@@ -128,7 +128,9 @@ pub fn build(b: *std.Build) void {
         return;
     };
 
-    const native_lib = buildHostLib(b, b.resolveTargetQuery(native_roc_target.toZigTarget()), optimize);
+    const native_lib = buildHostLib(b,
+        //b.resolveTargetQuery(native_roc_target.toZigTarget()),
+        native_target, optimize);
     b.installArtifact(native_lib);
 
     const copy_native = b.addUpdateSourceFiles();
@@ -148,6 +150,39 @@ pub fn build(b: *std.Build) void {
     }
     native_step.dependOn(&copy_native.step);
     native_step.dependOn(&native_lib.step);
+
+    // const roc_archive = b.addSystemCommand(&.{
+    //     "roc",
+    //     "build",
+    //     // "--no-cache",
+    //     "./examples/hello_godot/main.roc",
+    // });
+
+    // -----------------------------------------------------------------
+    // GDExtension shared library (native only – for Godot testing)
+    // -----------------------------------------------------------------
+    //const gdext_step = b.step("gdextension", "Build shared library for Godot GDExtension");
+
+    // const gdext_lib = buildSharedLib(
+    //     b,
+    //     //b.resolveTargetQuery(native_roc_target.toZigTarget()),
+    //     native_target,
+    //     optimize,
+    // );
+    //gdext_lib.step.dependOn(&roc_archive.step);
+
+    //gdext_lib.root_module.addObjectFile(b.path("zig-out/lib/libhost.a"));
+
+    // Install into zig-out/lib/
+    //b.installArtifact(gdext_lib);
+    //gdext_step.dependOn(&gdext_lib.step);
+
+    //const install_gdext = b.addInstallArtifact(gdext_lib, .{});
+    //gdext_step.dependOn(&install_gdext.step);
+
+    // Also make the default `zig build` produce the shared lib on native
+    // (optional – comment out if you want it only via `zig build gdextension`)
+    //all_step.dependOn(&gdext_lib.step);
 
     // Docs step: verify Roc docs generation for the platform API.
     const docs_step = b.step("docs", "Generate Roc platform API docs");
@@ -269,10 +304,46 @@ fn buildHostLib(
             .optimize = optimize,
             .strip = optimize != .Debug,
             .pic = true,
+            .link_libc = true,
         }),
     });
+
+    // include gdextension_interface.h C header file.
+    host_lib.root_module.addIncludePath(b.path("src/godot"));
+
     // Linux gets compiler-rt from the verified runtime; other targets embed it.
     host_lib.bundle_compiler_rt = target.result.os.tag != .linux;
 
     return host_lib;
 }
+
+// fn buildSharedLib(
+//     b: *std.Build,
+//     target: std.Build.ResolvedTarget,
+//     optimize: std.builtin.OptimizeMode,
+// ) *std.Build.Step.Compile {
+//     const lib = b.addLibrary(.{
+//         .name = "roc_godot", // libroc_godot.so / .dylib / .dll
+//         .linkage = .static,
+//         .root_module = b.createModule(.{
+//             .root_source_file = b.path("src/gdextension.zig"),
+//             .target = target,
+//             .optimize = optimize,
+//             .strip = optimize != .Debug,
+//             .pic = true, // required for shared libs
+//             .link_libc = true,
+//         }),
+//     });
+
+//     // include gdextension_interface.h C header file.
+//     lib.root_module.addIncludePath(b.path("src/godot"));
+
+//     // Roc app archive from: output: Archive
+//     // Adjust path if roc writes it elsewhere (--output, cwd, etc.)
+//     // lib.root_module.addObjectFile(b.path("main.a")); // "examples/hello_godot/main.a"
+
+//     // Same compiler-rt policy as the static host
+//     //lib.bundle_compiler_rt = target.result.os.tag != .linux;
+
+//     return lib;
+// }

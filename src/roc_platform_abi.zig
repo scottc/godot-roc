@@ -709,8 +709,8 @@ pub const HostStderr_lineResultTag = enum(u8) {
 
 /// Payload union for Try.
 pub const HostStderr_lineResultPayload = extern union {
-        err: RocStr,
-        ok: [0]u8,
+    err: RocStr,
+    ok: [0]u8,
 };
 
 /// Tag union: Try
@@ -768,8 +768,8 @@ pub const HostStdin_lineResultTag = enum(u8) {
 
 /// Payload union for Try.
 pub const HostStdin_lineResultPayload = extern union {
-        err: RocStr,
-        ok: RocStr,
+    err: RocStr,
+    ok: RocStr,
 };
 
 /// Tag union: Try
@@ -834,8 +834,8 @@ pub const HostStdout_lineResultTag = enum(u8) {
 
 /// Payload union for Try.
 pub const HostStdout_lineResultPayload = extern union {
-        err: RocStr,
-        ok: [0]u8,
+    err: RocStr,
+    ok: [0]u8,
 };
 
 /// Tag union: Try
@@ -893,8 +893,8 @@ pub const TryType16Tag = enum(u8) {
 
 /// Payload union for Try.
 pub const TryType16Payload = extern union {
-        err: i32,
-        ok: [0]u8,
+    err: i32,
+    ok: [0]u8,
 };
 
 /// Tag union: Try
@@ -963,7 +963,7 @@ pub const HostStdout_lineArgs = extern struct {
 fn decrefHostStderr_lineResult(value: HostStderr_lineResult, roc_host: *RocHost) void {
     switch (value.tag) {
         .Err => {
-        value.payload_err().decref(roc_host);
+            value.payload_err().decref(roc_host);
         },
         .Ok => {},
     }
@@ -972,7 +972,7 @@ fn decrefHostStderr_lineResult(value: HostStderr_lineResult, roc_host: *RocHost)
 fn increfHostStderr_lineResult(value: HostStderr_lineResult, amount: isize) void {
     switch (value.tag) {
         .Err => {
-        value.payload_err().incref(amount);
+            value.payload_err().incref(amount);
         },
         .Ok => {},
     }
@@ -987,10 +987,10 @@ pub const HostStderr_lineResultRelease = struct {
 fn decrefHostStdin_lineResult(value: HostStdin_lineResult, roc_host: *RocHost) void {
     switch (value.tag) {
         .Err => {
-        value.payload_err().decref(roc_host);
+            value.payload_err().decref(roc_host);
         },
         .Ok => {
-        value.payload_ok().decref(roc_host);
+            value.payload_ok().decref(roc_host);
         },
     }
 }
@@ -998,10 +998,10 @@ fn decrefHostStdin_lineResult(value: HostStdin_lineResult, roc_host: *RocHost) v
 fn increfHostStdin_lineResult(value: HostStdin_lineResult, amount: isize) void {
     switch (value.tag) {
         .Err => {
-        value.payload_err().incref(amount);
+            value.payload_err().incref(amount);
         },
         .Ok => {
-        value.payload_ok().incref(amount);
+            value.payload_ok().incref(amount);
         },
     }
 }
@@ -1015,7 +1015,7 @@ pub const HostStdin_lineResultRelease = struct {
 fn decrefHostStdout_lineResult(value: HostStdout_lineResult, roc_host: *RocHost) void {
     switch (value.tag) {
         .Err => {
-        value.payload_err().decref(roc_host);
+            value.payload_err().decref(roc_host);
         },
         .Ok => {},
     }
@@ -1024,7 +1024,7 @@ fn decrefHostStdout_lineResult(value: HostStdout_lineResult, roc_host: *RocHost)
 fn increfHostStdout_lineResult(value: HostStdout_lineResult, amount: isize) void {
     switch (value.tag) {
         .Err => {
-        value.payload_err().incref(amount);
+            value.payload_err().incref(amount);
         },
         .Ok => {},
     }
@@ -1066,7 +1066,6 @@ pub fn decrefListOfStr(value: RocList(RocStr), roc_host: *RocHost) void {
     value.deinitWith(RocStrRelease, roc_host);
 }
 
-
 fn rocReleasePolicy(comptime T: type) type {
     if (T == RocStr) return RocStrRelease;
     if (T == HostStderr_lineResult) return HostStderr_lineResultRelease;
@@ -1075,7 +1074,6 @@ fn rocReleasePolicy(comptime T: type) type {
     if (T == RocList(RocStr)) return RocListRelease(RocList(RocStr), RocStrRelease);
     @compileError("generated glue has no recursive release policy for " ++ @typeName(T));
 }
-
 
 // Runtime Symbols
 //
@@ -1113,7 +1111,6 @@ pub extern fn roc_stdin_line() callconv(.c) HostStdin_lineResult;
 ///     arg0.decref(roc_host);
 /// The result is owned by Roc: return exactly one owned reference.
 pub extern fn roc_stdout_line(arg0: RocStr) callconv(.c) HostStdout_lineResult;
-
 
 /// Default memory management functions for Roc platforms.
 ///
