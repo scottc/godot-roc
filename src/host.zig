@@ -24,13 +24,21 @@ pub extern fn roc_main(args: abi.RocList(abi.RocStr)) callconv(.c) i32;
 //     return 0;
 // }
 
+pub extern fn roc_init() callconv(.c) void;
+
 pub extern fn roc_ready() callconv(.c) void;
 // pub export fn roc_ready() callconv(.c) void {
 //     std.debug.print("roc_ready stub (Roc not linked yet)\n", .{});
 // }
 // exact type depends on Roc glue for `{} => {}`
 
-/// Hosted: Host.register_class! : Str, Str => …
+var g_roc_classes: [32]?ClassInfo = .{null} ** 32;
+var g_roc_class_count: usize = 0;
+
+fn dupeZ(s: []const u8) ![:0]const u8 {
+    return std.heap.c_allocator.dupeZ(u8, s);
+}
+
 pub export fn roc_register_class(
     class_name: abi.RocStr,
     parent_class_name: abi.RocStr,
@@ -42,22 +50,26 @@ pub export fn roc_register_class(
     var parent_owned = parent_class_name;
     defer parent_owned.decref(roc_host);
 
-    const class_slice = class_owned.asSlice(); // []const u8
+    const class_slice = class_owned.asSlice();
     const parent_slice = parent_owned.asSlice();
-
     std.debug.print("roc_register_class {s} : {s}\n", .{ class_slice, parent_slice });
 
-    // Need stable NUL-terminated strings for ClassInfo lifetime
-    // const class_z = dupeZ(class_slice) catch {
-    //     std.debug.print("register_class: OOM class name\n", .{});
-    //     return;
-    // };
-    // const parent_z = dupeZ(parent_slice) catch {
-    //     // free class_z if you care
-    //     return;
-    // };
+    if (g_roc_class_count >= g_roc_classes.len) {
+        std.debug.print("roc_register_class: table full\n", .{});
+        return;
+    }
 
-    //registerClassFromRoc(class_z, parent_z);
+    const class_z = dupeZ(class_slice) catch return;
+    const parent_z = dupeZ(parent_slice) catch return;
+
+    const i = g_roc_class_count;
+    g_roc_classes[i] = .{
+        .class_name = class_z,
+        .parent_name = parent_z,
+    };
+    g_roc_class_count += 1;
+
+    registerClass(&g_roc_classes[i].?);
 }
 
 pub extern fn roc_process(instance_id: u64, delta: f64) callconv(.c) void;
@@ -333,13 +345,17 @@ fn initialize(userdata: ?*anyopaque, level: gd.GDExtensionInitializationLevel) c
     std.debug.print("[./platform/src/gdextension.zig]: initialize at SCENE level\n", .{});
 
     // Must live as long as the process (Godot keeps the pointer).
-    var class_node = ClassInfo{ .parent_name = "Node", .class_name = "RocNode" };
-    var class_node2d = ClassInfo{ .parent_name = "Node2D", .class_name = "RocNode2D" };
-    var class_node3d = ClassInfo{ .parent_name = "Node3D", .class_name = "RocNode3D" };
+    // var class_node = ClassInfo{ .parent_name = "Node", .class_name = "RocNode" };
+    // var class_node2d = ClassInfo{ .parent_name = "Node2D", .class_name = "RocNode2D" };
+    // var class_node3d = ClassInfo{ .parent_name = "Node3D", .class_name = "RocNode3D" };
 
-    registerClass(&class_node);
-    registerClass(&class_node2d);
-    registerClass(&class_node3d);
+    // registerClass(&class_node);
+    // registerClass(&class_node2d);
+    // registerClass(&class_node3d);
+
+    // callback hook for app to register godot classes, or to do whatever
+    // maybe this is a bit too early.
+    roc_init();
 }
 
 fn deinitialize(userdata: ?*anyopaque, level: gd.GDExtensionInitializationLevel) callconv(.c) void {

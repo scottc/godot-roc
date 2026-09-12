@@ -1,21 +1,28 @@
 platform ""
     requires {} {
-        main! : List(Str) => Try({}, [Exit(I32), ..]),
+        main! : List(Str) => Try({}, [Exit(I32), ..]), # unused
 
+        init! : {} => {},
         ready! : {} => {},
         process! : U64, F64 => {},
     }
-    exposes [Stdout, Stderr, Stdin]
+    exposes [
+        Stdout,
+        Stderr,
+        Stdin, # unused
+        Godot,
+    ]
     packages { roc: "nightly-2026-09-08-39a3f89" }
     provides {
         "roc_main": main_for_host!,
 
+        "roc_init": init_for_host!,
         "roc_ready": ready_for_host!,
         "roc_process": process_for_host!,
     }
     hosted {
         "roc_stderr_line": Host.stderr_line!,
-        "roc_stdin_line": Host.stdin_line!,
+        "roc_stdin_line": Host.stdin_line!, # unused
         "roc_stdout_line": Host.stdout_line!,
 
         "roc_register_class": Host.register_class!,
@@ -41,7 +48,7 @@ import Host
 
 main_for_host! : List(Str) => I32
 main_for_host! = |args| {
-    _ = Stdout.line!("[platform/main.roc] hello from Roc Platform main_for_host.")
+    _ = Stdout.line!("[platform/main.roc] dead code branch, this won't be an executable with a main func.")
     result = main!(args)
     match result {
         Ok({}) => 0
@@ -51,6 +58,13 @@ main_for_host! = |args| {
             -1
         }
     }
+}
+
+init_for_host! : {} => {}
+init_for_host! = |{}| {
+    _ = Stdout.line!("[platform/main.roc] init_for_host!")
+    _result = init!({})
+    {}
 }
 
 ready_for_host! : {} => {}
