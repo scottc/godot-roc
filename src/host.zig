@@ -346,17 +346,8 @@ fn initialize(userdata: ?*anyopaque, level: gd.GDExtensionInitializationLevel) c
 
     std.debug.print("[./platform/src/gdextension.zig]: initialize at SCENE level\n", .{});
 
-    // Must live as long as the process (Godot keeps the pointer).
-    // var class_node = ClassInfo{ .parent_name = "Node", .class_name = "RocNode" };
-    // var class_node2d = ClassInfo{ .parent_name = "Node2D", .class_name = "RocNode2D" };
-    // var class_node3d = ClassInfo{ .parent_name = "Node3D", .class_name = "RocNode3D" };
-
-    // registerClass(&class_node);
-    // registerClass(&class_node2d);
-    // registerClass(&class_node3d);
-
     // callback hook for app to register godot classes, or to do whatever
-    // maybe this is a bit too early.
+    // maybe this is a bit too early or late.
     roc_init();
 }
 
@@ -422,6 +413,15 @@ const ClassInstance = struct {
     object: gd.GDExtensionObjectPtr,
     class_name: [:0]const u8,
 };
+
+fn handleFromInstance(self: *ClassInstance) u64 {
+    return @intFromPtr(self);
+}
+
+fn instanceFromHandle(handle: u64) ?*ClassInstance {
+    if (handle == 0) return null;
+    return @ptrFromInt(handle);
+}
 
 fn createInstance(
     class_userdata: ?*anyopaque,
@@ -492,7 +492,86 @@ fn registerClass(info: *ClassInfo) void {
     std.debug.print("registered {s} : {s}\n", .{ info.class_name, info.parent_name });
 }
 
-fn rocNodeReady(
+var g_mb_move_and_slide: gd.GDExtensionMethodBindPtr = null;
+var g_mb_set_velocity: gd.GDExtensionMethodBindPtr = null;
+
+fn getMethodBind(class_name: [:0]const u8, method_name: [:0]const u8, hash: i64) gd.GDExtensionMethodBindPtr {
+    const classdb_get_method_bind = load(
+        "classdb_get_method_bind",
+        *const fn (
+            gd.GDExtensionConstStringNamePtr,
+            gd.GDExtensionConstStringNamePtr,
+            i64,
+        ) callconv(.c) gd.GDExtensionMethodBindPtr,
+    );
+    var cn = makeStringName(class_name);
+    var mn = makeStringName(method_name);
+    return classdb_get_method_bind(@ptrCast(&cn), @ptrCast(&mn), hash);
+}
+
+fn ensureMethodBinds() void {
+    if (g_mb_move_and_slide != null) return;
+
+    const MOVE_AND_SLIDE_HASH = 2240911060; // extension_api.json -> classes -> CharacterBody3D -> methods -> move_and_slide -> hash
+    const SET_VELOCITY_HASH = 3460891852; // extension_api.json -> classes -> CharacterBody3D -> methods -> set_velocity -> hash
+    g_mb_move_and_slide = getMethodBind("CharacterBody3D", "move_and_slide", MOVE_AND_SLIDE_HASH);
+    g_mb_set_velocity = getMethodBind("CharacterBody3D", "set_velocity", SET_VELOCITY_HASH);
+}
+
+const Vector3 = extern struct {
+    x: f32,
+    y: f32,
+    z: f32,
+};
+
+fn ptrcall(
+    method: gd.GDExtensionMethodBindPtr,
+    object: gd.GDExtensionObjectPtr,
+    args: ?[*]const gd.GDExtensionConstTypePtr,
+    ret: gd.GDExtensionTypePtr,
+) void {
+    const object_method_bind_ptrcall = load(
+        "object_method_bind_ptrcall",
+        *const fn (
+            gd.GDExtensionMethodBindPtr,
+            gd.GDExtensionObjectPtr,
+            ?[*]const gd.GDExtensionConstTypePtr,
+            gd.GDExtensionTypePtr,
+        ) callconv(.c) void,
+    );
+    object_method_bind_ptrcall(method, object, args, ret);
+}
+
+pub export fn roc_set_velocity(handle: u64, x: f64, y: f64, z: f64) callconv(.c) void {
+    ensureMethodBinds();
+    const self = instanceFromHandle(handle) orelse return;
+    if (g_mb_set_velocity == null) return;
+
+    var v = Vector3{
+        .x = @floatCast(x),
+        .y = @floatCast(y),
+        .z = @floatCast(z),
+    };
+    const args = [_]gd.GDExtensionConstTypePtr{@ptrCast(&v)};
+    ptrcall(g_mb_set_velocity, self.object, &args, null);
+}
+
+pub export fn roc_move_and_slide(handle: u64) callconv(.c) void {
+    std.debug.print("[./platform/src/host.zig]: move_and_slide() 1\n", .{});
+
+    ensureMethodBinds();
+    const self = instanceFromHandle(handle) orelse return;
+    if (g_mb_move_and_slide == null) return;
+
+    // move_and_slide() -> bool; optional to read
+    var hit: gd.GDExtensionBool = 0;
+    ptrcall(g_mb_move_and_slide, self.object, null, @ptrCast(&hit));
+    //_ = hit;
+
+    std.debug.print("[./platform/src/host.zig]: move_and_slide() 2\n", .{});
+}
+
+fn onReady(
     instance: gd.GDExtensionClassInstancePtr,
     args: [*c]const gd.GDExtensionConstTypePtr,
     ret: gd.GDExtensionTypePtr,
@@ -500,17 +579,17 @@ fn rocNodeReady(
     _ = instance;
     _ = args;
     _ = ret;
-    std.debug.print("[./platform/src/gdextension.zig]: rocNodeReady()\n", .{});
+    std.debug.print("[./platform/src/host.zig]: rocNodeReady()\n", .{});
 
     roc_ready();
 }
 
-fn rocNodeProcess(
+fn onProcess(
     instance: gd.GDExtensionClassInstancePtr,
     args: [*c]const gd.GDExtensionConstTypePtr,
     ret: gd.GDExtensionTypePtr,
 ) callconv(.c) void {
-    _ = instance;
+    //_ = instance;
     _ = ret; // _process returns void
 
     // guard, if needed.
@@ -519,21 +598,18 @@ fn rocNodeProcess(
     // args[0] → pointer to f64 delta
     const delta: f64 = @as(*const f64, @ptrCast(@alignCast(args[0]))).*;
 
-    //const self: *ClassInstance = @ptrCast(@alignCast(instance));
-    // if you store a handle on the instance:
-    //const handle: u64 = self.handle;
+    const self: *ClassInstance = @ptrCast(@alignCast(instance));
+    // std.debug.print("_process self={any} delta={d}\n", .{ self, delta });
 
-    // std.debug.print("RocHello._process self={any} delta={d}\n", .{ self, delta });
-
-    roc_process(123, delta); // use real handle when you have one
+    roc_process(handleFromInstance(self), delta);
 }
 
-fn rocNodeProcessPhysics(
+fn onPhysicsProcess(
     instance: gd.GDExtensionClassInstancePtr,
     args: [*c]const gd.GDExtensionConstTypePtr,
     ret: gd.GDExtensionTypePtr,
 ) callconv(.c) void {
-    _ = instance;
+    //_ = instance;
     _ = ret; // _process returns void
 
     // guard, if needed.
@@ -542,13 +618,11 @@ fn rocNodeProcessPhysics(
     // args[0] → pointer to f64 delta
     const delta: f64 = @as(*const f64, @ptrCast(@alignCast(args[0]))).*;
 
-    //const self: *ClassInstance = @ptrCast(@alignCast(instance));
-    // if you store a handle on the instance:
-    //const handle: u64 = self.handle;
+    const self: *ClassInstance = @ptrCast(@alignCast(instance));
 
-    // std.debug.print("RocHello._process self={any} delta={d}\n", .{ self, delta });
+    std.debug.print("onPhysicsProcess self={any} delta={d}\n", .{ self, delta });
 
-    roc_physics_process(123, delta); // use real handle when you have one
+    roc_physics_process(handleFromInstance(self), delta);
 }
 
 fn getVirtual(
@@ -567,13 +641,13 @@ fn getVirtual(
     const _ready_HASH = 3218959716;
     if (hash == _ready_HASH) {
         // std.debug.print("Is _ready = {any}, {any}, hash = {any})\n", .{ class_userdata, name, hash });
-        return rocNodeReady;
+        return onReady;
     }
     if (stringNameEq(name, "_process")) {
-        return rocNodeProcess;
+        return onProcess;
     }
     if (stringNameEq(name, "_physics_process")) {
-        return rocNodeProcessPhysics;
+        return onPhysicsProcess;
     }
     // else {
     //     std.debug.print("[WARN] Unhandled {any}, {any}, hash = {any})\n", .{ class_userdata, name, hash });

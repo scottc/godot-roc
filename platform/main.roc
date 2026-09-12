@@ -28,6 +28,7 @@ platform ""
         "roc_stdout_line": Host.stdout_line!,
 
         "roc_register_class": Host.register_class!,
+        "roc_move_and_slide": Host.move_and_slide!,
     }
     targets: {
         inputs_dir: "targets/",

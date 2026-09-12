@@ -15,18 +15,20 @@ init! = |_| {
     _ = Godot.register_class!(
         "RocPlayer",        # Class name
         "CharacterBody3D"   # Inherits parent class: CharacterBody3D; a physics body with agency behavior.
-    )
+    ) # this could/should return a handle...?
     _ = Stdout.line!("[examples/hello_godot/main.roc] registered!")
     {}
 }
 
 physics_process! : U64, F64 => {}
 physics_process! = |handle, delta| {
-    _ = handle
+    #_ = handle
     _ = delta
     # _ = Stdout.line!("[examples/hello_godot/main.roc] physics_process!")
 
-    Godot.move_and_slide!() # Apply generic collisions & physics.
+    _ = Stdout.line!("[examples/hello_godot/main.roc] physics_process! -> move and slide?! ${handle.to_str()} ${delta.to_str()}")
+    Godot.move_and_slide!(handle) # Apply generic collisions & physics.
+    _ = Stdout.line!("[examples/hello_godot/main.roc] physics_process! -> Did we move?! ${handle.to_str()} ${delta.to_str()}")
 
     # func _physics_process(delta: float) -> void:
     # 	# Add the gravity.

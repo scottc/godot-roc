@@ -8,8 +8,9 @@ Godot := [].{
             Err(RegisterClassErr(err)) => Err(RegisterClassErr(err))
         }
 
-    move_and_slide! : () => {}
-    move_and_slide! = || {
+    move_and_slide! : U64 => {}
+    move_and_slide! = |handle| {
+        Host.move_and_slide!(handle)
         {}
     }
 }
