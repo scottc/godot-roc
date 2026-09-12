@@ -5,4 +5,6 @@ Host := [].{
 	stderr_line! : Str => Try({}, [StderrErr(Str)])
 	stdin_line! : {} => Try(Str, [StdinErr(Str)])
 	stdout_line! : Str => Try({}, [StdoutErr(Str)])
+
+	register_class! : Str, Str => {} # Try({}, [RegisterClassErr(Str)])
 }

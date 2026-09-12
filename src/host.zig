@@ -30,6 +30,36 @@ pub extern fn roc_ready() callconv(.c) void;
 // }
 // exact type depends on Roc glue for `{} => {}`
 
+/// Hosted: Host.register_class! : Str, Str => …
+pub export fn roc_register_class(
+    class_name: abi.RocStr,
+    parent_class_name: abi.RocStr,
+) callconv(.c) void {
+    const roc_host = g_roc_host.?;
+
+    var class_owned = class_name;
+    defer class_owned.decref(roc_host);
+    var parent_owned = parent_class_name;
+    defer parent_owned.decref(roc_host);
+
+    const class_slice = class_owned.asSlice(); // []const u8
+    const parent_slice = parent_owned.asSlice();
+
+    std.debug.print("roc_register_class {s} : {s}\n", .{ class_slice, parent_slice });
+
+    // Need stable NUL-terminated strings for ClassInfo lifetime
+    // const class_z = dupeZ(class_slice) catch {
+    //     std.debug.print("register_class: OOM class name\n", .{});
+    //     return;
+    // };
+    // const parent_z = dupeZ(parent_slice) catch {
+    //     // free class_z if you care
+    //     return;
+    // };
+
+    //registerClassFromRoc(class_z, parent_z);
+}
+
 pub extern fn roc_process(instance_id: u64, delta: f64) callconv(.c) void;
 pub extern fn roc_log(string: abi.RocList(abi.RocStr)) callconv(.c) void;
 pub extern fn roc_get_position() callconv(.c) void;
@@ -288,10 +318,6 @@ fn buildStrArgsList(argc: usize, argv: [*][*:0]u8, roc_host: *abi.RocHost) abi.R
     return args_list;
 }
 
-//const std = @import("std");
-//const abi = @import("roc_platform_abi.zig");
-//const host = @import("host.zig");
-
 const gd = @import("godot/gd.zig").gd;
 
 const GetProcAddressFn = *const fn ([*c]const u8) callconv(.c) ?*const fn (...) callconv(.c) void;
@@ -306,9 +332,14 @@ fn initialize(userdata: ?*anyopaque, level: gd.GDExtensionInitializationLevel) c
 
     std.debug.print("[./platform/src/gdextension.zig]: initialize at SCENE level\n", .{});
 
-    ensureRocHost(); // TODO: is this the correct place for this...? what about de-init?
+    // Must live as long as the process (Godot keeps the pointer).
+    var class_node = ClassInfo{ .parent_name = "Node", .class_name = "RocNode" };
+    var class_node2d = ClassInfo{ .parent_name = "Node2D", .class_name = "RocNode2D" };
+    var class_node3d = ClassInfo{ .parent_name = "Node3D", .class_name = "RocNode3D" };
 
-    registerRocHello();
+    registerClass(&class_node);
+    registerClass(&class_node2d);
+    registerClass(&class_node3d);
 }
 
 fn deinitialize(userdata: ?*anyopaque, level: gd.GDExtensionInitializationLevel) callconv(.c) void {
@@ -322,6 +353,10 @@ export fn roc_godot_library_init(
     p_library: gd.GDExtensionClassLibraryPtr,
     r_initialization: *gd.GDExtensionInitialization,
 ) callconv(.c) gd.GDExtensionBool {
+
+    // TODO: is this the correct place for this...? what about de-init?
+    ensureRocHost();
+
     get_proc_address = p_get_proc_address;
     library = p_library;
 
@@ -331,6 +366,7 @@ export fn roc_godot_library_init(
         .initialize = initialize,
         .deinitialize = deinitialize,
     };
+
     return 1;
 }
 
@@ -359,20 +395,26 @@ fn makeStringName(text: [:0]const u8) StringName {
     return sn;
 }
 
-const RocHello = struct {
-    // Your per-instance data. Start empty.
-    object: gd.GDExtensionObjectPtr = null,
+const ClassInfo = struct {
+    parent_name: [:0]const u8,
+    class_name: [:0]const u8,
+};
+
+const ClassInstance = struct {
+    object: gd.GDExtensionObjectPtr,
+    class_name: [:0]const u8,
 };
 
 fn createInstance(
     class_userdata: ?*anyopaque,
     notify_postinitialize: gd.GDExtensionBool,
 ) callconv(.c) gd.GDExtensionObjectPtr {
-    _ = class_userdata;
     _ = notify_postinitialize;
 
+    const info: *const ClassInfo = @ptrCast(@alignCast(class_userdata orelse return null));
+
     const classdb_construct = load(
-        "classdb_construct_object2", // fall back to classdb_construct_object if missing
+        "classdb_construct_object2",
         *const fn (gd.GDExtensionConstStringNamePtr) callconv(.c) gd.GDExtensionObjectPtr,
     );
     const object_set_instance = load(
@@ -384,28 +426,29 @@ fn createInstance(
         ) callconv(.c) void,
     );
 
-    var parent_name = makeStringName("Node");
-    var class_name = makeStringName("RocHello");
+    var parent_sn = makeStringName(info.parent_name);
+    var class_sn = makeStringName(info.class_name);
 
-    const obj = classdb_construct(@ptrCast(&parent_name));
+    const obj = classdb_construct(@ptrCast(&parent_sn));
     if (obj == null) return null;
 
-    const self = std.heap.c_allocator.create(RocHello) catch return null;
-    self.* = .{ .object = obj };
+    const self = std.heap.c_allocator.create(ClassInstance) catch return null;
+    self.* = .{
+        .object = obj,
+        .class_name = info.class_name, // useful for Roc dispatch later
+    };
 
-    object_set_instance(obj, @ptrCast(&class_name), @ptrCast(self));
-    // do NOT call object_set_instance_binding yet
-
+    object_set_instance(obj, @ptrCast(&class_sn), @ptrCast(self));
     return obj;
 }
 
 fn freeInstance(class_userdata: ?*anyopaque, instance: gd.GDExtensionClassInstancePtr) callconv(.c) void {
     _ = class_userdata;
-    const self: *RocHello = @ptrCast(@alignCast(instance));
+    const self: *ClassInstance = @ptrCast(@alignCast(instance));
     std.heap.c_allocator.destroy(self);
 }
 
-fn registerRocHello() void {
+fn registerClass(info: *ClassInfo) void {
     const register_class = load(
         "classdb_register_extension_class6",
         *const fn (
@@ -416,31 +459,22 @@ fn registerRocHello() void {
         ) callconv(.c) void,
     );
 
-    var class_name = makeStringName("RocHello");
-    var parent_name = makeStringName("Node");
+    var class_sn = makeStringName(info.class_name);
+    var parent_sn = makeStringName(info.parent_name);
 
-    // Zero everything, then set required fields.
-    var info: gd.GDExtensionClassCreationInfo6 = std.mem.zeroes(gd.GDExtensionClassCreationInfo6);
+    var creation: gd.GDExtensionClassCreationInfo6 = std.mem.zeroes(gd.GDExtensionClassCreationInfo6);
+    creation.is_exposed = 1;
+    creation.create_instance_func = createInstance;
+    creation.free_instance_func = freeInstance;
+    creation.get_virtual_func = getVirtual;
+    creation.class_userdata = info;
 
-    info.is_virtual = 0;
-    info.is_abstract = 0;
-    info.is_exposed = 1; // show in editor / ClassDB
-    // info.is_runtime = 0; // if field exists
-    // info.icon_path = null;
+    register_class(library, @ptrCast(&class_sn), @ptrCast(&parent_sn), &creation);
 
-    info.get_virtual_func = getVirtual;
-
-    info.create_instance_func = createInstance;
-    info.free_instance_func = freeInstance;
-
-    // Leave the rest null/0 for a bare Node subclass.
-
-    register_class(library, @ptrCast(&class_name), @ptrCast(&parent_name), &info);
-
-    std.debug.print("[./platform/src/gdextension.zig]: registered RocHello\n", .{});
+    std.debug.print("registered {s} : {s}\n", .{ info.class_name, info.parent_name });
 }
 
-fn rocHelloReady(
+fn rocNodeReady(
     instance: gd.GDExtensionClassInstancePtr,
     args: [*c]const gd.GDExtensionConstTypePtr,
     ret: gd.GDExtensionTypePtr,
@@ -456,7 +490,7 @@ fn rocHelloReady(
     roc_ready();
 }
 
-fn rocHelloProcess(
+fn rocNodeProcess(
     instance: gd.GDExtensionClassInstancePtr,
     args: [*c]const gd.GDExtensionConstTypePtr,
     ret: gd.GDExtensionTypePtr,
@@ -469,7 +503,7 @@ fn rocHelloProcess(
     // args[0] → pointer to f64 delta
     const delta: f64 = @as(*const f64, @ptrCast(@alignCast(args[0]))).*;
 
-    const self: *RocHello = @ptrCast(@alignCast(instance));
+    const self: *ClassInstance = @ptrCast(@alignCast(instance));
     // if you store a handle on the instance:
     //const handle: u64 = self.handle;
 
@@ -494,10 +528,10 @@ fn getVirtual(
     const _ready_HASH = 3218959716;
     if (hash == _ready_HASH) {
         // std.debug.print("Is _ready = {any}, {any}, hash = {any})\n", .{ class_userdata, name, hash });
-        return rocHelloReady;
+        return rocNodeReady;
     }
     if (stringNameEq(name, "_process")) {
-        return rocHelloProcess;
+        return rocNodeProcess;
     }
     // else {
     //     std.debug.print("[WARN] Unhandled {any}, {any}, hash = {any})\n", .{ class_userdata, name, hash });

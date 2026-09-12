@@ -17,6 +17,8 @@ platform ""
         "roc_stderr_line": Host.stderr_line!,
         "roc_stdin_line": Host.stdin_line!,
         "roc_stdout_line": Host.stdout_line!,
+
+        "roc_register_class": Host.register_class!,
     }
     targets: {
         inputs_dir: "targets/",
@@ -34,6 +36,7 @@ platform ""
 import Stdout
 import Stderr
 import Stdin
+import Godot
 import Host
 
 main_for_host! : List(Str) => I32
