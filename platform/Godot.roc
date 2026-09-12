@@ -7,4 +7,9 @@ Godot := [].{
             Ok({}) => Ok({})
             Err(RegisterClassErr(err)) => Err(RegisterClassErr(err))
         }
+
+    move_and_slide! : () => {}
+    move_and_slide! = || {
+        {}
+    }
 }

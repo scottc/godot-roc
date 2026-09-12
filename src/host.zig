@@ -73,6 +73,8 @@ pub export fn roc_register_class(
 }
 
 pub extern fn roc_process(instance_id: u64, delta: f64) callconv(.c) void;
+pub extern fn roc_physics_process(instance_id: u64, delta: f64) callconv(.c) void;
+
 pub extern fn roc_log(string: abi.RocList(abi.RocStr)) callconv(.c) void;
 pub extern fn roc_get_position() callconv(.c) void;
 pub extern fn roc_set_position() callconv(.c) void;
@@ -498,11 +500,8 @@ fn rocNodeReady(
     _ = instance;
     _ = args;
     _ = ret;
-    std.debug.print("[./platform/src/gdextension.zig]: RocHello._ready()\n", .{});
+    std.debug.print("[./platform/src/gdextension.zig]: rocNodeReady()\n", .{});
 
-    //host.ensureRocHost(); // is this needed?
-    //const args2 = abi.RocList(abi.RocStr).empty();
-    //_ = host.roc_main(args2);
     roc_ready();
 }
 
@@ -511,6 +510,7 @@ fn rocNodeProcess(
     args: [*c]const gd.GDExtensionConstTypePtr,
     ret: gd.GDExtensionTypePtr,
 ) callconv(.c) void {
+    _ = instance;
     _ = ret; // _process returns void
 
     // guard, if needed.
@@ -519,13 +519,36 @@ fn rocNodeProcess(
     // args[0] → pointer to f64 delta
     const delta: f64 = @as(*const f64, @ptrCast(@alignCast(args[0]))).*;
 
-    const self: *ClassInstance = @ptrCast(@alignCast(instance));
+    //const self: *ClassInstance = @ptrCast(@alignCast(instance));
     // if you store a handle on the instance:
     //const handle: u64 = self.handle;
 
-    std.debug.print("RocHello._process self={any} delta={d}\n", .{ self, delta });
+    // std.debug.print("RocHello._process self={any} delta={d}\n", .{ self, delta });
 
     roc_process(123, delta); // use real handle when you have one
+}
+
+fn rocNodeProcessPhysics(
+    instance: gd.GDExtensionClassInstancePtr,
+    args: [*c]const gd.GDExtensionConstTypePtr,
+    ret: gd.GDExtensionTypePtr,
+) callconv(.c) void {
+    _ = instance;
+    _ = ret; // _process returns void
+
+    // guard, if needed.
+    // if (args == null) return;
+
+    // args[0] → pointer to f64 delta
+    const delta: f64 = @as(*const f64, @ptrCast(@alignCast(args[0]))).*;
+
+    //const self: *ClassInstance = @ptrCast(@alignCast(instance));
+    // if you store a handle on the instance:
+    //const handle: u64 = self.handle;
+
+    // std.debug.print("RocHello._process self={any} delta={d}\n", .{ self, delta });
+
+    roc_physics_process(123, delta); // use real handle when you have one
 }
 
 fn getVirtual(
@@ -548,6 +571,9 @@ fn getVirtual(
     }
     if (stringNameEq(name, "_process")) {
         return rocNodeProcess;
+    }
+    if (stringNameEq(name, "_physics_process")) {
+        return rocNodeProcessPhysics;
     }
     // else {
     //     std.debug.print("[WARN] Unhandled {any}, {any}, hash = {any})\n", .{ class_userdata, name, hash });

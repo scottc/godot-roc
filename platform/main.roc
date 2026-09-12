@@ -5,6 +5,7 @@ platform ""
         init! : {} => {},
         ready! : {} => {},
         process! : U64, F64 => {},
+        physics_process! : U64, F64 => {},
     }
     exposes [
         Stdout,
@@ -19,6 +20,7 @@ platform ""
         "roc_init": init_for_host!,
         "roc_ready": ready_for_host!,
         "roc_process": process_for_host!,
+        "roc_physics_process": physics_process_for_host!,
     }
     hosted {
         "roc_stderr_line": Host.stderr_line!,
@@ -76,7 +78,14 @@ ready_for_host! = |{}| {
 
 process_for_host! : U64,F64 => {}
 process_for_host! = |handle, delta| {
-    _ = Stdout.line!("[platform/main.roc] process_for_host! ${handle.to_str()} ${delta.to_str()}")
+    # _ = Stdout.line!("[platform/main.roc] process_for_host! ${handle.to_str()} ${delta.to_str()}")
     _result = process!(handle, delta)
+    {}
+}
+
+physics_process_for_host! : U64,F64 => {}
+physics_process_for_host! = |handle, delta| {
+    _ = Stdout.line!("[platform/main.roc] process_physics_for_host! ${handle.to_str()} ${delta.to_str()}")
+    _result = physics_process!(handle, delta)
     {}
 }
