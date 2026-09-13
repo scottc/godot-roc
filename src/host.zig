@@ -506,6 +506,7 @@ fn registerClass(info: *ClassInfo) void {
 }
 
 var g_mb_move_and_slide: gd.GDExtensionMethodBindPtr = null;
+var g_mb_get_velocity: gd.GDExtensionMethodBindPtr = null;
 var g_mb_set_velocity: gd.GDExtensionMethodBindPtr = null;
 
 fn getMethodBind(class_name: [:0]const u8, method_name: [:0]const u8, hash: i64) gd.GDExtensionMethodBindPtr {
@@ -531,8 +532,11 @@ fn ensureMethodBinds() void {
 
     const MOVE_AND_SLIDE_HASH = 2240911060; // extension_api.json -> classes -> CharacterBody3D -> methods -> move_and_slide -> hash
     const SET_VELOCITY_HASH = 3460891852; // extension_api.json -> classes -> CharacterBody3D -> methods -> set_velocity -> hash
+    const GET_VELOCITY_HASH = 3360562783; // extension_api.json -> classes -> CharacterBody3D -> methods -> set_velocity -> hash
+
     g_mb_move_and_slide = getMethodBind("CharacterBody3D", "move_and_slide", MOVE_AND_SLIDE_HASH);
     g_mb_set_velocity = getMethodBind("CharacterBody3D", "set_velocity", SET_VELOCITY_HASH);
+    g_mb_get_velocity = getMethodBind("CharacterBody3D", "get_velocity", GET_VELOCITY_HASH);
 }
 
 const Vector3 = extern struct {
@@ -561,20 +565,37 @@ fn ptrcall(
     object_method_bind_ptrcall(method, object, args, ret);
 }
 
-pub export fn roc_set_velocity(handle: u64, x: f64, y: f64, z: f64) callconv(.c) void {
-    std.debug.print("[./platform/src/host.zig]: roc_set_velocity(handle: u64, x: f64, y: f64, z: f64) 1\n", .{});
-
+pub export fn roc_set_velocity(handle: u64, v: Vector3) callconv(.c) void {
     ensureMethodBinds();
     const self = instanceFromHandle(handle) orelse return;
     if (g_mb_set_velocity == null) return;
 
-    var v = Vector3{
-        .x = @floatCast(x),
-        .y = @floatCast(y),
-        .z = @floatCast(z),
+    var gv = Vector3{
+        .x = @floatCast(v.x),
+        .y = @floatCast(v.y),
+        .z = @floatCast(v.z),
     };
-    const args = [_]gd.GDExtensionConstTypePtr{@ptrCast(&v)};
+    const args = [_]gd.GDExtensionConstTypePtr{@ptrCast(&gv)};
     ptrcall(g_mb_set_velocity, self.object, &args, null);
+}
+
+pub export fn roc_get_velocity(handle: u64) callconv(.c) Vector3 {
+    ensureMethodBinds();
+    const self = instanceFromHandle(handle) orelse {
+        return .{ .x = 0, .y = 0, .z = 0 };
+    };
+    if (g_mb_get_velocity == null) {
+        return .{ .x = 0, .y = 0, .z = 0 };
+    }
+
+    var gv = Vector3{ .x = 0, .y = 0, .z = 0 };
+    ptrcall(g_mb_get_velocity, self.object, null, @ptrCast(&gv));
+
+    return .{
+        .x = gv.x,
+        .y = gv.y,
+        .z = gv.z,
+    };
 }
 
 var g_input: gd.GDExtensionObjectPtr = null;
@@ -638,6 +659,52 @@ pub export fn roc_move_and_slide(handle: u64) callconv(.c) void {
     var hit: gd.GDExtensionBool = 0;
     ptrcall(g_mb_move_and_slide, self.object, null, @ptrCast(&hit));
     //_ = hit;
+}
+
+var g_mb_is_on_floor: gd.GDExtensionMethodBindPtr = null;
+var g_mb_get_gravity: gd.GDExtensionMethodBindPtr = null;
+
+fn ensureFloorBinds() void {
+    if (g_mb_is_on_floor != null) return;
+
+    const CHARACTERBODY3D_IS_ON_FLOOR_HASH = 36873697;
+    const PHYSICSBODY3D_GET_GRAVITY_HASH = 3360562783;
+
+    g_mb_is_on_floor = getMethodBind("CharacterBody3D", "is_on_floor", CHARACTERBODY3D_IS_ON_FLOOR_HASH);
+    g_mb_get_gravity = getMethodBind("CharacterBody3D", "get_gravity", PHYSICSBODY3D_GET_GRAVITY_HASH);
+}
+
+pub export fn roc_is_on_floor(handle: u64) callconv(.c) u8 {
+    ensureFloorBinds();
+    const self = instanceFromHandle(handle) orelse return 0;
+    if (g_mb_is_on_floor == null) return 0;
+
+    var ret: gd.GDExtensionBool = 0;
+    ptrcall(g_mb_is_on_floor, self.object, null, @ptrCast(&ret));
+    return ret;
+}
+
+/// Writes gravity into out_x/y/z (units/sec²).
+pub export fn roc_get_gravity(handle: u64, out_x: *f64, out_y: *f64, out_z: *f64) callconv(.c) void {
+    ensureFloorBinds();
+    const self = instanceFromHandle(handle) orelse {
+        out_x.* = 0;
+        out_y.* = -9.8;
+        out_z.* = 0;
+        return;
+    };
+    if (g_mb_get_gravity == null) {
+        out_x.* = 0;
+        out_y.* = -9.8;
+        out_z.* = 0;
+        return;
+    }
+
+    var g = Vector3{ .x = 0, .y = 0, .z = 0 };
+    ptrcall(g_mb_get_gravity, self.object, null, @ptrCast(&g));
+    out_x.* = g.x;
+    out_y.* = g.y;
+    out_z.* = g.z;
 }
 
 fn onReady(

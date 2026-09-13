@@ -37,9 +37,12 @@ platform ""
 
         # Godot:
         "roc_register_class": Host.register_class!,
+        "roc_get_velocity": Host.get_velocity!,
         "roc_set_velocity": Host.set_velocity!,
         "roc_input_is_action_pressed": Host.input_is_action_pressed!, # Input Singleton class?
         "roc_move_and_slide": Host.move_and_slide!,
+        "roc_is_on_floor": Host.is_on_floor!,
+        "roc_get_gravity": Host.get_gravity!,
     }
     targets: {
         inputs_dir: "targets/",
