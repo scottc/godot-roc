@@ -52,7 +52,7 @@ pub export fn roc_register_class(
 
     const class_slice = class_owned.asSlice();
     const parent_slice = parent_owned.asSlice();
-    std.debug.print("roc_register_class {s} : {s}\n", .{ class_slice, parent_slice });
+    std.debug.print("[./platform/src/host.zig] roc_register_class({s}, {s})\n", .{ class_slice, parent_slice });
 
     if (g_roc_class_count >= g_roc_classes.len) {
         std.debug.print("roc_register_class: table full\n", .{});
@@ -395,6 +395,8 @@ const StringName = [8]u8; // if this is wrong, check extension_api.json / header
 
 // Construct StringName via interface (preferred)
 fn makeStringName(text: [:0]const u8) StringName {
+    std.debug.print("[./platform/src/host.zig]: makeStringName(text: [:0]const u8) StringName\n", .{});
+
     var sn: StringName = undefined;
     const string_name_new = load(
         "string_name_new_with_utf8_chars",
@@ -415,10 +417,14 @@ const ClassInstance = struct {
 };
 
 fn handleFromInstance(self: *ClassInstance) u64 {
+    std.debug.print("[./platform/src/host.zig]: handleFromInstance(self: *ClassInstance) u64\n", .{});
+
     return @intFromPtr(self);
 }
 
 fn instanceFromHandle(handle: u64) ?*ClassInstance {
+    std.debug.print("[./platform/src/host.zig]: instanceFromHandle(handle: u64) ?*ClassInstance\n", .{});
+
     if (handle == 0) return null;
     return @ptrFromInt(handle);
 }
@@ -428,6 +434,8 @@ fn createInstance(
     notify_postinitialize: gd.GDExtensionBool,
 ) callconv(.c) gd.GDExtensionObjectPtr {
     _ = notify_postinitialize;
+
+    std.debug.print("[./platform/src/host.zig]: createInstance(class_userdata: ?*anyopaque, notify_postinitialize: gd.GDExtensionBool) gd.GDExtensionObjectPtr\n", .{});
 
     const info: *const ClassInfo = @ptrCast(@alignCast(class_userdata orelse return null));
 
@@ -462,11 +470,16 @@ fn createInstance(
 
 fn freeInstance(class_userdata: ?*anyopaque, instance: gd.GDExtensionClassInstancePtr) callconv(.c) void {
     _ = class_userdata;
+
+    std.debug.print("[./platform/src/host.zig]: freeInstance(class_userdata: ?*anyopaque, instance: gd.GDExtensionClassInstancePtr) void\n", .{});
+
     const self: *ClassInstance = @ptrCast(@alignCast(instance));
     std.heap.c_allocator.destroy(self);
 }
 
 fn registerClass(info: *ClassInfo) void {
+    std.debug.print("[./platform/src/host.zig]: registerClass(info: *ClassInfo) void\n", .{});
+
     const register_class = load(
         "classdb_register_extension_class6",
         *const fn (
@@ -489,13 +502,15 @@ fn registerClass(info: *ClassInfo) void {
 
     register_class(library, @ptrCast(&class_sn), @ptrCast(&parent_sn), &creation);
 
-    std.debug.print("registered {s} : {s}\n", .{ info.class_name, info.parent_name });
+    std.debug.print("[./platform/src/host.zig]: registered {s} : {s}\n", .{ info.class_name, info.parent_name });
 }
 
 var g_mb_move_and_slide: gd.GDExtensionMethodBindPtr = null;
 var g_mb_set_velocity: gd.GDExtensionMethodBindPtr = null;
 
 fn getMethodBind(class_name: [:0]const u8, method_name: [:0]const u8, hash: i64) gd.GDExtensionMethodBindPtr {
+    std.debug.print("[./platform/src/host.zig]: getMethodBind()\n", .{});
+
     const classdb_get_method_bind = load(
         "classdb_get_method_bind",
         *const fn (
@@ -510,6 +525,8 @@ fn getMethodBind(class_name: [:0]const u8, method_name: [:0]const u8, hash: i64)
 }
 
 fn ensureMethodBinds() void {
+    std.debug.print("[./platform/src/host.zig]: ensureMethodBinds()\n", .{});
+
     if (g_mb_move_and_slide != null) return;
 
     const MOVE_AND_SLIDE_HASH = 2240911060; // extension_api.json -> classes -> CharacterBody3D -> methods -> move_and_slide -> hash
@@ -530,6 +547,8 @@ fn ptrcall(
     args: ?[*]const gd.GDExtensionConstTypePtr,
     ret: gd.GDExtensionTypePtr,
 ) void {
+    std.debug.print("[./platform/src/host.zig]: ptrcall(method, object, args, ret)\n", .{});
+
     const object_method_bind_ptrcall = load(
         "object_method_bind_ptrcall",
         *const fn (
@@ -543,6 +562,8 @@ fn ptrcall(
 }
 
 pub export fn roc_set_velocity(handle: u64, x: f64, y: f64, z: f64) callconv(.c) void {
+    std.debug.print("[./platform/src/host.zig]: roc_set_velocity(handle: u64, x: f64, y: f64, z: f64) 1\n", .{});
+
     ensureMethodBinds();
     const self = instanceFromHandle(handle) orelse return;
     if (g_mb_set_velocity == null) return;
@@ -557,7 +578,7 @@ pub export fn roc_set_velocity(handle: u64, x: f64, y: f64, z: f64) callconv(.c)
 }
 
 pub export fn roc_move_and_slide(handle: u64) callconv(.c) void {
-    std.debug.print("[./platform/src/host.zig]: move_and_slide() 1\n", .{});
+    std.debug.print("[./platform/src/host.zig]: move_and_slide(handle: u64) 1\n", .{});
 
     ensureMethodBinds();
     const self = instanceFromHandle(handle) orelse return;
@@ -620,7 +641,7 @@ fn onPhysicsProcess(
 
     const self: *ClassInstance = @ptrCast(@alignCast(instance));
 
-    std.debug.print("onPhysicsProcess self={any} delta={d}\n", .{ self, delta });
+    std.debug.print("[./platform/src/host.zig]: onPhysicsProcess self={any} delta={d}\n", .{ self, delta });
 
     roc_physics_process(handleFromInstance(self), delta);
 }

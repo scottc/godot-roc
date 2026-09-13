@@ -8,6 +8,12 @@ Godot := [].{
             Err(RegisterClassErr(err)) => Err(RegisterClassErr(err))
         }
 
+    set_velocity! : U64, F64, F64, F64 => {}
+    set_velocity! = |handle, vx, vy, vz| {
+        Host.set_velocity!(handle, vx, vy, vz)
+        {}
+    }
+
     move_and_slide! : U64 => {}
     move_and_slide! = |handle| {
         Host.move_and_slide!(handle)

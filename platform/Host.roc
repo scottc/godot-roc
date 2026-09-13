@@ -7,5 +7,6 @@ Host := [].{
 	stdout_line! : Str => Try({}, [StdoutErr(Str)])
 
 	register_class! : Str, Str => Try({}, [RegisterClassErr(Str)])
+	set_velocity! : U64, F64, F64, F64 => {}
 	move_and_slide! : U64 => {}
 }

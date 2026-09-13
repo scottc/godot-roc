@@ -6,29 +6,43 @@ app [main!, ready!, process!, init!, physics_process!] {
 import pf.Stdout
 import pf.Godot
 
-# Lifecycle init hook - this is not a Godot concept, a Roc-ism.
+# Lifecycle init hook - this is not a Godot concept per-se, a Roc-ism.
 # Called immediately after Godot base classes are avaliable.
 # register a class here.
 init! : {} => {}
 init! = |_| {
-    _ = Stdout.line!("[examples/hello_godot/main.roc] init!")
-    _ = Godot.register_class!(
-        "RocPlayer",        # Class name
-        "CharacterBody3D"   # Inherits parent class: CharacterBody3D; a physics body with agency behavior.
-    ) # this could/should return a handle...?
-    _ = Stdout.line!("[examples/hello_godot/main.roc] registered!")
+    _ = Stdout.line!("[examples/hello_godot/main.roc] init! -> registering a class...")
+    # A class handle, so we can reference later, if needed.
+    _handle = Godot.register_class!(
+        # Class name:
+        "RocPlayer",
+        # Parent class (inherited):
+        "CharacterBody3D"
+        # A Godot physics body with agency, in 3D space.
+        # Player characters & NPCs.
+    )
+    _ = Stdout.line!("[examples/hello_godot/main.roc] init! -> registered class.")
     {}
 }
 
 physics_process! : U64, F64 => {}
 physics_process! = |handle, delta| {
-    #_ = handle
-    _ = delta
-    # _ = Stdout.line!("[examples/hello_godot/main.roc] physics_process!")
+    # too verbose...
+    # _ = Stdout.line!("[examples/hello_godot/main.roc] physics_process!(${handle.to_str()}, ${delta.to_str()}) -> ...")
+    gravity = 200.0
 
-    _ = Stdout.line!("[examples/hello_godot/main.roc] physics_process! -> move and slide?! ${handle.to_str()} ${delta.to_str()}")
-    Godot.move_and_slide!(handle) # Apply generic collisions & physics.
-    _ = Stdout.line!("[examples/hello_godot/main.roc] physics_process! -> Did we move?! ${handle.to_str()} ${delta.to_str()}")
+    vx = 2.0 * delta # move +x, just to test.
+    vy = -gravity * delta # fall due to gravity
+    vz = 2.0 * delta # move +y, just to test.
+
+    #_ = Stdout.line!("[examples/hello_godot/main.roc] physics_process! -> set_velocity calling...")
+    Godot.set_velocity!(handle, vx, vy, vz)
+    #_ = Stdout.line!("[examples/hello_godot/main.roc] physics_process! -> set_velocity called.")
+
+    # Process physics for this class / node.
+    #_ = Stdout.line!("[examples/hello_godot/main.roc] physics_process! -> move_and_slide calling...")
+    Godot.move_and_slide!(handle)
+    #_ = Stdout.line!("[examples/hello_godot/main.roc] physics_process! -> move_and_slide called.")
 
     # func _physics_process(delta: float) -> void:
     # 	# Add the gravity.

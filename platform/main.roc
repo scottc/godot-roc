@@ -1,33 +1,43 @@
 platform ""
     requires {} {
+        # Cli:
         main! : List(Str) => Try({}, [Exit(I32), ..]), # unused
 
+        # Godot:
         init! : {} => {},
         ready! : {} => {},
         process! : U64, F64 => {},
         physics_process! : U64, F64 => {},
     }
     exposes [
+        # Cli:
         Stdout,
         Stderr,
         Stdin, # unused
+
+        # Godot:
         Godot,
     ]
     packages { roc: "nightly-2026-09-08-39a3f89" }
     provides {
+        # Cli:
         "roc_main": main_for_host!,
 
+        # Godot:
         "roc_init": init_for_host!,
         "roc_ready": ready_for_host!,
         "roc_process": process_for_host!,
         "roc_physics_process": physics_process_for_host!,
     }
     hosted {
+        # Cli:
         "roc_stderr_line": Host.stderr_line!,
         "roc_stdin_line": Host.stdin_line!, # unused
         "roc_stdout_line": Host.stdout_line!,
 
+        # Godot:
         "roc_register_class": Host.register_class!,
+        "roc_set_velocity": Host.set_velocity!,
         "roc_move_and_slide": Host.move_and_slide!,
     }
     targets: {
@@ -79,6 +89,7 @@ ready_for_host! = |{}| {
 
 process_for_host! : U64,F64 => {}
 process_for_host! = |handle, delta| {
+    # too verbose...
     # _ = Stdout.line!("[platform/main.roc] process_for_host! ${handle.to_str()} ${delta.to_str()}")
     _result = process!(handle, delta)
     {}
@@ -86,7 +97,8 @@ process_for_host! = |handle, delta| {
 
 physics_process_for_host! : U64,F64 => {}
 physics_process_for_host! = |handle, delta| {
-    _ = Stdout.line!("[platform/main.roc] process_physics_for_host! ${handle.to_str()} ${delta.to_str()}")
+    # too verbose...
+    # _ = Stdout.line!("[platform/main.roc] process_physics_for_host! ${handle.to_str()} ${delta.to_str()}")
     _result = physics_process!(handle, delta)
     {}
 }
