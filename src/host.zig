@@ -395,7 +395,7 @@ const StringName = [8]u8; // if this is wrong, check extension_api.json / header
 
 // Construct StringName via interface (preferred)
 fn makeStringName(text: [:0]const u8) StringName {
-    std.debug.print("[./platform/src/host.zig]: makeStringName(text: [:0]const u8) StringName\n", .{});
+    // std.debug.print("[./platform/src/host.zig]: makeStringName(text: [:0]const u8) StringName\n", .{});
 
     var sn: StringName = undefined;
     const string_name_new = load(
@@ -547,7 +547,7 @@ fn ptrcall(
     args: ?[*]const gd.GDExtensionConstTypePtr,
     ret: gd.GDExtensionTypePtr,
 ) void {
-    std.debug.print("[./platform/src/host.zig]: ptrcall(method, object, args, ret)\n", .{});
+    // std.debug.print("[./platform/src/host.zig]: ptrcall(method, object, args, ret)\n", .{});
 
     const object_method_bind_ptrcall = load(
         "object_method_bind_ptrcall",
@@ -577,8 +577,58 @@ pub export fn roc_set_velocity(handle: u64, x: f64, y: f64, z: f64) callconv(.c)
     ptrcall(g_mb_set_velocity, self.object, &args, null);
 }
 
+var g_input: gd.GDExtensionObjectPtr = null;
+var g_mb_is_action_pressed: gd.GDExtensionMethodBindPtr = null;
+
+fn ensureInput() void {
+    if (g_input != null) return;
+
+    const global_get_singleton = load(
+        "global_get_singleton",
+        *const fn (gd.GDExtensionConstStringNamePtr) callconv(.c) gd.GDExtensionObjectPtr,
+    );
+    var input_name = makeStringName("Input");
+    g_input = global_get_singleton(@ptrCast(&input_name));
+
+    const INPUT_IS_ACTION_PRESSED_HASH = 1558498928; // extension_api.json → Input.is_action_pressed
+
+    g_mb_is_action_pressed = getMethodBind("Input", "is_action_pressed", INPUT_IS_ACTION_PRESSED_HASH);
+}
+
+fn isActionPressed(action: [:0]const u8) bool {
+    ensureInput();
+    if (g_input == null or g_mb_is_action_pressed == null) return false;
+
+    var action_sn = makeStringName(action);
+    // is_action_pressed(action: StringName, exact_match: bool = false)
+    // Check your API: some versions are just (action)
+    var exact: gd.GDExtensionBool = 0;
+    const args = [_]gd.GDExtensionConstTypePtr{
+        @ptrCast(&action_sn),
+        @ptrCast(&exact),
+    };
+    var ret: gd.GDExtensionBool = 0;
+    ptrcall(g_mb_is_action_pressed, g_input, &args, @ptrCast(&ret));
+    return ret != 0;
+}
+
+pub export fn roc_input_is_action_pressed(action: abi.RocStr) callconv(.c) u8 {
+    std.debug.print("[./platform/src/host.zig]: roc_input_is_action_pressed(action: abi.RocStr) u8\n", .{});
+
+    const roc_host = g_roc_host.?;
+    var owned = action;
+    defer owned.decref(roc_host);
+    // need temporary [:0]u8 — dupeZ or stack buffer if short
+    var buf: [64]u8 = undefined;
+    const s = owned.asSlice();
+    if (s.len >= buf.len) return 0;
+    @memcpy(buf[0..s.len], s);
+    buf[s.len] = 0;
+    return if (isActionPressed(buf[0..s.len :0])) 1 else 0;
+}
+
 pub export fn roc_move_and_slide(handle: u64) callconv(.c) void {
-    std.debug.print("[./platform/src/host.zig]: move_and_slide(handle: u64) 1\n", .{});
+    std.debug.print("[./platform/src/host.zig]: move_and_slide(handle: u64) void\n", .{});
 
     ensureMethodBinds();
     const self = instanceFromHandle(handle) orelse return;
@@ -588,8 +638,6 @@ pub export fn roc_move_and_slide(handle: u64) callconv(.c) void {
     var hit: gd.GDExtensionBool = 0;
     ptrcall(g_mb_move_and_slide, self.object, null, @ptrCast(&hit));
     //_ = hit;
-
-    std.debug.print("[./platform/src/host.zig]: move_and_slide() 2\n", .{});
 }
 
 fn onReady(
@@ -601,6 +649,8 @@ fn onReady(
     _ = args;
     _ = ret;
     std.debug.print("[./platform/src/host.zig]: rocNodeReady()\n", .{});
+
+    if (isEditorHint()) return; // MVP
 
     roc_ready();
 }
@@ -616,6 +666,8 @@ fn onProcess(
     // guard, if needed.
     // if (args == null) return;
 
+    if (isEditorHint()) return; // MVP
+
     // args[0] → pointer to f64 delta
     const delta: f64 = @as(*const f64, @ptrCast(@alignCast(args[0]))).*;
 
@@ -623,6 +675,30 @@ fn onProcess(
     // std.debug.print("_process self={any} delta={d}\n", .{ self, delta });
 
     roc_process(handleFromInstance(self), delta);
+}
+
+var g_engine: gd.GDExtensionObjectPtr = null;
+var g_mb_is_editor_hint: gd.GDExtensionMethodBindPtr = null;
+
+fn ensureEngine() void {
+    if (g_engine != null) return;
+    const global_get_singleton = load(
+        "global_get_singleton",
+        *const fn (gd.GDExtensionConstStringNamePtr) callconv(.c) gd.GDExtensionObjectPtr,
+    );
+
+    const IS_EDITOR_HINT_HASH = 36873697;
+    var name = makeStringName("Engine");
+    g_engine = global_get_singleton(@ptrCast(&name));
+    g_mb_is_editor_hint = getMethodBind("Engine", "is_editor_hint", IS_EDITOR_HINT_HASH);
+}
+
+fn isEditorHint() bool {
+    ensureEngine();
+    if (g_engine == null or g_mb_is_editor_hint == null) return false;
+    var ret: gd.GDExtensionBool = 0;
+    ptrcall(g_mb_is_editor_hint, g_engine, null, @ptrCast(&ret));
+    return ret != 0;
 }
 
 fn onPhysicsProcess(
@@ -635,6 +711,8 @@ fn onPhysicsProcess(
 
     // guard, if needed.
     // if (args == null) return;
+
+    if (isEditorHint()) return; // MVP
 
     // args[0] → pointer to f64 delta
     const delta: f64 = @as(*const f64, @ptrCast(@alignCast(args[0]))).*;

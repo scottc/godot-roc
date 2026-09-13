@@ -38,6 +38,7 @@ platform ""
         # Godot:
         "roc_register_class": Host.register_class!,
         "roc_set_velocity": Host.set_velocity!,
+        "roc_input_is_action_pressed": Host.input_is_action_pressed!, # Input Singleton class?
         "roc_move_and_slide": Host.move_and_slide!,
     }
     targets: {

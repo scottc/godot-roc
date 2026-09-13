@@ -6,13 +6,13 @@ app [main!, ready!, process!, init!, physics_process!] {
 import pf.Stdout
 import pf.Godot
 
-# Lifecycle init hook - this is not a Godot concept per-se, a Roc-ism.
-# Called immediately after Godot base classes are avaliable.
-# register a class here.
+# Lifecycle - scene initialization hook.
+# Called immediately after Godot base classes are avaliable @ scene initialization.
+# register classes here.
 init! : {} => {}
 init! = |_| {
-    _ = Stdout.line!("[examples/hello_godot/main.roc] init! -> registering a class...")
-    # A class handle, so we can reference later, if needed.
+    _ = Stdout.line!("...") # some reason this line is needed, or it crashes. TODO: fix.
+    # A class handle, can reference later, if needed.
     _handle = Godot.register_class!(
         # Class name:
         "RocPlayer",
@@ -21,55 +21,51 @@ init! = |_| {
         # A Godot physics body with agency, in 3D space.
         # Player characters & NPCs.
     )
-    _ = Stdout.line!("[examples/hello_godot/main.roc] init! -> registered class.")
     {}
 }
 
 physics_process! : U64, F64 => {}
-physics_process! = |handle, delta| {
-    # too verbose...
-    # _ = Stdout.line!("[examples/hello_godot/main.roc] physics_process!(${handle.to_str()}, ${delta.to_str()}) -> ...")
-    gravity = 200.0
+physics_process! = |handle, _delta| {
+    # Note: physics_process!, runs at a fixed delta, so delta is optional to use here...
+    # Note: process!, runs at a variable delta, once per render cycle.
+    # Read the godot docos, to understand the differences.
 
-    vx = 2.0 * delta # move +x, just to test.
-    vy = -gravity * delta # fall due to gravity
-    vz = 2.0 * delta # move +y, just to test.
+    gravity = 1.0
+    movement_speed = 2.0
+    idle = 0.0
 
-    #_ = Stdout.line!("[examples/hello_godot/main.roc] physics_process! -> set_velocity calling...")
-    Godot.set_velocity!(handle, vx, vy, vz)
-    #_ = Stdout.line!("[examples/hello_godot/main.roc] physics_process! -> set_velocity called.")
+    # Don't forget to set Godot's keybind to action mappings!
+    is_forward = Godot.is_action_pressed!("forward") == 1
+    is_left = Godot.is_action_pressed!("left") == 1
+    is_right = Godot.is_action_pressed!("right") == 1
+    is_back = Godot.is_action_pressed!("back") == 1
+    # is_jump = Godot.is_action_pressed!("jump") == 1
 
-    # Process physics for this class / node.
-    #_ = Stdout.line!("[examples/hello_godot/main.roc] physics_process! -> move_and_slide calling...")
-    Godot.move_and_slide!(handle)
-    #_ = Stdout.line!("[examples/hello_godot/main.roc] physics_process! -> move_and_slide called.")
+    vx =
+        if is_right
+            movement_speed
+        else if is_left
+            movement_speed * -1
+        else
+            idle
 
-    # func _physics_process(delta: float) -> void:
-    # 	# Add the gravity.
+    vz =
+        if is_back
+            movement_speed
+        else if is_forward
+            movement_speed * -1
+        else
+            idle
+
+    # TODO:
     # 	if not is_on_floor():
     # 		velocity += get_gravity() * delta
+    vy = gravity * -1
 
-    # 	# Handle jump.
-    # 	if Input.is_action_just_pressed("dive") and is_on_floor():
-    # 		velocity.y = JUMP_VELOCITY
+    Godot.set_velocity!(handle, vx, vy, vz)
 
-    # 	# Get the input direction and handle the movement/deceleration.
-    # 	# As good practice, you should replace UI actions with custom gameplay actions.
-    # 	var input_dir := Input.get_vector("left", "right", "forward", "back")
-    # 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-    # 	if direction:
-    # 		velocity.x = direction.x * SPEED
-    # 		velocity.z = direction.z * SPEED
-    # 		# rotation.x = velocity.x # TODO: set the rotation, to match the direction that the player is moving.
-    # 		# rotation.z = velocity.z # TODO: set the rotation, to match the direction that the player is moving.
-    # 	else:
-    # 		velocity.x = move_toward(velocity.x, 0, SPEED)
-    # 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
-    # 	if is_auto_attacking and can_attack:
-    # 		autoattack()
-
-    # 	move_and_slide()
+    # Process physics for this class / node.
+    Godot.move_and_slide!(handle)
 
     {}
 }
@@ -82,6 +78,7 @@ process! = |_handle, _delta| {
     {}
 }
 
+# TODO: implement... i don't think this is working yet.
 unhandled_input! : {} => {} #InputEvent => {}
 unhandled_input! = |_| {
     # func _unhandled_input(event: InputEvent) -> void:
@@ -99,30 +96,16 @@ unhandled_input! = |_| {
     # 		aim_dir.z = event.axis_value
 }
 
-
-
-
-
-
-
-
-
-# not that useful... yet.
+# not that useful...? yet.
 ready! : {} => {}
 ready! = |_| {
     _ = Stdout.line!("[examples/hello_godot/main.roc] ready!")
     {}
 }
 
-
-
-
-
-
-
 # unused code branch, dead code...
 main! : List(Str) => Try({}, [Exit(I32), StdoutErr(Str), ..])
 main! = |_args| {
-    Stdout.line!("[examples/hello_godot/main.roc] main!")?
+    #_ = Stdout.line!("[examples/hello_godot/main.roc] main!")
     Ok({})
 }

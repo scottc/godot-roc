@@ -8,5 +8,7 @@ Host := [].{
 
 	register_class! : Str, Str => Try({}, [RegisterClassErr(Str)])
 	set_velocity! : U64, F64, F64, F64 => {}
+	#Input.input_is_action_pressed
+	input_is_action_pressed! : Str => U8 # TODO: Str => bool
 	move_and_slide! : U64 => {}
 }
