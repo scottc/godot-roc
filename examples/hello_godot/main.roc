@@ -30,16 +30,17 @@ physics_process! = |handle, _delta| {
     # Note: process!, runs at a variable delta, once per render cycle.
     # Read the godot docos, to understand the differences.
 
-    gravity = 1.0
+    gravity = 20.0
     movement_speed = 2.0
-    idle = 0.0
+    idle_speed = 0.0
+    jump_impulse_force = 40.0
 
     # Don't forget to set Godot's keybind to action mappings!
     is_forward = Godot.is_action_pressed!("forward") == 1
     is_left = Godot.is_action_pressed!("left") == 1
     is_right = Godot.is_action_pressed!("right") == 1
     is_back = Godot.is_action_pressed!("back") == 1
-    # is_jump = Godot.is_action_pressed!("jump") == 1
+    is_jump = Godot.is_action_pressed!("jump") == 1
 
     vx =
         if is_right
@@ -47,7 +48,7 @@ physics_process! = |handle, _delta| {
         else if is_left
             movement_speed * -1
         else
-            idle
+            idle_speed
 
     vz =
         if is_back
@@ -55,12 +56,12 @@ physics_process! = |handle, _delta| {
         else if is_forward
             movement_speed * -1
         else
-            idle
+            idle_speed
 
     # TODO:
     # 	if not is_on_floor():
     # 		velocity += get_gravity() * delta
-    vy = gravity * -1
+    vy = -gravity + if is_jump jump_impulse_force else idle_speed
 
     Godot.set_velocity!(handle, vx, vy, vz)
 
