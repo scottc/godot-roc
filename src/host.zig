@@ -468,6 +468,33 @@ fn createInstance(
     return obj;
 }
 
+fn recreateInstance(
+    class_userdata: ?*anyopaque,
+    object: gd.GDExtensionObjectPtr,
+) callconv(.c) gd.GDExtensionClassInstancePtr {
+    const info: *const ClassInfo = @ptrCast(@alignCast(class_userdata orelse return null));
+
+    const object_set_instance = load(
+        "object_set_instance",
+        *const fn (
+            gd.GDExtensionObjectPtr,
+            gd.GDExtensionConstStringNamePtr,
+            gd.GDExtensionClassInstancePtr,
+        ) callconv(.c) void,
+    );
+
+    const self = std.heap.c_allocator.create(ClassInstance) catch return null;
+    self.* = .{
+        .object = object,
+        .class_name = info.class_name,
+    };
+
+    var class_sn = makeStringName(info.class_name);
+    object_set_instance(object, @ptrCast(&class_sn), @ptrCast(self));
+
+    return @ptrCast(self);
+}
+
 fn freeInstance(class_userdata: ?*anyopaque, instance: gd.GDExtensionClassInstancePtr) callconv(.c) void {
     _ = class_userdata;
 
@@ -497,6 +524,7 @@ fn registerClass(info: *ClassInfo) void {
     creation.is_exposed = 1;
     creation.create_instance_func = createInstance;
     creation.free_instance_func = freeInstance;
+    creation.recreate_instance_func = recreateInstance;
     creation.get_virtual_func = getVirtual;
     creation.class_userdata = info;
 

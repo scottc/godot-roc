@@ -1,15 +1,15 @@
-app [main!, ready!, process!, init!, physics_process!] {
-    roc: "nightly-2026-09-08-39a3f89",
-    pf: platform "../../platform/main.roc",
-}
-
-import pf.Stdout
 import pf.Godot
 
-init! : {} => {}
-init! = |_| {
-    _ = Stdout.line!("...")
-    _ = Godot.register_class!("RocPlayer", "CharacterBody3D")
+main! = |_| {}
+
+class_name = "NpcCharacter"
+parent_class = "CharacterBody3D"
+
+register_class! = || {
+    _handle = Godot.register_class!(
+        class_name,
+        parent_class
+    )
     {}
 }
 
@@ -26,8 +26,8 @@ physics_process! = |handle, _delta| {
     is_back = Godot.is_action_pressed!("back") == 1
     is_jump = Godot.is_action_pressed!("jump") == 1
     velocity = Godot.get_velocity!(handle)
-
-    Godot.set_velocity!(handle, {
+    Godot.set_velocity!(handle,
+    {
         x:
             if is_right
                 movement_speed
@@ -35,7 +35,6 @@ physics_process! = |handle, _delta| {
                 -movement_speed
             else
                 idle_speed,
-
         y:
             velocity.y
             + -gravity
@@ -43,7 +42,6 @@ physics_process! = |handle, _delta| {
                 jump_force
             else
                 idle_speed,
-
         z:
             if is_back
                 movement_speed
@@ -53,28 +51,8 @@ physics_process! = |handle, _delta| {
                 idle_speed
     })
 
+    # Process physics for this class / node.
     Godot.move_and_slide!(handle)
 
     {}
-}
-
-process! : U64, F64 => {}
-process! = |_handle, _delta| {
-    {}
-}
-
-unhandled_input! : {} => {}
-unhandled_input! = |_| {
-    {}
-}
-
-ready! : {} => {}
-ready! = |_| {
-    #_ = Stdout.line!("[examples/hello_godot/main.roc] ready!")
-    {}
-}
-
-main! : List(Str) => Try({}, [Exit(I32), StdoutErr(Str), ..])
-main! = |_args| {
-    Ok({})
 }
