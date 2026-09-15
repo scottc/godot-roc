@@ -1,3 +1,7 @@
+# Godot Roc
+demo/bin/libgodot_roc.so
+
+# Upstream zig template
 generated-docs/
 
 examples/hello
