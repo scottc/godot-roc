@@ -7,7 +7,7 @@ platform ""
         init! : {} => {},
         ready! : {} => {},
         process! : U64, F64 => {},
-        physics_process! : U64, F64 => {},
+        physics_process! : Str, U64, F64 => {}
     }
     exposes [
         # Cli:
@@ -91,7 +91,7 @@ ready_for_host! = |{}| {
     {}
 }
 
-process_for_host! : U64,F64 => {}
+process_for_host! : U64, F64 => {}
 process_for_host! = |handle, delta| {
     # too verbose...
     # _ = Stdout.line!("[platform/main.roc] process_for_host! ${handle.to_str()} ${delta.to_str()}")
@@ -99,10 +99,10 @@ process_for_host! = |handle, delta| {
     {}
 }
 
-physics_process_for_host! : U64,F64 => {}
-physics_process_for_host! = |handle, delta| {
+physics_process_for_host! : Str, U64, F64 => {}
+physics_process_for_host! = |class_name, handle, delta| {
     # too verbose...
     # _ = Stdout.line!("[platform/main.roc] process_physics_for_host! ${handle.to_str()} ${delta.to_str()}")
-    _result = physics_process!(handle, delta)
+    _result = physics_process!(class_name, handle, delta)
     {}
 }

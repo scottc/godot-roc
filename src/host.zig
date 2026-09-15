@@ -73,7 +73,7 @@ pub export fn roc_register_class(
 }
 
 pub extern fn roc_process(instance_id: u64, delta: f64) callconv(.c) void;
-pub extern fn roc_physics_process(instance_id: u64, delta: f64) callconv(.c) void;
+pub extern fn roc_physics_process(class_name: abi.RocStr, class_handle: u64, delta: f64) callconv(.c) void;
 
 pub extern fn roc_log(string: abi.RocList(abi.RocStr)) callconv(.c) void;
 pub extern fn roc_get_position() callconv(.c) void;
@@ -415,6 +415,14 @@ const ClassInstance = struct {
     object: gd.GDExtensionObjectPtr,
     class_name: [:0]const u8,
 };
+
+fn classInstanceFromInstance(instance: gd.GDExtensionClassInstancePtr) *ClassInstance {
+    return @ptrCast(@alignCast(instance));
+}
+
+fn classNameFromInstance(self: *ClassInstance) abi.RocStr {
+    return abi.RocStr.fromSlice(self.class_name, g_roc_host.?);
+}
 
 fn handleFromInstance(self: *ClassInstance) u64 {
     std.debug.print("[./platform/src/host.zig]: handleFromInstance(self: *ClassInstance) u64\n", .{});
@@ -812,11 +820,9 @@ fn onPhysicsProcess(
     // args[0] → pointer to f64 delta
     const delta: f64 = @as(*const f64, @ptrCast(@alignCast(args[0]))).*;
 
-    const self: *ClassInstance = @ptrCast(@alignCast(instance));
+    const self: *ClassInstance = classInstanceFromInstance(instance);
 
-    std.debug.print("[./platform/src/host.zig]: onPhysicsProcess self={any} delta={d}\n", .{ self, delta });
-
-    roc_physics_process(handleFromInstance(self), delta);
+    roc_physics_process(classNameFromInstance(self), handleFromInstance(self), delta);
 }
 
 fn getVirtual(
