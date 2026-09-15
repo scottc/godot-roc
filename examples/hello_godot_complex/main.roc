@@ -19,18 +19,18 @@ init! = |_| {
 
 ## class_id | class_name = which type / behaviour. (PlayerType vs NPCType)
 ## handle = which object / instance. aka (NPC#12 vs NPC#15)
-## delta = time since previous tick
+## delta = time elapsed since previous tick
 physics_process! : Str, U64, F64 => {}
 physics_process! = |class_name, handle, delta| {
-
     # TODO:
     # Class name could conflict, if duplicates...
-    # class_id, could be enforced unique, and faster to compare U32's vs strings...
+    # a class_id, could be enforced to be unique
+    # and faster to compare U32 vs strings...
 
     # TODO:
     # how can we pass handle around in the background?
-    # and bind it to all relevant method calls...
-    # does roc support currying?
+    # and bind it to all relevant function calls...
+    # does roc support currying? or dependency injection?
     # maybe we can do it at the platform layer?
 
     # TODO:
@@ -38,7 +38,7 @@ physics_process! = |class_name, handle, delta| {
     # And reduce the need for manual registration of classes, thus maintaince of code.
     # make it resemble the default godot experience?
 
-    # foo = Player.class_name
+    #foo = Player.class_name
 
     _ = match class_name {
         "PlayerCharacter" => Player.physics_process!(handle, delta)

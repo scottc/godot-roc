@@ -6,10 +6,13 @@ app [main!, ready!, process!, init!, physics_process!] {
 import pf.Stdout
 import pf.Godot
 
+class_name = "RocPlayer"
+parent_class = "CharacterBody3D"
+
 init! : {} => {}
 init! = |_| {
     _ = Stdout.line!("...")
-    _ = Godot.register_class!("RocPlayer", "CharacterBody3D")
+    _ = Godot.register_class!(class_name, parent_class)
     {}
 }
 
@@ -18,8 +21,12 @@ movement_speed = 2.0
 idle_speed = 0.0
 jump_force = 50.0
 
-physics_process! : U64, F64 => {}
-physics_process! = |handle, _delta| {
+## class_id | class_name = which type / behaviour. (PlayerType vs NPCType)
+## handle = which object / instance. aka (NPC#12 vs NPC#15)
+## delta = time elapsed since previous tick
+physics_process! : Str, U64, F64 => {}
+physics_process! = |_class_name, handle, _delta| {
+
     is_forward = Godot.is_action_pressed!("forward") == 1
     is_left = Godot.is_action_pressed!("left") == 1
     is_right = Godot.is_action_pressed!("right") == 1
