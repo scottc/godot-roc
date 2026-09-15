@@ -1,6 +1,8 @@
 app [main!, ready!, process!, init!, physics_process!] {
     roc: "nightly-2026-09-08-39a3f89",
     pf: platform "../../platform/main.roc",
+    # When released:
+    # pf: platform "https://github.com/scottc/godot-roc/releases/download/0.0.0/{HASH_GOES_HERE}.tar.zst",
 }
 
 import pf.Stdout
@@ -17,11 +19,19 @@ init! = |_| {
     _ = Npc.register_class!()
 }
 
-## class_id | class_name = which type / behaviour. (PlayerType vs NPCType)
-## handle = which object / instance. aka (NPC#12 vs NPC#15)
+## class_id(u64) | class_name(str) = which type / behaviour. Example: (PlayerType vs NPCType)
+## handle(u64) = which object / instance. Example: (NPC#12 vs NPC#15)
 ## delta = time elapsed since previous tick
 physics_process! : Str, U64, F64 => {}
 physics_process! = |class_name, handle, delta| {
+    _ = match class_name {
+        "PlayerCharacter" => Player.physics_process!(handle, delta)
+        "NpcCharacter" => Npc.physics_process!(handle, delta)
+        _ => {
+            _ = Stdout.line!("Unhandled physics_process! handle ... ${handle.to_str()}")
+        }
+    }
+
     # TODO:
     # Class name could conflict, if duplicates...
     # a class_id, could be enforced to be unique
@@ -40,13 +50,6 @@ physics_process! = |class_name, handle, delta| {
 
     #foo = Player.class_name
 
-    _ = match class_name {
-        "PlayerCharacter" => Player.physics_process!(handle, delta)
-        "NpcCharacter" => Npc.physics_process!(handle, delta)
-        _ => {
-            _ = Stdout.line!("Unhandled physics_process! handle ... ${handle.to_str()}")
-        }
-    }
     {}
 }
 
