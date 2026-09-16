@@ -1,10 +1,68 @@
 # Godot Roc
-[Roc lang](https://roc-lang.org/) intergration for [Godot Game Engine](https://godotengine.org/).
+
+Roc language bindings for Godot Game Engine.
+
+## About
+
+Godot-Roc lets you write **typed functional game logic** in [Roc lang](https://roc-lang.org/) on [Godot Game Engine](https://godotengine.org/) for scenes, rendering, and tooling.
+
+### Use cases
+
+- **Structured game logic** - Model complex rules with types that encode invariants, so invalid states are harder to represent.
+- **Fewer playtest bugs** - A strong static type system catches many mistakes at compile time. Good types won’t eliminate playtesting, but they eliminate many failures.
+- **AI-friendly Tooling and errors** - Precise compile errors are easier to act on (for humans or automated loops) than vague runtime failures.
+
+### Language comparison
+
+| | Roc (godot-roc) | GDScript | C# | C++ |
+| --- | --- | --- | --- | --- |
+| **Role in Godot** | Community binding (this project) | First-party script language | Official .NET support | Engine / GDExtension native |
+| **Ecosystem maturity** | New | Mature (Godot-focused) | Mature | Mature |
+| **Docs & tutorials** | Emerging (Roc + this repo) | Official & plentiful | Official + .NET ecosystem | Official engine docs; steeper |
+| **Skills transfer outside Godot** | Yes (general Roc / FP) | Limited | Yes | Yes |
+| **Primary style** | Functional | Multi-paradigm, script-oriented | Multi-paradigm | Multi-paradigm |
+| **Type system** | ✨**Strong, static, inference**✨ | Optional / gradual | Static (nullable & pragmatism) | Static (manual discipline) |
+| **Learning curve** | Easy-moderate (if new to FP) | Easy | Moderate | Hard |
+| **Iteration speed in Godot** | Rebuild / reload pipeline | Very fast | Fast | Slow–moderate (compile native) |
+| **Performance potential** | High (native extension path) | Good enough for most games | High | Highest (engine-level) |
+| **API coverage** | What the binding exposes | Full engine scripting API | Broad official bindings | Full native access |
+
+*This table is intentionally simplified. Real projects can mix languages (e.g. GDScript for UI + Roc or C# for gameplay).*
+
+### Who is this for?
+
+**Good fit:** experimenters, hobbyists, and people who want to explore Roc for game logic or help shape an early binding.
+
+**Possible but demanding:** beginners and production teams - expect fewer tutorials, a smaller community, and sharper edges than GDScript or C#.
+
+**Not yet:** “drop-in replacement for GDScript to ship a commercial title with zero friction.” If you need that reliability *today*, use Godot’s first-party stack and keep an eye on this project as it matures.
+
+**Right place if:** you like bleeding-edge tooling, are comfortable building against an evolving platform, and care more about typed functional logic than maximum Godot-native convenience.
+
+## Performance Profile
+
+| | Roc (godot-roc) | GDScript | C# | C++ / GDExtension |
+|--|-----------------|----------|-----|-------------------|
+| **Execution model** | Native (Roc → machine code; Zig host in a GDExtension) | Bytecode on Godot’s VM | .NET (JIT/AOT depending on setup) | Native |
+| **Pure number crunching** | High (native) | Slowest of these | Usually much faster than GDScript | Fastest / engine-level |
+| **Calling into Godot APIs** | Native extension path (ptrcall / binds); not free if very chatty | Very direct (language designed for this) | Can pay marshalling costs | Direct native |
+| **Small, API-heavy glue** | Fine; bound by engine + bind overhead | Often “fast enough”; very low friction to engine | Marshalling can dominate tiny calls | Fast, but awkward for large amounts of glue |
+| **Heavy algorithms in script/app code** | Strong fit | Prefer not to keep in pure GDScript | Strong option | Best option |
+| **Typical game bottleneck** | Often still rendering / physics / draw calls (engine C++), not Roc vs GDScript | Same | Same | Same unless you replace engine systems |
+
+GDScript runs on a bytecode VM and is not compiled to native machine code for
+gameplay scripts. In Godot 4, typed GDScript is faster than untyped, but tight
+pure-script loops still lag C#/C++. Roc in godot-roc is compiled to native code
+and the host is Zig (also native) loaded as a GDExtension—there is no Roc VM in
+the game loop. For all of these, much gameplay work is ultimately engine C++
+(physics, rendering), so language choice often does not dominate frame time
+until profiling shows a script/app-side hotspot.
 
 ## Build toolchain
-The recommended way, is to use the [nix package manager](https://nixos.org/) (with [flakes enabled](https://nixos.wiki/wiki/Flakes).) to install all the required tools in a reproducible development environment.
 
-These are the exact versions are offically tested against & supported.
+The recommended approach is to use the [nix package manager](https://nixos.org/) (with [flakes enabled](https://nixos.wiki/wiki/Flakes).) to install the required tools in a reproducible development environment.
+
+These are the exact pinned versions are offically supported & tested against.
 ```sh
 nix develop
 # roc:    Roc compiler version debug-no-git
@@ -14,8 +72,10 @@ nix develop
 # gh:     gh version 2.100.0 (nixpkgs)
 ```
 See `flake.nix` & `flake.lock`, for more details.
+
 ## Scaffold a New Project, Build & Run
-Note: You can click the copy button, to paste entire scripts as batched commands.
+
+Note: You can press the copy button to paste scripts as batch commands.
 ```sh
 #
 # Scaffold
@@ -122,7 +182,8 @@ godot my_game/project.godot
 # Enjoy!
 ```
 
-## Result - And verifying success
+## Result - Verify Success
+
 If your build & run was successful. You should have stdout that looks like this:
 ```
 0 errors and 0 warnings found in 250ms while successfully building:
@@ -149,7 +210,9 @@ my_game/libgodot_roc.{so,dll,dylib} # the built godot roc dynamic library.
 And the godot editor, should have also opened.
 
 ## Godot Roc Tutorial - Part 1 - Getting Started with Godot
+
 Start by:
+
 1) Run godot `godot my_game/project.godot`
 2) Find the Scene panel in the top left hand corner.
 3) Create Root Node: `3D Scene`.
@@ -163,6 +226,7 @@ Start by:
 11) Godot will prompt you for a "main" scene to run -> `Select Current`.
 
 ## Godot Roc Tutorial - Part 2 - Godot Roc Workflow
+
 Unfortunately in-editor support is not implemented yet, this is the current workflow.
 1) Keep the godot window open.
 2) Open `my_game/main.roc` in your preferred code/text editor of choice. (I'm using `zededitor` + `roc lsp`)
@@ -173,6 +237,7 @@ Unfortunately in-editor support is not implemented yet, this is the current work
 7) You can use a filewatcher that will run the build command on file save.
 
 ## Helper commands
+
 ```sh
 # Platform development: Build & run; as a one-liner...
 
@@ -194,6 +259,7 @@ zig build native \
 ```
 
 ## Troubleshooting
+
 ```sh
 # Verify: my_game/roc.gdextension
 nano my_game/roc.gdextension
@@ -204,6 +270,7 @@ nano my_game/roc.gdextension
 ```
 
 ## Updating - For platform maintainers.
+
 ```sh
 # Update reproduceable development environment devtools
 nix flake update
@@ -233,6 +300,7 @@ roc check ./main.roc \
 ## Features & Roadmap
 
 ### [DONE] GDExtension Phase 1 - Bootstrap a 3D platformer
+
 - [x] stdout
 - [x] Precompiled host + precompiled roc app, with godot entrypoint.
 - [x] custom init & register_class! api, so we can specify base class & inheritance.
@@ -246,6 +314,7 @@ roc check ./main.roc \
 - [x] Core apis to make some simple 3D platformer game prototype.
 
 ### [WIP] GDExtension Phase 2 - Ease of use
+
 - [x] Multiple Classes, see complex example.
 - [x] GDExtension `.so` hot module reloading, allow reloadable = true, "Psudo-hotreload" via watching, roc recompile `.so` & godot auto reloading.
 - [ ] GDExtension `.so` hot module reloading, game state is preserved (advanced).
@@ -254,6 +323,7 @@ roc check ./main.roc \
 - [ ] MacOS Support (in theory, already supported... just test build pipeline.)
 
 ### [WIP] GDExtension Phase 3 - API Completeness
+
 - [ ] Node2D.*
 - [ ] print (godot intergrated, stdout replacement)
 - [ ] signals
@@ -265,6 +335,7 @@ roc check ./main.roc \
 - [ ] Complete apis for many godot versions: `4.7.2`, `4.6.1` etc.
 
 ### [TODO] ScriptLanguageExtension Phase 4
+
 - [ ] Bootstrap "hello world" ScriptLanguageExtension.
 - [ ] Edit roc scripts inside of godot.
 - [ ] Tightly intergrated hot-reloading; incremental, on-save, persisted game state.
@@ -274,6 +345,7 @@ roc check ./main.roc \
 - [ ] Roc language version manager intergration.
 
 ### [TODO] Phase 5 - Web platform support via WASM
+
 Publish for web currently yields this warning...
 ```
 WARNING: GDExtension: No "wasm32" library found for GDExtension: "res://roc.gdextension". Possible feature flags for your platform: web, s3tc, bptc, nothreads, web_noextensions, wasm32, template, debug, template_debug, single
