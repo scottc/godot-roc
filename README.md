@@ -195,13 +195,15 @@ godot my_game/project.godot
 
 This tutorial assumes that you have successfully completed the build & run steps above.
 
+And that you have successfully completed at least 1 godot tutoral with gdscript [Your first 3D game](https://docs.godotengine.org/en/stable/getting_started/first_3d_game/index.html).
+
 Start by:
 
 1) Run godot `godot my_game/project.godot`
 2) Find the Scene panel in the top left hand corner.
 3) Create Root Node: `3D Scene`.
 4) Right Click `Node3D` -> Add Child Node. (Or click the + icon.)
-5) Search for "MyPlayerCharacter" -> Create.
+5) Search for "`MyPlayerCharacter`" -> Create.
 6) And then `Camera3D`
 7) Add `DirectionalLight3D` (A global lightsource; like the sun.)
 8) Move things into place; select each node, and use the arrow handles to move them.
