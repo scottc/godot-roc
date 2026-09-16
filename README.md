@@ -193,6 +193,8 @@ godot my_game/project.godot
 
 ## Godot Roc Tutorial - Part 1 - Getting Started with Godot
 
+This tutorial assumes that you have successfully completed the build & run steps above.
+
 Start by:
 
 1) Run godot `godot my_game/project.godot`
