@@ -1,5 +1,5 @@
 # Godot Roc
-Roc lang intergration for Godot.
+[Roc lang](https://roc-lang.org/) intergration for [Godot Game Engine](https://godotengine.org/).
 
 ## Build toolchain
 The recommended way, is to use the [nix package manager](https://nixos.org/) (with [flakes enabled](https://nixos.wiki/wiki/Flakes).) to install all the required tools in a reproducible development environment.
@@ -122,7 +122,7 @@ godot my_game/project.godot
 # Enjoy!
 ```
 
-## Verifying Success
+## Result - And verifying success
 If your build & run was successful. You should have stdout that looks like this:
 ```
 0 errors and 0 warnings found in 250ms while successfully building:
@@ -139,6 +139,14 @@ Hello World!
 
 # ...etc
 ```
+And these files.
+```
+my_game/project.godot               # the godot project file
+my_game/main.roc                    # the godot roc app, source code
+my_game/roc.gdextension             # the godot roc gdextension definition file
+my_game/libgodot_roc.{so,dll,dylib} # the built godot roc dynamic library.
+```
+And the godot editor, should have also opened.
 
 ## Godot Roc Tutorial - Part 1 - Getting Started with Godot
 Start by:
