@@ -355,6 +355,19 @@ fn deinitialize(userdata: ?*anyopaque, level: gd.GDExtensionInitializationLevel)
     _ = userdata;
     if (level != gd.GDEXTENSION_INITIALIZATION_SCENE) return;
     std.debug.print("[./platform/src/gdextension.zig]: deinitialize at SCENE level\n", .{});
+
+    // Unregister every class you registered (from g_roc_classes / fixed list)
+    var i: usize = 0;
+    while (i < g_roc_class_count) : (i += 1) {
+        if (g_roc_classes[i]) |info| {
+            unregisterClass(info.class_name);
+            // free dupeZ strings if you own them
+        }
+        g_roc_classes[i] = null;
+    }
+    g_roc_class_count = 0;
+
+    // optional: shutdownRocHost() if you fully tear down; or leave host and only reset classes
 }
 
 export fn roc_godot_library_init(
@@ -515,6 +528,9 @@ fn freeInstance(class_userdata: ?*anyopaque, instance: gd.GDExtensionClassInstan
 fn registerClass(info: *ClassInfo) void {
     std.debug.print("[./platform/src/host.zig]: registerClass(info: *ClassInfo) void\n", .{});
 
+    // unregister first (idempotent) // this maybe needed...
+    // unregisterClass(info.class_name);
+
     const register_class = load(
         "classdb_register_extension_class6",
         *const fn (
@@ -539,6 +555,19 @@ fn registerClass(info: *ClassInfo) void {
     register_class(library, @ptrCast(&class_sn), @ptrCast(&parent_sn), &creation);
 
     std.debug.print("[./platform/src/host.zig]: registered {s} : {s}\n", .{ info.class_name, info.parent_name });
+}
+
+fn unregisterClass(class_name: [:0]const u8) void {
+    const unregister = load(
+        "classdb_unregister_extension_class",
+        *const fn (
+            gd.GDExtensionClassLibraryPtr,
+            gd.GDExtensionConstStringNamePtr,
+        ) callconv(.c) void,
+    );
+    var sn = makeStringName(class_name);
+    unregister(library, @ptrCast(&sn));
+    std.debug.print("[./platform/src/host.zig]: unregistered {s}\n", .{class_name});
 }
 
 var g_mb_move_and_slide: gd.GDExtensionMethodBindPtr = null;
