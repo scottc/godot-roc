@@ -122,7 +122,7 @@ godot my_game/project.godot
 # Enjoy!
 ```
 
-## Expected Success
+## Verifying Success
 If your build & run was successful. You should have stdout that looks like this:
 ```
 0 errors and 0 warnings found in 250ms while successfully building:
@@ -140,7 +140,7 @@ Hello World!
 # ...etc
 ```
 
-## Godot Roc Tutorial - Getting Started with Godot
+## Godot Roc Tutorial - Part 1 - Getting Started with Godot
 Start by:
 1) Run godot `godot my_game/project.godot`
 2) Find the Scene panel in the top left hand corner.
@@ -154,7 +154,7 @@ Start by:
 10) Run the project (play icon, in top right hand corner).
 11) Godot will prompt you for a "main" scene to run -> `Select Current`.
 
-## Godot Roc Tutorial - Godot Roc Workflow
+## Godot Roc Tutorial - Part 2 - Godot Roc Workflow
 Unfortunately in-editor support is not implemented yet, this is the current workflow.
 1) Keep the godot window open.
 2) Open `my_game/main.roc` in your preferred code/text editor of choice. (I'm using `zededitor` + `roc lsp`)
@@ -164,7 +164,7 @@ Unfortunately in-editor support is not implemented yet, this is the current work
 6) Godot should be able to reload the built dynamic library.
 7) You can use a filewatcher that will run the build command on file save.
 
-## Helper commands.
+## Helper commands
 ```sh
 # Build & run; as a one-liner...
 
