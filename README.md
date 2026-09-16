@@ -237,12 +237,14 @@ zig build native \
 
 # hello_godot example
 zig build native \
-&& roc build examples/hello_godot/main.roc --output=examples/hello_godot/demo/bin/libgodot_roc.so \
+&& roc build examples/hello_godot/main.roc \
+--output=examples/hello_godot/demo/bin/libgodot_roc.so \
 && godot examples/hello_godot/demo/project.godot
 
 # hello_godot_complex example
 zig build native \
-&& roc build examples/hello_godot_complex/main.roc --output=examples/hello_godot_complex/demo/bin/libgodot_roc.so \
+&& roc build examples/hello_godot_complex/main.roc \
+--output=examples/hello_godot_complex/demo/bin/libgodot_roc.so \
 && godot examples/hello_godot_complex/demo/project.godot
 ```
 
@@ -269,7 +271,8 @@ cd scripts/godot-api-client-generator
 # Dump the gdextension_interface.h & extension_api.json files, to import into zig project.
 # We probably only need to update whenever the godot API changes...
 # We use these later to generate APIs, bindings, glue, type conversions for roc.
-# zig has comptime, so we could perhaps do some comptime functions to generate versioned APIs, or pre-build tooling.
+# zig has comptime, so we could perhaps do some comptime functions 
+# to generate versioned APIs, or pre-build tooling.
 godot --headless --dump-gdextension-interface # gdextension_interface.h
 godot --headless --dump-gdextension-interface-json # gdextension_interface.json
 godot --headless --dump-extension-api # extension_api.json
