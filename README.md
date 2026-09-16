@@ -62,7 +62,7 @@ until profiling shows a script/app-side hotspot.
 
 The recommended approach is to use the [nix package manager](https://nixos.org/) (with [flakes enabled](https://nixos.wiki/wiki/Flakes).) to install the required tools in a reproducible development environment.
 
-These are the exact pinned versions are offically supported & tested against.
+These are the exact pinned versions that are offically supported & tested against.
 ```sh
 nix develop
 # roc:    Roc compiler version debug-no-git
@@ -73,14 +73,10 @@ nix develop
 ```
 See `flake.nix` & `flake.lock`, for more details.
 
-## Scaffold a New Project, Build & Run
+## Scaffold - New godot-roc project
 
-Note: You can press the copy button to paste scripts as batch commands.
+Note: You can copy & paste the entire script as a batch of commands.
 ```sh
-#
-# Scaffold
-# 
-
 # Create godot project directory
 mkdir my_game
 
@@ -152,62 +148,48 @@ main! = |_args| {
     Ok({})
 }
 EOF
+```
+Output:
+```
+my_game/project.godot   # The godot project file
+my_game/roc.gdextension # The godot roc gdextension definition file
 
-#
-# Build
-# 
+my_game/main.roc        # Your game's source code
+```
 
-# Build zig platform
+## Build
+
+```sh
 zig build native
-# TODO: Release & publish a prebuilt platform
-# So we can skip the zig build.
-# This step, should only be required for platform maintainers.
-# And then we can supply platform dev env, and a lightweight app dev env.
+# Output -> platform/targets/[TARGET]/libhost.a
 
-# Build roc app (as a gdextension dynamic library)
 # [Linux]
 roc build my_game/main.roc --output=my_game/libgodot_roc.so
+# 0 errors and 0 warnings found in 250ms while successfully building:
+# 
+#     my_game/libgodot_roc.so
+
 # [Windows]
 # roc build my_game/main.roc --output=my_game/libgodot_roc.dll
+
 # [MacOS]
 # roc build my_game/main.roc --output=my_game/libgodot_roc.dylib
+```
 
-#
-# Run
-# 
+## Run
 
-# Run the godot project
+```sh
 godot my_game/project.godot
-
-# Enjoy!
-```
-
-## Result - Verify Success
-
-If your build & run was successful. You should have stdout that looks like this:
-```
-0 errors and 0 warnings found in 250ms while successfully building:
-
-    my_game/libgodot_roc.so
-Godot Engine v4.7.2.stable.nixpkgs.ed1daf0bf - https://godotengine.org
-Vulkan 1.4.354 - Forward+ - Using Device #0: Intel - Intel(R) UHD Graphics 620 (KBL GT2)
-
-[./platform/src/host.zig]: g_roc_host ready
-[./platform/src/gdextension.zig]: initialize at SCENE level
-[platform/main.roc] init_for_host!
-Hello World!
-[./platform/src/host.zig] roc_register_class(MyPlayerCharacter, CharacterBody3D)
-
+# Godot Engine v4.7.2.stable.nixpkgs.ed1daf0bf - https://godotengine.org
+# Vulkan 1.4.354 - Forward+ - Using Device #0: Intel - Intel(R) UHD Graphics 620 (KBL GT2)
+# 
+# [./platform/src/host.zig]: g_roc_host ready
+# [./platform/src/gdextension.zig]: initialize at SCENE level
+# [platform/main.roc] init_for_host!
+# Hello World!
+# [./platform/src/host.zig] roc_register_class(MyPlayerCharacter, CharacterBody3D)
 # ...etc
 ```
-And these files.
-```
-my_game/project.godot               # the godot project file
-my_game/main.roc                    # the godot roc app, source code
-my_game/roc.gdextension             # the godot roc gdextension definition file
-my_game/libgodot_roc.{so,dll,dylib} # the built godot roc dynamic library.
-```
-And the godot editor, should have also opened.
 
 ## Godot Roc Tutorial - Part 1 - Getting Started with Godot
 
