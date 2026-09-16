@@ -1,6 +1,6 @@
 # Godot Roc
 
-Roc language bindings for Godot Game Engine.
+Roc language bindings for Godot Game Engine & Redot Game Engine.
 
 ## About
 
