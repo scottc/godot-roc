@@ -532,7 +532,7 @@ fn registerClass(info: *ClassInfo) void {
     // unregisterClass(info.class_name);
 
     const register_class = load(
-        "classdb_register_extension_class6",
+        "classdb_register_extension_class5",
         *const fn (
             gd.GDExtensionClassLibraryPtr,
             gd.GDExtensionConstStringNamePtr,

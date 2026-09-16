@@ -312,7 +312,8 @@ fn buildHostLib(
     host_lib.root_module.addIncludePath(b.path("src/godot"));
 
     // Linux gets compiler-rt from the verified runtime; other targets embed it.
-    host_lib.bundle_compiler_rt = target.result.os.tag != .linux;
+    // host_lib.bundle_compiler_rt = target.result.os.tag != .linux; // Godot
+    host_lib.bundle_compiler_rt = true; // Redot
 
     return host_lib;
 }

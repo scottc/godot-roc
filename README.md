@@ -4,7 +4,7 @@ Roc language bindings for Godot Game Engine.
 
 ## About
 
-Godot-Roc lets you write **typed functional game logic** in [Roc lang](https://roc-lang.org/), while [Godot Game Engine](https://godotengine.org/) handles scenes, rendering, and tooling.
+Godot-Roc lets you write **typed functional game logic** in [Roc lang](https://roc-lang.org/), while [Godot Game Engine](https://godotengine.org/) or [Redot Game Engine](https://www.redotengine.org/) handles scenes, rendering, and tooling.
 
 ## Use cases
 
@@ -69,7 +69,7 @@ These are the exact pinned versions that are offically supported & tested agains
 nix develop
 # roc:    Roc compiler version debug-no-git
 # zig:    0.16.0
-# godot:  4.7.2.stable.nixpkgs.ed1daf0bf
+# godot:  4.5.1.stable.nixpkgs.f62fdbde1
 # redot:  26.2.stable.official.4f5b14aba
 # python: Python 3.14.7
 # gh:     gh version 2.100.0 (nixpkgs)
@@ -95,7 +95,7 @@ EOF
 cat > my_game/roc.gdextension << 'EOF'
 [configuration]
 entry_symbol = "roc_godot_library_init"
-compatibility_minimum = "4.6"
+compatibility_minimum = "4.5"
 reloadable = true
 
 [libraries]
@@ -328,9 +328,9 @@ roc check ./main.roc \
 - [ ] Api client code generator: godot `extension_api.json` -> zig host -> roc `Godot.*` apis.
 - [ ] Roc APIs that closely match godots API signatures.
 - [ ] Roc APIs that exactly match godots API signatures.
-- [ ] Complete apis for a specific version of godot: `4.7.2`.
+- [x] [Redot](https://www.redotengine.org/) support.
+- [ ] Complete apis for a specific version of godot: `4.5.1`.
 - [ ] Complete apis for many godot versions: `4.7.2`, `4.6.1` etc.
-- [ ] [Redot](https://www.redotengine.org/) support.
 
 ### [TODO] ScriptLanguageExtension Phase 4
 

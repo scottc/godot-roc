@@ -38,7 +38,9 @@
             pkgs.zig
             pkgs.python3
             pkgs.gh
-            pkgs.godot
+
+            #pkgs.godot # latest 4.7.1
+            pkgs.godotPackages_4_5.godot # 4.5.1, why 4.5.1? most compatable with redot.
 
             rocPkg
             redotPkg
