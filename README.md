@@ -4,7 +4,7 @@ Roc language bindings for Godot Game Engine.
 
 ## About
 
-Godot-Roc lets you write **typed functional game logic** in [Roc lang](https://roc-lang.org/) on [Godot Game Engine](https://godotengine.org/) for scenes, rendering, and tooling.
+Godot-Roc lets you write **typed functional game logic** in [Roc lang](https://roc-lang.org/), while [Godot Game Engine](https://godotengine.org/) handles scenes, rendering, and tooling.
 
 ## Use cases
 
