@@ -6,13 +6,13 @@ Roc language bindings for Godot Game Engine.
 
 Godot-Roc lets you write **typed functional game logic** in [Roc lang](https://roc-lang.org/) on [Godot Game Engine](https://godotengine.org/) for scenes, rendering, and tooling.
 
-### Use cases
+## Use cases
 
 - **Structured game logic** - Model complex rules with types that encode invariants, so invalid states are harder to represent.
-- **Fewer playtest bugs** - A strong static type system catches many mistakes at compile time. Good types won’t eliminate playtesting, but they eliminate many failures.
-- **AI-friendly Tooling and errors** - Precise compile errors are easier to act on (for humans or automated loops) than vague runtime failures.
+- **Fewer playtest bugs** - A strong static type system catches many mistakes at compile time. Good types won’t eliminate playtesting, but they can eliminate many failures.
+- **AI-friendly tooling and errors** - Precise compile errors are easier to act on (for humans or automated loops) than vague runtime failures.
 
-### Language comparison
+## Language comparison
 
 | | Roc (godot-roc) | GDScript | C# | C++ |
 | --- | --- | --- | --- | --- |
@@ -29,7 +29,7 @@ Godot-Roc lets you write **typed functional game logic** in [Roc lang](https://r
 
 *This table is intentionally simplified. Real projects can mix languages (e.g. GDScript for UI + Roc or C# for gameplay).*
 
-### Who is this for?
+## Who is this for?
 
 **Good fit:** experimenters, hobbyists, and people who want to explore Roc for game logic or help shape an early binding.
 
@@ -58,7 +58,7 @@ the game loop. For all of these, much gameplay work is ultimately engine C++
 (physics, rendering), so language choice often does not dominate frame time
 until profiling shows a script/app-side hotspot.
 
-## Build toolchain
+## Build & Run - Toolchain Setup
 
 The recommended approach is to use the [nix package manager](https://nixos.org/) (with [flakes enabled](https://nixos.wiki/wiki/Flakes).) to install the required tools in a reproducible development environment.
 
