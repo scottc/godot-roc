@@ -17,14 +17,14 @@ Godot-Roc lets you write **typed functional game logic** in [Roc lang](https://r
 | | Roc (godot-roc) | GDScript | C# | C++ |
 | --- | --- | --- | --- | --- |
 | **Role in Godot** | Community binding (this project) | First-party script language | Official .NET support | Engine / GDExtension native |
-| **Ecosystem maturity** | New | Mature (Godot-focused) | Mature | Mature |
-| **Docs & tutorials** | Emerging (Roc + this repo) | Official & plentiful | Official + .NET ecosystem | Official engine docs; steeper |
+| **Ecosystem maturity** | New [[projects](https://github.com/lukewilliamboswell/roc-awesome)] | Mature (Godot-focused) | Mature | Mature |
+| **Docs & tutorials** | Emerging [[roc docs](https://roc-lang.org/docs/main/)] [[roc examples](https://roc-lang.org/examples/)] | Official & plentiful | Official + .NET ecosystem | Official engine docs; steeper |
 | **Skills transfer outside Godot** | Yes (general Roc / FP) | Limited | Yes | Yes |
-| **Primary style** | ✨**Functional**✨ | Multi-paradigm, script-oriented | Multi-paradigm | Multi-paradigm |
+| **Primary style** | ✨**[Functional](https://roc-lang.org/functional)**✨ | Multi-paradigm, script-oriented | Multi-paradigm | Multi-paradigm |
 | **Type system** | ✨**Strong, static, inference**✨ | Optional / gradual | Static (nullable & pragmatism) | Static (manual discipline) |
-| **Learning curve** | Easy-moderate (if new to FP) | Easy | Moderate | Hard |
-| **Iteration speed in Godot** | Rebuild / reload pipeline | Very fast | Fast | Slow–moderate (compile native) |
-| **Performance potential** | High (native extension path) | Good enough for most games | High | Highest (engine-level) |
+| **Learning curve** | [Easy-moderate](https://roc-lang.org/friendly) (if new to FP) | Easy | Moderate | Hard |
+| **Iteration speed in Godot** | Fast Rebuild / reload pipeline. 1 class ~=250/300ms(cache/no-cache) on my potato laptop | Very fast | Fast | Slow–moderate (compile native) |
+| **Performance potential** | [High](https://roc-lang.org/fast) (native extension path) | Good enough for most games | High | Highest (engine-level) |
 | **API coverage** | What the binding exposes | Full engine scripting API | Broad official bindings | Full native access |
 
 *This table is intentionally simplified. Real projects can mix languages (e.g. GDScript for UI + Roc or C# for gameplay).*
