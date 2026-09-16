@@ -104,7 +104,7 @@ windows.release.x86_64 = "res://libgodot_roc.dll"
 EOF
 
 # Create godot roc app
-cat > my_game/main.roc << 'EOF'
+cat > my_game/MyPlayerCharacter.roc << 'EOF'
 app [main!, ready!, process!, init!, physics_process!] {
     roc: "nightly-2026-09-08-39a3f89",
     pf: platform "../platform/main.roc",
@@ -118,7 +118,7 @@ parent_class = "CharacterBody3D"
 
 init! : {} => {}
 init! = |_| {
-    _ = Stdout.line!("Hello World!")
+    _ = Stdout.line!("[my_game/MyPlayerCharacter.roc] Hello World!")
     _ = Godot.register_class!(class_name, parent_class)
     {}
 }
@@ -151,10 +151,10 @@ EOF
 ```
 Output:
 ```
-my_game/project.godot   # The godot project file
-my_game/roc.gdextension # The godot roc gdextension definition file
+my_game/project.godot         # The godot project file
+my_game/roc.gdextension       # The godot roc gdextension definition file
 
-my_game/main.roc        # Your game's source code
+my_game/MyPlayerCharacter.roc # Your game's source code
 ```
 
 ## Build
@@ -164,7 +164,7 @@ zig build native
 # Output -> platform/targets/[TARGET]/libhost.a
 
 # [Linux]
-roc build my_game/main.roc --output=my_game/libgodot_roc.so
+roc build my_game/MyPlayerCharacter.roc --output=my_game/libgodot_roc.so
 # 0 errors and 0 warnings found in 250ms while successfully building:
 # 
 #     my_game/libgodot_roc.so
@@ -186,7 +186,7 @@ godot my_game/project.godot
 # [./platform/src/host.zig]: g_roc_host ready
 # [./platform/src/gdextension.zig]: initialize at SCENE level
 # [platform/main.roc] init_for_host!
-# Hello World!
+# [my_game/MyPlayerCharacter.roc] Hello World!
 # [./platform/src/host.zig] roc_register_class(MyPlayerCharacter, CharacterBody3D)
 # ...etc
 ```
@@ -211,12 +211,16 @@ Start by:
 
 Unfortunately in-editor support is not implemented yet, this is the current workflow.
 1) Keep the godot window open.
-2) Open `my_game/main.roc` in your preferred code/text editor of choice. (I'm using `zededitor` + `roc lsp`)
+2) Open `my_game/MyPlayerCharacter.roc` in your preferred code/text editor of choice. (I'm using `zededitor` + `roc lsp`)
 3) Make code changes.
 4) Open a new terminal.
-5) Rebuild `roc build my_game/main.roc --output=my_game/libgodot_roc.so`
+5) Rebuild `roc build my_game/MyPlayerCharacter.roc --output=my_game/libgodot_roc.so`
 6) Godot should be able to reload the built dynamic library.
 7) You can use a filewatcher that will run the build command on file save.
+
+## Godot Roc Tutorial - Part 3 - Adding more Classes
+
+1) Have a look at `examples/hello_godot_complex/main.roc` for an example.
 
 ## Helper commands
 
