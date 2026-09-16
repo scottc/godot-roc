@@ -2,7 +2,7 @@
 Roc lang intergration for Godot.
 
 ## Build toolchain
-The recommended way, is to use the nix package manager to install all the required tools in a reproduceable development environment.
+The recommended way, is to use the [nix package manager](https://nixos.org/) (with [flakes enabled](https://nixos.wiki/wiki/Flakes).) to install all the required tools in a reproducible development environment.
 
 These are the exact versions are offically tested against & supported.
 ```sh
