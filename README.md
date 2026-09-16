@@ -184,9 +184,8 @@ roc build my_game/MyPlayerCharacter.roc --output=my_game/libgodot_roc.so
 
 ```sh
 godot my_game/project.godot
-# Godot Engine v4.7.2.stable.nixpkgs.ed1daf0bf - https://godotengine.org
+# Godot Engine v4.5.1.stable.nixpkgs.f62fdbde1 - https://godotengine.org
 # Vulkan 1.4.354 - Forward+ - Using Device #0: Intel - Intel(R) UHD Graphics 620 (KBL GT2)
-# 
 # [./platform/src/host.zig]: g_roc_host ready
 # [./platform/src/gdextension.zig]: initialize at SCENE level
 # [platform/main.roc] init_for_host!
