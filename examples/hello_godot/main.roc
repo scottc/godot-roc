@@ -19,9 +19,9 @@ init! = |_| {
 }
 
 gravity = 9.8
-movement_speed = 2.0
+movement_speed = 20.0
 idle_speed = 0.0
-jump_force = 50.0
+jump_force = 500.0
 
 ## class_id | class_name = which type / behaviour. (PlayerType vs NPCType)
 ## handle = which object / instance. aka (NPC#12 vs NPC#15)

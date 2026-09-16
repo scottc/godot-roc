@@ -312,15 +312,20 @@ roc check ./main.roc \
 - [x] CharacterBody3D.set_velocity
 - [x] CharacterBody3D.move_and_slide
 - [x] Core apis to make some simple 3D platformer game prototype.
+- [x] Multiple Classes, see complex example.
 
 ### [WIP] GDExtension Phase 2 - Ease of use
 
-- [x] Multiple Classes, see complex example.
-- [x] GDExtension `.so` hot module reloading, allow reloadable = true, "Psudo-hotreload" via watching, roc recompile `.so` & godot auto reloading.
-- [ ] GDExtension `.so` hot module reloading, game state is preserved (advanced).
+- [x] `godot 4.7.2` (latest) support.
+- [x] `godot 4.5.1` (compatability) support.
+- [x] `redot 28.2` (latest) support.
+- [x] GDExtension `.so` hot module reloading, allow reloadable = true, "Psudo-hotreload" via watching, roc recompile `.so` & godot auto reloading (game restart to reinitialize the scene is required, editor can stay open.).
+- [ ] GDExtension `.so` hot module reloading; game state is preserved (advanced).
 - [x] Linux Support
 - [ ] Windows Support (in theory, already supported... just test build pipeline.)
 - [ ] MacOS Support (in theory, already supported... just test build pipeline.)
+
+
 
 ### [WIP] GDExtension Phase 3 - API Completeness
 
@@ -331,7 +336,6 @@ roc check ./main.roc \
 - [ ] Api client code generator: godot `extension_api.json` -> zig host -> roc `Godot.*` apis.
 - [ ] Roc APIs that closely match godots API signatures.
 - [ ] Roc APIs that exactly match godots API signatures.
-- [x] [Redot](https://www.redotengine.org/) support.
 - [ ] Complete apis for a specific version of godot: `4.5.1`.
 - [ ] Complete apis for many godot versions: `4.7.2`, `4.6.1` etc.
 
