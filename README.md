@@ -231,7 +231,7 @@ Unfortunately in-editor support is not implemented yet, this is the current work
 
 # my_game
 zig build native \
-&& roc build my_game/main.roc --output=my_game/libgodot_roc.so \
+&& roc build my_game/MyPlayerCharacter.roc --output=my_game/libgodot_roc.so \
 && godot my_game/project.godot
 
 
