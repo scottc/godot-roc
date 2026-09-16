@@ -1,5 +1,6 @@
 # Godot Roc
 demo/bin/libgodot_roc.so
+my_game/
 
 # Upstream zig template
 generated-docs/

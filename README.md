@@ -1,6 +1,227 @@
 # Godot Roc
 Roc lang intergration for Godot.
 
+## Build toolchain
+The recommended way, is to use the nix package manager to install all the required tools in a reproduceable development environment.
+
+These are the exact versions are offically tested against & supported.
+```sh
+nix develop
+# roc:    Roc compiler version debug-no-git
+# zig:    0.16.0
+# godot:  4.7.2.stable.nixpkgs.ed1daf0bf
+# python: Python 3.14.7
+# gh:     gh version 2.100.0 (nixpkgs)
+```
+See `flake.nix` & `flake.lock`, for more details.
+## Scaffold a New Project, Build & Run
+Note: You can click the copy button, to paste entire scripts as batched commands.
+```sh
+#
+# Scaffold
+# 
+
+# Create godot project directory
+mkdir my_game
+
+# Create godot project file.
+cat > my_game/project.godot << 'EOF'
+config_version=5
+[application]
+config/name="My Game"
+EOF
+
+# Create godot roc.gdextension file, with hotreloading enabled...
+cat > my_game/roc.gdextension << 'EOF'
+[configuration]
+entry_symbol = "roc_godot_library_init"
+compatibility_minimum = "4.6"
+reloadable = true
+
+[libraries]
+linux.debug.x86_64   = "res://libgodot_roc.so"
+linux.release.x86_64 = "res://libgodot_roc.so"
+macos.debug          = "res://libgodot_roc.dylib"
+macos.release        = "res://libgodot_roc.dylib"
+windows.debug.x86_64 = "res://libgodot_roc.dll"
+windows.release.x86_64 = "res://libgodot_roc.dll"
+EOF
+
+# Create godot roc app
+cat > my_game/main.roc << 'EOF'
+app [main!, ready!, process!, init!, physics_process!] {
+    roc: "nightly-2026-09-08-39a3f89",
+    pf: platform "../platform/main.roc",
+}
+
+import pf.Stdout
+import pf.Godot
+
+class_name = "MyPlayerCharacter"
+parent_class = "CharacterBody3D"
+
+init! : {} => {}
+init! = |_| {
+    _ = Stdout.line!("Hello World!")
+    _ = Godot.register_class!(class_name, parent_class)
+    {}
+}
+
+physics_process! : Str, U64, F64 => {}
+physics_process! = |_class_name, _handle, _delta| {
+    {}
+}
+
+process! : U64, F64 => {}
+process! = |_handle, _delta| {
+    {}
+}
+
+unhandled_input! : {} => {}
+unhandled_input! = |_| {
+    {}
+}
+
+ready! : {} => {}
+ready! = |_| {
+    {}
+}
+
+main! : List(Str) => Try({}, [Exit(I32), StdoutErr(Str), ..])
+main! = |_args| {
+    Ok({})
+}
+EOF
+
+#
+# Build
+# 
+
+# Build zig platform
+zig build native
+# TODO: Release & publish a prebuilt platform
+# So we can skip the zig build.
+# This step, should only be required for platform maintainers.
+# And then we can supply platform dev env, and a lightweight app dev env.
+
+# Build roc app (as a gdextension dynamic library)
+# [Linux]
+roc build my_game/main.roc --output=my_game/libgodot_roc.so
+# [Windows]
+# roc build my_game/main.roc --output=my_game/libgodot_roc.dll
+# [MacOS]
+# roc build my_game/main.roc --output=my_game/libgodot_roc.dylib
+
+#
+# Run
+# 
+
+# Run the godot project
+godot my_game/project.godot
+
+# Enjoy!
+```
+
+## Expected Success
+If your build & run was successful. You should have stdout that looks like this:
+```
+0 errors and 0 warnings found in 250ms while successfully building:
+
+    my_game/libgodot_roc.so
+Godot Engine v4.7.2.stable.nixpkgs.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.354 - Forward+ - Using Device #0: Intel - Intel(R) UHD Graphics 620 (KBL GT2)
+
+[./platform/src/host.zig]: g_roc_host ready
+[./platform/src/gdextension.zig]: initialize at SCENE level
+[platform/main.roc] init_for_host!
+Hello World!
+[./platform/src/host.zig] roc_register_class(MyPlayerCharacter, CharacterBody3D)
+
+# ...etc
+```
+
+## Godot Roc Tutorial - Getting Started with Godot
+Start by:
+1) Run godot `godot my_game/project.godot`
+2) Find the Scene panel in the top left hand corner.
+3) Create Root Node: `3D Scene`.
+4) Right Click `Node3D` -> Add Child Node. (Or click the + icon.)
+5) Search for "MyPlayerCharacter" -> Create.
+6) And then `Camera3D`
+7) Add `DirectionalLight3D` (A global lightsource; like the sun.)
+8) Move things into place; select each node, and use the arrow handles to move them.
+9) Save the scene. (Default Hotkey: `Ctrl+S`)
+10) Run the project (play icon, in top right hand corner).
+11) Godot will prompt you for a "main" scene to run -> `Select Current`.
+
+## Godot Roc Tutorial - Godot Roc Workflow
+Unfortunately in-editor support is not implemented yet, this is the current workflow.
+1) Keep the godot window open.
+2) Open `my_game/main.roc` in your preferred code/text editor of choice. (I'm using `zededitor` + `roc lsp`)
+3) Make code changes.
+4) Open a new terminal.
+5) Rebuild `roc build my_game/main.roc --output=my_game/libgodot_roc.so`
+6) Godot should be able to reload the built dynamic library.
+7) You can use a filewatcher that will run the build command on file save.
+
+## Helper commands.
+```sh
+# Build & run; as a one-liner...
+
+# my_game
+zig build native \
+&& roc build my_game/main.roc --output=my_game/libgodot_roc.so \
+&& godot my_game/project.godot
+
+
+# hello_godot example
+zig build native \
+&& roc build examples/hello_godot/main.roc --output=examples/hello_godot/demo/bin/libgodot_roc.so \
+&& godot examples/hello_godot/demo/project.godot
+
+# hello_godot_complex example
+zig build native \
+&& roc build examples/hello_godot_complex/main.roc --output=examples/hello_godot_complex/demo/bin/libgodot_roc.so \
+&& godot examples/hello_godot_complex/demo/project.godot
+```
+
+## Troubleshooting
+```sh
+# Verify: my_game/roc.gdextension
+nano my_game/roc.gdextension
+# Ensure the built "godot roc" dynamic library exists.
+# Ensure the library filepath is correct.
+# Ensure the entry_symbol is correct.
+# Ensure stdout is not printing any errors, if so read them carefully.
+```
+
+## Updating - For platform maintainers.
+```sh
+# Update reproduceable development environment devtools
+nix flake update
+
+# Godot bindings generator, generate new bindings for newer(or older) versions of godot
+cd scripts/godot-api-client-generator
+
+# Dump the gdextension_interface.h & extension_api.json files, to import into zig project.
+# We probably only need to update whenever the godot API changes...
+# We use these later to generate APIs, bindings, glue, type conversions for roc.
+# zig has comptime, so we could perhaps do some comptime functions to generate versioned APIs, or pre-build tooling.
+godot --headless --dump-gdextension-interface # gdextension_interface.h
+godot --headless --dump-gdextension-interface-json # gdextension_interface.json
+godot --headless --dump-extension-api # extension_api.json
+
+# Generate godot-zig bindings
+roc check ./main.roc \
+&& cat extension_api.json | roc run ./main.roc > generated.zig \
+&& zig test ./generated.zig
+
+# Generate zig-roc bindings
+roc check ./main.roc \
+&& cat extension_api.json | roc run ./main.roc > generated.roc \
+&& roc check ./generated.roc
+```
+
 ## Features & Roadmap
 
 ### [DONE] GDExtension Phase 1 - Bootstrap a 3D platformer
@@ -56,154 +277,3 @@ Currently the roc platform produces native linux `.so` desktop dynamic library s
 - [ ] WASM Roc app
 - [ ] Complete publish to web, WASM web builds.
 - [ ] Optimised native desktop release builds.
-
-## Example
-```roc
-app [main!, ready!, process!, init!, physics_process!] {
-    roc: "nightly-2026-09-08-39a3f89",
-    pf: platform "../../platform/main.roc",
-    # When released:
-    # pf: platform "https://github.com/scottc/godot-roc/releases/download/0.0.0/{HASH_GOES_HERE}.tar.zst",
-
-}
-
-import pf.Stdout
-import pf.Godot
-
-# Lifecycle - scene initialization hook.
-# Called immediately after Godot base classes are avaliable @ scene initialization.
-# register classes here.
-init! : {} => {}
-init! = |_| {
-    _ = Stdout.line!("...") # some reason this line is needed, or it crashes. TODO: fix.
-    # A class handle, can reference later, if needed.
-    _handle = Godot.register_class!(
-        # Class name:
-        "RocPlayer",
-        # Parent class (inherited):
-        "CharacterBody3D"
-        # A Godot physics body with agency, in 3D space.
-        # Player characters & NPCs.
-    )
-    {}
-}
-
-gravity = 9.8 # TODO: Godot.get_gravity!(handle)
-movement_speed = 2.0
-idle_speed = 0.0
-jump_force = 50.0
-
-physics_process! : U64, F64 => {}
-physics_process! = |handle, _delta| {
-    # Note: physics_process!, runs at a fixed delta, so delta is optional to use here...
-    # Note: process!, runs at a variable delta, once per render cycle.
-    # Read the godot docos, to understand the differences.
-
-    # Don't forget to set Godot's keybind to action mappings!
-    is_forward = Godot.is_action_pressed!("forward") == 1
-    is_left = Godot.is_action_pressed!("left") == 1
-    is_right = Godot.is_action_pressed!("right") == 1
-    is_back = Godot.is_action_pressed!("back") == 1
-    is_jump = Godot.is_action_pressed!("jump") == 1
-
-    # current velocity
-    velocity = Godot.get_velocity!(handle)
-
-    # next velocity
-    vx =
-        if is_right
-            movement_speed
-        else if is_left
-            -movement_speed
-        else
-            idle_speed
-
-    vz = if is_back
-            movement_speed
-        else if is_forward
-            -movement_speed
-        else
-            idle_speed
-
-    vy =
-        velocity.y # preserve existing y-axis momentum, plus add vector modifiers:
-        + -gravity
-        + if is_jump and Godot.is_on_floor!(handle)
-            jump_force
-        else
-            idle_speed
-
-    Godot.set_velocity!(handle, { x: vx, y: vy, z: vz })
-
-    # Process physics for this class / node.
-    Godot.move_and_slide!(handle)
-
-    {}
-}
-```
-
-## Build & Run
-```sh
-# [Optional] Enter reproduceable development environment.
-# Or provide your own.
-nix develop
-# roc:    Roc compiler version debug-no-git
-# zig:    0.16.0
-# godot:  4.7.2.stable.nixpkgs.ed1daf0bf
-# python: Python 3.14.7
-# gh:     gh version 2.100.0 (nixpkgs)
-
-# Change working directory...
-cd platform
-# TODO: move build.zig to root dir.
-
-# Build zig platform
-zig build native
-
-# TODO: add godot scaffolding commands? & roc.gdextension file creation?
-
-# Build the roc shared object / dynamic library (.so on linux. .dylib,.dll for other OS)
-roc build examples/hello_godot/main.roc --output=examples/hello_godot/demo/bin/libgodot_roc.so
-
-# Run the godot project.
-godot examples/hello_godot/demo/project.godot
-
-# Build & run; as a one-liner...
-
-# hello_godot example
-zig build native \
-&& roc build examples/hello_godot/main.roc --output=examples/hello_godot/demo/bin/libgodot_roc.so \
-&& godot examples/hello_godot/demo/project.godot
-
-# hello_godot_complex example
-zig build native \
-&& roc build examples/hello_godot_complex/main.roc --output=examples/hello_godot_complex/demo/bin/libgodot_roc.so \
-&& godot examples/hello_godot_complex/demo/project.godot
-```
-
-## Troubleshooting
-```sh
-# Ensure the build roc.so file is referenced correctly in the demo project.
-nano ../demo/bin/roc.gdextension
-```
-
-## Updating
-```sh
-# Update reproduceable development environment devtools
-nix flake update
-
-# Dump the gdextension_interface.h & extension_api.json files, to import into zig project.
-# We probably only need to update whenever the godot API changes...
-# We use these later to generate APIs, bindings, glue, type conversions for roc.
-# zig has comptime, so we could perhaps do some comptime functions to generate versioned APIs, or pre-build tooling.
-cd ../demo
-godot --headless --dump-gdextension-interface
-# then, just `zig build native`???
-
-# code generate
-cd scripts/godot-api-client-generator
-
-roc check ./main.roc && cat extension_api.json | roc run ./main.roc > generated.zig && zig test ./generated.zig
-
-roc check ./main.roc && cat extension_api.json | roc run ./main.roc > generated.roc && roc check ./generated.roc
-```
