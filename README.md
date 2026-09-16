@@ -166,7 +166,7 @@ Unfortunately in-editor support is not implemented yet, this is the current work
 
 ## Helper commands
 ```sh
-# Build & run; as a one-liner...
+# Platform development: Build & run; as a one-liner...
 
 # my_game
 zig build native \
