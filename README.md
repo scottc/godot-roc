@@ -69,11 +69,11 @@ These are the exact pinned versions that are offically supported & tested agains
 nix develop
 # roc:    Roc compiler version debug-no-git
 # zig:    0.16.0
-# godot:  4.5.1.stable.nixpkgs.f62fdbde1
+# godot:  4.7.2.stable.nixpkgs.ed1daf0bf
+# godot4.5:  4.5.1.stable.nixpkgs.f62fdbde1
 # redot:  26.2.stable.official.4f5b14aba
 # python: Python 3.14.7
 # gh:     gh version 2.100.0 (nixpkgs)
-
 ```
 See `flake.nix` & `flake.lock`, for more details.
 

@@ -39,7 +39,7 @@
             pkgs.python3
             pkgs.gh
 
-            #pkgs.godot # latest 4.7.1
+            pkgs.godot # latest 4.7.1
             pkgs.godotPackages_4_5.godot # 4.5.1, why 4.5.1? most compatable with redot.
 
             rocPkg
@@ -52,12 +52,13 @@
           ]; # ++ pkgs.lib.optional (rocPkg != null) rocPkg
 
           shellHook = ''
-            echo "roc:    $(roc version)"
-            echo "zig:    $(zig version)"
-            echo "godot:  $(godot --version)"
-            echo "redot:  $(redot --version)"
-            echo "python: $(python3 --version)"
-            echo "gh:     $(gh --version)"
+            echo "roc:      $(roc version)"
+            echo "zig:      $(zig version)"
+            echo "godot:    $(godot --version)"
+            echo "godot4.5: $(godot4.5 --version)"
+            echo "redot:    $(redot --version)"
+            echo "python:   $(python3 --version)"
+            echo "gh:       $(gh --version)"
 
             # export GODOT_EXPORT_TEMPLATES="${pkgs.godot-export-templates-bin}/share/godot/export_templates"
             # echo "export templates: ${pkgs.godot-export-templates-bin}"
