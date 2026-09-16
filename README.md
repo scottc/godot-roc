@@ -20,7 +20,7 @@ Godot-Roc lets you write **typed functional game logic** in [Roc lang](https://r
 | **Ecosystem maturity** | New | Mature (Godot-focused) | Mature | Mature |
 | **Docs & tutorials** | Emerging (Roc + this repo) | Official & plentiful | Official + .NET ecosystem | Official engine docs; steeper |
 | **Skills transfer outside Godot** | Yes (general Roc / FP) | Limited | Yes | Yes |
-| **Primary style** | Functional | Multi-paradigm, script-oriented | Multi-paradigm | Multi-paradigm |
+| **Primary style** | ✨**Functional**✨ | Multi-paradigm, script-oriented | Multi-paradigm | Multi-paradigm |
 | **Type system** | ✨**Strong, static, inference**✨ | Optional / gradual | Static (nullable & pragmatism) | Static (manual discipline) |
 | **Learning curve** | Easy-moderate (if new to FP) | Easy | Moderate | Hard |
 | **Iteration speed in Godot** | Rebuild / reload pipeline | Very fast | Fast | Slow–moderate (compile native) |
