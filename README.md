@@ -29,6 +29,8 @@ Godot-Roc lets you write **typed functional game logic** in [Roc lang](https://r
 
 *This table is intentionally simplified. Real projects can mix languages (e.g. GDScript for UI + Roc or C# for gameplay).*
 
+[Other community maintained languages](https://docs.godotengine.org/en/stable/tutorials/scripting/other_languages.html#doc-scripting-languages), and [engines](https://docs.redotengine.org/tutorials/scripting/gdextension/what_is_gdextension#doc-what-is-gdextension) are also avaliable.
+
 ## Who is this for?
 
 **Good fit:** experimenters, hobbyists, and people who want to explore Roc for game logic or help shape an early binding.
@@ -68,8 +70,10 @@ nix develop
 # roc:    Roc compiler version debug-no-git
 # zig:    0.16.0
 # godot:  4.7.2.stable.nixpkgs.ed1daf0bf
+# redot:  26.2.stable.official.4f5b14aba
 # python: Python 3.14.7
 # gh:     gh version 2.100.0 (nixpkgs)
+
 ```
 See `flake.nix` & `flake.lock`, for more details.
 
@@ -326,6 +330,7 @@ roc check ./main.roc \
 - [ ] Roc APIs that exactly match godots API signatures.
 - [ ] Complete apis for a specific version of godot: `4.7.2`.
 - [ ] Complete apis for many godot versions: `4.7.2`, `4.6.1` etc.
+- [ ] [Redot](https://www.redotengine.org/) support.
 
 ### [TODO] ScriptLanguageExtension Phase 4
 

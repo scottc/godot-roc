@@ -16,32 +16,44 @@
     # if you want to explicitly stick to a version.
     # roc.url = "github:roc-lang/roc/b877f945ab9d6aded5636ee7e88c68cad5ea645a?dir=src";
 
+    redot.url = "path:./flakes/redot-nix";
+    redot.inputs.nixpkgs.follows = "nixpkgs";
+
     roc.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, flake-utils, roc, ... }:
+  outputs = { self, nixpkgs, flake-utils, roc, redot, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
         rocPkg = roc.packages.${system}.roc or null;
+        redotPkg = redot.packages.${system}.redot;
+
       in
       {
+        packages.redot = redot;
+
         devShells.default = pkgs.mkShell {
           packages = [
             pkgs.zig
             pkgs.python3
             pkgs.gh
             pkgs.godot
+
+            rocPkg
+            redotPkg
+
             # Export templates, if you want to publish to a target platform.
             # Or, you can just install them into your home directory, using the UI, via godot.
             # Warning: 1.3Gb download though, it's ALL templates.
             # pkgs.godot-export-templates-bin
-          ] ++ pkgs.lib.optional (rocPkg != null) rocPkg;
+          ]; # ++ pkgs.lib.optional (rocPkg != null) rocPkg
 
           shellHook = ''
             echo "roc:    $(roc version)"
             echo "zig:    $(zig version)"
             echo "godot:  $(godot --version)"
+            echo "redot:  $(redot --version)"
             echo "python: $(python3 --version)"
             echo "gh:     $(gh --version)"
 
