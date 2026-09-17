@@ -354,86 +354,23 @@ roc check ./main.roc \
 
 ### [WIP] Phase 5 - Web platform support via WASM
 
-Publish for web currently yields this warning...
-```
-WARNING: GDExtension: No "wasm32" library found for GDExtension: "res://roc.gdextension". Possible feature flags for your platform: web, s3tc, bptc, nothreads, web_noextensions, wasm32, template, debug, template_debug, single
-```
-Currently the roc platform produces native linux `.so` desktop dynamic library shared object binary. Godot needs a wasm module entrypoint in `roc.gdextension`. It's possible to produce a wasm module.
+It's possible to produce a wasm module, however, this is a work in progress:
 
 [WIP] Build path:
 ```
-zig build-lib src/wasm_host.zig -target wasm32-freestanding -dynamic -rdynamic 
-# (module $wasm_host.wasm
-#  (type $t0 (func))
-#  (type $t1 (func (param i32) (result i32)))
-#  (import "env" "memory" (memory $env.memory 0))
-#  (import "env" "__indirect_function_table" (table $env.__indirect_function_table 0 funcref))
-#  (import "env" "__stack_pointer" (global $__stack_pointer (mut i32)))
-#  (import "env" "__memory_base" (global $__memory_base i32))
-#  (import "env" "__table_base" (global $__table_base i32))
-#  (func $__wasm_call_ctors (type $t0))
-#  (func $wasm_host.roc_godot_library_init (export "roc_godot_library_init") (type $t1) (param $p0 i32) (result i32)
-#    (local $l1 i32) (local $l2 i32)
-#    (local.set $l1
-#      (i32.sub
-#        (global.get $__stack_pointer)
-#        (i32.const 16)))
-#    (global.set $__stack_pointer
-#      (local.get $l1))
-#    (i32.store offset=12
-#      (local.get $l1)
-#      (local.get $p0))
-#    (local.set $l2
-#      (i32.const 0))
-#    (global.set $__stack_pointer
-#      (i32.add
-#        (local.get $l1)
-#        (i32.const 16)))
-#    (return
-#      (local.get $l2))))
+zig build-lib src/wasm_host.zig \
+  -target wasm32-emscripten \
+  -OReleaseSmall \
+  -fno-entry \
+  -rdynamic \
+  --name godot_roc_wasm
 
-cp wasm_host.wasm platform/targets/wasm32/wasm_host.wasm
+emcc libgodot_roc_wasm.a \
+  -o my_game/libgodot_roc.web.wasm32.nothreads.wasm \
+  -sSIDE_MODULE=2 \
+  -sERROR_ON_UNDEFINED_SYMBOLS=0 \
+  -O2
 
-roc build examples/hello_godot/main.roc --target=wasm32 --output=examples/hello_godot/demo/bin/libgodot_roc.wasm
-# wasm-ld: error: attempted static link of dynamic object /home/anon/Projects/godot-roc/platform/targets/wasm32/wasm_host.wasm
-# ── ✗ linker failed ──────────────────────────────────────────────────────────────────────────────
-#
-# The linker failed while building for target wasm32.
-#
-# Error: LinkFailed
-
-
-# Unfortunately the error is pretty opaque...
-# 
-# I suspect, this is due to not providing the full list of export stubs in `platform/main.roc`.
-#
-# This just needs more build pipeline implementation work...
-
-# ...
-# ...
-# ...
-
-# For now, we'll skip this part, and cheat by using the wasm module that zig built...
-
-# Ensure `libgodot_roc.wasm` is copied into the godot project directory, and that it's referenced roc.gdextension:
-cp wasm_host.wasm /examples/hello_godot/demo/libgodot_roc.wasm
-
-# Then in godot:
-# Project > Export > Web (html 5 / wasm) > Options > Extensions Support = "(checked) On"
-
-# Then click "Export Project..." Button.
-
-# The wasm module won't load, if you just open `index.html` (or whatever you called your project export.) We need to serve the file by a proper webserver.
-
-# cd examples/hello_godot/demo/export/
-# python3 -m http.server
-
-# And then open `http://localhost:8000/index.html` in your web browser.
-
-# And then you should see an error like this: "function signature mismatch"
-# This is because our exported zig/roc stubs don't match the required exports API.
-
-# TODO: finish implementing the required parts.
 ```
 
 

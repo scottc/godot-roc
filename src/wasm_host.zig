@@ -1,22 +1,40 @@
-// Zig does not provide a libc implementation for the wasm32-freestanding target (ie wasm in web browsers).
-// As explicitly noted in tracking issues and release notes,
-// the compiler is designed to error out when attempting to link libc
-// against freestanding targets, as these environments are intended to
-// operate without standard C library dependencies.
-// const gd = @import("godot/gd.zig").gd;
+const GDExtensionInitializationLevel = enum(i32) {
+    core = 0,
+    servers = 1,
+    scene = 2,
+    editor = 3,
+};
 
-// TODO: implement WASM32 ABI, without godot's C .h interfaces (pulling in libc).
+const GDExtensionInitialization = extern struct {
+    minimum_initialization_level: GDExtensionInitializationLevel,
+    userdata: ?*anyopaque,
+    initialize: ?*const fn (?*anyopaque, GDExtensionInitializationLevel) callconv(.c) void,
+    deinitialize: ?*const fn (?*anyopaque, GDExtensionInitializationLevel) callconv(.c) void,
+};
+
+fn initialize(userdata: ?*anyopaque, level: GDExtensionInitializationLevel) callconv(.c) void {
+    _ = userdata;
+    _ = level;
+    // no print/libc yet — success = “no crash + extension loads”
+}
+
+fn deinitialize(userdata: ?*anyopaque, level: GDExtensionInitializationLevel) callconv(.c) void {
+    _ = userdata;
+    _ = level;
+}
 
 export fn roc_godot_library_init(
-    p_get_proc_address: u32, // gd.GDExtensionInterfaceGetProcAddress,
-    p_library: u32, // gd.GDExtensionClassLibraryPtr,
-    r_initialization: u32, // *gd.GDExtensionInitialization,
-) callconv(.c) u32 // gd.GDExtensionBool
-{
-    //_ = args;
+    p_get_proc_address: ?*const fn ([*:0]const u8) callconv(.c) ?*anyopaque,
+    p_library: ?*anyopaque,
+    r_initialization: *GDExtensionInitialization,
+) callconv(.c) u8 {
     _ = p_get_proc_address;
     _ = p_library;
-    _ = r_initialization;
-
-    return 0;
+    r_initialization.* = .{
+        .minimum_initialization_level = .scene,
+        .userdata = null,
+        .initialize = &initialize,
+        .deinitialize = &deinitialize,
+    };
+    return 1;
 }
