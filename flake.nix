@@ -17,7 +17,6 @@
     # roc.url = "github:roc-lang/roc/b877f945ab9d6aded5636ee7e88c68cad5ea645a?dir=src";
     roc.inputs.nixpkgs.follows = "nixpkgs";
 
-
     redot.url = "path:./flakes/redot-nix";
     redot.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -25,16 +24,17 @@
     rex.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, flake-utils, roc, redot, ... }:
+  outputs = { self, nixpkgs, flake-utils, roc, redot, rex, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
         rocPkg = roc.packages.${system}.roc or null;
         redotPkg = redot.packages.${system}.redot;
+        rexPkg = rex.packages.${system}.rex;
 
       in
       {
-        packages.redot = redot;
+        # packages.redot = redot;
 
         devShells.default = pkgs.mkShell {
           packages = [
@@ -47,6 +47,7 @@
 
             rocPkg
             redotPkg
+            rexPkg
 
             # Export templates, if you want to publish to a target platform.
             # Or, you can just install them into your home directory, using the UI, via godot.
@@ -55,17 +56,17 @@
           ]; # ++ pkgs.lib.optional (rocPkg != null) rocPkg
 
           shellHook = ''
-            \# compilers:
+            # compilers:
             echo "roc:      $(roc version)"
             echo "zig:      $(zig version)"
 
-            \# engines:
+            # engines:
             echo "godot:    $(godot --version)"
             echo "godot4.5: $(godot4.5 --version)"
             echo "redot:    $(redot --version)"
             echo "rex:      $(rex --version)"
 
-            \# optional:
+            # optional:
             echo "python:   $(python3 --version)"
             echo "gh:       $(gh --version)"
 
