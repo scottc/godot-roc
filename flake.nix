@@ -15,11 +15,14 @@
     # this can be useful
     # if you want to explicitly stick to a version.
     # roc.url = "github:roc-lang/roc/b877f945ab9d6aded5636ee7e88c68cad5ea645a?dir=src";
+    roc.inputs.nixpkgs.follows = "nixpkgs";
+
 
     redot.url = "path:./flakes/redot-nix";
     redot.inputs.nixpkgs.follows = "nixpkgs";
 
-    roc.inputs.nixpkgs.follows = "nixpkgs";
+    rex.url = "path:./flakes/rex-nix";
+    rex.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, flake-utils, roc, redot, ... }:
@@ -52,11 +55,17 @@
           ]; # ++ pkgs.lib.optional (rocPkg != null) rocPkg
 
           shellHook = ''
+            \# compilers:
             echo "roc:      $(roc version)"
             echo "zig:      $(zig version)"
+
+            \# engines:
             echo "godot:    $(godot --version)"
             echo "godot4.5: $(godot4.5 --version)"
             echo "redot:    $(redot --version)"
+            echo "rex:      $(rex --version)"
+
+            \# optional:
             echo "python:   $(python3 --version)"
             echo "gh:       $(gh --version)"
 

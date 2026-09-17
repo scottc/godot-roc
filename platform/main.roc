@@ -49,7 +49,18 @@ platform ""
         x64mac: { inputs: ["libhost.a", app] },
         arm64mac: { inputs: ["libhost.a", app] },
         # x64musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
+
         x64musl :{ inputs: [ "libhost.a", app ], output: Shared },
+        wasm32: { inputs: [ "wasm_host.wasm", app ],
+            output: Shared,
+            # TODO: reference github issue#
+            # TODO: cleanup and remove, when export detection is implemented:
+            exports: [
+                "roc_godot_library_init",
+                # "roc_main" # ... etc.
+            ]
+        },
+
         x64v1musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
         arm64musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
         arm64v1musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },

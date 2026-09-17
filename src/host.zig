@@ -75,14 +75,13 @@ pub export fn roc_register_class(
 pub extern fn roc_process(instance_id: u64, delta: f64) callconv(.c) void;
 pub extern fn roc_physics_process(class_name: abi.RocStr, class_handle: u64, delta: f64) callconv(.c) void;
 
-pub extern fn roc_log(string: abi.RocList(abi.RocStr)) callconv(.c) void;
-pub extern fn roc_get_position() callconv(.c) void;
-pub extern fn roc_set_position() callconv(.c) void;
-pub extern fn roc_queue_free() callconv(.c) void;
+// pub extern fn roc_log(string: abi.RocList(abi.RocStr)) callconv(.c) void;
+// pub extern fn roc_get_position() callconv(.c) void;
+// pub extern fn roc_set_position() callconv(.c) void;
+// pub extern fn roc_queue_free() callconv(.c) void;
 
 /// Private RocHost used by host helpers and exported runtime symbols.
 var g_roc_host: ?*abi.RocHost = null;
-var g_roc_host_storage: abi.RocHost = undefined;
 
 // host.zig — module-level so the allocator outlives the call
 var g_host_env: ?HostEnv = null;
@@ -104,8 +103,10 @@ pub fn ensureRocHost() void {
         .roc_io = abi.RocIo.default(),
     };
 
-    g_roc_host_storage = abi.makeRocHost(&env.roc_env);
-    g_roc_host = &g_roc_host_storage;
+    var roc_host_storage: abi.RocHost = undefined;
+    roc_host_storage = abi.makeRocHost(&env.roc_env);
+    g_roc_host = &roc_host_storage;
+
     std.debug.print("[./platform/src/host.zig]: g_roc_host ready\n", .{});
 }
 

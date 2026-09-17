@@ -4,7 +4,7 @@ Roc language bindings for Godot Game Engine & Redot Game Engine.
 
 ## About
 
-Godot-Roc lets you write **typed functional game logic** in [Roc lang](https://roc-lang.org/), while [Godot Game Engine](https://godotengine.org/) or [Redot Game Engine](https://www.redotengine.org/) handles scenes, rendering, and tooling.
+Godot-Roc lets you write game logic in [Roc](https://roc-lang.org/), "A [**fast**](https://roc-lang.org/fast), [**friendly**](https://roc-lang.org/friendly), [**functional**](https://roc-lang.org/functional) [language](https://roc-lang.org/)". While [Godot Game Engine](https://godotengine.org/) or [Redot Game Engine](https://www.redotengine.org/) handles scenes, rendering, and tooling.
 
 ## Use cases
 
@@ -105,6 +105,8 @@ macos.debug          = "res://libgodot_roc.dylib"
 macos.release        = "res://libgodot_roc.dylib"
 windows.debug.x86_64 = "res://libgodot_roc.dll"
 windows.release.x86_64 = "res://libgodot_roc.dll"
+web.debug.wasm32 = "res://libgodot_roc.wasm"
+web.release.wasm32 = "res://libgodot_roc.wasm"
 EOF
 
 # Create godot roc app
@@ -325,8 +327,6 @@ roc check ./main.roc \
 - [ ] Windows Support (in theory, already supported... just test build pipeline.)
 - [ ] MacOS Support (in theory, already supported... just test build pipeline.)
 
-
-
 ### [WIP] GDExtension Phase 3 - API Completeness
 
 - [ ] Node2D.*
@@ -349,7 +349,7 @@ roc check ./main.roc \
 - [ ] Packed & shipped to godot store.
 - [ ] Roc language version manager intergration.
 
-### [TODO] Phase 5 - Web platform support via WASM
+### [WIP] Phase 5 - Web platform support via WASM
 
 Publish for web currently yields this warning...
 ```
@@ -357,7 +357,85 @@ WARNING: GDExtension: No "wasm32" library found for GDExtension: "res://roc.gdex
 ```
 Currently the roc platform produces native linux `.so` desktop dynamic library shared object binary. Godot needs a wasm module entrypoint in `roc.gdextension`. It's possible to produce a wasm module.
 
-- [ ] Bootstrap a zig "Hello World" platform placeholder stub.
+[WIP] Build path:
+```
+zig build-lib src/wasm_host.zig -target wasm32-freestanding -dynamic -rdynamic 
+# (module $wasm_host.wasm
+#  (type $t0 (func))
+#  (type $t1 (func (param i32) (result i32)))
+#  (import "env" "memory" (memory $env.memory 0))
+#  (import "env" "__indirect_function_table" (table $env.__indirect_function_table 0 funcref))
+#  (import "env" "__stack_pointer" (global $__stack_pointer (mut i32)))
+#  (import "env" "__memory_base" (global $__memory_base i32))
+#  (import "env" "__table_base" (global $__table_base i32))
+#  (func $__wasm_call_ctors (type $t0))
+#  (func $wasm_host.roc_godot_library_init (export "roc_godot_library_init") (type $t1) (param $p0 i32) (result i32)
+#    (local $l1 i32) (local $l2 i32)
+#    (local.set $l1
+#      (i32.sub
+#        (global.get $__stack_pointer)
+#        (i32.const 16)))
+#    (global.set $__stack_pointer
+#      (local.get $l1))
+#    (i32.store offset=12
+#      (local.get $l1)
+#      (local.get $p0))
+#    (local.set $l2
+#      (i32.const 0))
+#    (global.set $__stack_pointer
+#      (i32.add
+#        (local.get $l1)
+#        (i32.const 16)))
+#    (return
+#      (local.get $l2))))
+
+cp wasm_host.wasm platform/targets/wasm32/wasm_host.wasm
+
+roc build examples/hello_godot/main.roc --target=wasm32 --output=examples/hello_godot/demo/bin/libgodot_roc.wasm
+# wasm-ld: error: attempted static link of dynamic object /home/anon/Projects/godot-roc/platform/targets/wasm32/wasm_host.wasm
+# ── ✗ linker failed ──────────────────────────────────────────────────────────────────────────────
+#
+# The linker failed while building for target wasm32.
+#
+# Error: LinkFailed
+
+
+# Unfortunately the error is pretty opaque...
+# 
+# I suspect, this is due to not providing the full list of export stubs in `platform/main.roc`.
+#
+# This just needs more build pipeline implementation work...
+
+# ...
+# ...
+# ...
+
+# For now, we'll skip this part, and cheat by using the wasm module that zig built...
+
+# Ensure `libgodot_roc.wasm` is copied into the godot project directory, and that it's referenced roc.gdextension:
+cp wasm_host.wasm /examples/hello_godot/demo/libgodot_roc.wasm
+
+# Then in godot:
+# Project > Export > Web (html 5 / wasm) > Options > Extensions Support = "(checked) On"
+
+# Then click "Export Project..." Button.
+
+# The wasm module won't load, if you just open `index.html` (or whatever you called your project export.) We need to serve the file by a proper webserver.
+
+# cd examples/hello_godot/demo/export/
+# python3 -m http.server
+
+# And then open `http://localhost:8000/index.html` in your web browser.
+
+# And then you should see an error like this: "function signature mismatch"
+# This is because our exported zig/roc stubs don't match the required exports API.
+
+# TODO: finish implementing the required parts.
+```
+
+
+
+- [ ] \[WIP] Bootstrap a zig "Hello World" platform placeholder stub.
 - [ ] full WASM Zig host platform
 - [ ] WASM Roc app
 - [ ] Complete publish to web, WASM web builds.
