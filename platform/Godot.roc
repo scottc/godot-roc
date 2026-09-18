@@ -9,6 +9,13 @@ Godot := [].{
             Err(RegisterClassErr(err)) => Err(RegisterClassErr(err))
         }
 
+    print! : Str => Try({}, [PrintErr(Str), ..])
+    print! = |str|
+        match Host.print!(str) {
+            Ok({}) => Ok({})
+            Err(PrintErr(err)) => Err(PrintErr(err))
+        }
+
     # Input.is_action_pressed
     is_action_pressed! : Str => U8 # TODO: Str => bool
     is_action_pressed! = |action| {

@@ -1,11 +1,10 @@
 app [main!, ready!, process!, init!, physics_process!] {
-    roc: "nightly-2026-09-08-39a3f89",
+    roc: "nightly-2026-09-12-220fd47",
     pf: platform "../../platform/main.roc",
     # When released:
     # pf: platform "https://github.com/scottc/godot-roc/releases/download/0.0.0/{HASH_GOES_HERE}.tar.zst",
 }
 
-import pf.Stdout
 import pf.Godot
 
 class_name = "RocPlayer"
@@ -13,7 +12,6 @@ parent_class = "CharacterBody3D"
 
 init! : {} => {}
 init! = |_| {
-    _ = Stdout.line!("...")
     _ = Godot.register_class!(class_name, parent_class)
     {}
 }
@@ -79,7 +77,6 @@ unhandled_input! = |_| {
 
 ready! : {} => {}
 ready! = |_| {
-    #_ = Stdout.line!("[examples/hello_godot/main.roc] ready!")
     {}
 }
 

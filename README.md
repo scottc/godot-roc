@@ -1,18 +1,19 @@
 # Godot Roc
 
-Roc language bindings for Godot Game Engine & Redot Game Engine & Draconic Game Engine.
+Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game Engine.
 
 ## About
 
-Godot-Roc lets you write game logic in [Roc](https://roc-lang.org/), "A [**fast**](https://roc-lang.org/fast), [**friendly**](https://roc-lang.org/friendly), [**functional**](https://roc-lang.org/functional) [language](https://roc-lang.org/)". While [Godot Engine](https://godotengine.org/), [Redot Engine](https://www.redotengine.org/) or [Draconic Engine](https://github.com/Redot-Engine/DraconicEngine) handles scenes, rendering, and tooling.
+Godot-Roc lets you write game logic in [Roc](https://roc-lang.org/), "A [fast](https://roc-lang.org/fast), [friendly](https://roc-lang.org/friendly), [functional](https://roc-lang.org/functional) [language](https://roc-lang.org/)". While [Godot Engine](https://godotengine.org/), [Redot Engine](https://www.redotengine.org/) or [Draconic Engine](https://github.com/Redot-Engine/DraconicEngine) handles scenes, rendering, and tooling.
 
-Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI for maximum compatability. In theory godot-roc will work with any game engine runtime that supports the `godot-4.5.1` gdextension ABI, including newer versions of godot, forks & alternative engines.
+Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI for maximum compatability. In theory godot-roc will work with any game engine runtime that supports the `godot-4.5.1` gdextension ABI, including newer versions of godot, forks & alternative host runtimes (aka game engines).
 
 ## Use cases
 
+- **DX - Developer Experience** - Ergonomics of a high level scripting language, with great low level native performance.
 - **Structured game logic** - Model complex rules with types that encode invariants, so invalid states are harder to represent.
 - **Fewer playtest bugs** - A strong static type system catches many mistakes at compile time. Good types won’t eliminate playtesting, but they can eliminate many failures.
-- **AI-friendly tooling and errors** - Precise compile errors are easier to act on (for humans or automated loops) than vague runtime failures.
+- **AI-friendly tooling and errors** - More stronger types = more precise compile time errors, that are easier to act on for (humans or automated loops) than vague runtime failures.
 
 ## Language comparison
 
@@ -28,8 +29,9 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 | **Iteration speed in Godot** | Fast Rebuild / reload pipeline. 1 class ~=250/300ms(cache/no-cache) on my potato laptop | Very fast | Fast | Slow–moderate (compile native) |
 | **Performance potential** | [High](https://roc-lang.org/fast) (native extension path) | Good enough for most games | High | Highest (engine-level) |
 | **API coverage** | What the binding exposes | Full engine scripting API | Broad official bindings | Full native access |
+| **Web support** | Experimental (GDExtension wasm) | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
 
-*This table is intentionally simplified. Real projects can mix languages (e.g. GDScript for UI + Roc or C# for gameplay).*
+*This table is intentionally simplified. Real projects can mix languages (e.g. GDScript for UI + Roc or C# for gameplay + C++ for hotspots).*
 
 [Other community maintained languages](https://docs.godotengine.org/en/stable/tutorials/scripting/other_languages.html#doc-scripting-languages), and [engines](https://docs.redotengine.org/tutorials/scripting/gdextension/what_is_gdextension#doc-what-is-gdextension) are also avaliable.
 
@@ -69,14 +71,31 @@ The recommended approach is to use the [nix package manager](https://nixos.org/)
 These are the exact pinned versions that are offically supported & tested against.
 ```sh
 nix develop
-# roc:      Roc compiler version debug-no-git
-# zig:      0.16.0
-# godot:    4.7.2.stable.nixpkgs.ed1daf0bf
-# godot4.5: 4.5.1.stable.nixpkgs.f62fdbde1
-# redot:    26.2.stable.official.4f5b14aba
-# rex:      0.0.1.alpha.898.
-# python:   Python 3.14.7
-# gh:       gh version 2.100.0 (nixpkgs)
+#
+# Welcome to the reproduceable development environment.
+#
+# These are some of tools that are avaliable:
+#
+# =Compilers=
+# roc:          Roc compiler version debug-no-git
+# zig:          0.16.0
+#
+# =Engines=
+# godot:        4.7.2.stable.nixpkgs.ed1daf0bf
+# godot4.5:     4.5.1.stable.nixpkgs.f62fdbde1
+# redot:        26.2.stable.official.4f5b14aba
+# rex:          0.0.1.alpha.898.
+#
+# =Optional=
+# emcc:         emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.9-git
+# wasm-objdump: 1.0.41
+# python:       Python 3.14.7
+# gh:           gh version 2.100.0 (nixpkgs)
+#
+# Tip:
+# You can now follow the build & run instructions here:
+# https://github.com/scottc/godot-roc
+#
 ```
 See `flake.nix` & `flake.lock`, for more details.
 
@@ -114,12 +133,11 @@ EOF
 
 # Create godot roc app
 cat > my_game/MyPlayerCharacter.roc << 'EOF'
-app [main!, ready!, process!, init!, physics_process!] {
-    roc: "nightly-2026-09-08-39a3f89",
+app [ready!, process!, init!, physics_process!] {
+    roc: "nightly-2026-09-12-220fd47",
     pf: platform "../platform/main.roc",
 }
 
-import pf.Stdout
 import pf.Godot
 
 class_name = "MyPlayerCharacter"
@@ -127,7 +145,7 @@ parent_class = "CharacterBody3D"
 
 init! : {} => {}
 init! = |_| {
-    _ = Stdout.line!("[my_game/MyPlayerCharacter.roc] Hello World!")
+    _ = Godot.print!("[my_game/MyPlayerCharacter.roc] Hello World!")
     _ = Godot.register_class!(class_name, parent_class)
     {}
 }
@@ -150,11 +168,6 @@ unhandled_input! = |_| {
 ready! : {} => {}
 ready! = |_| {
     {}
-}
-
-main! : List(Str) => Try({}, [Exit(I32), StdoutErr(Str), ..])
-main! = |_args| {
-    Ok({})
 }
 EOF
 ```
@@ -270,7 +283,7 @@ nano my_game/roc.gdextension
 # Ensure the built "godot roc" dynamic library exists.
 # Ensure the library filepath is correct.
 # Ensure the entry_symbol is correct.
-# Ensure stdout is not printing any errors, if so read them carefully.
+# Ensure godot's stdout is not printing any errors, if so read them carefully.
 ```
 
 ## Updating - For platform maintainers.
@@ -306,7 +319,7 @@ roc check ./main.roc \
 
 ### [DONE] GDExtension Phase 1 - Bootstrap a 3D platformer
 
-- [x] stdout
+- [x] stdout (Edit: removed, not web wasm32 compatible.)
 - [x] Precompiled host + precompiled roc app, with godot entrypoint.
 - [x] custom init & register_class! api, so we can specify base class & inheritance.
 - [x] _ready()
@@ -358,19 +371,54 @@ It's possible to produce a wasm module, however, this is a work in progress:
 
 [WIP] Build path:
 ```
-zig build-lib src/wasm_host.zig \
+zig build-obj src/host.zig \
   -target wasm32-emscripten \
   -OReleaseSmall \
-  -fno-entry \
+  -fPIC \
   -rdynamic \
-  --name godot_roc_wasm
+  --name wasm_host
+# Output -> wasm_host.o
 
-emcc libgodot_roc_wasm.a \
+# or
+# zig build wasm_host
+#const obj = b.addObject(.{
+#    .name = "wasm_host",
+#    .root_module = b.createModule(.{
+#        .root_source_file = b.path("src/host.zig"),
+#        .target = b.resolveTargetQuery(.{
+#            .cpu_arch = .wasm32,
+#            .os_tag = .emscripten,
+#        }),
+#        .optimize = .ReleaseSmall,
+#        .pic = true, // required for SIDE_MODULE + fn pointers
+#    }),
+#});
+#b.getInstallStep().dependOn(&b.addInstallBinFile(obj.getEmittedBin(), "wasm_host.o").step);
+
+emcc wasm_host.o \
   -o my_game/libgodot_roc.web.wasm32.nothreads.wasm \
   -sSIDE_MODULE=2 \
   -sERROR_ON_UNDEFINED_SYMBOLS=0 \
+  -sEXPORTED_FUNCTIONS='["_roc_godot_library_init"]' \
   -O2
 
+# TODO: Add roc app to wasm. (skipping for now.)
+# roc build --target=wasm32 ./foo.roc --output=./foo.wasm
+
+#Godot > Project > Export > Web > Options > Extensions Support = On (Checked)
+
+#Godot > Project > Export > Web > Options > Thread Support = Off (Unchecked)
+
+python3 -m http.server
+
+# It runs, and doesn't crash! yay, but it's just an entrypoint stub, with no behaviour.
+
+# And errors printed to browser console, because class registration isn't implemented yet.
+
+# index.js:452 Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+# index.js:452 OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL
+# index.js:452 Build configuration: Emscripten 4.0.20, single-threaded, GDExtension support.
+# installHook.js:1 ERROR: Cannot get class 'PlayerCharacter'.
 ```
 
 

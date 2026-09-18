@@ -8,13 +8,14 @@
     # latest git roc version
     # see flake.lock for the final reproduceable pinned version
     # `flake update` to update pinned version, to latest.
-    roc.url = "github:roc-lang/roc?dir=src";
+    # roc.url = "github:roc-lang/roc?dir=src";
 
     # specific roc version
     # via specified commit-id hash:
     # this can be useful
     # if you want to explicitly stick to a version.
-    # roc.url = "github:roc-lang/roc/b877f945ab9d6aded5636ee7e88c68cad5ea645a?dir=src";
+    # We use the short hash here, to be consistant with other useages.
+    roc.url = "github:roc-lang/roc/220fd47?dir=src";
     roc.inputs.nixpkgs.follows = "nixpkgs";
 
     redot.url = "path:./flakes/redot-nix";
@@ -42,6 +43,7 @@
             pkgs.python3
             pkgs.gh
             pkgs.emscripten # godot 4.5 docs expects emscripten 3.1.62+ when building web templates.
+            pkgs.wabt # for wasm-objdump, cli helper utility
 
             pkgs.godot # latest 4.7.1
             pkgs.godotPackages_4_5.godot # 4.5.1, why 4.5.1? most compatable with redot.
@@ -57,20 +59,31 @@
           ]; # ++ pkgs.lib.optional (rocPkg != null) rocPkg
 
           shellHook = ''
-            echo "# compilers:"
-            echo "# roc:      $(roc version)"
-            echo "# zig:      $(zig version)"
-            echo "# "
-            echo "# engines:"
-            echo "# godot:    $(godot --version)"
-            echo "# godot4.5: $(godot4.5 --version)"
-            echo "# redot:    $(redot --version)"
-            echo "# rex:      $(rex --version)"
-            echo "# "
-            echo "# optional:"
-            echo "# emcc:     $(emcc -v 2>&1 | head -n1) (Publish to web wasm target)"
-            echo "# python:   $(python3 --version) (for github automation scripts)"
-            echo "# gh:       $(gh --version) (for github cli)"
+            echo "#
+# Welcome to the reproduceable development environment.
+#
+# These are some of tools that are avaliable:
+#
+# =Compilers=
+# roc:          $(roc version)
+# zig:          $(zig version)
+#
+# =Engines=
+# godot:        $(godot --version)
+# godot4.5:     $(godot4.5 --version)
+# redot:        $(redot --version)
+# rex:          $(rex --version)
+#
+# =Optional=
+# emcc:         $(emcc -v 2>&1 | head -n1)
+# wasm-objdump: $(wasm-objdump --version)
+# python:       $(python3 --version)
+# gh:           $(gh --version 2>&1 | head -n1)
+#
+# Tip:
+# You can now follow the build & run instructions here:
+# https://github.com/scottc/godot-roc
+# "
           '';
 
           # Optional shell hook: godot's export templates.

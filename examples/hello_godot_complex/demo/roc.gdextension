@@ -4,8 +4,7 @@ compatibility_minimum = "4.5"
 reloadable = true
 
 [icons]
-MyPlayerCharacter = "res://roc.svg"
-# TODO: implement icons in the "class" script file, not here.
+PlayerCharacter = "res://roc.svg"
 
 [libraries]
 linux.debug.x86_64   = "res://bin/libgodot_roc.so"

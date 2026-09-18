@@ -6,7 +6,7 @@
 # roc ./main.roc
 #
 
-app [main!] { roc: "nightly-2026-09-11-793f9d8", pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/1.0.0/AnZoxzoGPtSGQ15EQh6pBeeaHJ7aizP9MQhK81dES3Uq.tar.zst" }
+app [main!] { roc: "nightly-2026-09-12-220fd47", pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/1.0.0/AnZoxzoGPtSGQ15EQh6pBeeaHJ7aizP9MQhK81dES3Uq.tar.zst" }
 
 import pf.Stdin
 import pf.Stdout

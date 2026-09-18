@@ -1,65 +1,44 @@
 platform ""
     requires {} {
-        # Cli:
-        main! : List(Str) => Try({}, [Exit(I32), ..]), # unused
-
-        # Godot:
         init! : {} => {},
         ready! : {} => {},
         process! : U64, F64 => {},
         physics_process! : Str, U64, F64 => {}
     }
     exposes [
-        # Cli:
-        Stdout,
-        Stderr,
-        Stdin, # unused
-
-        # Godot:
         Godot,
     ]
-    packages { roc: "nightly-2026-09-08-39a3f89" }
+    packages { roc: "nightly-2026-09-12-220fd47" }
     provides {
-        # Cli:
-        "roc_main": main_for_host!,
-
-        # Godot:
-        "roc_init": init_for_host!,
-        "roc_ready": ready_for_host!,
-        "roc_process": process_for_host!,
-        "roc_physics_process": physics_process_for_host!,
+        "godot_roc_scene_init": init_for_host!,
+        "godot_roc_ready": ready_for_host!,
+        "godot_roc_process": process_for_host!,
+        "godot_roc_physics_process": physics_process_for_host!,
     }
     hosted {
-        # Cli:
-        "roc_stderr_line": Host.stderr_line!,
-        "roc_stdin_line": Host.stdin_line!, # unused
-        "roc_stdout_line": Host.stdout_line!,
-
-        # Godot:
-        "roc_register_class": Host.register_class!,
-        "roc_get_velocity": Host.get_velocity!,
-        "roc_set_velocity": Host.set_velocity!,
-        "roc_input_is_action_pressed": Host.input_is_action_pressed!, # Input Singleton class?
-        "roc_move_and_slide": Host.move_and_slide!,
-        "roc_is_on_floor": Host.is_on_floor!,
-        "roc_get_gravity": Host.get_gravity!,
+        "godot_roc_print": Host.print!,
+        "godot_roc_register_class": Host.register_class!,
+        "godot_roc_get_velocity": Host.get_velocity!,
+        "godot_roc_set_velocity": Host.set_velocity!,
+        "godot_roc_input_is_action_pressed": Host.input_is_action_pressed!, # Input Singleton class?
+        "godot_roc_move_and_slide": Host.move_and_slide!,
+        "godot_roc_is_on_floor": Host.is_on_floor!,
+        "godot_roc_get_gravity": Host.get_gravity!,
     }
     targets: {
         inputs_dir: "targets/",
         x64mac: { inputs: ["libhost.a", app] },
         arm64mac: { inputs: ["libhost.a", app] },
-        # x64musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
-
         x64musl :{ inputs: [ "libhost.a", app ], output: Shared },
-        wasm32: { inputs: [ "wasm_host.wasm", app ],
-            output: Shared,
-            # TODO: reference github issue#
-            # TODO: cleanup and remove, when export detection is implemented:
-            exports: [
-                "roc_godot_library_init",
-                # "roc_main" # ... etc.
-            ]
-        },
+        # wasm32: { inputs: [ "wasm_host.wasm", app ],
+        #     output: Shared,
+        #     # TODO: reference github issue#
+        #     # TODO: cleanup and remove, when export detection is implemented:
+        #     exports: [
+        #         "roc_godot_library_init",
+        #         # "roc_main" # ... etc.
+        #     ]
+        # },
 
         x64v1musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
         arm64musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
@@ -68,36 +47,19 @@ platform ""
         arm64win: { inputs: ["host.lib", app] },
     }
 
-import Stdout
-import Stderr
-import Stdin
 import Godot
 import Host
 
-main_for_host! : List(Str) => I32
-main_for_host! = |args| {
-    _ = Stdout.line!("[platform/main.roc] dead code branch, this won't be an executable with a main func.")
-    result = main!(args)
-    match result {
-        Ok({}) => 0
-        Err(Exit(code)) => code
-        Err(other) => {
-            _ = Stderr.line!("ERROR: ${Str.inspect(other)}")
-            -1
-        }
-    }
-}
-
 init_for_host! : {} => {}
 init_for_host! = |{}| {
-    _ = Stdout.line!("[platform/main.roc] init_for_host!")
+    _ = Godot.print!("[platform/main.roc] init_for_host!")
     _result = init!({})
     {}
 }
 
 ready_for_host! : {} => {}
 ready_for_host! = |{}| {
-    _ = Stdout.line!("[platform/main.roc] ready_for_host!")
+    _ = Godot.print!("[platform/main.roc] ready_for_host!")
     _result = ready!({})
     {}
 }
@@ -105,7 +67,7 @@ ready_for_host! = |{}| {
 process_for_host! : U64, F64 => {}
 process_for_host! = |handle, delta| {
     # too verbose...
-    # _ = Stdout.line!("[platform/main.roc] process_for_host! ${handle.to_str()} ${delta.to_str()}")
+    # _ = Godot.print!("[platform/main.roc] process_for_host! ${handle.to_str()} ${delta.to_str()}")
     _result = process!(handle, delta)
     {}
 }
@@ -113,7 +75,7 @@ process_for_host! = |handle, delta| {
 physics_process_for_host! : Str, U64, F64 => {}
 physics_process_for_host! = |class_name, handle, delta| {
     # too verbose...
-    # _ = Stdout.line!("[platform/main.roc] process_physics_for_host! ${handle.to_str()} ${delta.to_str()}")
+    # _ = Godot.print!("[platform/main.roc] process_physics_for_host! ${handle.to_str()} ${delta.to_str()}")
     _result = physics_process!(class_name, handle, delta)
     {}
 }

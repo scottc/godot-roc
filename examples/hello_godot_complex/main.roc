@@ -1,11 +1,10 @@
 app [main!, ready!, process!, init!, physics_process!] {
-    roc: "nightly-2026-09-08-39a3f89",
+    roc: "nightly-2026-09-12-220fd47",
     pf: platform "../../platform/main.roc",
     # When released:
     # pf: platform "https://github.com/scottc/godot-roc/releases/download/0.0.0/{HASH_GOES_HERE}.tar.zst",
 }
 
-import pf.Stdout
 import pf.Godot
 
 import Player
