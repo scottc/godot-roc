@@ -1,4 +1,4 @@
-app [main!, ready!, process!, init!, physics_process!] {
+app [main!, ready!, process!, scene_init!, physics_process!] {
     roc: "nightly-2026-09-12-220fd47",
     pf: platform "../../platform/main.roc",
     # When released:
@@ -10,8 +10,8 @@ import pf.Godot
 class_name = "RocPlayer"
 parent_class = "CharacterBody3D"
 
-init! : {} => {}
-init! = |_| {
+scene_init! : {} => {}
+scene_init! = |_| {
     _ = Godot.register_class!(class_name, parent_class)
     {}
 }

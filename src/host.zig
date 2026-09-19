@@ -7,7 +7,8 @@
 ///! don't forget to use the is_wasm_target flag where appropriate.
 const std = @import("std");
 const builtin = @import("builtin");
-const gd = @import("godot/gdextension_interface.zig");
+const gde_if = @import("godot/gdextension_interface.manual.zig");
+const eapi = @import("godot/extension_api.zig");
 const abi = @import("roc_platform_abi.zig");
 
 //
@@ -38,8 +39,8 @@ const is_native_target = !is_wasm_target;
 ///
 
 // godot GDExtension runtime state
-var get_proc_address: gd.GDExtensionInterfaceGetProcAddress = null;
-var library: gd.GDExtensionClassLibraryPtr = null;
+var get_proc_address: gde_if.GDExtensionInterfaceGetProcAddress = null;
+var library: gde_if.GDExtensionClassLibraryPtr = null;
 
 // Roc ABI runtime state
 /// Private RocHost used by host helpers and exported runtime symbols.
@@ -54,6 +55,8 @@ var g_fba_state: std.heap.FixedBufferAllocator = undefined;
 // godot-roc runtime state
 var g_roc_classes: [32]?ClassInfo = .{null} ** 32;
 var g_roc_class_count: usize = 0;
+var g_name_storage: [32][64]u8 = undefined;
+var g_parent_storage: [32][64]u8 = undefined;
 
 //
 // exports for godot
@@ -61,15 +64,15 @@ var g_roc_class_count: usize = 0;
 
 /// The main entrypoint export for godot
 export fn roc_godot_library_init(
-    p_get_proc_address: gd.GDExtensionInterfaceGetProcAddress,
-    p_library: gd.GDExtensionClassLibraryPtr,
-    r_initialization: *gd.GDExtensionInitialization,
-) callconv(.c) gd.GDExtensionBool {
+    p_get_proc_address: gde_if.GDExtensionInterfaceGetProcAddress,
+    p_library: gde_if.GDExtensionClassLibraryPtr,
+    r_initialization: *gde_if.GDExtensionInitialization,
+) callconv(.c) gde_if.GDExtensionBool {
     get_proc_address = p_get_proc_address;
     library = p_library;
 
-    // Note: this is for the entire godot scene tree, not when "player changes level".
     r_initialization.* = .{
+        // Note: this is for the entire godot scene tree, not when "player changes level".
         .minimum_initialization_level = .scene,
         .userdata = null,
         .initialize = &initialize,
@@ -110,7 +113,6 @@ export fn roc_crashed(bytes: [*]const u8, len: usize) callconv(.c) void {
 //
 // exports for godot-roc
 //
-// TODO: rename "roc_set_velocity" to "godot_roc_set_velocity"... to infer correct ownership, it's not a roc ABI thing, but a godot-roc ABI thing...
 
 export fn godot_roc_print(roc_str: abi.RocStr) callconv(.c) void {
     const roc_host = g_roc_host.?;
@@ -141,26 +143,40 @@ export fn godot_roc_register_class(
 
     const class_slice = class_owned.asSlice();
     const parent_slice = parent_owned.asSlice();
-    //std.debug.print("[./platform/src/native_host.zig] roc_register_class({s}, {s})\n", .{ class_slice, parent_slice });
+    print("[./platform/src/native_host.zig] roc_register_class({s}, {s})\n", .{ class_slice, parent_slice });
 
     if (g_roc_class_count >= g_roc_classes.len) {
-        //std.debug.print("roc_register_class: table full\n", .{});
+        print("roc_register_class: table full\n", .{});
         return;
     }
 
-    if (!is_wasm_target) { // enable when roc wasm is ready.
-        const class_z = std.heap.c_allocator.dupeZ(u8, class_slice) catch return;
-        const parent_z = std.heap.c_allocator.dupeZ(u8, parent_slice) catch return;
+    // if (!is_wasm_target) {
+    //     const class_z = std.heap.c_allocator.dupeZ(u8, class_slice) catch return;
+    //     const parent_z = std.heap.c_allocator.dupeZ(u8, parent_slice) catch return;
 
-        const i = g_roc_class_count;
-        g_roc_classes[i] = .{
-            .class_name = class_z,
-            .parent_name = parent_z,
-        };
-        g_roc_class_count += 1;
+    //     const i = g_roc_class_count;
+    //     g_roc_classes[i] = .{
+    //         .class_name = class_z,
+    //         .parent_name = parent_z,
+    //     };
+    //     g_roc_class_count += 1;
 
-        registerClass(&g_roc_classes[i].?);
-    }
+    //     registerClass(&g_roc_classes[i].?);
+    // }
+
+    const i = g_roc_class_count;
+    if (class_slice.len >= 63 or parent_slice.len >= 63) return;
+    @memcpy(g_name_storage[i][0..class_slice.len], class_slice);
+    g_name_storage[i][class_slice.len] = 0;
+    @memcpy(g_parent_storage[i][0..parent_slice.len], parent_slice);
+    g_parent_storage[i][parent_slice.len] = 0;
+
+    g_roc_classes[i] = .{
+        .class_name = g_name_storage[i][0..class_slice.len :0],
+        .parent_name = g_parent_storage[i][0..parent_slice.len :0],
+    };
+    g_roc_class_count += 1;
+    registerClass(&g_roc_classes[i].?);
 }
 
 //
@@ -168,89 +184,120 @@ export fn godot_roc_register_class(
 //
 
 fn print(comptime fmt: []const u8, args: anytype) void {
-    if (is_native_target) {
-        std.debug.print("[godot-roc/src/host.zig] " ++ fmt, args);
-    } else {
-        // TODO: implement print for WASM.
-    }
+    var buf: [512]u8 = undefined;
+    const msg = std.fmt.bufPrintZ(&buf, "[godot-roc] " ++ fmt, args) catch {
+        // fallback if format overflowed
+        const fallback = "[godot-roc] (print truncated)\n";
+        printError(fallback, "print", "host.zig", @src().line, 0);
+        return;
+    };
+
+    printError(msg, "print", "host.zig", @src().line, 0);
 }
 
-fn initialize(userdata: ?*anyopaque, level: gd.GDExtensionInitializationLevel) callconv(.c) void {
+///
+/// Usage:
+/// godotPrintError("Something bad happened", "my_func", "host.zig", @src().line, 1)
+///
+/// description = "Something bad happened"
+/// function = "my_func"
+/// file = "host.zig"
+/// line = @src().line
+/// editor_notify = 1
+///
+fn printError(description: [:0]const u8, function: [:0]const u8, file: [:0]const u8, line: i32, editor_notify: gde_if.GDExtensionBool) void {
+    // Native: also hit stderr for terminal runs
+    if (comptime is_native_target) {
+        std.debug.print("printError \"{s}\" in {s} @ {s}:{d} & editor_notify={d}", .{ description, function, file, line, editor_notify });
+    }
+
+    eapi.print_error(get_proc_address, description.ptr, function.ptr, file.ptr, line, editor_notify);
+
+    // optional emscripten logging...
+    // const emscripten_console_log = if (is_wasm_target)
+    //     struct {
+    //         extern fn emscripten_console_log(utf8: [*:0]const u8) void;
+    //     }.emscripten_console_log
+    // else
+    //     null;
+
+    // if (comptime is_wasm_target) {
+    //     if (emscripten_console_log) |log| log(msg.ptr);
+    // }
+}
+
+fn initialize(userdata: ?*anyopaque, level: gde_if.GDExtensionInitializationLevel) callconv(.c) void {
     _ = userdata;
     // no print/libc yet — success = “no crash + extension loads”
 
-    if (level == gd.GDExtensionInitializationLevel.core) {
+    if (level == gde_if.GDExtensionInitializationLevel.core) {
         print("initialize(level=core)\n", .{});
 
         // TODO: call new godot_roc_core_init hook.
         return;
     }
 
-    if (level == gd.GDExtensionInitializationLevel.servers) {
+    if (level == gde_if.GDExtensionInitializationLevel.servers) {
         print("initialize(level=servers)\n", .{});
 
         // TODO: call new godot_roc_servers_init hook.
         return;
     }
 
-    if (level == gd.GDExtensionInitializationLevel.scene) {
+    if (level == gde_if.GDExtensionInitializationLevel.scene) {
         print("initialize(level=scene)\n", .{});
 
-        if (!is_wasm_target) { // when wasm roc is ready, but we're not there yet.
-            // TODO: move to entry gdext point, when ready.
+        // if you get crash like this...
+        // apparently moving ensureRocHost() to scene initialize resolves it...
+        // unsure why.
 
-            // if you get crash like this...
-            // apparently moving this to scene initialize resolves it...
-            // unsure why.
+        // ================================================================
+        // handle_crash: Program crashed with signal 11
+        // Engine version: Godot Engine v4.7.2.stable.nixpkgs (ed1daf0bf001b61586d9930840f2f1394092c079)
+        // Dumping the backtrace. Please include this when reporting the bug on: https://github.com/godotengine/godot/issues
+        // Load address: 7fffe5800000
 
-            // ================================================================
-            // handle_crash: Program crashed with signal 11
-            // Engine version: Godot Engine v4.7.2.stable.nixpkgs (ed1daf0bf001b61586d9930840f2f1394092c079)
-            // Dumping the backtrace. Please include this when reporting the bug on: https://github.com/godotengine/godot/issues
-            // Load address: 7fffe5800000
-
-            // [1] 7ffff26421a0 (libc.so.6+421a0) - /nix/store/lm3pknxi0ipypy3lxh1wmm8wvvavdwrn-glibc-2.42-84/lib/libc.so.6(+0x421a0) [0x7ffff26421a0]
-            // [2] 7fffe59c9702 (main+1c9702) - /home/anon/Projects/godot-roc/my_game/libgodot_roc.so(+0x1c9702) [0x7fffe59c9702]
-            // -- END OF C++ BACKTRACE --
-            // ================================================================
-
-            ensureRocHost();
-        }
+        // [1] 7ffff26421a0 (libc.so.6+421a0) - /nix/store/lm3pknxi0ipypy3lxh1wmm8wvvavdwrn-glibc-2.42-84/lib/libc.so.6(+0x421a0) [0x7ffff26421a0]
+        // [2] 7fffe59c9702 (main+1c9702) - /home/anon/Projects/godot-roc/my_game/libgodot_roc.so(+0x1c9702) [0x7fffe59c9702]
+        // -- END OF C++ BACKTRACE --
+        // ================================================================
+        // TODO: move to entry gdext point, when ready.
+        ensureRocHost();
 
         godot_roc_scene_init();
         return;
     }
 
-    if (level == gd.GDExtensionInitializationLevel.editor) {
+    if (level == gde_if.GDExtensionInitializationLevel.editor) {
         print("initialize(level=editor)\n", .{});
         // TODO: call new godot_roc_editor_init hook.
         return;
     }
 }
 
-fn deinitialize(userdata: ?*anyopaque, level: gd.GDExtensionInitializationLevel) callconv(.c) void {
+fn deinitialize(userdata: ?*anyopaque, level: gde_if.GDExtensionInitializationLevel) callconv(.c) void {
     _ = userdata;
 
     // TODO: make & call roc extern "godot_roc_scene_deinit()".
-    if (level == gd.GDExtensionInitializationLevel.core) {
+    if (level == gde_if.GDExtensionInitializationLevel.core) {
         print("deinitialize(level=core)\n", .{});
         // TODO: call new godot_roc_core_deinit hook.
         return;
     }
 
-    if (level == gd.GDExtensionInitializationLevel.servers) {
+    if (level == gde_if.GDExtensionInitializationLevel.servers) {
         print("deinitialize(level=servers)\n", .{});
         // TODO: call new godot_roc_servers_deinit hook.
         return;
     }
 
-    if (level == gd.GDExtensionInitializationLevel.scene) {
+    if (level == gde_if.GDExtensionInitializationLevel.scene) {
         print("deinitialize(level=scene)\n", .{});
         // TODO: call new godot_roc_scene_deinit hook.
         return;
     }
 
-    if (level == gd.GDExtensionInitializationLevel.editor) {
+    if (level == gde_if.GDExtensionInitializationLevel.editor) {
         print("deinitialize(level=editor)\n", .{});
         // TODO: call new godot_roc_editor_deinit hook.
         return;
@@ -278,10 +325,9 @@ fn ensureRocHost() void {
     g_roc_host_storage = abi.makeRocHost(&env.roc_env);
     g_roc_host = &g_roc_host_storage;
 
-    print("roc_initialized()\n", .{});
+    print("ensureRocHost: ready (wasm={})\n", .{comptime is_wasm_target});
 
-    // TODO: call godot's print() api...
-    // std.debug.print("[./platform/src/native_host.zig]: g_roc_host ready\n", .{});
+    print("roc_initialized()\n", .{});
 }
 
 //
@@ -301,26 +347,17 @@ const HostEnv = struct {
 // Unsorted
 //
 
-fn load(comptime name: [:0]const u8, comptime T: type) T {
-    const gpa = get_proc_address orelse @trap();
-    const ptr = gpa(name.ptr) orelse @trap();
-    return @ptrCast(@alignCast(ptr));
-}
-
 // Opaque storage large enough for StringName / String on stack.
 // Godot's StringName is opaque; size is in the extension API (often 8).
-const StringName = [8]u8; // if this is wrong, check extension_api.json / header comments
 
 // Construct StringName via interface (preferred)
-fn makeStringName(text: [:0]const u8) StringName {
+fn makeStringName(text: [:0]const u8) gde_if.GDExtensionStringName {
     // std.debug.print("[./platform/src/host.zig]: makeStringName(text: [:0]const u8) StringName\n", .{});
 
-    var sn: StringName = undefined;
-    const string_name_new = load(
-        "string_name_new_with_utf8_chars",
-        *const fn (gd.GDExtensionUninitializedStringNamePtr, [*:0]const u8) callconv(.c) void,
-    );
-    string_name_new(@ptrCast(&sn), text.ptr);
+    var sn: gde_if.GDExtensionStringName = undefined;
+
+    eapi.string_name_new_with_utf8_chars(get_proc_address, @ptrCast(&sn), text.ptr);
+
     return sn;
 }
 
@@ -330,11 +367,11 @@ const ClassInfo = struct {
 };
 
 const ClassInstance = struct {
-    object: gd.GDExtensionObjectPtr,
+    object: gde_if.GDExtensionObjectPtr,
     class_name: [:0]const u8,
 };
 
-fn classInstanceFromInstance(instance: gd.GDExtensionClassInstancePtr) *ClassInstance {
+fn classInstanceFromInstance(instance: gde_if.GDExtensionClassInstancePtr) *ClassInstance {
     return @ptrCast(@alignCast(instance));
 }
 
@@ -343,55 +380,37 @@ fn classNameFromInstance(self: *ClassInstance) abi.RocStr {
 }
 
 fn handleFromInstance(self: *ClassInstance) u64 {
-    // std.debug.print("[./platform/src/native_host.zig]: handleFromInstance(self: *ClassInstance) u64\n", .{});
-
     return @intFromPtr(self);
 }
 
 fn instanceFromHandle(handle: usize) ?*ClassInstance {
-    // std.debug.print("[./platform/src/native_host.zig]: instanceFromHandle(handle: u64) ?*ClassInstance\n", .{});
-
     if (handle == 0) return null;
     return @ptrFromInt(handle);
 }
 
 fn createInstance(
     class_userdata: ?*anyopaque,
-    notify_postinitialize: gd.GDExtensionBool,
-) callconv(.c) gd.GDExtensionObjectPtr {
+    notify_postinitialize: gde_if.GDExtensionBool,
+) callconv(.c) gde_if.GDExtensionObjectPtr {
     _ = notify_postinitialize;
 
-    //std.debug.print("[./platform/src/native_host.zig]: createInstance(class_userdata: ?*anyopaque, notify_postinitialize: gd.GDExtensionBool) gd.GDExtensionObjectPtr\n", .{});
+    print("createInstance(class_userdata: ?*anyopaque, notify_postinitialize: gde_if.GDExtensionBool) gde_if.GDExtensionObjectPtr\n", .{});
 
     const info: *const ClassInfo = @ptrCast(@alignCast(class_userdata orelse return null));
-
-    const classdb_construct = load(
-        "classdb_construct_object2",
-        *const fn (gd.GDExtensionConstStringNamePtr) callconv(.c) gd.GDExtensionObjectPtr,
-    );
-    const object_set_instance = load(
-        "object_set_instance",
-        *const fn (
-            gd.GDExtensionObjectPtr,
-            gd.GDExtensionConstStringNamePtr,
-            gd.GDExtensionClassInstancePtr,
-        ) callconv(.c) void,
-    );
 
     var parent_sn = makeStringName(info.parent_name);
     var class_sn = makeStringName(info.class_name);
 
-    const obj = classdb_construct(@ptrCast(&parent_sn));
+    const obj = eapi.classdb_construct_object2(get_proc_address, @ptrCast(&parent_sn));
     if (obj == null) return null;
 
-    const self = std.heap.c_allocator.create(ClassInstance) catch return null;
-    //const self = instanceAllocator();
+    const self = instanceAllocator().create(ClassInstance) catch return null;
     self.* = .{
         .object = obj,
         .class_name = info.class_name, // useful for Roc dispatch later
     };
 
-    object_set_instance(obj, @ptrCast(&class_sn), @ptrCast(self));
+    eapi.object_set_instance(get_proc_address, obj, @ptrCast(&class_sn), @ptrCast(self));
     return obj;
 }
 
@@ -410,107 +429,106 @@ fn instanceAllocator() std.mem.Allocator {
 
 fn recreateInstance(
     class_userdata: ?*anyopaque,
-    object: gd.GDExtensionObjectPtr,
-) callconv(.c) gd.GDExtensionClassInstancePtr {
+    object: gde_if.GDExtensionObjectPtr,
+) callconv(.c) gde_if.GDExtensionClassInstancePtr {
+    print("recreateInstance(class_userdata: ?*anyopaque, notify_postinitialize: gde_if.GDExtensionBool) gde_if.GDExtensionObjectPtr\n", .{});
+
     const info: *const ClassInfo = @ptrCast(@alignCast(class_userdata orelse return null));
 
-    const object_set_instance = load(
-        "object_set_instance",
-        *const fn (
-            gd.GDExtensionObjectPtr,
-            gd.GDExtensionConstStringNamePtr,
-            gd.GDExtensionClassInstancePtr,
-        ) callconv(.c) void,
-    );
-
-    const self = std.heap.c_allocator.create(ClassInstance) catch return null;
-    //const self = instanceAllocator();
+    //const self = std.heap.c_allocator.create(ClassInstance) catch return null;
+    const self = instanceAllocator().create(ClassInstance) catch return null;
     self.* = .{
         .object = object,
         .class_name = info.class_name,
     };
 
     var class_sn = makeStringName(info.class_name);
-    object_set_instance(object, @ptrCast(&class_sn), @ptrCast(self));
+    eapi.object_set_instance(get_proc_address, object, @ptrCast(&class_sn), @ptrCast(self));
 
     return @ptrCast(self);
 }
 
-fn freeInstance(class_userdata: ?*anyopaque, instance: gd.GDExtensionClassInstancePtr) callconv(.c) void {
+fn freeInstance(class_userdata: ?*anyopaque, instance: gde_if.GDExtensionClassInstancePtr) callconv(.c) void {
     _ = class_userdata;
-    _ = instance;
-    //std.debug.print("[./platform/src/native_host.zig]: freeInstance(class_userdata: ?*anyopaque, instance: gd.GDExtensionClassInstancePtr) void\n", .{});
+    //_ = instance;
+    print("freeInstance(class_userdata: ?*anyopaque, instance: gde_if.GDExtensionClassInstancePtr) void\n", .{});
 
-    //const self: *ClassInstance = @ptrCast(@alignCast(instance));
+    const self: *ClassInstance = @ptrCast(@alignCast(instance));
 
     // Umm... we're not deallocating????! memory leaks?? for WASM? // good enough for prototype...
     // std.heap.c_allocator.destroy(self);
+    //
+    // TODO: would this work??
+    instanceAllocator().destroy(self); // catch return null;
 }
 
 fn registerClass(info: *ClassInfo) void {
-    //std.debug.print("[./platform/src/native_host.zig]: registerClass(info: *ClassInfo) void\n", .{});
+    print("registerClass(info: *ClassInfo) void\n", .{});
 
     // unregister first (idempotent) // this maybe needed...
     // unregisterClass(info.class_name);
 
-    const register_class = load(
+    const register_class = eapi.load(
+        get_proc_address,
         "classdb_register_extension_class5",
         *const fn (
-            gd.GDExtensionClassLibraryPtr,
-            gd.GDExtensionConstStringNamePtr,
-            gd.GDExtensionConstStringNamePtr,
-            *const gd.GDExtensionClassCreationInfo5,
+            gde_if.GDExtensionClassLibraryPtr,
+            gde_if.GDExtensionConstStringNamePtr,
+            gde_if.GDExtensionConstStringNamePtr,
+            *const gde_if.GDExtensionClassCreationInfo5,
         ) callconv(.c) void,
     );
 
     var class_sn = makeStringName(info.class_name);
     var parent_sn = makeStringName(info.parent_name);
 
-    //var creation: gd.GDExtensionClassCreationInfo5 = std.mem.zeroes(gd.GDExtensionClassCreationInfo5);
-    var creation: gd.GDExtensionClassCreationInfo5 = undefined;
-    @memset(@as([*]u8, @ptrCast(&creation))[0..@sizeOf(gd.GDExtensionClassCreationInfo5)], 0); // WASM compatible.
+    //var creation: gde_if.GDExtensionClassCreationInfo5 = std.mem.zeroes(gde_if.GDExtensionClassCreationInfo5);
+    var creation: gde_if.GDExtensionClassCreationInfo5 = undefined;
+    @memset(@as([*]u8, @ptrCast(&creation))[0..@sizeOf(gde_if.GDExtensionClassCreationInfo5)], 0); // WASM compatible.
 
     creation.is_exposed = 1;
     creation.create_instance_func = createInstance;
     creation.free_instance_func = freeInstance;
     creation.recreate_instance_func = recreateInstance;
-    // creation.get_virtual_func = getVirtual;
+    //creation.get_virtual_func = getVirtual;
     //creation.get_virtual_func = @ptrCast(&getVirtual);
-    creation.get_virtual_func = @ptrCast(@constCast(&getVirtual));
+    creation.get_virtual_func = @ptrCast(@constCast(&getVirtual)); // TODO: remove casts?
     creation.class_userdata = info;
 
     register_class(library, @ptrCast(&class_sn), @ptrCast(&parent_sn), &creation);
 
-    //std.debug.print("[./platform/src/native_host.zig]: registered {s} : {s}\n", .{ info.class_name, info.parent_name });
+    print("registered {s} : {s}\n", .{ info.class_name, info.parent_name });
 }
 
 fn unregisterClass(class_name: [:0]const u8) void {
-    const unregister = load(
+    const unregister = eapi.load(
+        get_proc_address,
         "classdb_unregister_extension_class",
         *const fn (
-            gd.GDExtensionClassLibraryPtr,
-            gd.GDExtensionConstStringNamePtr,
+            gde_if.GDExtensionClassLibraryPtr,
+            gde_if.GDExtensionConstStringNamePtr,
         ) callconv(.c) void,
     );
     var sn = makeStringName(class_name);
     unregister(library, @ptrCast(&sn));
-    //std.debug.print("[./platform/src/native_host.zig]: unregistered {s}\n", .{class_name});
+    print("unregistered {s}\n", .{class_name});
 }
 
-var g_mb_move_and_slide: gd.GDExtensionMethodBindPtr = null;
-var g_mb_get_velocity: gd.GDExtensionMethodBindPtr = null;
-var g_mb_set_velocity: gd.GDExtensionMethodBindPtr = null;
+var g_mb_move_and_slide: gde_if.GDExtensionMethodBindPtr = null;
+var g_mb_get_velocity: gde_if.GDExtensionMethodBindPtr = null;
+var g_mb_set_velocity: gde_if.GDExtensionMethodBindPtr = null;
 
-fn getMethodBind(class_name: [:0]const u8, method_name: [:0]const u8, hash: i64) gd.GDExtensionMethodBindPtr {
+fn getMethodBind(class_name: [:0]const u8, method_name: [:0]const u8, hash: i64) gde_if.GDExtensionMethodBindPtr {
     //std.debug.print("[./platform/src/native_host.zig]: getMethodBind()\n", .{});
 
-    const classdb_get_method_bind = load(
+    const classdb_get_method_bind = eapi.load(
+        get_proc_address,
         "classdb_get_method_bind",
         *const fn (
-            gd.GDExtensionConstStringNamePtr,
-            gd.GDExtensionConstStringNamePtr,
+            gde_if.GDExtensionConstStringNamePtr,
+            gde_if.GDExtensionConstStringNamePtr,
             i64,
-        ) callconv(.c) gd.GDExtensionMethodBindPtr,
+        ) callconv(.c) gde_if.GDExtensionMethodBindPtr,
     );
     var cn = makeStringName(class_name);
     var mn = makeStringName(method_name);
@@ -538,26 +556,27 @@ const Vector3 = extern struct {
 };
 
 fn ptrcall(
-    method: gd.GDExtensionMethodBindPtr,
-    object: gd.GDExtensionObjectPtr,
-    args: ?[*]const gd.GDExtensionConstTypePtr,
-    ret: gd.GDExtensionTypePtr,
+    method: gde_if.GDExtensionMethodBindPtr,
+    object: gde_if.GDExtensionObjectPtr,
+    args: ?[*]const gde_if.GDExtensionConstTypePtr,
+    ret: gde_if.GDExtensionTypePtr,
 ) void {
     // std.debug.print("[./platform/src/native_host.zig]: ptrcall(method, object, args, ret)\n", .{});
 
-    const object_method_bind_ptrcall = load(
+    const object_method_bind_ptrcall = eapi.load(
+        get_proc_address,
         "object_method_bind_ptrcall",
         *const fn (
-            gd.GDExtensionMethodBindPtr,
-            gd.GDExtensionObjectPtr,
-            ?[*]const gd.GDExtensionConstTypePtr,
-            gd.GDExtensionTypePtr,
+            gde_if.GDExtensionMethodBindPtr,
+            gde_if.GDExtensionObjectPtr,
+            ?[*]const gde_if.GDExtensionConstTypePtr,
+            gde_if.GDExtensionTypePtr,
         ) callconv(.c) void,
     );
     object_method_bind_ptrcall(method, object, args, ret);
 }
 
-export fn roc_set_velocity(handle: usize, v: Vector3) callconv(.c) void {
+export fn godot_roc_set_velocity(handle: usize, v: Vector3) callconv(.c) void {
     ensureMethodBinds();
     const self = instanceFromHandle(handle) orelse return;
     if (g_mb_set_velocity == null) return;
@@ -567,11 +586,11 @@ export fn roc_set_velocity(handle: usize, v: Vector3) callconv(.c) void {
         .y = @floatCast(v.y),
         .z = @floatCast(v.z),
     };
-    const args = [_]gd.GDExtensionConstTypePtr{@ptrCast(&gv)};
+    const args = [_]gde_if.GDExtensionConstTypePtr{@ptrCast(&gv)};
     ptrcall(g_mb_set_velocity, self.object, &args, null);
 }
 
-export fn roc_get_velocity(handle: usize) callconv(.c) Vector3 {
+export fn godot_roc_get_velocity(handle: usize) callconv(.c) Vector3 {
     ensureMethodBinds();
     const self = instanceFromHandle(handle) orelse {
         return .{ .x = 0, .y = 0, .z = 0 };
@@ -590,15 +609,16 @@ export fn roc_get_velocity(handle: usize) callconv(.c) Vector3 {
     };
 }
 
-var g_input: gd.GDExtensionObjectPtr = null;
-var g_mb_is_action_pressed: gd.GDExtensionMethodBindPtr = null;
+var g_input: gde_if.GDExtensionObjectPtr = null;
+var g_mb_is_action_pressed: gde_if.GDExtensionMethodBindPtr = null;
 
 fn ensureInput() void {
     if (g_input != null) return;
 
-    const global_get_singleton = load(
+    const global_get_singleton = eapi.load(
+        get_proc_address,
         "global_get_singleton",
-        *const fn (gd.GDExtensionConstStringNamePtr) callconv(.c) gd.GDExtensionObjectPtr,
+        *const fn (gde_if.GDExtensionConstStringNamePtr) callconv(.c) gde_if.GDExtensionObjectPtr,
     );
     var input_name = makeStringName("Input");
     g_input = global_get_singleton(@ptrCast(&input_name));
@@ -615,18 +635,18 @@ fn isActionPressed(action: [:0]const u8) bool {
     var action_sn = makeStringName(action);
     // is_action_pressed(action: StringName, exact_match: bool = false)
     // Check your API: some versions are just (action)
-    var exact: gd.GDExtensionBool = 0;
-    const args = [_]gd.GDExtensionConstTypePtr{
+    var exact: gde_if.GDExtensionBool = 0;
+    const args = [_]gde_if.GDExtensionConstTypePtr{
         @ptrCast(&action_sn),
         @ptrCast(&exact),
     };
-    var ret: gd.GDExtensionBool = 0;
+    var ret: gde_if.GDExtensionBool = 0;
     ptrcall(g_mb_is_action_pressed, g_input, &args, @ptrCast(&ret));
     return ret != 0;
 }
 
-export fn roc_input_is_action_pressed(action: abi.RocStr) callconv(.c) gd.GDExtensionBool {
-    //std.debug.print("[./platform/src/native_host.zig]: roc_input_is_action_pressed(action: abi.RocStr) u8\n", .{});
+export fn godot_roc_input_is_action_pressed(action: abi.RocStr) callconv(.c) gde_if.GDExtensionBool {
+    //print("[./platform/src/native_host.zig]: roc_input_is_action_pressed(action: abi.RocStr) u8\n", .{});
 
     const roc_host = g_roc_host.?;
     var owned = action;
@@ -640,7 +660,7 @@ export fn roc_input_is_action_pressed(action: abi.RocStr) callconv(.c) gd.GDExte
     return if (isActionPressed(buf[0..s.len :0])) 1 else 0;
 }
 
-export fn roc_move_and_slide(handle: usize) callconv(.c) void {
+export fn godot_roc_move_and_slide(handle: usize) callconv(.c) void {
     //std.debug.print("[./platform/src/native_host.zig]: move_and_slide(handle: u64) void\n", .{});
 
     ensureMethodBinds();
@@ -648,13 +668,13 @@ export fn roc_move_and_slide(handle: usize) callconv(.c) void {
     if (g_mb_move_and_slide == null) return;
 
     // move_and_slide() -> bool; optional to read
-    var hit: gd.GDExtensionBool = 0;
+    var hit: gde_if.GDExtensionBool = 0;
     ptrcall(g_mb_move_and_slide, self.object, null, @ptrCast(&hit));
     //_ = hit;
 }
 
-var g_mb_is_on_floor: gd.GDExtensionMethodBindPtr = null;
-var g_mb_get_gravity: gd.GDExtensionMethodBindPtr = null;
+var g_mb_is_on_floor: gde_if.GDExtensionMethodBindPtr = null;
+var g_mb_get_gravity: gde_if.GDExtensionMethodBindPtr = null;
 
 fn ensureFloorBinds() void {
     if (g_mb_is_on_floor != null) return;
@@ -666,18 +686,18 @@ fn ensureFloorBinds() void {
     g_mb_get_gravity = getMethodBind("CharacterBody3D", "get_gravity", PHYSICSBODY3D_GET_GRAVITY_HASH);
 }
 
-export fn roc_is_on_floor(handle: usize) callconv(.c) gd.GDExtensionBool {
+export fn godot_roc_is_on_floor(handle: usize) callconv(.c) gde_if.GDExtensionBool {
     ensureFloorBinds();
     const self = instanceFromHandle(handle) orelse return 0;
     if (g_mb_is_on_floor == null) return 0;
 
-    var ret: gd.GDExtensionBool = 0;
+    var ret: gde_if.GDExtensionBool = 0;
     ptrcall(g_mb_is_on_floor, self.object, null, @ptrCast(&ret));
     return ret;
 }
 
 /// Writes gravity into out_x/y/z (units/sec²).
-export fn roc_get_gravity(handle: usize, out_x: *f64, out_y: *f64, out_z: *f64) callconv(.c) void {
+export fn godot_roc_get_gravity(handle: usize, out_x: *f64, out_y: *f64, out_z: *f64) callconv(.c) void {
     ensureFloorBinds();
     const self = instanceFromHandle(handle) orelse {
         out_x.* = 0;
@@ -700,9 +720,9 @@ export fn roc_get_gravity(handle: usize, out_x: *f64, out_y: *f64, out_z: *f64) 
 }
 
 fn onReady(
-    instance: gd.GDExtensionClassInstancePtr,
-    args: [*c]const gd.GDExtensionConstTypePtr,
-    ret: gd.GDExtensionTypePtr,
+    instance: gde_if.GDExtensionClassInstancePtr,
+    args: [*c]const gde_if.GDExtensionConstTypePtr,
+    ret: gde_if.GDExtensionTypePtr,
 ) callconv(.c) void {
     _ = instance;
     _ = args;
@@ -715,9 +735,9 @@ fn onReady(
 }
 
 fn onProcess(
-    instance: gd.GDExtensionClassInstancePtr,
-    args: [*c]const gd.GDExtensionConstTypePtr,
-    ret: gd.GDExtensionTypePtr,
+    instance: gde_if.GDExtensionClassInstancePtr,
+    args: [*c]const gde_if.GDExtensionConstTypePtr,
+    ret: gde_if.GDExtensionTypePtr,
 ) callconv(.c) void {
     //_ = instance;
     _ = ret; // _process returns void
@@ -736,14 +756,15 @@ fn onProcess(
     godot_roc_process(handleFromInstance(self), delta);
 }
 
-var g_engine: gd.GDExtensionObjectPtr = null;
-var g_mb_is_editor_hint: gd.GDExtensionMethodBindPtr = null;
+var g_engine: gde_if.GDExtensionObjectPtr = null;
+var g_mb_is_editor_hint: gde_if.GDExtensionMethodBindPtr = null;
 
 fn ensureEngine() void {
     if (g_engine != null) return;
-    const global_get_singleton = load(
+    const global_get_singleton = eapi.load(
+        get_proc_address,
         "global_get_singleton",
-        *const fn (gd.GDExtensionConstStringNamePtr) callconv(.c) gd.GDExtensionObjectPtr,
+        *const fn (gde_if.GDExtensionConstStringNamePtr) callconv(.c) gde_if.GDExtensionObjectPtr,
     );
 
     const IS_EDITOR_HINT_HASH = 36873697;
@@ -755,15 +776,15 @@ fn ensureEngine() void {
 fn isEditorHint() bool {
     ensureEngine();
     if (g_engine == null or g_mb_is_editor_hint == null) return false;
-    var ret: gd.GDExtensionBool = 0;
+    var ret: gde_if.GDExtensionBool = 0;
     ptrcall(g_mb_is_editor_hint, g_engine, null, @ptrCast(&ret));
     return ret != 0;
 }
 
 fn onPhysicsProcess(
-    instance: gd.GDExtensionClassInstancePtr,
-    args: [*c]const gd.GDExtensionConstTypePtr,
-    ret: gd.GDExtensionTypePtr,
+    instance: gde_if.GDExtensionClassInstancePtr,
+    args: [*c]const gde_if.GDExtensionConstTypePtr,
+    ret: gde_if.GDExtensionTypePtr,
 ) callconv(.c) void {
     //_ = instance;
     _ = ret; // _process returns void
@@ -783,14 +804,14 @@ fn onPhysicsProcess(
 
 fn getVirtual(
     class_userdata: ?*anyopaque,
-    name: gd.GDExtensionConstStringNamePtr,
+    name: gde_if.GDExtensionConstStringNamePtr,
     hash: u32,
-) callconv(.c) ?gd.GDExtensionClassCallVirtual {
+) callconv(.c) ?gde_if.GDExtensionClassCallVirtual {
     _ = class_userdata;
     //_ = name;
     //_ = hash; // can use later for fast matching
 
-    // std.debug.print("roc_godot: getVirtual(class_userdata: ?*anyopaque = {any}, name: gd.GDExtensionConstStringNamePtr = {any}, hash: u32 = {any})\n", .{ class_userdata, name, hash });
+    // std.debug.print("roc_godot: getVirtual(class_userdata: ?*anyopaque = {any}, name: gde_if.GDExtensionConstStringNamePtr = {any}, hash: u32 = {any})\n", .{ class_userdata, name, hash });
 
     // "_ready", hash == 3218959716
     // if (stringNameEq(name, "_ready")) { // helper function, so we can find the _ready hash.
@@ -817,27 +838,30 @@ fn getVirtual(
 const StringNameValue = [8]u8;
 
 fn stringNameEq(
-    name: gd.GDExtensionConstStringNamePtr, // pointer to existing StringName
+    name: gde_if.GDExtensionConstStringNamePtr, // pointer to existing StringName
     text: [:0]const u8,
 ) bool {
     // --- load interface functions ---
-    const string_name_new = load(
+    const string_name_new = eapi.load(
+        get_proc_address,
         "string_name_new_with_utf8_chars",
-        *const fn (gd.GDExtensionUninitializedStringNamePtr, [*:0]const u8) callconv(.c) void,
+        *const fn (gde_if.GDExtensionUninitializedStringNamePtr, [*:0]const u8) callconv(.c) void,
     );
 
-    const get_op_evaluator = load(
+    const get_op_evaluator = eapi.load(
+        get_proc_address,
         "variant_get_ptr_operator_evaluator",
         *const fn (
-            gd.GDExtensionVariantOperator,
-            gd.GDExtensionVariantType,
-            gd.GDExtensionVariantType,
-        ) callconv(.c) gd.GDExtensionPtrOperatorEvaluator,
+            gde_if.GDExtensionVariantOperator,
+            gde_if.GDExtensionVariantType,
+            gde_if.GDExtensionVariantType,
+        ) callconv(.c) gde_if.GDExtensionPtrOperatorEvaluator,
     );
 
-    const get_destructor = load(
+    const get_destructor = eapi.load(
+        get_proc_address,
         "variant_get_ptr_destructor",
-        *const fn (gd.GDExtensionVariantType) callconv(.c) gd.GDExtensionPtrDestructor,
+        *const fn (gde_if.GDExtensionVariantType) callconv(.c) gde_if.GDExtensionPtrDestructor,
     );
 
     // --- construct temporary StringName from UTF-8 ---
@@ -845,14 +869,14 @@ fn stringNameEq(
     string_name_new(@ptrCast(&other), text.ptr);
 
     // Always destroy the temporary we constructed.
-    const destroy = get_destructor(gd.GDEXTENSION_VARIANT_TYPE_STRING_NAME);
+    const destroy = get_destructor(gde_if.GDEXTENSION_VARIANT_TYPE_STRING_NAME);
     defer if (destroy) |d| d(@ptrCast(&other));
 
     // --- get StringName == StringName evaluator ---
     const eval = get_op_evaluator(
-        gd.GDEXTENSION_VARIANT_OP_EQUAL,
-        gd.GDEXTENSION_VARIANT_TYPE_STRING_NAME,
-        gd.GDEXTENSION_VARIANT_TYPE_STRING_NAME,
+        gde_if.GDEXTENSION_VARIANT_OP_EQUAL,
+        gde_if.GDEXTENSION_VARIANT_TYPE_STRING_NAME,
+        gde_if.GDEXTENSION_VARIANT_TYPE_STRING_NAME,
     );
     if (eval == null) return false;
 
@@ -861,7 +885,7 @@ fn stringNameEq(
     //            GDExtensionConstTypePtr right,
     //            GDExtensionTypePtr result);
     // For EQUAL, result is a bool (GDExtensionBool / uint8_t).
-    var result: gd.GDExtensionBool = 0;
+    var result: gde_if.GDExtensionBool = 0;
     eval.?(@ptrCast(name), @ptrCast(&other), @ptrCast(&result));
     return result != 0;
 }

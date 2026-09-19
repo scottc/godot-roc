@@ -29,7 +29,7 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 | **Iteration speed in Godot** | Fast Rebuild / reload pipeline. 1 class ~=250/300ms(cache/no-cache) on my potato laptop | Very fast | Fast | Slow–moderate (compile native) |
 | **Performance potential** | [High](https://roc-lang.org/fast) (native extension path) | Good enough for most games | High | Highest (engine-level) |
 | **API coverage** | What the binding exposes | Full engine scripting API | Broad official bindings | Full native access |
-| **Web support** | Experimental (GDExtension wasm) | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
+| **Web support** | \[WIP] Implemented, but blocked on emscripten linking | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
 
 *This table is intentionally simplified. Real projects can mix languages (e.g. GDScript for UI + Roc or C# for gameplay + C++ for hotspots).*
 
@@ -127,13 +127,13 @@ macos.debug          = "res://libgodot_roc.dylib"
 macos.release        = "res://libgodot_roc.dylib"
 windows.debug.x86_64 = "res://libgodot_roc.dll"
 windows.release.x86_64 = "res://libgodot_roc.dll"
-web.debug.wasm32 = "res://libgodot_roc.wasm"
-web.release.wasm32 = "res://libgodot_roc.wasm"
+web.debug.wasm32 = "res://libgodot_roc.web.wasm32.nothreads.wasm"
+web.release.wasm32 = "res://libgodot_roc.web.wasm32.nothreads.wasm"
 EOF
 
 # Create godot roc app
 cat > my_game/MyPlayerCharacter.roc << 'EOF'
-app [ready!, process!, init!, physics_process!] {
+app [ready!, process!, scene_init!, physics_process!] {
     roc: "nightly-2026-09-12-220fd47",
     pf: platform "../platform/main.roc",
 }
@@ -143,8 +143,8 @@ import pf.Godot
 class_name = "MyPlayerCharacter"
 parent_class = "CharacterBody3D"
 
-init! : {} => {}
-init! = |_| {
+scene_init! : {} => {}
+scene_init! = |_| {
     _ = Godot.print!("[my_game/MyPlayerCharacter.roc] Hello World!")
     _ = Godot.register_class!(class_name, parent_class)
     {}
@@ -304,6 +304,11 @@ godot --headless --dump-gdextension-interface # gdextension_interface.h
 godot --headless --dump-gdextension-interface-json # gdextension_interface.json
 godot --headless --dump-extension-api # extension_api.json
 
+# Generate api - Part 1.
+roc run src/godot/gdextension_interface.generate.roc > src/godot/gdextension_interface.generated.zig
+
+# Generate api - Part 2.
+
 # Generate godot-zig bindings
 roc check ./main.roc \
 && cat extension_api.json | roc run ./main.roc > generated.zig \
@@ -376,8 +381,14 @@ zig build-obj src/host.zig \
   -OReleaseSmall \
   -fPIC \
   -rdynamic \
-  --name wasm_host
-# Output -> wasm_host.o
+  --name libhost
+# Output -> libhost.o
+
+# inspect what zig built... if it includes the required exported symbols
+wasm-objdump -x libhost.o | grep godot_roc
+
+# Copy into place:
+cp libhost.o platform/targets/wasm32/libhost.o
 
 # or
 # zig build wasm_host
@@ -393,17 +404,33 @@ zig build-obj src/host.zig \
 #        .pic = true, // required for SIDE_MODULE + fn pointers
 #    }),
 #});
-#b.getInstallStep().dependOn(&b.addInstallBinFile(obj.getEmittedBin(), "wasm_host.o").step);
+#b.getInstallStep().dependOn(&b.addInstallBinFile(obj.getEmittedBin(), "libhost.o").step);
 
-emcc wasm_host.o \
+
+# The platform inputs...
+# wasm32: { inputs: [ "wasm_host.wasm", app ],
+#     output: Shared,
+#     # TODO: create or reference github issue#
+#     # TODO: cleanup and remove, when automatic export detection is implemented:
+#     exports: [
+#         "roc_godot_library_init",
+#         # "roc_main" # ... etc.
+#     ]
+# },
+
+roc build --target=wasm32 my_game/MyPlayerCharacter.roc --output=my_game/temp.o
+
+# Inspect what roc built...
+wasm-objdump -x my_game/temp.o | grep godot_roc
+
+emcc my_game/temp.o \
   -o my_game/libgodot_roc.web.wasm32.nothreads.wasm \
   -sSIDE_MODULE=2 \
   -sERROR_ON_UNDEFINED_SYMBOLS=0 \
   -sEXPORTED_FUNCTIONS='["_roc_godot_library_init"]' \
   -O2
+# Output -> my_game/libgodot_roc.web.wasm32.nothreads.wasm
 
-# TODO: Add roc app to wasm. (skipping for now.)
-# roc build --target=wasm32 ./foo.roc --output=./foo.wasm
 
 #Godot > Project > Export > Web > Options > Extensions Support = On (Checked)
 

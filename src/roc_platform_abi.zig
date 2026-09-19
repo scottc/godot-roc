@@ -668,11 +668,15 @@ pub const RocIo = struct {
     }
 
     fn nativeWriteStderr(_: ?*anyopaque, data: []const u8) void {
-        std.Io.File.stderr().writeStreamingAll(std.Io.Threaded.global_single_threaded.io(), data) catch {};
+        _ = data;
+        // TODO: fix for wasm & native target...
+        // std.Io.File.stderr().writeStreamingAll(std.Io.Threaded.global_single_threaded.io(), data) catch {};
     }
 
     fn nativeOnFatal(_: ?*anyopaque) noreturn {
-        std.process.exit(1);
+        // TODO: fix for wasm & native target...
+        // std.process.exit(1);
+        @trap();
     }
 
     fn freestandingWriteStderr(_: ?*anyopaque, _: []const u8) void {}

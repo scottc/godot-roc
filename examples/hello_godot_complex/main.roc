@@ -1,4 +1,4 @@
-app [main!, ready!, process!, init!, physics_process!] {
+app [main!, ready!, process!, scene_init!, physics_process!] {
     roc: "nightly-2026-09-12-220fd47",
     pf: platform "../../platform/main.roc",
     # When released:
@@ -10,9 +10,9 @@ import pf.Godot
 import Player
 import Npc
 
-init! : {} => {}
-init! = |_| {
-    _ = Stdout.line!("...")
+scene_init! : {} => {}
+scene_init! = |_| {
+    _ = Godot.print!("Hello World!")
 
     _ = Player.register_class!()
     _ = Npc.register_class!()
@@ -27,7 +27,7 @@ physics_process! = |class_name, handle, delta| {
         "PlayerCharacter" => Player.physics_process!(handle, delta)
         "NpcCharacter" => Npc.physics_process!(handle, delta)
         _ => {
-            _ = Stdout.line!("Unhandled physics_process! handle ... ${handle.to_str()}")
+            _ = Godot.print!("Unhandled physics_process! handle ... ${handle.to_str()}")
         }
     }
 
@@ -64,7 +64,7 @@ unhandled_input! = |_| {
 
 ready! : {} => {}
 ready! = |_| {
-    # _ = Stdout.line!("[examples/hello_godot_complex/Player.roc] ready!")
+    # _ = Godot.print!("[examples/hello_godot_complex/Player.roc] ready!")
     {}
 }
 

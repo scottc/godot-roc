@@ -4,8 +4,8 @@ import Vector3
 ##
 ## Applications should import `Stdout`, `Stderr`, and `Stdin` instead.
 Host := [].{
+    print! : Str => Try({}, [PrintErr(Str)])
 	register_class! : Str, Str => Try({}, [RegisterClassErr(Str)])
-	print! : Str => Try({}, [PrintErr(Str)])
 
 	#Input.input_is_action_pressed
 	input_is_action_pressed! : Str => U8 # TODO: Str => bool

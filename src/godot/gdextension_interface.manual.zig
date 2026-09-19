@@ -1,21 +1,16 @@
+//!
+//! Godot 4.5.1 - Interface Data types
+//!
+//! A zig port from gdextension_interface.h
+//!
+//! TODO: generate this file.
+//!
+
 // pub const gd = @cImport({
 //     // To update files:
 //     // godot --headless --dump-gdextension-interface
 //     @cInclude("gdextension_interface.h");
 // });
-
-//
-// Godot 4.5.1 - Interface Data types
-//
-// A zig port from gdextension_interface.h
-//
-// TODO: write a roc script that will..
-// decode gdextension_interface.h file.
-// generate the equivilant zig structs.
-//
-// 1. So that they're accurate, no human error in translation.
-// 2. Easy to keep up to date.
-//
 
 pub const GDExtensionInitializationLevel = enum(i32) {
     core = 0,
@@ -178,3 +173,5 @@ pub const GDExtensionClassCreationInfo5 = extern struct {
     call_virtual_with_data_func: ?*anyopaque,
     class_userdata: ?*anyopaque,
 };
+
+pub const GDExtensionStringName = [8]u8;
