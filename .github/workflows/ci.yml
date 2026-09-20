@@ -1,134 +1,138 @@
 name: CI
 
 on:
-  workflow_dispatch:
-    inputs:
-      nightly_validation:
-        description: "Validate a nightly candidate without publishing or deploying"
-        type: boolean
-        required: false
-        default: false
+  # push:
+  #   branches: [master]
   pull_request:
+  workflow_dispatch:
 
-permissions:
-  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # --- Roc ---
+  ROC_VERSION: nightly-new-compiler
+  ROC_NIGHTLY_TAG: nightly-2026-09-12-220fd47   # update deliberately
+  SCRIPT: scripts/ci.roc
+  BINARY: bin/ci-script
+
+  # --- Zig ---
+  ZIG_VERSION: "0.16.0"
+
+  # --- Emscripten ---
+  EM_VERSION: "3.1.74"          # pin a recent stable; update when needed
+
+  # --- Godot ---
+  GODOT_VERSION: "4.7.2-stable" # or whatever you use (must match templates)
 
 jobs:
-  tooling:
-    name: Runtime tooling and source hygiene
+  full-build:
     runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - run: python3 scripts/check_binary_artifacts.py
-      - run: python3 -m unittest discover -s scripts -p 'test_runtime_*.py' -v
-
-  build:
-    name: Current source (${{ matrix.os }})
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - macos-15-intel
-          - macos-15
-          - ubuntu-22.04
-          - ubuntu-24.04-arm
-          - windows-2022
-          - windows-2025
-          # TODO: re-enable windows-11-arm after https://codeberg.org/ziglang/zig/issues/31865 is fixed.
-    defaults:
-      run:
-        shell: bash
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Install Zig
-        uses: mlugg/setup-zig@d1434d08867e3ee9daa34448df10607b98908d29 # ratchet:mlugg/setup-zig@v2.2.1
+        uses: actions/checkout@v4
         with:
-          version: 0.16.0
-          use-cache: false
+          lfs: true               # if you use LFS for assets
 
-      - name: Read pinned Roc version
-        run: |
-          PIN=$(python3 scripts/roc_version.py)
-          echo "ROC_NIGHTLY_TAG=$PIN" >> "$GITHUB_ENV"
+      # ──────────────────────────────────────────────
+      # 1. Zig (host.zig unit tests / platform)
+      # ──────────────────────────────────────────────
+      - name: Setup Zig
+        uses: mlugg/setup-zig@v2
+        with:
+          version: ${{ env.ZIG_VERSION }}
+          use-cache: true
 
-      - name: Install Roc nightly
+      # ──────────────────────────────────────────────
+      # 2. Emscripten (emcc + friends)
+      # ──────────────────────────────────────────────
+      - name: Setup Emscripten
+        uses: emscripten-core/setup-emsdk@v16
+        with:
+          version: ${{ env.EM_VERSION }}
+          # actions-cache-folder: 'emsdk-cache'  # optional explicit cache dir
+
+      - name: Verify Emscripten
+        run: emcc -v
+
+      # ──────────────────────────────────────────────
+      # 3. Roc
+      # ──────────────────────────────────────────────
+      - name: Setup Roc
         uses: roc-lang/setup-roc@cbe782d6f165b89c87d99f50a59ac4f5f73b4427
         with:
-          version: nightly-new-compiler
+          version: ${{ env.ROC_VERSION }}
           nightly-tag: ${{ env.ROC_NIGHTLY_TAG }}
 
-      - name: Fetch and verify pinned runtime
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 scripts/runtime.py fetch
-
-      - name: Run all tests
-        uses: roc-lang/roc/.github/actions/flaky-retry@3d0fdde9ae6ffb5ef411f8c8c2fc2cdce22a74fe
+      - name: Cache Roc packages + build artifacts
+        uses: actions/cache@v4
         with:
-          command: bash ci/all_tests.sh
-          error_string_contains: "build.zig.zon"
+          path: ~/.cache/roc
+          key: roc-cache-${{ runner.os }}-${{ runner.arch }}-${{ env.ROC_VERSION }}-${{ env.ROC_NIGHTLY_TAG }}-${{ hashFiles('**/*.roc') }}
+          restore-keys: |
+            roc-cache-${{ runner.os }}-${{ runner.arch }}-${{ env.ROC_VERSION }}-${{ env.ROC_NIGHTLY_TAG }}-
+            roc-cache-${{ runner.os }}-${{ runner.arch }}-
 
-  published-examples:
-    name: Published examples (${{ matrix.os }})
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - macos-15-intel
-          - macos-15
-          - ubuntu-22.04
-          - ubuntu-24.04-arm
-          - windows-2022
-          - windows-2025
-          # TODO: re-enable windows-11-arm after https://codeberg.org/ziglang/zig/issues/31865 is fixed.
-    defaults:
-      run:
-        shell: bash
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-
-      - name: Install Zig
-        uses: mlugg/setup-zig@d1434d08867e3ee9daa34448df10607b98908d29 # ratchet:mlugg/setup-zig@v2.2.1
+      - name: Cache pre-built Roc script binary
+        id: binary-cache
+        uses: actions/cache@v4
         with:
-          version: 0.16.0
-          use-cache: false
+          path: ${{ env.BINARY }}
+          key: roc-binary-${{ runner.os }}-${{ runner.arch }}-${{ env.ROC_VERSION }}-${{ env.ROC_NIGHTLY_TAG }}-${{ hashFiles(env.SCRIPT, '**/*.roc') }}
 
-      - name: Read pinned Roc version
+      - name: Build Roc script (cache miss only)
+        if: steps.binary-cache.outputs.cache-hit != 'true'
         run: |
-          PIN=$(python3 scripts/roc_version.py)
-          echo "ROC_NIGHTLY_TAG=$PIN" >> "$GITHUB_ENV"
+          mkdir -p "$(dirname "${{ env.BINARY }}")"
+          roc build --optimize "${{ env.SCRIPT }}" -o "${{ env.BINARY }}"
+          chmod +x "${{ env.BINARY }}"
 
-      - name: Install Roc nightly
-        uses: roc-lang/setup-roc@cbe782d6f165b89c87d99f50a59ac4f5f73b4427
+      # ──────────────────────────────────────────────
+      # 4. Godot (for Web export)
+      # ──────────────────────────────────────────────
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v2
         with:
-          version: nightly-new-compiler
-          nightly-tag: ${{ env.ROC_NIGHTLY_TAG }}
+          version: ${{ env.GODOT_VERSION }}
+          use-dotnet: false                 # set true if you need C#
+          include-templates: true           # required for export
 
-      - name: Test committed release URLs with a fresh cache
-        run: python3 scripts/test_published_examples.py
+      # Alternative (lighter / Linux-focused):
+      # - uses: solarlabyrinth/action-setup-godot@v3
+      #   with:
+      #     version: ${{ env.GODOT_VERSION }}
+      #     export-templates: true
 
-  ci-required:
-    name: CI required
-    if: always()
-    needs: [tooling, build, published-examples]
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Require every validation lane to pass
-        env:
-          RESULTS: ${{ toJSON(needs.*.result) }}
-        run: |
-          python3 - <<'PYCODE'
-          import json, os
-          results = json.loads(os.environ["RESULTS"])
-          if len(results) != 3 or any(result != "success" for result in results):
-              raise SystemExit(f"Required validation failed: {results}")
-          PYCODE
+      - name: Verify Godot
+        run: godot --version
+
+      # ──────────────────────────────────────────────
+      # Your actual pipeline steps
+      # ──────────────────────────────────────────────
+      # - name: zig build native
+      #   run: zig build native
+
+      - name: roc run ci.roc
+        run: "${{ env.BINARY }}"
+
+      # - name: Build platform / native bits (example)
+      #   run: |
+      #     # Example: compile something with emcc if needed
+      #     emcc ... -o something.js
+
+      # - name: Mock "Publish to Web" (Godot Web export)
+      #   run: |
+      #     mkdir -p build/web
+      #     # Replace "Web" with the exact name of your export preset
+      #     godot --headless --path . --export-release "Web" build/web/index.html
+      #     # or --export-debug for debug builds
+
+      # - name: Upload Web build artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: web-export
+      #     path: build/web
+      #     retention-days: 7

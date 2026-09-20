@@ -1,10 +1,8 @@
 # Godot Roc
-libgodot_roc.so
-libgodot_roc.wasm
-wasm_host.wasm
+*.wasm
 my_game/
-my_rex/
 examples/hello_godot/demo/export/
+examples/hello_godot_complex/demo/export/
 
 # Upstream zig template
 generated-docs/
