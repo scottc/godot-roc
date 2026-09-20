@@ -1,0 +1,5 @@
+Dumping Extension API
+ReX Engine v0.0.1.alpha.898. - https://redotengine.org
+
+ERROR: Cannot open file 'extension_api.json' for writing.
+   at: generate_extension_json_file (/builds/redot-engine/rex-engine/core/extension/extension_api_dump.cpp:1356)
