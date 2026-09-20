@@ -7,9 +7,23 @@
 ///! don't forget to use the is_wasm_target flag where appropriate.
 const std = @import("std");
 const builtin = @import("builtin");
-const gde_if = @import("godot/gdextension_interface.manual.zig");
-const eapi = @import("godot/extension_api.zig");
 const abi = @import("roc_platform_abi.zig");
+
+// godot 4.7.2
+const gde_if = @import("godot/gdextension_interface.manual.zig");
+const eapi = @import("godot/extension_api.manual.zig");
+// TODO: generated bindings bindings...
+// TODO: full first-class multi-engine support.
+
+// godot 4.7.2 hashes... These need to be accurate.
+const CHARACTERBODY3D_IS_ON_FLOOR_HASH = 36873697;
+const PHYSICSBODY3D_GET_GRAVITY_HASH = 3360562783;
+const MOVE_AND_SLIDE_HASH = 2240911060; // extension_api.json -> classes -> CharacterBody3D -> methods -> move_and_slide -> hash
+const SET_VELOCITY_HASH = 3460891852; // extension_api.json -> classes -> CharacterBody3D -> methods -> set_velocity -> hash
+const GET_VELOCITY_HASH = 3360562783; // extension_api.json -> classes -> CharacterBody3D -> methods -> set_velocity -> hash
+const INPUT_IS_ACTION_PRESSED_HASH = 1558498928; // extension_api.json → Input.is_action_pressed
+const IS_EDITOR_HINT_HASH = 36873697;
+const _ready_HASH = 3218959716;
 
 //
 // Imports from roc.
@@ -537,12 +551,7 @@ fn getMethodBind(class_name: [:0]const u8, method_name: [:0]const u8, hash: i64)
 
 fn ensureMethodBinds() void {
     //std.debug.print("[./platform/src/native_host.zig]: ensureMethodBinds()\n", .{});
-
     if (g_mb_move_and_slide != null) return;
-
-    const MOVE_AND_SLIDE_HASH = 2240911060; // extension_api.json -> classes -> CharacterBody3D -> methods -> move_and_slide -> hash
-    const SET_VELOCITY_HASH = 3460891852; // extension_api.json -> classes -> CharacterBody3D -> methods -> set_velocity -> hash
-    const GET_VELOCITY_HASH = 3360562783; // extension_api.json -> classes -> CharacterBody3D -> methods -> set_velocity -> hash
 
     g_mb_move_and_slide = getMethodBind("CharacterBody3D", "move_and_slide", MOVE_AND_SLIDE_HASH);
     g_mb_set_velocity = getMethodBind("CharacterBody3D", "set_velocity", SET_VELOCITY_HASH);
@@ -623,8 +632,6 @@ fn ensureInput() void {
     var input_name = makeStringName("Input");
     g_input = global_get_singleton(@ptrCast(&input_name));
 
-    const INPUT_IS_ACTION_PRESSED_HASH = 1558498928; // extension_api.json → Input.is_action_pressed
-
     g_mb_is_action_pressed = getMethodBind("Input", "is_action_pressed", INPUT_IS_ACTION_PRESSED_HASH);
 }
 
@@ -678,9 +685,6 @@ var g_mb_get_gravity: gde_if.GDExtensionMethodBindPtr = null;
 
 fn ensureFloorBinds() void {
     if (g_mb_is_on_floor != null) return;
-
-    const CHARACTERBODY3D_IS_ON_FLOOR_HASH = 36873697;
-    const PHYSICSBODY3D_GET_GRAVITY_HASH = 3360562783;
 
     g_mb_is_on_floor = getMethodBind("CharacterBody3D", "is_on_floor", CHARACTERBODY3D_IS_ON_FLOOR_HASH);
     g_mb_get_gravity = getMethodBind("CharacterBody3D", "get_gravity", PHYSICSBODY3D_GET_GRAVITY_HASH);
@@ -767,7 +771,6 @@ fn ensureEngine() void {
         *const fn (gde_if.GDExtensionConstStringNamePtr) callconv(.c) gde_if.GDExtensionObjectPtr,
     );
 
-    const IS_EDITOR_HINT_HASH = 36873697;
     var name = makeStringName("Engine");
     g_engine = global_get_singleton(@ptrCast(&name));
     g_mb_is_editor_hint = getMethodBind("Engine", "is_editor_hint", IS_EDITOR_HINT_HASH);
@@ -809,13 +812,10 @@ fn getVirtual(
 ) callconv(.c) ?gde_if.GDExtensionClassCallVirtual {
     _ = class_userdata;
     //_ = name;
-    //_ = hash; // can use later for fast matching
 
     // std.debug.print("roc_godot: getVirtual(class_userdata: ?*anyopaque = {any}, name: gde_if.GDExtensionConstStringNamePtr = {any}, hash: u32 = {any})\n", .{ class_userdata, name, hash });
 
-    // "_ready", hash == 3218959716
     // if (stringNameEq(name, "_ready")) { // helper function, so we can find the _ready hash.
-    const _ready_HASH = 3218959716;
     if (hash == _ready_HASH) {
         // std.debug.print("Is _ready = {any}, {any}, hash = {any})\n", .{ class_userdata, name, hash });
         return onReady;

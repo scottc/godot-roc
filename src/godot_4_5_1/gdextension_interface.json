@@ -1,0 +1,8 @@
+godot4.5 --headless --dump-gdextension-interface-json
+Godot Engine v4.5.1.stable.nixpkgs.f62fdbde1 - https://godotengine.org
+
+ERROR: Cannot open X509CertificateMbedTLS file 'False'.
+   at: load (modules/mbedtls/crypto_mbedtls.cpp:160)
+ERROR: TLS handshake error: -9984
+   at: _do_handshake (modules/mbedtls/stream_peer_mbedtls.cpp:88)
+mbedtls error: returned -0x2700

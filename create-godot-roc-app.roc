@@ -164,6 +164,7 @@ main! = |_args| {
 
 	# emcc
 	# Ideally, roc could emit a "wasm32-emscripten SIDE_MODULE=2"
+	# and then we can drop emcc & emscripten entirely.
 	pr11474 = False
 	if (pr11474) { # This depends on https://github.com/roc-lang/roc/pull/11474
     	Stdout.line!("Compiling Final Web GDExtension (wasm32-emscripten SIDE_MODULE=2)")?
@@ -209,7 +210,11 @@ main! = |_args| {
 		\\#    - MeshInstance3D
 		\\#    - CollisionShape3D
 		\\#
-		\\# 4) Edit my_game/MyPlayerCharacter.roc
+		\\# 4) Edit:
+		\\#    - my_game/MyPlayerCharacter.roc
+		\\#
+		\\# 5) Build:
+		\\#    - roc build my_game/MyPlayerCharacter.roc --output=my_game/libgodot_roc.so
 		\\#
 		\\# 5) Visit:
 		\\#    - https://docs.godotengine.org/en/stable/
@@ -217,22 +222,49 @@ main! = |_args| {
 		\\#    - https://roc-lang.org/
 		\\#
 		\\
-		\\Launch Godot? [y/N]:
+		\\Launch Game Engine Editor UI? [1/2/3/4/N]:
+		\\[latest, recommended]      godot = 1
+		\\[compatability]         godot4.5 = 2
+		\\[faster, more features]    redot = 3
+		\\[fastest, experimental]      rex = 4
+		\\                              NO = n
 	)?
+	# TODO: print exact versions?
 
 	match (Stdin.line!()?) {
-	    "y" | "Y" | "yes" | "Yes" | "YES" => {
-           	Stdout.line!("Godot editor launch...")?
+        "1" | "godot" | "y" | "Y" | "yes" | "Yes" | "YES" => {
+           	Stdout.line!("Launching 'godot'...")?
            	_godot_out = Cmd.exec!("godot", [
                	"my_game/project.godot",
            	])?
             {}
-		}
-		"n" | "N" | "no" => {
-		    {} # do nothing
+        }
+        "2" | "godot4.5" => {
+           	Stdout.line!("Launching 'godot4.5'...")?
+           	_godot_out = Cmd.exec!("godot4.5", [
+               	"my_game/project.godot",
+           	])?
+            {}
+        }
+        "3" | "redot" => {
+           	Stdout.line!("Launching 'redot'...")?
+           	_godot_out = Cmd.exec!("redot", [
+               	"my_game/project.godot",
+           	])?
+            {}
+        }
+        "4" | "rex" => {
+           	Stdout.line!("Launching 'rex'...")?
+           	_godot_out = Cmd.exec!("rex", [
+               	"my_game/project.godot",
+           	])?
+            {}
+        }
+        "0" | "5" | "n" | "N" | "no" | "NO" => {
+		    {} # do nothing, explictly.
 		}
 		_ => {
-		    {} # default: do nothing.
+		    {} # do nothing, implicit default.
 		}
     }
 

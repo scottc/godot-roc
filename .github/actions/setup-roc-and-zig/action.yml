@@ -1,0 +1,54 @@
+name: 'Setup Roc + Zig'
+description: 'Installs pinned Roc + Zig with good caching. Ready for platform host tests.'
+
+inputs:
+  roc-version:
+    default: 'nightly-new-compiler'
+  nightly-tag:
+    default: ''
+  zig-version:
+    default: '0.16.0'
+  script:
+    description: 'Optional Roc script to pre-build & run'
+    required: false
+  binary:
+    default: 'bin/roc-script'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Zig
+      uses: mlugg/setup-zig@v2
+      with:
+        version: ${{ inputs.zig-version }}
+        use-cache: true
+
+    - name: Setup Roc
+      uses: roc-lang/setup-roc@cbe782d6f165b89c87d99f50a59ac4f5f73b4427
+      with:
+        version: ${{ inputs.roc-version }}
+        nightly-tag: ${{ inputs.nightly-tag }}
+
+    - name: Cache Roc packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/roc
+        key: roc-cache-${{ runner.os }}-${{ runner.arch }}-${{ inputs.roc-version }}-${{ inputs.nightly-tag }}-${{ hashFiles('**/*.roc') }}
+        restore-keys: |
+          roc-cache-${{ runner.os }}-${{ runner.arch }}-${{ inputs.roc-version }}-${{ inputs.nightly-tag }}-
+
+    - name: Cache + build Roc script (if provided)
+      if: inputs.script != ''
+      id: binary-cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ inputs.binary }}
+        key: roc-binary-${{ runner.os }}-${{ runner.arch }}-${{ inputs.roc-version }}-${{ inputs.nightly-tag }}-${{ hashFiles(inputs.script, '**/*.roc') }}
+
+    - name: Build script on miss
+      if: inputs.script != '' && steps.binary-cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        mkdir -p "$(dirname "${{ inputs.binary }}")"
+        roc build --optimize "${{ inputs.script }}" -o "${{ inputs.binary }}"
+        chmod +x "${{ inputs.binary }}"

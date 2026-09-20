@@ -7,13 +7,19 @@ Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game E
 
 ## Requirements
 
+- `roc-0.0.0` or newer is required.
+- A compatible game engine (`godot`, `redot`, `rex`, etc) of your choice is required.
+- `zig-0.16.0` or newer is required until we've shipped our first release.
+- `nix` is **optional**, but recommended.
+- `emcc` (from emscripten toolchain) is optional (for publish to web).
+
+The recommended approach is to use the [nix package manager](https://nixos.org/) (with [flakes enabled](https://nixos.wiki/wiki/Flakes)). To install the required tools in a reproducible development environment.
+
 ```sh
 nix develop
 # roc: 0.0.0
 # zig: 0.16.0
 ```
-
-The recommended approach is to use the [nix package manager](https://nixos.org/) (with [flakes enabled](https://nixos.wiki/wiki/Flakes)). To install the required tools in a reproducible development environment. **Nix is optional**, roc is required, zig is required until we've shipped our first release.
 
 Or you can install the required tools manually.
 
@@ -108,30 +114,35 @@ nix flake update
 # Also see: flakes/[package]-nix/flake.nix, for maintained flakes.
 
 # Dump C & json bindings
+cd src/godot
 godot --headless --dump-gdextension-interface # gdextension_interface.h
 godot --headless --dump-gdextension-interface-json # gdextension_interface.json
 godot --headless --dump-extension-api # extension_api.json
 
+cd src/godot_4_5_1
 godot4.5 --headless --dump-gdextension-interface # gdextension_interface.h
-godot4.5 --headless --dump-gdextension-interface-json # gdextension_interface.json
+# godot4.5 --headless --dump-gdextension-interface-json # gdextension_interface.json # slow?
 godot4.5 --headless --dump-extension-api # extension_api.json
 
+cd src/redot
 redot --headless --dump-gdextension-interface # gdextension_interface.h
-redot --headless --dump-gdextension-interface-json # gdextension_interface.json
+# redot --headless --dump-gdextension-interface-json # gdextension_interface.json # slow?
 redot --headless --dump-extension-api # extension_api.json
 
+cd src/rex
 rex --headless --dump-gdextension-interface # gdextension_interface.h
-rex --headless --dump-gdextension-interface-json # gdextension_interface.json
+# rex --headless --dump-gdextension-interface-json # gdextension_interface.json # slow?
 rex --headless --dump-extension-api # extension_api.json
+
+# Note: Schema can be found here:
+# https://github.com/godotengine/godot/blob/d21670318fab526f0f651ebbe16e88363143ff07/core/extension/gdextension_interface.schema.json
 
 # Generate Zig Bindings
 roc run src/godot/gdextension_interface.generate.roc
 roc run src/godot/extension_api.generate.roc
 
-# Create & build a new project
+# Test & ensure everything builds & runs correctly.
 roc run create-godot-roc-app.roc
-
-# Test and ensure that things work.
 
 # add changes to git, commit, push.
 ```

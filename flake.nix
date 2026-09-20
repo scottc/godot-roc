@@ -40,8 +40,6 @@
         devShells.default = pkgs.mkShell {
           packages = [
             pkgs.zig
-            pkgs.python3
-            pkgs.gh
             pkgs.emscripten # godot 4.5 docs expects emscripten 3.1.62+ when building web templates.
             pkgs.wabt # for wasm-objdump, cli helper utility
 
@@ -77,12 +75,9 @@
 # =Optional=
 # emcc:         $(emcc -v 2>&1 | head -n1)
 # wasm-objdump: $(wasm-objdump --version)
-# python:       $(python3 --version)
-# gh:           $(gh --version 2>&1 | head -n1)
 #
-# Tip:
-# You can now follow the build & run instructions here:
-# https://github.com/scottc/godot-roc
+# Tip - To get started run the following command:
+# roc run create-godot-roc-app.roc
 # "
           '';
 

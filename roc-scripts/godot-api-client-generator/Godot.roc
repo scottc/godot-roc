@@ -8,6 +8,8 @@ Godot := {
     # empty void module type if you only need nested types
 }.{
 
+    OptionalField(a) : Try(a, [Missing])
+
     ## Root document from `godot --dump-extension-api`
     ## extension_api.json
     ExtensionApi : {
