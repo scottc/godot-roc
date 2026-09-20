@@ -14,8 +14,8 @@ env:
   # --- Roc ---
   ROC_VERSION: nightly-new-compiler
   ROC_NIGHTLY_TAG: nightly-2026-09-12-220fd47   # update deliberately
-  SCRIPT: scripts/ci.roc
-  BINARY: bin/ci-script
+  SCRIPT: ci.roc
+  BINARY: bin/ci
 
   # --- Zig ---
   ZIG_VERSION: "0.16.0"
@@ -75,21 +75,6 @@ jobs:
           restore-keys: |
             roc-cache-${{ runner.os }}-${{ runner.arch }}-${{ env.ROC_VERSION }}-${{ env.ROC_NIGHTLY_TAG }}-
             roc-cache-${{ runner.os }}-${{ runner.arch }}-
-
-      - name: Cache pre-built Roc script binary
-        id: binary-cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.BINARY }}
-          key: roc-binary-${{ runner.os }}-${{ runner.arch }}-${{ env.ROC_VERSION }}-${{ env.ROC_NIGHTLY_TAG }}-${{ hashFiles(env.SCRIPT, '**/*.roc') }}
-
-      - name: Build Roc script (cache miss only)
-        if: steps.binary-cache.outputs.cache-hit != 'true'
-        run: |
-          mkdir -p "$(dirname "${{ env.BINARY }}")"
-          roc build --optimize "${{ env.SCRIPT }}" -o "${{ env.BINARY }}"
-          chmod +x "${{ env.BINARY }}"
-
       # ──────────────────────────────────────────────
       # 4. Godot (for Web export)
       # ──────────────────────────────────────────────
@@ -110,11 +95,33 @@ jobs:
         run: godot --version
 
       # ──────────────────────────────────────────────
+      # 5. Build CI Script
+      # ──────────────────────────────────────────────
+      - name: Cache pre-built Roc script binary
+        id: binary-cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.BINARY }}
+          key: roc-binary-${{ runner.os }}-${{ runner.arch }}-${{ env.ROC_VERSION }}-${{ env.ROC_NIGHTLY_TAG }}-${{ hashFiles(env.SCRIPT, '**/*.roc') }}
+
+      - name: Build Roc script (cache miss only)
+        if: steps.binary-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p "$(dirname "${{ env.BINARY }}")"
+          roc build --opt=speed --output="${{ env.BINARY }}" "${{ env.SCRIPT }}"
+          chmod +x "${{ env.BINARY }}"
+
+
+
+      # ──────────────────────────────────────────────
       # Your actual pipeline steps
       # ──────────────────────────────────────────────
       # - name: zig build native
       #   run: zig build native
 
+      # Maybe this is a bad idea for CI...
+      # As each of the steps are not broken out...
+      # But at least we get type checking etc.
       - name: roc run ci.roc
         run: "${{ env.BINARY }}"
 
