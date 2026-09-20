@@ -1,15 +1,15 @@
+> [!IMPORTANT]   
+> This project is under development, and there are missing or incomplete features.
+
 # Godot Roc
 
 Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game Engine.
-
-> [!IMPORTANT]   
-> This project is still under development, and there are missing or incomplete features.
 
 ## Requirements
 
 ```sh
 nix develop
-# roc: Roc compiler version debug-no-git
+# roc: 0.0.0
 # zig: 0.16.0
 ```
 
@@ -132,4 +132,6 @@ roc run src/godot/extension_api.generate.roc
 roc run create-godot-roc-app.roc
 
 # Test and ensure that things work.
+
+# add changes to git, commit, push.
 ```
