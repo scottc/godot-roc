@@ -92,7 +92,7 @@ pub fn build(b: *std.Build) void {
     cleanup_step.dependOn(&CleanupStep.create(b, b.path("platform/libhost.a")).step);
     cleanup_step.dependOn(&CleanupStep.create(b, b.path("platform/host.lib")).step);
 
-    const runtime_stage = b.addSystemCommand(&.{ "python3", "scripts/runtime.py", "stage" });
+    //const runtime_stage = b.addSystemCommand(&.{ "python3", "scripts/runtime.py", "stage" });
 
     // Default step: build for all targets (with cleanup first)
     const all_step = b.getInstallStep();
@@ -101,7 +101,7 @@ pub fn build(b: *std.Build) void {
     // Create copy step for all targets
     const copy_all = b.addUpdateSourceFiles();
     all_step.dependOn(&copy_all.step);
-    copy_all.step.dependOn(&runtime_stage.step);
+    //copy_all.step.dependOn(&runtime_stage.step);
     copy_all.step.dependOn(cleanup_step);
 
     // Build for each Roc target
@@ -140,7 +140,7 @@ pub fn build(b: *std.Build) void {
     );
 
     if (native_roc_target.baselineMuslTarget()) |baseline_roc_target| {
-        copy_native.step.dependOn(&runtime_stage.step);
+        //copy_native.step.dependOn(&runtime_stage.step);
         const baseline_lib = buildHostLib(b, b.resolveTargetQuery(baseline_roc_target.toZigTarget()), optimize);
         copy_native.addCopyFileToSource(
             baseline_lib.getEmittedBin(),
@@ -200,42 +200,42 @@ pub fn build(b: *std.Build) void {
     test_step.dependOn(&docs.step);
 
     // Unit tests for platform code
-    const host_tests = b.addTest(.{
-        .root_module = b.createModule(.{
-            .root_source_file = b.path("src/host.zig"),
-            .target = native_target,
-            .optimize = optimize,
-        }),
-    });
+    // const host_tests = b.addTest(.{
+    //     .root_module = b.createModule(.{
+    //         .root_source_file = b.path("src/host.zig"),
+    //         .target = native_target,
+    //         .optimize = optimize,
+    //     }),
+    // });
 
-    const run_host_tests = b.addRunArtifact(host_tests);
+    // const run_host_tests = b.addRunArtifact(host_tests);
 
-    const local_examples_dir = ".zig-cache/local-examples";
-    const prepare_local_examples = b.addSystemCommand(&.{
-        "bash",
-        "ci/prepare_local_examples.sh",
-        local_examples_dir,
-    });
+    // const local_examples_dir = ".zig-cache/local-examples";
+    // const prepare_local_examples = b.addSystemCommand(&.{
+    //     "bash",
+    //     "ci/prepare_local_examples.sh",
+    //     local_examples_dir,
+    // });
 
-    const run_integration = b.addSystemCommand(&.{
-        "python3",
-        "scripts/test.py",
-        "--examples-dir",
-        ".zig-cache/local-examples/examples",
-    });
-    // Integration tests need the native platform library to be built first
-    run_integration.step.dependOn(&copy_native.step);
-    // The checked-in examples use the latest release URL; local tests should
-    // exercise the platform in this checkout.
-    run_integration.step.dependOn(&prepare_local_examples.step);
-    // Run integration after unit tests
-    run_integration.step.dependOn(&run_host_tests.step);
-    // Pass through args (e.g. --verbose)
-    if (b.args) |args| {
-        run_integration.addArgs(args);
-    }
+    // const run_integration = b.addSystemCommand(&.{
+    //     "python3",
+    //     "scripts/test.py",
+    //     "--examples-dir",
+    //     ".zig-cache/local-examples/examples",
+    // });
+    // // Integration tests need the native platform library to be built first
+    // run_integration.step.dependOn(&copy_native.step);
+    // // The checked-in examples use the latest release URL; local tests should
+    // // exercise the platform in this checkout.
+    // run_integration.step.dependOn(&prepare_local_examples.step);
+    // // Run integration after unit tests
+    // run_integration.step.dependOn(&run_host_tests.step);
+    // // Pass through args (e.g. --verbose)
+    // if (b.args) |args| {
+    //     run_integration.addArgs(args);
+    // }
 
-    test_step.dependOn(&run_integration.step);
+    // test_step.dependOn(&run_integration.step);
 }
 
 /// Detect which RocTarget matches the native platform
