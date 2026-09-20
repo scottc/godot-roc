@@ -1,5 +1,5 @@
 {
-  description = "godot-roc";
+  description = "godot-roc development environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -15,6 +15,7 @@
     # this can be useful
     # if you want to explicitly stick to a version.
     # We use the short hash here, to be consistant with other useages.
+    # Searchable string: nightly-2026-09-12-220fd47
     roc.url = "github:roc-lang/roc/220fd47?dir=src";
     roc.inputs.nixpkgs.follows = "nixpkgs";
 

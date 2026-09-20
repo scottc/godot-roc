@@ -7,23 +7,7 @@ Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game E
 
 ## Requirements
 
-- `roc-0.0.0` or newer is required.
-- A compatible game engine (`godot`, `redot`, `rex`, etc) of your choice is required.
-- `zig-0.16.0` or newer is required until we've shipped our first release.
-- `nix` is **optional**, but recommended.
-- `emcc` (from emscripten toolchain) is optional (for publish to web).
-
-The recommended approach is to use the [nix package manager](https://nixos.org/) (with [flakes enabled](https://nixos.wiki/wiki/Flakes)). To install the required tools in a reproducible development environment.
-
-```sh
-nix develop
-# roc: 0.0.0
-# zig: 0.16.0
-```
-
-Or you can install the required tools manually.
-
-See `flake.nix` & `flake.lock`, for more details.
+`roc` [nightly-2026-09-12-220fd47](https://github.com/roc-lang/nightlies/releases#release-nightly-2026-09-12-220fd47)
 
 ## Getting Started
 

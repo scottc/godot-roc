@@ -30,6 +30,22 @@ main! = |_args| {
     target_name = "My Game"
     target_destination = Path.from_os_str("my_game")
 
+    Stdout.line!(
+        \\ Which engine [1/2/3/4]?
+  		\\[latest, recommended]      godot = 1
+		\\[compatability]         godot4.5 = 2
+		\\[faster, more features]    redot = 3
+		\\[fastest, experimental]      rex = 4
+    )?
+    target_engine : [Godot, Godot451, Redot, Draconic]
+    target_engine = match(Stdin.line!()?) {
+        "1" => Godot
+        "2" => Godot451
+        "3" => Redot
+        "4" => Draconic
+        _ => Godot
+    }
+
     create_start = Utc.now!()
     Stdout.line!("# Creating godot-roc app \"${target_name}\" in \"${target_destination.display()}\"...")?
 
@@ -67,18 +83,18 @@ main! = |_args| {
 	    Path.join(target_destination, "MyPlayerCharacter.roc"),
 		\\app [ready!, process!, scene_init!, physics_process!] {
 		\\    roc: "nightly-2026-09-12-220fd47",
-		\\    pf: platform "../platform/main.roc",
+		\\    pf: platform "https://github.com/scottc/godot-roc/releases/download/0.0.1-pre-alpha-test1/3KSNNkS4Aj6eRRhnk8ujQ6YELvCg55W9SaU9nx9AqYcq.tar.zst",
 		\\}
 		\\
-		\\import pf.Godot
+		\\import pf.${Str.inspect(target_engine)}
 		\\
 		\\class_name = "MyPlayerCharacter"
 		\\parent_class = "CharacterBody3D"
 		\\
 		\\scene_init! : {} => {}
 		\\scene_init! = |_| {
-		\\    _ = Godot.print!("[my_game/MyPlayerCharacter.roc] Hello World!")
-		\\    _ = Godot.register_class!(class_name, parent_class)
+		\\    _ = ${Str.inspect(target_engine)}.print!("[my_game/MyPlayerCharacter.roc] Hello World!")
+		\\    _ = ${Str.inspect(target_engine)}.register_class!(class_name, parent_class)
 		\\    {}
 		\\}
 		\\
@@ -108,11 +124,11 @@ main! = |_args| {
 	# Precompile?
 
 	# TODO: release a versioned platform, and the app can reference the precompiled release.
-	Stdout.line!("Compiling desktop platform...")?
-	Stdout.line!("zig build native")? # To inform the user
-	zig_desktop_start = Utc.now!()
-	_zig_desktop_out = Cmd.exec!("zig", ["build", "native"])?
-	Stdout.line!("Desktop platform compiled ${(Utc.now!() - zig_desktop_start).to_str()}ns")?
+	# Stdout.line!("Compiling desktop platform...")?
+	# Stdout.line!("zig build native")? # To inform the user
+	# zig_desktop_start = Utc.now!()
+	# _zig_desktop_out = Cmd.exec!("zig", ["build", "native"])?
+	# Stdout.line!("Desktop platform compiled ${(Utc.now!() - zig_desktop_start).to_str()}ns")?
 
 	# compile roc - to native
 	Stdout.line!("Compiling desktop roc app...")?
@@ -123,18 +139,18 @@ main! = |_args| {
 
 
 	# TODO: implement
-	Stdout.line!("Compiling web platform...")?
-	Stdout.line!("zig build-obj native")? # To inform the user
-	zig_web_start = Utc.now!()
-	_zig_web_out = Cmd.exec!("zig", [
-    	"build-obj",
-    	"src/host.zig",
-    	"-target", "wasm32-emscripten",
-    	"-OReleaseSmall",
-    	"-fPIC",
-    	"-rdynamic",
-    	"--name", "libhost",
-	])?
+	# Stdout.line!("Compiling web platform...")?
+	# Stdout.line!("zig build-obj native")? # To inform the user
+	# zig_web_start = Utc.now!()
+	# _zig_web_out = Cmd.exec!("zig", [
+ #    	"build-obj",
+ #    	"src/host.zig",
+ #    	"-target", "wasm32-emscripten",
+ #    	"-OReleaseSmall",
+ #    	"-fPIC",
+ #    	"-rdynamic",
+ #    	"--name", "libhost",
+	# ])?
 	# TODO: move to place
 	# cp libhost.o platform/targets/wasm32/libhost.o
 	# TODO:
@@ -153,7 +169,7 @@ main! = |_args| {
 	#    }),
 	#});
 	#b.getInstallStep().dependOn(&b.addInstallBinFile(obj.getEmittedBin(), "libhost.o").step);
-	Stdout.line!("Web platform compiled ${(Utc.now!() - zig_web_start).to_str()}ns")?
+	# Stdout.line!("Web platform compiled ${(Utc.now!() - zig_web_start).to_str()}ns")?
 
 	# compile roc - to web
 	Stdout.line!("Compiling web roc app...")?
@@ -222,50 +238,41 @@ main! = |_args| {
 		\\#    - https://roc-lang.org/
 		\\#
 		\\
-		\\Launch Game Engine Editor UI? [1/2/3/4/N]:
-		\\[latest, recommended]      godot = 1
-		\\[compatability]         godot4.5 = 2
-		\\[faster, more features]    redot = 3
-		\\[fastest, experimental]      rex = 4
-		\\                              NO = n
+		\\Launch Game Engine Editor UI? [y/N]:
 	)?
-	# TODO: print exact versions?
 
-	match (Stdin.line!()?) {
-        "1" | "godot" | "y" | "Y" | "yes" | "Yes" | "YES" => {
+	# TODO: print exact versions?
+	# TODO: handle y/n
+
+	match (target_engine) {
+        Godot => {
            	Stdout.line!("Launching 'godot'...")?
            	_godot_out = Cmd.exec!("godot", [
                	"my_game/project.godot",
            	])?
             {}
         }
-        "2" | "godot4.5" => {
+        Godot451 => {
            	Stdout.line!("Launching 'godot4.5'...")?
            	_godot_out = Cmd.exec!("godot4.5", [
                	"my_game/project.godot",
            	])?
             {}
         }
-        "3" | "redot" => {
+        Redot => {
            	Stdout.line!("Launching 'redot'...")?
            	_godot_out = Cmd.exec!("redot", [
                	"my_game/project.godot",
            	])?
             {}
         }
-        "4" | "rex" => {
+        Draconic => {
            	Stdout.line!("Launching 'rex'...")?
            	_godot_out = Cmd.exec!("rex", [
                	"my_game/project.godot",
            	])?
             {}
         }
-        "0" | "5" | "n" | "N" | "no" | "NO" => {
-		    {} # do nothing, explictly.
-		}
-		_ => {
-		    {} # do nothing, implicit default.
-		}
     }
 
 	Ok({})

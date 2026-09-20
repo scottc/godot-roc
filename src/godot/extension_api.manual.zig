@@ -6,18 +6,56 @@
 
 const gde_if = @import("gdextension_interface.manual.zig");
 
-// TODO: some kind of object that deals with dependency injection? to make this nicer for us to use?
+pub const Interface = struct {
+    // Raw function pointers – all non-optional after successful init
+    print_error: *const fn (
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        gde_if.GDExtensionBool,
+    ) callconv(.c) void,
+
+    string_name_new_with_utf8_chars: *const fn (
+        gde_if.GDExtensionUninitializedStringNamePtr,
+        [*:0]const u8,
+    ) callconv(.c) void,
+
+    // … every other function you need
+};
+
+///returns function pointer from get_proc_address lookup table function.
+fn fp(
+    gpa: gde_if.GDExtensionInterfaceGetProcAddress,
+    comptime name: [:0]const u8,
+    comptime T: type,
+) !T {
+    const ptr = gpa.?(name.ptr) orelse return error.MissingFunction;
+    return @ptrCast(@alignCast(ptr));
+}
+
+pub fn loadInterface(get_proc_address: gde_if.GDExtensionInterfaceGetProcAddress) !Interface {
+    const gpa = get_proc_address orelse return error.MissingGetProcAddress;
+    return .{
+        .print_error = try fp(gpa, "print_error", *const fn (
+            [*:0]const u8,
+            [*:0]const u8,
+            [*:0]const u8,
+            i32,
+            gde_if.GDExtensionBool,
+        ) callconv(.c) void),
+
+        .string_name_new_with_utf8_chars = try fp(gpa, "string_name_new_with_utf8_chars", *const fn (
+            gde_if.GDExtensionUninitializedStringNamePtr,
+            [*:0]const u8,
+        ) callconv(.c) void),
+
+        // …
+    };
+}
+
 //
-// TODO: enforce the if (get_proc_address == null) return; check, just once?
-//
-// we just need get_proc_address,
-// and we don't want to pass it around everywhere in our code.
-//
-// TODO: determine the most highest performance bindings...
-// Do we just call load once during bindings init?
-// and keep the loaded functions in memory?
-// What about for functions that are not used?
-// Eager or Lazy loading? etc.
+// TODO: delete below, in favor of the above.
 //
 
 //
@@ -34,32 +72,6 @@ pub fn load(get_proc_address: gde_if.GDExtensionInterfaceGetProcAddress, comptim
 //
 // Public extension_api, this should all be generated code:
 //
-
-pub fn print_error(get_proc_address: gde_if.GDExtensionInterfaceGetProcAddress, description: [*:0]const u8, function: [*:0]const u8, file: [*:0]const u8, line: i32, editor_notify: gde_if.GDExtensionBool) void {
-    if (get_proc_address == null) return;
-
-    return load(
-        get_proc_address,
-        "print_error",
-        *const fn (
-            [*:0]const u8,
-            [*:0]const u8,
-            [*:0]const u8,
-            i32,
-            gde_if.GDExtensionBool,
-        ) callconv(.c) void,
-    )(description, function, file, line, editor_notify);
-}
-
-pub fn string_name_new_with_utf8_chars(get_proc_address: gde_if.GDExtensionInterfaceGetProcAddress, sn: gde_if.GDExtensionUninitializedStringNamePtr, text: [*:0]const u8) void {
-    if (get_proc_address == null) return;
-
-    return load(
-        get_proc_address,
-        "string_name_new_with_utf8_chars",
-        *const fn (gde_if.GDExtensionUninitializedStringNamePtr, [*:0]const u8) callconv(.c) void,
-    )(sn, text);
-}
 
 pub fn classdb_construct_object2(get_proc_address: gde_if.GDExtensionInterfaceGetProcAddress, arg: gde_if.GDExtensionConstStringNamePtr) gde_if.GDExtensionObjectPtr {
     return load(
@@ -97,14 +109,3 @@ pub fn classdb_register_extension_class5(get_proc_address: gde_if.GDExtensionInt
         ) callconv(.c) void,
     )(arg1, arg2, arg3, arg4);
 }
-
-// TEMPLATE:
-// pub fn _FUNC_NAME_(get_proc_address: gde_if.GDExtensionInterfaceGetProcAddress, arg1: _TYPE_1_, arg2: _TYPE_2_) _TYPE_3_ {
-//     if (get_proc_address == null) return;
-
-//     return load(
-//         get_proc_address,
-//         "_func_name_",
-//         *const fn (_TYPE_1_, _TYPE_2_) callconv(.c) _TYPE_3_,
-//     )(arg1, arg2);
-// }

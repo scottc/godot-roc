@@ -7,6 +7,8 @@ platform ""
     }
     exposes [
         Godot,
+        Redot,
+        Draconic,
     ]
     packages { roc: "nightly-2026-09-12-220fd47" }
     provides {
@@ -26,9 +28,9 @@ platform ""
         "godot_roc_get_gravity": Host.get_gravity!,
     }
     targets: {
-        inputs_dir: "targets/",
-        x64mac: { inputs: ["libhost.a", app] },
-        arm64mac: { inputs: ["libhost.a", app] },
+        inputs_dir: "../targets/",
+        #x64mac: { inputs: ["libhost.a", app] },
+        #arm64mac: { inputs: ["libhost.a", app] },
         x64musl :{ inputs: [ "libhost.a", app ], output: Shared },
         wasm32: {
             inputs: [ "libhost.o", app ],
@@ -44,14 +46,16 @@ platform ""
             ]
         },
 
-        x64v1musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
-        arm64musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
-        arm64v1musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
-        x64win: { inputs: ["host.lib", app] },
-        arm64win: { inputs: ["host.lib", app] },
+        #x64v1musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
+        #arm64musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
+        #arm64v1musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
+        #x64win: { inputs: ["host.lib", app] },
+        #arm64win: { inputs: ["host.lib", app] },
     }
 
 import Godot
+import Redot
+import Draconic
 import Host
 
 scene_init_for_host! : {} => {}

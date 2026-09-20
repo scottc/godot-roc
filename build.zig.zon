@@ -1,13 +1,13 @@
 .{
-    .name = .roc_platform_template_zig,
-    .version = "0.1.0",
+    .name = .godot_roc,
+    .version = "0.0.1",
     .minimum_zig_version = "0.16.0",
     .dependencies = .{},
-    .fingerprint = 0xb91745a94628a7e0,
+    .fingerprint = 0xaf0c3de2a13730d2,
     .paths = .{
         "build.zig",
         "build.zig.zon",
-        "platform",
+        // "platform",
         "src",
     },
 }

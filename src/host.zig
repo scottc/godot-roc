@@ -55,6 +55,7 @@ const is_native_target = !is_wasm_target;
 // godot GDExtension runtime state
 var get_proc_address: gde_if.GDExtensionInterfaceGetProcAddress = null;
 var library: gde_if.GDExtensionClassLibraryPtr = null;
+var gde: gde_if.Interface = undefined;
 
 // Roc ABI runtime state
 /// Private RocHost used by host helpers and exported runtime symbols.
@@ -85,6 +86,8 @@ export fn roc_godot_library_init(
     get_proc_address = p_get_proc_address;
     library = p_library;
 
+    gde = gde_if.loadInterface(get_proc_address) catch return 0; // zero is failure
+
     r_initialization.* = .{
         // Note: this is for the entire godot scene tree, not when "player changes level".
         .minimum_initialization_level = .scene,
@@ -93,7 +96,7 @@ export fn roc_godot_library_init(
         .deinitialize = &deinitialize,
     };
 
-    return 1;
+    return 1; // non-zero is success.
 }
 
 //
@@ -202,42 +205,15 @@ fn print(comptime fmt: []const u8, args: anytype) void {
     const msg = std.fmt.bufPrintZ(&buf, "[godot-roc] " ++ fmt, args) catch {
         // fallback if format overflowed
         const fallback = "[godot-roc] (print truncated)\n";
-        printError(fallback, "print", "host.zig", @src().line, 0);
+        gde.print_error(fallback, "print", "host.zig", @src().line, 0);
         return;
     };
 
-    printError(msg, "print", "host.zig", @src().line, 0);
-}
-
-///
-/// Usage:
-/// godotPrintError("Something bad happened", "my_func", "host.zig", @src().line, 1)
-///
-/// description = "Something bad happened"
-/// function = "my_func"
-/// file = "host.zig"
-/// line = @src().line
-/// editor_notify = 1
-///
-fn printError(description: [:0]const u8, function: [:0]const u8, file: [:0]const u8, line: i32, editor_notify: gde_if.GDExtensionBool) void {
-    // Native: also hit stderr for terminal runs
     if (comptime is_native_target) {
-        std.debug.print("printError \"{s}\" in {s} @ {s}:{d} & editor_notify={d}", .{ description, function, file, line, editor_notify });
+        std.debug.print("print \"{s}\" in {s} @ {s}:{d} & editor_notify={d}", .{ msg, "print", "host.zig", @src().line, 0 });
     }
 
-    eapi.print_error(get_proc_address, description.ptr, function.ptr, file.ptr, line, editor_notify);
-
-    // optional emscripten logging...
-    // const emscripten_console_log = if (is_wasm_target)
-    //     struct {
-    //         extern fn emscripten_console_log(utf8: [*:0]const u8) void;
-    //     }.emscripten_console_log
-    // else
-    //     null;
-
-    // if (comptime is_wasm_target) {
-    //     if (emscripten_console_log) |log| log(msg.ptr);
-    // }
+    gde.print_error(msg, "print", "host.zig", @src().line, 0);
 }
 
 fn initialize(userdata: ?*anyopaque, level: gde_if.GDExtensionInitializationLevel) callconv(.c) void {
@@ -370,7 +346,7 @@ fn makeStringName(text: [:0]const u8) gde_if.GDExtensionStringName {
 
     var sn: gde_if.GDExtensionStringName = undefined;
 
-    eapi.string_name_new_with_utf8_chars(get_proc_address, @ptrCast(&sn), text.ptr);
+    gde.string_name_new_with_utf8_chars(@ptrCast(&sn), text.ptr);
 
     return sn;
 }

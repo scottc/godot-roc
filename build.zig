@@ -86,7 +86,7 @@ pub fn build(b: *std.Build) void {
     const cleanup_step = b.step("clean", "Remove all built library files");
     for (all_targets) |roc_target| {
         cleanup_step.dependOn(&CleanupStep.create(b, b.path(
-            b.pathJoin(&.{ "platform", "targets", roc_target.targetDir(), roc_target.libFilename() }),
+            b.pathJoin(&.{ "targets", roc_target.targetDir(), roc_target.libFilename() }),
         )).step);
     }
     cleanup_step.dependOn(&CleanupStep.create(b, b.path("platform/libhost.a")).step);
@@ -112,7 +112,7 @@ pub fn build(b: *std.Build) void {
         // Copy to platform/targets/{target}/libhost.a (or host.lib for Windows)
         copy_all.addCopyFileToSource(
             host_lib.getEmittedBin(),
-            b.pathJoin(&.{ "platform", "targets", roc_target.targetDir(), roc_target.libFilename() }),
+            b.pathJoin(&.{ "targets", roc_target.targetDir(), roc_target.libFilename() }),
         );
     }
 
@@ -136,7 +136,7 @@ pub fn build(b: *std.Build) void {
     const copy_native = b.addUpdateSourceFiles();
     copy_native.addCopyFileToSource(
         native_lib.getEmittedBin(),
-        b.pathJoin(&.{ "platform", "targets", native_roc_target.targetDir(), native_roc_target.libFilename() }),
+        b.pathJoin(&.{ "targets", native_roc_target.targetDir(), native_roc_target.libFilename() }),
     );
 
     if (native_roc_target.baselineMuslTarget()) |baseline_roc_target| {
@@ -144,7 +144,7 @@ pub fn build(b: *std.Build) void {
         const baseline_lib = buildHostLib(b, b.resolveTargetQuery(baseline_roc_target.toZigTarget()), optimize);
         copy_native.addCopyFileToSource(
             baseline_lib.getEmittedBin(),
-            b.pathJoin(&.{ "platform", "targets", baseline_roc_target.targetDir(), baseline_roc_target.libFilename() }),
+            b.pathJoin(&.{ "targets", baseline_roc_target.targetDir(), baseline_roc_target.libFilename() }),
         );
         native_step.dependOn(&baseline_lib.step);
     }
@@ -185,19 +185,19 @@ pub fn build(b: *std.Build) void {
     //all_step.dependOn(&gdext_lib.step);
 
     // Docs step: verify Roc docs generation for the platform API.
-    const docs_step = b.step("docs", "Generate Roc platform API docs");
-    const docs = b.addSystemCommand(&.{
-        "roc",
-        "docs",
-        "platform/main.roc",
-        "--output=.zig-cache/roc-docs",
-        "--no-cache",
-    });
-    docs_step.dependOn(&docs.step);
+    // const docs_step = b.step("docs", "Generate Roc platform API docs");
+    // const docs = b.addSystemCommand(&.{
+    //     "roc",
+    //     "docs",
+    //     "platform/main.roc",
+    //     "--output=.zig-cache/roc-docs",
+    //     "--no-cache",
+    // });
+    // docs_step.dependOn(&docs.step);
 
     // Test step: run unit tests and integration tests
-    const test_step = b.step("test", "Run all tests (unit tests and integration tests)");
-    test_step.dependOn(&docs.step);
+    //const test_step = b.step("test", "Run all tests (unit tests and integration tests)");
+    //test_step.dependOn(&docs.step);
 
     // Unit tests for platform code
     // const host_tests = b.addTest(.{
@@ -309,7 +309,7 @@ fn buildHostLib(
     });
 
     // include gdextension_interface.h C header file.
-    host_lib.root_module.addIncludePath(b.path("src/godot"));
+    // host_lib.root_module.addIncludePath(b.path("src/godot"));
 
     // Linux gets compiler-rt from the verified runtime; other targets embed it.
     // host_lib.bundle_compiler_rt = target.result.os.tag != .linux; // Godot
@@ -317,34 +317,3 @@ fn buildHostLib(
 
     return host_lib;
 }
-
-// fn buildSharedLib(
-//     b: *std.Build,
-//     target: std.Build.ResolvedTarget,
-//     optimize: std.builtin.OptimizeMode,
-// ) *std.Build.Step.Compile {
-//     const lib = b.addLibrary(.{
-//         .name = "roc_godot", // libroc_godot.so / .dylib / .dll
-//         .linkage = .static,
-//         .root_module = b.createModule(.{
-//             .root_source_file = b.path("src/gdextension.zig"),
-//             .target = target,
-//             .optimize = optimize,
-//             .strip = optimize != .Debug,
-//             .pic = true, // required for shared libs
-//             .link_libc = true,
-//         }),
-//     });
-
-//     // include gdextension_interface.h C header file.
-//     lib.root_module.addIncludePath(b.path("src/godot"));
-
-//     // Roc app archive from: output: Archive
-//     // Adjust path if roc writes it elsewhere (--output, cwd, etc.)
-//     // lib.root_module.addObjectFile(b.path("main.a")); // "examples/hello_godot/main.a"
-
-//     // Same compiler-rt policy as the static host
-//     //lib.bundle_compiler_rt = target.result.os.tag != .linux;
-
-//     return lib;
-// }
