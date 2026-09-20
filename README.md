@@ -385,12 +385,12 @@ zig build-obj src/host.zig \
 # Output -> libhost.o
 
 # inspect what zig built... if it includes the required exported symbols
-wasm-objdump -x libhost.o | grep godot_roc
+# wasm-objdump -x libhost.o | grep godot_roc
 
 # Copy into place:
 cp libhost.o platform/targets/wasm32/libhost.o
 
-# or
+# TODO:
 # zig build wasm_host
 #const obj = b.addObject(.{
 #    .name = "wasm_host",
@@ -406,46 +406,33 @@ cp libhost.o platform/targets/wasm32/libhost.o
 #});
 #b.getInstallStep().dependOn(&b.addInstallBinFile(obj.getEmittedBin(), "libhost.o").step);
 
-
-# The platform inputs...
-# wasm32: { inputs: [ "wasm_host.wasm", app ],
-#     output: Shared,
-#     # TODO: create or reference github issue#
-#     # TODO: cleanup and remove, when automatic export detection is implemented:
-#     exports: [
-#         "roc_godot_library_init",
-#         # "roc_main" # ... etc.
-#     ]
-# },
-
-roc build --target=wasm32 my_game/MyPlayerCharacter.roc --output=my_game/temp.o
+roc build --target=wasm32 my_game/MyPlayerCharacter.roc --output=my_game/temp.a.wasm
 
 # Inspect what roc built...
-wasm-objdump -x my_game/temp.o | grep godot_roc
+wasm-objdump -x my_game/temp.a.wasm | grep godot_roc
 
-emcc my_game/temp.o \
+# TODO: add wasm32-emscripten (w/ side_module=2 flag) support to roc, then we can skip emcc:
+
+emcc my_game/temp.a.wasm \
   -o my_game/libgodot_roc.web.wasm32.nothreads.wasm \
   -sSIDE_MODULE=2 \
   -sERROR_ON_UNDEFINED_SYMBOLS=0 \
   -sEXPORTED_FUNCTIONS='["_roc_godot_library_init"]' \
-  -O2
+  -O0 \
+  -msimd128
 # Output -> my_game/libgodot_roc.web.wasm32.nothreads.wasm
 
+# Ensure these settings are enabled for the web export.
+# Godot > Project > Export > Web > Options > Extensions Support = On (Checked)
+# Godot > Project > Export > Web > Options > Thread Support = Off (Unchecked)
+godot my_game/project.godot --headless --export-release Web my_game/export/index.html
 
-#Godot > Project > Export > Web > Options > Extensions Support = On (Checked)
-
-#Godot > Project > Export > Web > Options > Thread Support = Off (Unchecked)
-
+# "upload to cloud", it needs to be run via a webserver.
 python3 -m http.server
 
-# It runs, and doesn't crash! yay, but it's just an entrypoint stub, with no behaviour.
+# open brower @ url...
 
-# And errors printed to browser console, because class registration isn't implemented yet.
-
-# index.js:452 Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
-# index.js:452 OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL
-# index.js:452 Build configuration: Emscripten 4.0.20, single-threaded, GDExtension support.
-# installHook.js:1 ERROR: Cannot get class 'PlayerCharacter'.
+# ... various console errors...
 ```
 
 
