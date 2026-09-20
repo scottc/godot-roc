@@ -29,7 +29,7 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 | **Iteration speed in Godot** | Fast Rebuild / reload pipeline. 1 class ~=250/300ms(cache/no-cache) on my potato laptop | Very fast | Fast | Slow–moderate (compile native) |
 | **Performance potential** | [High](https://roc-lang.org/fast) (native extension path) | Good enough for most games | High | Highest (engine-level) |
 | **API coverage** | What the binding exposes | Full engine scripting API | Broad official bindings | Full native access |
-| **Web support** | \[WIP] Implemented, but blocked on emscripten linking | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
+| **Web support** | \[WIP] Experimental | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
 
 *This table is intentionally simplified. Real projects can mix languages (e.g. GDScript for UI + Roc or C# for gameplay + C++ for hotspots).*
 
