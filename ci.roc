@@ -186,7 +186,7 @@ main! = |_args| {
 
 	# TODO: implement
 	Stdout.line!("Compiling web platform...")?
-	Stdout.line!("zig build-obj native")? # To inform the user
+	Stdout.line!("zig build-obj src/host.zig -target wasm32-emscripten -OReleaseSmall -fPIC -rdynamic --name libhost")? # To inform the user
 	zig_web_start = Utc.now!()
 	_zig_web_out = Cmd.exec!("zig", [
     	"build-obj",
