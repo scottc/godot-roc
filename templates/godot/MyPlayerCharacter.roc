@@ -1,6 +1,8 @@
+### MyPlayerCharacter.roc - A player controlled character
+
 import pf.Godot
 
-class_name = "PlayerCharacter"
+class_name = "MyPlayerCharacter"
 parent_class = "CharacterBody3D"
 
 register_class! = || {
@@ -63,3 +65,6 @@ physics_process! = |handle, _delta| {
 
     {}
 }
+
+# Default app modules must have a main! function.
+main! = |_args| {{}}

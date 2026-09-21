@@ -118,6 +118,13 @@ main! = |_args| {
 	)?
 	Stdout.line!("Desktop roc app compiled ${(Utc.now!() - roc_desktop_start).to_str()}ns")?
 
+
+	# emcc
+	# Ideally, roc could emit a "wasm32-emscripten SIDE_MODULE=2"
+	# and then we can drop emcc & emscripten entirely.
+	pr11474 = False
+	if (pr11474) { # This depends on https://github.com/roc-lang/roc/pull/11474
+
 	# TODO: implement
 	Stdout.line!("Compiling web platform...")?
 	Stdout.line!("cd targets/wasm32 && zig build-obj src/host.zig -target wasm32-emscripten -OReleaseSmall -fPIC -rdynamic --name libhost")? # To inform the user
@@ -169,11 +176,7 @@ main! = |_args| {
 	])?
 	Stdout.line!("Roc app compiled ${(Utc.now!() - roc_web_start).to_str()}ns")?
 
-	# emcc
-	# Ideally, roc could emit a "wasm32-emscripten SIDE_MODULE=2"
-	# and then we can drop emcc & emscripten entirely.
-	pr11474 = False
-	if (pr11474) { # This depends on https://github.com/roc-lang/roc/pull/11474
+
     	Stdout.line!("Compiling Final Web GDExtension (wasm32-emscripten SIDE_MODULE=2)")?
     	Stdout.line!("[emcc command here...]")? # To inform the user
     	_emcc_out = Cmd.exec!("emcc", [

@@ -63,3 +63,7 @@ physics_process! = |handle, _delta| {
 
     {}
 }
+
+
+# Default app modules must have a main! function.
+main! = |_args| {{}}
