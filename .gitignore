@@ -1,6 +1,12 @@
 # Godot Roc
 *.wasm
+
+# ci.roc
+ci-out/
+
+# create-godot-roc-app.roc
 my_game/
+
 examples/hello_godot/demo/export/
 examples/hello_godot_complex/demo/export/
 
