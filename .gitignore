@@ -2,7 +2,7 @@
 
 # ci.roc
 ci-out/
-targets/
+platform/targets/
 wip-targets-bak/
 # TODO: write targets into ci-out subdirectory.
 

@@ -58,32 +58,28 @@ main! = |_args| {
     copy_dir!("platform/", Path.join(bundle_workspace, "platform/"))?
     copy_dir!("targets/", Path.join(bundle_workspace, "platform/targets/"))?
 
-   	_bundle_out = run_in_dir!(
-        bundle_workspace,
-   	    Cmd.new("roc")
-            .args([
-                "bundle",
-          		"platform/main.roc",
-          		"platform/targets/wasm32/libhost.o",
-          		#"platform/targets/x64musl/crt1.o").display()}",
-          		#"platform/targets/x64musl/libc.a").display()}",
-          		#"platform/targets/x64musl/libcompiler_rt.a").display()}",
-          		"platform/targets/x64musl/libhost.a",
-          		#"platform/targets/x64musl/libzigc.a").display()}",
-            ])
-	)?
+_bundle_out = run_in_dir!(
+    bundle_workspace,
+    Cmd.new("roc")
+        .args([
+            "bundle",
+      		"platform/main.roc",
+      		"platform/targets/wasm32/libhost.o",
+      		"platform/targets/x64musl/libhost.a",
+        ])
+)?
 
-   	_templates_out = run_in_dir!(
-        bundle_workspace,
-   	    Cmd.new("zip")
-            .args([
-                "-r",
-          		"templates.zip",
-                "."
-                "-i"
-          		"templates/",
-            ])
-	)?
+_templates_out = run_in_dir!(
+    bundle_workspace,
+    Cmd.new("zip")
+        .args([
+            "-r",
+      		"templates.zip",
+            "."
+            "-i"
+      		"templates/",
+        ])
+)?
 
     Stdout.line!(
     \\# Bundle & template is ready:

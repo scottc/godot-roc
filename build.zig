@@ -3,6 +3,9 @@ const builtin = @import("builtin");
 
 /// Roc target definitions matching src/cli/target.zig
 const RocTarget = enum {
+    // wasm32 targets
+    wasm32emscripten,
+
     // x64 (x86_64) targets
     x64mac,
     x64win,
@@ -17,6 +20,7 @@ const RocTarget = enum {
 
     fn toZigTarget(self: RocTarget) std.Target.Query {
         return switch (self) {
+            .wasm32emscripten => .{ .cpu_arch = .wasm32, .os_tag = .emscripten },
             .x64mac => .{ .cpu_arch = .x86_64, .os_tag = .macos },
             .x64win => .{ .cpu_arch = .x86_64, .os_tag = .windows, .abi = .msvc },
             .x64musl => .{ .cpu_arch = .x86_64, .os_tag = .linux, .abi = .musl },
@@ -40,6 +44,12 @@ const RocTarget = enum {
 
     fn targetDir(self: RocTarget) []const u8 {
         return switch (self) {
+            // we can't have dashes, because roc's...
+            // targets: { wasm32: { } }
+            // --target=wasm32
+            // record structure, and cli args.
+            // everything here needs to match roc.
+            .wasm32emscripten => "wasm32",
             .x64mac => "x64mac",
             .x64win => "x64win",
             .x64musl => "x64musl",
@@ -53,6 +63,7 @@ const RocTarget = enum {
 
     fn libFilename(self: RocTarget) []const u8 {
         return switch (self) {
+            .wasm32emscripten => "libhost.o.wasm",
             .x64win, .arm64win => "host.lib",
             else => "libhost.a",
         };
@@ -69,6 +80,7 @@ const RocTarget = enum {
 
 /// All cross-compilation targets for `zig build`
 const all_targets = [_]RocTarget{
+    .wasm32emscripten,
     .x64mac,
     .x64win,
     .x64musl,
@@ -86,13 +98,12 @@ pub fn build(b: *std.Build) void {
     const cleanup_step = b.step("clean", "Remove all built library files");
     for (all_targets) |roc_target| {
         cleanup_step.dependOn(&CleanupStep.create(b, b.path(
-            b.pathJoin(&.{ "targets", roc_target.targetDir(), roc_target.libFilename() }),
+            b.pathJoin(&.{ "platform", "targets", roc_target.targetDir(), roc_target.libFilename() }),
         )).step);
     }
+    cleanup_step.dependOn(&CleanupStep.create(b, b.path("platform/libhost.o.wasm")).step);
     cleanup_step.dependOn(&CleanupStep.create(b, b.path("platform/libhost.a")).step);
     cleanup_step.dependOn(&CleanupStep.create(b, b.path("platform/host.lib")).step);
-
-    //const runtime_stage = b.addSystemCommand(&.{ "python3", "scripts/runtime.py", "stage" });
 
     // Default step: build for all targets (with cleanup first)
     const all_step = b.getInstallStep();
@@ -112,7 +123,7 @@ pub fn build(b: *std.Build) void {
         // Copy to platform/targets/{target}/libhost.a (or host.lib for Windows)
         copy_all.addCopyFileToSource(
             host_lib.getEmittedBin(),
-            b.pathJoin(&.{ "targets", roc_target.targetDir(), roc_target.libFilename() }),
+            b.pathJoin(&.{ "platform", "targets", roc_target.targetDir(), roc_target.libFilename() }),
         );
     }
 
@@ -136,7 +147,7 @@ pub fn build(b: *std.Build) void {
     const copy_native = b.addUpdateSourceFiles();
     copy_native.addCopyFileToSource(
         native_lib.getEmittedBin(),
-        b.pathJoin(&.{ "targets", native_roc_target.targetDir(), native_roc_target.libFilename() }),
+        b.pathJoin(&.{ "platform", "targets", native_roc_target.targetDir(), native_roc_target.libFilename() }),
     );
 
     if (native_roc_target.baselineMuslTarget()) |baseline_roc_target| {
@@ -144,98 +155,12 @@ pub fn build(b: *std.Build) void {
         const baseline_lib = buildHostLib(b, b.resolveTargetQuery(baseline_roc_target.toZigTarget()), optimize);
         copy_native.addCopyFileToSource(
             baseline_lib.getEmittedBin(),
-            b.pathJoin(&.{ "targets", baseline_roc_target.targetDir(), baseline_roc_target.libFilename() }),
+            b.pathJoin(&.{ "platform", "targets", baseline_roc_target.targetDir(), baseline_roc_target.libFilename() }),
         );
         native_step.dependOn(&baseline_lib.step);
     }
     native_step.dependOn(&copy_native.step);
     native_step.dependOn(&native_lib.step);
-
-    // const roc_archive = b.addSystemCommand(&.{
-    //     "roc",
-    //     "build",
-    //     // "--no-cache",
-    //     "./examples/hello_godot/main.roc",
-    // });
-
-    // -----------------------------------------------------------------
-    // GDExtension shared library (native only – for Godot testing)
-    // -----------------------------------------------------------------
-    //const gdext_step = b.step("gdextension", "Build shared library for Godot GDExtension");
-
-    // const gdext_lib = buildSharedLib(
-    //     b,
-    //     //b.resolveTargetQuery(native_roc_target.toZigTarget()),
-    //     native_target,
-    //     optimize,
-    // );
-    //gdext_lib.step.dependOn(&roc_archive.step);
-
-    //gdext_lib.root_module.addObjectFile(b.path("zig-out/lib/libhost.a"));
-
-    // Install into zig-out/lib/
-    //b.installArtifact(gdext_lib);
-    //gdext_step.dependOn(&gdext_lib.step);
-
-    //const install_gdext = b.addInstallArtifact(gdext_lib, .{});
-    //gdext_step.dependOn(&install_gdext.step);
-
-    // Also make the default `zig build` produce the shared lib on native
-    // (optional – comment out if you want it only via `zig build gdextension`)
-    //all_step.dependOn(&gdext_lib.step);
-
-    // Docs step: verify Roc docs generation for the platform API.
-    // const docs_step = b.step("docs", "Generate Roc platform API docs");
-    // const docs = b.addSystemCommand(&.{
-    //     "roc",
-    //     "docs",
-    //     "platform/main.roc",
-    //     "--output=.zig-cache/roc-docs",
-    //     "--no-cache",
-    // });
-    // docs_step.dependOn(&docs.step);
-
-    // Test step: run unit tests and integration tests
-    //const test_step = b.step("test", "Run all tests (unit tests and integration tests)");
-    //test_step.dependOn(&docs.step);
-
-    // Unit tests for platform code
-    // const host_tests = b.addTest(.{
-    //     .root_module = b.createModule(.{
-    //         .root_source_file = b.path("src/host.zig"),
-    //         .target = native_target,
-    //         .optimize = optimize,
-    //     }),
-    // });
-
-    // const run_host_tests = b.addRunArtifact(host_tests);
-
-    // const local_examples_dir = ".zig-cache/local-examples";
-    // const prepare_local_examples = b.addSystemCommand(&.{
-    //     "bash",
-    //     "ci/prepare_local_examples.sh",
-    //     local_examples_dir,
-    // });
-
-    // const run_integration = b.addSystemCommand(&.{
-    //     "python3",
-    //     "scripts/test.py",
-    //     "--examples-dir",
-    //     ".zig-cache/local-examples/examples",
-    // });
-    // // Integration tests need the native platform library to be built first
-    // run_integration.step.dependOn(&copy_native.step);
-    // // The checked-in examples use the latest release URL; local tests should
-    // // exercise the platform in this checkout.
-    // run_integration.step.dependOn(&prepare_local_examples.step);
-    // // Run integration after unit tests
-    // run_integration.step.dependOn(&run_host_tests.step);
-    // // Pass through args (e.g. --verbose)
-    // if (b.args) |args| {
-    //     run_integration.addArgs(args);
-    // }
-
-    // test_step.dependOn(&run_integration.step);
 }
 
 /// Detect which RocTarget matches the native platform
@@ -301,7 +226,11 @@ fn buildHostLib(
         .root_module = b.createModule(.{
             .root_source_file = b.path("src/host.zig"),
             .target = target,
-            .optimize = optimize,
+            // WORKAROUND: Bug in zig 0.16.0 - for wasm32-emscripten target in std library.
+            // https://ziggit.dev/t/0-16-0-wasm32-emscripten-fails-to-build-because-of-default-panic-handler-recommended-workaround/15052
+            // https://codeberg.org/ziglang/zig/pulls/31850
+            .optimize = if (target.result.os.tag == .emscripten) .ReleaseFast else optimize,
+            //.optimize = optimize,
             .strip = optimize != .Debug,
             .pic = true,
             .link_libc = true,

@@ -13,15 +13,7 @@ Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game E
 
 ## Getting Started
 
-> [!NOTE]
-> For security best practices, godot-roc aims to keep a minimal attack surface.
->
-> While scaffolding tools provide a convenient developer experience, however this is yet another opportunity for an attack vector for malware.
->
-> As such, we will intentionally **NOT** be providing a `./create-godot-roc-app` tool or shell script, nor do we recommend using one.
->
-> Instead we offer static plain text [templates.zip](https://github.com/scottc/godot-roc/releases/download/0.0.1-pre-alpha-test2/templates.zip)`/templates/*`.
-> `sha256:be5cb566978a9c68f4e3eabd8fc2bd8ec1597a1a1f098f42320ead3fae937daa`
+Project template [templates.zip](https://github.com/scottc/godot-roc/releases/download/0.0.1-pre-alpha-test2/templates.zip)`/templates/*`: `sha256:be5cb566978a9c68f4e3eabd8fc2bd8ec1597a1a1f098f42320ead3fae937daa`
 
 ```sh
 # Extract & copy template to your desired location.
@@ -118,3 +110,33 @@ cat my_game/roc.gdextension
 # Ensure the entry_symbol is correct.
 # Ensure godot's stdout is not printing any errors, if so read them carefully.
 ```
+
+## Upgrading
+
+1) Find latest release from the [releases page](https://github.com/scottc/godot-roc/releases).
+
+2) Expand the Assets section.
+
+3) Find and replace the `platform` url in your `main.roc` file.
+
+#### 0.0.1-pre-alpha-test2
+```roc
+## My Project
+app [ready!, process!, scene_init!, physics_process!] {
+    roc: "nightly-2026-09-12-220fd47",
+    pf: platform "https://github.com/scottc/godot-roc/releases/download/0.0.1-pre-alpha-test2/GbukRHC46qgdGqBVnpcSBVuSjZpT2GEC2KPV1B5Ddvhw.tar.zst",
+}
+```
+
+#### 0.0.1-pre-alpha-test1
+```roc
+## My Project
+app [ready!, process!, scene_init!, physics_process!] {
+    roc: "nightly-2026-09-12-220fd47",
+    pf: platform "https://github.com/scottc/godot-roc/releases/download/0.0.1-pre-alpha-test1/3KSNNkS4Aj6eRRhnk8ujQ6YELvCg55W9SaU9nx9AqYcq.tar.zst",
+}
+```
+
+4) Run: `roc check main.roc`, to find and fix any breaking changes.
+
+5) Enjoy.

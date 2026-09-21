@@ -29,10 +29,10 @@ platform ""
     }
     targets: {
         inputs_dir: "targets/",
-        #x64mac: { inputs: ["libhost.a", app] },
-        #arm64mac: { inputs: ["libhost.a", app] },
+        #x64mac: { inputs: ["libhost.a", app], output: Shared },
+        #arm64mac: { inputs: ["libhost.a", app], output: Shared },
         x64musl :{ inputs: [ "libhost.a", app ], output: Shared },
-        wasm32: {
+        wasm32emscripten: {
             inputs: [ "libhost.o", app ],
             # depends on PR: https://github.com/roc-lang/roc/pull/11474
             output: Archive,
@@ -42,15 +42,19 @@ platform ""
             # Linked WebAssembly targets must explicitly declare their host-visible function exports.
             exports: [
                 "roc_godot_library_init",
-                # ... etc.
             ]
         },
-
-        #x64v1musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
-        #arm64musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
-        #arm64v1musl: { inputs: ["crt1.o", "libhost.a", app, "libc.a", "libzigc.a", "libcompiler_rt.a"] },
-        #x64win: { inputs: ["host.lib", app] },
-        #arm64win: { inputs: ["host.lib", app] },
+        # x64v1musl: { inputs: ["libhost.a", app,
+        # #"libc.a", "libzigc.a", "libcompiler_rt.a"
+        # ], output: Shared },
+        # arm64musl: { inputs: [ "libhost.a", app,
+        #     #"libc.a", "libzigc.a", "libcompiler_rt.a"
+        # ], output: Shared },
+        # arm64v1musl: { inputs: [ "libhost.a", app,
+        # #"libc.a", "libzigc.a", "libcompiler_rt.a"
+        # ], output: Shared },
+        x64win: { inputs: ["host.lib", app], output: Shared },
+        arm64win: { inputs: ["host.lib", app], output: Shared },
     }
 
 import Godot

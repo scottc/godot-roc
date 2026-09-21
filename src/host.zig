@@ -7,6 +7,13 @@
 ///! don't forget to use the is_wasm_target flag where appropriate.
 const std = @import("std");
 const builtin = @import("builtin");
+
+// WORKAROUND: zig 0.16.0 windows compiler bug.
+// I don't have a PR or issue# for this one.
+pub const std_options: std.Options = .{
+    .allow_stack_tracing = false,
+};
+
 const abi = @import("roc_platform_abi.zig");
 
 // godot 4.7.2
