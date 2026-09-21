@@ -2,9 +2,10 @@
 
 #
 # Usage:
-# roc run ./create-godot-roc-app.roc [args]
+# roc run ./ci.roc [args]
 #
 
+## Continous Intergration
 app [main!] {
     roc: "nightly-2026-09-12-220fd47",
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.22.2/9zUBxb1LtXYVc4eR4hAtd1WQDwBYDhM6HQdZz1UFCm2m.tar.zst"
@@ -19,55 +20,113 @@ import pf.Cmd
 
 main! : List(OsStr) => Try({}, _)
 main! = |_args| {
+    ci_start = Utc.now!()
     Stdout.line!(
         \\#
         \\# https://github.com/scottc/godot-roc
-        \\# create-godot-roc-app.roc
+        \\#
+        \\# ci.roc
+        \\#
+        \\# Continous Intergration
+        \\#
+        \\# The purpose of this script is to ensure quality & integrity of the codebase.
+        \\#
+        \\# As such we do the following static analysis & tests:
+        \\# - Type check
+        \\# - Unit tests
+        \\# - Lints & code rules
+        \\# - A complete build from start to final product.
+        \\#
+        \\# For all targets & engines...
         \\#
     )?
 
-    # TODO: from args, or stdin wizard?
-    target_name = "My Game"
-    target_destination = Path.from_os_str("my_game")
+    #
+    # Type checks
+    #
 
-    create_start = Utc.now!()
-    Stdout.line!("# Creating godot-roc app \"${target_name}\" in \"${target_destination.display()}\"...")?
+    #
+    # Unit tests
+    #
 
-	Path.create_dir!(target_destination)?
+    #
+    # Lints & code rules
+    #
 
-	# TODO:
-	# Prepare everything in a private Env.temp_dir!()? workspace, so we're atomic?
+    #
+    # Complete build
+    #
 
+    ci_out = "ci-out"
+
+    ci_workspace : Path
+    ci_workspace = Path.join(ci_out, ci_start.to_str()) # Include "unique number" to avoid conflicts, so we can avoid deleting.
+
+    project : Str
+    project = "my_game"
+
+    project_roc_entrypoint : Str
+    project_roc_entrypoint = "MyPlayerCharacter.roc"
+
+    project_godot : Str
+    project_godot = "project.godot"
+
+    project_name : Str
+    project_name = "My Game"
+
+    #project_engine : [Godot, Redot, Draconic] # todo "Godot451"
+    #_project_engine = Godot
+
+    project_target_linux_binary : Str
+    project_target_linux_binary = "libgodot_roc.linux.x86_64.so"
+
+    project_target_web_binary : Str
+    project_target_web_binary = "libgodot_roc.web.wasm32.nothreads.wasm"
+
+    Stdout.line!("# Creating godot-roc app \"${project_name}\" in \"${Path.join(ci_workspace, project).display()}\"...")?
+
+    # Path.delete_dir!(target_destination)?
+    match Path.create_dir!(ci_out) {
+        _ => {
+            {} # suppress AlreadyExists error.
+            # TODO: keep other errors...
+        }
+    }
+
+    Path.create_dir!(ci_workspace)?
+	Path.create_dir!(Path.join(ci_workspace, project))?
+
+	# TODO: this should be imported and shared with the create-godot-roc-app.roc script.
 	Path.write_utf8!(
-	    Path.join(target_destination, "project.godot"),
+	    Path.join(Path.join(ci_workspace, project), project_godot),
         \\config_version=5
         \\[application]
-        \\config/name="${target_name}"
+        \\config/name="${project_name}"
 	)?
 
 	Path.write_utf8!(
-	    Path.join(target_destination, "roc.gdextension"),
+	    Path.join(Path.join(ci_workspace, project), "roc.gdextension"),
         \\[configuration]
         \\entry_symbol = "roc_godot_library_init"
         \\compatibility_minimum = "4.5"
         \\reloadable = true
         \\
         \\[libraries]
-        \\linux.debug.x86_64   = "res://libgodot_roc.so"
-        \\linux.release.x86_64 = "res://libgodot_roc.so"
+        \\linux.debug.x86_64   = "res://${project_target_linux_binary}"
+        \\linux.release.x86_64 = "res://${project_target_linux_binary}"
         \\macos.debug          = "res://libgodot_roc.dylib"
         \\macos.release        = "res://libgodot_roc.dylib"
         \\windows.debug.x86_64 = "res://libgodot_roc.dll"
         \\windows.release.x86_64 = "res://libgodot_roc.dll"
-        \\web.debug.wasm32 = "res://libgodot_roc.web.wasm32.nothreads.wasm"
-        \\web.release.wasm32 = "res://libgodot_roc.web.wasm32.nothreads.wasm"
+        \\web.debug.wasm32 = "res://${project_target_web_binary}"
+        \\web.release.wasm32 = "res://${project_target_web_binary}"
 	)?
 
 	Path.write_utf8!(
-	    Path.join(target_destination, "MyPlayerCharacter.roc"),
+	    Path.join(Path.join(ci_workspace, project), project_roc_entrypoint),
 		\\app [ready!, process!, scene_init!, physics_process!] {
 		\\    roc: "nightly-2026-09-12-220fd47",
-		\\    pf: platform "../platform/main.roc",
+		\\    pf: platform "../../../platform/main.roc",
 		\\}
 		\\
 		\\import pf.Godot
@@ -103,7 +162,7 @@ main! = |_args| {
 		\\}
 	)?
 
-	Stdout.line!("Created godot-roc app: ${Path.display(target_destination)} ${(Utc.now!() - create_start).to_str()}ns")?
+	Stdout.line!("Created godot-roc app: ${Path.join(ci_workspace, project).display()} ${(Utc.now!() - ci_start).to_str()}ns")?
 
 	# Precompile?
 
@@ -116,9 +175,13 @@ main! = |_args| {
 
 	# compile roc - to native
 	Stdout.line!("Compiling desktop roc app...")?
-	Stdout.line!("roc build my_game/MyPlayerCharacter.roc --output=my_game/libgodot_roc.so")? # To inform the user
+	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).display()} --output=${Path.join(Path.join(ci_workspace, project), project_target_linux_binary).display()}")? # To inform the user
 	roc_desktop_start = Utc.now!()
-	_roc_desktop_out = Cmd.exec!("roc", ["build", "my_game/MyPlayerCharacter.roc", "--output=my_game/libgodot_roc.so"])?
+	_roc_desktop_out = Cmd.exec!("roc", [
+	    "build",
+		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
+		"--output=${Path.join(Path.join(ci_workspace, project), project_target_linux_binary).display()}"]
+	)?
 	Stdout.line!("Desktop roc app compiled ${(Utc.now!() - roc_desktop_start).to_str()}ns")?
 
 	# TODO: implement
@@ -136,7 +199,7 @@ main! = |_args| {
 	])?
 
 	# TODO: move to place
-	# cp libhost.o platform/targets/wasm32/libhost.o
+	# mv libhost.o platform/targets/wasm32/libhost.o
 
 	# TODO:
 	# TODO: Add to build.zig:
@@ -158,13 +221,16 @@ main! = |_args| {
 
 
 
-
-
 	# compile roc - to web
 	Stdout.line!("Compiling web roc app...")?
-	Stdout.line!("roc build my_game/MyPlayerCharacter.roc --target=wasm32 --output=my_game/temp.a.wasm")? # To inform the user
+	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).display()} --target=wasm32 --output=${Path.join(Path.join(ci_workspace, project), "temp.a.wasm").display()}")? # To inform the user
 	roc_web_start = Utc.now!()
-	_roc_web_out = Cmd.exec!("roc", ["build", "my_game/MyPlayerCharacter.roc", "--target=wasm32", "--output=my_game/temp.a.wasm"])?
+	_roc_web_out = Cmd.exec!("roc", [
+	    "build",
+		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
+		"--target=wasm32",
+		"--output=${Path.join(Path.join(ci_workspace, project), "temp.a.wasm").display()}"
+	])?
 	Stdout.line!("Roc app compiled ${(Utc.now!() - roc_web_start).to_str()}ns")?
 
 	# emcc
