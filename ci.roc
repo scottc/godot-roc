@@ -198,8 +198,9 @@ main! = |_args| {
     	"--name", "libhost",
 	])?
 
-	# TODO: move to place
-	# mv libhost.o platform/targets/wasm32/libhost.o
+	# TODO: this isn't the cleanest...
+	# we should probably write into the target ci_workspace directory..
+	_rn_out = Path.rename!("libhost.o", "targets/wasm32/libhost.o")?
 
 	# TODO:
 	# TODO: Add to build.zig:
