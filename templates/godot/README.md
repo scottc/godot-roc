@@ -24,6 +24,7 @@ roc build main.roc --ouput=my_game.so
 # Note:
 # Godot should be able to hotreload the changes, see:
 # template/godot/roc.gdextension -> reloadable = true
+# Although, it seems to only reload when the godot window is focused.
 ```
 
 ## Troubleshooting

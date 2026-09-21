@@ -8,7 +8,7 @@ Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game E
 ## Requirements
 
 * `godot-4.5.1` or newer; `godot-4.7.2`, `godot-4.5.1`, `redot-26.2`, `rex-0.0.1`.
-* `roc` [Install](https://roc-lang.org/install) [nightly-2026-09-12-220fd47](https://github.com/roc-lang/nightlies/releases#release-nightly-2026-09-12-220fd47)
+* `roc` [Install](https://roc-lang.org/install) (Pinned Version: [nightly-2026-09-12-220fd47](https://github.com/roc-lang/nightlies/releases#release-nightly-2026-09-12-220fd47))
 * `linux-x86_64` only, (Windows & MacOS support coming soon).
 
 ## Getting Started
@@ -16,12 +16,12 @@ Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game E
 > [!NOTE]
 > For security best practices, godot-roc aims to keep a minimal attack surface.
 >
-> While scaffolding tools provide a convenient developer experience, however this is yet another opporunity for an attack vector for malware.
+> While scaffolding tools provide a convenient developer experience, however this is yet another opportunity for an attack vector for malware.
 >
 > As such, we will intentionally **NOT** be providing a `./create-godot-roc-app` tool or shell script, nor do we recommend using one.
 >
 > Instead we offer static plain text [templates.zip](https://github.com/scottc/godot-roc/releases/download/0.0.1-pre-alpha-test2/templates.zip)`/templates/*`.
-> `sha256:47b642b8d40773e9d4d7b73e4c23f4b6fadc278d66c94e27a8a7fc0a5b2ea43a`
+> `sha256:be5cb566978a9c68f4e3eabd8fc2bd8ec1597a1a1f098f42320ead3fae937daa`
 
 ```sh
 # Extract & copy template to your desired location.
@@ -43,6 +43,7 @@ roc build main.roc --ouput=my_game.so
 # Note:
 # Godot should be able to hotreload the changes, see:
 # template/godot/roc.gdextension -> reloadable = true
+# Although, it seems to only reload when the godot window is focused.
 ```
 
 ## About
