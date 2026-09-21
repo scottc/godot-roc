@@ -99,7 +99,7 @@ jobs:
       # ──────────────────────────────────────────────
       - name: Cache pre-built Roc script binary
         id: binary-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ env.BINARY }}
           key: roc-binary-${{ runner.os }}-${{ runner.arch }}-${{ env.ROC_VERSION }}-${{ env.ROC_NIGHTLY_TAG }}-${{ hashFiles(env.SCRIPT, '**/*.roc') }}
