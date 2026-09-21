@@ -14,7 +14,7 @@ env:
   # --- Roc ---
   ROC_VERSION: nightly-new-compiler
   ROC_NIGHTLY_TAG: nightly-2026-09-12-220fd47   # update deliberately
-  SCRIPT: ci.roc
+  SCRIPT: scripts/ci.roc
   BINARY: bin/ci
 
   # --- Zig ---

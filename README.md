@@ -11,10 +11,27 @@ Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game E
 
 ## Getting Started
 
-Create New Project, Build & Run:
+> [!NOTE]
+> For security best practices, godot-roc aims to keep a minimal attack surface.
+>
+> Scaffolding tools provide a convenient developer experience, however this is yet another opporunity for an attack vector for malware.
+>
+> As such, we will intentionally **NOT** be providing a `./create-godot-roc-app` tool.
+>
+> Instead we offer static plain text `templates/*`, and later `godot-roc-template-0.0.1.zip`, later again via the godot store.
 
 ```sh
-roc run create-godot-roc-app.roc
+# Copy template
+cp templates/godot ~/Projects/my_new_game_project
+
+# Run godot
+godot ~/Projects/my_new_game_project/project.godot
+
+# Build
+roc build ~/Projects/my_new_game_project/main.roc
+# Note:
+# Godot should be able to hotreload the changes, see:
+# template/godot/roc.gdextension -> reloadable = true
 ```
 
 ## About
@@ -126,7 +143,19 @@ roc run src/godot/gdextension_interface.generate.roc
 roc run src/godot/extension_api.generate.roc
 
 # Test & ensure everything builds & runs correctly.
-roc run create-godot-roc-app.roc
+roc run scripts/ci.roc
 
-# add changes to git, commit, push.
+# Bundle new platform version.
+roc run scripts/bundle.roc
+
+# Update readme with new pinned versions?
+# ...
+
+# Push changes.
+git add *
+git commit -m 'Updated versions'
+git push
+
+# Publish new bundled platform version
+# ...
 ```
