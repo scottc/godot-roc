@@ -269235,13 +269235,6 @@
 			]
 		},
 		{
-			"name": "RocHello",
-			"is_refcounted": false,
-			"is_instantiable": true,
-			"inherits": "Node",
-			"api_type": "extension"
-		},
-		{
 			"name": "RootMotionView",
 			"is_refcounted": false,
 			"is_instantiable": true,

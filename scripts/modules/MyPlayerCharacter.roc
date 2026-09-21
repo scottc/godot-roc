@@ -1,6 +1,6 @@
 import pf.Godot
 
-class_name = "Npc"
+class_name = "PlayerCharacter"
 parent_class = "CharacterBody3D"
 
 register_class! = || {

@@ -28,7 +28,7 @@ platform ""
         "godot_roc_get_gravity": Host.get_gravity!,
     }
     targets: {
-        inputs_dir: "../targets/",
+        inputs_dir: "targets/",
         #x64mac: { inputs: ["libhost.a", app] },
         #arm64mac: { inputs: ["libhost.a", app] },
         x64musl :{ inputs: [ "libhost.a", app ], output: Shared },

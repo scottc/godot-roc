@@ -3,6 +3,8 @@
 
 # ci.roc
 ci-out/
+# bundle.roc
+bundle-out/
 
 # create-godot-roc-app.roc
 my_game/

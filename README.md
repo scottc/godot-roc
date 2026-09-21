@@ -16,13 +16,18 @@ Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game E
 >
 > Scaffolding tools provide a convenient developer experience, however this is yet another opporunity for an attack vector for malware.
 >
-> As such, we will intentionally **NOT** be providing a `./create-godot-roc-app` tool.
+> As such, we will intentionally **NOT** be providing a `./create-godot-roc-app` tool, nor do we recommend using one.
 >
 > Instead we offer static plain text `templates/*`, and later `godot-roc-template-0.0.1.zip`, later again via the godot store.
 
 ```sh
 # Copy template
 cp templates/godot ~/Projects/my_new_game_project
+
+# Read the source code
+cat ~/Projects/my_new_game_project/main.roc
+# And double check the platform
+# Before trusting the source code
 
 # Run godot
 godot ~/Projects/my_new_game_project/project.godot
@@ -105,57 +110,4 @@ cat my_game/roc.gdextension
 # Ensure the library filepath is correct.
 # Ensure the entry_symbol is correct.
 # Ensure godot's stdout is not printing any errors, if so read them carefully.
-```
-
-## Updating - For platform maintainers.
-
-```sh
-# Update reproduceable development environment devtools
-nix flake update
-# Also see: flakes/[package]-nix/flake.nix, for maintained flakes.
-
-# Dump C & json bindings
-cd src/godot
-godot --headless --dump-gdextension-interface # gdextension_interface.h
-godot --headless --dump-gdextension-interface-json # gdextension_interface.json
-godot --headless --dump-extension-api # extension_api.json
-
-cd src/godot_4_5_1
-godot4.5 --headless --dump-gdextension-interface # gdextension_interface.h
-# godot4.5 --headless --dump-gdextension-interface-json # gdextension_interface.json # slow?
-godot4.5 --headless --dump-extension-api # extension_api.json
-
-cd src/redot
-redot --headless --dump-gdextension-interface # gdextension_interface.h
-# redot --headless --dump-gdextension-interface-json # gdextension_interface.json # slow?
-redot --headless --dump-extension-api # extension_api.json
-
-cd src/rex
-rex --headless --dump-gdextension-interface # gdextension_interface.h
-# rex --headless --dump-gdextension-interface-json # gdextension_interface.json # slow?
-rex --headless --dump-extension-api # extension_api.json
-
-# Note: Schema can be found here:
-# https://github.com/godotengine/godot/blob/d21670318fab526f0f651ebbe16e88363143ff07/core/extension/gdextension_interface.schema.json
-
-# Generate Zig Bindings
-roc run src/godot/gdextension_interface.generate.roc
-roc run src/godot/extension_api.generate.roc
-
-# Test & ensure everything builds & runs correctly.
-roc run scripts/ci.roc
-
-# Bundle new platform version.
-roc run scripts/bundle.roc
-
-# Update readme with new pinned versions?
-# ...
-
-# Push changes.
-git add *
-git commit -m 'Updated versions'
-git push
-
-# Publish new bundled platform version
-# ...
 ```

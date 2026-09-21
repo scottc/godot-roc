@@ -2,7 +2,7 @@
 
 #
 # Usage:
-# roc run ./ci.roc [args]
+# roc run ci.roc [args]
 #
 
 ## Continous Intergration
@@ -17,6 +17,7 @@ import pf.Stdout
 import pf.Stdin
 import pf.Utc
 import pf.Cmd
+import pf.Env
 
 main! : List(OsStr) => Try({}, _)
 main! = |_args| {
@@ -68,20 +69,20 @@ main! = |_args| {
     project_roc_entrypoint : Str
     project_roc_entrypoint = "main.roc"
 
-    project_godot : Str
-    project_godot = "project.godot"
+    # project_godot_entrypoint : Str
+    # project_godot_entrypoint = "project.godot"
 
     project_name : Str
     project_name = "My Game"
 
-    #project_engine : [Godot, Redot, Draconic] # todo "Godot451"
-    #_project_engine = Godot
+    # project_engine : [Godot, Redot, Draconic] # todo "Godot451"
+    # project_engine = Godot
 
     project_target_linux_binary : Str
     project_target_linux_binary = "libgodot_roc.linux.x86_64.so"
 
-    project_target_web_binary : Str
-    project_target_web_binary = "libgodot_roc.web.wasm32.nothreads.wasm"
+    # project_target_web_binary : Str
+    # project_target_web_binary = "libgodot_roc.web.wasm32.nothreads.wasm"
 
     Stdout.line!("# Creating godot-roc app \"${project_name}\" in \"${Path.join(ci_workspace, project).display()}\"...")?
 
@@ -119,21 +120,22 @@ main! = |_args| {
 
 	# TODO: implement
 	Stdout.line!("Compiling web platform...")?
-	Stdout.line!("zig build-obj src/host.zig -target wasm32-emscripten -OReleaseSmall -fPIC -rdynamic --name libhost")? # To inform the user
+	Stdout.line!("cd targets/wasm32 && zig build-obj src/host.zig -target wasm32-emscripten -OReleaseSmall -fPIC -rdynamic --name libhost")? # To inform the user
 	zig_web_start = Utc.now!()
-	_zig_web_out = Cmd.exec!("zig", [
-    	"build-obj",
-    	"src/host.zig",
-    	"-target", "wasm32-emscripten",
-    	"-OReleaseSmall",
-    	"-fPIC",
-    	"-rdynamic",
-    	"--name", "libhost",
-	])?
-
-	# TODO: this isn't the cleanest...
-	# we should probably write into the target ci_workspace directory..
-	_rn_out = Path.rename!("libhost.o", "targets/wasm32/libhost.o")?
+	_zig_web_out = run_in_dir!(
+    	"targets/wasm32",
+    	Cmd
+       	    .new("zig")
+            .args([
+               	"build-obj",
+               	"src/host.zig",
+               	"-target", "wasm32-emscripten",
+               	"-OReleaseSmall",
+               	"-fPIC",
+               	"-rdynamic",
+               	"--name", "libhost",
+            ])
+    )?
 
 	# TODO:
 	# TODO: Add to build.zig:
@@ -261,4 +263,19 @@ copy_tree! = |source, dest| {
     })?
 
     Ok({})
+}
+
+run_in_dir! : Path, Cmd => Try({}, _)
+run_in_dir! = |dir, cmd| {
+    old_cwd = Env.cwd!()?
+
+    Env.set_cwd!(dir)?
+
+    # Run the command (pick the exec style you need)
+    result = cmd.exec_cmd!()
+
+    # Always try to restore, even if the command failed
+    _ = Env.set_cwd!(old_cwd)
+
+    result
 }

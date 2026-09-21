@@ -11,9 +11,9 @@ app [main!] { roc: "nightly-2026-09-12-220fd47", pf: platform "https://github.co
 import pf.Stdin
 import pf.Stdout
 
-import Godot
-import GodotToRocMapper
-import GodotToZigMapper
+import modules/Godot
+import modules/GodotToRocMapper
+import modules/GodotToZigMapper
 
 Mode : [Roc, Zig]
 
