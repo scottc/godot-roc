@@ -1,8 +1,8 @@
 name: CI
 
 on:
-  # push:
-  #   branches: [master]
+  push:
+    branches: [master]
   pull_request:
   workflow_dispatch:
 
@@ -29,19 +29,19 @@ env:
 jobs:
   full-build:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 5
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
-          lfs: true               # if you use LFS for assets
+          lfs: false               # if you use LFS for assets
 
       # ──────────────────────────────────────────────
       # 1. Zig (host.zig unit tests / platform)
       # ──────────────────────────────────────────────
       - name: Setup Zig
-        uses: mlugg/setup-zig@v2
+        uses: xyzzylabs/setup-zig@v1
         with:
           version: ${{ env.ZIG_VERSION }}
           use-cache: true
@@ -49,14 +49,14 @@ jobs:
       # ──────────────────────────────────────────────
       # 2. Emscripten (emcc + friends)
       # ──────────────────────────────────────────────
-      - name: Setup Emscripten
-        uses: emscripten-core/setup-emsdk@v16
-        with:
-          version: ${{ env.EM_VERSION }}
-          # actions-cache-folder: 'emsdk-cache'  # optional explicit cache dir
+      # - name: Setup Emscripten
+      #   uses: emscripten-core/setup-emsdk@v16
+      #   with:
+      #     version: ${{ env.EM_VERSION }}
+      #     actions-cache-folder: 'emsdk-cache'  # optional explicit cache dir
 
-      - name: Verify Emscripten
-        run: emcc -v
+      # - name: Verify Emscripten
+      #   run: emcc -v
 
       # ──────────────────────────────────────────────
       # 3. Roc
@@ -68,7 +68,7 @@ jobs:
           nightly-tag: ${{ env.ROC_NIGHTLY_TAG }}
 
       - name: Cache Roc packages + build artifacts
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/roc
           key: roc-cache-${{ runner.os }}-${{ runner.arch }}-${{ env.ROC_VERSION }}-${{ env.ROC_NIGHTLY_TAG }}-${{ hashFiles('**/*.roc') }}
