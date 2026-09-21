@@ -79,7 +79,7 @@ main! = |_args| {
     # project_engine = Godot
 
     project_target_linux_binary : Str
-    project_target_linux_binary = "libgodot_roc.linux.x86_64.so"
+    project_target_linux_binary = "my_game.so"
 
     # project_target_web_binary : Str
     # project_target_web_binary = "libgodot_roc.web.wasm32.nothreads.wasm"

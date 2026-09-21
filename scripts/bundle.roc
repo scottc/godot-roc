@@ -58,7 +58,7 @@ main! = |_args| {
     copy_dir!("platform/", Path.join(bundle_workspace, "platform/"))?
     copy_dir!("targets/", Path.join(bundle_workspace, "platform/targets/"))?
 
-   	_roc_desktop_out = run_in_dir!(
+   	_bundle_out = run_in_dir!(
         bundle_workspace,
    	    Cmd.new("roc")
             .args([
@@ -72,6 +72,23 @@ main! = |_args| {
           		#"platform/targets/x64musl/libzigc.a").display()}",
             ])
 	)?
+
+   	_templates_out = run_in_dir!(
+        bundle_workspace,
+   	    Cmd.new("zip")
+            .args([
+                "-r",
+          		"templates.zip",
+                "."
+                "-i"
+          		"templates/",
+            ])
+	)?
+
+    Stdout.line!(
+    \\# Bundle & template is ready:
+    \\# ${bundle_workspace.display()}
+    )?
 
     Ok({})
 }
