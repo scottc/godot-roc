@@ -1,4 +1,0 @@
-Files expected to go here...
-
-[linux]
-libhost.o
