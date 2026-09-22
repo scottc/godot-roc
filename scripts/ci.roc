@@ -7,7 +7,7 @@
 
 ## Continous Intergration
 app [main!] {
-    roc: "nightly-2026-09-12-220fd47",
+    roc: "nightly-2026-09-18-1d982dc",
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.22.2/9zUBxb1LtXYVc4eR4hAtd1WQDwBYDhM6HQdZz1UFCm2m.tar.zst"
 }
 
@@ -116,19 +116,32 @@ main! = |_args| {
 
 	# Precompile?
 
-	# TODO: release a versioned platform, and the app can reference the precompiled release.
-	Stdout.line!("Zig build all host targets...")?
-	Stdout.line!("zig build")? # To inform the user
-	zig_desktop_start = Utc.now!()
-	_zig_desktop_out = Cmd.exec!("zig", [
-	    "build",
+	# # TODO: release a versioned platform, and the app can reference the precompiled release.
+	# Stdout.line!("Zig build all host targets...")?
+	# Stdout.line!("zig build")? # To inform the user
+	# zig_desktop_start = Utc.now!()
+	# _zig_desktop_out = Cmd.exec!("zig", [
+	#     "build",
+	# 	"-Doptimize=Debug"
+	# 	# Debug = fastest build time (default)
+	# 	# ReleaseFast = fastest runtime speed.
+	# 	# For CI, we want build speed.
+	# 	# For releases, we want run speed.
+	# ])?
+	# Stdout.line!("All host targets built ${(Utc.now!() - zig_desktop_start).to_str()}ns")?
+
+	Stdout.line!("Roc build all host (zig) targets...")?
+	Stdout.line!("roc run scripts/build.roc")? # To inform the user
+	roc_zig_start = Utc.now!()
+	_roc_zig_out = Cmd.exec!("roc", [
+	    "scripts/build.roc",
 		"-Doptimize=Debug"
 		# Debug = fastest build time (default)
 		# ReleaseFast = fastest runtime speed.
 		# For CI, we want build speed.
 		# For releases, we want run speed.
 	])?
-	Stdout.line!("All host targets built ${(Utc.now!() - zig_desktop_start).to_str()}ns")?
+	Stdout.line!("All host targets built ${(Utc.now!() - roc_zig_start).to_str()}ns")?
 
 	# TODO: roc build all targets that godot supports...
 	# Valid roc targets are:

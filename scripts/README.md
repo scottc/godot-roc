@@ -18,4 +18,11 @@ The scripts folder is for platform maintainers, to perform a variety of automate
 
 This project will be mostly just generating glue.
 
-godot <-> zig <-> roc
+game engine <-> zig <-> roc
+
+## Overview
+
+`build.roc` - A build.zig replacement, it builds the zig host.
+`ci.roc` - CI script that is triggered to run, to "continously intergrate" code & ensure software quality.
+`bundle.roc` - Packages the platform.
+`release.roc` - Releases the platform. (does not yet exist)

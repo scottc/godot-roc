@@ -9,7 +9,7 @@
 ## Deprecated - Users are encouraged to minimize their dependencies.
 ## Copy a template instead.
 app [main!] {
-    roc: "nightly-2026-09-12-220fd47",
+    roc: "nightly-2026-09-18-1d982dc",
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.22.2/9zUBxb1LtXYVc4eR4hAtd1WQDwBYDhM6HQdZz1UFCm2m.tar.zst"
 }
 
@@ -85,7 +85,7 @@ main! = |_args| {
 	Path.write_utf8!(
 	    Path.join(target_destination, "MyPlayerCharacter.roc"),
 		\\app [ready!, process!, scene_init!, physics_process!] {
-		\\    roc: "nightly-2026-09-12-220fd47",
+		\\    roc: "nightly-2026-09-18-1d982dc",
 		\\    pf: platform "https://github.com/scottc/godot-roc/releases/download/0.0.1-pre-alpha-test1/3KSNNkS4Aj6eRRhnk8ujQ6YELvCg55W9SaU9nx9AqYcq.tar.zst",
 		\\}
 		\\
