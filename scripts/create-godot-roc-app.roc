@@ -9,7 +9,7 @@
 ## Deprecated - Users are encouraged to minimize their dependencies.
 ## Copy a template instead.
 app [main!] {
-    roc: "nightly-2026-09-18-1d982dc",
+    roc: "nightly-2026-09-12-220fd47",
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.22.2/9zUBxb1LtXYVc4eR4hAtd1WQDwBYDhM6HQdZz1UFCm2m.tar.zst"
 }
 
@@ -67,7 +67,7 @@ main! = |_args| {
 	Path.write_utf8!(
 	    Path.join(target_destination, "roc.gdextension"),
         \\[configuration]
-        \\entry_symbol = "roc_godot_library_init"
+        \\entry_symbol = "roc_godot_init"
         \\compatibility_minimum = "4.5"
         \\reloadable = true
         \\
@@ -85,7 +85,7 @@ main! = |_args| {
 	Path.write_utf8!(
 	    Path.join(target_destination, "MyPlayerCharacter.roc"),
 		\\app [ready!, process!, scene_init!, physics_process!] {
-		\\    roc: "nightly-2026-09-18-1d982dc",
+		\\    roc: "nightly-2026-09-12-220fd47",
 		\\    pf: platform "https://github.com/scottc/godot-roc/releases/download/0.0.1-pre-alpha-test1/3KSNNkS4Aj6eRRhnk8ujQ6YELvCg55W9SaU9nx9AqYcq.tar.zst",
 		\\}
 		\\
@@ -193,7 +193,7 @@ main! = |_args| {
        	"-o", "my_game/libgodot_roc.web.wasm32.nothreads.wasm",
        	"-sSIDE_MODULE=2",
        	"-sERROR_ON_UNDEFINED_SYMBOLS=0",
-       	"-sEXPORTED_FUNCTIONS='[\"_roc_godot_library_init\"]'",
+       	"-sEXPORTED_FUNCTIONS='[\"_roc_godot_init\"]'",
        	"-O0",
        	"-msimd128",
     	])?

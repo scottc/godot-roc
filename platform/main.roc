@@ -41,7 +41,7 @@ platform ""
             # so we can skip emcc
             # Linked WebAssembly targets must explicitly declare their host-visible function exports.
             exports: [
-                "roc_godot_library_init",
+                "roc_godot_init",
             ]
         },
         # x64v1musl: { inputs: ["libhost.a", app,

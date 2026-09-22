@@ -7,7 +7,7 @@
 ##
 app [main!] {
     cli: platform "https://github.com/roc-lang/basic-cli/releases/download/0.23.0-rc1/3hT3SoHZ6qbEsa9qVFLUW3547U5LeoNd1KbpqLpz4r1i.tar.zst",
-    roc: "nightly-2026-09-18-1d982dc",
+    roc: "nightly-2026-09-12-220fd47",
 }
 
 import cli.Cmd
@@ -15,6 +15,12 @@ import cli.Env
 import cli.OsStr
 import cli.Stderr
 import cli.Stdout
+
+# Note: This is slower then build.zig,
+# due to the lack of roc concurrency primatives.
+#
+# A workaround, is to implement a build platform,
+# that can schedule the tasks required.
 
 # =============================================================================
 # Domain

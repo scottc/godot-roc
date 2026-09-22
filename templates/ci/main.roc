@@ -1,6 +1,6 @@
 ## My Project
 app [ready!, process!, scene_init!, physics_process!] {
-    roc: "nightly-2026-09-18-1d982dc",
+    roc: "nightly-2026-09-12-220fd47",
     # must reference the same commit
     pf: platform "../../../platform/main.roc",
 }
