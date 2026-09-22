@@ -7,38 +7,10 @@
 
 Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game Engine.
 
-## Requirements
-
-* `godot-4.5.1` or newer; `godot-4.7.2`, `godot-4.5.1`, `rex-0.0.1`.
-* `roc` [Install](https://roc-lang.org/install) (Pinned Version: [nightly-2026-09-12-220fd47](https://github.com/roc-lang/nightlies/releases#release-nightly-2026-09-12-220fd47))
-* `linux-x86_64` only, (Windows & MacOS support coming soon).
-
-## Getting Started
-
-Project template [templates.zip](https://github.com/scottc/godot-roc/releases/download/0.0.1-pre-alpha-test2/templates.zip)`/templates/*`: `sha256:be5cb566978a9c68f4e3eabd8fc2bd8ec1597a1a1f098f42320ead3fae937daa`
-
-```sh
-# Extract & copy template to your desired location.
-cp templates/godot ~/Projects/my_new_game_project
-
-# Change working directory to your new project
-cd ~/Projects/my_new_game_project
-
-# Read the source code
-cat main.roc
-# And double check the platform can be trusted
-# Before trusting the source code
-
-# Run godot
-godot project.godot
-
-# Build
-roc build main.roc --ouput=my_game.so
-# Note:
-# Godot should be able to hotreload the changes, see:
-# template/godot/roc.gdextension -> reloadable = true
-# Although, it seems to only reload when the godot window is focused.
-```
+> [!NOTE]   
+> This page is for godot-roc **platform** development.
+>
+> For godot-roc **game development** see our [Getting Started Guide](templates/godot/README.md).
 
 ## About
 
@@ -46,7 +18,7 @@ Godot-Roc lets you write game logic in [Roc](https://roc-lang.org/), "A [fast](h
 
 Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI for maximum compatability. In theory godot-roc will work with any game engine runtime that supports the `godot-4.5.1` gdextension ABI, including newer versions of godot, forks & alternative host runtimes (aka game engines).
 
-## Use cases
+## Use Cases
 
 - **DX - Developer Experience** - Ergonomics of a high level scripting language, with great low level native performance.
 - **Structured game logic** - Model complex rules with types that encode invariants, so invalid states are harder to represent.
@@ -101,44 +73,3 @@ and the host is Zig (also native) loaded as a GDExtension—there is no Roc VM i
 the game loop. For all of these, much gameplay work is ultimately engine C++
 (physics, rendering), so language choice often does not dominate frame time
 until profiling shows a script/app-side hotspot.
-
-## Troubleshooting
-
-```sh
-# Verify: my_game/roc.gdextension
-cat my_game/roc.gdextension
-# Ensure the built "godot roc" dynamic library exists for the target platform & architecture.
-# Ensure the library filepath is correct.
-# Ensure the entry_symbol is correct.
-# Ensure godot's stdout is not printing any errors, if so read them carefully.
-```
-
-## Upgrading
-
-1) Find latest release from the [releases page](https://github.com/scottc/godot-roc/releases).
-
-2) Expand the Assets section.
-
-3) Find and replace the `platform` url in your `main.roc` file.
-
-#### 0.0.1-pre-alpha-test2
-```roc
-## My Project
-app [ready!, process!, scene_init!, physics_process!] {
-    roc: "nightly-2026-09-12-220fd47",
-    pf: platform "https://github.com/scottc/godot-roc/releases/download/0.0.1-pre-alpha-test2/GbukRHC46qgdGqBVnpcSBVuSjZpT2GEC2KPV1B5Ddvhw.tar.zst",
-}
-```
-
-#### 0.0.1-pre-alpha-test1
-```roc
-## My Project
-app [ready!, process!, scene_init!, physics_process!] {
-    roc: "nightly-2026-09-12-220fd47",
-    pf: platform "https://github.com/scottc/godot-roc/releases/download/0.0.1-pre-alpha-test1/3KSNNkS4Aj6eRRhnk8ujQ6YELvCg55W9SaU9nx9AqYcq.tar.zst",
-}
-```
-
-4) Run: `roc check main.roc`, to find and fix any breaking changes.
-
-5) Enjoy.
