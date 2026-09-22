@@ -1,9 +1,13 @@
-> [!IMPORTANT]   
-> This project is under development, and there are missing or incomplete features.
-
 # Godot Roc
 
-<img src="logo.svg" alt="Godot Roc Logo" width="150" height="200" />
+<p align="center">
+  <a href="https://github.com/scottc/godot-roc/">
+    <img src="brand/logo-stroke.png" width="400" alt="Godot-Roc Logo">
+  </a>
+</p>
+
+> [!IMPORTANT]   
+> This project is under development, and there are missing or incomplete features.
 
 Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game Engine.
 
