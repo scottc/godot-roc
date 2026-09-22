@@ -6,10 +6,10 @@
   </a>
 </p>
 
+Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game Engine.
+
 > [!IMPORTANT]   
 > This project is under development, and there are missing or incomplete features.
-
-Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game Engine.
 
 > [!NOTE]   
 > This page is for the godot-roc **platform**.
