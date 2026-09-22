@@ -22,13 +22,13 @@ pub const std_options: std.Options = .{
 
 const abi = @import("roc_platform_abi.zig");
 
-// godot 4.7.2
-const gde_if = @import("godot/gdextension_interface.manual.zig");
-const eapi = @import("godot/extension_api.manual.zig");
+// godot-roc "godot 4.5.1 compatible" - ABI & APIs.
+const gde_if = @import("engine/gdextension_interface.manual.zig");
+const eapi = @import("engine/extension_api.manual.zig");
 // TODO: generated bindings bindings...
 // TODO: full first-class multi-engine support.
 
-// godot 4.7.2 hashes... These need to be accurate.
+// hashes... These need to be accurate, and specific per engine & version.
 const CHARACTERBODY3D_IS_ON_FLOOR_HASH = 36873697;
 const PHYSICSBODY3D_GET_GRAVITY_HASH = 3360562783;
 const MOVE_AND_SLIDE_HASH = 2240911060; // extension_api.json -> classes -> CharacterBody3D -> methods -> move_and_slide -> hash
