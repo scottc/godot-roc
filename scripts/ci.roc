@@ -91,11 +91,11 @@ main! = |_args| {
     project_target_linux_binary : Str
     project_target_linux_binary = "my_game.so"
 
-    project_target_windows_binary : Str
-    project_target_windows_binary = "my_game.dll"
+    # project_target_windows_binary : Str
+    # project_target_windows_binary = "my_game.dll"
 
-    project_target_macos_binary : Str
-    project_target_macos_binary = "my_game.dylib"
+    # project_target_macos_binary : Str
+    # project_target_macos_binary = "my_game.dylib"
 
     # project_target_web_binary : Str
     # project_target_web_binary = "libgodot_roc.web.wasm32.nothreads.wasm"
