@@ -225,7 +225,7 @@ main! = |_args| {
     	_godot_outasdasd = Cmd.exec!("godot", [
             Path.join(Path.join(ci_workspace, project), "project.godot").to_os_str(),
            	"--headless",
-           	"--export-release", "Web", Path.join(Path.join(ci_workspace, project), "export/index.html").to_os_str()
+           	"--export-release", "Web", "index.html" # relative to project.godot file.
     	])?
 
     	Stdout.line!("Run web server... Serving: 'my_game/' @ localhost:8000 ")?
