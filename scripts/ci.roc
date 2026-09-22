@@ -189,29 +189,30 @@ main! = |_args| {
 	# emcc
 	# Ideally, roc could emit a "wasm32-emscripten SIDE_MODULE=2"
 	# and then we can drop emcc & emscripten entirely.
-	pr11474 = False
+	pr11474 = True
 	if (pr11474) { # This depends on https://github.com/roc-lang/roc/pull/11474
 
     	# compile roc - to web
     	Stdout.line!("Compiling web roc app...")?
     	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).display()} --target=wasm32 --output=${Path.join(Path.join(ci_workspace, project), "temp.a.wasm").display()}")? # To inform the user
     	roc_web_start = Utc.now!()
-    	_roc_web_out = Cmd.exec!("roc", [
+    	_roc_web_out = Cmd.exec!("/home/anon/Projects/roc/zig-out/bin/roc", [
     	    "build",
     		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
     		"--target=wasm32",
-    		"--output=${Path.join(Path.join(ci_workspace, project), "temp.a.wasm").display()}"
+    		"--output=${Path.join(Path.join(ci_workspace, project), "temp.a").display()}"
     	])?
-    	Stdout.line!("Roc app compiled ${(Utc.now!() - roc_web_start).to_str()}ns")?
+    	Stdout.line!("Roc web app compiled ${(Utc.now!() - roc_web_start).to_str()}ns")?
 
     	Stdout.line!("Compiling Final Web GDExtension (wasm32-emscripten SIDE_MODULE=2)")?
     	Stdout.line!("[emcc command here...]")? # To inform the user
     	_emcc_out = Cmd.exec!("emcc", [
-           	"my_game/temp.a.wasm",
-           	"-o", "my_game/libgodot_roc.web.wasm32.nothreads.wasm",
+            Path.join(Path.join(ci_workspace, project), "temp.a").to_os_str(),
+           	"-o", Path.join(Path.join(ci_workspace, project), "my_game.wasm").to_os_str(),
            	"-sSIDE_MODULE=2",
            	"-sERROR_ON_UNDEFINED_SYMBOLS=0",
-           	"-sEXPORTED_FUNCTIONS='[\"_roc_godot_init\"]'",
+           	# "-sEXPORTED_FUNCTIONS=[\"_godot_roc_init\"]", # or an array, but godot only needs an entrypoint?
+           	"-sEXPORTED_FUNCTIONS=_godot_roc_init",
            	"-O0",
            	"-msimd128",
     	])?
@@ -221,10 +222,16 @@ main! = |_args| {
     	# Godot > Project > Export > Web > Options > Extensions Support = On (Checked)
     	# Godot > Project > Export > Web > Options > Thread Support = Off (Unchecked)
     	Stdout.line!("Godot publish to web...")?
-    	_godot_out = Cmd.exec!("godot", [
-           	"my_game/project.godot",
+    	_godot_outasdasd = Cmd.exec!("godot", [
+            Path.join(Path.join(ci_workspace, project), "project.godot").to_os_str(),
            	"--headless",
-           	"--export-release", "Web", "my_game/export/index.html"
+           	"--export-release", "Web", Path.join(Path.join(ci_workspace, project), "export/index.html").to_os_str()
+    	])?
+
+    	Stdout.line!("Run web server... Serving: 'my_game/' @ localhost:8000 ")?
+    	_godot_outasdasdghf = Cmd.exec!("roc", [
+           	"run",
+           	"scripts/serve.roc",
     	])?
 	}
 

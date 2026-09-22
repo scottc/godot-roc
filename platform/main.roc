@@ -32,8 +32,8 @@ platform ""
         #x64mac: { inputs: ["libhost.a", app], output: Shared },
         #arm64mac: { inputs: ["libhost.a", app], output: Shared },
         x64musl :{ inputs: [ "libhost.a", app ], output: Shared },
-        wasm32emscripten: {
-            inputs: [ "libhost.o", app ],
+        wasm32: {
+            inputs: [ "libhost.o.wasm", app ],
             # depends on PR: https://github.com/roc-lang/roc/pull/11474
             output: Archive,
             # relocatable file for emcc
@@ -41,7 +41,7 @@ platform ""
             # so we can skip emcc
             # Linked WebAssembly targets must explicitly declare their host-visible function exports.
             exports: [
-                "roc_godot_init",
+                "godot_roc_init",
             ]
         },
         # x64v1musl: { inputs: ["libhost.a", app,

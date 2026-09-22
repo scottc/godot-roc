@@ -91,7 +91,7 @@ var g_parent_storage: [32][64]u8 = undefined;
 //
 
 /// The main entrypoint export for godot
-export fn roc_godot_library_init(
+export fn godot_roc_init(
     p_get_proc_address: gde_if.GDExtensionInterfaceGetProcAddress,
     p_library: gde_if.GDExtensionClassLibraryPtr,
     r_initialization: *gde_if.GDExtensionInitialization,

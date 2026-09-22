@@ -359,7 +359,7 @@ fn deinitialize(userdata: ?*anyopaque, level: gd.GDExtensionInitializationLevel)
     // optional: shutdownRocHost() if you fully tear down; or leave host and only reset classes
 }
 
-export fn roc_godot_library_init(
+export fn godot_roc_init(
     p_get_proc_address: gd.GDExtensionInterfaceGetProcAddress,
     p_library: gd.GDExtensionClassLibraryPtr,
     r_initialization: *gd.GDExtensionInitialization,

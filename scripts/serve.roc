@@ -25,7 +25,7 @@ init! : () => Try({ config : Server.Config, context : Context }, [Exit(I64), ..]
 init! = || {
 	file_root = Server.file_root_with_cache({
 		id: "my_game-export",
-		path: Path.utf8("my_game/export"),
+		path: Path.utf8("my_game/"),
 		cache: Server.public_for(3600),
 	})
 

@@ -67,7 +67,7 @@ main! = |_args| {
 	Path.write_utf8!(
 	    Path.join(target_destination, "roc.gdextension"),
         \\[configuration]
-        \\entry_symbol = "roc_godot_init"
+        \\entry_symbol = "godot_roc_init"
         \\compatibility_minimum = "4.5"
         \\reloadable = true
         \\
@@ -193,7 +193,7 @@ main! = |_args| {
        	"-o", "my_game/libgodot_roc.web.wasm32.nothreads.wasm",
        	"-sSIDE_MODULE=2",
        	"-sERROR_ON_UNDEFINED_SYMBOLS=0",
-       	"-sEXPORTED_FUNCTIONS='[\"_roc_godot_init\"]'",
+       	"-sEXPORTED_FUNCTIONS='[\"_godot_roc_init\"]'",
        	"-O0",
        	"-msimd128",
     	])?

@@ -705,266 +705,279 @@ pub const RocEnv = struct {
     roc_io: RocIo,
 };
 
+/// Element type for Vector3
+pub const Vector3 = if (@sizeOf(usize) == 4) extern struct {
+    x: f32,
+    y: f32,
+    z: f32,
+    /// Recursively decrement Roc-owned fields.
+    pub fn decref(self: @This(), roc_host: *RocHost) void {
+        const value = self;
+        _ = value;
+        _ = roc_host;
+    }
+
+    /// Increment Roc-owned fields.
+    pub fn incref(self: @This(), amount: isize) void {
+        const value = self;
+        _ = value;
+        _ = amount;
+    }
+} else extern struct {
+    x: f32,
+    y: f32,
+    z: f32,
+    /// Recursively decrement Roc-owned fields.
+    pub fn decref(self: @This(), roc_host: *RocHost) void {
+        const value = self;
+        _ = value;
+        _ = roc_host;
+    }
+
+    /// Increment Roc-owned fields.
+    pub fn incref(self: @This(), amount: isize) void {
+        const value = self;
+        _ = value;
+        _ = amount;
+    }
+};
+
+comptime {
+    if (@sizeOf(usize) == 8) {
+        if (@sizeOf(Vector3) != 12) @compileError("Vector3 size mismatch");
+        if (@alignOf(Vector3) != 4) @compileError("Vector3 alignment mismatch");
+    }
+    if (@sizeOf(usize) == 4) {
+        if (@sizeOf(Vector3) != 12) @compileError("Vector3 size mismatch");
+        if (@alignOf(Vector3) != 4) @compileError("Vector3 alignment mismatch");
+    }
+}
+
 /// Tag discriminant for Try.
-pub const HostStderr_lineResultTag = enum(u8) {
+pub const HostPrintResultTag = enum(u8) {
     Err = 0,
     Ok = 1,
 };
 
 /// Payload union for Try.
-pub const HostStderr_lineResultPayload = extern union {
+pub const HostPrintResultPayload = extern union {
     err: RocStr,
     ok: [0]u8,
 };
 
 /// Tag union: Try
-pub const HostStderr_lineResult = if (@sizeOf(usize) == 4) extern struct {
+pub const HostPrintResult = if (@sizeOf(usize) == 4) extern struct {
     payload: [12]u8 align(4),
-    tag: HostStderr_lineResultTag,
+    tag: HostPrintResultTag,
     pub fn payload_err(self: *const @This()) RocStr {
         const ptr: *const RocStr = @ptrCast(@alignCast(&self.payload));
         return ptr.*;
     }
     /// Recursively decrement Roc-owned payloads.
     pub fn decref(self: @This(), roc_host: *RocHost) void {
-        decrefHostStderr_lineResult(self, roc_host);
+        decrefHostPrintResult(self, roc_host);
     }
 
     /// Increment Roc-owned payloads.
     pub fn incref(self: @This(), amount: isize) void {
-        increfHostStderr_lineResult(self, amount);
+        increfHostPrintResult(self, amount);
     }
 } else extern struct {
-    payload: HostStderr_lineResultPayload,
-    tag: HostStderr_lineResultTag,
+    payload: HostPrintResultPayload,
+    tag: HostPrintResultTag,
     pub fn payload_err(self: *const @This()) RocStr {
         return self.payload.err;
     }
     /// Recursively decrement Roc-owned payloads.
     pub fn decref(self: @This(), roc_host: *RocHost) void {
-        decrefHostStderr_lineResult(self, roc_host);
+        decrefHostPrintResult(self, roc_host);
     }
 
     /// Increment Roc-owned payloads.
     pub fn incref(self: @This(), amount: isize) void {
-        increfHostStderr_lineResult(self, amount);
+        increfHostPrintResult(self, amount);
     }
 };
 
 comptime {
     if (@sizeOf(usize) == 8) {
-        if (@sizeOf(HostStderr_lineResult) != 32) @compileError("HostStderr_lineResult size mismatch");
-        if (@alignOf(HostStderr_lineResult) != 8) @compileError("HostStderr_lineResult alignment mismatch");
-        if (@offsetOf(HostStderr_lineResult, "tag") != 24) @compileError("HostStderr_lineResult tag offset mismatch");
+        if (@sizeOf(HostPrintResult) != 32) @compileError("HostPrintResult size mismatch");
+        if (@alignOf(HostPrintResult) != 8) @compileError("HostPrintResult alignment mismatch");
+        if (@offsetOf(HostPrintResult, "tag") != 24) @compileError("HostPrintResult tag offset mismatch");
     }
     if (@sizeOf(usize) == 4) {
-        if (@sizeOf(HostStderr_lineResult) != 16) @compileError("HostStderr_lineResult size mismatch");
-        if (@alignOf(HostStderr_lineResult) != 4) @compileError("HostStderr_lineResult alignment mismatch");
-        if (@offsetOf(HostStderr_lineResult, "tag") != 12) @compileError("HostStderr_lineResult tag offset mismatch");
+        if (@sizeOf(HostPrintResult) != 16) @compileError("HostPrintResult size mismatch");
+        if (@alignOf(HostPrintResult) != 4) @compileError("HostPrintResult alignment mismatch");
+        if (@offsetOf(HostPrintResult, "tag") != 12) @compileError("HostPrintResult tag offset mismatch");
     }
 }
 
 /// Tag discriminant for Try.
-pub const HostStdin_lineResultTag = enum(u8) {
+pub const HostRegister_classResultTag = enum(u8) {
     Err = 0,
     Ok = 1,
 };
 
 /// Payload union for Try.
-pub const HostStdin_lineResultPayload = extern union {
-    err: RocStr,
-    ok: RocStr,
-};
-
-/// Tag union: Try
-pub const HostStdin_lineResult = if (@sizeOf(usize) == 4) extern struct {
-    payload: [12]u8 align(4),
-    tag: HostStdin_lineResultTag,
-    pub fn payload_err(self: *const @This()) RocStr {
-        const ptr: *const RocStr = @ptrCast(@alignCast(&self.payload));
-        return ptr.*;
-    }
-    pub fn payload_ok(self: *const @This()) RocStr {
-        const ptr: *const RocStr = @ptrCast(@alignCast(&self.payload));
-        return ptr.*;
-    }
-    /// Recursively decrement Roc-owned payloads.
-    pub fn decref(self: @This(), roc_host: *RocHost) void {
-        decrefHostStdin_lineResult(self, roc_host);
-    }
-
-    /// Increment Roc-owned payloads.
-    pub fn incref(self: @This(), amount: isize) void {
-        increfHostStdin_lineResult(self, amount);
-    }
-} else extern struct {
-    payload: HostStdin_lineResultPayload,
-    tag: HostStdin_lineResultTag,
-    pub fn payload_err(self: *const @This()) RocStr {
-        return self.payload.err;
-    }
-    pub fn payload_ok(self: *const @This()) RocStr {
-        return self.payload.ok;
-    }
-    /// Recursively decrement Roc-owned payloads.
-    pub fn decref(self: @This(), roc_host: *RocHost) void {
-        decrefHostStdin_lineResult(self, roc_host);
-    }
-
-    /// Increment Roc-owned payloads.
-    pub fn incref(self: @This(), amount: isize) void {
-        increfHostStdin_lineResult(self, amount);
-    }
-};
-
-comptime {
-    if (@sizeOf(usize) == 8) {
-        if (@sizeOf(HostStdin_lineResult) != 32) @compileError("HostStdin_lineResult size mismatch");
-        if (@alignOf(HostStdin_lineResult) != 8) @compileError("HostStdin_lineResult alignment mismatch");
-        if (@offsetOf(HostStdin_lineResult, "tag") != 24) @compileError("HostStdin_lineResult tag offset mismatch");
-    }
-    if (@sizeOf(usize) == 4) {
-        if (@sizeOf(HostStdin_lineResult) != 16) @compileError("HostStdin_lineResult size mismatch");
-        if (@alignOf(HostStdin_lineResult) != 4) @compileError("HostStdin_lineResult alignment mismatch");
-        if (@offsetOf(HostStdin_lineResult, "tag") != 12) @compileError("HostStdin_lineResult tag offset mismatch");
-    }
-}
-
-/// Tag discriminant for Try.
-pub const HostStdout_lineResultTag = enum(u8) {
-    Err = 0,
-    Ok = 1,
-};
-
-/// Payload union for Try.
-pub const HostStdout_lineResultPayload = extern union {
+pub const HostRegister_classResultPayload = extern union {
     err: RocStr,
     ok: [0]u8,
 };
 
 /// Tag union: Try
-pub const HostStdout_lineResult = if (@sizeOf(usize) == 4) extern struct {
+pub const HostRegister_classResult = if (@sizeOf(usize) == 4) extern struct {
     payload: [12]u8 align(4),
-    tag: HostStdout_lineResultTag,
+    tag: HostRegister_classResultTag,
     pub fn payload_err(self: *const @This()) RocStr {
         const ptr: *const RocStr = @ptrCast(@alignCast(&self.payload));
         return ptr.*;
     }
     /// Recursively decrement Roc-owned payloads.
     pub fn decref(self: @This(), roc_host: *RocHost) void {
-        decrefHostStdout_lineResult(self, roc_host);
+        decrefHostRegister_classResult(self, roc_host);
     }
 
     /// Increment Roc-owned payloads.
     pub fn incref(self: @This(), amount: isize) void {
-        increfHostStdout_lineResult(self, amount);
+        increfHostRegister_classResult(self, amount);
     }
 } else extern struct {
-    payload: HostStdout_lineResultPayload,
-    tag: HostStdout_lineResultTag,
+    payload: HostRegister_classResultPayload,
+    tag: HostRegister_classResultTag,
     pub fn payload_err(self: *const @This()) RocStr {
         return self.payload.err;
     }
     /// Recursively decrement Roc-owned payloads.
     pub fn decref(self: @This(), roc_host: *RocHost) void {
-        decrefHostStdout_lineResult(self, roc_host);
+        decrefHostRegister_classResult(self, roc_host);
     }
 
     /// Increment Roc-owned payloads.
     pub fn incref(self: @This(), amount: isize) void {
-        increfHostStdout_lineResult(self, amount);
+        increfHostRegister_classResult(self, amount);
     }
 };
 
 comptime {
     if (@sizeOf(usize) == 8) {
-        if (@sizeOf(HostStdout_lineResult) != 32) @compileError("HostStdout_lineResult size mismatch");
-        if (@alignOf(HostStdout_lineResult) != 8) @compileError("HostStdout_lineResult alignment mismatch");
-        if (@offsetOf(HostStdout_lineResult, "tag") != 24) @compileError("HostStdout_lineResult tag offset mismatch");
+        if (@sizeOf(HostRegister_classResult) != 32) @compileError("HostRegister_classResult size mismatch");
+        if (@alignOf(HostRegister_classResult) != 8) @compileError("HostRegister_classResult alignment mismatch");
+        if (@offsetOf(HostRegister_classResult, "tag") != 24) @compileError("HostRegister_classResult tag offset mismatch");
     }
     if (@sizeOf(usize) == 4) {
-        if (@sizeOf(HostStdout_lineResult) != 16) @compileError("HostStdout_lineResult size mismatch");
-        if (@alignOf(HostStdout_lineResult) != 4) @compileError("HostStdout_lineResult alignment mismatch");
-        if (@offsetOf(HostStdout_lineResult, "tag") != 12) @compileError("HostStdout_lineResult tag offset mismatch");
+        if (@sizeOf(HostRegister_classResult) != 16) @compileError("HostRegister_classResult size mismatch");
+        if (@alignOf(HostRegister_classResult) != 4) @compileError("HostRegister_classResult alignment mismatch");
+        if (@offsetOf(HostRegister_classResult, "tag") != 12) @compileError("HostRegister_classResult tag offset mismatch");
     }
 }
 
-/// Tag discriminant for Try.
-pub const TryType16Tag = enum(u8) {
-    Err = 0,
-    Ok = 1,
-};
-
-/// Payload union for Try.
-pub const TryType16Payload = extern union {
-    err: i32,
-    ok: [0]u8,
-};
-
-/// Tag union: Try
-pub const TryType16 = if (@sizeOf(usize) == 4) extern struct {
-    payload: [4]u8 align(4),
-    tag: TryType16Tag,
-    pub fn payload_err(self: *const @This()) i32 {
-        const ptr: *const i32 = @ptrCast(@alignCast(&self.payload));
-        return ptr.*;
-    }
-    /// Recursively decrement Roc-owned payloads.
-    pub fn decref(self: @This(), roc_host: *RocHost) void {
-        decrefTryType16(self, roc_host);
-    }
-
-    /// Increment Roc-owned payloads.
-    pub fn incref(self: @This(), amount: isize) void {
-        increfTryType16(self, amount);
-    }
+/// Return type record for Host.get_velocity!
+/// Fields ordered by compiler-emitted ABI offsets.
+pub const HostGet_velocityRetRecord = if (@sizeOf(usize) == 4) extern struct {
+    x: f32,
+    y: f32,
+    z: f32,
 } else extern struct {
-    payload: TryType16Payload,
-    tag: TryType16Tag,
-    pub fn payload_err(self: *const @This()) i32 {
-        return self.payload.err;
-    }
-    /// Recursively decrement Roc-owned payloads.
-    pub fn decref(self: @This(), roc_host: *RocHost) void {
-        decrefTryType16(self, roc_host);
-    }
-
-    /// Increment Roc-owned payloads.
-    pub fn incref(self: @This(), amount: isize) void {
-        increfTryType16(self, amount);
-    }
+    x: f32,
+    y: f32,
+    z: f32,
 };
 
 comptime {
     if (@sizeOf(usize) == 8) {
-        if (@sizeOf(TryType16) != 8) @compileError("TryType16 size mismatch");
-        if (@alignOf(TryType16) != 4) @compileError("TryType16 alignment mismatch");
-        if (@offsetOf(TryType16, "tag") != 4) @compileError("TryType16 tag offset mismatch");
+        if (@sizeOf(HostGet_velocityRetRecord) != 12) @compileError("HostGet_velocityRetRecord size mismatch");
+        if (@alignOf(HostGet_velocityRetRecord) != 4) @compileError("HostGet_velocityRetRecord alignment mismatch");
     }
     if (@sizeOf(usize) == 4) {
-        if (@sizeOf(TryType16) != 8) @compileError("TryType16 size mismatch");
-        if (@alignOf(TryType16) != 4) @compileError("TryType16 alignment mismatch");
-        if (@offsetOf(TryType16, "tag") != 4) @compileError("TryType16 tag offset mismatch");
+        if (@sizeOf(HostGet_velocityRetRecord) != 12) @compileError("HostGet_velocityRetRecord size mismatch");
+        if (@alignOf(HostGet_velocityRetRecord) != 4) @compileError("HostGet_velocityRetRecord alignment mismatch");
     }
 }
 
-/// Arguments for Host.stderr_line!
-/// Roc signature: Str => Try({}, [StderrErr(Str)])
+/// Return type record for Host.get_gravity!
+/// Fields ordered by compiler-emitted ABI offsets.
+pub const HostGet_gravityRetRecord = if (@sizeOf(usize) == 4) extern struct {
+    x: f32,
+    y: f32,
+    z: f32,
+} else extern struct {
+    x: f32,
+    y: f32,
+    z: f32,
+};
+
+comptime {
+    if (@sizeOf(usize) == 8) {
+        if (@sizeOf(HostGet_gravityRetRecord) != 12) @compileError("HostGet_gravityRetRecord size mismatch");
+        if (@alignOf(HostGet_gravityRetRecord) != 4) @compileError("HostGet_gravityRetRecord alignment mismatch");
+    }
+    if (@sizeOf(usize) == 4) {
+        if (@sizeOf(HostGet_gravityRetRecord) != 12) @compileError("HostGet_gravityRetRecord size mismatch");
+        if (@alignOf(HostGet_gravityRetRecord) != 4) @compileError("HostGet_gravityRetRecord alignment mismatch");
+    }
+}
+
+/// Arguments for Host.print!
+/// Roc signature: Str => Try({}, [PrintErr(Str)])
 /// Refcounted fields are owned by the hosted function.
-pub const HostStderr_lineArgs = extern struct {
+pub const HostPrintArgs = extern struct {
     arg0: RocStr,
 };
 
-/// Arguments for Host.stdout_line!
-/// Roc signature: Str => Try({}, [StdoutErr(Str)])
+/// Arguments for Host.register_class!
+/// Roc signature: Str, Str => Try({}, [RegisterClassErr(Str)])
 /// Refcounted fields are owned by the hosted function.
-pub const HostStdout_lineArgs = extern struct {
+pub const HostRegister_classArgs = extern struct {
     arg0: RocStr,
+    arg1: RocStr,
+};
+
+/// Arguments for Host.get_velocity!
+/// Roc signature: U64 => Vector3
+/// Refcounted fields are owned by the hosted function.
+pub const HostGet_velocityArgs = extern struct {
+    arg0: u64,
+};
+
+/// Arguments for Host.set_velocity!
+/// Roc signature: U64, Vector3 => {}
+/// Refcounted fields are owned by the hosted function.
+pub const HostSet_velocityArgs = extern struct {
+    arg0: u64,
+    arg1: Vector3,
+};
+
+/// Arguments for Host.input_is_action_pressed!
+/// Roc signature: Str => U8
+/// Refcounted fields are owned by the hosted function.
+pub const HostInput_is_action_pressedArgs = extern struct {
+    arg0: RocStr,
+};
+
+/// Arguments for Host.move_and_slide!
+/// Roc signature: U64 => {}
+/// Refcounted fields are owned by the hosted function.
+pub const HostMove_and_slideArgs = extern struct {
+    arg0: u64,
+};
+
+/// Arguments for Host.is_on_floor!
+/// Roc signature: U64 => Bool
+/// Refcounted fields are owned by the hosted function.
+pub const HostIs_on_floorArgs = extern struct {
+    arg0: u64,
+};
+
+/// Arguments for Host.get_gravity!
+/// Roc signature: U64 => Vector3
+/// Refcounted fields are owned by the hosted function.
+pub const HostGet_gravityArgs = extern struct {
+    arg0: u64,
 };
 
 // Generated Refcount Helpers
 
-fn decrefHostStderr_lineResult(value: HostStderr_lineResult, roc_host: *RocHost) void {
+fn decrefHostPrintResult(value: HostPrintResult, roc_host: *RocHost) void {
     switch (value.tag) {
         .Err => {
             value.payload_err().decref(roc_host);
@@ -973,7 +986,7 @@ fn decrefHostStderr_lineResult(value: HostStderr_lineResult, roc_host: *RocHost)
     }
 }
 
-fn increfHostStderr_lineResult(value: HostStderr_lineResult, amount: isize) void {
+fn increfHostPrintResult(value: HostPrintResult, amount: isize) void {
     switch (value.tag) {
         .Err => {
             value.payload_err().incref(amount);
@@ -982,41 +995,13 @@ fn increfHostStderr_lineResult(value: HostStderr_lineResult, amount: isize) void
     }
 }
 
-pub const HostStderr_lineResultRelease = struct {
-    pub fn release(value: HostStderr_lineResult, roc_host: *RocHost) void {
+pub const HostPrintResultRelease = struct {
+    pub fn release(value: HostPrintResult, roc_host: *RocHost) void {
         value.decref(roc_host);
     }
 };
 
-fn decrefHostStdin_lineResult(value: HostStdin_lineResult, roc_host: *RocHost) void {
-    switch (value.tag) {
-        .Err => {
-            value.payload_err().decref(roc_host);
-        },
-        .Ok => {
-            value.payload_ok().decref(roc_host);
-        },
-    }
-}
-
-fn increfHostStdin_lineResult(value: HostStdin_lineResult, amount: isize) void {
-    switch (value.tag) {
-        .Err => {
-            value.payload_err().incref(amount);
-        },
-        .Ok => {
-            value.payload_ok().incref(amount);
-        },
-    }
-}
-
-pub const HostStdin_lineResultRelease = struct {
-    pub fn release(value: HostStdin_lineResult, roc_host: *RocHost) void {
-        value.decref(roc_host);
-    }
-};
-
-fn decrefHostStdout_lineResult(value: HostStdout_lineResult, roc_host: *RocHost) void {
+fn decrefHostRegister_classResult(value: HostRegister_classResult, roc_host: *RocHost) void {
     switch (value.tag) {
         .Err => {
             value.payload_err().decref(roc_host);
@@ -1025,7 +1010,7 @@ fn decrefHostStdout_lineResult(value: HostStdout_lineResult, roc_host: *RocHost)
     }
 }
 
-fn increfHostStdout_lineResult(value: HostStdout_lineResult, amount: isize) void {
+fn increfHostRegister_classResult(value: HostRegister_classResult, amount: isize) void {
     switch (value.tag) {
         .Err => {
             value.payload_err().incref(amount);
@@ -1034,48 +1019,23 @@ fn increfHostStdout_lineResult(value: HostStdout_lineResult, amount: isize) void
     }
 }
 
-pub const HostStdout_lineResultRelease = struct {
-    pub fn release(value: HostStdout_lineResult, roc_host: *RocHost) void {
+pub const HostRegister_classResultRelease = struct {
+    pub fn release(value: HostRegister_classResult, roc_host: *RocHost) void {
         value.decref(roc_host);
     }
 };
 
-fn decrefTryType16(value: TryType16, roc_host: *RocHost) void {
-    _ = roc_host;
-    switch (value.tag) {
-        .Err => {},
-        .Ok => {},
-    }
-}
-
-fn increfTryType16(value: TryType16, amount: isize) void {
-    _ = amount;
-    switch (value.tag) {
-        .Err => {},
-        .Ok => {},
-    }
-}
-
-pub const TryType16Release = struct {
-    pub fn release(value: TryType16, roc_host: *RocHost) void {
+pub const Vector3Release = struct {
+    pub fn release(value: Vector3, roc_host: *RocHost) void {
         value.decref(roc_host);
     }
 };
-
-/// Release one owned reference to a `RocList(RocStr)`.
-///
-/// The allocation's final reference is claimed atomically before any element
-/// is read, so concurrent owners cannot skip or duplicate element teardown.
-pub fn decrefListOfStr(value: RocList(RocStr), roc_host: *RocHost) void {
-    value.deinitWith(RocStrRelease, roc_host);
-}
 
 fn rocReleasePolicy(comptime T: type) type {
     if (T == RocStr) return RocStrRelease;
-    if (T == HostStderr_lineResult) return HostStderr_lineResultRelease;
-    if (T == HostStdin_lineResult) return HostStdin_lineResultRelease;
-    if (T == HostStdout_lineResult) return HostStdout_lineResultRelease;
-    if (T == RocList(RocStr)) return RocListRelease(RocList(RocStr), RocStrRelease);
+    if (T == HostPrintResult) return HostPrintResultRelease;
+    if (T == HostRegister_classResult) return HostRegister_classResultRelease;
+    if (T == RocErasedCallable) return RocErasedCallableRelease;
     @compileError("generated glue has no recursive release policy for " ++ @typeName(T));
 }
 
@@ -1095,26 +1055,52 @@ pub extern fn roc_crashed(bytes: [*]const u8, len: usize) callconv(.c) void;
 // The platform host must export these symbols with the exact direct C ABI signatures.
 // Refcounted arguments are owned by the hosted function.
 
-/// Hosted symbol for Host.stderr_line!
-/// Roc signature: Str => Try({}, [StderrErr(Str)])
+/// Hosted symbol for Host.print!
+/// Roc signature: Str => Try({}, [PrintErr(Str)])
 /// Owned arguments. Release each exactly once before returning, unless it is
 /// moved into storage or into the result:
 ///     arg0.decref(roc_host);
 /// The result is owned by Roc: return exactly one owned reference.
-pub extern fn roc_stderr_line(arg0: RocStr) callconv(.c) HostStderr_lineResult;
+pub extern fn godot_roc_print(arg0: RocStr) callconv(.c) HostPrintResult;
 
-/// Hosted symbol for Host.stdin_line!
-/// Roc signature: {} => Try(Str, [StdinErr(Str)])
-/// The result is owned by Roc: return exactly one owned reference.
-pub extern fn roc_stdin_line() callconv(.c) HostStdin_lineResult;
-
-/// Hosted symbol for Host.stdout_line!
-/// Roc signature: Str => Try({}, [StdoutErr(Str)])
+/// Hosted symbol for Host.register_class!
+/// Roc signature: Str, Str => Try({}, [RegisterClassErr(Str)])
 /// Owned arguments. Release each exactly once before returning, unless it is
 /// moved into storage or into the result:
 ///     arg0.decref(roc_host);
+///     arg1.decref(roc_host);
 /// The result is owned by Roc: return exactly one owned reference.
-pub extern fn roc_stdout_line(arg0: RocStr) callconv(.c) HostStdout_lineResult;
+pub extern fn godot_roc_register_class(arg0: RocStr, arg1: RocStr) callconv(.c) HostRegister_classResult;
+
+/// Hosted symbol for Host.get_velocity!
+/// Roc signature: U64 => Vector3
+pub extern fn godot_roc_get_velocity(arg0: u64) callconv(.c) Vector3;
+
+/// Hosted symbol for Host.set_velocity!
+/// Roc signature: U64, Vector3 => {}
+/// Owned arguments. Release each exactly once before returning, unless it is
+/// moved into storage or into the result:
+///     arg1.decref(roc_host);
+pub extern fn godot_roc_set_velocity(arg0: u64, arg1: Vector3) callconv(.c) void;
+
+/// Hosted symbol for Host.input_is_action_pressed!
+/// Roc signature: Str => U8
+/// Owned arguments. Release each exactly once before returning, unless it is
+/// moved into storage or into the result:
+///     arg0.decref(roc_host);
+pub extern fn godot_roc_input_is_action_pressed(arg0: RocStr) callconv(.c) u8;
+
+/// Hosted symbol for Host.move_and_slide!
+/// Roc signature: U64 => {}
+pub extern fn godot_roc_move_and_slide(arg0: u64) callconv(.c) void;
+
+/// Hosted symbol for Host.is_on_floor!
+/// Roc signature: U64 => Bool
+pub extern fn godot_roc_is_on_floor(arg0: u64) callconv(.c) bool;
+
+/// Hosted symbol for Host.get_gravity!
+/// Roc signature: U64 => Vector3
+pub extern fn godot_roc_get_gravity(arg0: u64) callconv(.c) Vector3;
 
 /// Default memory management functions for Roc platforms.
 ///
@@ -1255,5 +1241,14 @@ pub fn makeRocHost(env: *RocEnv) RocHost {
 //
 // Roc exports these symbols from the app with their natural C ABI signatures.
 
-/// Entrypoint: main_for_host!
-pub extern fn roc_main(arg0: RocList(RocStr)) callconv(.c) i32;
+/// Entrypoint: scene_init_for_host!
+pub extern fn godot_roc_scene_init() callconv(.c) void;
+
+/// Entrypoint: ready_for_host!
+pub extern fn godot_roc_ready() callconv(.c) void;
+
+/// Entrypoint: process_for_host!
+pub extern fn godot_roc_process(arg0: u64, arg1: f64) callconv(.c) void;
+
+/// Entrypoint: physics_process_for_host!
+pub extern fn godot_roc_physics_process(arg0: RocStr, arg1: u64, arg2: f64) callconv(.c) void;
