@@ -13,6 +13,12 @@ const builtin = @import("builtin");
 pub const std_options: std.Options = .{
     .allow_stack_tracing = false,
 };
+// pub const panic = if (builtin.os.tag == .windows or builtin.os.tag == .emscripten)
+//     std.debug.no_panic
+// else
+//     std.debug.FullPanic(std.debug.defaultPanic);
+//
+// /WORKAROUND.
 
 const abi = @import("roc_platform_abi.zig");
 

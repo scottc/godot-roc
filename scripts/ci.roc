@@ -152,25 +152,25 @@ main! = |_args| {
 	)?
 	Stdout.line!("Desktop roc app compiled ${(Utc.now!() - roc_linux_start).to_str()}ns")?
 
-	roc_windows_start = Utc.now!()
-	_roc_windows_out = Cmd.exec!("roc", [
-	    "build",
-		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
-		"--target=x64win",
-		"--no-cache",
-		"--output=${Path.join(Path.join(ci_workspace, project), project_target_windows_binary).display()}"]
-	)?
-	Stdout.line!("Desktop roc app compiled ${(Utc.now!() - roc_windows_start).to_str()}ns")?
+	# roc_windows_start = Utc.now!()
+	# _roc_windows_out = Cmd.exec!("roc", [
+	#     "build",
+	# 	Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
+	# 	"--target=x64mingw", # MinGW is avaliable on linux, msvc is not, so we can cross-compile.
+	# 	"--no-cache",
+	# 	"--output=${Path.join(Path.join(ci_workspace, project), project_target_windows_binary).display()}"]
+	# )?
+	# Stdout.line!("Desktop roc app compiled ${(Utc.now!() - roc_windows_start).to_str()}ns")?
 
-	roc_mac_start = Utc.now!()
-	_roc_mac_out = Cmd.exec!("roc", [
-	    "build",
-		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
-		"--target=x64mac",
-		"--no-cache",
-		"--output=${Path.join(Path.join(ci_workspace, project), project_target_macos_binary).display()}"]
-	)?
-	Stdout.line!("Desktop roc app compiled ${(Utc.now!() - roc_mac_start).to_str()}ns")?
+	# roc_mac_start = Utc.now!()
+	# _roc_mac_out = Cmd.exec!("roc", [
+	#     "build",
+	# 	Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
+	# 	"--target=x64mac",
+	# 	"--no-cache",
+	# 	"--output=${Path.join(Path.join(ci_workspace, project), project_target_macos_binary).display()}"]
+	# )?
+	# Stdout.line!("Desktop roc app compiled ${(Utc.now!() - roc_mac_start).to_str()}ns")?
 
 
 	# emcc

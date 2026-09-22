@@ -3,11 +3,13 @@
 
 # Godot Roc
 
+<img src="logo.svg" alt="Godot Roc Logo" width="150" height="200" />
+
 Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game Engine.
 
 ## Requirements
 
-* `godot-4.5.1` or newer; `godot-4.7.2`, `godot-4.5.1`, `redot-26.2`, `rex-0.0.1`.
+* `godot-4.5.1` or newer; `godot-4.7.2`, `godot-4.5.1`, `rex-0.0.1`.
 * `roc` [Install](https://roc-lang.org/install) (Pinned Version: [nightly-2026-09-12-220fd47](https://github.com/roc-lang/nightlies/releases#release-nightly-2026-09-12-220fd47))
 * `linux-x86_64` only, (Windows & MacOS support coming soon).
 

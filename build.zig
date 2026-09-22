@@ -9,12 +9,14 @@ const RocTarget = enum {
     // x64 (x86_64) targets
     x64mac,
     x64win,
+    x64mingw,
     x64musl,
     x64v1musl,
 
     // arm64 (aarch64) targets
     arm64mac,
     arm64win,
+    arm64mingw,
     arm64musl,
     arm64v1musl,
 
@@ -23,6 +25,7 @@ const RocTarget = enum {
             .wasm32emscripten => .{ .cpu_arch = .wasm32, .os_tag = .emscripten },
             .x64mac => .{ .cpu_arch = .x86_64, .os_tag = .macos },
             .x64win => .{ .cpu_arch = .x86_64, .os_tag = .windows, .abi = .msvc },
+            .x64mingw => .{ .cpu_arch = .x86_64, .os_tag = .windows, .abi = .gnu },
             .x64musl => .{ .cpu_arch = .x86_64, .os_tag = .linux, .abi = .musl },
             .x64v1musl => .{
                 .cpu_arch = .x86_64,
@@ -32,6 +35,7 @@ const RocTarget = enum {
             },
             .arm64mac => .{ .cpu_arch = .aarch64, .os_tag = .macos },
             .arm64win => .{ .cpu_arch = .aarch64, .os_tag = .windows, .abi = .msvc },
+            .arm64mingw => .{ .cpu_arch = .aarch64, .os_tag = .windows, .abi = .gnu },
             .arm64musl => .{ .cpu_arch = .aarch64, .os_tag = .linux, .abi = .musl },
             .arm64v1musl => .{
                 .cpu_arch = .aarch64,
@@ -52,10 +56,12 @@ const RocTarget = enum {
             .wasm32emscripten => "wasm32",
             .x64mac => "x64mac",
             .x64win => "x64win",
+            .x64mingw => "x64mingw",
             .x64musl => "x64musl",
             .x64v1musl => "x64v1musl",
             .arm64mac => "arm64mac",
             .arm64win => "arm64win",
+            .arm64mingw => "arm64mingw",
             .arm64musl => "arm64musl",
             .arm64v1musl => "arm64v1musl",
         };
@@ -64,7 +70,7 @@ const RocTarget = enum {
     fn libFilename(self: RocTarget) []const u8 {
         return switch (self) {
             .wasm32emscripten => "libhost.o.wasm",
-            .x64win, .arm64win => "host.lib",
+            .x64win, .arm64win, .x64mingw, .arm64mingw => "host.lib",
             else => "libhost.a",
         };
     }
@@ -83,10 +89,12 @@ const all_targets = [_]RocTarget{
     .wasm32emscripten,
     .x64mac,
     .x64win,
+    .x64mingw,
     .x64musl,
     .x64v1musl,
     .arm64mac,
     .arm64win,
+    .arm64mingw,
     .arm64musl,
     .arm64v1musl,
 };

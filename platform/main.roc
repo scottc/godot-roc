@@ -55,6 +55,8 @@ platform ""
         # ], output: Shared },
         x64win: { inputs: ["host.lib", app], output: Shared },
         arm64win: { inputs: ["host.lib", app], output: Shared },
+        x64mingw: { inputs: ["host.lib", app], output: Shared },
+        arm64mingw: { inputs: ["host.lib", app], output: Shared },
     }
 
 import Godot
