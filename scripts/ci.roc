@@ -307,8 +307,8 @@ main! = |_args| {
             #"-fno-lto",
     	])?
 
-    	Stdout.line!("Validating app... wasm-validate my_game.wasm")?
-        _emcc_valid_out = Cmd.exec!("wasm-validate", [Path.join(Path.join(ci_workspace, project), "my_game.wasm").to_os_str()])?
+    	Stdout.line!("Validating app... wasm-validate --enable-extended-const my_game.wasm")?
+        _emcc_valid_out = Cmd.exec!("wasm-validate", ["--enable-extended-const", Path.join(Path.join(ci_workspace, project), "my_game.wasm").to_os_str()])?
 
         dp = Path.join(Path.join(ci_workspace, project), "export").display()
     	Stdout.line!(
