@@ -191,16 +191,51 @@ pub const Interface = struct {
         [*:0]const u8,
     ) callconv(.c) void,
 
+    classdb_construct_object2: *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr,
+    object_set_instance: *const fn (
+        GDExtensionObjectPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionClassInstancePtr,
+    ) callconv(.c) void,
+    classdb_register_extension_class5: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        *const GDExtensionClassCreationInfo5,
+    ) callconv(.c) void,
+    global_get_singleton: *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr,
+
+    variant_get_ptr_operator_evaluator: *const fn (
+        GDExtensionVariantOperator,
+        GDExtensionVariantType,
+        GDExtensionVariantType,
+    ) callconv(.c) GDExtensionPtrOperatorEvaluator,
+
+    variant_get_ptr_destructor: *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrDestructor,
+
+    classdb_get_method_bind: *const fn (
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        i64,
+    ) callconv(.c) GDExtensionMethodBindPtr,
+
+    object_method_bind_ptrcall: *const fn (
+        GDExtensionMethodBindPtr,
+        GDExtensionObjectPtr,
+        ?[*]const GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void,
+
     // … every other function you need
 };
 
 ///returns function pointer from get_proc_address lookup table function.
 fn fp(
-    gpa: GDExtensionInterfaceGetProcAddress,
+    get_proc_address: GDExtensionInterfaceGetProcAddress,
     comptime name: [:0]const u8,
     comptime T: type,
 ) !T {
-    const ptr = gpa.?(name.ptr) orelse return error.MissingFunction;
+    const ptr = get_proc_address.?(name.ptr) orelse return error.MissingFunction;
     return @ptrCast(@alignCast(ptr));
 }
 
@@ -214,68 +249,73 @@ pub fn loadInterface(get_proc_address: GDExtensionInterfaceGetProcAddress) !Inte
             i32,
             GDExtensionBool,
         ) callconv(.c) void),
-
         .string_name_new_with_utf8_chars = try fp(gpa, "string_name_new_with_utf8_chars", *const fn (
             GDExtensionUninitializedStringNamePtr,
             [*:0]const u8,
         ) callconv(.c) void),
+        .classdb_construct_object2 = try fp(
+            gpa,
+            "classdb_construct_object2",
+            *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr,
+        ),
+        .object_set_instance = try fp(
+            gpa,
+            "object_set_instance",
+            *const fn (
+                GDExtensionObjectPtr,
+                GDExtensionConstStringNamePtr,
+                GDExtensionClassInstancePtr,
+            ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class5 = try fp(
+            gpa,
+            "classdb_register_extension_class5",
+            *const fn (
+                GDExtensionClassLibraryPtr,
+                GDExtensionConstStringNamePtr,
+                GDExtensionConstStringNamePtr,
+                *const GDExtensionClassCreationInfo5,
+            ) callconv(.c) void,
+        ),
+        .global_get_singleton = try fp(gpa, "global_get_singleton", *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr),
 
-        // …
+        .variant_get_ptr_operator_evaluator = try fp(
+            gpa,
+            "variant_get_ptr_operator_evaluator",
+            *const fn (
+                GDExtensionVariantOperator,
+                GDExtensionVariantType,
+                GDExtensionVariantType,
+            ) callconv(.c) GDExtensionPtrOperatorEvaluator,
+        ),
+
+        .variant_get_ptr_destructor = try fp(
+            gpa,
+            "variant_get_ptr_destructor",
+            *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrDestructor,
+        ),
+
+        .classdb_get_method_bind = try fp(
+            gpa,
+            "classdb_get_method_bind",
+            *const fn (
+                GDExtensionConstStringNamePtr,
+                GDExtensionConstStringNamePtr,
+                i64,
+            ) callconv(.c) GDExtensionMethodBindPtr,
+        ),
+        .object_method_bind_ptrcall = try fp(
+            gpa,
+            "object_method_bind_ptrcall",
+            *const fn (
+                GDExtensionMethodBindPtr,
+                GDExtensionObjectPtr,
+                ?[*]const GDExtensionConstTypePtr,
+                GDExtensionTypePtr,
+            ) callconv(.c) void,
+        ),
+
+        //...
+        // ..
     };
-}
-
-//
-// TODO: delete below, in favor of the above.
-//
-
-//
-// Private Helper functions, just the bare minimum to make the bindings work...
-//
-
-// TODO: make private
-pub fn load(get_proc_address: GDExtensionInterfaceGetProcAddress, comptime name: [:0]const u8, comptime T: type) T {
-    const gpa = get_proc_address orelse @trap();
-    const ptr = gpa(name.ptr) orelse @trap();
-    return @ptrCast(@alignCast(ptr));
-}
-
-//
-// Public extension_api, this should all be generated code:
-//
-
-pub fn classdb_construct_object2(get_proc_address: GDExtensionInterfaceGetProcAddress, arg: GDExtensionConstStringNamePtr) GDExtensionObjectPtr {
-    return load(
-        get_proc_address,
-        "classdb_construct_object2",
-        *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr,
-    )(arg);
-}
-
-pub fn object_set_instance(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: GDExtensionObjectPtr, arg2: GDExtensionConstStringNamePtr, arg3: GDExtensionClassInstancePtr) void {
-    if (get_proc_address == null) return;
-
-    return load(
-        get_proc_address,
-        "object_set_instance",
-        *const fn (
-            GDExtensionObjectPtr,
-            GDExtensionConstStringNamePtr,
-            GDExtensionClassInstancePtr,
-        ) callconv(.c) void,
-    )(arg1, arg2, arg3);
-}
-
-pub fn classdb_register_extension_class5(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: GDExtensionClassLibraryPtr, arg2: GDExtensionConstStringNamePtr, arg3: GDExtensionConstStringNamePtr, arg4: *const GDExtensionClassCreationInfo5) void {
-    if (get_proc_address == null) return;
-
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class5",
-        *const fn (
-            GDExtensionClassLibraryPtr,
-            GDExtensionConstStringNamePtr,
-            GDExtensionConstStringNamePtr,
-            *const GDExtensionClassCreationInfo5,
-        ) callconv(.c) void,
-    )(arg1, arg2, arg3, arg4);
 }

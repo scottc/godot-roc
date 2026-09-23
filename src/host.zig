@@ -406,7 +406,7 @@ fn createInstance(
     var parent_sn = makeStringName(info.parent_name);
     var class_sn = makeStringName(info.class_name);
 
-    const obj = eapi.classdb_construct_object2(get_proc_address, @ptrCast(&parent_sn));
+    const obj = gde.classdb_construct_object2(@ptrCast(&parent_sn));
     if (obj == null) return null;
 
     const self = instanceAllocator().create(ClassInstance) catch return null;
@@ -415,7 +415,7 @@ fn createInstance(
         .class_name = info.class_name, // useful for Roc dispatch later
     };
 
-    eapi.object_set_instance(get_proc_address, obj, @ptrCast(&class_sn), @ptrCast(self));
+    gde.object_set_instance(obj, @ptrCast(&class_sn), @ptrCast(self));
     return obj;
 }
 
@@ -448,7 +448,7 @@ fn recreateInstance(
     };
 
     var class_sn = makeStringName(info.class_name);
-    eapi.object_set_instance(get_proc_address, object, @ptrCast(&class_sn), @ptrCast(self));
+    gde.object_set_instance(object, @ptrCast(&class_sn), @ptrCast(self));
 
     return @ptrCast(self);
 }
@@ -473,17 +473,6 @@ fn registerClass(info: *ClassInfo) void {
     // unregister first (idempotent) // this maybe needed...
     // unregisterClass(info.class_name);
 
-    const register_class = eapi.load(
-        get_proc_address,
-        "classdb_register_extension_class5",
-        *const fn (
-            gde_if.GDExtensionClassLibraryPtr,
-            gde_if.GDExtensionConstStringNamePtr,
-            gde_if.GDExtensionConstStringNamePtr,
-            *const gde_if.GDExtensionClassCreationInfo5,
-        ) callconv(.c) void,
-    );
-
     var class_sn = makeStringName(info.class_name);
     var parent_sn = makeStringName(info.parent_name);
 
@@ -500,13 +489,13 @@ fn registerClass(info: *ClassInfo) void {
     creation.get_virtual_func = @ptrCast(@constCast(&getVirtual)); // TODO: remove casts?
     creation.class_userdata = info;
 
-    register_class(library, @ptrCast(&class_sn), @ptrCast(&parent_sn), &creation);
+    gde.classdb_register_extension_class5(library, @ptrCast(&class_sn), @ptrCast(&parent_sn), &creation);
 
     print("registered {s} : {s}\n", .{ info.class_name, info.parent_name });
 }
 
 fn unregisterClass(class_name: [:0]const u8) void {
-    const unregister = eapi.load(
+    const unregister = eapi.fp(
         get_proc_address,
         "classdb_unregister_extension_class",
         *const fn (
@@ -525,19 +514,9 @@ var g_mb_set_velocity: gde_if.GDExtensionMethodBindPtr = null;
 
 fn getMethodBind(class_name: [:0]const u8, method_name: [:0]const u8, hash: i64) gde_if.GDExtensionMethodBindPtr {
     //std.debug.print("[./platform/src/native_host.zig]: getMethodBind()\n", .{});
-
-    const classdb_get_method_bind = eapi.load(
-        get_proc_address,
-        "classdb_get_method_bind",
-        *const fn (
-            gde_if.GDExtensionConstStringNamePtr,
-            gde_if.GDExtensionConstStringNamePtr,
-            i64,
-        ) callconv(.c) gde_if.GDExtensionMethodBindPtr,
-    );
     var cn = makeStringName(class_name);
     var mn = makeStringName(method_name);
-    return classdb_get_method_bind(@ptrCast(&cn), @ptrCast(&mn), hash);
+    return gde.classdb_get_method_bind(@ptrCast(&cn), @ptrCast(&mn), hash);
 }
 
 fn ensureMethodBinds() void {
@@ -563,17 +542,7 @@ fn ptrcall(
 ) void {
     // std.debug.print("[./platform/src/native_host.zig]: ptrcall(method, object, args, ret)\n", .{});
 
-    const object_method_bind_ptrcall = eapi.load(
-        get_proc_address,
-        "object_method_bind_ptrcall",
-        *const fn (
-            gde_if.GDExtensionMethodBindPtr,
-            gde_if.GDExtensionObjectPtr,
-            ?[*]const gde_if.GDExtensionConstTypePtr,
-            gde_if.GDExtensionTypePtr,
-        ) callconv(.c) void,
-    );
-    object_method_bind_ptrcall(method, object, args, ret);
+    gde.object_method_bind_ptrcall(method, object, args, ret);
 }
 
 export fn godot_roc_set_velocity(handle: usize, v: Vector3) callconv(.c) void {
@@ -615,13 +584,9 @@ var g_mb_is_action_pressed: gde_if.GDExtensionMethodBindPtr = null;
 fn ensureInput() void {
     if (g_input != null) return;
 
-    const global_get_singleton = eapi.load(
-        get_proc_address,
-        "global_get_singleton",
-        *const fn (gde_if.GDExtensionConstStringNamePtr) callconv(.c) gde_if.GDExtensionObjectPtr,
-    );
     var input_name = makeStringName("Input");
-    g_input = global_get_singleton(@ptrCast(&input_name));
+
+    g_input = gde.global_get_singleton(@ptrCast(&input_name));
 
     g_mb_is_action_pressed = getMethodBind("Input", "is_action_pressed", INPUT_IS_ACTION_PRESSED_HASH);
 }
@@ -756,14 +721,9 @@ var g_mb_is_editor_hint: gde_if.GDExtensionMethodBindPtr = null;
 
 fn ensureEngine() void {
     if (g_engine != null) return;
-    const global_get_singleton = eapi.load(
-        get_proc_address,
-        "global_get_singleton",
-        *const fn (gde_if.GDExtensionConstStringNamePtr) callconv(.c) gde_if.GDExtensionObjectPtr,
-    );
 
     var name = makeStringName("Engine");
-    g_engine = global_get_singleton(@ptrCast(&name));
+    g_engine = gde.global_get_singleton(@ptrCast(&name));
     g_mb_is_editor_hint = getMethodBind("Engine", "is_editor_hint", IS_EDITOR_HINT_HASH);
 }
 
@@ -833,38 +793,17 @@ fn stringNameEq(
     text: [:0]const u8,
 ) bool {
     // --- load interface functions ---
-    const string_name_new = eapi.load(
-        get_proc_address,
-        "string_name_new_with_utf8_chars",
-        *const fn (gde_if.GDExtensionUninitializedStringNamePtr, [*:0]const u8) callconv(.c) void,
-    );
-
-    const get_op_evaluator = eapi.load(
-        get_proc_address,
-        "variant_get_ptr_operator_evaluator",
-        *const fn (
-            gde_if.GDExtensionVariantOperator,
-            gde_if.GDExtensionVariantType,
-            gde_if.GDExtensionVariantType,
-        ) callconv(.c) gde_if.GDExtensionPtrOperatorEvaluator,
-    );
-
-    const get_destructor = eapi.load(
-        get_proc_address,
-        "variant_get_ptr_destructor",
-        *const fn (gde_if.GDExtensionVariantType) callconv(.c) gde_if.GDExtensionPtrDestructor,
-    );
 
     // --- construct temporary StringName from UTF-8 ---
     var other: StringNameValue = undefined;
-    string_name_new(@ptrCast(&other), text.ptr);
+    gde.string_name_new_with_utf8_chars(@ptrCast(&other), text.ptr);
 
     // Always destroy the temporary we constructed.
-    const destroy = get_destructor(gde_if.GDEXTENSION_VARIANT_TYPE_STRING_NAME);
+    const destroy = gde.variant_get_ptr_destructor(gde_if.GDEXTENSION_VARIANT_TYPE_STRING_NAME);
     defer if (destroy) |d| d(@ptrCast(&other));
 
     // --- get StringName == StringName evaluator ---
-    const eval = get_op_evaluator(
+    const eval = gde.variant_get_ptr_operator_evaluator(
         gde_if.GDEXTENSION_VARIANT_OP_EQUAL,
         gde_if.GDEXTENSION_VARIANT_TYPE_STRING_NAME,
         gde_if.GDEXTENSION_VARIANT_TYPE_STRING_NAME,

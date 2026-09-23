@@ -1,11 +1,11 @@
-import pf.Godot
+import pf.Engine
 import pf.Size
 
 class_name = "Npc"
 parent_class = "CharacterBody3D"
 
 register_class! = || {
-    _handle = Godot.register_class!(
+    _handle = Engine.register_class!(
         class_name,
         parent_class
     )
@@ -24,14 +24,14 @@ physics_process! = |handle, _delta| {
     # Read the godot docos, to understand the differences.
 
     # Don't forget to set Godot's keybind to action mappings!
-    is_forward = Godot.is_action_pressed!("forward") == 1
-    is_left = Godot.is_action_pressed!("left") == 1
-    is_right = Godot.is_action_pressed!("right") == 1
-    is_back = Godot.is_action_pressed!("back") == 1
-    is_jump = Godot.is_action_pressed!("jump") == 1
+    is_forward = Engine.is_action_pressed!("forward") == 1
+    is_left = Engine.is_action_pressed!("left") == 1
+    is_right = Engine.is_action_pressed!("right") == 1
+    is_back = Engine.is_action_pressed!("back") == 1
+    is_jump = Engine.is_action_pressed!("jump") == 1
 
     # current velocity
-    velocity = Godot.get_velocity!(handle)
+    velocity = Engine.get_velocity!(handle)
 
     # next velocity
     vx =
@@ -52,15 +52,15 @@ physics_process! = |handle, _delta| {
     vy =
         velocity.y # preserve existing y-axis momentum, plus add vector modifiers:
         + -gravity
-        + if is_jump and Godot.is_on_floor!(handle)
+        + if is_jump and Engine.is_on_floor!(handle)
             jump_force
         else
             idle_speed
 
-    Godot.set_velocity!(handle, { x: vx, y: vy, z: vz })
+    Engine.set_velocity!(handle, { x: vx, y: vy, z: vz })
 
     # Process physics for this class / node.
-    Godot.move_and_slide!(handle)
+    Engine.move_and_slide!(handle)
 
     {}
 }

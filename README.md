@@ -30,7 +30,7 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 | | Roc (godot-roc) | GDScript | C# | C++ |
 | --- | --- | --- | --- | --- |
 | **API coverage** | \[WIP] What the binding exposes | Full engine scripting API | Broad official bindings | Full native access |
-| **Web support** | Supported [[godot demo](https://scottc.github.io/godot-roc)] [[redot demo](https://scottc.github.io/redot-roc)] | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
+| **Web support** | GDExtension wasm32-emscripten [[godot-demo](https://scottc.github.io/godot-roc)] [[redot-demo](https://scottc.github.io/redot-roc)] | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
 | **Iteration speed in Godot** | Fast Rebuild / reload pipeline. 1 class ~=250/300ms(cache/no-cache) on my potato laptop | Very fast | Fast | Slow–moderate (compile native) |
 | **Learning curve** | [Easy-moderate](https://roc-lang.org/friendly) (if new to FP) | Easy | Moderate | Hard |
 | **Performance potential** | [High](https://roc-lang.org/fast) (native extension path) | Good enough for most games | High | Highest (engine-level) |
@@ -38,7 +38,7 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 | **Primary style** | ✨[**Functional**](https://roc-lang.org/functional)✨ | Multi-paradigm, script-oriented | Multi-paradigm | Multi-paradigm |
 | **Type system** | ✨**Strong, static, inference**✨ | Optional / gradual | Static (nullable & pragmatism) | Static (manual discipline) |
 | **Ecosystem maturity** | New [[projects](https://github.com/lukewilliamboswell/roc-awesome)] | Mature (Godot-focused) | Mature | Mature |
-| **Docs & tutorials** | Emerging [[roc docs](https://roc-lang.org/docs/main/)] [[roc examples](https://roc-lang.org/examples/)] | Official & plentiful | Official + .NET ecosystem | Official engine docs; steeper |
+| **Docs & tutorials** | Emerging [[roc-docs](https://roc-lang.org/docs/main/)] [[roc-examples](https://roc-lang.org/examples/)] | Official & plentiful | Official + .NET ecosystem | Official engine docs; steeper |
 | **Role in Godot** | Community binding (this project) | First-party script language | Official .NET support | Engine / GDExtension native |
 
 

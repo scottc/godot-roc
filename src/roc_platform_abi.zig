@@ -813,17 +813,17 @@ pub const HostRegister_classArgs = extern struct {
 };
 
 /// Arguments for Host.get_velocity!
-/// Roc signature: U32 => Vector3
+/// Roc signature: U64 => Vector3
 /// Refcounted fields are owned by the hosted function.
 pub const HostGet_velocityArgs = extern struct {
-    arg0: u32,
+    arg0: u64,
 };
 
 /// Arguments for Host.set_velocity!
-/// Roc signature: U32, Vector3 => {}
+/// Roc signature: U64, Vector3 => {}
 /// Refcounted fields are owned by the hosted function.
 pub const HostSet_velocityArgs = extern struct {
-    arg0: u32,
+    arg0: u64,
     arg1: Vector3,
 };
 
@@ -835,24 +835,24 @@ pub const HostInput_is_action_pressedArgs = extern struct {
 };
 
 /// Arguments for Host.move_and_slide!
-/// Roc signature: U32 => {}
+/// Roc signature: U64 => {}
 /// Refcounted fields are owned by the hosted function.
 pub const HostMove_and_slideArgs = extern struct {
-    arg0: u32,
+    arg0: u64,
 };
 
 /// Arguments for Host.is_on_floor!
-/// Roc signature: U32 => Bool
+/// Roc signature: U64 => Bool
 /// Refcounted fields are owned by the hosted function.
 pub const HostIs_on_floorArgs = extern struct {
-    arg0: u32,
+    arg0: u64,
 };
 
 /// Arguments for Host.get_gravity!
-/// Roc signature: U32 => Vector3
+/// Roc signature: U64 => Vector3
 /// Refcounted fields are owned by the hosted function.
 pub const HostGet_gravityArgs = extern struct {
-    arg0: u32,
+    arg0: u64,
 };
 
 // Generated Refcount Helpers
@@ -903,15 +903,15 @@ pub extern fn godot_roc_print(arg0: RocStr) callconv(.c) void;
 pub extern fn godot_roc_register_class(arg0: RocStr, arg1: RocStr) callconv(.c) void;
 
 /// Hosted symbol for Host.get_velocity!
-/// Roc signature: U32 => Vector3
-pub extern fn godot_roc_get_velocity(arg0: u32) callconv(.c) Vector3;
+/// Roc signature: U64 => Vector3
+pub extern fn godot_roc_get_velocity(arg0: u64) callconv(.c) Vector3;
 
 /// Hosted symbol for Host.set_velocity!
-/// Roc signature: U32, Vector3 => {}
+/// Roc signature: U64, Vector3 => {}
 /// Owned arguments. Release each exactly once before returning, unless it is
 /// moved into storage or into the result:
 ///     arg1.decref(roc_host);
-pub extern fn godot_roc_set_velocity(arg0: u32, arg1: Vector3) callconv(.c) void;
+pub extern fn godot_roc_set_velocity(arg0: u64, arg1: Vector3) callconv(.c) void;
 
 /// Hosted symbol for Host.input_is_action_pressed!
 /// Roc signature: Str => U8
@@ -921,16 +921,16 @@ pub extern fn godot_roc_set_velocity(arg0: u32, arg1: Vector3) callconv(.c) void
 pub extern fn godot_roc_input_is_action_pressed(arg0: RocStr) callconv(.c) u8;
 
 /// Hosted symbol for Host.move_and_slide!
-/// Roc signature: U32 => {}
-pub extern fn godot_roc_move_and_slide(arg0: u32) callconv(.c) void;
+/// Roc signature: U64 => {}
+pub extern fn godot_roc_move_and_slide(arg0: u64) callconv(.c) void;
 
 /// Hosted symbol for Host.is_on_floor!
-/// Roc signature: U32 => Bool
-pub extern fn godot_roc_is_on_floor(arg0: u32) callconv(.c) bool;
+/// Roc signature: U64 => Bool
+pub extern fn godot_roc_is_on_floor(arg0: u64) callconv(.c) bool;
 
 /// Hosted symbol for Host.get_gravity!
-/// Roc signature: U32 => Vector3
-pub extern fn godot_roc_get_gravity(arg0: u32) callconv(.c) Vector3;
+/// Roc signature: U64 => Vector3
+pub extern fn godot_roc_get_gravity(arg0: u64) callconv(.c) Vector3;
 
 
 /// Default memory management functions for Roc platforms.
@@ -1079,8 +1079,8 @@ pub extern fn godot_roc_scene_init() callconv(.c) void;
 pub extern fn godot_roc_ready() callconv(.c) void;
 
 /// Entrypoint: process_for_host!
-pub extern fn godot_roc_process(arg0: u32, arg1: f64) callconv(.c) void;
+pub extern fn godot_roc_process(arg0: u64, arg1: f64) callconv(.c) void;
 
 /// Entrypoint: physics_process_for_host!
-pub extern fn godot_roc_physics_process(arg0: RocStr, arg1: u32, arg2: f64) callconv(.c) void;
+pub extern fn godot_roc_physics_process(arg0: RocStr, arg1: u64, arg2: f64) callconv(.c) void;
 

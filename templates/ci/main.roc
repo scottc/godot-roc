@@ -5,7 +5,7 @@ app [ready!, process!, scene_init!, physics_process!] {
     pf: platform "../../../platform/main.roc",
 }
 
-import pf.Godot
+import pf.Engine
 import pf.Size
 
 import MyPlayerCharacter
@@ -14,7 +14,7 @@ import Npc
 ## Called when godot initializes the Scene Tree, this includes all scenes.
 scene_init! : {} => {}
 scene_init! = |_| {
-    _ = Godot.print!("Hello World!")
+    _ = Engine.print!("Hello World!")
 
     MyPlayerCharacter.register_class!()
     Npc.register_class!()
@@ -29,7 +29,7 @@ physics_process! = |class_name, handle, delta| {
         "PlayerCharacter" => MyPlayerCharacter.physics_process!(handle, delta)
         "NpcCharacter" => Npc.physics_process!(handle, delta)
         _ => {
-            _ = Godot.print!("Unhandled class! ${class_name}")
+            _ = Engine.print!("Unhandled class! ${class_name}")
         }
     }
     {}

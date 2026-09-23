@@ -6,9 +6,7 @@ platform ""
         physics_process! : Str, Size.GDExtensionObjectPtr, F64 => {}
     }
     exposes [
-        Godot,
-        Redot,
-        Draconic,
+        Engine,
         Size
     ]
     packages { roc: "nightly-2026-09-12-220fd47" }
@@ -60,9 +58,7 @@ platform ""
         arm64mingw: { inputs: ["host.lib", app], output: Shared },
     }
 
-import Godot
-import Redot
-import Draconic
+import Engine
 import Host
 import Size
 

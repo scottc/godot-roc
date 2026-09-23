@@ -163,7 +163,7 @@ main! = |_args| {
 
 	# compile roc - to native
 	Stdout.line!("Compiling desktop roc app...")?
-	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint64).display()} --output=${Path.join(Path.join(ci_workspace, project), project_target_linux_binary).display()}")? # To inform the user
+	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint64).display()} --target=x64musl --no-cache --output=${Path.join(Path.join(ci_workspace, project), project_target_linux_binary).display()}")? # To inform the user
 	roc_linux_start = Utc.now!()
 	_roc_linux_out = Cmd.exec!("roc", [
 	    "build",
