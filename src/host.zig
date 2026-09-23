@@ -49,8 +49,8 @@ const _ready_HASH = 3218959716;
 // TODO: rename _init() to _scene_init()
 extern fn godot_roc_scene_init() callconv(.c) void;
 extern fn godot_roc_ready() callconv(.c) void;
-extern fn godot_roc_process(instance_id: u64, delta: f64) callconv(.c) void;
-extern fn godot_roc_physics_process(class_name: abi.RocStr, class_handle: u64, delta: f64) callconv(.c) void;
+extern fn godot_roc_process(instance_id: usize, delta: f64) callconv(.c) void;
+extern fn godot_roc_physics_process(class_name: abi.RocStr, class_handle: usize, delta: f64) callconv(.c) void;
 
 //
 // Constants
@@ -382,11 +382,13 @@ fn classNameFromInstance(self: *ClassInstance) abi.RocStr {
     return abi.RocStr.fromSlice(self.class_name, g_roc_host.?);
 }
 
-fn handleFromInstance(self: *ClassInstance) u64 {
+//fn handleFromInstance(self: ?*anyopaque) usize {
+fn handleFromInstance(self: *ClassInstance) gde_if.ObjectHandle {
     return @intFromPtr(self);
 }
 
-fn instanceFromHandle(handle: usize) ?*ClassInstance {
+//fn instanceFromHandle(handle: ObjectHandle) ?*anyopaque {
+fn instanceFromHandle(handle: gde_if.ObjectHandle) ?*ClassInstance {
     if (handle == 0) return null;
     return @ptrFromInt(handle);
 }

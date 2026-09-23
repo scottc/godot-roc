@@ -1,6 +1,7 @@
 ### MyPlayerCharacter.roc - A player controlled character
 
 import pf.Godot
+import pf.Size
 
 class_name = "MyPlayerCharacter"
 parent_class = "CharacterBody3D"
@@ -18,7 +19,7 @@ movement_speed = 2.0
 idle_speed = 0.0
 jump_force = 50.0
 
-physics_process! : U64, F64 => {}
+physics_process! : Size.GDExtensionObjectPtr, F64 => {}
 physics_process! = |handle, _delta| {
     # Note: physics_process!, runs at a fixed delta, so delta is optional to use here...
     # Note: process!, runs at a variable delta, once per render cycle.

@@ -76,8 +76,10 @@ main! = |_args| {
     project_template : Str
     project_template = "ci"
 
-    project_roc_entrypoint : Str
-    project_roc_entrypoint = "main.roc"
+    project_roc_entrypoint32 : Str
+    project_roc_entrypoint32 = "main.roc"
+    project_roc_entrypoint64 : Str
+    project_roc_entrypoint64 = "main.roc"
 
     # project_godot_entrypoint : Str
     # project_godot_entrypoint = "project.godot"
@@ -113,6 +115,13 @@ main! = |_args| {
     Path.create_dir!(ci_workspace)?
 	_cp_template_out = copy_dir!("templates/${project_template}", Path.join(ci_workspace, project))?
 	Stdout.line!("Created godot-roc app: ${Path.join(ci_workspace, project).display()} ${(Utc.now!() - ci_start).to_str()}ns")?
+
+
+	# TODO: generate: godot api -> roc types -> zig..
+
+	Stdout.line!("Generating glue.. roc run scripts/glue.roc")?
+	_roc_glue_out = Cmd.exec!("roc", ["run", "scripts/glue.roc", "native64" ])?
+	Stdout.line!("Glue generated!")?
 
 	# Precompile?
 
@@ -154,11 +163,11 @@ main! = |_args| {
 
 	# compile roc - to native
 	Stdout.line!("Compiling desktop roc app...")?
-	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).display()} --output=${Path.join(Path.join(ci_workspace, project), project_target_linux_binary).display()}")? # To inform the user
+	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint64).display()} --output=${Path.join(Path.join(ci_workspace, project), project_target_linux_binary).display()}")? # To inform the user
 	roc_linux_start = Utc.now!()
 	_roc_linux_out = Cmd.exec!("roc", [
 	    "build",
-		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
+		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint64).to_os_str(),
 		"--target=x64musl",
 		"--no-cache",
 		"--output=${Path.join(Path.join(ci_workspace, project), project_target_linux_binary).display()}"]
@@ -192,13 +201,30 @@ main! = |_args| {
 	pr11474 = True
 	if (pr11474) { # This depends on https://github.com/roc-lang/roc/pull/11474
 
+    	Stdout.line!("Generating glue.. roc run scripts/glue.roc")?
+    	_roc_glue_out2 = Cmd.exec!("roc", ["run", "scripts/glue.roc", "wasm32" ])?
+    	Stdout.line!("Glue generated!")?
+
+    	Stdout.line!("Roc build all host (zig) targets...")?
+    	Stdout.line!("roc run scripts/build.roc")? # To inform the user
+    	roc_zig_start2 = Utc.now!()
+    	_roc_zig_out2 = Cmd.exec!("roc", [
+    	    "scripts/build.roc",
+    		"-Doptimize=Debug"
+    		# Debug = fastest build time (default)
+    		# ReleaseFast = fastest runtime speed.
+    		# For CI, we want build speed.
+    		# For releases, we want run speed.
+    	])?
+    	Stdout.line!("All host targets built ${(Utc.now!() - roc_zig_start2).to_str()}ns")?
+
     	# compile roc - to web
     	Stdout.line!("Compiling web roc app...")?
-    	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).display()} --target=wasm32 --output=${Path.join(Path.join(ci_workspace, project), "temp.a.wasm").display()}")? # To inform the user
+    	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint32).display()} --target=wasm32 --output=${Path.join(Path.join(ci_workspace, project), "temp.a.wasm").display()}")? # To inform the user
     	roc_web_start = Utc.now!()
     	_roc_web_out = Cmd.exec!("/home/anon/Projects/roc/zig-out/bin/roc", [
     	    "build",
-    		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
+    		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint32).to_os_str(),
     		"--target=wasm32",
     		"--output=${Path.join(Path.join(ci_workspace, project), "temp.a").display()}"
     	])?
@@ -210,8 +236,8 @@ main! = |_args| {
             "ar",
             [
                 "x",
-                Path.join(Path.join(ci_workspace, project), "temp.a").to_os_str()
-                Path.join(ci_workspace, project).to_os_str()
+                Path.join(Path.join(ci_workspace, project), "temp.a").to_os_str(),
+                "--output", Path.join(ci_workspace, project).to_os_str()
             ]
         )?
        	Stdout.line!("Extracted...")?
@@ -221,26 +247,45 @@ main! = |_args| {
         # roc_app_llvm_wasm32_speed.o
 
        	Stdout.line!("List files ...")?
-        _ls_al_out = Cmd.exec!("ls", ["-al"])?
+        _ls_al_out = Cmd.exec!("ls", ["-al", Path.join(ci_workspace, project).to_os_str()])?
        	Stdout.line!("files listed ...")?
 
        	Stdout.line!("Validating host... wasm-validate libhost.o.wasm")?
-        _validate_host_out = Cmd.exec!("wasm-validate", ["libhost.o.wasm"])?
+        _validate_host_out = Cmd.exec!("wasm-validate", [Path.join(Path.join(ci_workspace, project), "libhost.o.wasm").to_os_str()])?
        	Stdout.line!("Validated host.")?
 
        	Stdout.line!("Validating app... wasm-validate roc_app_llvm_wasm32_speed.o")?
-        _validate_roc_out = Cmd.exec!("wasm-validate", ["roc_app_llvm_wasm32_speed.o"])?
+        _validate_roc_out = Cmd.exec!("wasm-validate", [Path.join(Path.join(ci_workspace, project), "roc_app_llvm_wasm32_speed.o").to_os_str()])?
        	Stdout.line!("Validated app.")?
 
-        # TODO: validate
+
+       	Stdout.line!("Linking with wasm-ld")?
+        _wasm_ld_out = Cmd.exec!("wasm-ld",
+            [
+                "--fatal-warnings", # this is to ensure emcc doesn't silently suppress warnings.
+                "--experimental-pic", # this is to supress the "shared libraries … not yet stable"
+                "--no-entry",
+                "--export-dynamic",
+                "--import-memory",
+                "--import-table",
+                "-shared",
+                "-o", Path.join(Path.join(ci_workspace, project), "test.wasm").to_os_str(),
+                Path.join(Path.join(ci_workspace, project), "libhost.o.wasm").to_os_str(),
+                Path.join(Path.join(ci_workspace, project), "roc_app_llvm_wasm32_speed.o").to_os_str()
+            ]
+        )?
+       	Stdout.line!("wasm-ld Linked!")?
+
+        # TODO: can we keep the wasm-ld, fatal warnings, but exclude "wasm-ld: error: creating shared libraries, with -shared, is not yet stable"?
+
 
     	Stdout.line!("Compiling Final Web GDExtension (wasm32-emscripten SIDE_MODULE=2)")?
     	Stdout.line!("[emcc command here...]")? # To inform the user
     	_emcc_out = Cmd.exec!("emcc", [
             Path.join(Path.join(ci_workspace, project), "temp.a").to_os_str(),
            	"-o", Path.join(Path.join(ci_workspace, project), "my_game.wasm").to_os_str(),
-           	"-sSIDE_MODULE=2",
-           	"-sERROR_ON_UNDEFINED_SYMBOLS=0",
+           	"-sERROR_ON_UNDEFINED_SYMBOLS=1", # make missing symbols cause error.
+            "-sSIDE_MODULE=2", # 1 = "old" export everything, 2=???? "newer"
            	# "-sEXPORTED_FUNCTIONS=[\"_godot_roc_init\"]", # or an array, but godot only needs an entrypoint?
            	"-sEXPORTED_FUNCTIONS=_godot_roc_init",
            	"-O0",
@@ -254,6 +299,12 @@ main! = |_args| {
             # wasm-validate
             # wasm2wat
             # etc.
+            #
+            # experiments...
+            #"--no-entry",
+            #"-Wl,--export-all",
+            #"-sALLOW_MEMORY_GROWTH=0",
+            #"-fno-lto",
     	])?
 
     	Stdout.line!("Validating app... wasm-validate my_game.wasm")?

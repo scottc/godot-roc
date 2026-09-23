@@ -2,13 +2,14 @@ platform ""
     requires {} {
         scene_init! : {} => {},
         ready! : {} => {},
-        process! : U64, F64 => {},
-        physics_process! : Str, U64, F64 => {}
+        process! : Size.GDExtensionObjectPtr, F64 => {},
+        physics_process! : Str, Size.GDExtensionObjectPtr, F64 => {}
     }
     exposes [
         Godot,
         Redot,
         Draconic,
+        Size
     ]
     packages { roc: "nightly-2026-09-12-220fd47" }
     provides {
@@ -63,6 +64,7 @@ import Godot
 import Redot
 import Draconic
 import Host
+import Size
 
 scene_init_for_host! : {} => {}
 scene_init_for_host! = |{}| {
@@ -78,7 +80,7 @@ ready_for_host! = |{}| {
     {}
 }
 
-process_for_host! : U64, F64 => {}
+process_for_host! : Size.GDExtensionObjectPtr, F64 => {}
 process_for_host! = |handle, delta| {
     # too verbose...
     # _ = Godot.print!("[platform/main.roc] process_for_host! ${handle.to_str()} ${delta.to_str()}")
@@ -86,7 +88,7 @@ process_for_host! = |handle, delta| {
     {}
 }
 
-physics_process_for_host! : Str, U64, F64 => {}
+physics_process_for_host! : Str, Size.GDExtensionObjectPtr, F64 => {}
 physics_process_for_host! = |class_name, handle, delta| {
     # too verbose...
     # _ = Godot.print!("[platform/main.roc] process_physics_for_host! ${handle.to_str()} ${delta.to_str()}")

@@ -6,6 +6,7 @@ app [ready!, process!, scene_init!, physics_process!] {
 }
 
 import pf.Godot
+import pf.Size
 
 import MyPlayerCharacter
 import Npc
@@ -20,9 +21,9 @@ scene_init! = |_| {
 }
 
 ## class_id(u64) | class_name(str) = which type / behaviour. Example: (PlayerType vs NPCType)
-## handle(u64) = which object / instance. Example: (NPC#12 vs NPC#15)
+## handle(usize) = which object / instance. Example: (NPC#12 vs NPC#15)
 ## delta = time elapsed since previous tick
-physics_process! : Str, U64, F64 => {}
+physics_process! : Str, Size.GDExtensionObjectPtr, F64 => {}
 physics_process! = |class_name, handle, delta| {
     _ = match class_name {
         "PlayerCharacter" => MyPlayerCharacter.physics_process!(handle, delta)
@@ -34,7 +35,7 @@ physics_process! = |class_name, handle, delta| {
     {}
 }
 
-process! : U64, F64 => {}
+process! : Size.GDExtensionObjectPtr, F64 => {}
 process! = |_handle, _delta| {
     {}
 }

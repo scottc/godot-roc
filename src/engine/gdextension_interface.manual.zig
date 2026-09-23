@@ -32,6 +32,9 @@ pub const GDExtensionClassLibraryPtr = ?*anyopaque;
 
 pub const GDExtensionBool = u8;
 
+/// This should be renamed to: GDExtensionObjectPtr, because that's what this really is.
+pub const ObjectHandle = usize;
+
 pub const GDExtensionObjectPtr = ?*anyopaque;
 pub const GDExtensionClassInstancePtr = ?*anyopaque;
 //pub const GDExtensionClassLibraryPtr = ?*anyopaque;

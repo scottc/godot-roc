@@ -42,7 +42,10 @@
           packages = [
             pkgs.zig
             pkgs.emscripten # godot 4.5 docs expects emscripten 3.1.62+ when building web templates.
+            pkgs.lld # provides wasm-ld, a lower level alternative to emscripten's emcc wasm-ld driver.
             pkgs.wabt # for wasm-objdump, cli helper utility
+
+
             pkgs.zip # for zipping the templates
             pkgs.godot # latest 4.7.1
             pkgs.godotPackages_4_5.godot # 4.5.1, why 4.5.1? most compatable with redot.
