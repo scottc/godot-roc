@@ -54,61 +54,37 @@ main! = |args| {
 
     _glue_out = Cmd.exec!("roc", ["glue", "vendor/roc/ZigGlue.roc", "src/", "platform/main.roc"])?
 
-    # And then this will break our wasm32-emscripten target, on the zig 0.16.0 compiler...
-    # So we need to patch the glue file.
-    #
-    # And then replace our existing src/roc_platform_abi.roc
-
     # Patch glue..
-
-
-    # fn nativeWriteStderr(_: ?*anyopaque, data: []const u8) void {
-    #     _ = data;
-    #     // TODO: fix for wasm & native target...
-    #     // std.Io.File.stderr().writeStreamingAll(std.Io.Threaded.global_single_threaded.io(), data) catch {};
-    # }
-
-    # fn nativeOnFatal(_: ?*anyopaque) noreturn {
-    #     // TODO: fix for wasm & native target...
-    #     // std.process.exit(1);
-    #     @trap();
-    # }
 
     generated_glue = Path.read_utf8!("src/roc_platform_abi.zig")?
 
-    # patched_glue =
-    #     match (target) {
-    #         DesktopNative64 => generated_glue
-    #         WebWasm32 => {
-                # Adjust `find_*` strings if roc glue output changes — crash makes that obvious.
-                s1 = find_and_replace_first(
-                    generated_glue,
-                    # --- find (unpatched, as emitted by roc glue) ---
-                    \\    fn nativeWriteStderr(_: ?*anyopaque, data: []const u8) void {
-                    \\        std.Io.File.stderr().writeStreamingAll(std.Io.Threaded.global_single_threaded.io(), data) catch {};
-                    \\    }
-                    ,
-                    # --- replace ---
-                    \\// PATCHED BY scripts/glue.roc
-                    \\fn nativeWriteStderr(_: ?*anyopaque, data: []const u8) void {
-                    \\    _ = data;
-                    \\}
-                    ,
-                )
-                s2 = find_and_replace_first(
-                    s1,
-                    \\    fn nativeOnFatal(_: ?*anyopaque) noreturn {
-                    \\        std.process.exit(1);
-                    \\    }
-                    ,
-                    \\// PATCHED BY scripts/glue.roc
-                    \\fn nativeOnFatal(_: ?*anyopaque) noreturn {
-                    \\    @trap();
-                    \\}
-                    ,
-                )
-        #     }
-        # }
+    s1 = find_and_replace_first(
+        generated_glue,
+        # --- find (unpatched, as emitted by roc glue) ---
+        \\    fn nativeWriteStderr(_: ?*anyopaque, data: []const u8) void {
+        \\        std.Io.File.stderr().writeStreamingAll(std.Io.Threaded.global_single_threaded.io(), data) catch {};
+        \\    }
+        ,
+        # --- replace ---
+        \\// PATCHED BY scripts/glue.roc
+        \\fn nativeWriteStderr(_: ?*anyopaque, data: []const u8) void {
+        \\    _ = data;
+        \\}
+        ,
+    )
+    s2 = find_and_replace_first(
+        s1,
+        \\    fn nativeOnFatal(_: ?*anyopaque) noreturn {
+        \\        std.process.exit(1);
+        \\    }
+        ,
+        \\// PATCHED BY scripts/glue.roc
+        \\fn nativeOnFatal(_: ?*anyopaque) noreturn {
+        \\    @trap();
+        \\}
+        ,
+    )
+
 
 
     Path.write_utf8!("src/roc_platform_abi.zig", s2)?

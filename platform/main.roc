@@ -68,14 +68,14 @@ import Size
 
 scene_init_for_host! : {} => {}
 scene_init_for_host! = |{}| {
-    _ = Godot.print!("[platform/main.roc] init_for_host!")
+    _ = Engine.print!("[platform/main.roc] init_for_host!")
     _result = scene_init!({})
     {}
 }
 
 ready_for_host! : {} => {}
 ready_for_host! = |{}| {
-    _ = Godot.print!("[platform/main.roc] ready_for_host!")
+    _ = Engine.print!("[platform/main.roc] ready_for_host!")
     _result = ready!({})
     {}
 }
@@ -83,7 +83,7 @@ ready_for_host! = |{}| {
 process_for_host! : Size.GDExtensionObjectPtr, F64 => {}
 process_for_host! = |handle, delta| {
     # too verbose...
-    # _ = Godot.print!("[platform/main.roc] process_for_host! ${handle.to_str()} ${delta.to_str()}")
+    # _ = Engine.print!("[platform/main.roc] process_for_host! ${handle.to_str()} ${delta.to_str()}")
     _result = process!(handle, delta)
     {}
 }

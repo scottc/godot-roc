@@ -16,6 +16,8 @@ Godot-Roc lets you write game logic in [Roc](https://roc-lang.org/), "A [fast](h
 
 Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI for maximum compatability. In theory godot-roc will work with any game engine runtime that supports the `godot-4.5.1` gdextension ABI, including newer versions of godot, forks & alternative host runtimes (aka game engines).
 
+![Godot-Roc Screenshot](brand/Screenshot_20260923_194128.png)
+
 ## Use Cases
 
 - **DX - Developer Experience** - Ergonomics of a high level scripting language, with great low level native performance.
@@ -28,7 +30,7 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 | | Roc (godot-roc) | GDScript | C# | C++ |
 | --- | --- | --- | --- | --- |
 | **API coverage** | \[WIP] What the binding exposes | Full engine scripting API | Broad official bindings | Full native access |
-| **Web support** | \[WIP] GDExtension wasm (emscripten) | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
+| **Web support** | Supported [[godot demo](https://scottc.github.io/godot-roc)] [[redot demo](https://scottc.github.io/redot-roc)] | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
 | **Iteration speed in Godot** | Fast Rebuild / reload pipeline. 1 class ~=250/300ms(cache/no-cache) on my potato laptop | Very fast | Fast | Slow–moderate (compile native) |
 | **Learning curve** | [Easy-moderate](https://roc-lang.org/friendly) (if new to FP) | Easy | Moderate | Hard |
 | **Performance potential** | [High](https://roc-lang.org/fast) (native extension path) | Good enough for most games | High | Highest (engine-level) |

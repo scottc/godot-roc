@@ -1,9 +1,6 @@
 import Vector3
 import Size
 
-## Internal hosted-effect boundary used by the platform wrappers.
-##
-## Applications should import `Stdout`, `Stderr`, and `Stdin` instead.
 Host := [].{
     print! : Str => {} # Try({}, [PrintErr(Str)])
 	register_class! : Str, Str => {} # Try({}, [RegisterClassErr(Str)])

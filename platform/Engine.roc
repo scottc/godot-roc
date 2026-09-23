@@ -2,7 +2,8 @@ import Host
 import Vector3
 import Size
 
-Draconic := [].{
+## A generic godot-4.5.1-like game engine interface.
+Engine := [].{
     register_class! : Str, Str => {} # Try({}, [RegisterClassErr(Str), ..])
     register_class! = |class_name, parent_class_name|
         Host.register_class!(class_name, parent_class_name)
