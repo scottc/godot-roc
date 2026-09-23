@@ -16,18 +16,26 @@ import pf.Path
 import pf.Server
 import pf.Stdout
 import http.Response
+import pf.Env
 
-Context : { }
+Context : {}
 
 program = { init!, respond!, shutdown! }
 
 init! : () => Try({ config : Server.Config, context : Context }, [Exit(I64), ..])
 init! = || {
-	file_root = Server.file_root_with_cache({
-		id: "my_game-export",
-		path: Path.utf8("my_game/"),
-		cache: Server.public_for(3600),
-	})
+
+    serve_path = Env.var_str!("SERVE_PATH")
+
+    file_root = match serve_path {
+        Ok(p) =>
+            Server.file_root_with_cache({
+          		id: "serve_path",
+          		path: Path.utf8(p),
+          		cache: Server.public_for(3600),
+           	}),
+        _ => crash "[scripts/serve.roc] Missing env var SERVE_PATH"
+    }
 
 	config =
 		Server.default_config
@@ -40,7 +48,6 @@ init! = || {
 			.with_native_routes({
 				files: [
 					Server.static_mount({ at: "/", files: file_root }),
-					# Server.static_file({ at: "/favicon.ico", files: foo, relative: bar }),
 				],
 				liveness: [],
 				readiness: [],

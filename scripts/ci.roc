@@ -204,6 +204,36 @@ main! = |_args| {
     	])?
     	Stdout.line!("Roc web app compiled ${(Utc.now!() - roc_web_start).to_str()}ns")?
 
+        # TODO: extract and validate "wasm-validate" temp.a -> whatever file...
+       	Stdout.line!("Extracting for validation ...")?
+        _ar_x_out = Cmd.exec!(
+            "ar",
+            [
+                "x",
+                Path.join(Path.join(ci_workspace, project), "temp.a").to_os_str()
+                Path.join(ci_workspace, project).to_os_str()
+            ]
+        )?
+       	Stdout.line!("Extracted...")?
+
+        # Seems to produce:
+        # libhost.o.wasm
+        # roc_app_llvm_wasm32_speed.o
+
+       	Stdout.line!("List files ...")?
+        _ls_al_out = Cmd.exec!("ls", ["-al"])?
+       	Stdout.line!("files listed ...")?
+
+       	Stdout.line!("Validating host... wasm-validate libhost.o.wasm")?
+        _validate_host_out = Cmd.exec!("wasm-validate", ["libhost.o.wasm"])?
+       	Stdout.line!("Validated host.")?
+
+       	Stdout.line!("Validating app... wasm-validate roc_app_llvm_wasm32_speed.o")?
+        _validate_roc_out = Cmd.exec!("wasm-validate", ["roc_app_llvm_wasm32_speed.o"])?
+       	Stdout.line!("Validated app.")?
+
+        # TODO: validate
+
     	Stdout.line!("Compiling Final Web GDExtension (wasm32-emscripten SIDE_MODULE=2)")?
     	Stdout.line!("[emcc command here...]")? # To inform the user
     	_emcc_out = Cmd.exec!("emcc", [
@@ -215,7 +245,30 @@ main! = |_args| {
            	"-sEXPORTED_FUNCTIONS=_godot_roc_init",
            	"-O0",
            	"-msimd128",
+            # for investigating & troubleshooting
+            "-g2",
+            "--profiling",
+            "--emit-symbol-map",
+            # then you can run
+            # "wasm-objdump -x my_game.wasm", and it will now show the symbol names.
+            # wasm-validate
+            # wasm2wat
+            # etc.
     	])?
+
+    	Stdout.line!("Validating app... wasm-validate my_game.wasm")?
+        _emcc_valid_out = Cmd.exec!("wasm-validate", [Path.join(Path.join(ci_workspace, project), "my_game.wasm").to_os_str()])?
+
+        dp = Path.join(Path.join(ci_workspace, project), "export").display()
+    	Stdout.line!(
+            \\ To test the exported web app: Run web server...
+            \\
+            \\Run:
+            \\SERVE_PATH=\'${dp}\' roc run scripts/serve.roc
+            \\
+            \\And then open in browser:
+            \\localhost:8000/index.html
+        )?
 
     	# godot publish
     	# Ensure these settings are enabled for the web export.
@@ -225,14 +278,10 @@ main! = |_args| {
     	_godot_outasdasd = Cmd.exec!("godot", [
             Path.join(Path.join(ci_workspace, project), "project.godot").to_os_str(),
            	"--headless",
-           	"--export-release", "Web", "index.html" # relative to project.godot file.
+           	"--export-release", "Web", "./export/index.html" # relative to project.godot file.
     	])?
 
-    	Stdout.line!("Run web server... Serving: 'my_game/' @ localhost:8000 ")?
-    	_godot_outasdasdghf = Cmd.exec!("roc", [
-           	"run",
-           	"scripts/serve.roc",
-    	])?
+
 	}
 
 	Ok({})
