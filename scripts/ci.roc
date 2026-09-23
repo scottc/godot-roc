@@ -198,7 +198,7 @@ main! = |_args| {
 	# emcc
 	# Ideally, roc could emit a "wasm32-emscripten SIDE_MODULE=2"
 	# and then we can drop emcc & emscripten entirely.
-	pr11474 = True
+	pr11474 = False
 	if (pr11474) { # This depends on https://github.com/roc-lang/roc/pull/11474
 
     	Stdout.line!("Generating glue.. roc run scripts/glue.roc")?
