@@ -32,7 +32,7 @@ init! = || {
             Server.file_root_with_cache({
           		id: "serve_path",
           		path: Path.utf8(p),
-          		cache: Server.public_for(3600),
+          		cache: Server.public_for(1),
            	}),
         _ => crash "[scripts/serve.roc] Missing env var SERVE_PATH"
     }
@@ -47,7 +47,7 @@ init! = || {
 			.with_file_roots([file_root])
 			.with_native_routes({
 				files: [
-					Server.static_mount({ at: "/", files: file_root }),
+					Server.static_mount({ at: "/static_mount", files: file_root }),
 				],
 				liveness: [],
 				readiness: [],

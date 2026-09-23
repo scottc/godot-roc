@@ -1,6 +1,16 @@
 #!/usr/bin/env roc
 
 #
+# DEPRECATED!
+# Users are encouraged to simply unzip a template,
+# or copy a directory structure instead.
+# Static plain text files are great.
+# Why needlessly increase attack surface?
+#
+# Also godot has a asset store feature.
+#
+
+#
 # Usage:
 # roc run create-godot-roc-app.roc [args]
 #

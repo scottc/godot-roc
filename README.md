@@ -1,4 +1,4 @@
-# [![Godot-Roc](brand/logo-stroke.svg)](https://github.com/scottc/godot-roc)
+# [![Godot-Roc](brand/logo-stroke.plain.svg)](https://github.com/scottc/godot-roc)
 
 Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game Engine.
 
