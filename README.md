@@ -18,20 +18,20 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 
 ![Godot-Roc Screenshot](brand/Screenshot_20260923_194128.png)
 
-## Use Cases
+## Binding comparison
 
-- **DX - Developer Experience** - Ergonomics of a high level scripting language, with great low level native performance.
-- **Structured game logic** - Model complex rules with types that encode invariants, so invalid states are harder to represent.
-- **Fewer playtest bugs** - A strong static type system catches many mistakes at compile time. Good types won’t eliminate playtesting, but they can eliminate many failures.
-- **AI-friendly tooling and errors** - More stronger types = more precise compile time errors, that are easier to act on for (humans or automated loops) than vague runtime failures.
+| | godot-roc | GDScript | C# | C++ |
+| --- | --- | --- | --- | --- |
+| **API coverage** | \[WIP] What the binding exposes [[source](platform/)] [[wip-docs](#)] | Full engine scripting API | Broad official bindings | Full native access |
+| **Native desktop support** | Linux (\[WIP] cross-compiling; windows & macos) | Linux, windows & mac | Linux, windows & mac | Linux, windows & mac |
+| **Web support** | GDExtension wasm32-emscripten [[godot-demo](https://scottc.github.io/godot-roc)] [[redot-demo](https://scottc.github.io/redot-roc)] | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
+| **Role in Godot** | Community binding (this project) | First-party script language | Official .NET support | Engine / GDExtension native |
 
 ## Language comparison
 
-| | Roc (godot-roc) | GDScript | C# | C++ |
+| | Roc | GDScript | C# | C++ |
 | --- | --- | --- | --- | --- |
-| **API coverage** | \[WIP] What the binding exposes | Full engine scripting API | Broad official bindings | Full native access |
-| **Web support** | GDExtension wasm32-emscripten [[godot-demo](https://scottc.github.io/godot-roc)] [[redot-demo](https://scottc.github.io/redot-roc)] | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
-| **Iteration speed in Godot** | Fast Rebuild / reload pipeline. 1 class ~=250/300ms(cache/no-cache) on my potato laptop | Very fast | Fast | Slow–moderate (compile native) |
+| **Iteration speed in Godot** | Fast native rebuild & reload pipeline. 1 class ~=250/300ms(cache/no-cache) on my potato laptop | Very fast | Fast | Slow–moderate (compile native) |
 | **Learning curve** | [Easy-moderate](https://roc-lang.org/friendly) (if new to FP) | Easy | Moderate | Hard |
 | **Performance potential** | [High](https://roc-lang.org/fast) (native extension path) | Good enough for most games | High | Highest (engine-level) |
 | **Skills transfer outside Godot** | Yes (general Roc / FP) | Limited | Yes | Yes |
@@ -39,24 +39,10 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 | **Type system** | ✨**Strong, static, inference**✨ | Optional / gradual | Static (nullable & pragmatism) | Static (manual discipline) |
 | **Ecosystem maturity** | New [[projects](https://github.com/lukewilliamboswell/roc-awesome)] | Mature (Godot-focused) | Mature | Mature |
 | **Docs & tutorials** | Emerging [[roc-docs](https://roc-lang.org/docs/main/)] [[roc-examples](https://roc-lang.org/examples/)] | Official & plentiful | Official + .NET ecosystem | Official engine docs; steeper |
-| **Role in Godot** | Community binding (this project) | First-party script language | Official .NET support | Engine / GDExtension native |
-
-
-
 
 *This table is intentionally simplified. Real projects can mix languages (e.g. GDScript for UI + Roc or C# for gameplay + C++ for hotspots).*
 
 [Other community maintained languages](https://docs.godotengine.org/en/stable/tutorials/scripting/other_languages.html#doc-scripting-languages), and [engines](https://docs.redotengine.org/tutorials/scripting/gdextension/what_is_gdextension#doc-what-is-gdextension) are also avaliable.
-
-## Who is this for?
-
-**Good fit:** experimenters, hobbyists, and people who want to explore Roc for game logic or help shape an early binding.
-
-**Possible but demanding:** beginners and production teams - expect fewer tutorials, a smaller community, and sharper edges than GDScript or C#.
-
-**Not yet:** “drop-in replacement for GDScript to ship a commercial title with zero friction.” If you need that reliability *today*, use Godot’s first-party stack and keep an eye on this project as it matures.
-
-**Right place if:** you like bleeding-edge tooling, are comfortable building against an evolving platform, and care more about typed functional logic than maximum Godot-native convenience.
 
 ## Performance Profile
 
@@ -76,3 +62,41 @@ and the host is Zig (also native) loaded as a GDExtension—there is no Roc VM i
 the game loop. For all of these, much gameplay work is ultimately engine C++
 (physics, rendering), so language choice often does not dominate frame time
 until profiling shows a script/app-side hotspot.
+
+## Use Cases
+
+- **DX - Developer Experience** - Ergonomics of a high level scripting language, with great low level native performance.
+
+- **Structured game logic** - Model complex rules with types that encode invariants, so invalid states are harder to represent.
+
+- **Fewer playtest bugs** - A strong static type system catches many mistakes at compile time. Good types won’t eliminate playtesting, but they can eliminate many failures.
+
+- **AI-friendly tooling and errors** - More stronger types = more precise compile time errors, that are easier to act on for (humans or automated loops) than vague runtime failures.
+
+## Who is this for?
+
+**Good fit:** experimenters, hobbyists, and people who want to explore Roc for game logic or help shape an early binding.
+
+**Possible but demanding:** beginners and production teams - expect fewer tutorials, a smaller community, and sharper edges than GDScript or C#.
+
+**Not yet:** “drop-in replacement for GDScript to ship a commercial title with zero friction.” If you need that reliability *today*, use Godot’s first-party stack and keep an eye on this project as it matures.
+
+**Right place if:** you like bleeding-edge tooling, are comfortable building against an evolving platform, and care more about typed functional logic than maximum Godot-native convenience.
+
+## When you should strongly consider using godot-roc
+
+You want the ergonomics of a high level scripting language, and 90% of the performance ceiling of a compile to native language. And are whilling to deal with the sharp edges & bugs that comes with latest bleeding edge technology.
+
+## Supporting godot-roc
+
+godot-roc is developed & maintained by a solo dev; me. Here are some things that would greatly help me.
+
+- **Game Dev Testers**, dog fooding small prototypes is one thing. But, I need some game devs, to actually use this project and give me experience reports. Ideally in a complete end-to-end ship game to production environment. What are the blockers? Where are the sharp edges? What could be smoother, faster & more seemless? This can help me prioritize and discover & resolve problems faster.
+
+- **A LLM subscription, or hardware**, unfortunately I don't have access to one... and can't justify one, yet. It could help speed up my progress. Free LLM services, have useage caps; 20 prompts a day or 50k tokens etc. And are only suitable for casual prompting.
+
+- **A source of income**, to pay my bills & rent. At the moment, I'm in the red at the end of every month and this is not sustainable long term. And ideally make a modest living & support my other hobbies; compute/embeded hardware, gadgets etc. If you can afford it, consider donating (when I setup patreon & sponsorships), or give me a job offer for sustainable long-term on-going work.
+
+- **Freedom to continue working on godot-roc**, as how I see fit... For me, I just generally enjoy the process of experimenting with new technology, dealing with new & difficult challenges. And ultimately to serve the needs & desires of game developers & gamers. And I hope that you find this project to be extremely useful.
+
+- **Freedom to move onto the next project**, while this project is great. I eventually see the need to swap out the engine, to a more modern, open-source, high performance design that can out-compete unreal & unity. And the godot-4.5.1 style bindings could be a limiting factor in engine design. As such I have my eyes on the next generation ECS-like engines; bevy and alike. And this would warrent a new project from scratch, it doesn't make sense to add engines beyond the godot family to this project.
