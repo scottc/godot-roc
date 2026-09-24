@@ -2,9 +2,6 @@
 
 Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game Engine.
 
-> [!IMPORTANT]   
-> This project is under development, and there are missing or incomplete features.
-
 > [!NOTE]   
 > This page is for the godot-roc **platform**.
 >
@@ -20,6 +17,9 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 
 ## Binding comparison
 
+> [!IMPORTANT]   
+> This project is under development, and there are missing or incomplete features.
+
 | | godot-roc | GDScript | C# | C++ |
 | --- | --- | --- | --- | --- |
 | **API coverage** | \[WIP] What the binding exposes [[exposed-api](platform/)] \[TODO-docs] [[DONE-engine-to-zig-binding-generator](scripts/gdextension_interface.generate.roc)] \[TODO-engine-to-roc-binding-generator] \[TODO-glue-to-glue-generator] | Full engine scripting API | Broad official bindings | Full native access |
@@ -28,6 +28,11 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 | **Role in Godot** | Community binding (this project) | First-party script language | Official .NET support | Engine / GDExtension native |
 
 ## Language & Compiler comparison
+
+> [!NOTE]
+> *This table is intentionally simplified. Real projects can mix languages (e.g. GDScript for UI + Roc or C# for gameplay + C++ for hotspots).*
+>
+> [Other community maintained languages](https://docs.godotengine.org/en/stable/tutorials/scripting/other_languages.html#doc-scripting-languages), and [engines](https://docs.redotengine.org/tutorials/scripting/gdextension/what_is_gdextension#doc-what-is-gdextension) are also avaliable.
 
 | | Roc | GDScript | C# | C++ |
 | --- | --- | --- | --- | --- |
@@ -40,11 +45,18 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 | **Ecosystem maturity** | New [[projects](https://github.com/lukewilliamboswell/roc-awesome)] | Mature (Godot-focused) | Mature | Mature |
 | **Docs & tutorials** | Offical Language docs [[roc-docs](https://roc-lang.org/docs/main/)] [[roc-examples](https://roc-lang.org/examples/)] & emerging community | Official & plentiful | Official + .NET ecosystem | Official engine docs; steeper |
 
-*This table is intentionally simplified. Real projects can mix languages (e.g. GDScript for UI + Roc or C# for gameplay + C++ for hotspots).*
 
-[Other community maintained languages](https://docs.godotengine.org/en/stable/tutorials/scripting/other_languages.html#doc-scripting-languages), and [engines](https://docs.redotengine.org/tutorials/scripting/gdextension/what_is_gdextension#doc-what-is-gdextension) are also avaliable.
 
 ## Performance Profile
+
+> [!NOTE]
+> GDScript runs on a bytecode VM and is not compiled to native machine code for
+> gameplay scripts. In Godot 4, typed GDScript is faster than untyped, but tight
+> pure-script loops still lag C#/C++. Roc in godot-roc is compiled to native code
+> and the host is Zig (also native) loaded as a GDExtension—there is no Roc VM in
+> the game loop. For all of these, much gameplay work is ultimately engine C++
+> (physics, rendering), so language choice often does not dominate frame time
+until profiling shows a script/app-side hotspot.
 
 | | Roc (godot-roc) | GDScript | C# | C++ / GDExtension |
 |--|-----------------|----------|-----|-------------------|
@@ -55,13 +67,6 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 | **Heavy algorithms in script/app code** | Strong fit | Prefer not to keep in pure GDScript | Strong option | Best option |
 | **Typical game bottleneck** | Often still rendering / physics / draw calls (engine C++), not Roc vs GDScript | Same | Same | Same unless you replace engine systems |
 
-GDScript runs on a bytecode VM and is not compiled to native machine code for
-gameplay scripts. In Godot 4, typed GDScript is faster than untyped, but tight
-pure-script loops still lag C#/C++. Roc in godot-roc is compiled to native code
-and the host is Zig (also native) loaded as a GDExtension—there is no Roc VM in
-the game loop. For all of these, much gameplay work is ultimately engine C++
-(physics, rendering), so language choice often does not dominate frame time
-until profiling shows a script/app-side hotspot.
 
 ## Use Cases
 
