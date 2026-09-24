@@ -15,12 +15,12 @@ import pf.Utc
 import pf.OsStr
 
 needle_doc = "/**".to_utf8()
+needle_block_open = "/*".to_utf8()
+needle_block_close = "*/".to_utf8()
 needle_doc_end = "*/".to_utf8()
 needle_typedef = "typedef".to_utf8()
 needle_hash = "#".to_utf8()
 needle_line_comment = "//".to_utf8()
-needle_block_open = "/*".to_utf8()
-needle_block_close = "*/".to_utf8()
 needle_const = "const".to_utf8()
 
 Item : { comment: CommentInfo, typedef: TypeDefInfo }
