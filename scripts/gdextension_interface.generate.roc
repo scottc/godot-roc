@@ -514,7 +514,7 @@ render_load_interface = |fns| {
     }
     body = join_with($inits, "\n")
     \\pub fn loadInterface(get_proc_address: GDExtensionInterfaceGetProcAddress) !Interface {
-    \\    const gpa = get_proc_address orelse return error.MissingGetProcAddress;
+    \\    const gpa = get_proc_address; // orelse return error.MissingGetProcAddress;
     \\    return .{
     \\${body}
     \\    };
@@ -600,6 +600,7 @@ map_base_type = |b| {
         "char" => "u8"
         "signed char" => "i8"
         "unsigned char" => "u8"
+        "wchar_t" => "c_ushort"   # Windows / common Godot path; or "c_int" on some Unix # simpler alternative: "wchar_t" => "u16"
         "short" | "short int" | "signed short" | "signed short int" => "c_short"
         "unsigned short" | "unsigned short int" => "c_ushort"
         "int" | "signed int" | "signed" => "c_int"
@@ -680,7 +681,9 @@ next_typedef_block = |bytes, start| {
                 }
             }
             Ok(47.U8) => {
+                # '/'
                 if match_at(bytes, $i, needle_doc) {
+                    # /** … */ — existing typedef-after-doc path
                     open = $i + 3
                     match find_from(bytes, open, needle_doc_end) {
                         Err({}) => return Err(Done)
@@ -699,10 +702,21 @@ next_typedef_block = |bytes, start| {
                                     }
                                 }
                             } else {
-                                $i = after  # skip non-typedef docs; no slice
+                                $i = after
                             }
                         }
                     }
+                } else if match_at(bytes, $i, needle_block_open) {
+                    # /* … */ non-doc: skip only, do not parse
+                    match find_from(bytes, $i + 2, needle_block_close) {
+                        Err({}) => return Err(Done)
+                        Ok(close) => {
+                            $i = close + 2
+                        }
+                    }
+                } else if match_at(bytes, $i, needle_line_comment) {
+                    # // … end of line
+                    $i = skip_line(bytes, $i)
                 } else {
                     $i = $i + 1
                 }
@@ -934,6 +948,7 @@ parse_typedef = |line| {
         return Err(ParseErr("not a typedef"))
     }
     rest = t.drop_prefix("typedef").trim()
+    # rest = strip_leading_c_comments(t.drop_prefix("typedef").trim()) # harden, only if needed
     if rest.starts_with("enum") {
         parse_enum_typedef(rest)
     } else if rest.starts_with("struct") {

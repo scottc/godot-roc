@@ -67,7 +67,7 @@ const is_native_target = !is_wasm_target;
 ///
 
 // godot GDExtension runtime state
-var get_proc_address: gde_if.GDExtensionInterfaceGetProcAddress = null;
+//var get_proc_address: ?gde_if.GDExtensionInterfaceGetProcAddress = null;
 var library: gde_if.GDExtensionClassLibraryPtr = null;
 var gde: gde_if.Interface = undefined;
 
@@ -97,10 +97,10 @@ export fn godot_roc_init(
     p_library: gde_if.GDExtensionClassLibraryPtr,
     r_initialization: *gde_if.GDExtensionInitialization,
 ) callconv(.c) gde_if.GDExtensionBool {
-    get_proc_address = p_get_proc_address;
+    //get_proc_address = p_get_proc_address;
     library = p_library;
 
-    gde = gde_if.loadInterface(get_proc_address) catch return 0; // zero is failure
+    gde = gde_if.loadInterface(p_get_proc_address) catch return 0; // zero is failure
 
     r_initialization.* = .{
         // Note: this is for the entire godot scene tree, not when "player changes level".
@@ -384,12 +384,12 @@ fn classNameFromInstance(self: *ClassInstance) abi.RocStr {
 }
 
 //fn handleFromInstance(self: ?*anyopaque) usize {
-fn handleFromInstance(self: *ClassInstance) gde_if.ObjectHandle {
+fn handleFromInstance(self: *ClassInstance) gde_if.GDExtensionObjectPtr {
     return @intFromPtr(self);
 }
 
-//fn instanceFromHandle(handle: ObjectHandle) ?*anyopaque {
-fn instanceFromHandle(handle: gde_if.ObjectHandle) ?*ClassInstance {
+//fn instanceFromHandle(handle: ) ?*anyopaque {
+fn instanceFromHandle(handle: gde_if.GDExtensionObjectPtr) ?*ClassInstance {
     if (handle == 0) return null;
     return @ptrFromInt(handle);
 }
@@ -496,16 +496,8 @@ fn registerClass(info: *ClassInfo) void {
 }
 
 fn unregisterClass(class_name: [:0]const u8) void {
-    const unregister = eapi.fp(
-        get_proc_address,
-        "classdb_unregister_extension_class",
-        *const fn (
-            gde_if.GDExtensionClassLibraryPtr,
-            gde_if.GDExtensionConstStringNamePtr,
-        ) callconv(.c) void,
-    );
     var sn = makeStringName(class_name);
-    unregister(library, @ptrCast(&sn));
+    gde.classdb_unregister_extension_class(library, @ptrCast(&sn));
     print("unregistered {s}\n", .{class_name});
 }
 

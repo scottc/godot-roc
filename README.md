@@ -27,7 +27,7 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 | **Web support** | GDExtension wasm32-emscripten [[godot-demo](https://scottc.github.io/godot-roc)] [[redot-demo](https://scottc.github.io/redot-roc)] | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
 | **Role in Godot** | Community binding (this project) | First-party script language | Official .NET support | Engine / GDExtension native |
 
-## Language comparison
+## Language & Compiler comparison
 
 | | Roc | GDScript | C# | C++ |
 | --- | --- | --- | --- | --- |
