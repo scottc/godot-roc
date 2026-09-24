@@ -5,7 +5,7 @@ Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game E
 > [!NOTE]   
 > This page is for the godot-roc **platform**.
 >
-> For godot-roc **game development** see our [Getting Started Guide](templates/godot/README.md).
+> For **game development** with godot-roc see our [Getting Started Guide](templates/godot/README.md).
 
 ## About
 
