@@ -1,4 +1,4 @@
-// Path.utf8("vendor/godot/gdextension_interface.h") Read time: 219135ns
+// Path.utf8("vendor/godot/gdextension_interface.h") Read time: 370827ns
 // pre-parse n=1
 // post-parse n=1 ok
 // pre-parse n=2
@@ -656,7 +656,7 @@
 // pre-parse n=328
 // post-parse n=328 ok
 // parse done n=328 ok=328 err=0 items=328
-// parse time: 11859235ns
+// parse time: 14075350ns
 // types=149 api_fns=179
 //!
 //! Godot GDExtension interface — generated from gdextension_interface.h
@@ -804,17 +804,17 @@ pub const GDExtensionTypeFromVariantConstructorFunc = *const fn (GDExtensionUnin
 pub const GDExtensionVariantGetInternalPtrFunc = *const fn (GDExtensionVariantPtr) callconv(.c) ?*anyopaque;
 
 pub const GDExtensionPtrOperatorEvaluator = *const fn (
-    GDExtensionConstTypePtr,
-    GDExtensionConstTypePtr,
-    GDExtensionTypePtr,
-) callconv(.c) void;
+        GDExtensionConstTypePtr,
+        GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionPtrBuiltInMethod = *const fn (
-    GDExtensionTypePtr,
-    [*c]const GDExtensionConstTypePtr,
-    GDExtensionTypePtr,
-    i32,
-) callconv(.c) void;
+        GDExtensionTypePtr,
+        [*c]const GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+        i32,
+    ) callconv(.c) void;
 
 pub const GDExtensionPtrConstructor = *const fn (GDExtensionUninitializedTypePtr, [*c]const GDExtensionConstTypePtr) callconv(.c) void;
 
@@ -825,52 +825,52 @@ pub const GDExtensionPtrSetter = *const fn (GDExtensionTypePtr, GDExtensionConst
 pub const GDExtensionPtrGetter = *const fn (GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;
 
 pub const GDExtensionPtrIndexedSetter = *const fn (
-    GDExtensionTypePtr,
-    GDExtensionInt,
-    GDExtensionConstTypePtr,
-) callconv(.c) void;
+        GDExtensionTypePtr,
+        GDExtensionInt,
+        GDExtensionConstTypePtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionPtrIndexedGetter = *const fn (
-    GDExtensionConstTypePtr,
-    GDExtensionInt,
-    GDExtensionTypePtr,
-) callconv(.c) void;
+        GDExtensionConstTypePtr,
+        GDExtensionInt,
+        GDExtensionTypePtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionPtrKeyedSetter = *const fn (
-    GDExtensionTypePtr,
-    GDExtensionConstTypePtr,
-    GDExtensionConstTypePtr,
-) callconv(.c) void;
+        GDExtensionTypePtr,
+        GDExtensionConstTypePtr,
+        GDExtensionConstTypePtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionPtrKeyedGetter = *const fn (
-    GDExtensionConstTypePtr,
-    GDExtensionConstTypePtr,
-    GDExtensionTypePtr,
-) callconv(.c) void;
+        GDExtensionConstTypePtr,
+        GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionPtrKeyedChecker = *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr) callconv(.c) u32;
 
 pub const GDExtensionPtrUtilityFunction = *const fn (
-    GDExtensionTypePtr,
-    [*c]const GDExtensionConstTypePtr,
-    i32,
-) callconv(.c) void;
+        GDExtensionTypePtr,
+        [*c]const GDExtensionConstTypePtr,
+        i32,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassConstructor = *const fn () callconv(.c) GDExtensionObjectPtr;
 
 pub const GDExtensionInstanceBindingCreateCallback = *const fn (?*anyopaque, ?*anyopaque) callconv(.c) ?*anyopaque;
 
 pub const GDExtensionInstanceBindingFreeCallback = *const fn (
-    ?*anyopaque,
-    ?*anyopaque,
-    ?*anyopaque,
-) callconv(.c) void;
+        ?*anyopaque,
+        ?*anyopaque,
+        ?*anyopaque,
+    ) callconv(.c) void;
 
 pub const GDExtensionInstanceBindingReferenceCallback = *const fn (
-    ?*anyopaque,
-    ?*anyopaque,
-    GDExtensionBool,
-) callconv(.c) GDExtensionBool;
+        ?*anyopaque,
+        ?*anyopaque,
+        GDExtensionBool,
+    ) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionInstanceBindingCallbacks = extern struct {
     create_callback: GDExtensionInstanceBindingCreateCallback,
@@ -881,21 +881,21 @@ pub const GDExtensionInstanceBindingCallbacks = extern struct {
 pub const GDExtensionClassInstancePtr = ?*anyopaque;
 
 pub const GDExtensionClassSet = *const fn (
-    GDExtensionClassInstancePtr,
-    GDExtensionConstStringNamePtr,
-    GDExtensionConstVariantPtr,
-) callconv(.c) GDExtensionBool;
+        GDExtensionClassInstancePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+    ) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionClassGet = *const fn (
-    GDExtensionClassInstancePtr,
-    GDExtensionConstStringNamePtr,
-    GDExtensionVariantPtr,
-) callconv(.c) GDExtensionBool;
+        GDExtensionClassInstancePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionVariantPtr,
+    ) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionClassGetRID = *const fn (GDExtensionClassInstancePtr) callconv(.c) u64;
 
 pub const GDExtensionPropertyInfo = extern struct {
-    type: GDExtensionVariantType,
+    @"type": GDExtensionVariantType,
     name: GDExtensionStringNamePtr,
     class_name: GDExtensionStringNamePtr,
     hint: u32,
@@ -919,44 +919,44 @@ pub const GDExtensionClassGetPropertyList = *const fn (GDExtensionClassInstanceP
 pub const GDExtensionClassFreePropertyList = *const fn (GDExtensionClassInstancePtr, [*c]const GDExtensionPropertyInfo) callconv(.c) void;
 
 pub const GDExtensionClassFreePropertyList2 = *const fn (
-    GDExtensionClassInstancePtr,
-    [*c]const GDExtensionPropertyInfo,
-    u32,
-) callconv(.c) void;
+        GDExtensionClassInstancePtr,
+        [*c]const GDExtensionPropertyInfo,
+        u32,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassPropertyCanRevert = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionClassPropertyGetRevert = *const fn (
-    GDExtensionClassInstancePtr,
-    GDExtensionConstStringNamePtr,
-    GDExtensionVariantPtr,
-) callconv(.c) GDExtensionBool;
+        GDExtensionClassInstancePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionVariantPtr,
+    ) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionClassValidateProperty = *const fn (GDExtensionClassInstancePtr, [*c]GDExtensionPropertyInfo) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionClassNotification = *const fn (GDExtensionClassInstancePtr, i32) callconv(.c) void;
 
 pub const GDExtensionClassNotification2 = *const fn (
-    GDExtensionClassInstancePtr,
-    i32,
-    GDExtensionBool,
-) callconv(.c) void;
+        GDExtensionClassInstancePtr,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassToString = *const fn (
-    GDExtensionClassInstancePtr,
-    [*c]GDExtensionBool,
-    GDExtensionStringPtr,
-) callconv(.c) void;
+        GDExtensionClassInstancePtr,
+        [*c]GDExtensionBool,
+        GDExtensionStringPtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassReference = *const fn (GDExtensionClassInstancePtr) callconv(.c) void;
 
 pub const GDExtensionClassUnreference = *const fn (GDExtensionClassInstancePtr) callconv(.c) void;
 
 pub const GDExtensionClassCallVirtual = *const fn (
-    GDExtensionClassInstancePtr,
-    [*c]const GDExtensionConstTypePtr,
-    GDExtensionTypePtr,
-) callconv(.c) void;
+        GDExtensionClassInstancePtr,
+        [*c]const GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassCreateInstance = *const fn (?*anyopaque) callconv(.c) GDExtensionObjectPtr;
 
@@ -971,26 +971,26 @@ pub const GDExtensionClassRecreateInstance = *const fn (?*anyopaque, GDExtension
 pub const GDExtensionClassGetVirtual = *const fn (?*anyopaque, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionClassCallVirtual;
 
 pub const GDExtensionClassGetVirtual2 = *const fn (
-    ?*anyopaque,
-    GDExtensionConstStringNamePtr,
-    u32,
-) callconv(.c) GDExtensionClassCallVirtual;
+        ?*anyopaque,
+        GDExtensionConstStringNamePtr,
+        u32,
+    ) callconv(.c) GDExtensionClassCallVirtual;
 
 pub const GDExtensionClassGetVirtualCallData = *const fn (?*anyopaque, GDExtensionConstStringNamePtr) callconv(.c) ?*anyopaque;
 
 pub const GDExtensionClassGetVirtualCallData2 = *const fn (
-    ?*anyopaque,
-    GDExtensionConstStringNamePtr,
-    u32,
-) callconv(.c) ?*anyopaque;
+        ?*anyopaque,
+        GDExtensionConstStringNamePtr,
+        u32,
+    ) callconv(.c) ?*anyopaque;
 
 pub const GDExtensionClassCallVirtualWithData = *const fn (
-    GDExtensionClassInstancePtr,
-    GDExtensionConstStringNamePtr,
-    ?*anyopaque,
-    [*c]const GDExtensionConstTypePtr,
-    GDExtensionTypePtr,
-) callconv(.c) void;
+        GDExtensionClassInstancePtr,
+        GDExtensionConstStringNamePtr,
+        ?*anyopaque,
+        [*c]const GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassCreationInfo = extern struct {
     is_virtual: GDExtensionBool,
@@ -1150,27 +1150,27 @@ pub const GDExtensionClassMethodArgumentMetadata = enum(c_int) {
 };
 
 pub const GDExtensionClassMethodCall = *const fn (
-    ?*anyopaque,
-    GDExtensionClassInstancePtr,
-    [*c]const GDExtensionConstVariantPtr,
-    GDExtensionInt,
-    GDExtensionVariantPtr,
-    [*c]GDExtensionCallError,
-) callconv(.c) void;
+        ?*anyopaque,
+        GDExtensionClassInstancePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassMethodValidatedCall = *const fn (
-    ?*anyopaque,
-    GDExtensionClassInstancePtr,
-    [*c]const GDExtensionConstVariantPtr,
-    GDExtensionVariantPtr,
-) callconv(.c) void;
+        ?*anyopaque,
+        GDExtensionClassInstancePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionVariantPtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassMethodPtrCall = *const fn (
-    ?*anyopaque,
-    GDExtensionClassInstancePtr,
-    [*c]const GDExtensionConstTypePtr,
-    GDExtensionTypePtr,
-) callconv(.c) void;
+        ?*anyopaque,
+        GDExtensionClassInstancePtr,
+        [*c]const GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassMethodInfo = extern struct {
     name: GDExtensionStringNamePtr,
@@ -1199,12 +1199,12 @@ pub const GDExtensionClassVirtualMethodInfo = extern struct {
 };
 
 pub const GDExtensionCallableCustomCall = *const fn (
-    ?*anyopaque,
-    [*c]const GDExtensionConstVariantPtr,
-    GDExtensionInt,
-    GDExtensionVariantPtr,
-    [*c]GDExtensionCallError,
-) callconv(.c) void;
+        ?*anyopaque,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void;
 
 pub const GDExtensionCallableCustomIsValid = *const fn (?*anyopaque) callconv(.c) GDExtensionBool;
 
@@ -1217,10 +1217,10 @@ pub const GDExtensionCallableCustomEqual = *const fn (?*anyopaque, ?*anyopaque) 
 pub const GDExtensionCallableCustomLessThan = *const fn (?*anyopaque, ?*anyopaque) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionCallableCustomToString = *const fn (
-    ?*anyopaque,
-    [*c]GDExtensionBool,
-    GDExtensionStringPtr,
-) callconv(.c) void;
+        ?*anyopaque,
+        [*c]GDExtensionBool,
+        GDExtensionStringPtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionCallableCustomGetArgumentCount = *const fn (?*anyopaque, [*c]GDExtensionBool) callconv(.c) GDExtensionInt;
 
@@ -1254,99 +1254,99 @@ pub const GDExtensionCallableCustomInfo2 = extern struct {
 pub const GDExtensionScriptInstanceDataPtr = ?*anyopaque;
 
 pub const GDExtensionScriptInstanceSet = *const fn (
-    GDExtensionScriptInstanceDataPtr,
-    GDExtensionConstStringNamePtr,
-    GDExtensionConstVariantPtr,
-) callconv(.c) GDExtensionBool;
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+    ) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionScriptInstanceGet = *const fn (
-    GDExtensionScriptInstanceDataPtr,
-    GDExtensionConstStringNamePtr,
-    GDExtensionVariantPtr,
-) callconv(.c) GDExtensionBool;
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionVariantPtr,
+    ) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionScriptInstanceGetPropertyList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]u32) callconv(.c) [*c]const GDExtensionPropertyInfo;
 
 pub const GDExtensionScriptInstanceFreePropertyList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]const GDExtensionPropertyInfo) callconv(.c) void;
 
 pub const GDExtensionScriptInstanceFreePropertyList2 = *const fn (
-    GDExtensionScriptInstanceDataPtr,
-    [*c]const GDExtensionPropertyInfo,
-    u32,
-) callconv(.c) void;
+        GDExtensionScriptInstanceDataPtr,
+        [*c]const GDExtensionPropertyInfo,
+        u32,
+    ) callconv(.c) void;
 
 pub const GDExtensionScriptInstanceGetClassCategory = *const fn (GDExtensionScriptInstanceDataPtr, [*c]GDExtensionPropertyInfo) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionScriptInstanceGetPropertyType = *const fn (
-    GDExtensionScriptInstanceDataPtr,
-    GDExtensionConstStringNamePtr,
-    [*c]GDExtensionBool,
-) callconv(.c) GDExtensionVariantType;
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) GDExtensionVariantType;
 
 pub const GDExtensionScriptInstanceValidateProperty = *const fn (GDExtensionScriptInstanceDataPtr, [*c]GDExtensionPropertyInfo) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionScriptInstancePropertyCanRevert = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionScriptInstancePropertyGetRevert = *const fn (
-    GDExtensionScriptInstanceDataPtr,
-    GDExtensionConstStringNamePtr,
-    GDExtensionVariantPtr,
-) callconv(.c) GDExtensionBool;
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionVariantPtr,
+    ) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionScriptInstanceGetOwner = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionObjectPtr;
 
 pub const GDExtensionScriptInstancePropertyStateAdd = *const fn (
-    GDExtensionConstStringNamePtr,
-    GDExtensionConstVariantPtr,
-    ?*anyopaque,
-) callconv(.c) void;
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+        ?*anyopaque,
+    ) callconv(.c) void;
 
 pub const GDExtensionScriptInstanceGetPropertyState = *const fn (
-    GDExtensionScriptInstanceDataPtr,
-    GDExtensionScriptInstancePropertyStateAdd,
-    ?*anyopaque,
-) callconv(.c) void;
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionScriptInstancePropertyStateAdd,
+        ?*anyopaque,
+    ) callconv(.c) void;
 
 pub const GDExtensionScriptInstanceGetMethodList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]u32) callconv(.c) [*c]const GDExtensionMethodInfo;
 
 pub const GDExtensionScriptInstanceFreeMethodList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]const GDExtensionMethodInfo) callconv(.c) void;
 
 pub const GDExtensionScriptInstanceFreeMethodList2 = *const fn (
-    GDExtensionScriptInstanceDataPtr,
-    [*c]const GDExtensionMethodInfo,
-    u32,
-) callconv(.c) void;
+        GDExtensionScriptInstanceDataPtr,
+        [*c]const GDExtensionMethodInfo,
+        u32,
+    ) callconv(.c) void;
 
 pub const GDExtensionScriptInstanceHasMethod = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionScriptInstanceGetMethodArgumentCount = *const fn (
-    GDExtensionScriptInstanceDataPtr,
-    GDExtensionConstStringNamePtr,
-    [*c]GDExtensionBool,
-) callconv(.c) GDExtensionInt;
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) GDExtensionInt;
 
 pub const GDExtensionScriptInstanceCall = *const fn (
-    GDExtensionScriptInstanceDataPtr,
-    GDExtensionConstStringNamePtr,
-    [*c]const GDExtensionConstVariantPtr,
-    GDExtensionInt,
-    GDExtensionVariantPtr,
-    [*c]GDExtensionCallError,
-) callconv(.c) void;
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void;
 
 pub const GDExtensionScriptInstanceNotification = *const fn (GDExtensionScriptInstanceDataPtr, i32) callconv(.c) void;
 
 pub const GDExtensionScriptInstanceNotification2 = *const fn (
-    GDExtensionScriptInstanceDataPtr,
-    i32,
-    GDExtensionBool,
-) callconv(.c) void;
+        GDExtensionScriptInstanceDataPtr,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void;
 
 pub const GDExtensionScriptInstanceToString = *const fn (
-    GDExtensionScriptInstanceDataPtr,
-    [*c]GDExtensionBool,
-    GDExtensionStringPtr,
-) callconv(.c) void;
+        GDExtensionScriptInstanceDataPtr,
+        [*c]GDExtensionBool,
+        GDExtensionStringPtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionScriptInstanceRefCountIncremented = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) void;
 
@@ -1475,10 +1475,10 @@ pub const GDExtensionInterfaceFunctionPtr = *const fn () callconv(.c) void;
 pub const GDExtensionInterfaceGetProcAddress = *const fn ([*:0]const u8) callconv(.c) GDExtensionInterfaceFunctionPtr;
 
 pub const GDExtensionInitializationFunction = *const fn (
-    GDExtensionInterfaceGetProcAddress,
-    GDExtensionClassLibraryPtr,
-    [*c]GDExtensionInitialization,
-) callconv(.c) GDExtensionBool;
+        GDExtensionInterfaceGetProcAddress,
+        GDExtensionClassLibraryPtr,
+        [*c]GDExtensionInitialization,
+    ) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionGodotVersion = extern struct {
     major: u32,
@@ -2236,848 +2236,847 @@ pub const Interface = struct {
 };
 
 /// Returns proc address from get_proc_address lookup table function.
-fn fp(
+fn pa(
     get_proc_address: GDExtensionInterfaceGetProcAddress,
     comptime name: [:0]const u8,
     comptime T: type,
 ) !T {
-    const ptr = get_proc_address.?(name.ptr) orelse return error.MissingFunction;
-    return @ptrCast(@alignCast(ptr));
+    return @ptrCast(@alignCast(get_proc_address(name.ptr)));
 }
 
 pub fn loadInterface(get_proc_address: GDExtensionInterfaceGetProcAddress) !Interface {
-    const gpa = get_proc_address; // orelse return error.MissingGetProcAddress;
+    const gpa = get_proc_address;
     return .{
-        .get_godot_version = try fp(gpa, "get_godot_version", *const fn ([*c]GDExtensionGodotVersion) callconv(.c) void),
-        .get_godot_version2 = try fp(gpa, "get_godot_version2", *const fn ([*c]GDExtensionGodotVersion2) callconv(.c) void),
-        .mem_alloc = try fp(gpa, "mem_alloc", *const fn (usize) callconv(.c) ?*anyopaque),
-        .mem_realloc = try fp(gpa, "mem_realloc", *const fn (?*anyopaque, usize) callconv(.c) ?*anyopaque),
-        .mem_free = try fp(gpa, "mem_free", *const fn (?*anyopaque) callconv(.c) void),
-        .mem_alloc2 = try fp(gpa, "mem_alloc2", *const fn (usize, GDExtensionBool) callconv(.c) ?*anyopaque),
-        .mem_realloc2 = try fp(
+        .get_godot_version = try pa(gpa, "get_godot_version", *const fn ([*c]GDExtensionGodotVersion) callconv(.c) void),
+        .get_godot_version2 = try pa(gpa, "get_godot_version2", *const fn ([*c]GDExtensionGodotVersion2) callconv(.c) void),
+        .mem_alloc = try pa(gpa, "mem_alloc", *const fn (usize) callconv(.c) ?*anyopaque),
+        .mem_realloc = try pa(gpa, "mem_realloc", *const fn (?*anyopaque, usize) callconv(.c) ?*anyopaque),
+        .mem_free = try pa(gpa, "mem_free", *const fn (?*anyopaque) callconv(.c) void),
+        .mem_alloc2 = try pa(gpa, "mem_alloc2", *const fn (usize, GDExtensionBool) callconv(.c) ?*anyopaque),
+        .mem_realloc2 = try pa(
             gpa,
             "mem_realloc2",
             *const fn (
-                ?*anyopaque,
-                usize,
-                GDExtensionBool,
-            ) callconv(.c) ?*anyopaque,
+        ?*anyopaque,
+        usize,
+        GDExtensionBool,
+    ) callconv(.c) ?*anyopaque,
         ),
-        .mem_free2 = try fp(gpa, "mem_free2", *const fn (?*anyopaque, GDExtensionBool) callconv(.c) void),
-        .print_error = try fp(
+        .mem_free2 = try pa(gpa, "mem_free2", *const fn (?*anyopaque, GDExtensionBool) callconv(.c) void),
+        .print_error = try pa(
             gpa,
             "print_error",
             *const fn (
-                [*:0]const u8,
-                [*:0]const u8,
-                [*:0]const u8,
-                i32,
-                GDExtensionBool,
-            ) callconv(.c) void,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .print_error_with_message = try fp(
+        .print_error_with_message = try pa(
             gpa,
             "print_error_with_message",
             *const fn (
-                [*:0]const u8,
-                [*:0]const u8,
-                [*:0]const u8,
-                [*:0]const u8,
-                i32,
-                GDExtensionBool,
-            ) callconv(.c) void,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .print_warning = try fp(
+        .print_warning = try pa(
             gpa,
             "print_warning",
             *const fn (
-                [*:0]const u8,
-                [*:0]const u8,
-                [*:0]const u8,
-                i32,
-                GDExtensionBool,
-            ) callconv(.c) void,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .print_warning_with_message = try fp(
+        .print_warning_with_message = try pa(
             gpa,
             "print_warning_with_message",
             *const fn (
-                [*:0]const u8,
-                [*:0]const u8,
-                [*:0]const u8,
-                [*:0]const u8,
-                i32,
-                GDExtensionBool,
-            ) callconv(.c) void,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .print_script_error = try fp(
+        .print_script_error = try pa(
             gpa,
             "print_script_error",
             *const fn (
-                [*:0]const u8,
-                [*:0]const u8,
-                [*:0]const u8,
-                i32,
-                GDExtensionBool,
-            ) callconv(.c) void,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .print_script_error_with_message = try fp(
+        .print_script_error_with_message = try pa(
             gpa,
             "print_script_error_with_message",
             *const fn (
-                [*:0]const u8,
-                [*:0]const u8,
-                [*:0]const u8,
-                [*:0]const u8,
-                i32,
-                GDExtensionBool,
-            ) callconv(.c) void,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .get_native_struct_size = try fp(gpa, "get_native_struct_size", *const fn (GDExtensionConstStringNamePtr) callconv(.c) u64),
-        .variant_new_copy = try fp(gpa, "variant_new_copy", *const fn (GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr) callconv(.c) void),
-        .variant_new_nil = try fp(gpa, "variant_new_nil", *const fn (GDExtensionUninitializedVariantPtr) callconv(.c) void),
-        .variant_destroy = try fp(gpa, "variant_destroy", *const fn (GDExtensionVariantPtr) callconv(.c) void),
-        .variant_call = try fp(
+        .get_native_struct_size = try pa(gpa, "get_native_struct_size", *const fn (GDExtensionConstStringNamePtr) callconv(.c) u64),
+        .variant_new_copy = try pa(gpa, "variant_new_copy", *const fn (GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr) callconv(.c) void),
+        .variant_new_nil = try pa(gpa, "variant_new_nil", *const fn (GDExtensionUninitializedVariantPtr) callconv(.c) void),
+        .variant_destroy = try pa(gpa, "variant_destroy", *const fn (GDExtensionVariantPtr) callconv(.c) void),
+        .variant_call = try pa(
             gpa,
             "variant_call",
             *const fn (
-                GDExtensionVariantPtr,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionConstVariantPtr,
-                GDExtensionInt,
-                GDExtensionUninitializedVariantPtr,
-                [*c]GDExtensionCallError,
-            ) callconv(.c) void,
+        GDExtensionVariantPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
         ),
-        .variant_call_static = try fp(
+        .variant_call_static = try pa(
             gpa,
             "variant_call_static",
             *const fn (
-                GDExtensionVariantType,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionConstVariantPtr,
-                GDExtensionInt,
-                GDExtensionUninitializedVariantPtr,
-                [*c]GDExtensionCallError,
-            ) callconv(.c) void,
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
         ),
-        .variant_evaluate = try fp(
+        .variant_evaluate = try pa(
             gpa,
             "variant_evaluate",
             *const fn (
-                GDExtensionVariantOperator,
-                GDExtensionConstVariantPtr,
-                GDExtensionConstVariantPtr,
-                GDExtensionUninitializedVariantPtr,
-                [*c]GDExtensionBool,
-            ) callconv(.c) void,
+        GDExtensionVariantOperator,
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .variant_set = try fp(
+        .variant_set = try pa(
             gpa,
             "variant_set",
             *const fn (
-                GDExtensionVariantPtr,
-                GDExtensionConstVariantPtr,
-                GDExtensionConstVariantPtr,
-                [*c]GDExtensionBool,
-            ) callconv(.c) void,
+        GDExtensionVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .variant_set_named = try fp(
+        .variant_set_named = try pa(
             gpa,
             "variant_set_named",
             *const fn (
-                GDExtensionVariantPtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstVariantPtr,
-                [*c]GDExtensionBool,
-            ) callconv(.c) void,
+        GDExtensionVariantPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .variant_set_keyed = try fp(
+        .variant_set_keyed = try pa(
             gpa,
             "variant_set_keyed",
             *const fn (
-                GDExtensionVariantPtr,
-                GDExtensionConstVariantPtr,
-                GDExtensionConstVariantPtr,
-                [*c]GDExtensionBool,
-            ) callconv(.c) void,
+        GDExtensionVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .variant_set_indexed = try fp(
+        .variant_set_indexed = try pa(
             gpa,
             "variant_set_indexed",
             *const fn (
-                GDExtensionVariantPtr,
-                GDExtensionInt,
-                GDExtensionConstVariantPtr,
-                [*c]GDExtensionBool,
-                [*c]GDExtensionBool,
-            ) callconv(.c) void,
+        GDExtensionVariantPtr,
+        GDExtensionInt,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .variant_get = try fp(
+        .variant_get = try pa(
             gpa,
             "variant_get",
             *const fn (
-                GDExtensionConstVariantPtr,
-                GDExtensionConstVariantPtr,
-                GDExtensionUninitializedVariantPtr,
-                [*c]GDExtensionBool,
-            ) callconv(.c) void,
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .variant_get_named = try fp(
+        .variant_get_named = try pa(
             gpa,
             "variant_get_named",
             *const fn (
-                GDExtensionConstVariantPtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionUninitializedVariantPtr,
-                [*c]GDExtensionBool,
-            ) callconv(.c) void,
+        GDExtensionConstVariantPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .variant_get_keyed = try fp(
+        .variant_get_keyed = try pa(
             gpa,
             "variant_get_keyed",
             *const fn (
-                GDExtensionConstVariantPtr,
-                GDExtensionConstVariantPtr,
-                GDExtensionUninitializedVariantPtr,
-                [*c]GDExtensionBool,
-            ) callconv(.c) void,
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .variant_get_indexed = try fp(
+        .variant_get_indexed = try pa(
             gpa,
             "variant_get_indexed",
             *const fn (
-                GDExtensionConstVariantPtr,
-                GDExtensionInt,
-                GDExtensionUninitializedVariantPtr,
-                [*c]GDExtensionBool,
-                [*c]GDExtensionBool,
-            ) callconv(.c) void,
+        GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .variant_iter_init = try fp(
+        .variant_iter_init = try pa(
             gpa,
             "variant_iter_init",
             *const fn (
-                GDExtensionConstVariantPtr,
-                GDExtensionUninitializedVariantPtr,
-                [*c]GDExtensionBool,
-            ) callconv(.c) GDExtensionBool,
+        GDExtensionConstVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) GDExtensionBool,
         ),
-        .variant_iter_next = try fp(
+        .variant_iter_next = try pa(
             gpa,
             "variant_iter_next",
             *const fn (
-                GDExtensionConstVariantPtr,
-                GDExtensionVariantPtr,
-                [*c]GDExtensionBool,
-            ) callconv(.c) GDExtensionBool,
+        GDExtensionConstVariantPtr,
+        GDExtensionVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) GDExtensionBool,
         ),
-        .variant_iter_get = try fp(
+        .variant_iter_get = try pa(
             gpa,
             "variant_iter_get",
             *const fn (
-                GDExtensionConstVariantPtr,
-                GDExtensionVariantPtr,
-                GDExtensionUninitializedVariantPtr,
-                [*c]GDExtensionBool,
-            ) callconv(.c) void,
+        GDExtensionConstVariantPtr,
+        GDExtensionVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .variant_hash = try fp(gpa, "variant_hash", *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionInt),
-        .variant_recursive_hash = try fp(gpa, "variant_recursive_hash", *const fn (GDExtensionConstVariantPtr, GDExtensionInt) callconv(.c) GDExtensionInt),
-        .variant_hash_compare = try fp(gpa, "variant_hash_compare", *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool),
-        .variant_booleanize = try fp(gpa, "variant_booleanize", *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool),
-        .variant_duplicate = try fp(
+        .variant_hash = try pa(gpa, "variant_hash", *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionInt),
+        .variant_recursive_hash = try pa(gpa, "variant_recursive_hash", *const fn (GDExtensionConstVariantPtr, GDExtensionInt) callconv(.c) GDExtensionInt),
+        .variant_hash_compare = try pa(gpa, "variant_hash_compare", *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool),
+        .variant_booleanize = try pa(gpa, "variant_booleanize", *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool),
+        .variant_duplicate = try pa(
             gpa,
             "variant_duplicate",
             *const fn (
-                GDExtensionConstVariantPtr,
-                GDExtensionVariantPtr,
-                GDExtensionBool,
-            ) callconv(.c) void,
+        GDExtensionConstVariantPtr,
+        GDExtensionVariantPtr,
+        GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .variant_stringify = try fp(gpa, "variant_stringify", *const fn (GDExtensionConstVariantPtr, GDExtensionStringPtr) callconv(.c) void),
-        .variant_get_type = try fp(gpa, "variant_get_type", *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantType),
-        .variant_has_method = try fp(gpa, "variant_has_method", *const fn (GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool),
-        .variant_has_member = try fp(gpa, "variant_has_member", *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool),
-        .variant_has_key = try fp(
+        .variant_stringify = try pa(gpa, "variant_stringify", *const fn (GDExtensionConstVariantPtr, GDExtensionStringPtr) callconv(.c) void),
+        .variant_get_type = try pa(gpa, "variant_get_type", *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantType),
+        .variant_has_method = try pa(gpa, "variant_has_method", *const fn (GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool),
+        .variant_has_member = try pa(gpa, "variant_has_member", *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool),
+        .variant_has_key = try pa(
             gpa,
             "variant_has_key",
             *const fn (
-                GDExtensionConstVariantPtr,
-                GDExtensionConstVariantPtr,
-                [*c]GDExtensionBool,
-            ) callconv(.c) GDExtensionBool,
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) GDExtensionBool,
         ),
-        .variant_get_object_instance_id = try fp(gpa, "variant_get_object_instance_id", *const fn (GDExtensionConstVariantPtr) callconv(.c) GDObjectInstanceID),
-        .variant_get_type_name = try fp(gpa, "variant_get_type_name", *const fn (GDExtensionVariantType, GDExtensionUninitializedStringPtr) callconv(.c) void),
-        .variant_get_type_by_name = try fp(gpa, "variant_get_type_by_name", *const fn (GDExtensionConstStringPtr) callconv(.c) GDExtensionVariantType),
-        .variant_can_convert = try fp(gpa, "variant_can_convert", *const fn (GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionBool),
-        .variant_can_convert_strict = try fp(gpa, "variant_can_convert_strict", *const fn (GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionBool),
-        .get_variant_from_type_constructor = try fp(gpa, "get_variant_from_type_constructor", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionVariantFromTypeConstructorFunc),
-        .get_variant_to_type_constructor = try fp(gpa, "get_variant_to_type_constructor", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionTypeFromVariantConstructorFunc),
-        .variant_get_ptr_internal_getter = try fp(gpa, "variant_get_ptr_internal_getter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionVariantGetInternalPtrFunc),
-        .variant_get_ptr_operator_evaluator = try fp(
+        .variant_get_object_instance_id = try pa(gpa, "variant_get_object_instance_id", *const fn (GDExtensionConstVariantPtr) callconv(.c) GDObjectInstanceID),
+        .variant_get_type_name = try pa(gpa, "variant_get_type_name", *const fn (GDExtensionVariantType, GDExtensionUninitializedStringPtr) callconv(.c) void),
+        .variant_get_type_by_name = try pa(gpa, "variant_get_type_by_name", *const fn (GDExtensionConstStringPtr) callconv(.c) GDExtensionVariantType),
+        .variant_can_convert = try pa(gpa, "variant_can_convert", *const fn (GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionBool),
+        .variant_can_convert_strict = try pa(gpa, "variant_can_convert_strict", *const fn (GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionBool),
+        .get_variant_from_type_constructor = try pa(gpa, "get_variant_from_type_constructor", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionVariantFromTypeConstructorFunc),
+        .get_variant_to_type_constructor = try pa(gpa, "get_variant_to_type_constructor", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionTypeFromVariantConstructorFunc),
+        .variant_get_ptr_internal_getter = try pa(gpa, "variant_get_ptr_internal_getter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionVariantGetInternalPtrFunc),
+        .variant_get_ptr_operator_evaluator = try pa(
             gpa,
             "variant_get_ptr_operator_evaluator",
             *const fn (
-                GDExtensionVariantOperator,
-                GDExtensionVariantType,
-                GDExtensionVariantType,
-            ) callconv(.c) GDExtensionPtrOperatorEvaluator,
+        GDExtensionVariantOperator,
+        GDExtensionVariantType,
+        GDExtensionVariantType,
+    ) callconv(.c) GDExtensionPtrOperatorEvaluator,
         ),
-        .variant_get_ptr_builtin_method = try fp(
+        .variant_get_ptr_builtin_method = try pa(
             gpa,
             "variant_get_ptr_builtin_method",
             *const fn (
-                GDExtensionVariantType,
-                GDExtensionConstStringNamePtr,
-                GDExtensionInt,
-            ) callconv(.c) GDExtensionPtrBuiltInMethod,
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionPtrBuiltInMethod,
         ),
-        .variant_get_ptr_constructor = try fp(gpa, "variant_get_ptr_constructor", *const fn (GDExtensionVariantType, i32) callconv(.c) GDExtensionPtrConstructor),
-        .variant_get_ptr_destructor = try fp(gpa, "variant_get_ptr_destructor", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrDestructor),
-        .variant_construct = try fp(
+        .variant_get_ptr_constructor = try pa(gpa, "variant_get_ptr_constructor", *const fn (GDExtensionVariantType, i32) callconv(.c) GDExtensionPtrConstructor),
+        .variant_get_ptr_destructor = try pa(gpa, "variant_get_ptr_destructor", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrDestructor),
+        .variant_construct = try pa(
             gpa,
             "variant_construct",
             *const fn (
-                GDExtensionVariantType,
-                GDExtensionUninitializedVariantPtr,
-                [*c]const GDExtensionConstVariantPtr,
-                i32,
-                [*c]GDExtensionCallError,
-            ) callconv(.c) void,
+        GDExtensionVariantType,
+        GDExtensionUninitializedVariantPtr,
+        [*c]const GDExtensionConstVariantPtr,
+        i32,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
         ),
-        .variant_get_ptr_setter = try fp(gpa, "variant_get_ptr_setter", *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionPtrSetter),
-        .variant_get_ptr_getter = try fp(gpa, "variant_get_ptr_getter", *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionPtrGetter),
-        .variant_get_ptr_indexed_setter = try fp(gpa, "variant_get_ptr_indexed_setter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrIndexedSetter),
-        .variant_get_ptr_indexed_getter = try fp(gpa, "variant_get_ptr_indexed_getter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrIndexedGetter),
-        .variant_get_ptr_keyed_setter = try fp(gpa, "variant_get_ptr_keyed_setter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedSetter),
-        .variant_get_ptr_keyed_getter = try fp(gpa, "variant_get_ptr_keyed_getter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedGetter),
-        .variant_get_ptr_keyed_checker = try fp(gpa, "variant_get_ptr_keyed_checker", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedChecker),
-        .variant_get_constant_value = try fp(
+        .variant_get_ptr_setter = try pa(gpa, "variant_get_ptr_setter", *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionPtrSetter),
+        .variant_get_ptr_getter = try pa(gpa, "variant_get_ptr_getter", *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionPtrGetter),
+        .variant_get_ptr_indexed_setter = try pa(gpa, "variant_get_ptr_indexed_setter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrIndexedSetter),
+        .variant_get_ptr_indexed_getter = try pa(gpa, "variant_get_ptr_indexed_getter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrIndexedGetter),
+        .variant_get_ptr_keyed_setter = try pa(gpa, "variant_get_ptr_keyed_setter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedSetter),
+        .variant_get_ptr_keyed_getter = try pa(gpa, "variant_get_ptr_keyed_getter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedGetter),
+        .variant_get_ptr_keyed_checker = try pa(gpa, "variant_get_ptr_keyed_checker", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedChecker),
+        .variant_get_constant_value = try pa(
             gpa,
             "variant_get_constant_value",
             *const fn (
-                GDExtensionVariantType,
-                GDExtensionConstStringNamePtr,
-                GDExtensionUninitializedVariantPtr,
-            ) callconv(.c) void,
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionUninitializedVariantPtr,
+    ) callconv(.c) void,
         ),
-        .variant_get_ptr_utility_function = try fp(gpa, "variant_get_ptr_utility_function", *const fn (GDExtensionConstStringNamePtr, GDExtensionInt) callconv(.c) GDExtensionPtrUtilityFunction),
-        .string_new_with_latin1_chars = try fp(gpa, "string_new_with_latin1_chars", *const fn (GDExtensionUninitializedStringPtr, [*:0]const u8) callconv(.c) void),
-        .string_new_with_utf8_chars = try fp(gpa, "string_new_with_utf8_chars", *const fn (GDExtensionUninitializedStringPtr, [*:0]const u8) callconv(.c) void),
-        .string_new_with_utf16_chars = try fp(gpa, "string_new_with_utf16_chars", *const fn (GDExtensionUninitializedStringPtr, [*c]const u16) callconv(.c) void),
-        .string_new_with_utf32_chars = try fp(gpa, "string_new_with_utf32_chars", *const fn (GDExtensionUninitializedStringPtr, [*c]const u32) callconv(.c) void),
-        .string_new_with_wide_chars = try fp(gpa, "string_new_with_wide_chars", *const fn (GDExtensionUninitializedStringPtr, [*c]const c_ushort) callconv(.c) void),
-        .string_new_with_latin1_chars_and_len = try fp(
+        .variant_get_ptr_utility_function = try pa(gpa, "variant_get_ptr_utility_function", *const fn (GDExtensionConstStringNamePtr, GDExtensionInt) callconv(.c) GDExtensionPtrUtilityFunction),
+        .string_new_with_latin1_chars = try pa(gpa, "string_new_with_latin1_chars", *const fn (GDExtensionUninitializedStringPtr, [*:0]const u8) callconv(.c) void),
+        .string_new_with_utf8_chars = try pa(gpa, "string_new_with_utf8_chars", *const fn (GDExtensionUninitializedStringPtr, [*:0]const u8) callconv(.c) void),
+        .string_new_with_utf16_chars = try pa(gpa, "string_new_with_utf16_chars", *const fn (GDExtensionUninitializedStringPtr, [*c]const u16) callconv(.c) void),
+        .string_new_with_utf32_chars = try pa(gpa, "string_new_with_utf32_chars", *const fn (GDExtensionUninitializedStringPtr, [*c]const u32) callconv(.c) void),
+        .string_new_with_wide_chars = try pa(gpa, "string_new_with_wide_chars", *const fn (GDExtensionUninitializedStringPtr, [*c]const c_ushort) callconv(.c) void),
+        .string_new_with_latin1_chars_and_len = try pa(
             gpa,
             "string_new_with_latin1_chars_and_len",
             *const fn (
-                GDExtensionUninitializedStringPtr,
-                [*:0]const u8,
-                GDExtensionInt,
-            ) callconv(.c) void,
+        GDExtensionUninitializedStringPtr,
+        [*:0]const u8,
+        GDExtensionInt,
+    ) callconv(.c) void,
         ),
-        .string_new_with_utf8_chars_and_len = try fp(
+        .string_new_with_utf8_chars_and_len = try pa(
             gpa,
             "string_new_with_utf8_chars_and_len",
             *const fn (
-                GDExtensionUninitializedStringPtr,
-                [*:0]const u8,
-                GDExtensionInt,
-            ) callconv(.c) void,
+        GDExtensionUninitializedStringPtr,
+        [*:0]const u8,
+        GDExtensionInt,
+    ) callconv(.c) void,
         ),
-        .string_new_with_utf8_chars_and_len2 = try fp(
+        .string_new_with_utf8_chars_and_len2 = try pa(
             gpa,
             "string_new_with_utf8_chars_and_len2",
             *const fn (
-                GDExtensionUninitializedStringPtr,
-                [*:0]const u8,
-                GDExtensionInt,
-            ) callconv(.c) GDExtensionInt,
+        GDExtensionUninitializedStringPtr,
+        [*:0]const u8,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
         ),
-        .string_new_with_utf16_chars_and_len = try fp(
+        .string_new_with_utf16_chars_and_len = try pa(
             gpa,
             "string_new_with_utf16_chars_and_len",
             *const fn (
-                GDExtensionUninitializedStringPtr,
-                [*c]const u16,
-                GDExtensionInt,
-            ) callconv(.c) void,
+        GDExtensionUninitializedStringPtr,
+        [*c]const u16,
+        GDExtensionInt,
+    ) callconv(.c) void,
         ),
-        .string_new_with_utf16_chars_and_len2 = try fp(
+        .string_new_with_utf16_chars_and_len2 = try pa(
             gpa,
             "string_new_with_utf16_chars_and_len2",
             *const fn (
-                GDExtensionUninitializedStringPtr,
-                [*c]const u16,
-                GDExtensionInt,
-                GDExtensionBool,
-            ) callconv(.c) GDExtensionInt,
+        GDExtensionUninitializedStringPtr,
+        [*c]const u16,
+        GDExtensionInt,
+        GDExtensionBool,
+    ) callconv(.c) GDExtensionInt,
         ),
-        .string_new_with_utf32_chars_and_len = try fp(
+        .string_new_with_utf32_chars_and_len = try pa(
             gpa,
             "string_new_with_utf32_chars_and_len",
             *const fn (
-                GDExtensionUninitializedStringPtr,
-                [*c]const u32,
-                GDExtensionInt,
-            ) callconv(.c) void,
+        GDExtensionUninitializedStringPtr,
+        [*c]const u32,
+        GDExtensionInt,
+    ) callconv(.c) void,
         ),
-        .string_new_with_wide_chars_and_len = try fp(
+        .string_new_with_wide_chars_and_len = try pa(
             gpa,
             "string_new_with_wide_chars_and_len",
             *const fn (
-                GDExtensionUninitializedStringPtr,
-                [*c]const c_ushort,
-                GDExtensionInt,
-            ) callconv(.c) void,
+        GDExtensionUninitializedStringPtr,
+        [*c]const c_ushort,
+        GDExtensionInt,
+    ) callconv(.c) void,
         ),
-        .string_to_latin1_chars = try fp(
+        .string_to_latin1_chars = try pa(
             gpa,
             "string_to_latin1_chars",
             *const fn (
-                GDExtensionConstStringPtr,
-                [*c]u8,
-                GDExtensionInt,
-            ) callconv(.c) GDExtensionInt,
+        GDExtensionConstStringPtr,
+        [*c]u8,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
         ),
-        .string_to_utf8_chars = try fp(
+        .string_to_utf8_chars = try pa(
             gpa,
             "string_to_utf8_chars",
             *const fn (
-                GDExtensionConstStringPtr,
-                [*c]u8,
-                GDExtensionInt,
-            ) callconv(.c) GDExtensionInt,
+        GDExtensionConstStringPtr,
+        [*c]u8,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
         ),
-        .string_to_utf16_chars = try fp(
+        .string_to_utf16_chars = try pa(
             gpa,
             "string_to_utf16_chars",
             *const fn (
-                GDExtensionConstStringPtr,
-                [*c]u16,
-                GDExtensionInt,
-            ) callconv(.c) GDExtensionInt,
+        GDExtensionConstStringPtr,
+        [*c]u16,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
         ),
-        .string_to_utf32_chars = try fp(
+        .string_to_utf32_chars = try pa(
             gpa,
             "string_to_utf32_chars",
             *const fn (
-                GDExtensionConstStringPtr,
-                [*c]u32,
-                GDExtensionInt,
-            ) callconv(.c) GDExtensionInt,
+        GDExtensionConstStringPtr,
+        [*c]u32,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
         ),
-        .string_to_wide_chars = try fp(
+        .string_to_wide_chars = try pa(
             gpa,
             "string_to_wide_chars",
             *const fn (
-                GDExtensionConstStringPtr,
-                [*c]c_ushort,
-                GDExtensionInt,
-            ) callconv(.c) GDExtensionInt,
+        GDExtensionConstStringPtr,
+        [*c]c_ushort,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
         ),
-        .string_operator_index = try fp(gpa, "string_operator_index", *const fn (GDExtensionStringPtr, GDExtensionInt) callconv(.c) [*c]u32),
-        .string_operator_index_const = try fp(gpa, "string_operator_index_const", *const fn (GDExtensionConstStringPtr, GDExtensionInt) callconv(.c) [*c]const u32),
-        .string_operator_plus_eq_string = try fp(gpa, "string_operator_plus_eq_string", *const fn (GDExtensionStringPtr, GDExtensionConstStringPtr) callconv(.c) void),
-        .string_operator_plus_eq_char = try fp(gpa, "string_operator_plus_eq_char", *const fn (GDExtensionStringPtr, u32) callconv(.c) void),
-        .string_operator_plus_eq_cstr = try fp(gpa, "string_operator_plus_eq_cstr", *const fn (GDExtensionStringPtr, [*:0]const u8) callconv(.c) void),
-        .string_operator_plus_eq_wcstr = try fp(gpa, "string_operator_plus_eq_wcstr", *const fn (GDExtensionStringPtr, [*c]const c_ushort) callconv(.c) void),
-        .string_operator_plus_eq_c32str = try fp(gpa, "string_operator_plus_eq_c32str", *const fn (GDExtensionStringPtr, [*c]const u32) callconv(.c) void),
-        .string_resize = try fp(gpa, "string_resize", *const fn (GDExtensionStringPtr, GDExtensionInt) callconv(.c) GDExtensionInt),
-        .string_name_new_with_latin1_chars = try fp(
+        .string_operator_index = try pa(gpa, "string_operator_index", *const fn (GDExtensionStringPtr, GDExtensionInt) callconv(.c) [*c]u32),
+        .string_operator_index_const = try pa(gpa, "string_operator_index_const", *const fn (GDExtensionConstStringPtr, GDExtensionInt) callconv(.c) [*c]const u32),
+        .string_operator_plus_eq_string = try pa(gpa, "string_operator_plus_eq_string", *const fn (GDExtensionStringPtr, GDExtensionConstStringPtr) callconv(.c) void),
+        .string_operator_plus_eq_char = try pa(gpa, "string_operator_plus_eq_char", *const fn (GDExtensionStringPtr, u32) callconv(.c) void),
+        .string_operator_plus_eq_cstr = try pa(gpa, "string_operator_plus_eq_cstr", *const fn (GDExtensionStringPtr, [*:0]const u8) callconv(.c) void),
+        .string_operator_plus_eq_wcstr = try pa(gpa, "string_operator_plus_eq_wcstr", *const fn (GDExtensionStringPtr, [*c]const c_ushort) callconv(.c) void),
+        .string_operator_plus_eq_c32str = try pa(gpa, "string_operator_plus_eq_c32str", *const fn (GDExtensionStringPtr, [*c]const u32) callconv(.c) void),
+        .string_resize = try pa(gpa, "string_resize", *const fn (GDExtensionStringPtr, GDExtensionInt) callconv(.c) GDExtensionInt),
+        .string_name_new_with_latin1_chars = try pa(
             gpa,
             "string_name_new_with_latin1_chars",
             *const fn (
-                GDExtensionUninitializedStringNamePtr,
-                [*:0]const u8,
-                GDExtensionBool,
-            ) callconv(.c) void,
+        GDExtensionUninitializedStringNamePtr,
+        [*:0]const u8,
+        GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .string_name_new_with_utf8_chars = try fp(gpa, "string_name_new_with_utf8_chars", *const fn (GDExtensionUninitializedStringNamePtr, [*:0]const u8) callconv(.c) void),
-        .string_name_new_with_utf8_chars_and_len = try fp(
+        .string_name_new_with_utf8_chars = try pa(gpa, "string_name_new_with_utf8_chars", *const fn (GDExtensionUninitializedStringNamePtr, [*:0]const u8) callconv(.c) void),
+        .string_name_new_with_utf8_chars_and_len = try pa(
             gpa,
             "string_name_new_with_utf8_chars_and_len",
             *const fn (
-                GDExtensionUninitializedStringNamePtr,
-                [*:0]const u8,
-                GDExtensionInt,
-            ) callconv(.c) void,
+        GDExtensionUninitializedStringNamePtr,
+        [*:0]const u8,
+        GDExtensionInt,
+    ) callconv(.c) void,
         ),
-        .xml_parser_open_buffer = try fp(
+        .xml_parser_open_buffer = try pa(
             gpa,
             "xml_parser_open_buffer",
             *const fn (
-                GDExtensionObjectPtr,
-                [*:0]const u8,
-                usize,
-            ) callconv(.c) GDExtensionInt,
+        GDExtensionObjectPtr,
+        [*:0]const u8,
+        usize,
+    ) callconv(.c) GDExtensionInt,
         ),
-        .file_access_store_buffer = try fp(
+        .file_access_store_buffer = try pa(
             gpa,
             "file_access_store_buffer",
             *const fn (
-                GDExtensionObjectPtr,
-                [*:0]const u8,
-                u64,
-            ) callconv(.c) void,
+        GDExtensionObjectPtr,
+        [*:0]const u8,
+        u64,
+    ) callconv(.c) void,
         ),
-        .file_access_get_buffer = try fp(
+        .file_access_get_buffer = try pa(
             gpa,
             "file_access_get_buffer",
             *const fn (
-                GDExtensionConstObjectPtr,
-                [*c]u8,
-                u64,
-            ) callconv(.c) u64,
+        GDExtensionConstObjectPtr,
+        [*c]u8,
+        u64,
+    ) callconv(.c) u64,
         ),
-        .image_ptrw = try fp(gpa, "image_ptrw", *const fn (GDExtensionObjectPtr) callconv(.c) [*c]u8),
-        .image_ptr = try fp(gpa, "image_ptr", *const fn (GDExtensionObjectPtr) callconv(.c) [*:0]const u8),
-        .worker_thread_pool_add_native_group_task = try fp(
+        .image_ptrw = try pa(gpa, "image_ptrw", *const fn (GDExtensionObjectPtr) callconv(.c) [*c]u8),
+        .image_ptr = try pa(gpa, "image_ptr", *const fn (GDExtensionObjectPtr) callconv(.c) [*:0]const u8),
+        .worker_thread_pool_add_native_group_task = try pa(
             gpa,
             "worker_thread_pool_add_native_group_task",
             *const fn (
-                GDExtensionObjectPtr,
-                GDExtensionWorkerThreadPoolGroupTask,
-                ?*anyopaque,
-                i32,
-                i32,
-                GDExtensionBool,
-                GDExtensionConstStringPtr,
-            ) callconv(.c) i64,
+        GDExtensionObjectPtr,
+        GDExtensionWorkerThreadPoolGroupTask,
+        ?*anyopaque,
+        i32,
+        i32,
+        GDExtensionBool,
+        GDExtensionConstStringPtr,
+    ) callconv(.c) i64,
         ),
-        .worker_thread_pool_add_native_task = try fp(
+        .worker_thread_pool_add_native_task = try pa(
             gpa,
             "worker_thread_pool_add_native_task",
             *const fn (
-                GDExtensionObjectPtr,
-                GDExtensionWorkerThreadPoolTask,
-                ?*anyopaque,
-                GDExtensionBool,
-                GDExtensionConstStringPtr,
-            ) callconv(.c) i64,
+        GDExtensionObjectPtr,
+        GDExtensionWorkerThreadPoolTask,
+        ?*anyopaque,
+        GDExtensionBool,
+        GDExtensionConstStringPtr,
+    ) callconv(.c) i64,
         ),
-        .packed_byte_array_operator_index = try fp(gpa, "packed_byte_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]u8),
-        .packed_byte_array_operator_index_const = try fp(gpa, "packed_byte_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*:0]const u8),
-        .packed_float32_array_operator_index = try fp(gpa, "packed_float32_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]f32),
-        .packed_float32_array_operator_index_const = try fp(gpa, "packed_float32_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const f32),
-        .packed_float64_array_operator_index = try fp(gpa, "packed_float64_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]f64),
-        .packed_float64_array_operator_index_const = try fp(gpa, "packed_float64_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const f64),
-        .packed_int32_array_operator_index = try fp(gpa, "packed_int32_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]i32),
-        .packed_int32_array_operator_index_const = try fp(gpa, "packed_int32_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const i32),
-        .packed_int64_array_operator_index = try fp(gpa, "packed_int64_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]i64),
-        .packed_int64_array_operator_index_const = try fp(gpa, "packed_int64_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const i64),
-        .packed_string_array_operator_index = try fp(gpa, "packed_string_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionStringPtr),
-        .packed_string_array_operator_index_const = try fp(gpa, "packed_string_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionStringPtr),
-        .packed_vector2_array_operator_index = try fp(gpa, "packed_vector2_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
-        .packed_vector2_array_operator_index_const = try fp(gpa, "packed_vector2_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
-        .packed_vector3_array_operator_index = try fp(gpa, "packed_vector3_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
-        .packed_vector3_array_operator_index_const = try fp(gpa, "packed_vector3_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
-        .packed_vector4_array_operator_index = try fp(gpa, "packed_vector4_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
-        .packed_vector4_array_operator_index_const = try fp(gpa, "packed_vector4_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
-        .packed_color_array_operator_index = try fp(gpa, "packed_color_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
-        .packed_color_array_operator_index_const = try fp(gpa, "packed_color_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
-        .array_operator_index = try fp(gpa, "array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionVariantPtr),
-        .array_operator_index_const = try fp(gpa, "array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionVariantPtr),
-        .array_ref = try fp(gpa, "array_ref", *const fn (GDExtensionTypePtr, GDExtensionConstTypePtr) callconv(.c) void),
-        .array_set_typed = try fp(
+        .packed_byte_array_operator_index = try pa(gpa, "packed_byte_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]u8),
+        .packed_byte_array_operator_index_const = try pa(gpa, "packed_byte_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*:0]const u8),
+        .packed_float32_array_operator_index = try pa(gpa, "packed_float32_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]f32),
+        .packed_float32_array_operator_index_const = try pa(gpa, "packed_float32_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const f32),
+        .packed_float64_array_operator_index = try pa(gpa, "packed_float64_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]f64),
+        .packed_float64_array_operator_index_const = try pa(gpa, "packed_float64_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const f64),
+        .packed_int32_array_operator_index = try pa(gpa, "packed_int32_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]i32),
+        .packed_int32_array_operator_index_const = try pa(gpa, "packed_int32_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const i32),
+        .packed_int64_array_operator_index = try pa(gpa, "packed_int64_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]i64),
+        .packed_int64_array_operator_index_const = try pa(gpa, "packed_int64_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const i64),
+        .packed_string_array_operator_index = try pa(gpa, "packed_string_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionStringPtr),
+        .packed_string_array_operator_index_const = try pa(gpa, "packed_string_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionStringPtr),
+        .packed_vector2_array_operator_index = try pa(gpa, "packed_vector2_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_vector2_array_operator_index_const = try pa(gpa, "packed_vector2_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_vector3_array_operator_index = try pa(gpa, "packed_vector3_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_vector3_array_operator_index_const = try pa(gpa, "packed_vector3_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_vector4_array_operator_index = try pa(gpa, "packed_vector4_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_vector4_array_operator_index_const = try pa(gpa, "packed_vector4_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_color_array_operator_index = try pa(gpa, "packed_color_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_color_array_operator_index_const = try pa(gpa, "packed_color_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .array_operator_index = try pa(gpa, "array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionVariantPtr),
+        .array_operator_index_const = try pa(gpa, "array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionVariantPtr),
+        .array_ref = try pa(gpa, "array_ref", *const fn (GDExtensionTypePtr, GDExtensionConstTypePtr) callconv(.c) void),
+        .array_set_typed = try pa(
             gpa,
             "array_set_typed",
             *const fn (
-                GDExtensionTypePtr,
-                GDExtensionVariantType,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstVariantPtr,
-            ) callconv(.c) void,
+        GDExtensionTypePtr,
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+    ) callconv(.c) void,
         ),
-        .dictionary_operator_index = try fp(gpa, "dictionary_operator_index", *const fn (GDExtensionTypePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantPtr),
-        .dictionary_operator_index_const = try fp(gpa, "dictionary_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantPtr),
-        .dictionary_set_typed = try fp(
+        .dictionary_operator_index = try pa(gpa, "dictionary_operator_index", *const fn (GDExtensionTypePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantPtr),
+        .dictionary_operator_index_const = try pa(gpa, "dictionary_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantPtr),
+        .dictionary_set_typed = try pa(
             gpa,
             "dictionary_set_typed",
             *const fn (
-                GDExtensionTypePtr,
-                GDExtensionVariantType,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstVariantPtr,
-                GDExtensionVariantType,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstVariantPtr,
-            ) callconv(.c) void,
+        GDExtensionTypePtr,
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+    ) callconv(.c) void,
         ),
-        .object_method_bind_call = try fp(
+        .object_method_bind_call = try pa(
             gpa,
             "object_method_bind_call",
             *const fn (
-                GDExtensionMethodBindPtr,
-                GDExtensionObjectPtr,
-                [*c]const GDExtensionConstVariantPtr,
-                GDExtensionInt,
-                GDExtensionUninitializedVariantPtr,
-                [*c]GDExtensionCallError,
-            ) callconv(.c) void,
+        GDExtensionMethodBindPtr,
+        GDExtensionObjectPtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
         ),
-        .object_method_bind_ptrcall = try fp(
+        .object_method_bind_ptrcall = try pa(
             gpa,
             "object_method_bind_ptrcall",
             *const fn (
-                GDExtensionMethodBindPtr,
-                GDExtensionObjectPtr,
-                [*c]const GDExtensionConstTypePtr,
-                GDExtensionTypePtr,
-            ) callconv(.c) void,
+        GDExtensionMethodBindPtr,
+        GDExtensionObjectPtr,
+        [*c]const GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void,
         ),
-        .object_destroy = try fp(gpa, "object_destroy", *const fn (GDExtensionObjectPtr) callconv(.c) void),
-        .global_get_singleton = try fp(gpa, "global_get_singleton", *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr),
-        .object_get_instance_binding = try fp(
+        .object_destroy = try pa(gpa, "object_destroy", *const fn (GDExtensionObjectPtr) callconv(.c) void),
+        .global_get_singleton = try pa(gpa, "global_get_singleton", *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr),
+        .object_get_instance_binding = try pa(
             gpa,
             "object_get_instance_binding",
             *const fn (
-                GDExtensionObjectPtr,
-                ?*anyopaque,
-                [*c]const GDExtensionInstanceBindingCallbacks,
-            ) callconv(.c) ?*anyopaque,
+        GDExtensionObjectPtr,
+        ?*anyopaque,
+        [*c]const GDExtensionInstanceBindingCallbacks,
+    ) callconv(.c) ?*anyopaque,
         ),
-        .object_set_instance_binding = try fp(
+        .object_set_instance_binding = try pa(
             gpa,
             "object_set_instance_binding",
             *const fn (
-                GDExtensionObjectPtr,
-                ?*anyopaque,
-                ?*anyopaque,
-                [*c]const GDExtensionInstanceBindingCallbacks,
-            ) callconv(.c) void,
+        GDExtensionObjectPtr,
+        ?*anyopaque,
+        ?*anyopaque,
+        [*c]const GDExtensionInstanceBindingCallbacks,
+    ) callconv(.c) void,
         ),
-        .object_free_instance_binding = try fp(gpa, "object_free_instance_binding", *const fn (GDExtensionObjectPtr, ?*anyopaque) callconv(.c) void),
-        .object_set_instance = try fp(
+        .object_free_instance_binding = try pa(gpa, "object_free_instance_binding", *const fn (GDExtensionObjectPtr, ?*anyopaque) callconv(.c) void),
+        .object_set_instance = try pa(
             gpa,
             "object_set_instance",
             *const fn (
-                GDExtensionObjectPtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionClassInstancePtr,
-            ) callconv(.c) void,
+        GDExtensionObjectPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionClassInstancePtr,
+    ) callconv(.c) void,
         ),
-        .object_get_class_name = try fp(
+        .object_get_class_name = try pa(
             gpa,
             "object_get_class_name",
             *const fn (
-                GDExtensionConstObjectPtr,
-                GDExtensionClassLibraryPtr,
-                GDExtensionUninitializedStringNamePtr,
-            ) callconv(.c) GDExtensionBool,
+        GDExtensionConstObjectPtr,
+        GDExtensionClassLibraryPtr,
+        GDExtensionUninitializedStringNamePtr,
+    ) callconv(.c) GDExtensionBool,
         ),
-        .object_cast_to = try fp(gpa, "object_cast_to", *const fn (GDExtensionConstObjectPtr, ?*anyopaque) callconv(.c) GDExtensionObjectPtr),
-        .object_get_instance_from_id = try fp(gpa, "object_get_instance_from_id", *const fn (GDObjectInstanceID) callconv(.c) GDExtensionObjectPtr),
-        .object_get_instance_id = try fp(gpa, "object_get_instance_id", *const fn (GDExtensionConstObjectPtr) callconv(.c) GDObjectInstanceID),
-        .object_has_script_method = try fp(gpa, "object_has_script_method", *const fn (GDExtensionConstObjectPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool),
-        .object_call_script_method = try fp(
+        .object_cast_to = try pa(gpa, "object_cast_to", *const fn (GDExtensionConstObjectPtr, ?*anyopaque) callconv(.c) GDExtensionObjectPtr),
+        .object_get_instance_from_id = try pa(gpa, "object_get_instance_from_id", *const fn (GDObjectInstanceID) callconv(.c) GDExtensionObjectPtr),
+        .object_get_instance_id = try pa(gpa, "object_get_instance_id", *const fn (GDExtensionConstObjectPtr) callconv(.c) GDObjectInstanceID),
+        .object_has_script_method = try pa(gpa, "object_has_script_method", *const fn (GDExtensionConstObjectPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool),
+        .object_call_script_method = try pa(
             gpa,
             "object_call_script_method",
             *const fn (
-                GDExtensionObjectPtr,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionConstVariantPtr,
-                GDExtensionInt,
-                GDExtensionUninitializedVariantPtr,
-                [*c]GDExtensionCallError,
-            ) callconv(.c) void,
+        GDExtensionObjectPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
         ),
-        .ref_get_object = try fp(gpa, "ref_get_object", *const fn (GDExtensionConstRefPtr) callconv(.c) GDExtensionObjectPtr),
-        .ref_set_object = try fp(gpa, "ref_set_object", *const fn (GDExtensionRefPtr, GDExtensionObjectPtr) callconv(.c) void),
-        .script_instance_create = try fp(gpa, "script_instance_create", *const fn ([*c]const GDExtensionScriptInstanceInfo, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr),
-        .script_instance_create2 = try fp(gpa, "script_instance_create2", *const fn ([*c]const GDExtensionScriptInstanceInfo2, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr),
-        .script_instance_create3 = try fp(gpa, "script_instance_create3", *const fn ([*c]const GDExtensionScriptInstanceInfo3, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr),
-        .placeholder_script_instance_create = try fp(
+        .ref_get_object = try pa(gpa, "ref_get_object", *const fn (GDExtensionConstRefPtr) callconv(.c) GDExtensionObjectPtr),
+        .ref_set_object = try pa(gpa, "ref_set_object", *const fn (GDExtensionRefPtr, GDExtensionObjectPtr) callconv(.c) void),
+        .script_instance_create = try pa(gpa, "script_instance_create", *const fn ([*c]const GDExtensionScriptInstanceInfo, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr),
+        .script_instance_create2 = try pa(gpa, "script_instance_create2", *const fn ([*c]const GDExtensionScriptInstanceInfo2, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr),
+        .script_instance_create3 = try pa(gpa, "script_instance_create3", *const fn ([*c]const GDExtensionScriptInstanceInfo3, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr),
+        .placeholder_script_instance_create = try pa(
             gpa,
             "placeholder_script_instance_create",
             *const fn (
-                GDExtensionObjectPtr,
-                GDExtensionObjectPtr,
-                GDExtensionObjectPtr,
-            ) callconv(.c) GDExtensionScriptInstancePtr,
+        GDExtensionObjectPtr,
+        GDExtensionObjectPtr,
+        GDExtensionObjectPtr,
+    ) callconv(.c) GDExtensionScriptInstancePtr,
         ),
-        .placeholder_script_instance_update = try fp(
+        .placeholder_script_instance_update = try pa(
             gpa,
             "placeholder_script_instance_update",
             *const fn (
-                GDExtensionScriptInstancePtr,
-                GDExtensionConstTypePtr,
-                GDExtensionConstTypePtr,
-            ) callconv(.c) void,
+        GDExtensionScriptInstancePtr,
+        GDExtensionConstTypePtr,
+        GDExtensionConstTypePtr,
+    ) callconv(.c) void,
         ),
-        .object_get_script_instance = try fp(gpa, "object_get_script_instance", *const fn (GDExtensionConstObjectPtr, GDExtensionObjectPtr) callconv(.c) GDExtensionScriptInstanceDataPtr),
-        .object_set_script_instance = try fp(gpa, "object_set_script_instance", *const fn (GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr) callconv(.c) void),
-        .callable_custom_create = try fp(gpa, "callable_custom_create", *const fn (GDExtensionUninitializedTypePtr, [*c]GDExtensionCallableCustomInfo) callconv(.c) void),
-        .callable_custom_create2 = try fp(gpa, "callable_custom_create2", *const fn (GDExtensionUninitializedTypePtr, [*c]GDExtensionCallableCustomInfo2) callconv(.c) void),
-        .callable_custom_get_userdata = try fp(gpa, "callable_custom_get_userdata", *const fn (GDExtensionConstTypePtr, ?*anyopaque) callconv(.c) ?*anyopaque),
-        .classdb_construct_object = try fp(gpa, "classdb_construct_object", *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr),
-        .classdb_construct_object2 = try fp(gpa, "classdb_construct_object2", *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr),
-        .classdb_construct_object3 = try fp(gpa, "classdb_construct_object3", *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr),
-        .classdb_get_method_bind = try fp(
+        .object_get_script_instance = try pa(gpa, "object_get_script_instance", *const fn (GDExtensionConstObjectPtr, GDExtensionObjectPtr) callconv(.c) GDExtensionScriptInstanceDataPtr),
+        .object_set_script_instance = try pa(gpa, "object_set_script_instance", *const fn (GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr) callconv(.c) void),
+        .callable_custom_create = try pa(gpa, "callable_custom_create", *const fn (GDExtensionUninitializedTypePtr, [*c]GDExtensionCallableCustomInfo) callconv(.c) void),
+        .callable_custom_create2 = try pa(gpa, "callable_custom_create2", *const fn (GDExtensionUninitializedTypePtr, [*c]GDExtensionCallableCustomInfo2) callconv(.c) void),
+        .callable_custom_get_userdata = try pa(gpa, "callable_custom_get_userdata", *const fn (GDExtensionConstTypePtr, ?*anyopaque) callconv(.c) ?*anyopaque),
+        .classdb_construct_object = try pa(gpa, "classdb_construct_object", *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr),
+        .classdb_construct_object2 = try pa(gpa, "classdb_construct_object2", *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr),
+        .classdb_construct_object3 = try pa(gpa, "classdb_construct_object3", *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr),
+        .classdb_get_method_bind = try pa(
             gpa,
             "classdb_get_method_bind",
             *const fn (
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionInt,
-            ) callconv(.c) GDExtensionMethodBindPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionMethodBindPtr,
         ),
-        .classdb_get_class_tag = try fp(gpa, "classdb_get_class_tag", *const fn (GDExtensionConstStringNamePtr) callconv(.c) ?*anyopaque),
-        .classdb_register_extension_class = try fp(
+        .classdb_get_class_tag = try pa(gpa, "classdb_get_class_tag", *const fn (GDExtensionConstStringNamePtr) callconv(.c) ?*anyopaque),
+        .classdb_register_extension_class = try pa(
             gpa,
             "classdb_register_extension_class",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionClassCreationInfo,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo,
+    ) callconv(.c) void,
         ),
-        .classdb_register_extension_class2 = try fp(
+        .classdb_register_extension_class2 = try pa(
             gpa,
             "classdb_register_extension_class2",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionClassCreationInfo2,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo2,
+    ) callconv(.c) void,
         ),
-        .classdb_register_extension_class3 = try fp(
+        .classdb_register_extension_class3 = try pa(
             gpa,
             "classdb_register_extension_class3",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionClassCreationInfo3,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo3,
+    ) callconv(.c) void,
         ),
-        .classdb_register_extension_class4 = try fp(
+        .classdb_register_extension_class4 = try pa(
             gpa,
             "classdb_register_extension_class4",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionClassCreationInfo4,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo4,
+    ) callconv(.c) void,
         ),
-        .classdb_register_extension_class5 = try fp(
+        .classdb_register_extension_class5 = try pa(
             gpa,
             "classdb_register_extension_class5",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionClassCreationInfo5,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo5,
+    ) callconv(.c) void,
         ),
-        .classdb_register_extension_class6 = try fp(
+        .classdb_register_extension_class6 = try pa(
             gpa,
             "classdb_register_extension_class6",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionClassCreationInfo6,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo6,
+    ) callconv(.c) void,
         ),
-        .classdb_register_extension_class_method = try fp(
+        .classdb_register_extension_class_method = try pa(
             gpa,
             "classdb_register_extension_class_method",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionClassMethodInfo,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassMethodInfo,
+    ) callconv(.c) void,
         ),
-        .classdb_register_extension_class_virtual_method = try fp(
+        .classdb_register_extension_class_virtual_method = try pa(
             gpa,
             "classdb_register_extension_class_virtual_method",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionClassVirtualMethodInfo,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassVirtualMethodInfo,
+    ) callconv(.c) void,
         ),
-        .classdb_register_extension_class_integer_constant = try fp(
+        .classdb_register_extension_class_integer_constant = try pa(
             gpa,
             "classdb_register_extension_class_integer_constant",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionInt,
-                GDExtensionBool,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionInt,
+        GDExtensionBool,
+    ) callconv(.c) void,
         ),
-        .classdb_register_extension_class_property = try fp(
+        .classdb_register_extension_class_property = try pa(
             gpa,
             "classdb_register_extension_class_property",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionPropertyInfo,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringNamePtr,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionPropertyInfo,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+    ) callconv(.c) void,
         ),
-        .classdb_register_extension_class_property_indexed = try fp(
+        .classdb_register_extension_class_property_indexed = try pa(
             gpa,
             "classdb_register_extension_class_property_indexed",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionPropertyInfo,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionInt,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionPropertyInfo,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionInt,
+    ) callconv(.c) void,
         ),
-        .classdb_register_extension_class_property_group = try fp(
+        .classdb_register_extension_class_property_group = try pa(
             gpa,
             "classdb_register_extension_class_property_group",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringPtr,
-                GDExtensionConstStringPtr,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringPtr,
+        GDExtensionConstStringPtr,
+    ) callconv(.c) void,
         ),
-        .classdb_register_extension_class_property_subgroup = try fp(
+        .classdb_register_extension_class_property_subgroup = try pa(
             gpa,
             "classdb_register_extension_class_property_subgroup",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringPtr,
-                GDExtensionConstStringPtr,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringPtr,
+        GDExtensionConstStringPtr,
+    ) callconv(.c) void,
         ),
-        .classdb_register_extension_class_signal = try fp(
+        .classdb_register_extension_class_signal = try pa(
             gpa,
             "classdb_register_extension_class_signal",
             *const fn (
-                GDExtensionClassLibraryPtr,
-                GDExtensionConstStringNamePtr,
-                GDExtensionConstStringNamePtr,
-                [*c]const GDExtensionPropertyInfo,
-                GDExtensionInt,
-            ) callconv(.c) void,
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionPropertyInfo,
+        GDExtensionInt,
+    ) callconv(.c) void,
         ),
-        .classdb_unregister_extension_class = try fp(gpa, "classdb_unregister_extension_class", *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr) callconv(.c) void),
-        .get_library_path = try fp(gpa, "get_library_path", *const fn (GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr) callconv(.c) void),
-        .editor_add_plugin = try fp(gpa, "editor_add_plugin", *const fn (GDExtensionConstStringNamePtr) callconv(.c) void),
-        .editor_remove_plugin = try fp(gpa, "editor_remove_plugin", *const fn (GDExtensionConstStringNamePtr) callconv(.c) void),
-        .editor_help_load_xml_from_utf8_chars = try fp(gpa, "editor_help_load_xml_from_utf8_chars", *const fn ([*:0]const u8) callconv(.c) void),
-        .editor_help_load_xml_from_utf8_chars_and_len = try fp(gpa, "editor_help_load_xml_from_utf8_chars_and_len", *const fn ([*:0]const u8, GDExtensionInt) callconv(.c) void),
-        .editor_register_get_classes_used_callback = try fp(gpa, "editor_register_get_classes_used_callback", *const fn (GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback) callconv(.c) void),
-        .register_main_loop_callbacks = try fp(gpa, "register_main_loop_callbacks", *const fn (GDExtensionClassLibraryPtr, [*c]const GDExtensionMainLoopCallbacks) callconv(.c) void),
+        .classdb_unregister_extension_class = try pa(gpa, "classdb_unregister_extension_class", *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr) callconv(.c) void),
+        .get_library_path = try pa(gpa, "get_library_path", *const fn (GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr) callconv(.c) void),
+        .editor_add_plugin = try pa(gpa, "editor_add_plugin", *const fn (GDExtensionConstStringNamePtr) callconv(.c) void),
+        .editor_remove_plugin = try pa(gpa, "editor_remove_plugin", *const fn (GDExtensionConstStringNamePtr) callconv(.c) void),
+        .editor_help_load_xml_from_utf8_chars = try pa(gpa, "editor_help_load_xml_from_utf8_chars", *const fn ([*:0]const u8) callconv(.c) void),
+        .editor_help_load_xml_from_utf8_chars_and_len = try pa(gpa, "editor_help_load_xml_from_utf8_chars_and_len", *const fn ([*:0]const u8, GDExtensionInt) callconv(.c) void),
+        .editor_register_get_classes_used_callback = try pa(gpa, "editor_register_get_classes_used_callback", *const fn (GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback) callconv(.c) void),
+        .register_main_loop_callbacks = try pa(gpa, "register_main_loop_callbacks", *const fn (GDExtensionClassLibraryPtr, [*c]const GDExtensionMainLoopCallbacks) callconv(.c) void),
     };
 }
 
-// Total parse+render: 31153318ns
+// Total parse+render: 46021125ns

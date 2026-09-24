@@ -50,8 +50,8 @@ const _ready_HASH = 3218959716;
 // TODO: rename _init() to _scene_init()
 extern fn godot_roc_scene_init() callconv(.c) void;
 extern fn godot_roc_ready() callconv(.c) void;
-extern fn godot_roc_process(instance_id: usize, delta: f64) callconv(.c) void;
-extern fn godot_roc_physics_process(class_name: abi.RocStr, class_handle: usize, delta: f64) callconv(.c) void;
+extern fn godot_roc_process(instance_id: ?*anyopaque, delta: f64) callconv(.c) void;
+extern fn godot_roc_physics_process(class_name: abi.RocStr, class_handle: ?*anyopaque, delta: f64) callconv(.c) void;
 
 //
 // Constants
@@ -104,7 +104,7 @@ export fn godot_roc_init(
 
     r_initialization.* = .{
         // Note: this is for the entire godot scene tree, not when "player changes level".
-        .minimum_initialization_level = .scene,
+        .minimum_initialization_level = .initialization_scene, // GDExtensionInitializationLevel
         .userdata = null,
         .initialize = &initialize,
         .deinitialize = &deinitialize,
@@ -234,21 +234,21 @@ fn initialize(userdata: ?*anyopaque, level: gde_if.GDExtensionInitializationLeve
     _ = userdata;
     // no print/libc yet — success = “no crash + extension loads”
 
-    if (level == gde_if.GDExtensionInitializationLevel.core) {
+    if (level == gde_if.GDExtensionInitializationLevel.initialization_core) {
         print("initialize(level=core)\n", .{});
 
         // TODO: call new godot_roc_core_init hook.
         return;
     }
 
-    if (level == gde_if.GDExtensionInitializationLevel.servers) {
+    if (level == gde_if.GDExtensionInitializationLevel.initialization_servers) {
         print("initialize(level=servers)\n", .{});
 
         // TODO: call new godot_roc_servers_init hook.
         return;
     }
 
-    if (level == gde_if.GDExtensionInitializationLevel.scene) {
+    if (level == gde_if.GDExtensionInitializationLevel.initialization_scene) {
         print("initialize(level=scene)\n", .{});
 
         // if you get crash like this...
@@ -272,7 +272,7 @@ fn initialize(userdata: ?*anyopaque, level: gde_if.GDExtensionInitializationLeve
         return;
     }
 
-    if (level == gde_if.GDExtensionInitializationLevel.editor) {
+    if (level == gde_if.GDExtensionInitializationLevel.initialization_editor) {
         print("initialize(level=editor)\n", .{});
         // TODO: call new godot_roc_editor_init hook.
         return;
@@ -283,25 +283,25 @@ fn deinitialize(userdata: ?*anyopaque, level: gde_if.GDExtensionInitializationLe
     _ = userdata;
 
     // TODO: make & call roc extern "godot_roc_scene_deinit()".
-    if (level == gde_if.GDExtensionInitializationLevel.core) {
+    if (level == gde_if.GDExtensionInitializationLevel.initialization_core) {
         print("deinitialize(level=core)\n", .{});
         // TODO: call new godot_roc_core_deinit hook.
         return;
     }
 
-    if (level == gde_if.GDExtensionInitializationLevel.servers) {
+    if (level == gde_if.GDExtensionInitializationLevel.initialization_servers) {
         print("deinitialize(level=servers)\n", .{});
         // TODO: call new godot_roc_servers_deinit hook.
         return;
     }
 
-    if (level == gde_if.GDExtensionInitializationLevel.scene) {
+    if (level == gde_if.GDExtensionInitializationLevel.initialization_scene) {
         print("deinitialize(level=scene)\n", .{});
         // TODO: call new godot_roc_scene_deinit hook.
         return;
     }
 
-    if (level == gde_if.GDExtensionInitializationLevel.editor) {
+    if (level == gde_if.GDExtensionInitializationLevel.initialization_editor) {
         print("deinitialize(level=editor)\n", .{});
         // TODO: call new godot_roc_editor_deinit hook.
         return;
@@ -355,10 +355,10 @@ const HostEnv = struct {
 // Godot's StringName is opaque; size is in the extension API (often 8).
 
 // Construct StringName via interface (preferred)
-fn makeStringName(text: [:0]const u8) gde_if.GDExtensionStringName {
+fn makeStringName(text: [:0]const u8) gde_if.GDExtensionUninitializedStringNamePtr {
     // std.debug.print("[./platform/src/host.zig]: makeStringName(text: [:0]const u8) StringName\n", .{});
 
-    var sn: gde_if.GDExtensionStringName = undefined;
+    var sn: gde_if.GDExtensionUninitializedStringNamePtr = undefined;
 
     gde.string_name_new_with_utf8_chars(@ptrCast(&sn), text.ptr);
 
@@ -386,12 +386,16 @@ fn classNameFromInstance(self: *ClassInstance) abi.RocStr {
 //fn handleFromInstance(self: ?*anyopaque) usize {
 fn handleFromInstance(self: *ClassInstance) gde_if.GDExtensionObjectPtr {
     return @intFromPtr(self);
+    //return self.object;
 }
 
 //fn instanceFromHandle(handle: ) ?*anyopaque {
 fn instanceFromHandle(handle: gde_if.GDExtensionObjectPtr) ?*ClassInstance {
-    if (handle == 0) return null;
+    //if (handle == 0) return null;
     return @ptrFromInt(handle);
+    //if (handle == 0) return null; # error: incompatible types: '?*anyopaque' and 'comptime_int'
+    //return @ptrFromInt(handle);
+    //return handle;
 }
 
 fn createInstance(
@@ -538,7 +542,7 @@ fn ptrcall(
     gde.object_method_bind_ptrcall(method, object, args, ret);
 }
 
-export fn godot_roc_set_velocity(handle: usize, v: Vector3) callconv(.c) void {
+export fn godot_roc_set_velocity(handle: gde_if.GDExtensionObjectPtr, v: Vector3) callconv(.c) void {
     ensureMethodBinds();
     const self = instanceFromHandle(handle) orelse return;
     if (g_mb_set_velocity == null) return;
@@ -552,7 +556,7 @@ export fn godot_roc_set_velocity(handle: usize, v: Vector3) callconv(.c) void {
     ptrcall(g_mb_set_velocity, self.object, &args, null);
 }
 
-export fn godot_roc_get_velocity(handle: usize) callconv(.c) Vector3 {
+export fn godot_roc_get_velocity(handle: gde_if.GDExtensionObjectPtr) callconv(.c) Vector3 {
     ensureMethodBinds();
     const self = instanceFromHandle(handle) orelse {
         return .{ .x = 0, .y = 0, .z = 0 };
@@ -616,7 +620,7 @@ export fn godot_roc_input_is_action_pressed(action: abi.RocStr) callconv(.c) gde
     return if (isActionPressed(buf[0..s.len :0])) 1 else 0;
 }
 
-export fn godot_roc_move_and_slide(handle: usize) callconv(.c) void {
+export fn godot_roc_move_and_slide(handle: gde_if.GDExtensionObjectPtr) callconv(.c) void {
     //std.debug.print("[./platform/src/native_host.zig]: move_and_slide(handle: u64) void\n", .{});
 
     ensureMethodBinds();
@@ -639,7 +643,7 @@ fn ensureFloorBinds() void {
     g_mb_get_gravity = getMethodBind("CharacterBody3D", "get_gravity", PHYSICSBODY3D_GET_GRAVITY_HASH);
 }
 
-export fn godot_roc_is_on_floor(handle: usize) callconv(.c) gde_if.GDExtensionBool {
+export fn godot_roc_is_on_floor(handle: gde_if.GDExtensionObjectPtr) callconv(.c) gde_if.GDExtensionBool {
     ensureFloorBinds();
     const self = instanceFromHandle(handle) orelse return 0;
     if (g_mb_is_on_floor == null) return 0;
@@ -650,7 +654,7 @@ export fn godot_roc_is_on_floor(handle: usize) callconv(.c) gde_if.GDExtensionBo
 }
 
 /// Writes gravity into out_x/y/z (units/sec²).
-export fn godot_roc_get_gravity(handle: usize, out_x: *f64, out_y: *f64, out_z: *f64) callconv(.c) void {
+export fn godot_roc_get_gravity(handle: gde_if.GDExtensionObjectPtr, out_x: *f64, out_y: *f64, out_z: *f64) callconv(.c) void {
     ensureFloorBinds();
     const self = instanceFromHandle(handle) orelse {
         out_x.* = 0;
@@ -792,23 +796,18 @@ fn stringNameEq(
     gde.string_name_new_with_utf8_chars(@ptrCast(&other), text.ptr);
 
     // Always destroy the temporary we constructed.
-    const destroy = gde.variant_get_ptr_destructor(gde_if.GDEXTENSION_VARIANT_TYPE_STRING_NAME);
-    defer if (destroy) |d| d(@ptrCast(&other));
+    const destroy = gde.variant_get_ptr_destructor(gde_if.GDExtensionVariantType.string_name);
+    defer destroy(@ptrCast(&other));
 
     // --- get StringName == StringName evaluator ---
     const eval = gde.variant_get_ptr_operator_evaluator(
-        gde_if.GDEXTENSION_VARIANT_OP_EQUAL,
-        gde_if.GDEXTENSION_VARIANT_TYPE_STRING_NAME,
-        gde_if.GDEXTENSION_VARIANT_TYPE_STRING_NAME,
+        gde_if.GDExtensionVariantOperator.equal,
+        gde_if.GDExtensionVariantType.string_name,
+        gde_if.GDExtensionVariantType.string_name,
     );
-    if (eval == null) return false;
 
-    // GDExtensionPtrOperatorEvaluator:
-    //   void (*)(GDExtensionConstTypePtr left,
-    //            GDExtensionConstTypePtr right,
-    //            GDExtensionTypePtr result);
     // For EQUAL, result is a bool (GDExtensionBool / uint8_t).
     var result: gde_if.GDExtensionBool = 0;
-    eval.?(@ptrCast(name), @ptrCast(&other), @ptrCast(&result));
+    eval(@ptrCast(name), @ptrCast(&other), @ptrCast(&result));
     return result != 0;
 }

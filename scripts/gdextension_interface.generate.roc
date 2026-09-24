@@ -483,13 +483,12 @@ render_interface_struct = |fns| {
 render_fp_helper : Str
 render_fp_helper =
     \\/// Returns proc address from get_proc_address lookup table function.
-    \\fn fp(
+    \\fn pa(
     \\    get_proc_address: GDExtensionInterfaceGetProcAddress,
     \\    comptime name: [:0]const u8,
     \\    comptime T: type,
     \\) !T {
-    \\    const ptr = get_proc_address.?(name.ptr) orelse return error.MissingFunction;
-    \\    return @ptrCast(@alignCast(ptr));
+    \\    return @ptrCast(@alignCast(get_proc_address(name.ptr)));
     \\}
 
 render_load_interface : List(InterfaceFn) -> Str
@@ -500,7 +499,7 @@ render_load_interface = |fns| {
         # multi-line fp() when type is long
         if f.parameters.len() > 2 {
             $inits = $inits.append(
-                \\        .${f.api_name} = try fp(
+                \\        .${f.api_name} = try pa(
                 \\            gpa,
                 \\            "${f.api_name}",
                 \\            ${ty},
@@ -508,13 +507,13 @@ render_load_interface = |fns| {
             )
         } else {
             $inits = $inits.append(
-                \\        .${f.api_name} = try fp(gpa, "${f.api_name}", ${ty}),
+                \\        .${f.api_name} = try pa(gpa, "${f.api_name}", ${ty}),
             )
         }
     }
     body = join_with($inits, "\n")
     \\pub fn loadInterface(get_proc_address: GDExtensionInterfaceGetProcAddress) !Interface {
-    \\    const gpa = get_proc_address; // orelse return error.MissingGetProcAddress;
+    \\    const gpa = get_proc_address;
     \\    return .{
     \\${body}
     \\    };
