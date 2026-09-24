@@ -1,4 +1,663 @@
-// Path.utf8("vendor/godot/gdextension_interface.h") Read time: 278405ns
+// Path.utf8("vendor/godot/gdextension_interface.h") Read time: 242149ns
+// pre-parse n=1
+// post-parse n=1 ok
+// pre-parse n=2
+// post-parse n=2 ok
+// pre-parse n=3
+// post-parse n=3 ok
+// pre-parse n=4
+// post-parse n=4 ok
+// pre-parse n=5
+// post-parse n=5 ok
+// pre-parse n=6
+// post-parse n=6 ok
+// pre-parse n=7
+// post-parse n=7 ok
+// pre-parse n=8
+// post-parse n=8 ok
+// pre-parse n=9
+// post-parse n=9 ok
+// pre-parse n=10
+// post-parse n=10 ok
+// pre-parse n=11
+// post-parse n=11 ok
+// pre-parse n=12
+// post-parse n=12 ok
+// pre-parse n=13
+// post-parse n=13 ok
+// pre-parse n=14
+// post-parse n=14 ok
+// pre-parse n=15
+// post-parse n=15 ok
+// pre-parse n=16
+// post-parse n=16 ok
+// pre-parse n=17
+// post-parse n=17 ok
+// pre-parse n=18
+// post-parse n=18 ok
+// pre-parse n=19
+// post-parse n=19 ok
+// pre-parse n=20
+// post-parse n=20 ok
+// pre-parse n=21
+// post-parse n=21 ok
+// pre-parse n=22
+// post-parse n=22 ok
+// pre-parse n=23
+// post-parse n=23 ok
+// pre-parse n=24
+// post-parse n=24 ok
+// pre-parse n=25
+// post-parse n=25 ok
+// pre-parse n=26
+// post-parse n=26 ok
+// pre-parse n=27
+// post-parse n=27 ok
+// pre-parse n=28
+// post-parse n=28 ok
+// pre-parse n=29
+// post-parse n=29 ok
+// pre-parse n=30
+// post-parse n=30 ok
+// pre-parse n=31
+// post-parse n=31 ok
+// pre-parse n=32
+// post-parse n=32 ok
+// pre-parse n=33
+// post-parse n=33 ok
+// pre-parse n=34
+// post-parse n=34 ok
+// pre-parse n=35
+// post-parse n=35 ok
+// pre-parse n=36
+// post-parse n=36 ok
+// pre-parse n=37
+// post-parse n=37 ok
+// pre-parse n=38
+// post-parse n=38 ok
+// pre-parse n=39
+// post-parse n=39 ok
+// pre-parse n=40
+// post-parse n=40 ok
+// pre-parse n=41
+// post-parse n=41 ok
+// pre-parse n=42
+// post-parse n=42 ok
+// pre-parse n=43
+// post-parse n=43 ok
+// pre-parse n=44
+// post-parse n=44 ok
+// pre-parse n=45
+// post-parse n=45 ok
+// pre-parse n=46
+// post-parse n=46 ok
+// pre-parse n=47
+// post-parse n=47 ok
+// pre-parse n=48
+// post-parse n=48 ok
+// pre-parse n=49
+// post-parse n=49 ok
+// pre-parse n=50
+// post-parse n=50 ok
+// pre-parse n=51
+// post-parse n=51 ok
+// pre-parse n=52
+// post-parse n=52 ok
+// pre-parse n=53
+// post-parse n=53 ok
+// pre-parse n=54
+// post-parse n=54 ok
+// pre-parse n=55
+// post-parse n=55 ok
+// pre-parse n=56
+// post-parse n=56 ok
+// pre-parse n=57
+// post-parse n=57 ok
+// pre-parse n=58
+// post-parse n=58 ok
+// pre-parse n=59
+// post-parse n=59 ok
+// pre-parse n=60
+// post-parse n=60 ok
+// pre-parse n=61
+// post-parse n=61 ok
+// pre-parse n=62
+// post-parse n=62 ok
+// pre-parse n=63
+// post-parse n=63 ok
+// pre-parse n=64
+// post-parse n=64 ok
+// pre-parse n=65
+// post-parse n=65 ok
+// pre-parse n=66
+// post-parse n=66 ok
+// pre-parse n=67
+// post-parse n=67 ok
+// pre-parse n=68
+// post-parse n=68 ok
+// pre-parse n=69
+// post-parse n=69 ok
+// pre-parse n=70
+// post-parse n=70 ok
+// pre-parse n=71
+// post-parse n=71 ok
+// pre-parse n=72
+// post-parse n=72 ok
+// pre-parse n=73
+// post-parse n=73 ok
+// pre-parse n=74
+// post-parse n=74 ok
+// pre-parse n=75
+// post-parse n=75 ok
+// pre-parse n=76
+// post-parse n=76 ok
+// pre-parse n=77
+// post-parse n=77 ok
+// pre-parse n=78
+// post-parse n=78 ok
+// pre-parse n=79
+// post-parse n=79 ok
+// pre-parse n=80
+// post-parse n=80 ok
+// pre-parse n=81
+// post-parse n=81 ok
+// pre-parse n=82
+// post-parse n=82 ok
+// pre-parse n=83
+// post-parse n=83 ok
+// pre-parse n=84
+// post-parse n=84 ok
+// pre-parse n=85
+// post-parse n=85 ok
+// pre-parse n=86
+// post-parse n=86 ok
+// pre-parse n=87
+// post-parse n=87 ok
+// pre-parse n=88
+// post-parse n=88 ok
+// pre-parse n=89
+// post-parse n=89 ok
+// pre-parse n=90
+// post-parse n=90 ok
+// pre-parse n=91
+// post-parse n=91 ok
+// pre-parse n=92
+// post-parse n=92 ok
+// pre-parse n=93
+// post-parse n=93 ok
+// pre-parse n=94
+// post-parse n=94 ok
+// pre-parse n=95
+// post-parse n=95 ok
+// pre-parse n=96
+// post-parse n=96 ok
+// pre-parse n=97
+// post-parse n=97 ok
+// pre-parse n=98
+// post-parse n=98 ok
+// pre-parse n=99
+// post-parse n=99 ok
+// pre-parse n=100
+// post-parse n=100 ok
+// pre-parse n=101
+// post-parse n=101 ok
+// pre-parse n=102
+// post-parse n=102 ok
+// pre-parse n=103
+// post-parse n=103 ok
+// pre-parse n=104
+// post-parse n=104 ok
+// pre-parse n=105
+// post-parse n=105 ok
+// pre-parse n=106
+// post-parse n=106 ok
+// pre-parse n=107
+// post-parse n=107 ok
+// pre-parse n=108
+// post-parse n=108 ok
+// pre-parse n=109
+// post-parse n=109 ok
+// pre-parse n=110
+// post-parse n=110 ok
+// pre-parse n=111
+// post-parse n=111 ok
+// pre-parse n=112
+// post-parse n=112 ok
+// pre-parse n=113
+// post-parse n=113 ok
+// pre-parse n=114
+// post-parse n=114 ok
+// pre-parse n=115
+// post-parse n=115 ok
+// pre-parse n=116
+// post-parse n=116 ok
+// pre-parse n=117
+// post-parse n=117 ok
+// pre-parse n=118
+// post-parse n=118 ok
+// pre-parse n=119
+// post-parse n=119 ok
+// pre-parse n=120
+// post-parse n=120 ok
+// pre-parse n=121
+// post-parse n=121 ok
+// pre-parse n=122
+// post-parse n=122 ok
+// pre-parse n=123
+// post-parse n=123 ok
+// pre-parse n=124
+// post-parse n=124 ok
+// pre-parse n=125
+// post-parse n=125 ok
+// pre-parse n=126
+// post-parse n=126 ok
+// pre-parse n=127
+// post-parse n=127 ok
+// pre-parse n=128
+// post-parse n=128 ok
+// pre-parse n=129
+// post-parse n=129 ok
+// pre-parse n=130
+// post-parse n=130 ok
+// pre-parse n=131
+// post-parse n=131 ok
+// pre-parse n=132
+// post-parse n=132 ok
+// pre-parse n=133
+// post-parse n=133 ok
+// pre-parse n=134
+// post-parse n=134 ok
+// pre-parse n=135
+// post-parse n=135 ok
+// pre-parse n=136
+// post-parse n=136 ok
+// pre-parse n=137
+// post-parse n=137 ok
+// pre-parse n=138
+// post-parse n=138 ok
+// pre-parse n=139
+// post-parse n=139 ok
+// pre-parse n=140
+// post-parse n=140 ok
+// pre-parse n=141
+// post-parse n=141 ok
+// pre-parse n=142
+// post-parse n=142 ok
+// pre-parse n=143
+// post-parse n=143 ok
+// pre-parse n=144
+// post-parse n=144 ok
+// pre-parse n=145
+// post-parse n=145 ok
+// pre-parse n=146
+// post-parse n=146 ok
+// pre-parse n=147
+// post-parse n=147 ok
+// pre-parse n=148
+// post-parse n=148 ok
+// pre-parse n=149
+// post-parse n=149 ok
+// pre-parse n=150
+// post-parse n=150 ok
+// pre-parse n=151
+// post-parse n=151 ok
+// pre-parse n=152
+// post-parse n=152 ok
+// pre-parse n=153
+// post-parse n=153 ok
+// pre-parse n=154
+// post-parse n=154 ok
+// pre-parse n=155
+// post-parse n=155 ok
+// pre-parse n=156
+// post-parse n=156 ok
+// pre-parse n=157
+// post-parse n=157 ok
+// pre-parse n=158
+// post-parse n=158 ok
+// pre-parse n=159
+// post-parse n=159 ok
+// pre-parse n=160
+// post-parse n=160 ok
+// pre-parse n=161
+// post-parse n=161 ok
+// pre-parse n=162
+// post-parse n=162 ok
+// pre-parse n=163
+// post-parse n=163 ok
+// pre-parse n=164
+// post-parse n=164 ok
+// pre-parse n=165
+// post-parse n=165 ok
+// pre-parse n=166
+// post-parse n=166 ok
+// pre-parse n=167
+// post-parse n=167 ok
+// pre-parse n=168
+// post-parse n=168 ok
+// pre-parse n=169
+// post-parse n=169 ok
+// pre-parse n=170
+// post-parse n=170 ok
+// pre-parse n=171
+// post-parse n=171 ok
+// pre-parse n=172
+// post-parse n=172 ok
+// pre-parse n=173
+// post-parse n=173 ok
+// pre-parse n=174
+// post-parse n=174 ok
+// pre-parse n=175
+// post-parse n=175 ok
+// pre-parse n=176
+// post-parse n=176 ok
+// pre-parse n=177
+// post-parse n=177 ok
+// pre-parse n=178
+// post-parse n=178 ok
+// pre-parse n=179
+// post-parse n=179 ok
+// pre-parse n=180
+// post-parse n=180 ok
+// pre-parse n=181
+// post-parse n=181 ok
+// pre-parse n=182
+// post-parse n=182 ok
+// pre-parse n=183
+// post-parse n=183 ok
+// pre-parse n=184
+// post-parse n=184 ok
+// pre-parse n=185
+// post-parse n=185 ok
+// pre-parse n=186
+// post-parse n=186 ok
+// pre-parse n=187
+// post-parse n=187 ok
+// pre-parse n=188
+// post-parse n=188 ok
+// pre-parse n=189
+// post-parse n=189 ok
+// pre-parse n=190
+// post-parse n=190 ok
+// pre-parse n=191
+// post-parse n=191 ok
+// pre-parse n=192
+// post-parse n=192 ok
+// pre-parse n=193
+// post-parse n=193 ok
+// pre-parse n=194
+// post-parse n=194 ok
+// pre-parse n=195
+// post-parse n=195 ok
+// pre-parse n=196
+// post-parse n=196 ok
+// pre-parse n=197
+// post-parse n=197 ok
+// pre-parse n=198
+// post-parse n=198 ok
+// pre-parse n=199
+// post-parse n=199 ok
+// pre-parse n=200
+// post-parse n=200 ok
+// pre-parse n=201
+// post-parse n=201 ok
+// pre-parse n=202
+// post-parse n=202 ok
+// pre-parse n=203
+// post-parse n=203 ok
+// pre-parse n=204
+// post-parse n=204 ok
+// pre-parse n=205
+// post-parse n=205 ok
+// pre-parse n=206
+// post-parse n=206 ok
+// pre-parse n=207
+// post-parse n=207 ok
+// pre-parse n=208
+// post-parse n=208 ok
+// pre-parse n=209
+// post-parse n=209 ok
+// pre-parse n=210
+// post-parse n=210 ok
+// pre-parse n=211
+// post-parse n=211 ok
+// pre-parse n=212
+// post-parse n=212 ok
+// pre-parse n=213
+// post-parse n=213 ok
+// pre-parse n=214
+// post-parse n=214 ok
+// pre-parse n=215
+// post-parse n=215 ok
+// pre-parse n=216
+// post-parse n=216 ok
+// pre-parse n=217
+// post-parse n=217 ok
+// pre-parse n=218
+// post-parse n=218 ok
+// pre-parse n=219
+// post-parse n=219 ok
+// pre-parse n=220
+// post-parse n=220 ok
+// pre-parse n=221
+// post-parse n=221 ok
+// pre-parse n=222
+// post-parse n=222 ok
+// pre-parse n=223
+// post-parse n=223 ok
+// pre-parse n=224
+// post-parse n=224 ok
+// pre-parse n=225
+// post-parse n=225 ok
+// pre-parse n=226
+// post-parse n=226 ok
+// pre-parse n=227
+// post-parse n=227 ok
+// pre-parse n=228
+// post-parse n=228 ok
+// pre-parse n=229
+// post-parse n=229 ok
+// pre-parse n=230
+// post-parse n=230 ok
+// pre-parse n=231
+// post-parse n=231 ok
+// pre-parse n=232
+// post-parse n=232 ok
+// pre-parse n=233
+// post-parse n=233 ok
+// pre-parse n=234
+// post-parse n=234 ok
+// pre-parse n=235
+// post-parse n=235 ok
+// pre-parse n=236
+// post-parse n=236 ok
+// pre-parse n=237
+// post-parse n=237 ok
+// pre-parse n=238
+// post-parse n=238 ok
+// pre-parse n=239
+// post-parse n=239 ok
+// pre-parse n=240
+// post-parse n=240 ok
+// pre-parse n=241
+// post-parse n=241 ok
+// pre-parse n=242
+// post-parse n=242 ok
+// pre-parse n=243
+// post-parse n=243 ok
+// pre-parse n=244
+// post-parse n=244 ok
+// pre-parse n=245
+// post-parse n=245 ok
+// pre-parse n=246
+// post-parse n=246 ok
+// pre-parse n=247
+// post-parse n=247 ok
+// pre-parse n=248
+// post-parse n=248 ok
+// pre-parse n=249
+// post-parse n=249 ok
+// pre-parse n=250
+// post-parse n=250 ok
+// pre-parse n=251
+// post-parse n=251 ok
+// pre-parse n=252
+// post-parse n=252 ok
+// pre-parse n=253
+// post-parse n=253 ok
+// pre-parse n=254
+// post-parse n=254 ok
+// pre-parse n=255
+// post-parse n=255 ok
+// pre-parse n=256
+// post-parse n=256 ok
+// pre-parse n=257
+// post-parse n=257 ok
+// pre-parse n=258
+// post-parse n=258 ok
+// pre-parse n=259
+// post-parse n=259 ok
+// pre-parse n=260
+// post-parse n=260 ok
+// pre-parse n=261
+// post-parse n=261 ok
+// pre-parse n=262
+// post-parse n=262 ok
+// pre-parse n=263
+// post-parse n=263 ok
+// pre-parse n=264
+// post-parse n=264 ok
+// pre-parse n=265
+// post-parse n=265 ok
+// pre-parse n=266
+// post-parse n=266 ok
+// pre-parse n=267
+// post-parse n=267 ok
+// pre-parse n=268
+// post-parse n=268 ok
+// pre-parse n=269
+// post-parse n=269 ok
+// pre-parse n=270
+// post-parse n=270 ok
+// pre-parse n=271
+// post-parse n=271 ok
+// pre-parse n=272
+// post-parse n=272 ok
+// pre-parse n=273
+// post-parse n=273 ok
+// pre-parse n=274
+// post-parse n=274 ok
+// pre-parse n=275
+// post-parse n=275 ok
+// pre-parse n=276
+// post-parse n=276 ok
+// pre-parse n=277
+// post-parse n=277 ok
+// pre-parse n=278
+// post-parse n=278 ok
+// pre-parse n=279
+// post-parse n=279 ok
+// pre-parse n=280
+// post-parse n=280 ok
+// pre-parse n=281
+// post-parse n=281 ok
+// pre-parse n=282
+// post-parse n=282 ok
+// pre-parse n=283
+// post-parse n=283 ok
+// pre-parse n=284
+// post-parse n=284 ok
+// pre-parse n=285
+// post-parse n=285 ok
+// pre-parse n=286
+// post-parse n=286 ok
+// pre-parse n=287
+// post-parse n=287 ok
+// pre-parse n=288
+// post-parse n=288 ok
+// pre-parse n=289
+// post-parse n=289 ok
+// pre-parse n=290
+// post-parse n=290 ok
+// pre-parse n=291
+// post-parse n=291 ok
+// pre-parse n=292
+// post-parse n=292 ok
+// pre-parse n=293
+// post-parse n=293 ok
+// pre-parse n=294
+// post-parse n=294 ok
+// pre-parse n=295
+// post-parse n=295 ok
+// pre-parse n=296
+// post-parse n=296 ok
+// pre-parse n=297
+// post-parse n=297 ok
+// pre-parse n=298
+// post-parse n=298 ok
+// pre-parse n=299
+// post-parse n=299 ok
+// pre-parse n=300
+// post-parse n=300 ok
+// pre-parse n=301
+// post-parse n=301 ok
+// pre-parse n=302
+// post-parse n=302 ok
+// pre-parse n=303
+// post-parse n=303 ok
+// pre-parse n=304
+// post-parse n=304 ok
+// pre-parse n=305
+// post-parse n=305 ok
+// pre-parse n=306
+// post-parse n=306 ok
+// pre-parse n=307
+// post-parse n=307 ok
+// pre-parse n=308
+// post-parse n=308 ok
+// pre-parse n=309
+// post-parse n=309 ok
+// pre-parse n=310
+// post-parse n=310 ok
+// pre-parse n=311
+// post-parse n=311 ok
+// pre-parse n=312
+// post-parse n=312 ok
+// pre-parse n=313
+// post-parse n=313 ok
+// pre-parse n=314
+// post-parse n=314 ok
+// pre-parse n=315
+// post-parse n=315 ok
+// pre-parse n=316
+// post-parse n=316 ok
+// pre-parse n=317
+// post-parse n=317 ok
+// pre-parse n=318
+// post-parse n=318 ok
+// pre-parse n=319
+// post-parse n=319 ok
+// pre-parse n=320
+// post-parse n=320 ok
+// pre-parse n=321
+// post-parse n=321 ok
+// pre-parse n=322
+// post-parse n=322 ok
+// pre-parse n=323
+// post-parse n=323 ok
+// pre-parse n=324
+// post-parse n=324 ok
+// pre-parse n=325
+// post-parse n=325 ok
+// pre-parse n=326
+// post-parse n=326 ok
+// pre-parse n=327
+// post-parse n=327 ok
+// pre-parse n=328
+// post-parse n=328 ok
+// parse done n=328 ok=328 err=0 items=328
+// parse time: 23327047ns
+// types=149 api_fns=179
 //!
 //! Godot GDExtension interface — generated from gdextension_interface.h
 //! DO NOT EDIT BY HAND
@@ -30,34 +689,34 @@ pub const GDExtensionVariantType = enum(c_int) {
     transform3d = 18,
     projection = 19,
     color = 20,
-    name = 21,
-    path = 22,
+    string_name = 21,
+    node_path = 22,
     rid = 23,
     object = 24,
     callable = 25,
     signal = 26,
     dictionary = 27,
     array = 28,
-    array = 29,
-    array = 30,
-    array = 31,
-    array = 32,
-    array = 33,
-    array = 34,
-    array = 35,
-    array = 36,
-    array = 37,
-    array = 38,
-    max = 39,
+    packed_byte_array = 29,
+    packed_int32_array = 30,
+    packed_int64_array = 31,
+    packed_float32_array = 32,
+    packed_float64_array = 33,
+    packed_string_array = 34,
+    packed_vector2_array = 35,
+    packed_vector3_array = 36,
+    packed_color_array = 37,
+    packed_vector4_array = 38,
+    variant_max = 39,
 };
 
 pub const GDExtensionVariantOperator = enum(c_int) {
     equal = 0,
-    equal = 1,
+    not_equal = 1,
     less = 2,
-    equal = 3,
+    less_equal = 3,
     greater = 4,
-    equal = 5,
+    greater_equal = 5,
     add = 6,
     subtract = 7,
     multiply = 8,
@@ -66,51 +725,51 @@ pub const GDExtensionVariantOperator = enum(c_int) {
     positive = 11,
     module = 12,
     power = 13,
-    left = 14,
-    right = 15,
-    and = 16,
-    or = 17,
-    xor = 18,
-    negate = 19,
-    and = 20,
-    or = 21,
+    shift_left = 14,
+    shift_right = 15,
+    bit_and = 16,
+    bit_or = 17,
+    bit_xor = 18,
+    bit_negate = 19,
+    @"and" = 20,
+    @"or" = 21,
     xor = 22,
     not = 23,
     in = 24,
     max = 25,
 };
 
-pub const *GDExtensionVariantPtr = void;
+pub const GDExtensionVariantPtr = ?*anyopaque;
 
-pub const *GDExtensionConstVariantPtr = anyopaque;
+pub const GDExtensionConstVariantPtr = ?*const anyopaque;
 
-pub const *GDExtensionUninitializedVariantPtr = void;
+pub const GDExtensionUninitializedVariantPtr = ?*anyopaque;
 
-pub const *GDExtensionStringNamePtr = void;
+pub const GDExtensionStringNamePtr = ?*anyopaque;
 
-pub const *GDExtensionConstStringNamePtr = anyopaque;
+pub const GDExtensionConstStringNamePtr = ?*const anyopaque;
 
-pub const *GDExtensionUninitializedStringNamePtr = void;
+pub const GDExtensionUninitializedStringNamePtr = ?*anyopaque;
 
-pub const *GDExtensionStringPtr = void;
+pub const GDExtensionStringPtr = ?*anyopaque;
 
-pub const *GDExtensionConstStringPtr = anyopaque;
+pub const GDExtensionConstStringPtr = ?*const anyopaque;
 
-pub const *GDExtensionUninitializedStringPtr = void;
+pub const GDExtensionUninitializedStringPtr = ?*anyopaque;
 
-pub const *GDExtensionObjectPtr = void;
+pub const GDExtensionObjectPtr = ?*anyopaque;
 
-pub const *GDExtensionConstObjectPtr = anyopaque;
+pub const GDExtensionConstObjectPtr = ?*const anyopaque;
 
-pub const *GDExtensionUninitializedObjectPtr = void;
+pub const GDExtensionUninitializedObjectPtr = ?*anyopaque;
 
-pub const *GDExtensionTypePtr = void;
+pub const GDExtensionTypePtr = ?*anyopaque;
 
-pub const *GDExtensionConstTypePtr = anyopaque;
+pub const GDExtensionConstTypePtr = ?*const anyopaque;
 
-pub const *GDExtensionUninitializedTypePtr = void;
+pub const GDExtensionUninitializedTypePtr = ?*anyopaque;
 
-pub const *GDExtensionMethodBindPtr = anyopaque;
+pub const GDExtensionMethodBindPtr = ?*const anyopaque;
 
 pub const GDExtensionInt = i64;
 
@@ -118,22 +777,22 @@ pub const GDExtensionBool = u8;
 
 pub const GDObjectInstanceID = u64;
 
-pub const *GDExtensionRefPtr = void;
+pub const GDExtensionRefPtr = ?*anyopaque;
 
-pub const *GDExtensionConstRefPtr = anyopaque;
+pub const GDExtensionConstRefPtr = ?*const anyopaque;
 
 pub const GDExtensionCallErrorType = enum(c_int) {
     ok = 0,
-    method = 1,
-    argument = 2,
-    arguments = 3,
-    arguments = 4,
-    null = 5,
-    const = 6,
+    error_invalid_method = 1,
+    error_invalid_argument = 2,
+    error_too_many_arguments = 3,
+    error_too_few_arguments = 4,
+    error_instance_is_null = 5,
+    error_method_not_const = 6,
 };
 
 pub const GDExtensionCallError = extern struct {
-    error: GDExtensionCallErrorType,
+    @"error": GDExtensionCallErrorType,
     argument: i32,
     expected: i32,
 };
@@ -144,11 +803,20 @@ pub const GDExtensionTypeFromVariantConstructorFunc = *const fn (GDExtensionUnin
 
 pub const GDExtensionVariantGetInternalPtrFunc = *const fn (GDExtensionVariantPtr) callconv(.c) ?*anyopaque;
 
-pub const GDExtensionPtrOperatorEvaluator = *const fn (GDExtensionConstTypePtr, GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;
+pub const GDExtensionPtrOperatorEvaluator = *const fn (
+        GDExtensionConstTypePtr,
+        GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void;
 
-pub const GDExtensionPtrBuiltInMethod = *const fn (GDExtensionTypePtr, GDExtensionConstTypePtr *p_args, GDExtensionTypePtr, i32) callconv(.c) void;
+pub const GDExtensionPtrBuiltInMethod = *const fn (
+        GDExtensionTypePtr,
+        [*c]const GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+        i32,
+    ) callconv(.c) void;
 
-pub const GDExtensionPtrConstructor = *const fn (GDExtensionUninitializedTypePtr, GDExtensionConstTypePtr *p_args) callconv(.c) void;
+pub const GDExtensionPtrConstructor = *const fn (GDExtensionUninitializedTypePtr, [*c]const GDExtensionConstTypePtr) callconv(.c) void;
 
 pub const GDExtensionPtrDestructor = *const fn (GDExtensionTypePtr) callconv(.c) void;
 
@@ -156,25 +824,53 @@ pub const GDExtensionPtrSetter = *const fn (GDExtensionTypePtr, GDExtensionConst
 
 pub const GDExtensionPtrGetter = *const fn (GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;
 
-pub const GDExtensionPtrIndexedSetter = *const fn (GDExtensionTypePtr, GDExtensionInt, GDExtensionConstTypePtr) callconv(.c) void;
+pub const GDExtensionPtrIndexedSetter = *const fn (
+        GDExtensionTypePtr,
+        GDExtensionInt,
+        GDExtensionConstTypePtr,
+    ) callconv(.c) void;
 
-pub const GDExtensionPtrIndexedGetter = *const fn (GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr) callconv(.c) void;
+pub const GDExtensionPtrIndexedGetter = *const fn (
+        GDExtensionConstTypePtr,
+        GDExtensionInt,
+        GDExtensionTypePtr,
+    ) callconv(.c) void;
 
-pub const GDExtensionPtrKeyedSetter = *const fn (GDExtensionTypePtr, GDExtensionConstTypePtr, GDExtensionConstTypePtr) callconv(.c) void;
+pub const GDExtensionPtrKeyedSetter = *const fn (
+        GDExtensionTypePtr,
+        GDExtensionConstTypePtr,
+        GDExtensionConstTypePtr,
+    ) callconv(.c) void;
 
-pub const GDExtensionPtrKeyedGetter = *const fn (GDExtensionConstTypePtr, GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;
+pub const GDExtensionPtrKeyedGetter = *const fn (
+        GDExtensionConstTypePtr,
+        GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionPtrKeyedChecker = *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr) callconv(.c) u32;
 
-pub const GDExtensionPtrUtilityFunction = *const fn (GDExtensionTypePtr, GDExtensionConstTypePtr *p_args, i32) callconv(.c) void;
+pub const GDExtensionPtrUtilityFunction = *const fn (
+        GDExtensionTypePtr,
+        [*c]const GDExtensionConstTypePtr,
+        i32,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassConstructor = *const fn () callconv(.c) GDExtensionObjectPtr;
 
-pub const GDExtensionInstanceBindingCreateCallback = *const fn (void *p_token, void *p_instance) callconv(.c) ?*anyopaque;
+pub const GDExtensionInstanceBindingCreateCallback = *const fn (?*anyopaque, ?*anyopaque) callconv(.c) ?*anyopaque;
 
-pub const GDExtensionInstanceBindingFreeCallback = *const fn (void *p_token, void *p_instance, void *p_binding) callconv(.c) void;
+pub const GDExtensionInstanceBindingFreeCallback = *const fn (
+        ?*anyopaque,
+        ?*anyopaque,
+        ?*anyopaque,
+    ) callconv(.c) void;
 
-pub const GDExtensionInstanceBindingReferenceCallback = *const fn (void *p_token, void *p_binding, GDExtensionBool) callconv(.c) GDExtensionBool;
+pub const GDExtensionInstanceBindingReferenceCallback = *const fn (
+        ?*anyopaque,
+        ?*anyopaque,
+        GDExtensionBool,
+    ) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionInstanceBindingCallbacks = extern struct {
     create_callback: GDExtensionInstanceBindingCreateCallback,
@@ -182,75 +878,119 @@ pub const GDExtensionInstanceBindingCallbacks = extern struct {
     reference_callback: GDExtensionInstanceBindingReferenceCallback,
 };
 
-pub const *GDExtensionClassInstancePtr = void;
+pub const GDExtensionClassInstancePtr = ?*anyopaque;
 
-pub const GDExtensionClassSet = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool;
+pub const GDExtensionClassSet = *const fn (
+        GDExtensionClassInstancePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+    ) callconv(.c) GDExtensionBool;
 
-pub const GDExtensionClassGet = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, GDExtensionVariantPtr) callconv(.c) GDExtensionBool;
+pub const GDExtensionClassGet = *const fn (
+        GDExtensionClassInstancePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionVariantPtr,
+    ) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionClassGetRID = *const fn (GDExtensionClassInstancePtr) callconv(.c) u64;
 
 pub const GDExtensionPropertyInfo = extern struct {
-    type: GDExtensionVariantType,
+    @"type": GDExtensionVariantType,
     name: GDExtensionStringNamePtr,
     class_name: GDExtensionStringNamePtr,
-    hint: /* Bitfield of `PropertyHint` (defined in `extension_api.json`). */ uint32_t,
+    hint: u32,
     hint_string: GDExtensionStringPtr,
-    usage: /* Bitfield of `PropertyUsageFlags` (defined in `extension_api.json`). */ uint32_t,
+    usage: u32,
 };
 
 pub const GDExtensionMethodInfo = extern struct {
     name: GDExtensionStringNamePtr,
     return_value: GDExtensionPropertyInfo,
-    flags: /* Bitfield of `GDExtensionClassMethodFlags`. */ uint32_t,
+    flags: u32,
     id: i32,
-    argument_count: /* Arguments: `default_arguments` is an array of size `argument_count`. */ uint32_t,
-    default_argument_count: /* Default arguments: `default_arguments` is an array of size `default_argument_count`. */ uint32_t,
+    argument_count: u32,
+    arguments: [*c]GDExtensionPropertyInfo,
+    default_argument_count: u32,
+    default_arguments: [*c]GDExtensionVariantPtr,
 };
 
-pub const GDExtensionClassGetPropertyList = *const fn (GDExtensionClassInstancePtr, uint32_t *r_count) callconv(.c) [*c]const GDExtensionPropertyInfo;
+pub const GDExtensionClassGetPropertyList = *const fn (GDExtensionClassInstancePtr, [*c]u32) callconv(.c) [*c]const GDExtensionPropertyInfo;
 
-pub const GDExtensionClassFreePropertyList = *const fn (GDExtensionClassInstancePtr, GDExtensionPropertyInfo *p_list) callconv(.c) void;
+pub const GDExtensionClassFreePropertyList = *const fn (GDExtensionClassInstancePtr, [*c]const GDExtensionPropertyInfo) callconv(.c) void;
 
-pub const GDExtensionClassFreePropertyList2 = *const fn (GDExtensionClassInstancePtr, GDExtensionPropertyInfo *p_list, u32) callconv(.c) void;
+pub const GDExtensionClassFreePropertyList2 = *const fn (
+        GDExtensionClassInstancePtr,
+        [*c]const GDExtensionPropertyInfo,
+        u32,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassPropertyCanRevert = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;
 
-pub const GDExtensionClassPropertyGetRevert = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, GDExtensionVariantPtr) callconv(.c) GDExtensionBool;
+pub const GDExtensionClassPropertyGetRevert = *const fn (
+        GDExtensionClassInstancePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionVariantPtr,
+    ) callconv(.c) GDExtensionBool;
 
-pub const GDExtensionClassValidateProperty = *const fn (GDExtensionClassInstancePtr, GDExtensionPropertyInfo *p_property) callconv(.c) GDExtensionBool;
+pub const GDExtensionClassValidateProperty = *const fn (GDExtensionClassInstancePtr, [*c]GDExtensionPropertyInfo) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionClassNotification = *const fn (GDExtensionClassInstancePtr, i32) callconv(.c) void;
 
-pub const GDExtensionClassNotification2 = *const fn (GDExtensionClassInstancePtr, i32, GDExtensionBool) callconv(.c) void;
+pub const GDExtensionClassNotification2 = *const fn (
+        GDExtensionClassInstancePtr,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void;
 
-pub const GDExtensionClassToString = *const fn (GDExtensionClassInstancePtr, GDExtensionBool *r_is_valid, GDExtensionStringPtr) callconv(.c) void;
+pub const GDExtensionClassToString = *const fn (
+        GDExtensionClassInstancePtr,
+        [*c]GDExtensionBool,
+        GDExtensionStringPtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassReference = *const fn (GDExtensionClassInstancePtr) callconv(.c) void;
 
 pub const GDExtensionClassUnreference = *const fn (GDExtensionClassInstancePtr) callconv(.c) void;
 
-pub const GDExtensionClassCallVirtual = *const fn (GDExtensionClassInstancePtr, GDExtensionConstTypePtr *p_args, GDExtensionTypePtr) callconv(.c) void;
+pub const GDExtensionClassCallVirtual = *const fn (
+        GDExtensionClassInstancePtr,
+        [*c]const GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void;
 
-pub const GDExtensionClassCreateInstance = *const fn (void *p_class_userdata) callconv(.c) GDExtensionObjectPtr;
+pub const GDExtensionClassCreateInstance = *const fn (?*anyopaque) callconv(.c) GDExtensionObjectPtr;
 
-pub const GDExtensionClassCreateInstance2 = *const fn (void *p_class_userdata, GDExtensionBool) callconv(.c) GDExtensionObjectPtr;
+pub const GDExtensionClassCreateInstance2 = *const fn (?*anyopaque, GDExtensionBool) callconv(.c) GDExtensionObjectPtr;
 
-pub const GDExtensionClassCreateInstance3 = *const fn (void *p_class_userdata, GDExtensionBool) callconv(.c) GDExtensionObjectPtr;
+pub const GDExtensionClassCreateInstance3 = *const fn (?*anyopaque, GDExtensionBool) callconv(.c) GDExtensionObjectPtr;
 
-pub const GDExtensionClassFreeInstance = *const fn (void *p_class_userdata, GDExtensionClassInstancePtr) callconv(.c) void;
+pub const GDExtensionClassFreeInstance = *const fn (?*anyopaque, GDExtensionClassInstancePtr) callconv(.c) void;
 
-pub const GDExtensionClassRecreateInstance = *const fn (void *p_class_userdata, GDExtensionObjectPtr) callconv(.c) GDExtensionClassInstancePtr;
+pub const GDExtensionClassRecreateInstance = *const fn (?*anyopaque, GDExtensionObjectPtr) callconv(.c) GDExtensionClassInstancePtr;
 
-pub const GDExtensionClassGetVirtual = *const fn (void *p_class_userdata, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionClassCallVirtual;
+pub const GDExtensionClassGetVirtual = *const fn (?*anyopaque, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionClassCallVirtual;
 
-pub const GDExtensionClassGetVirtual2 = *const fn (void *p_class_userdata, GDExtensionConstStringNamePtr, u32) callconv(.c) GDExtensionClassCallVirtual;
+pub const GDExtensionClassGetVirtual2 = *const fn (
+        ?*anyopaque,
+        GDExtensionConstStringNamePtr,
+        u32,
+    ) callconv(.c) GDExtensionClassCallVirtual;
 
-pub const GDExtensionClassGetVirtualCallData = *const fn (void *p_class_userdata, GDExtensionConstStringNamePtr) callconv(.c) ?*anyopaque;
+pub const GDExtensionClassGetVirtualCallData = *const fn (?*anyopaque, GDExtensionConstStringNamePtr) callconv(.c) ?*anyopaque;
 
-pub const GDExtensionClassGetVirtualCallData2 = *const fn (void *p_class_userdata, GDExtensionConstStringNamePtr, u32) callconv(.c) ?*anyopaque;
+pub const GDExtensionClassGetVirtualCallData2 = *const fn (
+        ?*anyopaque,
+        GDExtensionConstStringNamePtr,
+        u32,
+    ) callconv(.c) ?*anyopaque;
 
-pub const GDExtensionClassCallVirtualWithData = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, void *p_virtual_call_userdata, GDExtensionConstTypePtr *p_args, GDExtensionTypePtr) callconv(.c) void;
+pub const GDExtensionClassCallVirtualWithData = *const fn (
+        GDExtensionClassInstancePtr,
+        GDExtensionConstStringNamePtr,
+        ?*anyopaque,
+        [*c]const GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassCreationInfo = extern struct {
     is_virtual: GDExtensionBool,
@@ -265,11 +1005,11 @@ pub const GDExtensionClassCreationInfo = extern struct {
     to_string_func: GDExtensionClassToString,
     reference_func: GDExtensionClassReference,
     unreference_func: GDExtensionClassUnreference,
-    create_instance_func: /* Class constructor. Required unless the class is virtual or abstract. */ GDExtensionClassCreateInstance,
-    Destructor: [*c]/,
-    free_instance_func: mandatory. */ GDExtensionClassFreeInstance,
-    get_virtual_func: /* Queries a virtual function by name and returns a callback to invoke the requested virtual function. */ GDExtensionClassGetVirtual,
+    create_instance_func: GDExtensionClassCreateInstance,
+    free_instance_func: GDExtensionClassFreeInstance,
+    get_virtual_func: GDExtensionClassGetVirtual,
     get_rid_func: GDExtensionClassGetRID,
+    class_userdata: ?*anyopaque,
 };
 
 pub const GDExtensionClassCreationInfo2 = extern struct {
@@ -287,14 +1027,14 @@ pub const GDExtensionClassCreationInfo2 = extern struct {
     to_string_func: GDExtensionClassToString,
     reference_func: GDExtensionClassReference,
     unreference_func: GDExtensionClassUnreference,
-    create_instance_func: /* Class constructor. Required unless the class is virtual or abstract. */ GDExtensionClassCreateInstance,
-    Destructor: [*c]/,
-    free_instance_func: mandatory. */ GDExtensionClassFreeInstance,
+    create_instance_func: GDExtensionClassCreateInstance,
+    free_instance_func: GDExtensionClassFreeInstance,
     recreate_instance_func: GDExtensionClassRecreateInstance,
-    get_virtual_func: /* Queries a virtual function by name and returns a callback to invoke the requested virtual function. */ GDExtensionClassGetVirtual,
-    get_virtual_call_data_func: /* Paired with `call_virtual_with_data_func`, this is an alternative to `get_virtual_func` for extensions that * need or benefit from extra data when calling virtual functions. * Returns user data that will be passed to `call_virtual_with_data_func`. * Returning `NULL` from this function signals to Godot that the virtual function is not overridden. * Data returned from this function should be managed by the extension and must be valid until the extension is deinitialized. * You should supply either `get_virtual_func`, or `get_virtual_call_data_func` with `call_virtual_with_data_func`. */ GDExtensionClassGetVirtualCallData,
-    call_virtual_with_data_func: /* Used to call virtual functions when `get_virtual_call_data_func` is not null. */ GDExtensionClassCallVirtualWithData,
+    get_virtual_func: GDExtensionClassGetVirtual,
+    get_virtual_call_data_func: GDExtensionClassGetVirtualCallData,
+    call_virtual_with_data_func: GDExtensionClassCallVirtualWithData,
     get_rid_func: GDExtensionClassGetRID,
+    class_userdata: ?*anyopaque,
 };
 
 pub const GDExtensionClassCreationInfo3 = extern struct {
@@ -313,14 +1053,14 @@ pub const GDExtensionClassCreationInfo3 = extern struct {
     to_string_func: GDExtensionClassToString,
     reference_func: GDExtensionClassReference,
     unreference_func: GDExtensionClassUnreference,
-    create_instance_func: /* Class constructor. Required unless the class is virtual or abstract. */ GDExtensionClassCreateInstance,
-    Destructor: [*c]/,
-    free_instance_func: mandatory. */ GDExtensionClassFreeInstance,
+    create_instance_func: GDExtensionClassCreateInstance,
+    free_instance_func: GDExtensionClassFreeInstance,
     recreate_instance_func: GDExtensionClassRecreateInstance,
-    get_virtual_func: /* Queries a virtual function by name and returns a callback to invoke the requested virtual function. */ GDExtensionClassGetVirtual,
-    get_virtual_call_data_func: /* Paired with `call_virtual_with_data_func`, this is an alternative to `get_virtual_func` for extensions that * need or benefit from extra data when calling virtual functions. * Returns user data that will be passed to `call_virtual_with_data_func`. * Returning `NULL` from this function signals to Godot that the virtual function is not overridden. * Data returned from this function should be managed by the extension and must be valid until the extension is deinitialized. * You should supply either `get_virtual_func`, or `get_virtual_call_data_func` with `call_virtual_with_data_func`. */ GDExtensionClassGetVirtualCallData,
-    call_virtual_with_data_func: /* Used to call virtual functions when `get_virtual_call_data_func` is not null. */ GDExtensionClassCallVirtualWithData,
+    get_virtual_func: GDExtensionClassGetVirtual,
+    get_virtual_call_data_func: GDExtensionClassGetVirtualCallData,
+    call_virtual_with_data_func: GDExtensionClassCallVirtualWithData,
     get_rid_func: GDExtensionClassGetRID,
+    class_userdata: ?*anyopaque,
 };
 
 pub const GDExtensionClassCreationInfo4 = extern struct {
@@ -340,13 +1080,13 @@ pub const GDExtensionClassCreationInfo4 = extern struct {
     to_string_func: GDExtensionClassToString,
     reference_func: GDExtensionClassReference,
     unreference_func: GDExtensionClassUnreference,
-    create_instance_func: /* Class constructor. Required unless the class is virtual or abstract. */ GDExtensionClassCreateInstance2,
-    Destructor: [*c]/,
-    free_instance_func: mandatory. */ GDExtensionClassFreeInstance,
+    create_instance_func: GDExtensionClassCreateInstance2,
+    free_instance_func: GDExtensionClassFreeInstance,
     recreate_instance_func: GDExtensionClassRecreateInstance,
-    get_virtual_func: /* Queries a virtual function by name and returns a callback to invoke the requested virtual function. */ GDExtensionClassGetVirtual2,
-    get_virtual_call_data_func: /* Paired with `call_virtual_with_data_func`, this is an alternative to `get_virtual_func` for extensions that * need or benefit from extra data when calling virtual functions. * Returns user data that will be passed to `call_virtual_with_data_func`. * Returning `NULL` from this function signals to Godot that the virtual function is not overridden. * Data returned from this function should be managed by the extension and must be valid until the extension is deinitialized. * You should supply either `get_virtual_func`, or `get_virtual_call_data_func` with `call_virtual_with_data_func`. */ GDExtensionClassGetVirtualCallData2,
-    call_virtual_with_data_func: /* Used to call virtual functions when `get_virtual_call_data_func` is not null. */ GDExtensionClassCallVirtualWithData,
+    get_virtual_func: GDExtensionClassGetVirtual2,
+    get_virtual_call_data_func: GDExtensionClassGetVirtualCallData2,
+    call_virtual_with_data_func: GDExtensionClassCallVirtualWithData,
+    class_userdata: ?*anyopaque,
 };
 
 pub const GDExtensionClassCreationInfo5 = GDExtensionClassCreationInfo4;
@@ -368,89 +1108,125 @@ pub const GDExtensionClassCreationInfo6 = extern struct {
     to_string_func: GDExtensionClassToString,
     reference_func: GDExtensionClassReference,
     unreference_func: GDExtensionClassUnreference,
-    create_instance_func: /* Class constructor. Required unless the class is virtual or abstract. */ GDExtensionClassCreateInstance3,
-    Destructor: [*c]/,
-    free_instance_func: mandatory. */ GDExtensionClassFreeInstance,
+    create_instance_func: GDExtensionClassCreateInstance3,
+    free_instance_func: GDExtensionClassFreeInstance,
     recreate_instance_func: GDExtensionClassRecreateInstance,
-    get_virtual_func: /* Queries a virtual function by name and returns a callback to invoke the requested virtual function. */ GDExtensionClassGetVirtual2,
-    get_virtual_call_data_func: /* Paired with `call_virtual_with_data_func`, this is an alternative to `get_virtual_func` for extensions that * need or benefit from extra data when calling virtual functions. * Returns user data that will be passed to `call_virtual_with_data_func`. * Returning `NULL` from this function signals to Godot that the virtual function is not overridden. * Data returned from this function should be managed by the extension and must be valid until the extension is deinitialized. * You should supply either `get_virtual_func`, or `get_virtual_call_data_func` with `call_virtual_with_data_func`. */ GDExtensionClassGetVirtualCallData2,
-    call_virtual_with_data_func: /* Used to call virtual functions when `get_virtual_call_data_func` is not null. */ GDExtensionClassCallVirtualWithData,
+    get_virtual_func: GDExtensionClassGetVirtual2,
+    get_virtual_call_data_func: GDExtensionClassGetVirtualCallData2,
+    call_virtual_with_data_func: GDExtensionClassCallVirtualWithData,
+    class_userdata: ?*anyopaque,
 };
 
-pub const *GDExtensionClassLibraryPtr = void;
+pub const GDExtensionClassLibraryPtr = ?*anyopaque;
 
 pub const GDExtensionEditorGetClassesUsedCallback = *const fn (GDExtensionTypePtr) callconv(.c) void;
 
 pub const GDExtensionClassMethodFlags = enum(c_int) {
-    normal = 1,
-    editor = 2,
-    const = 4,
-    virtual = 8,
-    vararg = 16,
-    static = 32,
-    required = 128,
-    default = 1,
+    flag_normal = 1,
+    flag_editor = 2,
+    flag_const = 4,
+    flag_virtual = 8,
+    flag_vararg = 16,
+    flag_static = 32,
+    flag_virtual_required = 128,
+    flags_default = 1,
 };
 
 pub const GDExtensionClassMethodArgumentMetadata = enum(c_int) {
     none = 0,
-    int8 = 1,
-    int16 = 2,
-    int32 = 3,
-    int64 = 4,
-    uint8 = 5,
-    uint16 = 6,
-    uint32 = 7,
-    uint64 = 8,
-    float = 9,
-    double = 10,
-    char16 = 11,
-    char32 = 12,
-    required = 13,
+    int_is_int8 = 1,
+    int_is_int16 = 2,
+    int_is_int32 = 3,
+    int_is_int64 = 4,
+    int_is_uint8 = 5,
+    int_is_uint16 = 6,
+    int_is_uint32 = 7,
+    int_is_uint64 = 8,
+    real_is_float = 9,
+    real_is_double = 10,
+    int_is_char16 = 11,
+    int_is_char32 = 12,
+    object_is_required = 13,
 };
 
-pub const GDExtensionClassMethodCall = *const fn (void *method_userdata, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr *p_args, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError *r_error) callconv(.c) void;
+pub const GDExtensionClassMethodCall = *const fn (
+        ?*anyopaque,
+        GDExtensionClassInstancePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void;
 
-pub const GDExtensionClassMethodValidatedCall = *const fn (void *method_userdata, GDExtensionClassInstancePtr, GDExtensionConstVariantPtr *p_args, GDExtensionVariantPtr) callconv(.c) void;
+pub const GDExtensionClassMethodValidatedCall = *const fn (
+        ?*anyopaque,
+        GDExtensionClassInstancePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionVariantPtr,
+    ) callconv(.c) void;
 
-pub const GDExtensionClassMethodPtrCall = *const fn (void *method_userdata, GDExtensionClassInstancePtr, GDExtensionConstTypePtr *p_args, GDExtensionTypePtr) callconv(.c) void;
+pub const GDExtensionClassMethodPtrCall = *const fn (
+        ?*anyopaque,
+        GDExtensionClassInstancePtr,
+        [*c]const GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionClassMethodInfo = extern struct {
     name: GDExtensionStringNamePtr,
+    method_userdata: ?*anyopaque,
     call_func: GDExtensionClassMethodCall,
     ptrcall_func: GDExtensionClassMethodPtrCall,
-    method_flags: /* Bitfield of `GDExtensionClassMethodFlags`. */ uint32_t,
-    has_return_value: /* If `has_return_value` is false, `return_value_info` and `return_value_metadata` are ignored. * * @todo Consider dropping `has_return_value` and making the other two properties match `GDExtensionMethodInfo` and `GDExtensionClassVirtualMethod` for consistency in future version of this struct. */ GDExtensionBool,
+    method_flags: u32,
+    has_return_value: GDExtensionBool,
+    return_value_info: [*c]GDExtensionPropertyInfo,
     return_value_metadata: GDExtensionClassMethodArgumentMetadata,
-    argument_count: /* Arguments: `arguments_info` and `arguments_metadata` are array of size `argument_count`. * Name and hint information for the argument can be omitted in release builds. Class name should always be present if it applies. * * @todo Consider renaming `arguments_info` to `arguments` for consistency in future version of this struct. */ uint32_t,
-    default_argument_count: /* Default arguments: `default_arguments` is an array of size `default_argument_count`. */ uint32_t,
+    argument_count: u32,
+    arguments_info: [*c]GDExtensionPropertyInfo,
+    arguments_metadata: [*c]GDExtensionClassMethodArgumentMetadata,
+    default_argument_count: u32,
+    default_arguments: [*c]GDExtensionVariantPtr,
 };
 
 pub const GDExtensionClassVirtualMethodInfo = extern struct {
     name: GDExtensionStringNamePtr,
-    method_flags: /* Bitfield of `GDExtensionClassMethodFlags`. */ uint32_t,
+    method_flags: u32,
     return_value: GDExtensionPropertyInfo,
     return_value_metadata: GDExtensionClassMethodArgumentMetadata,
     argument_count: u32,
+    arguments: [*c]GDExtensionPropertyInfo,
+    arguments_metadata: [*c]GDExtensionClassMethodArgumentMetadata,
 };
 
-pub const GDExtensionCallableCustomCall = *const fn (void *callable_userdata, GDExtensionConstVariantPtr *p_args, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError *r_error) callconv(.c) void;
+pub const GDExtensionCallableCustomCall = *const fn (
+        ?*anyopaque,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void;
 
-pub const GDExtensionCallableCustomIsValid = *const fn (void *callable_userdata) callconv(.c) GDExtensionBool;
+pub const GDExtensionCallableCustomIsValid = *const fn (?*anyopaque) callconv(.c) GDExtensionBool;
 
-pub const GDExtensionCallableCustomFree = *const fn (void *callable_userdata) callconv(.c) void;
+pub const GDExtensionCallableCustomFree = *const fn (?*anyopaque) callconv(.c) void;
 
-pub const GDExtensionCallableCustomHash = *const fn (void *callable_userdata) callconv(.c) u32;
+pub const GDExtensionCallableCustomHash = *const fn (?*anyopaque) callconv(.c) u32;
 
-pub const GDExtensionCallableCustomEqual = *const fn (void *callable_userdata_a, void *callable_userdata_b) callconv(.c) GDExtensionBool;
+pub const GDExtensionCallableCustomEqual = *const fn (?*anyopaque, ?*anyopaque) callconv(.c) GDExtensionBool;
 
-pub const GDExtensionCallableCustomLessThan = *const fn (void *callable_userdata_a, void *callable_userdata_b) callconv(.c) GDExtensionBool;
+pub const GDExtensionCallableCustomLessThan = *const fn (?*anyopaque, ?*anyopaque) callconv(.c) GDExtensionBool;
 
-pub const GDExtensionCallableCustomToString = *const fn (void *callable_userdata, GDExtensionBool *r_is_valid, GDExtensionStringPtr) callconv(.c) void;
+pub const GDExtensionCallableCustomToString = *const fn (
+        ?*anyopaque,
+        [*c]GDExtensionBool,
+        GDExtensionStringPtr,
+    ) callconv(.c) void;
 
-pub const GDExtensionCallableCustomGetArgumentCount = *const fn (void *callable_userdata, GDExtensionBool *r_is_valid) callconv(.c) GDExtensionInt;
+pub const GDExtensionCallableCustomGetArgumentCount = *const fn (?*anyopaque, [*c]GDExtensionBool) callconv(.c) GDExtensionInt;
 
 pub const GDExtensionCallableCustomInfo = extern struct {
+    callable_userdata: ?*anyopaque,
+    token: ?*anyopaque,
     object_id: GDObjectInstanceID,
     call_func: GDExtensionCallableCustomCall,
     is_valid_func: GDExtensionCallableCustomIsValid,
@@ -462,6 +1238,8 @@ pub const GDExtensionCallableCustomInfo = extern struct {
 };
 
 pub const GDExtensionCallableCustomInfo2 = extern struct {
+    callable_userdata: ?*anyopaque,
+    token: ?*anyopaque,
     object_id: GDObjectInstanceID,
     call_func: GDExtensionCallableCustomCall,
     is_valid_func: GDExtensionCallableCustomIsValid,
@@ -473,51 +1251,102 @@ pub const GDExtensionCallableCustomInfo2 = extern struct {
     get_argument_count_func: GDExtensionCallableCustomGetArgumentCount,
 };
 
-pub const *GDExtensionScriptInstanceDataPtr = void;
+pub const GDExtensionScriptInstanceDataPtr = ?*anyopaque;
 
-pub const GDExtensionScriptInstanceSet = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool;
+pub const GDExtensionScriptInstanceSet = *const fn (
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+    ) callconv(.c) GDExtensionBool;
 
-pub const GDExtensionScriptInstanceGet = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionVariantPtr) callconv(.c) GDExtensionBool;
+pub const GDExtensionScriptInstanceGet = *const fn (
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionVariantPtr,
+    ) callconv(.c) GDExtensionBool;
 
-pub const GDExtensionScriptInstanceGetPropertyList = *const fn (GDExtensionScriptInstanceDataPtr, uint32_t *r_count) callconv(.c) [*c]const GDExtensionPropertyInfo;
+pub const GDExtensionScriptInstanceGetPropertyList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]u32) callconv(.c) [*c]const GDExtensionPropertyInfo;
 
-pub const GDExtensionScriptInstanceFreePropertyList = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionPropertyInfo *p_list) callconv(.c) void;
+pub const GDExtensionScriptInstanceFreePropertyList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]const GDExtensionPropertyInfo) callconv(.c) void;
 
-pub const GDExtensionScriptInstanceFreePropertyList2 = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionPropertyInfo *p_list, u32) callconv(.c) void;
+pub const GDExtensionScriptInstanceFreePropertyList2 = *const fn (
+        GDExtensionScriptInstanceDataPtr,
+        [*c]const GDExtensionPropertyInfo,
+        u32,
+    ) callconv(.c) void;
 
-pub const GDExtensionScriptInstanceGetClassCategory = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionPropertyInfo *p_class_category) callconv(.c) GDExtensionBool;
+pub const GDExtensionScriptInstanceGetClassCategory = *const fn (GDExtensionScriptInstanceDataPtr, [*c]GDExtensionPropertyInfo) callconv(.c) GDExtensionBool;
 
-pub const GDExtensionScriptInstanceGetPropertyType = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionBool *r_is_valid) callconv(.c) GDExtensionVariantType;
+pub const GDExtensionScriptInstanceGetPropertyType = *const fn (
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) GDExtensionVariantType;
 
-pub const GDExtensionScriptInstanceValidateProperty = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionPropertyInfo *p_property) callconv(.c) GDExtensionBool;
+pub const GDExtensionScriptInstanceValidateProperty = *const fn (GDExtensionScriptInstanceDataPtr, [*c]GDExtensionPropertyInfo) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionScriptInstancePropertyCanRevert = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;
 
-pub const GDExtensionScriptInstancePropertyGetRevert = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionVariantPtr) callconv(.c) GDExtensionBool;
+pub const GDExtensionScriptInstancePropertyGetRevert = *const fn (
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionVariantPtr,
+    ) callconv(.c) GDExtensionBool;
 
 pub const GDExtensionScriptInstanceGetOwner = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionObjectPtr;
 
-pub const GDExtensionScriptInstancePropertyStateAdd = *const fn (GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, void *p_userdata) callconv(.c) void;
+pub const GDExtensionScriptInstancePropertyStateAdd = *const fn (
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+        ?*anyopaque,
+    ) callconv(.c) void;
 
-pub const GDExtensionScriptInstanceGetPropertyState = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePropertyStateAdd, void *p_userdata) callconv(.c) void;
+pub const GDExtensionScriptInstanceGetPropertyState = *const fn (
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionScriptInstancePropertyStateAdd,
+        ?*anyopaque,
+    ) callconv(.c) void;
 
-pub const GDExtensionScriptInstanceGetMethodList = *const fn (GDExtensionScriptInstanceDataPtr, uint32_t *r_count) callconv(.c) [*c]const GDExtensionMethodInfo;
+pub const GDExtensionScriptInstanceGetMethodList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]u32) callconv(.c) [*c]const GDExtensionMethodInfo;
 
-pub const GDExtensionScriptInstanceFreeMethodList = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionMethodInfo *p_list) callconv(.c) void;
+pub const GDExtensionScriptInstanceFreeMethodList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]const GDExtensionMethodInfo) callconv(.c) void;
 
-pub const GDExtensionScriptInstanceFreeMethodList2 = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionMethodInfo *p_list, u32) callconv(.c) void;
+pub const GDExtensionScriptInstanceFreeMethodList2 = *const fn (
+        GDExtensionScriptInstanceDataPtr,
+        [*c]const GDExtensionMethodInfo,
+        u32,
+    ) callconv(.c) void;
 
 pub const GDExtensionScriptInstanceHasMethod = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;
 
-pub const GDExtensionScriptInstanceGetMethodArgumentCount = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionBool *r_is_valid) callconv(.c) GDExtensionInt;
+pub const GDExtensionScriptInstanceGetMethodArgumentCount = *const fn (
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) GDExtensionInt;
 
-pub const GDExtensionScriptInstanceCall = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr *p_args, GDExtensionInt, GDExtensionVariantPtr, GDExtensionCallError *r_error) callconv(.c) void;
+pub const GDExtensionScriptInstanceCall = *const fn (
+        GDExtensionScriptInstanceDataPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void;
 
 pub const GDExtensionScriptInstanceNotification = *const fn (GDExtensionScriptInstanceDataPtr, i32) callconv(.c) void;
 
-pub const GDExtensionScriptInstanceNotification2 = *const fn (GDExtensionScriptInstanceDataPtr, i32, GDExtensionBool) callconv(.c) void;
+pub const GDExtensionScriptInstanceNotification2 = *const fn (
+        GDExtensionScriptInstanceDataPtr,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void;
 
-pub const GDExtensionScriptInstanceToString = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionBool *r_is_valid, GDExtensionStringPtr) callconv(.c) void;
+pub const GDExtensionScriptInstanceToString = *const fn (
+        GDExtensionScriptInstanceDataPtr,
+        [*c]GDExtensionBool,
+        GDExtensionStringPtr,
+    ) callconv(.c) void;
 
 pub const GDExtensionScriptInstanceRefCountIncremented = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) void;
 
@@ -527,13 +1356,13 @@ pub const GDExtensionScriptInstanceGetScript = *const fn (GDExtensionScriptInsta
 
 pub const GDExtensionScriptInstanceIsPlaceholder = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionBool;
 
-pub const *GDExtensionScriptLanguagePtr = void;
+pub const GDExtensionScriptLanguagePtr = ?*anyopaque;
 
 pub const GDExtensionScriptInstanceGetLanguage = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptLanguagePtr;
 
 pub const GDExtensionScriptInstanceFree = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) void;
 
-pub const *GDExtensionScriptInstancePtr = void;
+pub const GDExtensionScriptInstancePtr = ?*anyopaque;
 
 pub const GDExtensionScriptInstanceInfo = extern struct {
     set_func: GDExtensionScriptInstanceSet,
@@ -566,7 +1395,7 @@ pub const GDExtensionScriptInstanceInfo2 = extern struct {
     get_func: GDExtensionScriptInstanceGet,
     get_property_list_func: GDExtensionScriptInstanceGetPropertyList,
     free_property_list_func: GDExtensionScriptInstanceFreePropertyList,
-    get_class_category_func: /* Optional. Set to NULL for the default behavior. */ GDExtensionScriptInstanceGetClassCategory,
+    get_class_category_func: GDExtensionScriptInstanceGetClassCategory,
     property_can_revert_func: GDExtensionScriptInstancePropertyCanRevert,
     property_get_revert_func: GDExtensionScriptInstancePropertyGetRevert,
     get_owner_func: GDExtensionScriptInstanceGetOwner,
@@ -594,7 +1423,7 @@ pub const GDExtensionScriptInstanceInfo3 = extern struct {
     get_func: GDExtensionScriptInstanceGet,
     get_property_list_func: GDExtensionScriptInstanceGetPropertyList,
     free_property_list_func: GDExtensionScriptInstanceFreePropertyList2,
-    get_class_category_func: /* Optional. Set to NULL for the default behavior. */ GDExtensionScriptInstanceGetClassCategory,
+    get_class_category_func: GDExtensionScriptInstanceGetClassCategory,
     property_can_revert_func: GDExtensionScriptInstancePropertyCanRevert,
     property_get_revert_func: GDExtensionScriptInstancePropertyGetRevert,
     get_owner_func: GDExtensionScriptInstanceGetOwner,
@@ -623,41 +1452,51 @@ pub const GDExtensionWorkerThreadPoolGroupTask = *const fn (?*anyopaque, u32) ca
 pub const GDExtensionWorkerThreadPoolTask = *const fn (?*anyopaque) callconv(.c) void;
 
 pub const GDExtensionInitializationLevel = enum(c_int) {
-    core = 0,
-    servers = 1,
-    scene = 2,
-    editor = 3,
-    level = 4,
+    initialization_core = 0,
+    initialization_servers = 1,
+    initialization_scene = 2,
+    initialization_editor = 3,
+    max_initialization_level = 4,
 };
 
-pub const GDExtensionInitializeCallback = *const fn (void *p_userdata, GDExtensionInitializationLevel) callconv(.c) void;
+pub const GDExtensionInitializeCallback = *const fn (?*anyopaque, GDExtensionInitializationLevel) callconv(.c) void;
 
-pub const GDExtensionDeinitializeCallback = *const fn (void *p_userdata, GDExtensionInitializationLevel) callconv(.c) void;
+pub const GDExtensionDeinitializeCallback = *const fn (?*anyopaque, GDExtensionInitializationLevel) callconv(.c) void;
 
 pub const GDExtensionInitialization = extern struct {
-    minimum_initialization_level: /* Minimum initialization level required. * If Core or Servers, the extension needs editor or game restart to take effect */ GDExtensionInitializationLevel,
-    initialize: /* This function will be called multiple times for each initialization level. */ GDExtensionInitializeCallback,
+    minimum_initialization_level: GDExtensionInitializationLevel,
+    userdata: ?*anyopaque,
+    initialize: GDExtensionInitializeCallback,
     deinitialize: GDExtensionDeinitializeCallback,
 };
 
 pub const GDExtensionInterfaceFunctionPtr = *const fn () callconv(.c) void;
 
-pub const GDExtensionInterfaceGetProcAddress = *const fn (char *p_function_name) callconv(.c) GDExtensionInterfaceFunctionPtr;
+pub const GDExtensionInterfaceGetProcAddress = *const fn ([*:0]const u8) callconv(.c) GDExtensionInterfaceFunctionPtr;
 
-pub const GDExtensionInitializationFunction = *const fn (GDExtensionInterfaceGetProcAddress, GDExtensionClassLibraryPtr, GDExtensionInitialization *r_initialization) callconv(.c) that shows its signature. */ typedef GDExtensionBool;
+pub const GDExtensionInitializationFunction = *const fn (
+        GDExtensionInterfaceGetProcAddress,
+        GDExtensionClassLibraryPtr,
+        [*c]GDExtensionInitialization,
+    ) callconv(.c) that shows its signature. */ typedef GDExtensionBool;
 
 pub const GDExtensionGodotVersion = extern struct {
     major: u32,
     minor: u32,
     patch: u32,
+    string: [*:0]const u8,
 };
 
 pub const GDExtensionGodotVersion2 = extern struct {
     major: u32,
     minor: u32,
     patch: u32,
-    hex: /* Full version encoded as hexadecimal with one byte (2 hex digits) per number (e.g. for "3.1.12" it would be 0x03010C) */ uint32_t,
-    timestamp: /* Git commit date UNIX timestamp in seconds, or 0 if unavailable. */ uint64_t,
+    hex: u32,
+    status: [*:0]const u8,
+    build: [*:0]const u8,
+    hash: [*:0]const u8,
+    timestamp: u64,
+    string: [*:0]const u8,
 };
 
 pub const GDExtensionMainLoopStartupCallback = *const fn () callconv(.c) void;
@@ -667,2955 +1506,1578 @@ pub const GDExtensionMainLoopShutdownCallback = *const fn () callconv(.c) void;
 pub const GDExtensionMainLoopFrameCallback = *const fn () callconv(.c) void;
 
 pub const GDExtensionMainLoopCallbacks = extern struct {
-    startup_func: /* Will be called after Godot is started and is fully initialized. */ GDExtensionMainLoopStartupCallback,
-    shutdown_func: /* Will be called before Godot is shutdown when it is still fully initialized. */ GDExtensionMainLoopShutdownCallback,
-    frame_func: /* Will be called for each process frame. This will run after all `_process()` methods on Node, and before `ScriptServer::frame()`. * This is intended to be the equivalent of `ScriptLanguage::frame()` for GDExtension language bindings that don't use the script API. */ GDExtensionMainLoopFrameCallback,
+    startup_func: GDExtensionMainLoopStartupCallback,
+    shutdown_func: GDExtensionMainLoopShutdownCallback,
+    frame_func: GDExtensionMainLoopFrameCallback,
 };
 
-/// @name get_godot_version
-/// @since 4.1
-/// Gets the Godot version that the GDExtension was loaded into.
-/// @param r_godot_version A pointer to the structure to write the version information into.
-pub const GDExtensionInterfaceGetGodotVersion = *const fn (GDExtensionGodotVersion *r_godot_version) callconv(.c) void;
-
-pub fn get_godot_version(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: GDExtensionGodotVersion *r_godot_version) void {
-    return load(
-        get_proc_address,
-        "get_godot_version",
-        *const fn (GDExtensionGodotVersion *r_godot_version) callconv(.c) void,
-    )(arg1);
-}
-
-/// @name get_godot_version2
-/// @since 4.5
-/// Gets the Godot version that the GDExtension was loaded into.
-/// @param r_godot_version A pointer to the structure to write the version information into.
-pub const GDExtensionInterfaceGetGodotVersion2 = *const fn (GDExtensionGodotVersion2 *r_godot_version) callconv(.c) void;
-
-pub fn get_godot_version2(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: GDExtensionGodotVersion2 *r_godot_version) void {
-    return load(
-        get_proc_address,
-        "get_godot_version2",
-        *const fn (GDExtensionGodotVersion2 *r_godot_version) callconv(.c) void,
-    )(arg1);
-}
-
-/// @name mem_alloc
-/// @since 4.1
-/// Allocates memory.
-/// @param p_bytes The amount of memory to allocate in bytes.
-/// @return A pointer to the allocated memory, or NULL if unsuccessful.
-pub const GDExtensionInterfaceMemAlloc = *const fn (usize) callconv(.c) ?*anyopaque;
-
-pub fn mem_alloc(get_proc_address: GDExtensionInterfaceGetProcAddress, p_bytes: usize) ?*anyopaque {
-    return load(
-        get_proc_address,
-        "mem_alloc",
-        *const fn (usize) callconv(.c) ?*anyopaque,
-    )(p_bytes);
-}
-
-/// @name mem_realloc
-/// @since 4.1
-/// Reallocates memory.
-/// @param p_ptr A pointer to the previously allocated memory.
-/// @param p_bytes The number of bytes to resize the memory block to.
-/// @return A pointer to the allocated memory, or NULL if unsuccessful.
-pub const GDExtensionInterfaceMemRealloc = *const fn (void *p_ptr, usize) callconv(.c) ?*anyopaque;
-
-pub fn mem_realloc(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: void *p_ptr, p_bytes: usize) ?*anyopaque {
-    return load(
-        get_proc_address,
-        "mem_realloc",
-        *const fn (void *p_ptr, usize) callconv(.c) ?*anyopaque,
-    )(arg1, p_bytes);
-}
-
-/// @name mem_free
-/// @since 4.1
-/// Frees memory.
-/// @param p_ptr A pointer to the previously allocated memory.
-pub const GDExtensionInterfaceMemFree = *const fn (void *p_ptr) callconv(.c) void;
-
-pub fn mem_free(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: void *p_ptr) void {
-    return load(
-        get_proc_address,
-        "mem_free",
-        *const fn (void *p_ptr) callconv(.c) void,
-    )(arg1);
-}
-
-/// @name mem_alloc2
-/// @since 4.6
-/// Allocates memory.
-/// @param p_bytes The amount of memory to allocate in bytes.
-/// @param p_pad_align If true, the returned memory will have prepadding of at least 8 bytes.
-/// @return A pointer to the allocated memory, or NULL if unsuccessful.
-pub const GDExtensionInterfaceMemAlloc2 = *const fn (usize, GDExtensionBool) callconv(.c) ?*anyopaque;
-
-pub fn mem_alloc2(get_proc_address: GDExtensionInterfaceGetProcAddress, p_bytes: usize, p_pad_align: GDExtensionBool) ?*anyopaque {
-    return load(
-        get_proc_address,
-        "mem_alloc2",
-        *const fn (usize, GDExtensionBool) callconv(.c) ?*anyopaque,
-    )(p_bytes, p_pad_align);
-}
-
-/// @name mem_realloc2
-/// @since 4.6
-/// Reallocates memory.
-/// @param p_ptr A pointer to the previously allocated memory.
-/// @param p_bytes The number of bytes to resize the memory block to.
-/// @param p_pad_align If true, the returned memory will have prepadding of at least 8 bytes.
-/// @return A pointer to the allocated memory, or NULL if unsuccessful.
-pub const GDExtensionInterfaceMemRealloc2 = *const fn (void *p_ptr, usize, GDExtensionBool) callconv(.c) ?*anyopaque;
-
-pub fn mem_realloc2(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: void *p_ptr, p_bytes: usize, p_pad_align: GDExtensionBool) ?*anyopaque {
-    return load(
-        get_proc_address,
-        "mem_realloc2",
-        *const fn (void *p_ptr, usize, GDExtensionBool) callconv(.c) ?*anyopaque,
-    )(arg1, p_bytes, p_pad_align);
-}
-
-/// @name mem_free2
-/// @since 4.6
-/// Frees memory.
-/// @param p_ptr A pointer to the previously allocated memory.
-/// @param p_pad_align If true, the given memory was allocated with prepadding.
-pub const GDExtensionInterfaceMemFree2 = *const fn (void *p_ptr, GDExtensionBool) callconv(.c) void;
-
-pub fn mem_free2(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: void *p_ptr, p_pad_align: GDExtensionBool) void {
-    return load(
-        get_proc_address,
-        "mem_free2",
-        *const fn (void *p_ptr, GDExtensionBool) callconv(.c) void,
-    )(arg1, p_pad_align);
-}
-
-/// @name print_error
-/// @since 4.1
-/// Logs an error to Godot's built-in debugger and to the OS terminal.
-/// @param p_description The code triggering the error.
-/// @param p_function The function name where the error occurred.
-/// @param p_file The file where the error occurred.
-/// @param p_line The line where the error occurred.
-/// @param p_editor_notify Whether or not to notify the editor.
-pub const GDExtensionInterfacePrintError = *const fn (char *p_description, char *p_function, char *p_file, i32, GDExtensionBool) callconv(.c) void;
-
-pub fn print_error(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: char *p_description, arg2: char *p_function, arg3: char *p_file, p_line: i32, p_editor_notify: GDExtensionBool) void {
-    return load(
-        get_proc_address,
-        "print_error",
-        *const fn (char *p_description, char *p_function, char *p_file, i32, GDExtensionBool) callconv(.c) void,
-    )(arg1, arg2, arg3, p_line, p_editor_notify);
-}
-
-/// @name print_error_with_message
-/// @since 4.1
-/// Logs an error with a message to Godot's built-in debugger and to the OS terminal.
-/// @param p_description The code triggering the error.
-/// @param p_message The message to show along with the error.
-/// @param p_function The function name where the error occurred.
-/// @param p_file The file where the error occurred.
-/// @param p_line The line where the error occurred.
-/// @param p_editor_notify Whether or not to notify the editor.
-pub const GDExtensionInterfacePrintErrorWithMessage = *const fn (char *p_description, char *p_message, char *p_function, char *p_file, i32, GDExtensionBool) callconv(.c) void;
-
-pub fn print_error_with_message(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: char *p_description, arg2: char *p_message, arg3: char *p_function, arg4: char *p_file, p_line: i32, p_editor_notify: GDExtensionBool) void {
-    return load(
-        get_proc_address,
-        "print_error_with_message",
-        *const fn (char *p_description, char *p_message, char *p_function, char *p_file, i32, GDExtensionBool) callconv(.c) void,
-    )(arg1, arg2, arg3, arg4, p_line, p_editor_notify);
-}
-
-/// @name print_warning
-/// @since 4.1
-/// Logs a warning to Godot's built-in debugger and to the OS terminal.
-/// @param p_description The code triggering the warning.
-/// @param p_function The function name where the warning occurred.
-/// @param p_file The file where the warning occurred.
-/// @param p_line The line where the warning occurred.
-/// @param p_editor_notify Whether or not to notify the editor.
-pub const GDExtensionInterfacePrintWarning = *const fn (char *p_description, char *p_function, char *p_file, i32, GDExtensionBool) callconv(.c) void;
-
-pub fn print_warning(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: char *p_description, arg2: char *p_function, arg3: char *p_file, p_line: i32, p_editor_notify: GDExtensionBool) void {
-    return load(
-        get_proc_address,
-        "print_warning",
-        *const fn (char *p_description, char *p_function, char *p_file, i32, GDExtensionBool) callconv(.c) void,
-    )(arg1, arg2, arg3, p_line, p_editor_notify);
-}
-
-/// @name print_warning_with_message
-/// @since 4.1
-/// Logs a warning with a message to Godot's built-in debugger and to the OS terminal.
-/// @param p_description The code triggering the warning.
-/// @param p_message The message to show along with the warning.
-/// @param p_function The function name where the warning occurred.
-/// @param p_file The file where the warning occurred.
-/// @param p_line The line where the warning occurred.
-/// @param p_editor_notify Whether or not to notify the editor.
-pub const GDExtensionInterfacePrintWarningWithMessage = *const fn (char *p_description, char *p_message, char *p_function, char *p_file, i32, GDExtensionBool) callconv(.c) void;
-
-pub fn print_warning_with_message(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: char *p_description, arg2: char *p_message, arg3: char *p_function, arg4: char *p_file, p_line: i32, p_editor_notify: GDExtensionBool) void {
-    return load(
-        get_proc_address,
-        "print_warning_with_message",
-        *const fn (char *p_description, char *p_message, char *p_function, char *p_file, i32, GDExtensionBool) callconv(.c) void,
-    )(arg1, arg2, arg3, arg4, p_line, p_editor_notify);
-}
-
-/// @name print_script_error
-/// @since 4.1
-/// Logs a script error to Godot's built-in debugger and to the OS terminal.
-/// @param p_description The code triggering the error.
-/// @param p_function The function name where the error occurred.
-/// @param p_file The file where the error occurred.
-/// @param p_line The line where the error occurred.
-/// @param p_editor_notify Whether or not to notify the editor.
-pub const GDExtensionInterfacePrintScriptError = *const fn (char *p_description, char *p_function, char *p_file, i32, GDExtensionBool) callconv(.c) void;
-
-pub fn print_script_error(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: char *p_description, arg2: char *p_function, arg3: char *p_file, p_line: i32, p_editor_notify: GDExtensionBool) void {
-    return load(
-        get_proc_address,
-        "print_script_error",
-        *const fn (char *p_description, char *p_function, char *p_file, i32, GDExtensionBool) callconv(.c) void,
-    )(arg1, arg2, arg3, p_line, p_editor_notify);
-}
-
-/// @name print_script_error_with_message
-/// @since 4.1
-/// Logs a script error with a message to Godot's built-in debugger and to the OS terminal.
-/// @param p_description The code triggering the error.
-/// @param p_message The message to show along with the error.
-/// @param p_function The function name where the error occurred.
-/// @param p_file The file where the error occurred.
-/// @param p_line The line where the error occurred.
-/// @param p_editor_notify Whether or not to notify the editor.
-pub const GDExtensionInterfacePrintScriptErrorWithMessage = *const fn (char *p_description, char *p_message, char *p_function, char *p_file, i32, GDExtensionBool) callconv(.c) void;
-
-pub fn print_script_error_with_message(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: char *p_description, arg2: char *p_message, arg3: char *p_function, arg4: char *p_file, p_line: i32, p_editor_notify: GDExtensionBool) void {
-    return load(
-        get_proc_address,
-        "print_script_error_with_message",
-        *const fn (char *p_description, char *p_message, char *p_function, char *p_file, i32, GDExtensionBool) callconv(.c) void,
-    )(arg1, arg2, arg3, arg4, p_line, p_editor_notify);
-}
-
-/// @name get_native_struct_size
-/// @since 4.1
-/// Gets the size of a native struct (ex. ObjectID) in bytes.
-/// @param p_name A pointer to a StringName identifying the struct name.
-/// @return The size in bytes.
-pub const GDExtensionInterfaceGetNativeStructSize = *const fn (GDExtensionConstStringNamePtr) callconv(.c) u64;
-
-pub fn get_native_struct_size(get_proc_address: GDExtensionInterfaceGetProcAddress, p_name: GDExtensionConstStringNamePtr) u64 {
-    return load(
-        get_proc_address,
-        "get_native_struct_size",
-        *const fn (GDExtensionConstStringNamePtr) callconv(.c) u64,
-    )(p_name);
-}
-
-/// @name variant_new_copy
-/// @since 4.1
-/// Copies one Variant into a another.
-/// @param r_dest A pointer to the destination Variant.
-/// @param p_src A pointer to the source Variant.
-pub const GDExtensionInterfaceVariantNewCopy = *const fn (GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr) callconv(.c) void;
-
-pub fn variant_new_copy(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedVariantPtr, p_src: GDExtensionConstVariantPtr) void {
-    return load(
-        get_proc_address,
-        "variant_new_copy",
-        *const fn (GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr) callconv(.c) void,
-    )(r_dest, p_src);
-}
-
-/// @name variant_new_nil
-/// @since 4.1
-/// Creates a new Variant containing nil.
-/// @param r_dest A pointer to the destination Variant.
-pub const GDExtensionInterfaceVariantNewNil = *const fn (GDExtensionUninitializedVariantPtr) callconv(.c) void;
-
-pub fn variant_new_nil(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedVariantPtr) void {
-    return load(
-        get_proc_address,
-        "variant_new_nil",
-        *const fn (GDExtensionUninitializedVariantPtr) callconv(.c) void,
-    )(r_dest);
-}
-
-/// @name variant_destroy
-/// @since 4.1
-/// Destroys a Variant.
-/// @param p_self A pointer to the Variant to destroy.
-pub const GDExtensionInterfaceVariantDestroy = *const fn (GDExtensionVariantPtr) callconv(.c) void;
-
-pub fn variant_destroy(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionVariantPtr) void {
-    return load(
-        get_proc_address,
-        "variant_destroy",
-        *const fn (GDExtensionVariantPtr) callconv(.c) void,
-    )(p_self);
-}
-
-/// @name variant_call
-/// @since 4.1
-/// Calls a method on a Variant.
-/// @param p_self A pointer to the Variant.
-/// @param p_method A pointer to a StringName identifying the method.
-/// @param p_args A pointer to a C array of Variant.
-/// @param p_argument_count The number of arguments.
-/// @param r_return A pointer a Variant which will be assigned the return value.
-/// @param r_error A pointer the structure which will hold error information.
-pub const GDExtensionInterfaceVariantCall = *const fn (GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr *p_args, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError *r_error) callconv(.c) void;
-
-pub fn variant_call(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionVariantPtr, p_method: GDExtensionConstStringNamePtr, arg3: GDExtensionConstVariantPtr *p_args, p_argument_count: GDExtensionInt, r_return: GDExtensionUninitializedVariantPtr, arg6: GDExtensionCallError *r_error) void {
-    return load(
-        get_proc_address,
-        "variant_call",
-        *const fn (GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr *p_args, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError *r_error) callconv(.c) void,
-    )(p_self, p_method, arg3, p_argument_count, r_return, arg6);
-}
-
-/// @name variant_call_static
-/// @since 4.1
-/// Calls a static method on a Variant.
-/// @param p_type The variant type.
-/// @param p_method A pointer to a StringName identifying the method.
-/// @param p_args A pointer to a C array of Variant.
-/// @param p_argument_count The number of arguments.
-/// @param r_return A pointer a Variant which will be assigned the return value.
-/// @param r_error A pointer the structure which will be updated with error information.
-pub const GDExtensionInterfaceVariantCallStatic = *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr *p_args, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError *r_error) callconv(.c) void;
-
-pub fn variant_call_static(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType, p_method: GDExtensionConstStringNamePtr, arg3: GDExtensionConstVariantPtr *p_args, p_argument_count: GDExtensionInt, r_return: GDExtensionUninitializedVariantPtr, arg6: GDExtensionCallError *r_error) void {
-    return load(
-        get_proc_address,
-        "variant_call_static",
-        *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr *p_args, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError *r_error) callconv(.c) void,
-    )(p_type, p_method, arg3, p_argument_count, r_return, arg6);
-}
-
-/// @name variant_evaluate
-/// @since 4.1
-/// Evaluate an operator on two Variants.
-/// @param p_op The operator to evaluate.
-/// @param p_a The first Variant.
-/// @param p_b The second Variant.
-/// @param r_return A pointer a Variant which will be assigned the return value.
-/// @param r_valid A pointer to a boolean which will be set to false if the operation is invalid.
-pub const GDExtensionInterfaceVariantEvaluate = *const fn (GDExtensionVariantOperator, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid) callconv(.c) void;
-
-pub fn variant_evaluate(get_proc_address: GDExtensionInterfaceGetProcAddress, p_op: GDExtensionVariantOperator, p_a: GDExtensionConstVariantPtr, p_b: GDExtensionConstVariantPtr, r_return: GDExtensionUninitializedVariantPtr, arg5: GDExtensionBool *r_valid) void {
-    return load(
-        get_proc_address,
-        "variant_evaluate",
-        *const fn (GDExtensionVariantOperator, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid) callconv(.c) void,
-    )(p_op, p_a, p_b, r_return, arg5);
-}
-
-/// @name variant_set
-/// @since 4.1
-/// Sets a key on a Variant to a value.
-/// @param p_self A pointer to the Variant.
-/// @param p_key A pointer to a Variant representing the key.
-/// @param p_value A pointer to a Variant representing the value.
-/// @param r_valid A pointer to a boolean which will be set to false if the operation is invalid.
-pub const GDExtensionInterfaceVariantSet = *const fn (GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool *r_valid) callconv(.c) void;
-
-pub fn variant_set(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionVariantPtr, p_key: GDExtensionConstVariantPtr, p_value: GDExtensionConstVariantPtr, arg4: GDExtensionBool *r_valid) void {
-    return load(
-        get_proc_address,
-        "variant_set",
-        *const fn (GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool *r_valid) callconv(.c) void,
-    )(p_self, p_key, p_value, arg4);
-}
-
-/// @name variant_set_named
-/// @since 4.1
-/// Sets a named key on a Variant to a value.
-/// @param p_self A pointer to the Variant.
-/// @param p_key A pointer to a StringName representing the key.
-/// @param p_value A pointer to a Variant representing the value.
-/// @param r_valid A pointer to a boolean which will be set to false if the operation is invalid.
-pub const GDExtensionInterfaceVariantSetNamed = *const fn (GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionBool *r_valid) callconv(.c) void;
-
-pub fn variant_set_named(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionVariantPtr, p_key: GDExtensionConstStringNamePtr, p_value: GDExtensionConstVariantPtr, arg4: GDExtensionBool *r_valid) void {
-    return load(
-        get_proc_address,
-        "variant_set_named",
-        *const fn (GDExtensionVariantPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionBool *r_valid) callconv(.c) void,
-    )(p_self, p_key, p_value, arg4);
-}
-
-/// @name variant_set_keyed
-/// @since 4.1
-/// Sets a keyed property on a Variant to a value.
-/// @param p_self A pointer to the Variant.
-/// @param p_key A pointer to a Variant representing the key.
-/// @param p_value A pointer to a Variant representing the value.
-/// @param r_valid A pointer to a boolean which will be set to false if the operation is invalid.
-pub const GDExtensionInterfaceVariantSetKeyed = *const fn (GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool *r_valid) callconv(.c) void;
-
-pub fn variant_set_keyed(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionVariantPtr, p_key: GDExtensionConstVariantPtr, p_value: GDExtensionConstVariantPtr, arg4: GDExtensionBool *r_valid) void {
-    return load(
-        get_proc_address,
-        "variant_set_keyed",
-        *const fn (GDExtensionVariantPtr, GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool *r_valid) callconv(.c) void,
-    )(p_self, p_key, p_value, arg4);
-}
-
-/// @name variant_set_indexed
-/// @since 4.1
-/// Sets an index on a Variant to a value.
-/// @param p_self A pointer to the Variant.
-/// @param p_index The index.
-/// @param p_value A pointer to a Variant representing the value.
-/// @param r_valid A pointer to a boolean which will be set to false if the operation is invalid.
-/// @param r_oob A pointer to a boolean which will be set to true if the index is out of bounds.
-pub const GDExtensionInterfaceVariantSetIndexed = *const fn (GDExtensionVariantPtr, GDExtensionInt, GDExtensionConstVariantPtr, GDExtensionBool *r_valid, GDExtensionBool *r_oob) callconv(.c) void;
-
-pub fn variant_set_indexed(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionVariantPtr, p_index: GDExtensionInt, p_value: GDExtensionConstVariantPtr, arg4: GDExtensionBool *r_valid, arg5: GDExtensionBool *r_oob) void {
-    return load(
-        get_proc_address,
-        "variant_set_indexed",
-        *const fn (GDExtensionVariantPtr, GDExtensionInt, GDExtensionConstVariantPtr, GDExtensionBool *r_valid, GDExtensionBool *r_oob) callconv(.c) void,
-    )(p_self, p_index, p_value, arg4, arg5);
-}
-
-/// @name variant_get
-/// @since 4.1
-/// Gets the value of a key from a Variant.
-/// @param p_self A pointer to the Variant.
-/// @param p_key A pointer to a Variant representing the key.
-/// @param r_ret A pointer to a Variant which will be assigned the value.
-/// @param r_valid A pointer to a boolean which will be set to false if the operation is invalid.
-pub const GDExtensionInterfaceVariantGet = *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid) callconv(.c) void;
-
-pub fn variant_get(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr, p_key: GDExtensionConstVariantPtr, r_ret: GDExtensionUninitializedVariantPtr, arg4: GDExtensionBool *r_valid) void {
-    return load(
-        get_proc_address,
-        "variant_get",
-        *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid) callconv(.c) void,
-    )(p_self, p_key, r_ret, arg4);
-}
-
-/// @name variant_get_named
-/// @since 4.1
-/// Gets the value of a named key from a Variant.
-/// @param p_self A pointer to the Variant.
-/// @param p_key A pointer to a StringName representing the key.
-/// @param r_ret A pointer to a Variant which will be assigned the value.
-/// @param r_valid A pointer to a boolean which will be set to false if the operation is invalid.
-pub const GDExtensionInterfaceVariantGetNamed = *const fn (GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid) callconv(.c) void;
-
-pub fn variant_get_named(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr, p_key: GDExtensionConstStringNamePtr, r_ret: GDExtensionUninitializedVariantPtr, arg4: GDExtensionBool *r_valid) void {
-    return load(
-        get_proc_address,
-        "variant_get_named",
-        *const fn (GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid) callconv(.c) void,
-    )(p_self, p_key, r_ret, arg4);
-}
-
-/// @name variant_get_keyed
-/// @since 4.1
-/// Gets the value of a keyed property from a Variant.
-/// @param p_self A pointer to the Variant.
-/// @param p_key A pointer to a Variant representing the key.
-/// @param r_ret A pointer to a Variant which will be assigned the value.
-/// @param r_valid A pointer to a boolean which will be set to false if the operation is invalid.
-pub const GDExtensionInterfaceVariantGetKeyed = *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid) callconv(.c) void;
-
-pub fn variant_get_keyed(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr, p_key: GDExtensionConstVariantPtr, r_ret: GDExtensionUninitializedVariantPtr, arg4: GDExtensionBool *r_valid) void {
-    return load(
-        get_proc_address,
-        "variant_get_keyed",
-        *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid) callconv(.c) void,
-    )(p_self, p_key, r_ret, arg4);
-}
-
-/// @name variant_get_indexed
-/// @since 4.1
-/// Gets the value of an index from a Variant.
-/// @param p_self A pointer to the Variant.
-/// @param p_index The index.
-/// @param r_ret A pointer to a Variant which will be assigned the value.
-/// @param r_valid A pointer to a boolean which will be set to false if the operation is invalid.
-/// @param r_oob A pointer to a boolean which will be set to true if the index is out of bounds.
-pub const GDExtensionInterfaceVariantGetIndexed = *const fn (GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid, GDExtensionBool *r_oob) callconv(.c) void;
-
-pub fn variant_get_indexed(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr, p_index: GDExtensionInt, r_ret: GDExtensionUninitializedVariantPtr, arg4: GDExtensionBool *r_valid, arg5: GDExtensionBool *r_oob) void {
-    return load(
-        get_proc_address,
-        "variant_get_indexed",
-        *const fn (GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid, GDExtensionBool *r_oob) callconv(.c) void,
-    )(p_self, p_index, r_ret, arg4, arg5);
-}
-
-/// @name variant_iter_init
-/// @since 4.1
-/// Initializes an iterator over a Variant.
-/// @param p_self A pointer to the Variant.
-/// @param r_iter A pointer to a Variant which will be assigned the iterator.
-/// @param r_valid A pointer to a boolean which will be set to false if the operation is invalid.
-/// @return true if the operation is valid; otherwise false.
-pub const GDExtensionInterfaceVariantIterInit = *const fn (GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid) callconv(.c) GDExtensionBool;
-
-pub fn variant_iter_init(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr, r_iter: GDExtensionUninitializedVariantPtr, arg3: GDExtensionBool *r_valid) GDExtensionBool {
-    return load(
-        get_proc_address,
-        "variant_iter_init",
-        *const fn (GDExtensionConstVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid) callconv(.c) GDExtensionBool,
-    )(p_self, r_iter, arg3);
-}
-
-/// @name variant_iter_next
-/// @since 4.1
-/// Gets the next value for an iterator over a Variant.
-/// @param p_self A pointer to the Variant.
-/// @param r_iter A pointer to a Variant which will be assigned the iterator.
-/// @param r_valid A pointer to a boolean which will be set to false if the operation is invalid.
-/// @return true if the operation is valid; otherwise false.
-pub const GDExtensionInterfaceVariantIterNext = *const fn (GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool *r_valid) callconv(.c) GDExtensionBool;
-
-pub fn variant_iter_next(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr, r_iter: GDExtensionVariantPtr, arg3: GDExtensionBool *r_valid) GDExtensionBool {
-    return load(
-        get_proc_address,
-        "variant_iter_next",
-        *const fn (GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool *r_valid) callconv(.c) GDExtensionBool,
-    )(p_self, r_iter, arg3);
-}
-
-/// @name variant_iter_get
-/// @since 4.1
-/// Gets the next value for an iterator over a Variant.
-/// @param p_self A pointer to the Variant.
-/// @param r_iter A pointer to a Variant which will be assigned the iterator.
-/// @param r_ret A pointer to a Variant which will be assigned false if the operation is invalid.
-/// @param r_valid A pointer to a boolean which will be set to false if the operation is invalid.
-pub const GDExtensionInterfaceVariantIterGet = *const fn (GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid) callconv(.c) void;
-
-pub fn variant_iter_get(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr, r_iter: GDExtensionVariantPtr, r_ret: GDExtensionUninitializedVariantPtr, arg4: GDExtensionBool *r_valid) void {
-    return load(
-        get_proc_address,
-        "variant_iter_get",
-        *const fn (GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionUninitializedVariantPtr, GDExtensionBool *r_valid) callconv(.c) void,
-    )(p_self, r_iter, r_ret, arg4);
-}
-
-/// @name variant_hash
-/// @since 4.1
-/// Gets the hash of a Variant.
-/// @param p_self A pointer to the Variant.
-/// @return The hash value.
-pub const GDExtensionInterfaceVariantHash = *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionInt;
-
-pub fn variant_hash(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr) GDExtensionInt {
-    return load(
-        get_proc_address,
-        "variant_hash",
-        *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionInt,
-    )(p_self);
-}
-
-/// @name variant_recursive_hash
-/// @since 4.1
-/// Gets the recursive hash of a Variant.
-/// @param p_self A pointer to the Variant.
-/// @param p_recursion_count The number of recursive loops so far.
-/// @return The hash value.
-pub const GDExtensionInterfaceVariantRecursiveHash = *const fn (GDExtensionConstVariantPtr, GDExtensionInt) callconv(.c) GDExtensionInt;
-
-pub fn variant_recursive_hash(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr, p_recursion_count: GDExtensionInt) GDExtensionInt {
-    return load(
-        get_proc_address,
-        "variant_recursive_hash",
-        *const fn (GDExtensionConstVariantPtr, GDExtensionInt) callconv(.c) GDExtensionInt,
-    )(p_self, p_recursion_count);
-}
-
-/// @name variant_hash_compare
-/// @since 4.1
-/// Compares two Variants by their hash.
-/// @param p_self A pointer to the Variant.
-/// @param p_other A pointer to the other Variant to compare it to.
-/// @return The hash value.
-pub const GDExtensionInterfaceVariantHashCompare = *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool;
-
-pub fn variant_hash_compare(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr, p_other: GDExtensionConstVariantPtr) GDExtensionBool {
-    return load(
-        get_proc_address,
-        "variant_hash_compare",
-        *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool,
-    )(p_self, p_other);
-}
-
-/// @name variant_booleanize
-/// @since 4.1
-/// Converts a Variant to a boolean.
-/// @param p_self A pointer to the Variant.
-/// @return The boolean value of the Variant.
-pub const GDExtensionInterfaceVariantBooleanize = *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool;
-
-pub fn variant_booleanize(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr) GDExtensionBool {
-    return load(
-        get_proc_address,
-        "variant_booleanize",
-        *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool,
-    )(p_self);
-}
-
-/// @name variant_duplicate
-/// @since 4.1
-/// Duplicates a Variant.
-/// @param p_self A pointer to the Variant.
-/// @param r_ret A pointer to a Variant to store the duplicated value.
-/// @param p_deep Whether or not to duplicate deeply (when supported by the Variant type).
-pub const GDExtensionInterfaceVariantDuplicate = *const fn (GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool) callconv(.c) void;
-
-pub fn variant_duplicate(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr, r_ret: GDExtensionVariantPtr, p_deep: GDExtensionBool) void {
-    return load(
-        get_proc_address,
-        "variant_duplicate",
-        *const fn (GDExtensionConstVariantPtr, GDExtensionVariantPtr, GDExtensionBool) callconv(.c) void,
-    )(p_self, r_ret, p_deep);
-}
-
-/// @name variant_stringify
-/// @since 4.1
-/// Converts a Variant to a string.
-/// @param p_self A pointer to the Variant.
-/// @param r_ret A pointer to a String to store the resulting value.
-pub const GDExtensionInterfaceVariantStringify = *const fn (GDExtensionConstVariantPtr, GDExtensionStringPtr) callconv(.c) void;
-
-pub fn variant_stringify(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr, r_ret: GDExtensionStringPtr) void {
-    return load(
-        get_proc_address,
-        "variant_stringify",
-        *const fn (GDExtensionConstVariantPtr, GDExtensionStringPtr) callconv(.c) void,
-    )(p_self, r_ret);
-}
-
-/// @name variant_get_type
-/// @since 4.1
-/// Gets the type of a Variant.
-/// @param p_self A pointer to the Variant.
-/// @return The variant type.
-pub const GDExtensionInterfaceVariantGetType = *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantType;
-
-pub fn variant_get_type(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr) GDExtensionVariantType {
-    return load(
-        get_proc_address,
-        "variant_get_type",
-        *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantType,
-    )(p_self);
-}
-
-/// @name variant_has_method
-/// @since 4.1
-/// Checks if a Variant has the given method.
-/// @param p_self A pointer to the Variant.
-/// @param p_method A pointer to a StringName with the method name.
-/// @return true if the variant has the given method; otherwise false.
-pub const GDExtensionInterfaceVariantHasMethod = *const fn (GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;
-
-pub fn variant_has_method(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr, p_method: GDExtensionConstStringNamePtr) GDExtensionBool {
-    return load(
-        get_proc_address,
-        "variant_has_method",
-        *const fn (GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool,
-    )(p_self, p_method);
-}
-
-/// @name variant_has_member
-/// @since 4.1
-/// Checks if a type of Variant has the given member.
-/// @param p_type The Variant type.
-/// @param p_member A pointer to a StringName with the member name.
-/// @return true if the variant has the given method; otherwise false.
-pub const GDExtensionInterfaceVariantHasMember = *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;
-
-pub fn variant_has_member(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType, p_member: GDExtensionConstStringNamePtr) GDExtensionBool {
-    return load(
-        get_proc_address,
-        "variant_has_member",
-        *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool,
-    )(p_type, p_member);
-}
-
-/// @name variant_has_key
-/// @since 4.1
-/// Checks if a Variant has a key.
-/// @param p_self A pointer to the Variant.
-/// @param p_key A pointer to a Variant representing the key.
-/// @param r_valid A pointer to a boolean which will be set to false if the key doesn't exist.
-/// @return true if the key exists; otherwise false.
-pub const GDExtensionInterfaceVariantHasKey = *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool *r_valid) callconv(.c) GDExtensionBool;
-
-pub fn variant_has_key(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr, p_key: GDExtensionConstVariantPtr, arg3: GDExtensionBool *r_valid) GDExtensionBool {
-    return load(
-        get_proc_address,
-        "variant_has_key",
-        *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr, GDExtensionBool *r_valid) callconv(.c) GDExtensionBool,
-    )(p_self, p_key, arg3);
-}
-
-/// @name variant_get_object_instance_id
-/// @since 4.4
-/// Gets the object instance ID from a variant of type GDEXTENSION_VARIANT_TYPE_OBJECT.
-/// If the variant isn't of type GDEXTENSION_VARIANT_TYPE_OBJECT, then zero will be returned.
-/// The instance ID will be returned even if the object is no longer valid - use `object_get_instance_by_id()` to check if the object is still valid.
-/// @param p_self A pointer to the Variant.
-/// @return The instance ID for the contained object.
-pub const GDExtensionInterfaceVariantGetObjectInstanceId = *const fn (GDExtensionConstVariantPtr) callconv(.c) GDObjectInstanceID;
-
-pub fn variant_get_object_instance_id(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstVariantPtr) GDObjectInstanceID {
-    return load(
-        get_proc_address,
-        "variant_get_object_instance_id",
-        *const fn (GDExtensionConstVariantPtr) callconv(.c) GDObjectInstanceID,
-    )(p_self);
-}
-
-/// @name variant_get_type_name
-/// @since 4.1
-/// Gets the name of a Variant type.
-/// @param p_type The Variant type.
-/// @param r_name A pointer to a String to store the Variant type name.
-pub const GDExtensionInterfaceVariantGetTypeName = *const fn (GDExtensionVariantType, GDExtensionUninitializedStringPtr) callconv(.c) void;
-
-pub fn variant_get_type_name(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType, r_name: GDExtensionUninitializedStringPtr) void {
-    return load(
-        get_proc_address,
-        "variant_get_type_name",
-        *const fn (GDExtensionVariantType, GDExtensionUninitializedStringPtr) callconv(.c) void,
-    )(p_type, r_name);
-}
-
-/// @name variant_get_type_by_name
-/// @since 4.7
-/// Gets the Variant type by name.
-/// @param p_type_name The variant type name.
-/// @return The variant type for the given name; otherwise VARIANT_MAX if name is invalid.
-pub const GDExtensionInterfaceVariantGetTypeByName = *const fn (GDExtensionConstStringPtr) callconv(.c) GDExtensionVariantType;
-
-pub fn variant_get_type_by_name(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type_name: GDExtensionConstStringPtr) GDExtensionVariantType {
-    return load(
-        get_proc_address,
-        "variant_get_type_by_name",
-        *const fn (GDExtensionConstStringPtr) callconv(.c) GDExtensionVariantType,
-    )(p_type_name);
-}
-
-/// @name variant_can_convert
-/// @since 4.1
-/// Checks if Variants can be converted from one type to another.
-/// @param p_from The Variant type to convert from.
-/// @param p_to The Variant type to convert to.
-/// @return true if the conversion is possible; otherwise false.
-pub const GDExtensionInterfaceVariantCanConvert = *const fn (GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionBool;
-
-pub fn variant_can_convert(get_proc_address: GDExtensionInterfaceGetProcAddress, p_from: GDExtensionVariantType, p_to: GDExtensionVariantType) GDExtensionBool {
-    return load(
-        get_proc_address,
-        "variant_can_convert",
-        *const fn (GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionBool,
-    )(p_from, p_to);
-}
-
-/// @name variant_can_convert_strict
-/// @since 4.1
-/// Checks if Variant can be converted from one type to another using stricter rules.
-/// @param p_from The Variant type to convert from.
-/// @param p_to The Variant type to convert to.
-/// @return true if the conversion is possible; otherwise false.
-pub const GDExtensionInterfaceVariantCanConvertStrict = *const fn (GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionBool;
-
-pub fn variant_can_convert_strict(get_proc_address: GDExtensionInterfaceGetProcAddress, p_from: GDExtensionVariantType, p_to: GDExtensionVariantType) GDExtensionBool {
-    return load(
-        get_proc_address,
-        "variant_can_convert_strict",
-        *const fn (GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionBool,
-    )(p_from, p_to);
-}
-
-/// @name get_variant_from_type_constructor
-/// @since 4.1
-/// Gets a pointer to a function that can create a Variant of the given type from a raw value.
-/// @param p_type The Variant type.
-/// @return A pointer to a function that can create a Variant of the given type from a raw value.
-pub const GDExtensionInterfaceGetVariantFromTypeConstructor = *const fn (GDExtensionVariantType) callconv(.c) GDExtensionVariantFromTypeConstructorFunc;
-
-pub fn get_variant_from_type_constructor(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType) GDExtensionVariantFromTypeConstructorFunc {
-    return load(
-        get_proc_address,
-        "get_variant_from_type_constructor",
-        *const fn (GDExtensionVariantType) callconv(.c) GDExtensionVariantFromTypeConstructorFunc,
-    )(p_type);
-}
-
-/// @name get_variant_to_type_constructor
-/// @since 4.1
-/// Gets a pointer to a function that can get the raw value from a Variant of the given type.
-/// @param p_type The Variant type.
-/// @return A pointer to a function that can get the raw value from a Variant of the given type.
-pub const GDExtensionInterfaceGetVariantToTypeConstructor = *const fn (GDExtensionVariantType) callconv(.c) GDExtensionTypeFromVariantConstructorFunc;
-
-pub fn get_variant_to_type_constructor(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType) GDExtensionTypeFromVariantConstructorFunc {
-    return load(
-        get_proc_address,
-        "get_variant_to_type_constructor",
-        *const fn (GDExtensionVariantType) callconv(.c) GDExtensionTypeFromVariantConstructorFunc,
-    )(p_type);
-}
-
-/// @name variant_get_ptr_internal_getter
-/// @since 4.4
-/// Provides a function pointer for retrieving a pointer to a variant's internal value.
-/// Access to a variant's internal value can be used to modify it in-place, or to retrieve its value without the overhead of variant conversion functions.
-/// It is recommended to cache the getter for all variant types in a function table to avoid retrieval overhead upon use.
-/// Each function assumes the variant's type has already been determined and matches the function.
-/// Invoking the function with a variant of a mismatched type has undefined behavior, and may lead to a segmentation fault.
-/// @param p_type The Variant type.
-/// @return A pointer to a type-specific function that returns a pointer to the internal value of a variant. Check the implementation of this function (gdextension_variant_get_ptr_internal_getter) for pointee type info of each variant type.
-pub const GDExtensionInterfaceGetVariantGetInternalPtrFunc = *const fn (GDExtensionVariantType) callconv(.c) GDExtensionVariantGetInternalPtrFunc;
-
-pub fn variant_get_ptr_internal_getter(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType) GDExtensionVariantGetInternalPtrFunc {
-    return load(
-        get_proc_address,
-        "variant_get_ptr_internal_getter",
-        *const fn (GDExtensionVariantType) callconv(.c) GDExtensionVariantGetInternalPtrFunc,
-    )(p_type);
-}
-
-/// @name variant_get_ptr_operator_evaluator
-/// @since 4.1
-/// Gets a pointer to a function that can evaluate the given Variant operator on the given Variant types.
-/// @param p_operator The variant operator.
-/// @param p_type_a The type of the first Variant.
-/// @param p_type_b The type of the second Variant.
-/// @return A pointer to a function that can evaluate the given Variant operator on the given Variant types.
-pub const GDExtensionInterfaceVariantGetPtrOperatorEvaluator = *const fn (GDExtensionVariantOperator, GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionPtrOperatorEvaluator;
-
-pub fn variant_get_ptr_operator_evaluator(get_proc_address: GDExtensionInterfaceGetProcAddress, p_operator: GDExtensionVariantOperator, p_type_a: GDExtensionVariantType, p_type_b: GDExtensionVariantType) GDExtensionPtrOperatorEvaluator {
-    return load(
-        get_proc_address,
-        "variant_get_ptr_operator_evaluator",
-        *const fn (GDExtensionVariantOperator, GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionPtrOperatorEvaluator,
-    )(p_operator, p_type_a, p_type_b);
-}
-
-/// @name variant_get_ptr_builtin_method
-/// @since 4.1
-/// Gets a pointer to a function that can call a builtin method on a type of Variant.
-/// @param p_type The Variant type.
-/// @param p_method A pointer to a StringName with the method name.
-/// @param p_hash A hash representing the method signature.
-/// @return A pointer to a function that can call a builtin method on a type of Variant.
-pub const GDExtensionInterfaceVariantGetPtrBuiltinMethod = *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionInt) callconv(.c) GDExtensionPtrBuiltInMethod;
-
-pub fn variant_get_ptr_builtin_method(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType, p_method: GDExtensionConstStringNamePtr, p_hash: GDExtensionInt) GDExtensionPtrBuiltInMethod {
-    return load(
-        get_proc_address,
-        "variant_get_ptr_builtin_method",
-        *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionInt) callconv(.c) GDExtensionPtrBuiltInMethod,
-    )(p_type, p_method, p_hash);
-}
-
-/// @name variant_get_ptr_constructor
-/// @since 4.1
-/// Gets a pointer to a function that can call one of the constructors for a type of Variant.
-/// @param p_type The Variant type.
-/// @param p_constructor The index of the constructor.
-/// @return A pointer to a function that can call one of the constructors for a type of Variant.
-pub const GDExtensionInterfaceVariantGetPtrConstructor = *const fn (GDExtensionVariantType, i32) callconv(.c) GDExtensionPtrConstructor;
-
-pub fn variant_get_ptr_constructor(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType, p_constructor: i32) GDExtensionPtrConstructor {
-    return load(
-        get_proc_address,
-        "variant_get_ptr_constructor",
-        *const fn (GDExtensionVariantType, i32) callconv(.c) GDExtensionPtrConstructor,
-    )(p_type, p_constructor);
-}
-
-/// @name variant_get_ptr_destructor
-/// @since 4.1
-/// Gets a pointer to a function than can call the destructor for a type of Variant.
-/// @param p_type The Variant type.
-/// @return A pointer to a function than can call the destructor for a type of Variant.
-pub const GDExtensionInterfaceVariantGetPtrDestructor = *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrDestructor;
-
-pub fn variant_get_ptr_destructor(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType) GDExtensionPtrDestructor {
-    return load(
-        get_proc_address,
-        "variant_get_ptr_destructor",
-        *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrDestructor,
-    )(p_type);
-}
-
-/// @name variant_construct
-/// @since 4.1
-/// Constructs a Variant of the given type, using the first constructor that matches the given arguments.
-/// @param p_type The Variant type.
-/// @param r_base A pointer to a Variant to store the constructed value.
-/// @param p_args A pointer to a C array of Variant pointers representing the arguments for the constructor.
-/// @param p_argument_count The number of arguments to pass to the constructor.
-/// @param r_error A pointer the structure which will be updated with error information.
-pub const GDExtensionInterfaceVariantConstruct = *const fn (GDExtensionVariantType, GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr *p_args, i32, GDExtensionCallError *r_error) callconv(.c) void;
-
-pub fn variant_construct(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType, r_base: GDExtensionUninitializedVariantPtr, arg3: GDExtensionConstVariantPtr *p_args, p_argument_count: i32, arg5: GDExtensionCallError *r_error) void {
-    return load(
-        get_proc_address,
-        "variant_construct",
-        *const fn (GDExtensionVariantType, GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr *p_args, i32, GDExtensionCallError *r_error) callconv(.c) void,
-    )(p_type, r_base, arg3, p_argument_count, arg5);
-}
-
-/// @name variant_get_ptr_setter
-/// @since 4.1
-/// Gets a pointer to a function that can call a member's setter on the given Variant type.
-/// @param p_type The Variant type.
-/// @param p_member A pointer to a StringName with the member name.
-/// @return A pointer to a function that can call a member's setter on the given Variant type.
-pub const GDExtensionInterfaceVariantGetPtrSetter = *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionPtrSetter;
-
-pub fn variant_get_ptr_setter(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType, p_member: GDExtensionConstStringNamePtr) GDExtensionPtrSetter {
-    return load(
-        get_proc_address,
-        "variant_get_ptr_setter",
-        *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionPtrSetter,
-    )(p_type, p_member);
-}
-
-/// @name variant_get_ptr_getter
-/// @since 4.1
-/// Gets a pointer to a function that can call a member's getter on the given Variant type.
-/// @param p_type The Variant type.
-/// @param p_member A pointer to a StringName with the member name.
-/// @return A pointer to a function that can call a member's getter on the given Variant type.
-pub const GDExtensionInterfaceVariantGetPtrGetter = *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionPtrGetter;
-
-pub fn variant_get_ptr_getter(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType, p_member: GDExtensionConstStringNamePtr) GDExtensionPtrGetter {
-    return load(
-        get_proc_address,
-        "variant_get_ptr_getter",
-        *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionPtrGetter,
-    )(p_type, p_member);
-}
-
-/// @name variant_get_ptr_indexed_setter
-/// @since 4.1
-/// Gets a pointer to a function that can set an index on the given Variant type.
-/// @param p_type The Variant type.
-/// @return A pointer to a function that can set an index on the given Variant type.
-pub const GDExtensionInterfaceVariantGetPtrIndexedSetter = *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrIndexedSetter;
-
-pub fn variant_get_ptr_indexed_setter(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType) GDExtensionPtrIndexedSetter {
-    return load(
-        get_proc_address,
-        "variant_get_ptr_indexed_setter",
-        *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrIndexedSetter,
-    )(p_type);
-}
-
-/// @name variant_get_ptr_indexed_getter
-/// @since 4.1
-/// Gets a pointer to a function that can get an index on the given Variant type.
-/// @param p_type The Variant type.
-/// @return A pointer to a function that can get an index on the given Variant type.
-pub const GDExtensionInterfaceVariantGetPtrIndexedGetter = *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrIndexedGetter;
-
-pub fn variant_get_ptr_indexed_getter(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType) GDExtensionPtrIndexedGetter {
-    return load(
-        get_proc_address,
-        "variant_get_ptr_indexed_getter",
-        *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrIndexedGetter,
-    )(p_type);
-}
-
-/// @name variant_get_ptr_keyed_setter
-/// @since 4.1
-/// Gets a pointer to a function that can set a key on the given Variant type.
-/// @param p_type The Variant type.
-/// @return A pointer to a function that can set a key on the given Variant type.
-pub const GDExtensionInterfaceVariantGetPtrKeyedSetter = *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedSetter;
-
-pub fn variant_get_ptr_keyed_setter(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType) GDExtensionPtrKeyedSetter {
-    return load(
-        get_proc_address,
-        "variant_get_ptr_keyed_setter",
-        *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedSetter,
-    )(p_type);
-}
-
-/// @name variant_get_ptr_keyed_getter
-/// @since 4.1
-/// Gets a pointer to a function that can get a key on the given Variant type.
-/// @param p_type The Variant type.
-/// @return A pointer to a function that can get a key on the given Variant type.
-pub const GDExtensionInterfaceVariantGetPtrKeyedGetter = *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedGetter;
-
-pub fn variant_get_ptr_keyed_getter(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType) GDExtensionPtrKeyedGetter {
-    return load(
-        get_proc_address,
-        "variant_get_ptr_keyed_getter",
-        *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedGetter,
-    )(p_type);
-}
-
-/// @name variant_get_ptr_keyed_checker
-/// @since 4.1
-/// Gets a pointer to a function that can check a key on the given Variant type.
-/// @param p_type The Variant type.
-/// @return A pointer to a function that can check a key on the given Variant type.
-pub const GDExtensionInterfaceVariantGetPtrKeyedChecker = *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedChecker;
-
-pub fn variant_get_ptr_keyed_checker(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType) GDExtensionPtrKeyedChecker {
-    return load(
-        get_proc_address,
-        "variant_get_ptr_keyed_checker",
-        *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedChecker,
-    )(p_type);
-}
-
-/// @name variant_get_constant_value
-/// @since 4.1
-/// Gets the value of a constant from the given Variant type.
-/// @param p_type The Variant type.
-/// @param p_constant A pointer to a StringName with the constant name.
-/// @param r_ret A pointer to a Variant to store the value.
-pub const GDExtensionInterfaceVariantGetConstantValue = *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr) callconv(.c) void;
-
-pub fn variant_get_constant_value(get_proc_address: GDExtensionInterfaceGetProcAddress, p_type: GDExtensionVariantType, p_constant: GDExtensionConstStringNamePtr, r_ret: GDExtensionUninitializedVariantPtr) void {
-    return load(
-        get_proc_address,
-        "variant_get_constant_value",
-        *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionUninitializedVariantPtr) callconv(.c) void,
-    )(p_type, p_constant, r_ret);
-}
-
-/// @name variant_get_ptr_utility_function
-/// @since 4.1
-/// Gets a pointer to a function that can call a Variant utility function.
-/// @param p_function A pointer to a StringName with the function name.
-/// @param p_hash A hash representing the function signature.
-/// @return A pointer to a function that can call a Variant utility function.
-pub const GDExtensionInterfaceVariantGetPtrUtilityFunction = *const fn (GDExtensionConstStringNamePtr, GDExtensionInt) callconv(.c) GDExtensionPtrUtilityFunction;
-
-pub fn variant_get_ptr_utility_function(get_proc_address: GDExtensionInterfaceGetProcAddress, p_function: GDExtensionConstStringNamePtr, p_hash: GDExtensionInt) GDExtensionPtrUtilityFunction {
-    return load(
-        get_proc_address,
-        "variant_get_ptr_utility_function",
-        *const fn (GDExtensionConstStringNamePtr, GDExtensionInt) callconv(.c) GDExtensionPtrUtilityFunction,
-    )(p_function, p_hash);
-}
-
-/// @name string_new_with_latin1_chars
-/// @since 4.1
-/// Creates a String from a Latin-1 encoded C string.
-/// @param r_dest A pointer to a Variant to hold the newly created String.
-/// @param p_contents A pointer to a Latin-1 encoded C string (null terminated).
-pub const GDExtensionInterfaceStringNewWithLatin1Chars = *const fn (GDExtensionUninitializedStringPtr, char *p_contents) callconv(.c) void;
-
-pub fn string_new_with_latin1_chars(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringPtr, arg2: char *p_contents) void {
-    return load(
-        get_proc_address,
-        "string_new_with_latin1_chars",
-        *const fn (GDExtensionUninitializedStringPtr, char *p_contents) callconv(.c) void,
-    )(r_dest, arg2);
-}
-
-/// @name string_new_with_utf8_chars
-/// @since 4.1
-/// Creates a String from a UTF-8 encoded C string.
-/// @param r_dest A pointer to a Variant to hold the newly created String.
-/// @param p_contents A pointer to a UTF-8 encoded C string (null terminated).
-pub const GDExtensionInterfaceStringNewWithUtf8Chars = *const fn (GDExtensionUninitializedStringPtr, char *p_contents) callconv(.c) void;
-
-pub fn string_new_with_utf8_chars(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringPtr, arg2: char *p_contents) void {
-    return load(
-        get_proc_address,
-        "string_new_with_utf8_chars",
-        *const fn (GDExtensionUninitializedStringPtr, char *p_contents) callconv(.c) void,
-    )(r_dest, arg2);
-}
-
-/// @name string_new_with_utf16_chars
-/// @since 4.1
-/// Creates a String from a UTF-16 encoded C string.
-/// @param r_dest A pointer to a Variant to hold the newly created String.
-/// @param p_contents A pointer to a UTF-16 encoded C string (null terminated).
-pub const GDExtensionInterfaceStringNewWithUtf16Chars = *const fn (GDExtensionUninitializedStringPtr, char16_t *p_contents) callconv(.c) void;
-
-pub fn string_new_with_utf16_chars(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringPtr, arg2: char16_t *p_contents) void {
-    return load(
-        get_proc_address,
-        "string_new_with_utf16_chars",
-        *const fn (GDExtensionUninitializedStringPtr, char16_t *p_contents) callconv(.c) void,
-    )(r_dest, arg2);
-}
-
-/// @name string_new_with_utf32_chars
-/// @since 4.1
-/// Creates a String from a UTF-32 encoded C string.
-/// @param r_dest A pointer to a Variant to hold the newly created String.
-/// @param p_contents A pointer to a UTF-32 encoded C string (null terminated).
-pub const GDExtensionInterfaceStringNewWithUtf32Chars = *const fn (GDExtensionUninitializedStringPtr, char32_t *p_contents) callconv(.c) void;
-
-pub fn string_new_with_utf32_chars(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringPtr, arg2: char32_t *p_contents) void {
-    return load(
-        get_proc_address,
-        "string_new_with_utf32_chars",
-        *const fn (GDExtensionUninitializedStringPtr, char32_t *p_contents) callconv(.c) void,
-    )(r_dest, arg2);
-}
-
-/// @name string_new_with_wide_chars
-/// @since 4.1
-/// Creates a String from a wide C string.
-/// @param r_dest A pointer to a Variant to hold the newly created String.
-/// @param p_contents A pointer to a wide C string (null terminated).
-pub const GDExtensionInterfaceStringNewWithWideChars = *const fn (GDExtensionUninitializedStringPtr, wchar_t *p_contents) callconv(.c) void;
-
-pub fn string_new_with_wide_chars(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringPtr, arg2: wchar_t *p_contents) void {
-    return load(
-        get_proc_address,
-        "string_new_with_wide_chars",
-        *const fn (GDExtensionUninitializedStringPtr, wchar_t *p_contents) callconv(.c) void,
-    )(r_dest, arg2);
-}
-
-/// @name string_new_with_latin1_chars_and_len
-/// @since 4.1
-/// Creates a String from a Latin-1 encoded C string with the given length.
-/// @param r_dest A pointer to a Variant to hold the newly created String.
-/// @param p_contents A pointer to a Latin-1 encoded C string.
-/// @param p_size The number of characters (= number of bytes).
-pub const GDExtensionInterfaceStringNewWithLatin1CharsAndLen = *const fn (GDExtensionUninitializedStringPtr, char *p_contents, GDExtensionInt) callconv(.c) void;
-
-pub fn string_new_with_latin1_chars_and_len(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringPtr, arg2: char *p_contents, p_size: GDExtensionInt) void {
-    return load(
-        get_proc_address,
-        "string_new_with_latin1_chars_and_len",
-        *const fn (GDExtensionUninitializedStringPtr, char *p_contents, GDExtensionInt) callconv(.c) void,
-    )(r_dest, arg2, p_size);
-}
-
-/// @name string_new_with_utf8_chars_and_len
-/// @since 4.1
-/// Creates a String from a UTF-8 encoded C string with the given length.
-/// @param r_dest A pointer to a Variant to hold the newly created String.
-/// @param p_contents A pointer to a UTF-8 encoded C string.
-/// @param p_size The number of bytes (not code units).
-pub const GDExtensionInterfaceStringNewWithUtf8CharsAndLen = *const fn (GDExtensionUninitializedStringPtr, char *p_contents, GDExtensionInt) callconv(.c) void;
-
-pub fn string_new_with_utf8_chars_and_len(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringPtr, arg2: char *p_contents, p_size: GDExtensionInt) void {
-    return load(
-        get_proc_address,
-        "string_new_with_utf8_chars_and_len",
-        *const fn (GDExtensionUninitializedStringPtr, char *p_contents, GDExtensionInt) callconv(.c) void,
-    )(r_dest, arg2, p_size);
-}
-
-/// @name string_new_with_utf8_chars_and_len2
-/// @since 4.3
-/// Creates a String from a UTF-8 encoded C string with the given length.
-/// @param r_dest A pointer to a Variant to hold the newly created String.
-/// @param p_contents A pointer to a UTF-8 encoded C string.
-/// @param p_size The number of bytes (not code units).
-/// @return Error code signifying if the operation successful.
-pub const GDExtensionInterfaceStringNewWithUtf8CharsAndLen2 = *const fn (GDExtensionUninitializedStringPtr, char *p_contents, GDExtensionInt) callconv(.c) GDExtensionInt;
-
-pub fn string_new_with_utf8_chars_and_len2(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringPtr, arg2: char *p_contents, p_size: GDExtensionInt) GDExtensionInt {
-    return load(
-        get_proc_address,
-        "string_new_with_utf8_chars_and_len2",
-        *const fn (GDExtensionUninitializedStringPtr, char *p_contents, GDExtensionInt) callconv(.c) GDExtensionInt,
-    )(r_dest, arg2, p_size);
-}
-
-/// @name string_new_with_utf16_chars_and_len
-/// @since 4.1
-/// Creates a String from a UTF-16 encoded C string with the given length.
-/// @param r_dest A pointer to a Variant to hold the newly created String.
-/// @param p_contents A pointer to a UTF-16 encoded C string.
-/// @param p_char_count The number of characters (not bytes).
-pub const GDExtensionInterfaceStringNewWithUtf16CharsAndLen = *const fn (GDExtensionUninitializedStringPtr, char16_t *p_contents, GDExtensionInt) callconv(.c) void;
-
-pub fn string_new_with_utf16_chars_and_len(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringPtr, arg2: char16_t *p_contents, p_char_count: GDExtensionInt) void {
-    return load(
-        get_proc_address,
-        "string_new_with_utf16_chars_and_len",
-        *const fn (GDExtensionUninitializedStringPtr, char16_t *p_contents, GDExtensionInt) callconv(.c) void,
-    )(r_dest, arg2, p_char_count);
-}
-
-/// @name string_new_with_utf16_chars_and_len2
-/// @since 4.3
-/// Creates a String from a UTF-16 encoded C string with the given length.
-/// @param r_dest A pointer to a Variant to hold the newly created String.
-/// @param p_contents A pointer to a UTF-16 encoded C string.
-/// @param p_char_count The number of characters (not bytes).
-/// @param p_default_little_endian If true, UTF-16 use little endian.
-/// @return Error code signifying if the operation successful.
-pub const GDExtensionInterfaceStringNewWithUtf16CharsAndLen2 = *const fn (GDExtensionUninitializedStringPtr, char16_t *p_contents, GDExtensionInt, GDExtensionBool) callconv(.c) GDExtensionInt;
-
-pub fn string_new_with_utf16_chars_and_len2(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringPtr, arg2: char16_t *p_contents, p_char_count: GDExtensionInt, p_default_little_endian: GDExtensionBool) GDExtensionInt {
-    return load(
-        get_proc_address,
-        "string_new_with_utf16_chars_and_len2",
-        *const fn (GDExtensionUninitializedStringPtr, char16_t *p_contents, GDExtensionInt, GDExtensionBool) callconv(.c) GDExtensionInt,
-    )(r_dest, arg2, p_char_count, p_default_little_endian);
-}
-
-/// @name string_new_with_utf32_chars_and_len
-/// @since 4.1
-/// Creates a String from a UTF-32 encoded C string with the given length.
-/// @param r_dest A pointer to a Variant to hold the newly created String.
-/// @param p_contents A pointer to a UTF-32 encoded C string.
-/// @param p_char_count The number of characters (not bytes).
-pub const GDExtensionInterfaceStringNewWithUtf32CharsAndLen = *const fn (GDExtensionUninitializedStringPtr, char32_t *p_contents, GDExtensionInt) callconv(.c) void;
-
-pub fn string_new_with_utf32_chars_and_len(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringPtr, arg2: char32_t *p_contents, p_char_count: GDExtensionInt) void {
-    return load(
-        get_proc_address,
-        "string_new_with_utf32_chars_and_len",
-        *const fn (GDExtensionUninitializedStringPtr, char32_t *p_contents, GDExtensionInt) callconv(.c) void,
-    )(r_dest, arg2, p_char_count);
-}
-
-/// @name string_new_with_wide_chars_and_len
-/// @since 4.1
-/// Creates a String from a wide C string with the given length.
-/// @param r_dest A pointer to a Variant to hold the newly created String.
-/// @param p_contents A pointer to a wide C string.
-/// @param p_char_count The number of characters (not bytes).
-pub const GDExtensionInterfaceStringNewWithWideCharsAndLen = *const fn (GDExtensionUninitializedStringPtr, wchar_t *p_contents, GDExtensionInt) callconv(.c) void;
-
-pub fn string_new_with_wide_chars_and_len(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringPtr, arg2: wchar_t *p_contents, p_char_count: GDExtensionInt) void {
-    return load(
-        get_proc_address,
-        "string_new_with_wide_chars_and_len",
-        *const fn (GDExtensionUninitializedStringPtr, wchar_t *p_contents, GDExtensionInt) callconv(.c) void,
-    )(r_dest, arg2, p_char_count);
-}
-
-/// @name string_to_latin1_chars
-/// @since 4.1
-/// Converts a String to a Latin-1 encoded C string.
-/// It doesn't write a null terminator.
-/// @param p_self A pointer to the String.
-/// @param r_text A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
-/// @param p_max_write_length The maximum number of characters that can be written to r_text. It has no affect on the return value.
-/// @return The resulting encoded string length in characters, not including a null terminator. Characters that cannot be converted to Latin-1 are replaced with a space.
-pub const GDExtensionInterfaceStringToLatin1Chars = *const fn (GDExtensionConstStringPtr, char *r_text, GDExtensionInt) callconv(.c) GDExtensionInt;
-
-pub fn string_to_latin1_chars(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstStringPtr, arg2: char *r_text, p_max_write_length: GDExtensionInt) GDExtensionInt {
-    return load(
-        get_proc_address,
-        "string_to_latin1_chars",
-        *const fn (GDExtensionConstStringPtr, char *r_text, GDExtensionInt) callconv(.c) GDExtensionInt,
-    )(p_self, arg2, p_max_write_length);
-}
-
-/// @name string_to_utf8_chars
-/// @since 4.1
-/// Converts a String to a UTF-8 encoded C string.
-/// It doesn't write a null terminator.
-/// @param p_self A pointer to the String.
-/// @param r_text A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
-/// @param p_max_write_length The maximum number of characters that can be written to r_text. It has no affect on the return value.
-/// @return The resulting encoded string length in bytes (not characters), not including a null terminator.
-pub const GDExtensionInterfaceStringToUtf8Chars = *const fn (GDExtensionConstStringPtr, char *r_text, GDExtensionInt) callconv(.c) GDExtensionInt;
-
-pub fn string_to_utf8_chars(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstStringPtr, arg2: char *r_text, p_max_write_length: GDExtensionInt) GDExtensionInt {
-    return load(
-        get_proc_address,
-        "string_to_utf8_chars",
-        *const fn (GDExtensionConstStringPtr, char *r_text, GDExtensionInt) callconv(.c) GDExtensionInt,
-    )(p_self, arg2, p_max_write_length);
-}
-
-/// @name string_to_utf16_chars
-/// @since 4.1
-/// Converts a String to a UTF-16 encoded C string.
-/// It doesn't write a null terminator.
-/// @param p_self A pointer to the String.
-/// @param r_text A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
-/// @param p_max_write_length The maximum number of characters that can be written to r_text. It has no affect on the return value.
-/// @return The resulting encoded string length in 16-bit code units (not bytes or characters), not including a null terminator.
-pub const GDExtensionInterfaceStringToUtf16Chars = *const fn (GDExtensionConstStringPtr, char16_t *r_text, GDExtensionInt) callconv(.c) GDExtensionInt;
-
-pub fn string_to_utf16_chars(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstStringPtr, arg2: char16_t *r_text, p_max_write_length: GDExtensionInt) GDExtensionInt {
-    return load(
-        get_proc_address,
-        "string_to_utf16_chars",
-        *const fn (GDExtensionConstStringPtr, char16_t *r_text, GDExtensionInt) callconv(.c) GDExtensionInt,
-    )(p_self, arg2, p_max_write_length);
-}
-
-/// @name string_to_utf32_chars
-/// @since 4.1
-/// Converts a String to a UTF-32 encoded C string.
-/// It doesn't write a null terminator.
-/// @param p_self A pointer to the String.
-/// @param r_text A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
-/// @param p_max_write_length The maximum number of characters that can be written to r_text. It has no affect on the return value.
-/// @return The resulting encoded string length in characters (not bytes), not including a null terminator.
-pub const GDExtensionInterfaceStringToUtf32Chars = *const fn (GDExtensionConstStringPtr, char32_t *r_text, GDExtensionInt) callconv(.c) GDExtensionInt;
-
-pub fn string_to_utf32_chars(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstStringPtr, arg2: char32_t *r_text, p_max_write_length: GDExtensionInt) GDExtensionInt {
-    return load(
-        get_proc_address,
-        "string_to_utf32_chars",
-        *const fn (GDExtensionConstStringPtr, char32_t *r_text, GDExtensionInt) callconv(.c) GDExtensionInt,
-    )(p_self, arg2, p_max_write_length);
-}
-
-/// @name string_to_wide_chars
-/// @since 4.1
-/// Converts a String to a wide C string.
-/// It doesn't write a null terminator.
-/// @param p_self A pointer to the String.
-/// @param r_text A pointer to the buffer to hold the resulting data. If NULL is passed in, only the length will be computed.
-/// @param p_max_write_length The maximum number of characters that can be written to r_text. It has no affect on the return value.
-/// @return The resulting encoded string length in characters (for UTF-32) or 16-bit code units (for UTF-16), depending on the wchar_t representation. Does not include a null terminator.
-pub const GDExtensionInterfaceStringToWideChars = *const fn (GDExtensionConstStringPtr, wchar_t *r_text, GDExtensionInt) callconv(.c) GDExtensionInt;
-
-pub fn string_to_wide_chars(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstStringPtr, arg2: wchar_t *r_text, p_max_write_length: GDExtensionInt) GDExtensionInt {
-    return load(
-        get_proc_address,
-        "string_to_wide_chars",
-        *const fn (GDExtensionConstStringPtr, wchar_t *r_text, GDExtensionInt) callconv(.c) GDExtensionInt,
-    )(p_self, arg2, p_max_write_length);
-}
-
-/// @name string_operator_index
-/// @since 4.1
-/// Gets a pointer to the character at the given index from a String.
-/// @param p_self A pointer to the String.
-/// @param p_index The index.
-/// @return A pointer to the requested character.
-pub const GDExtensionInterfaceStringOperatorIndex = *const fn (GDExtensionStringPtr, GDExtensionInt) callconv(.c) [*c]u32;
-
-pub fn string_operator_index(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionStringPtr, p_index: GDExtensionInt) [*c]u32 {
-    return load(
-        get_proc_address,
-        "string_operator_index",
-        *const fn (GDExtensionStringPtr, GDExtensionInt) callconv(.c) [*c]u32,
-    )(p_self, p_index);
-}
-
-/// @name string_operator_index_const
-/// @since 4.1
-/// Gets a const pointer to the character at the given index from a String.
-/// @param p_self A pointer to the String.
-/// @param p_index The index.
-/// @return A const pointer to the requested character.
-pub const GDExtensionInterfaceStringOperatorIndexConst = *const fn (GDExtensionConstStringPtr, GDExtensionInt) callconv(.c) [*c]const u32;
-
-pub fn string_operator_index_const(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstStringPtr, p_index: GDExtensionInt) [*c]const u32 {
-    return load(
-        get_proc_address,
-        "string_operator_index_const",
-        *const fn (GDExtensionConstStringPtr, GDExtensionInt) callconv(.c) [*c]const u32,
-    )(p_self, p_index);
-}
-
-/// @name string_operator_plus_eq_string
-/// @since 4.1
-/// Appends another String to a String.
-/// @param p_self A pointer to the String.
-/// @param p_b A pointer to the other String to append.
-pub const GDExtensionInterfaceStringOperatorPlusEqString = *const fn (GDExtensionStringPtr, GDExtensionConstStringPtr) callconv(.c) void;
-
-pub fn string_operator_plus_eq_string(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionStringPtr, p_b: GDExtensionConstStringPtr) void {
-    return load(
-        get_proc_address,
-        "string_operator_plus_eq_string",
-        *const fn (GDExtensionStringPtr, GDExtensionConstStringPtr) callconv(.c) void,
-    )(p_self, p_b);
-}
-
-/// @name string_operator_plus_eq_char
-/// @since 4.1
-/// Appends a character to a String.
-/// @param p_self A pointer to the String.
-/// @param p_b A pointer to the character to append.
-pub const GDExtensionInterfaceStringOperatorPlusEqChar = *const fn (GDExtensionStringPtr, u32) callconv(.c) void;
-
-pub fn string_operator_plus_eq_char(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionStringPtr, p_b: u32) void {
-    return load(
-        get_proc_address,
-        "string_operator_plus_eq_char",
-        *const fn (GDExtensionStringPtr, u32) callconv(.c) void,
-    )(p_self, p_b);
-}
-
-/// @name string_operator_plus_eq_cstr
-/// @since 4.1
-/// Appends a Latin-1 encoded C string to a String.
-/// @param p_self A pointer to the String.
-/// @param p_b A pointer to a Latin-1 encoded C string (null terminated).
-pub const GDExtensionInterfaceStringOperatorPlusEqCstr = *const fn (GDExtensionStringPtr, char *p_b) callconv(.c) void;
-
-pub fn string_operator_plus_eq_cstr(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionStringPtr, arg2: char *p_b) void {
-    return load(
-        get_proc_address,
-        "string_operator_plus_eq_cstr",
-        *const fn (GDExtensionStringPtr, char *p_b) callconv(.c) void,
-    )(p_self, arg2);
-}
-
-/// @name string_operator_plus_eq_wcstr
-/// @since 4.1
-/// Appends a wide C string to a String.
-/// @param p_self A pointer to the String.
-/// @param p_b A pointer to a wide C string (null terminated).
-pub const GDExtensionInterfaceStringOperatorPlusEqWcstr = *const fn (GDExtensionStringPtr, wchar_t *p_b) callconv(.c) void;
-
-pub fn string_operator_plus_eq_wcstr(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionStringPtr, arg2: wchar_t *p_b) void {
-    return load(
-        get_proc_address,
-        "string_operator_plus_eq_wcstr",
-        *const fn (GDExtensionStringPtr, wchar_t *p_b) callconv(.c) void,
-    )(p_self, arg2);
-}
-
-/// @name string_operator_plus_eq_c32str
-/// @since 4.1
-/// Appends a UTF-32 encoded C string to a String.
-/// @param p_self A pointer to the String.
-/// @param p_b A pointer to a UTF-32 encoded C string (null terminated).
-pub const GDExtensionInterfaceStringOperatorPlusEqC32str = *const fn (GDExtensionStringPtr, char32_t *p_b) callconv(.c) void;
-
-pub fn string_operator_plus_eq_c32str(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionStringPtr, arg2: char32_t *p_b) void {
-    return load(
-        get_proc_address,
-        "string_operator_plus_eq_c32str",
-        *const fn (GDExtensionStringPtr, char32_t *p_b) callconv(.c) void,
-    )(p_self, arg2);
-}
-
-/// @name string_resize
-/// @since 4.2
-/// Resizes the underlying string data to the given number of characters.
-/// Space needs to be allocated for the null terminating character ('\0') which
-/// also must be added manually, in order for all string functions to work correctly.
-/// Warning: This is an error-prone operation - only use it if there's no other
-/// efficient way to accomplish your goal.
-/// @param p_self A pointer to the String.
-/// @param p_resize The new length for the String.
-/// @return Error code signifying if the operation successful.
-pub const GDExtensionInterfaceStringResize = *const fn (GDExtensionStringPtr, GDExtensionInt) callconv(.c) GDExtensionInt;
-
-pub fn string_resize(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionStringPtr, p_resize: GDExtensionInt) GDExtensionInt {
-    return load(
-        get_proc_address,
-        "string_resize",
-        *const fn (GDExtensionStringPtr, GDExtensionInt) callconv(.c) GDExtensionInt,
-    )(p_self, p_resize);
-}
-
-/// @name string_name_new_with_latin1_chars
-/// @since 4.2
-/// Creates a StringName from a Latin-1 encoded C string.
-/// If `p_is_static` is true, then:
-/// - The StringName will reuse the `p_contents` buffer instead of copying it.
-/// - You must guarantee that the buffer remains valid for the duration of the application (e.g. string literal).
-/// - You must not call a destructor for this StringName. Incrementing the initial reference once should achieve this.
-/// `p_is_static` is purely an optimization and can easily introduce undefined behavior if used wrong. In case of doubt, set it to false.
-/// @param r_dest A pointer to uninitialized storage, into which the newly created StringName is constructed.
-/// @param p_contents A pointer to a C string (null terminated and Latin-1 or ASCII encoded).
-/// @param p_is_static Whether the StringName reuses the buffer directly (see above).
-pub const GDExtensionInterfaceStringNameNewWithLatin1Chars = *const fn (GDExtensionUninitializedStringNamePtr, char *p_contents, GDExtensionBool) callconv(.c) void;
-
-pub fn string_name_new_with_latin1_chars(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringNamePtr, arg2: char *p_contents, p_is_static: GDExtensionBool) void {
-    return load(
-        get_proc_address,
-        "string_name_new_with_latin1_chars",
-        *const fn (GDExtensionUninitializedStringNamePtr, char *p_contents, GDExtensionBool) callconv(.c) void,
-    )(r_dest, arg2, p_is_static);
-}
-
-/// @name string_name_new_with_utf8_chars
-/// @since 4.2
-/// Creates a StringName from a UTF-8 encoded C string.
-/// @param r_dest A pointer to uninitialized storage, into which the newly created StringName is constructed.
-/// @param p_contents A pointer to a C string (null terminated and UTF-8 encoded).
-pub const GDExtensionInterfaceStringNameNewWithUtf8Chars = *const fn (GDExtensionUninitializedStringNamePtr, char *p_contents) callconv(.c) void;
-
-pub fn string_name_new_with_utf8_chars(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringNamePtr, arg2: char *p_contents) void {
-    return load(
-        get_proc_address,
-        "string_name_new_with_utf8_chars",
-        *const fn (GDExtensionUninitializedStringNamePtr, char *p_contents) callconv(.c) void,
-    )(r_dest, arg2);
-}
-
-/// @name string_name_new_with_utf8_chars_and_len
-/// @since 4.2
-/// Creates a StringName from a UTF-8 encoded string with a given number of characters.
-/// @param r_dest A pointer to uninitialized storage, into which the newly created StringName is constructed.
-/// @param p_contents A pointer to a C string (null terminated and UTF-8 encoded).
-/// @param p_size The number of bytes (not UTF-8 code points).
-pub const GDExtensionInterfaceStringNameNewWithUtf8CharsAndLen = *const fn (GDExtensionUninitializedStringNamePtr, char *p_contents, GDExtensionInt) callconv(.c) void;
-
-pub fn string_name_new_with_utf8_chars_and_len(get_proc_address: GDExtensionInterfaceGetProcAddress, r_dest: GDExtensionUninitializedStringNamePtr, arg2: char *p_contents, p_size: GDExtensionInt) void {
-    return load(
-        get_proc_address,
-        "string_name_new_with_utf8_chars_and_len",
-        *const fn (GDExtensionUninitializedStringNamePtr, char *p_contents, GDExtensionInt) callconv(.c) void,
-    )(r_dest, arg2, p_size);
-}
-
-/// @name xml_parser_open_buffer
-/// @since 4.1
-/// Opens a raw XML buffer on an XMLParser instance.
-/// @param p_instance A pointer to an XMLParser object.
-/// @param p_buffer A pointer to the buffer.
-/// @param p_size The size of the buffer.
-/// @return A Godot error code (ex. OK, ERR_INVALID_DATA, etc).
-pub const GDExtensionInterfaceXmlParserOpenBuffer = *const fn (GDExtensionObjectPtr, uint8_t *p_buffer, usize) callconv(.c) GDExtensionInt;
-
-pub fn xml_parser_open_buffer(get_proc_address: GDExtensionInterfaceGetProcAddress, p_instance: GDExtensionObjectPtr, arg2: uint8_t *p_buffer, p_size: usize) GDExtensionInt {
-    return load(
-        get_proc_address,
-        "xml_parser_open_buffer",
-        *const fn (GDExtensionObjectPtr, uint8_t *p_buffer, usize) callconv(.c) GDExtensionInt,
-    )(p_instance, arg2, p_size);
-}
-
-/// @name file_access_store_buffer
-/// @since 4.1
-/// Stores the given buffer using an instance of FileAccess.
-/// @param p_instance A pointer to a FileAccess object.
-/// @param p_src A pointer to the buffer.
-/// @param p_length The size of the buffer.
-pub const GDExtensionInterfaceFileAccessStoreBuffer = *const fn (GDExtensionObjectPtr, uint8_t *p_src, u64) callconv(.c) void;
-
-pub fn file_access_store_buffer(get_proc_address: GDExtensionInterfaceGetProcAddress, p_instance: GDExtensionObjectPtr, arg2: uint8_t *p_src, p_length: u64) void {
-    return load(
-        get_proc_address,
-        "file_access_store_buffer",
-        *const fn (GDExtensionObjectPtr, uint8_t *p_src, u64) callconv(.c) void,
-    )(p_instance, arg2, p_length);
-}
-
-/// @name file_access_get_buffer
-/// @since 4.1
-/// Reads the next p_length bytes into the given buffer using an instance of FileAccess.
-/// @param p_instance A pointer to a FileAccess object.
-/// @param p_dst A pointer to the buffer to store the data.
-/// @param p_length The requested number of bytes to read.
-/// @return The actual number of bytes read (may be less than requested).
-pub const GDExtensionInterfaceFileAccessGetBuffer = *const fn (GDExtensionConstObjectPtr, uint8_t *p_dst, u64) callconv(.c) u64;
-
-pub fn file_access_get_buffer(get_proc_address: GDExtensionInterfaceGetProcAddress, p_instance: GDExtensionConstObjectPtr, arg2: uint8_t *p_dst, p_length: u64) u64 {
-    return load(
-        get_proc_address,
-        "file_access_get_buffer",
-        *const fn (GDExtensionConstObjectPtr, uint8_t *p_dst, u64) callconv(.c) u64,
-    )(p_instance, arg2, p_length);
-}
-
-/// @name image_ptrw
-/// @since 4.3
-/// Returns writable pointer to internal Image buffer.
-/// @param p_instance A pointer to a Image object.
-/// @return Pointer to internal Image buffer.
-pub const GDExtensionInterfaceImagePtrw = *const fn (GDExtensionObjectPtr) callconv(.c) [*c]u8;
-
-pub fn image_ptrw(get_proc_address: GDExtensionInterfaceGetProcAddress, p_instance: GDExtensionObjectPtr) [*c]u8 {
-    return load(
-        get_proc_address,
-        "image_ptrw",
-        *const fn (GDExtensionObjectPtr) callconv(.c) [*c]u8,
-    )(p_instance);
-}
-
-/// @name image_ptr
-/// @since 4.3
-/// Returns read only pointer to internal Image buffer.
-/// @param p_instance A pointer to a Image object.
-/// @return Pointer to internal Image buffer.
-pub const GDExtensionInterfaceImagePtr = *const fn (GDExtensionObjectPtr) callconv(.c) [*:0]const u8;
-
-pub fn image_ptr(get_proc_address: GDExtensionInterfaceGetProcAddress, p_instance: GDExtensionObjectPtr) [*:0]const u8 {
-    return load(
-        get_proc_address,
-        "image_ptr",
-        *const fn (GDExtensionObjectPtr) callconv(.c) [*:0]const u8,
-    )(p_instance);
-}
-
-/// @name worker_thread_pool_add_native_group_task
-/// @since 4.1
-/// Adds a group task to an instance of WorkerThreadPool.
-/// @param p_instance A pointer to a WorkerThreadPool object.
-/// @param p_func A pointer to a function to run in the thread pool.
-/// @param p_userdata A pointer to arbitrary data which will be passed to p_func.
-/// @param p_elements The number of element needed in the group.
-/// @param p_tasks The number of tasks needed in the group.
-/// @param p_high_priority Whether or not this is a high priority task.
-/// @param p_description A pointer to a String with the task description.
-/// @return The task group ID.
-pub const GDExtensionInterfaceWorkerThreadPoolAddNativeGroupTask = *const fn (GDExtensionObjectPtr, GDExtensionWorkerThreadPoolGroupTask, void *p_userdata, i32, i32, GDExtensionBool, GDExtensionConstStringPtr) callconv(.c) i64;
-
-pub fn worker_thread_pool_add_native_group_task(get_proc_address: GDExtensionInterfaceGetProcAddress, p_instance: GDExtensionObjectPtr, p_func: GDExtensionWorkerThreadPoolGroupTask, arg3: void *p_userdata, p_elements: i32, p_tasks: i32, p_high_priority: GDExtensionBool, p_description: GDExtensionConstStringPtr) i64 {
-    return load(
-        get_proc_address,
-        "worker_thread_pool_add_native_group_task",
-        *const fn (GDExtensionObjectPtr, GDExtensionWorkerThreadPoolGroupTask, void *p_userdata, i32, i32, GDExtensionBool, GDExtensionConstStringPtr) callconv(.c) i64,
-    )(p_instance, p_func, arg3, p_elements, p_tasks, p_high_priority, p_description);
-}
-
-/// @name worker_thread_pool_add_native_task
-/// @since 4.1
-/// Adds a task to an instance of WorkerThreadPool.
-/// @param p_instance A pointer to a WorkerThreadPool object.
-/// @param p_func A pointer to a function to run in the thread pool.
-/// @param p_userdata A pointer to arbitrary data which will be passed to p_func.
-/// @param p_high_priority Whether or not this is a high priority task.
-/// @param p_description A pointer to a String with the task description.
-/// @return The task ID.
-pub const GDExtensionInterfaceWorkerThreadPoolAddNativeTask = *const fn (GDExtensionObjectPtr, GDExtensionWorkerThreadPoolTask, void *p_userdata, GDExtensionBool, GDExtensionConstStringPtr) callconv(.c) i64;
-
-pub fn worker_thread_pool_add_native_task(get_proc_address: GDExtensionInterfaceGetProcAddress, p_instance: GDExtensionObjectPtr, p_func: GDExtensionWorkerThreadPoolTask, arg3: void *p_userdata, p_high_priority: GDExtensionBool, p_description: GDExtensionConstStringPtr) i64 {
-    return load(
-        get_proc_address,
-        "worker_thread_pool_add_native_task",
-        *const fn (GDExtensionObjectPtr, GDExtensionWorkerThreadPoolTask, void *p_userdata, GDExtensionBool, GDExtensionConstStringPtr) callconv(.c) i64,
-    )(p_instance, p_func, arg3, p_high_priority, p_description);
-}
-
-/// @name packed_byte_array_operator_index
-/// @since 4.1
-/// Gets a pointer to a byte in a PackedByteArray.
-/// @param p_self A pointer to a PackedByteArray object.
-/// @param p_index The index of the byte to get.
-/// @return A pointer to the requested byte.
-pub const GDExtensionInterfacePackedByteArrayOperatorIndex = *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]u8;
-
-pub fn packed_byte_array_operator_index(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_index: GDExtensionInt) [*c]u8 {
-    return load(
-        get_proc_address,
-        "packed_byte_array_operator_index",
-        *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]u8,
-    )(p_self, p_index);
-}
-
-/// @name packed_byte_array_operator_index_const
-/// @since 4.1
-/// Gets a const pointer to a byte in a PackedByteArray.
-/// @param p_self A const pointer to a PackedByteArray object.
-/// @param p_index The index of the byte to get.
-/// @return A const pointer to the requested byte.
-pub const GDExtensionInterfacePackedByteArrayOperatorIndexConst = *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*:0]const u8;
-
-pub fn packed_byte_array_operator_index_const(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstTypePtr, p_index: GDExtensionInt) [*:0]const u8 {
-    return load(
-        get_proc_address,
-        "packed_byte_array_operator_index_const",
-        *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*:0]const u8,
-    )(p_self, p_index);
-}
-
-/// @name packed_float32_array_operator_index
-/// @since 4.1
-/// Gets a pointer to a 32-bit float in a PackedFloat32Array.
-/// @param p_self A pointer to a PackedFloat32Array object.
-/// @param p_index The index of the float to get.
-/// @return A pointer to the requested 32-bit float.
-pub const GDExtensionInterfacePackedFloat32ArrayOperatorIndex = *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]f32;
-
-pub fn packed_float32_array_operator_index(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_index: GDExtensionInt) [*c]f32 {
-    return load(
-        get_proc_address,
-        "packed_float32_array_operator_index",
-        *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]f32,
-    )(p_self, p_index);
-}
-
-/// @name packed_float32_array_operator_index_const
-/// @since 4.1
-/// Gets a const pointer to a 32-bit float in a PackedFloat32Array.
-/// @param p_self A const pointer to a PackedFloat32Array object.
-/// @param p_index The index of the float to get.
-/// @return A const pointer to the requested 32-bit float.
-pub const GDExtensionInterfacePackedFloat32ArrayOperatorIndexConst = *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const f32;
-
-pub fn packed_float32_array_operator_index_const(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstTypePtr, p_index: GDExtensionInt) [*c]const f32 {
-    return load(
-        get_proc_address,
-        "packed_float32_array_operator_index_const",
-        *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const f32,
-    )(p_self, p_index);
-}
-
-/// @name packed_float64_array_operator_index
-/// @since 4.1
-/// Gets a pointer to a 64-bit float in a PackedFloat64Array.
-/// @param p_self A pointer to a PackedFloat64Array object.
-/// @param p_index The index of the float to get.
-/// @return A pointer to the requested 64-bit float.
-pub const GDExtensionInterfacePackedFloat64ArrayOperatorIndex = *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]f64;
-
-pub fn packed_float64_array_operator_index(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_index: GDExtensionInt) [*c]f64 {
-    return load(
-        get_proc_address,
-        "packed_float64_array_operator_index",
-        *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]f64,
-    )(p_self, p_index);
-}
-
-/// @name packed_float64_array_operator_index_const
-/// @since 4.1
-/// Gets a const pointer to a 64-bit float in a PackedFloat64Array.
-/// @param p_self A const pointer to a PackedFloat64Array object.
-/// @param p_index The index of the float to get.
-/// @return A const pointer to the requested 64-bit float.
-pub const GDExtensionInterfacePackedFloat64ArrayOperatorIndexConst = *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const f64;
-
-pub fn packed_float64_array_operator_index_const(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstTypePtr, p_index: GDExtensionInt) [*c]const f64 {
-    return load(
-        get_proc_address,
-        "packed_float64_array_operator_index_const",
-        *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const f64,
-    )(p_self, p_index);
-}
-
-/// @name packed_int32_array_operator_index
-/// @since 4.1
-/// Gets a pointer to a 32-bit integer in a PackedInt32Array.
-/// @param p_self A pointer to a PackedInt32Array object.
-/// @param p_index The index of the integer to get.
-/// @return A pointer to the requested 32-bit integer.
-pub const GDExtensionInterfacePackedInt32ArrayOperatorIndex = *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]i32;
-
-pub fn packed_int32_array_operator_index(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_index: GDExtensionInt) [*c]i32 {
-    return load(
-        get_proc_address,
-        "packed_int32_array_operator_index",
-        *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]i32,
-    )(p_self, p_index);
-}
-
-/// @name packed_int32_array_operator_index_const
-/// @since 4.1
-/// Gets a const pointer to a 32-bit integer in a PackedInt32Array.
-/// @param p_self A const pointer to a PackedInt32Array object.
-/// @param p_index The index of the integer to get.
-/// @return A const pointer to the requested 32-bit integer.
-pub const GDExtensionInterfacePackedInt32ArrayOperatorIndexConst = *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const i32;
-
-pub fn packed_int32_array_operator_index_const(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstTypePtr, p_index: GDExtensionInt) [*c]const i32 {
-    return load(
-        get_proc_address,
-        "packed_int32_array_operator_index_const",
-        *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const i32,
-    )(p_self, p_index);
-}
-
-/// @name packed_int64_array_operator_index
-/// @since 4.1
-/// Gets a pointer to a 64-bit integer in a PackedInt64Array.
-/// @param p_self A pointer to a PackedInt64Array object.
-/// @param p_index The index of the integer to get.
-/// @return A pointer to the requested 64-bit integer.
-pub const GDExtensionInterfacePackedInt64ArrayOperatorIndex = *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]i64;
-
-pub fn packed_int64_array_operator_index(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_index: GDExtensionInt) [*c]i64 {
-    return load(
-        get_proc_address,
-        "packed_int64_array_operator_index",
-        *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]i64,
-    )(p_self, p_index);
-}
-
-/// @name packed_int64_array_operator_index_const
-/// @since 4.1
-/// Gets a const pointer to a 64-bit integer in a PackedInt64Array.
-/// @param p_self A const pointer to a PackedInt64Array object.
-/// @param p_index The index of the integer to get.
-/// @return A const pointer to the requested 64-bit integer.
-pub const GDExtensionInterfacePackedInt64ArrayOperatorIndexConst = *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const i64;
-
-pub fn packed_int64_array_operator_index_const(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstTypePtr, p_index: GDExtensionInt) [*c]const i64 {
-    return load(
-        get_proc_address,
-        "packed_int64_array_operator_index_const",
-        *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const i64,
-    )(p_self, p_index);
-}
-
-/// @name packed_string_array_operator_index
-/// @since 4.1
-/// Gets a pointer to a string in a PackedStringArray.
-/// @param p_self A pointer to a PackedStringArray object.
-/// @param p_index The index of the String to get.
-/// @return A pointer to the requested String.
-pub const GDExtensionInterfacePackedStringArrayOperatorIndex = *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionStringPtr;
-
-pub fn packed_string_array_operator_index(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_index: GDExtensionInt) GDExtensionStringPtr {
-    return load(
-        get_proc_address,
-        "packed_string_array_operator_index",
-        *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionStringPtr,
-    )(p_self, p_index);
-}
-
-/// @name packed_string_array_operator_index_const
-/// @since 4.1
-/// Gets a const pointer to a string in a PackedStringArray.
-/// @param p_self A const pointer to a PackedStringArray object.
-/// @param p_index The index of the String to get.
-/// @return A const pointer to the requested String.
-pub const GDExtensionInterfacePackedStringArrayOperatorIndexConst = *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionStringPtr;
-
-pub fn packed_string_array_operator_index_const(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstTypePtr, p_index: GDExtensionInt) GDExtensionStringPtr {
-    return load(
-        get_proc_address,
-        "packed_string_array_operator_index_const",
-        *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionStringPtr,
-    )(p_self, p_index);
-}
-
-/// @name packed_vector2_array_operator_index
-/// @since 4.1
-/// Gets a pointer to a Vector2 in a PackedVector2Array.
-/// @param p_self A pointer to a PackedVector2Array object.
-/// @param p_index The index of the Vector2 to get.
-/// @return A pointer to the requested Vector2.
-pub const GDExtensionInterfacePackedVector2ArrayOperatorIndex = *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr;
-
-pub fn packed_vector2_array_operator_index(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_index: GDExtensionInt) GDExtensionTypePtr {
-    return load(
-        get_proc_address,
-        "packed_vector2_array_operator_index",
-        *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
-    )(p_self, p_index);
-}
-
-/// @name packed_vector2_array_operator_index_const
-/// @since 4.1
-/// Gets a const pointer to a Vector2 in a PackedVector2Array.
-/// @param p_self A const pointer to a PackedVector2Array object.
-/// @param p_index The index of the Vector2 to get.
-/// @return A const pointer to the requested Vector2.
-pub const GDExtensionInterfacePackedVector2ArrayOperatorIndexConst = *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr;
-
-pub fn packed_vector2_array_operator_index_const(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstTypePtr, p_index: GDExtensionInt) GDExtensionTypePtr {
-    return load(
-        get_proc_address,
-        "packed_vector2_array_operator_index_const",
-        *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
-    )(p_self, p_index);
-}
-
-/// @name packed_vector3_array_operator_index
-/// @since 4.1
-/// Gets a pointer to a Vector3 in a PackedVector3Array.
-/// @param p_self A pointer to a PackedVector3Array object.
-/// @param p_index The index of the Vector3 to get.
-/// @return A pointer to the requested Vector3.
-pub const GDExtensionInterfacePackedVector3ArrayOperatorIndex = *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr;
-
-pub fn packed_vector3_array_operator_index(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_index: GDExtensionInt) GDExtensionTypePtr {
-    return load(
-        get_proc_address,
-        "packed_vector3_array_operator_index",
-        *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
-    )(p_self, p_index);
-}
-
-/// @name packed_vector3_array_operator_index_const
-/// @since 4.1
-/// Gets a const pointer to a Vector3 in a PackedVector3Array.
-/// @param p_self A const pointer to a PackedVector3Array object.
-/// @param p_index The index of the Vector3 to get.
-/// @return A const pointer to the requested Vector3.
-pub const GDExtensionInterfacePackedVector3ArrayOperatorIndexConst = *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr;
-
-pub fn packed_vector3_array_operator_index_const(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstTypePtr, p_index: GDExtensionInt) GDExtensionTypePtr {
-    return load(
-        get_proc_address,
-        "packed_vector3_array_operator_index_const",
-        *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
-    )(p_self, p_index);
-}
-
-/// @name packed_vector4_array_operator_index
-/// @since 4.3
-/// Gets a pointer to a Vector4 in a PackedVector4Array.
-/// @param p_self A pointer to a PackedVector4Array object.
-/// @param p_index The index of the Vector4 to get.
-/// @return A pointer to the requested Vector4.
-pub const GDExtensionInterfacePackedVector4ArrayOperatorIndex = *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr;
-
-pub fn packed_vector4_array_operator_index(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_index: GDExtensionInt) GDExtensionTypePtr {
-    return load(
-        get_proc_address,
-        "packed_vector4_array_operator_index",
-        *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
-    )(p_self, p_index);
-}
-
-/// @name packed_vector4_array_operator_index_const
-/// @since 4.3
-/// Gets a const pointer to a Vector4 in a PackedVector4Array.
-/// @param p_self A const pointer to a PackedVector4Array object.
-/// @param p_index The index of the Vector4 to get.
-/// @return A const pointer to the requested Vector4.
-pub const GDExtensionInterfacePackedVector4ArrayOperatorIndexConst = *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr;
-
-pub fn packed_vector4_array_operator_index_const(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstTypePtr, p_index: GDExtensionInt) GDExtensionTypePtr {
-    return load(
-        get_proc_address,
-        "packed_vector4_array_operator_index_const",
-        *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
-    )(p_self, p_index);
-}
-
-/// @name packed_color_array_operator_index
-/// @since 4.1
-/// Gets a pointer to a color in a PackedColorArray.
-/// @param p_self A pointer to a PackedColorArray object.
-/// @param p_index The index of the Color to get.
-/// @return A pointer to the requested Color.
-pub const GDExtensionInterfacePackedColorArrayOperatorIndex = *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr;
-
-pub fn packed_color_array_operator_index(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_index: GDExtensionInt) GDExtensionTypePtr {
-    return load(
-        get_proc_address,
-        "packed_color_array_operator_index",
-        *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
-    )(p_self, p_index);
-}
-
-/// @name packed_color_array_operator_index_const
-/// @since 4.1
-/// Gets a const pointer to a color in a PackedColorArray.
-/// @param p_self A const pointer to a PackedColorArray object.
-/// @param p_index The index of the Color to get.
-/// @return A const pointer to the requested Color.
-pub const GDExtensionInterfacePackedColorArrayOperatorIndexConst = *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr;
-
-pub fn packed_color_array_operator_index_const(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstTypePtr, p_index: GDExtensionInt) GDExtensionTypePtr {
-    return load(
-        get_proc_address,
-        "packed_color_array_operator_index_const",
-        *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
-    )(p_self, p_index);
-}
-
-/// @name array_operator_index
-/// @since 4.1
-/// Gets a pointer to a Variant in an Array.
-/// @param p_self A pointer to an Array object.
-/// @param p_index The index of the Variant to get.
-/// @return A pointer to the requested Variant.
-pub const GDExtensionInterfaceArrayOperatorIndex = *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionVariantPtr;
-
-pub fn array_operator_index(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_index: GDExtensionInt) GDExtensionVariantPtr {
-    return load(
-        get_proc_address,
-        "array_operator_index",
-        *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionVariantPtr,
-    )(p_self, p_index);
-}
-
-/// @name array_operator_index_const
-/// @since 4.1
-/// Gets a const pointer to a Variant in an Array.
-/// @param p_self A const pointer to an Array object.
-/// @param p_index The index of the Variant to get.
-/// @return A const pointer to the requested Variant.
-pub const GDExtensionInterfaceArrayOperatorIndexConst = *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionVariantPtr;
-
-pub fn array_operator_index_const(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstTypePtr, p_index: GDExtensionInt) GDExtensionVariantPtr {
-    return load(
-        get_proc_address,
-        "array_operator_index_const",
-        *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionVariantPtr,
-    )(p_self, p_index);
-}
-
-/// @name array_ref
-/// @since 4.1
-/// Sets an Array to be a reference to another Array object.
-/// @param p_self A pointer to the Array object to update.
-/// @param p_from A pointer to the Array object to reference.
-pub const GDExtensionInterfaceArrayRef = *const fn (GDExtensionTypePtr, GDExtensionConstTypePtr) callconv(.c) void;
-
-pub fn array_ref(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_from: GDExtensionConstTypePtr) void {
-    return load(
-        get_proc_address,
-        "array_ref",
-        *const fn (GDExtensionTypePtr, GDExtensionConstTypePtr) callconv(.c) void,
-    )(p_self, p_from);
-}
-
-/// @name array_set_typed
-/// @since 4.1
-/// Makes an Array into a typed Array.
-/// @param p_self A pointer to the Array.
-/// @param p_type The type of Variant the Array will store.
-/// @param p_class_name A pointer to a StringName with the name of the object (if p_type is GDEXTENSION_VARIANT_TYPE_OBJECT).
-/// @param p_script A pointer to a Script object (if p_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
-pub const GDExtensionInterfaceArraySetTyped = *const fn (GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr) callconv(.c) void;
-
-pub fn array_set_typed(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_type: GDExtensionVariantType, p_class_name: GDExtensionConstStringNamePtr, p_script: GDExtensionConstVariantPtr) void {
-    return load(
-        get_proc_address,
-        "array_set_typed",
-        *const fn (GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr) callconv(.c) void,
-    )(p_self, p_type, p_class_name, p_script);
-}
-
-/// @name dictionary_operator_index
-/// @since 4.1
-/// Gets a pointer to a Variant in a Dictionary with the given key.
-/// @param p_self A pointer to a Dictionary object.
-/// @param p_key A pointer to a Variant representing the key.
-/// @return A pointer to a Variant representing the value at the given key.
-pub const GDExtensionInterfaceDictionaryOperatorIndex = *const fn (GDExtensionTypePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantPtr;
-
-pub fn dictionary_operator_index(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_key: GDExtensionConstVariantPtr) GDExtensionVariantPtr {
-    return load(
-        get_proc_address,
-        "dictionary_operator_index",
-        *const fn (GDExtensionTypePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantPtr,
-    )(p_self, p_key);
-}
-
-/// @name dictionary_operator_index_const
-/// @since 4.1
-/// Gets a const pointer to a Variant in a Dictionary with the given key.
-/// @param p_self A const pointer to a Dictionary object.
-/// @param p_key A pointer to a Variant representing the key.
-/// @return A const pointer to a Variant representing the value at the given key.
-pub const GDExtensionInterfaceDictionaryOperatorIndexConst = *const fn (GDExtensionConstTypePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantPtr;
-
-pub fn dictionary_operator_index_const(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionConstTypePtr, p_key: GDExtensionConstVariantPtr) GDExtensionVariantPtr {
-    return load(
-        get_proc_address,
-        "dictionary_operator_index_const",
-        *const fn (GDExtensionConstTypePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantPtr,
-    )(p_self, p_key);
-}
-
-/// @name dictionary_set_typed
-/// @since 4.4
-/// Makes a Dictionary into a typed Dictionary.
-/// @param p_self A pointer to the Dictionary.
-/// @param p_key_type The type of Variant the Dictionary key will store.
-/// @param p_key_class_name A pointer to a StringName with the name of the object (if p_key_type is GDEXTENSION_VARIANT_TYPE_OBJECT).
-/// @param p_key_script A pointer to a Script object (if p_key_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
-/// @param p_value_type The type of Variant the Dictionary value will store.
-/// @param p_value_class_name A pointer to a StringName with the name of the object (if p_value_type is GDEXTENSION_VARIANT_TYPE_OBJECT).
-/// @param p_value_script A pointer to a Script object (if p_value_type is GDEXTENSION_VARIANT_TYPE_OBJECT and the base class is extended by a script).
-pub const GDExtensionInterfaceDictionarySetTyped = *const fn (GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr) callconv(.c) void;
-
-pub fn dictionary_set_typed(get_proc_address: GDExtensionInterfaceGetProcAddress, p_self: GDExtensionTypePtr, p_key_type: GDExtensionVariantType, p_key_class_name: GDExtensionConstStringNamePtr, p_key_script: GDExtensionConstVariantPtr, p_value_type: GDExtensionVariantType, p_value_class_name: GDExtensionConstStringNamePtr, p_value_script: GDExtensionConstVariantPtr) void {
-    return load(
-        get_proc_address,
-        "dictionary_set_typed",
-        *const fn (GDExtensionTypePtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, GDExtensionVariantType, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr) callconv(.c) void,
-    )(p_self, p_key_type, p_key_class_name, p_key_script, p_value_type, p_value_class_name, p_value_script);
-}
-
-/// @name object_method_bind_call
-/// @since 4.1
-/// Calls a method on an Object.
-/// @param p_method_bind A pointer to the MethodBind representing the method on the Object's class.
-/// @param p_instance A pointer to the Object.
-/// @param p_args A pointer to a C array of Variants representing the arguments.
-/// @param p_arg_count The number of arguments.
-/// @param r_ret A pointer to Variant which will receive the return value.
-/// @param r_error A pointer to a GDExtensionCallError struct that will receive error information.
-pub const GDExtensionInterfaceObjectMethodBindCall = *const fn (GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstVariantPtr *p_args, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError *r_error) callconv(.c) void;
-
-pub fn object_method_bind_call(get_proc_address: GDExtensionInterfaceGetProcAddress, p_method_bind: GDExtensionMethodBindPtr, p_instance: GDExtensionObjectPtr, arg3: GDExtensionConstVariantPtr *p_args, p_arg_count: GDExtensionInt, r_ret: GDExtensionUninitializedVariantPtr, arg6: GDExtensionCallError *r_error) void {
-    return load(
-        get_proc_address,
-        "object_method_bind_call",
-        *const fn (GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstVariantPtr *p_args, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError *r_error) callconv(.c) void,
-    )(p_method_bind, p_instance, arg3, p_arg_count, r_ret, arg6);
-}
-
-/// @name object_method_bind_ptrcall
-/// @since 4.1
-/// Calls a method on an Object (using a "ptrcall").
-/// @param p_method_bind A pointer to the MethodBind representing the method on the Object's class.
-/// @param p_instance A pointer to the Object.
-/// @param p_args A pointer to a C array representing the arguments.
-/// @param r_ret A pointer to the Object that will receive the return value.
-pub const GDExtensionInterfaceObjectMethodBindPtrcall = *const fn (GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstTypePtr *p_args, GDExtensionTypePtr) callconv(.c) void;
-
-pub fn object_method_bind_ptrcall(get_proc_address: GDExtensionInterfaceGetProcAddress, p_method_bind: GDExtensionMethodBindPtr, p_instance: GDExtensionObjectPtr, arg3: GDExtensionConstTypePtr *p_args, r_ret: GDExtensionTypePtr) void {
-    return load(
-        get_proc_address,
-        "object_method_bind_ptrcall",
-        *const fn (GDExtensionMethodBindPtr, GDExtensionObjectPtr, GDExtensionConstTypePtr *p_args, GDExtensionTypePtr) callconv(.c) void,
-    )(p_method_bind, p_instance, arg3, r_ret);
-}
-
-/// @name object_destroy
-/// @since 4.1
-/// Destroys an Object.
-/// @param p_o A pointer to the Object.
-pub const GDExtensionInterfaceObjectDestroy = *const fn (GDExtensionObjectPtr) callconv(.c) void;
-
-pub fn object_destroy(get_proc_address: GDExtensionInterfaceGetProcAddress, p_o: GDExtensionObjectPtr) void {
-    return load(
-        get_proc_address,
-        "object_destroy",
-        *const fn (GDExtensionObjectPtr) callconv(.c) void,
-    )(p_o);
-}
-
-/// @name global_get_singleton
-/// @since 4.1
-/// Gets a global singleton by name.
-/// @param p_name A pointer to a StringName with the singleton name.
-/// @return A pointer to the singleton Object.
-pub const GDExtensionInterfaceGlobalGetSingleton = *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr;
-
-pub fn global_get_singleton(get_proc_address: GDExtensionInterfaceGetProcAddress, p_name: GDExtensionConstStringNamePtr) GDExtensionObjectPtr {
-    return load(
-        get_proc_address,
-        "global_get_singleton",
-        *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr,
-    )(p_name);
-}
-
-/// @name object_get_instance_binding
-/// @since 4.1
-/// Gets a pointer representing an Object's instance binding.
-/// @param p_o A pointer to the Object.
-/// @param p_token A token the library received by the GDExtension's entry point function.
-/// @param p_callbacks A pointer to a GDExtensionInstanceBindingCallbacks struct.
-/// @return A pointer to the instance binding.
-pub const GDExtensionInterfaceObjectGetInstanceBinding = *const fn (GDExtensionObjectPtr, void *p_token, GDExtensionInstanceBindingCallbacks *p_callbacks) callconv(.c) ?*anyopaque;
-
-pub fn object_get_instance_binding(get_proc_address: GDExtensionInterfaceGetProcAddress, p_o: GDExtensionObjectPtr, arg2: void *p_token, arg3: GDExtensionInstanceBindingCallbacks *p_callbacks) ?*anyopaque {
-    return load(
-        get_proc_address,
-        "object_get_instance_binding",
-        *const fn (GDExtensionObjectPtr, void *p_token, GDExtensionInstanceBindingCallbacks *p_callbacks) callconv(.c) ?*anyopaque,
-    )(p_o, arg2, arg3);
-}
-
-/// @name object_set_instance_binding
-/// @since 4.1
-/// Sets an Object's instance binding.
-/// @param p_o A pointer to the Object.
-/// @param p_token A token the library received by the GDExtension's entry point function.
-/// @param p_binding A pointer to the instance binding.
-/// @param p_callbacks A pointer to a GDExtensionInstanceBindingCallbacks struct.
-pub const GDExtensionInterfaceObjectSetInstanceBinding = *const fn (GDExtensionObjectPtr, void *p_token, void *p_binding, GDExtensionInstanceBindingCallbacks *p_callbacks) callconv(.c) void;
-
-pub fn object_set_instance_binding(get_proc_address: GDExtensionInterfaceGetProcAddress, p_o: GDExtensionObjectPtr, arg2: void *p_token, arg3: void *p_binding, arg4: GDExtensionInstanceBindingCallbacks *p_callbacks) void {
-    return load(
-        get_proc_address,
-        "object_set_instance_binding",
-        *const fn (GDExtensionObjectPtr, void *p_token, void *p_binding, GDExtensionInstanceBindingCallbacks *p_callbacks) callconv(.c) void,
-    )(p_o, arg2, arg3, arg4);
-}
-
-/// @name object_free_instance_binding
-/// @since 4.2
-/// Free an Object's instance binding.
-/// @param p_o A pointer to the Object.
-/// @param p_token A token the library received by the GDExtension's entry point function.
-pub const GDExtensionInterfaceObjectFreeInstanceBinding = *const fn (GDExtensionObjectPtr, void *p_token) callconv(.c) void;
-
-pub fn object_free_instance_binding(get_proc_address: GDExtensionInterfaceGetProcAddress, p_o: GDExtensionObjectPtr, arg2: void *p_token) void {
-    return load(
-        get_proc_address,
-        "object_free_instance_binding",
-        *const fn (GDExtensionObjectPtr, void *p_token) callconv(.c) void,
-    )(p_o, arg2);
-}
-
-/// @name object_set_instance
-/// @since 4.1
-/// Sets an extension class instance on a Object.
-/// `p_classname` should be a registered extension class and should extend the `p_o` Object's class.
-/// @param p_o A pointer to the Object.
-/// @param p_classname A pointer to a StringName with the registered extension class's name.
-/// @param p_instance A pointer to the extension class instance.
-pub const GDExtensionInterfaceObjectSetInstance = *const fn (GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionClassInstancePtr) callconv(.c) void;
-
-pub fn object_set_instance(get_proc_address: GDExtensionInterfaceGetProcAddress, p_o: GDExtensionObjectPtr, p_classname: GDExtensionConstStringNamePtr, p_instance: GDExtensionClassInstancePtr) void {
-    return load(
-        get_proc_address,
-        "object_set_instance",
-        *const fn (GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionClassInstancePtr) callconv(.c) void,
-    )(p_o, p_classname, p_instance);
-}
-
-/// @name object_get_class_name
-/// @since 4.1
-/// Gets the class name of an Object.
-/// If the GDExtension wraps the Godot object in an abstraction specific to its class, this is the
-/// function that should be used to determine which wrapper to use.
-/// @param p_object A pointer to the Object.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param r_class_name A pointer to a String to receive the class name.
-/// @return true if successful in getting the class name; otherwise false.
-pub const GDExtensionInterfaceObjectGetClassName = *const fn (GDExtensionConstObjectPtr, GDExtensionClassLibraryPtr, GDExtensionUninitializedStringNamePtr) callconv(.c) GDExtensionBool;
-
-pub fn object_get_class_name(get_proc_address: GDExtensionInterfaceGetProcAddress, p_object: GDExtensionConstObjectPtr, p_library: GDExtensionClassLibraryPtr, r_class_name: GDExtensionUninitializedStringNamePtr) GDExtensionBool {
-    return load(
-        get_proc_address,
-        "object_get_class_name",
-        *const fn (GDExtensionConstObjectPtr, GDExtensionClassLibraryPtr, GDExtensionUninitializedStringNamePtr) callconv(.c) GDExtensionBool,
-    )(p_object, p_library, r_class_name);
-}
-
-/// @name object_cast_to
-/// @since 4.1
-/// Casts an Object to a different type.
-/// @param p_object A pointer to the Object.
-/// @param p_class_tag A pointer uniquely identifying a built-in class in the ClassDB.
-/// @return Returns a pointer to the Object, or NULL if it can't be cast to the requested type.
-pub const GDExtensionInterfaceObjectCastTo = *const fn (GDExtensionConstObjectPtr, void *p_class_tag) callconv(.c) GDExtensionObjectPtr;
-
-pub fn object_cast_to(get_proc_address: GDExtensionInterfaceGetProcAddress, p_object: GDExtensionConstObjectPtr, arg2: void *p_class_tag) GDExtensionObjectPtr {
-    return load(
-        get_proc_address,
-        "object_cast_to",
-        *const fn (GDExtensionConstObjectPtr, void *p_class_tag) callconv(.c) GDExtensionObjectPtr,
-    )(p_object, arg2);
-}
-
-/// @name object_get_instance_from_id
-/// @since 4.1
-/// Gets an Object by its instance ID.
-/// @param p_instance_id The instance ID.
-/// @return A pointer to the Object.
-pub const GDExtensionInterfaceObjectGetInstanceFromId = *const fn (GDObjectInstanceID) callconv(.c) GDExtensionObjectPtr;
-
-pub fn object_get_instance_from_id(get_proc_address: GDExtensionInterfaceGetProcAddress, p_instance_id: GDObjectInstanceID) GDExtensionObjectPtr {
-    return load(
-        get_proc_address,
-        "object_get_instance_from_id",
-        *const fn (GDObjectInstanceID) callconv(.c) GDExtensionObjectPtr,
-    )(p_instance_id);
-}
-
-/// @name object_get_instance_id
-/// @since 4.1
-/// Gets the instance ID from an Object.
-/// @param p_object A pointer to the Object.
-/// @return The instance ID.
-pub const GDExtensionInterfaceObjectGetInstanceId = *const fn (GDExtensionConstObjectPtr) callconv(.c) GDObjectInstanceID;
-
-pub fn object_get_instance_id(get_proc_address: GDExtensionInterfaceGetProcAddress, p_object: GDExtensionConstObjectPtr) GDObjectInstanceID {
-    return load(
-        get_proc_address,
-        "object_get_instance_id",
-        *const fn (GDExtensionConstObjectPtr) callconv(.c) GDObjectInstanceID,
-    )(p_object);
-}
-
-/// @name object_has_script_method
-/// @since 4.3
-/// Checks if this object has a script with the given method.
-/// @param p_object A pointer to the Object.
-/// @param p_method A pointer to a StringName identifying the method.
-/// @return true if the object has a script and that script has a method with the given name. Returns false if the object has no script.
-pub const GDExtensionInterfaceObjectHasScriptMethod = *const fn (GDExtensionConstObjectPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;
-
-pub fn object_has_script_method(get_proc_address: GDExtensionInterfaceGetProcAddress, p_object: GDExtensionConstObjectPtr, p_method: GDExtensionConstStringNamePtr) GDExtensionBool {
-    return load(
-        get_proc_address,
-        "object_has_script_method",
-        *const fn (GDExtensionConstObjectPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool,
-    )(p_object, p_method);
-}
-
-/// @name object_call_script_method
-/// @since 4.3
-/// Call the given script method on this object.
-/// @param p_object A pointer to the Object.
-/// @param p_method A pointer to a StringName identifying the method.
-/// @param p_args A pointer to a C array of Variant.
-/// @param p_argument_count The number of arguments.
-/// @param r_return A pointer a Variant which will be assigned the return value.
-/// @param r_error A pointer the structure which will hold error information.
-pub const GDExtensionInterfaceObjectCallScriptMethod = *const fn (GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr *p_args, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError *r_error) callconv(.c) void;
-
-pub fn object_call_script_method(get_proc_address: GDExtensionInterfaceGetProcAddress, p_object: GDExtensionObjectPtr, p_method: GDExtensionConstStringNamePtr, arg3: GDExtensionConstVariantPtr *p_args, p_argument_count: GDExtensionInt, r_return: GDExtensionUninitializedVariantPtr, arg6: GDExtensionCallError *r_error) void {
-    return load(
-        get_proc_address,
-        "object_call_script_method",
-        *const fn (GDExtensionObjectPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr *p_args, GDExtensionInt, GDExtensionUninitializedVariantPtr, GDExtensionCallError *r_error) callconv(.c) void,
-    )(p_object, p_method, arg3, p_argument_count, r_return, arg6);
-}
-
-/// @name ref_get_object
-/// @since 4.1
-/// Gets the Object from a reference.
-/// @param p_ref A pointer to the reference.
-/// @return A pointer to the Object from the reference or NULL.
-pub const GDExtensionInterfaceRefGetObject = *const fn (GDExtensionConstRefPtr) callconv(.c) GDExtensionObjectPtr;
-
-pub fn ref_get_object(get_proc_address: GDExtensionInterfaceGetProcAddress, p_ref: GDExtensionConstRefPtr) GDExtensionObjectPtr {
-    return load(
-        get_proc_address,
-        "ref_get_object",
-        *const fn (GDExtensionConstRefPtr) callconv(.c) GDExtensionObjectPtr,
-    )(p_ref);
-}
-
-/// @name ref_set_object
-/// @since 4.1
-/// Sets the Object referred to by a reference.
-/// @param p_ref A pointer to the reference.
-/// @param p_object A pointer to the Object to refer to.
-pub const GDExtensionInterfaceRefSetObject = *const fn (GDExtensionRefPtr, GDExtensionObjectPtr) callconv(.c) void;
-
-pub fn ref_set_object(get_proc_address: GDExtensionInterfaceGetProcAddress, p_ref: GDExtensionRefPtr, p_object: GDExtensionObjectPtr) void {
-    return load(
-        get_proc_address,
-        "ref_set_object",
-        *const fn (GDExtensionRefPtr, GDExtensionObjectPtr) callconv(.c) void,
-    )(p_ref, p_object);
-}
-
-/// @name script_instance_create
-/// @since 4.1
-/// Creates a script instance that contains the given info and instance data.
-/// @param p_info A pointer to a GDExtensionScriptInstanceInfo struct.
-/// @param p_instance_data A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on p_info.
-/// @return A pointer to a ScriptInstanceExtension object.
-pub const GDExtensionInterfaceScriptInstanceCreate = *const fn (GDExtensionScriptInstanceInfo *p_info, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr;
-
-pub fn script_instance_create(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: GDExtensionScriptInstanceInfo *p_info, p_instance_data: GDExtensionScriptInstanceDataPtr) GDExtensionScriptInstancePtr {
-    return load(
-        get_proc_address,
-        "script_instance_create",
-        *const fn (GDExtensionScriptInstanceInfo *p_info, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr,
-    )(arg1, p_instance_data);
-}
-
-/// @name script_instance_create2
-/// @since 4.2
-/// Creates a script instance that contains the given info and instance data.
-/// @param p_info A pointer to a GDExtensionScriptInstanceInfo2 struct.
-/// @param p_instance_data A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on p_info.
-/// @return A pointer to a ScriptInstanceExtension object.
-pub const GDExtensionInterfaceScriptInstanceCreate2 = *const fn (GDExtensionScriptInstanceInfo2 *p_info, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr;
-
-pub fn script_instance_create2(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: GDExtensionScriptInstanceInfo2 *p_info, p_instance_data: GDExtensionScriptInstanceDataPtr) GDExtensionScriptInstancePtr {
-    return load(
-        get_proc_address,
-        "script_instance_create2",
-        *const fn (GDExtensionScriptInstanceInfo2 *p_info, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr,
-    )(arg1, p_instance_data);
-}
-
-/// @name script_instance_create3
-/// @since 4.3
-/// Creates a script instance that contains the given info and instance data.
-/// @param p_info A pointer to a GDExtensionScriptInstanceInfo3 struct.
-/// @param p_instance_data A pointer to a data representing the script instance in the GDExtension. This will be passed to all the function pointers on p_info.
-/// @return A pointer to a ScriptInstanceExtension object.
-pub const GDExtensionInterfaceScriptInstanceCreate3 = *const fn (GDExtensionScriptInstanceInfo3 *p_info, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr;
-
-pub fn script_instance_create3(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: GDExtensionScriptInstanceInfo3 *p_info, p_instance_data: GDExtensionScriptInstanceDataPtr) GDExtensionScriptInstancePtr {
-    return load(
-        get_proc_address,
-        "script_instance_create3",
-        *const fn (GDExtensionScriptInstanceInfo3 *p_info, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr,
-    )(arg1, p_instance_data);
-}
-
-/// @name placeholder_script_instance_create
-/// @since 4.2
-/// Creates a placeholder script instance for a given script and instance.
-/// This interface is optional as a custom placeholder could also be created with script_instance_create().
-/// @param p_language A pointer to a ScriptLanguage.
-/// @param p_script A pointer to a Script.
-/// @param p_owner A pointer to an Object.
-/// @return A pointer to a PlaceHolderScriptInstance object.
-pub const GDExtensionInterfacePlaceHolderScriptInstanceCreate = *const fn (GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionObjectPtr) callconv(.c) GDExtensionScriptInstancePtr;
-
-pub fn placeholder_script_instance_create(get_proc_address: GDExtensionInterfaceGetProcAddress, p_language: GDExtensionObjectPtr, p_script: GDExtensionObjectPtr, p_owner: GDExtensionObjectPtr) GDExtensionScriptInstancePtr {
-    return load(
-        get_proc_address,
-        "placeholder_script_instance_create",
-        *const fn (GDExtensionObjectPtr, GDExtensionObjectPtr, GDExtensionObjectPtr) callconv(.c) GDExtensionScriptInstancePtr,
-    )(p_language, p_script, p_owner);
-}
-
-/// @name placeholder_script_instance_update
-/// @since 4.2
-/// Updates a placeholder script instance with the given properties and values.
-/// The passed in placeholder must be an instance of PlaceHolderScriptInstance
-/// such as the one returned by placeholder_script_instance_create().
-/// @param p_placeholder A pointer to a PlaceHolderScriptInstance.
-/// @param p_properties A pointer to an Array of Dictionary representing PropertyInfo.
-/// @param p_values A pointer to a Dictionary mapping StringName to Variant values.
-pub const GDExtensionInterfacePlaceHolderScriptInstanceUpdate = *const fn (GDExtensionScriptInstancePtr, GDExtensionConstTypePtr, GDExtensionConstTypePtr) callconv(.c) void;
-
-pub fn placeholder_script_instance_update(get_proc_address: GDExtensionInterfaceGetProcAddress, p_placeholder: GDExtensionScriptInstancePtr, p_properties: GDExtensionConstTypePtr, p_values: GDExtensionConstTypePtr) void {
-    return load(
-        get_proc_address,
-        "placeholder_script_instance_update",
-        *const fn (GDExtensionScriptInstancePtr, GDExtensionConstTypePtr, GDExtensionConstTypePtr) callconv(.c) void,
-    )(p_placeholder, p_properties, p_values);
-}
-
-/// @name object_get_script_instance
-/// @since 4.2
-/// Get the script instance data attached to this object.
-/// @param p_object A pointer to the Object.
-/// @param p_language A pointer to the language expected for this script instance.
-/// @return A GDExtensionScriptInstanceDataPtr that was attached to this object as part of script_instance_create.
-pub const GDExtensionInterfaceObjectGetScriptInstance = *const fn (GDExtensionConstObjectPtr, GDExtensionObjectPtr) callconv(.c) GDExtensionScriptInstanceDataPtr;
-
-pub fn object_get_script_instance(get_proc_address: GDExtensionInterfaceGetProcAddress, p_object: GDExtensionConstObjectPtr, p_language: GDExtensionObjectPtr) GDExtensionScriptInstanceDataPtr {
-    return load(
-        get_proc_address,
-        "object_get_script_instance",
-        *const fn (GDExtensionConstObjectPtr, GDExtensionObjectPtr) callconv(.c) GDExtensionScriptInstanceDataPtr,
-    )(p_object, p_language);
-}
-
-/// @name object_set_script_instance
-/// @since 4.5
-/// Set the script instance data attached to this object.
-/// @param p_object A pointer to the Object.
-/// @param p_script_instance A pointer to the script instance data to attach to this object.
-pub const GDExtensionInterfaceObjectSetScriptInstance = *const fn (GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr) callconv(.c) void;
-
-pub fn object_set_script_instance(get_proc_address: GDExtensionInterfaceGetProcAddress, p_object: GDExtensionObjectPtr, p_script_instance: GDExtensionScriptInstanceDataPtr) void {
-    return load(
-        get_proc_address,
-        "object_set_script_instance",
-        *const fn (GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr) callconv(.c) void,
-    )(p_object, p_script_instance);
-}
-
-/// @name callable_custom_create
-/// @since 4.2
-/// Creates a custom Callable object from a function pointer.
-/// Provided struct can be safely freed once the function returns.
-/// @param r_callable A pointer that will receive the new Callable.
-/// @param p_callable_custom_info The info required to construct a Callable.
-pub const GDExtensionInterfaceCallableCustomCreate = *const fn (GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo *p_callable_custom_info) callconv(.c) void;
-
-pub fn callable_custom_create(get_proc_address: GDExtensionInterfaceGetProcAddress, r_callable: GDExtensionUninitializedTypePtr, arg2: GDExtensionCallableCustomInfo *p_callable_custom_info) void {
-    return load(
-        get_proc_address,
-        "callable_custom_create",
-        *const fn (GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo *p_callable_custom_info) callconv(.c) void,
-    )(r_callable, arg2);
-}
-
-/// @name callable_custom_create2
-/// @since 4.3
-/// Creates a custom Callable object from a function pointer.
-/// Provided struct can be safely freed once the function returns.
-/// @param r_callable A pointer that will receive the new Callable.
-/// @param p_callable_custom_info The info required to construct a Callable.
-pub const GDExtensionInterfaceCallableCustomCreate2 = *const fn (GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo2 *p_callable_custom_info) callconv(.c) void;
-
-pub fn callable_custom_create2(get_proc_address: GDExtensionInterfaceGetProcAddress, r_callable: GDExtensionUninitializedTypePtr, arg2: GDExtensionCallableCustomInfo2 *p_callable_custom_info) void {
-    return load(
-        get_proc_address,
-        "callable_custom_create2",
-        *const fn (GDExtensionUninitializedTypePtr, GDExtensionCallableCustomInfo2 *p_callable_custom_info) callconv(.c) void,
-    )(r_callable, arg2);
-}
-
-/// @name callable_custom_get_userdata
-/// @since 4.2
-/// Retrieves the userdata pointer from a custom Callable.
-/// If the Callable is not a custom Callable or the token does not match the one provided to callable_custom_create() via GDExtensionCallableCustomInfo then NULL will be returned.
-/// @param p_callable A pointer to a Callable.
-/// @param p_token A pointer to an address that uniquely identifies the GDExtension.
-/// @return The userdata pointer given when creating this custom Callable.
-pub const GDExtensionInterfaceCallableCustomGetUserData = *const fn (GDExtensionConstTypePtr, void *p_token) callconv(.c) ?*anyopaque;
-
-pub fn callable_custom_get_userdata(get_proc_address: GDExtensionInterfaceGetProcAddress, p_callable: GDExtensionConstTypePtr, arg2: void *p_token) ?*anyopaque {
-    return load(
-        get_proc_address,
-        "callable_custom_get_userdata",
-        *const fn (GDExtensionConstTypePtr, void *p_token) callconv(.c) ?*anyopaque,
-    )(p_callable, arg2);
-}
-
-/// @name classdb_construct_object
-/// @since 4.1
-/// Constructs an Object of the requested class.
-/// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.
-/// @param p_classname A pointer to a StringName with the class name.
-/// @return A pointer to the newly created Object.
-pub const GDExtensionInterfaceClassdbConstructObject = *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr;
-
-pub fn classdb_construct_object(get_proc_address: GDExtensionInterfaceGetProcAddress, p_classname: GDExtensionConstStringNamePtr) GDExtensionObjectPtr {
-    return load(
-        get_proc_address,
-        "classdb_construct_object",
-        *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr,
-    )(p_classname);
-}
-
-/// @name classdb_construct_object2
-/// @since 4.4
-/// Constructs an Object of the requested class.
-/// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.
-/// "NOTIFICATION_POSTINITIALIZE" must be sent after construction.
-/// @param p_classname A pointer to a StringName with the class name.
-/// @return A pointer to the newly created Object.
-pub const GDExtensionInterfaceClassdbConstructObject2 = *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr;
-
-pub fn classdb_construct_object2(get_proc_address: GDExtensionInterfaceGetProcAddress, p_classname: GDExtensionConstStringNamePtr) GDExtensionObjectPtr {
-    return load(
-        get_proc_address,
-        "classdb_construct_object2",
-        *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr,
-    )(p_classname);
-}
-
-/// @name classdb_construct_object3
-/// @since 4.7
-/// Constructs an Object of the requested class.
-/// The passed class must be a built-in godot class, or an already-registered extension class. In both cases, object_set_instance() should be called to fully initialize the object.
-/// If the type is a subtype of RefCounted, it already has a refcount of 1. The caller must take ownership the refcount and is responsible for decrementing it again when the object is no longer needed.
-/// "NOTIFICATION_POSTINITIALIZE" must be sent after construction.
-/// @param p_classname A pointer to a StringName with the class name.
-/// @return A pointer to the newly created Object.
-pub const GDExtensionInterfaceClassdbConstructObject3 = *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr;
-
-pub fn classdb_construct_object3(get_proc_address: GDExtensionInterfaceGetProcAddress, p_classname: GDExtensionConstStringNamePtr) GDExtensionObjectPtr {
-    return load(
-        get_proc_address,
-        "classdb_construct_object3",
-        *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr,
-    )(p_classname);
-}
-
-/// @name classdb_get_method_bind
-/// @since 4.1
-/// Gets a pointer to the MethodBind in ClassDB for the given class, method and hash.
-/// @param p_classname A pointer to a StringName with the class name.
-/// @param p_methodname A pointer to a StringName with the method name.
-/// @param p_hash A hash representing the function signature.
-/// @return A pointer to the MethodBind from ClassDB.
-pub const GDExtensionInterfaceClassdbGetMethodBind = *const fn (GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt) callconv(.c) GDExtensionMethodBindPtr;
-
-pub fn classdb_get_method_bind(get_proc_address: GDExtensionInterfaceGetProcAddress, p_classname: GDExtensionConstStringNamePtr, p_methodname: GDExtensionConstStringNamePtr, p_hash: GDExtensionInt) GDExtensionMethodBindPtr {
-    return load(
-        get_proc_address,
-        "classdb_get_method_bind",
-        *const fn (GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt) callconv(.c) GDExtensionMethodBindPtr,
-    )(p_classname, p_methodname, p_hash);
-}
-
-/// @name classdb_get_class_tag
-/// @since 4.1
-/// Gets a pointer uniquely identifying the given built-in class in the ClassDB.
-/// @param p_classname A pointer to a StringName with the class name.
-/// @return A pointer uniquely identifying the built-in class in the ClassDB.
-pub const GDExtensionInterfaceClassdbGetClassTag = *const fn (GDExtensionConstStringNamePtr) callconv(.c) ?*anyopaque;
-
-pub fn classdb_get_class_tag(get_proc_address: GDExtensionInterfaceGetProcAddress, p_classname: GDExtensionConstStringNamePtr) ?*anyopaque {
-    return load(
-        get_proc_address,
-        "classdb_get_class_tag",
-        *const fn (GDExtensionConstStringNamePtr) callconv(.c) ?*anyopaque,
-    )(p_classname);
-}
-
-/// @name classdb_register_extension_class
-/// @since 4.1
-/// Registers an extension class in the ClassDB.
-/// Provided struct can be safely freed once the function returns.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_parent_class_name A pointer to a StringName with the parent class name.
-/// @param p_extension_funcs A pointer to a GDExtensionClassCreationInfo struct.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClass = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo *p_extension_funcs) callconv(.c) void;
-
-pub fn classdb_register_extension_class(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, p_parent_class_name: GDExtensionConstStringNamePtr, arg4: GDExtensionClassCreationInfo *p_extension_funcs) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo *p_extension_funcs) callconv(.c) void,
-    )(p_library, p_class_name, p_parent_class_name, arg4);
-}
-
-/// @name classdb_register_extension_class2
-/// @since 4.2
-/// Registers an extension class in the ClassDB.
-/// Provided struct can be safely freed once the function returns.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_parent_class_name A pointer to a StringName with the parent class name.
-/// @param p_extension_funcs A pointer to a GDExtensionClassCreationInfo2 struct.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClass2 = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo2 *p_extension_funcs) callconv(.c) void;
-
-pub fn classdb_register_extension_class2(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, p_parent_class_name: GDExtensionConstStringNamePtr, arg4: GDExtensionClassCreationInfo2 *p_extension_funcs) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class2",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo2 *p_extension_funcs) callconv(.c) void,
-    )(p_library, p_class_name, p_parent_class_name, arg4);
-}
-
-/// @name classdb_register_extension_class3
-/// @since 4.3
-/// Registers an extension class in the ClassDB.
-/// Provided struct can be safely freed once the function returns.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_parent_class_name A pointer to a StringName with the parent class name.
-/// @param p_extension_funcs A pointer to a GDExtensionClassCreationInfo3 struct.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClass3 = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo3 *p_extension_funcs) callconv(.c) void;
-
-pub fn classdb_register_extension_class3(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, p_parent_class_name: GDExtensionConstStringNamePtr, arg4: GDExtensionClassCreationInfo3 *p_extension_funcs) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class3",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo3 *p_extension_funcs) callconv(.c) void,
-    )(p_library, p_class_name, p_parent_class_name, arg4);
-}
-
-/// @name classdb_register_extension_class4
-/// @since 4.4
-/// Registers an extension class in the ClassDB.
-/// Provided struct can be safely freed once the function returns.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_parent_class_name A pointer to a StringName with the parent class name.
-/// @param p_extension_funcs A pointer to a GDExtensionClassCreationInfo4 struct.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClass4 = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo4 *p_extension_funcs) callconv(.c) void;
-
-pub fn classdb_register_extension_class4(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, p_parent_class_name: GDExtensionConstStringNamePtr, arg4: GDExtensionClassCreationInfo4 *p_extension_funcs) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class4",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo4 *p_extension_funcs) callconv(.c) void,
-    )(p_library, p_class_name, p_parent_class_name, arg4);
-}
-
-/// @name classdb_register_extension_class5
-/// @since 4.5
-/// Registers an extension class in the ClassDB.
-/// Provided struct can be safely freed once the function returns.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_parent_class_name A pointer to a StringName with the parent class name.
-/// @param p_extension_funcs A pointer to a GDExtensionClassCreationInfo5 struct.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClass5 = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo5 *p_extension_funcs) callconv(.c) void;
-
-pub fn classdb_register_extension_class5(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, p_parent_class_name: GDExtensionConstStringNamePtr, arg4: GDExtensionClassCreationInfo5 *p_extension_funcs) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class5",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo5 *p_extension_funcs) callconv(.c) void,
-    )(p_library, p_class_name, p_parent_class_name, arg4);
-}
-
-/// @name classdb_register_extension_class6
-/// @since 4.7
-/// Registers an extension class in the ClassDB.
-/// Provided struct can be safely freed once the function returns.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_parent_class_name A pointer to a StringName with the parent class name.
-/// @param p_extension_funcs A pointer to a GDExtensionClassCreationInfo6 struct.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClass6 = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo6 *p_extension_funcs) callconv(.c) void;
-
-pub fn classdb_register_extension_class6(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, p_parent_class_name: GDExtensionConstStringNamePtr, arg4: GDExtensionClassCreationInfo6 *p_extension_funcs) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class6",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionClassCreationInfo6 *p_extension_funcs) callconv(.c) void,
-    )(p_library, p_class_name, p_parent_class_name, arg4);
-}
-
-/// @name classdb_register_extension_class_method
-/// @since 4.1
-/// Registers a method on an extension class in the ClassDB.
-/// Provided struct can be safely freed once the function returns.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_method_info A pointer to a GDExtensionClassMethodInfo struct.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClassMethod = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassMethodInfo *p_method_info) callconv(.c) void;
-
-pub fn classdb_register_extension_class_method(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, arg3: GDExtensionClassMethodInfo *p_method_info) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class_method",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassMethodInfo *p_method_info) callconv(.c) void,
-    )(p_library, p_class_name, arg3);
-}
-
-/// @name classdb_register_extension_class_virtual_method
-/// @since 4.3
-/// Registers a virtual method on an extension class in ClassDB, that can be implemented by scripts or other extensions.
-/// Provided struct can be safely freed once the function returns.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_method_info A pointer to a GDExtensionClassMethodInfo struct.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClassVirtualMethod = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassVirtualMethodInfo *p_method_info) callconv(.c) void;
-
-pub fn classdb_register_extension_class_virtual_method(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, arg3: GDExtensionClassVirtualMethodInfo *p_method_info) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class_virtual_method",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionClassVirtualMethodInfo *p_method_info) callconv(.c) void,
-    )(p_library, p_class_name, arg3);
-}
-
-/// @name classdb_register_extension_class_integer_constant
-/// @since 4.1
-/// Registers an integer constant on an extension class in the ClassDB.
-/// Note about registering bitfield values (if p_is_bitfield is true): even though p_constant_value is signed, language bindings are
-/// advised to treat bitfields as uint64_t, since this is generally clearer and can prevent mistakes like using -1 for setting all bits.
-/// Language APIs should thus provide an abstraction that registers bitfields (uint64_t) separately from regular constants (int64_t).
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_enum_name A pointer to a StringName with the enum name.
-/// @param p_constant_name A pointer to a StringName with the constant name.
-/// @param p_constant_value The constant value.
-/// @param p_is_bitfield Whether or not this constant is part of a bitfield.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClassIntegerConstant = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionBool) callconv(.c) void;
-
-pub fn classdb_register_extension_class_integer_constant(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, p_enum_name: GDExtensionConstStringNamePtr, p_constant_name: GDExtensionConstStringNamePtr, p_constant_value: GDExtensionInt, p_is_bitfield: GDExtensionBool) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class_integer_constant",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt, GDExtensionBool) callconv(.c) void,
-    )(p_library, p_class_name, p_enum_name, p_constant_name, p_constant_value, p_is_bitfield);
-}
-
-/// @name classdb_register_extension_class_property
-/// @since 4.1
-/// Registers a property on an extension class in the ClassDB.
-/// Provided struct can be safely freed once the function returns.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_info A pointer to a GDExtensionPropertyInfo struct.
-/// @param p_setter A pointer to a StringName with the name of the setter method.
-/// @param p_getter A pointer to a StringName with the name of the getter method.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClassProperty = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo *p_info, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr) callconv(.c) void;
-
-pub fn classdb_register_extension_class_property(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, arg3: GDExtensionPropertyInfo *p_info, p_setter: GDExtensionConstStringNamePtr, p_getter: GDExtensionConstStringNamePtr) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class_property",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo *p_info, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr) callconv(.c) void,
-    )(p_library, p_class_name, arg3, p_setter, p_getter);
-}
-
-/// @name classdb_register_extension_class_property_indexed
-/// @since 4.2
-/// Registers an indexed property on an extension class in the ClassDB.
-/// Provided struct can be safely freed once the function returns.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_info A pointer to a GDExtensionPropertyInfo struct.
-/// @param p_setter A pointer to a StringName with the name of the setter method.
-/// @param p_getter A pointer to a StringName with the name of the getter method.
-/// @param p_index The index to pass as the first argument to the getter and setter methods.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClassPropertyIndexed = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo *p_info, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt) callconv(.c) void;
-
-pub fn classdb_register_extension_class_property_indexed(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, arg3: GDExtensionPropertyInfo *p_info, p_setter: GDExtensionConstStringNamePtr, p_getter: GDExtensionConstStringNamePtr, p_index: GDExtensionInt) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class_property_indexed",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo *p_info, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionInt) callconv(.c) void,
-    )(p_library, p_class_name, arg3, p_setter, p_getter, p_index);
-}
-
-/// @name classdb_register_extension_class_property_group
-/// @since 4.1
-/// Registers a property group on an extension class in the ClassDB.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_group_name A pointer to a String with the group name.
-/// @param p_prefix A pointer to a String with the prefix used by properties in this group.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClassPropertyGroup = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr) callconv(.c) void;
-
-pub fn classdb_register_extension_class_property_group(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, p_group_name: GDExtensionConstStringPtr, p_prefix: GDExtensionConstStringPtr) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class_property_group",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr) callconv(.c) void,
-    )(p_library, p_class_name, p_group_name, p_prefix);
-}
-
-/// @name classdb_register_extension_class_property_subgroup
-/// @since 4.1
-/// Registers a property subgroup on an extension class in the ClassDB.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_subgroup_name A pointer to a String with the subgroup name.
-/// @param p_prefix A pointer to a String with the prefix used by properties in this subgroup.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClassPropertySubgroup = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr) callconv(.c) void;
-
-pub fn classdb_register_extension_class_property_subgroup(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, p_subgroup_name: GDExtensionConstStringPtr, p_prefix: GDExtensionConstStringPtr) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class_property_subgroup",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringPtr, GDExtensionConstStringPtr) callconv(.c) void,
-    )(p_library, p_class_name, p_subgroup_name, p_prefix);
-}
-
-/// @name classdb_register_extension_class_signal
-/// @since 4.1
-/// Registers a signal on an extension class in the ClassDB.
-/// Provided structs can be safely freed once the function returns.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-/// @param p_signal_name A pointer to a StringName with the signal name.
-/// @param p_argument_info A pointer to a GDExtensionPropertyInfo struct.
-/// @param p_argument_count The number of arguments the signal receives.
-pub const GDExtensionInterfaceClassdbRegisterExtensionClassSignal = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo *p_argument_info, GDExtensionInt) callconv(.c) void;
-
-pub fn classdb_register_extension_class_signal(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr, p_signal_name: GDExtensionConstStringNamePtr, arg4: GDExtensionPropertyInfo *p_argument_info, p_argument_count: GDExtensionInt) void {
-    return load(
-        get_proc_address,
-        "classdb_register_extension_class_signal",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr, GDExtensionConstStringNamePtr, GDExtensionPropertyInfo *p_argument_info, GDExtensionInt) callconv(.c) void,
-    )(p_library, p_class_name, p_signal_name, arg4, p_argument_count);
-}
-
-/// @name classdb_unregister_extension_class
-/// @since 4.1
-/// Unregisters an extension class in the ClassDB.
-/// Unregistering a parent class before a class that inherits it will result in failure. Inheritors must be unregistered first.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_class_name A pointer to a StringName with the class name.
-pub const GDExtensionInterfaceClassdbUnregisterExtensionClass = *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr) callconv(.c) void;
-
-pub fn classdb_unregister_extension_class(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_class_name: GDExtensionConstStringNamePtr) void {
-    return load(
-        get_proc_address,
-        "classdb_unregister_extension_class",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr) callconv(.c) void,
-    )(p_library, p_class_name);
-}
-
-/// @name get_library_path
-/// @since 4.1
-/// Gets the path to the current GDExtension library.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param r_path A pointer to a String which will receive the path.
-pub const GDExtensionInterfaceGetLibraryPath = *const fn (GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr) callconv(.c) void;
-
-pub fn get_library_path(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, r_path: GDExtensionUninitializedStringPtr) void {
-    return load(
-        get_proc_address,
-        "get_library_path",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr) callconv(.c) void,
-    )(p_library, r_path);
-}
-
-/// @name editor_add_plugin
-/// @since 4.1
-/// Adds an editor plugin.
-/// It's safe to call during initialization.
-/// @param p_class_name A pointer to a StringName with the name of a class (descending from EditorPlugin) which is already registered with ClassDB.
-pub const GDExtensionInterfaceEditorAddPlugin = *const fn (GDExtensionConstStringNamePtr) callconv(.c) void;
-
-pub fn editor_add_plugin(get_proc_address: GDExtensionInterfaceGetProcAddress, p_class_name: GDExtensionConstStringNamePtr) void {
-    return load(
-        get_proc_address,
-        "editor_add_plugin",
-        *const fn (GDExtensionConstStringNamePtr) callconv(.c) void,
-    )(p_class_name);
-}
-
-/// @name editor_remove_plugin
-/// @since 4.1
-/// Removes an editor plugin.
-/// @param p_class_name A pointer to a StringName with the name of a class that was previously added as an editor plugin.
-pub const GDExtensionInterfaceEditorRemovePlugin = *const fn (GDExtensionConstStringNamePtr) callconv(.c) void;
-
-pub fn editor_remove_plugin(get_proc_address: GDExtensionInterfaceGetProcAddress, p_class_name: GDExtensionConstStringNamePtr) void {
-    return load(
-        get_proc_address,
-        "editor_remove_plugin",
-        *const fn (GDExtensionConstStringNamePtr) callconv(.c) void,
-    )(p_class_name);
-}
-
-/// @name editor_help_load_xml_from_utf8_chars
-/// @since 4.3
-/// Loads new XML-formatted documentation data in the editor.
-/// The provided pointer can be immediately freed once the function returns.
-/// @param p_data A pointer to a UTF-8 encoded C string (null terminated).
-pub const GDExtensionsInterfaceEditorHelpLoadXmlFromUtf8Chars = *const fn (char *p_data) callconv(.c) void;
-
-pub fn editor_help_load_xml_from_utf8_chars(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: char *p_data) void {
-    return load(
-        get_proc_address,
-        "editor_help_load_xml_from_utf8_chars",
-        *const fn (char *p_data) callconv(.c) void,
-    )(arg1);
-}
-
-/// @name editor_help_load_xml_from_utf8_chars_and_len
-/// @since 4.3
-/// Loads new XML-formatted documentation data in the editor.
-/// The provided pointer can be immediately freed once the function returns.
-/// @param p_data A pointer to a UTF-8 encoded C string.
-/// @param p_size The number of bytes (not code units).
-pub const GDExtensionsInterfaceEditorHelpLoadXmlFromUtf8CharsAndLen = *const fn (char *p_data, GDExtensionInt) callconv(.c) void;
-
-pub fn editor_help_load_xml_from_utf8_chars_and_len(get_proc_address: GDExtensionInterfaceGetProcAddress, arg1: char *p_data, p_size: GDExtensionInt) void {
-    return load(
-        get_proc_address,
-        "editor_help_load_xml_from_utf8_chars_and_len",
-        *const fn (char *p_data, GDExtensionInt) callconv(.c) void,
-    )(arg1, p_size);
-}
-
-/// @name editor_register_get_classes_used_callback
-/// @since 4.5
-/// Registers a callback that Godot can call to get the list of all classes (from ClassDB) that may be used by the calling GDExtension.
-/// This is used by the editor to generate a build profile (in "Tools" > "Engine Compilation Configuration Editor..." > "Detect from project"),
-/// in order to recompile Godot with only the classes used.
-/// In the provided callback, the GDExtension should provide the list of classes that _may_ be used statically, thus the time of invocation shouldn't matter.
-/// If a GDExtension doesn't register a callback, Godot will assume that it could be using any classes.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_callback The callback to retrieve the list of classes used.
-pub const GDExtensionInterfaceEditorRegisterGetClassesUsedCallback = *const fn (GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback) callconv(.c) void;
-
-pub fn editor_register_get_classes_used_callback(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, p_callback: GDExtensionEditorGetClassesUsedCallback) void {
-    return load(
-        get_proc_address,
-        "editor_register_get_classes_used_callback",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback) callconv(.c) void,
-    )(p_library, p_callback);
-}
-
-/// @name register_main_loop_callbacks
-/// @since 4.5
-/// Registers callbacks to be called at different phases of the main loop.
-/// @param p_library A pointer the library received by the GDExtension's entry point function.
-/// @param p_callbacks A pointer to the structure that contains the callbacks.
-pub const GDExtensionInterfaceRegisterMainLoopCallbacks = *const fn (GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks *p_callbacks) callconv(.c) void;
-
-pub fn register_main_loop_callbacks(get_proc_address: GDExtensionInterfaceGetProcAddress, p_library: GDExtensionClassLibraryPtr, arg2: GDExtensionMainLoopCallbacks *p_callbacks) void {
-    return load(
-        get_proc_address,
-        "register_main_loop_callbacks",
-        *const fn (GDExtensionClassLibraryPtr, GDExtensionMainLoopCallbacks *p_callbacks) callconv(.c) void,
-    )(p_library, arg2);
-}
-
-// Total parse+render: 301265650ns
+pub const Interface = struct {
+    // Raw function pointers – all non-optional after successful init
+    /// @since 4.1
+    get_godot_version: *const fn ([*c]GDExtensionGodotVersion) callconv(.c) void,
+    /// @since 4.5
+    get_godot_version2: *const fn ([*c]GDExtensionGodotVersion2) callconv(.c) void,
+    /// @since 4.1
+    mem_alloc: *const fn (usize) callconv(.c) ?*anyopaque,
+    /// @since 4.1
+    mem_realloc: *const fn (?*anyopaque, usize) callconv(.c) ?*anyopaque,
+    /// @since 4.1
+    mem_free: *const fn (?*anyopaque) callconv(.c) void,
+    /// @since 4.6
+    mem_alloc2: *const fn (usize, GDExtensionBool) callconv(.c) ?*anyopaque,
+    /// @since 4.6
+    mem_realloc2: *const fn (
+        ?*anyopaque,
+        usize,
+        GDExtensionBool,
+    ) callconv(.c) ?*anyopaque,
+    /// @since 4.6
+    mem_free2: *const fn (?*anyopaque, GDExtensionBool) callconv(.c) void,
+    /// @since 4.1
+    print_error: *const fn (
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    print_error_with_message: *const fn (
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    print_warning: *const fn (
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    print_warning_with_message: *const fn (
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    print_script_error: *const fn (
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    print_script_error_with_message: *const fn (
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    get_native_struct_size: *const fn (GDExtensionConstStringNamePtr) callconv(.c) u64,
+    /// @since 4.1
+    variant_new_copy: *const fn (GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr) callconv(.c) void,
+    /// @since 4.1
+    variant_new_nil: *const fn (GDExtensionUninitializedVariantPtr) callconv(.c) void,
+    /// @since 4.1
+    variant_destroy: *const fn (GDExtensionVariantPtr) callconv(.c) void,
+    /// @since 4.1
+    variant_call: *const fn (
+        GDExtensionVariantPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_call_static: *const fn (
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_evaluate: *const fn (
+        GDExtensionVariantOperator,
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_set: *const fn (
+        GDExtensionVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_set_named: *const fn (
+        GDExtensionVariantPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_set_keyed: *const fn (
+        GDExtensionVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_set_indexed: *const fn (
+        GDExtensionVariantPtr,
+        GDExtensionInt,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_get: *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_get_named: *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_get_keyed: *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_get_indexed: *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_iter_init: *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) GDExtensionBool,
+    /// @since 4.1
+    variant_iter_next: *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) GDExtensionBool,
+    /// @since 4.1
+    variant_iter_get: *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_hash: *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionInt,
+    /// @since 4.1
+    variant_recursive_hash: *const fn (GDExtensionConstVariantPtr, GDExtensionInt) callconv(.c) GDExtensionInt,
+    /// @since 4.1
+    variant_hash_compare: *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool,
+    /// @since 4.1
+    variant_booleanize: *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool,
+    /// @since 4.1
+    variant_duplicate: *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionVariantPtr,
+        GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_stringify: *const fn (GDExtensionConstVariantPtr, GDExtensionStringPtr) callconv(.c) void,
+    /// @since 4.1
+    variant_get_type: *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantType,
+    /// @since 4.1
+    variant_has_method: *const fn (GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool,
+    /// @since 4.1
+    variant_has_member: *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool,
+    /// @since 4.1
+    variant_has_key: *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) GDExtensionBool,
+    /// @since 4.4
+    variant_get_object_instance_id: *const fn (GDExtensionConstVariantPtr) callconv(.c) GDObjectInstanceID,
+    /// @since 4.1
+    variant_get_type_name: *const fn (GDExtensionVariantType, GDExtensionUninitializedStringPtr) callconv(.c) void,
+    /// @since 4.7
+    variant_get_type_by_name: *const fn (GDExtensionConstStringPtr) callconv(.c) GDExtensionVariantType,
+    /// @since 4.1
+    variant_can_convert: *const fn (GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionBool,
+    /// @since 4.1
+    variant_can_convert_strict: *const fn (GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionBool,
+    /// @since 4.1
+    get_variant_from_type_constructor: *const fn (GDExtensionVariantType) callconv(.c) GDExtensionVariantFromTypeConstructorFunc,
+    /// @since 4.1
+    get_variant_to_type_constructor: *const fn (GDExtensionVariantType) callconv(.c) GDExtensionTypeFromVariantConstructorFunc,
+    /// @since 4.4
+    variant_get_ptr_internal_getter: *const fn (GDExtensionVariantType) callconv(.c) GDExtensionVariantGetInternalPtrFunc,
+    /// @since 4.1
+    variant_get_ptr_operator_evaluator: *const fn (
+        GDExtensionVariantOperator,
+        GDExtensionVariantType,
+        GDExtensionVariantType,
+    ) callconv(.c) GDExtensionPtrOperatorEvaluator,
+    /// @since 4.1
+    variant_get_ptr_builtin_method: *const fn (
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionPtrBuiltInMethod,
+    /// @since 4.1
+    variant_get_ptr_constructor: *const fn (GDExtensionVariantType, i32) callconv(.c) GDExtensionPtrConstructor,
+    /// @since 4.1
+    variant_get_ptr_destructor: *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrDestructor,
+    /// @since 4.1
+    variant_construct: *const fn (
+        GDExtensionVariantType,
+        GDExtensionUninitializedVariantPtr,
+        [*c]const GDExtensionConstVariantPtr,
+        i32,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_get_ptr_setter: *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionPtrSetter,
+    /// @since 4.1
+    variant_get_ptr_getter: *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionPtrGetter,
+    /// @since 4.1
+    variant_get_ptr_indexed_setter: *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrIndexedSetter,
+    /// @since 4.1
+    variant_get_ptr_indexed_getter: *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrIndexedGetter,
+    /// @since 4.1
+    variant_get_ptr_keyed_setter: *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedSetter,
+    /// @since 4.1
+    variant_get_ptr_keyed_getter: *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedGetter,
+    /// @since 4.1
+    variant_get_ptr_keyed_checker: *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedChecker,
+    /// @since 4.1
+    variant_get_constant_value: *const fn (
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionUninitializedVariantPtr,
+    ) callconv(.c) void,
+    /// @since 4.1
+    variant_get_ptr_utility_function: *const fn (GDExtensionConstStringNamePtr, GDExtensionInt) callconv(.c) GDExtensionPtrUtilityFunction,
+    /// @since 4.1
+    string_new_with_latin1_chars: *const fn (GDExtensionUninitializedStringPtr, [*:0]const u8) callconv(.c) void,
+    /// @since 4.1
+    string_new_with_utf8_chars: *const fn (GDExtensionUninitializedStringPtr, [*:0]const u8) callconv(.c) void,
+    /// @since 4.1
+    string_new_with_utf16_chars: *const fn (GDExtensionUninitializedStringPtr, [*c]const u16) callconv(.c) void,
+    /// @since 4.1
+    string_new_with_utf32_chars: *const fn (GDExtensionUninitializedStringPtr, [*c]const u32) callconv(.c) void,
+    /// @since 4.1
+    string_new_with_wide_chars: *const fn (GDExtensionUninitializedStringPtr, [*c]const wchar_t) callconv(.c) void,
+    /// @since 4.1
+    string_new_with_latin1_chars_and_len: *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*:0]const u8,
+        GDExtensionInt,
+    ) callconv(.c) void,
+    /// @since 4.1
+    string_new_with_utf8_chars_and_len: *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*:0]const u8,
+        GDExtensionInt,
+    ) callconv(.c) void,
+    /// @since 4.3
+    string_new_with_utf8_chars_and_len2: *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*:0]const u8,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
+    /// @since 4.1
+    string_new_with_utf16_chars_and_len: *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*c]const u16,
+        GDExtensionInt,
+    ) callconv(.c) void,
+    /// @since 4.3
+    string_new_with_utf16_chars_and_len2: *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*c]const u16,
+        GDExtensionInt,
+        GDExtensionBool,
+    ) callconv(.c) GDExtensionInt,
+    /// @since 4.1
+    string_new_with_utf32_chars_and_len: *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*c]const u32,
+        GDExtensionInt,
+    ) callconv(.c) void,
+    /// @since 4.1
+    string_new_with_wide_chars_and_len: *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*c]const wchar_t,
+        GDExtensionInt,
+    ) callconv(.c) void,
+    /// @since 4.1
+    string_to_latin1_chars: *const fn (
+        GDExtensionConstStringPtr,
+        [*c]u8,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
+    /// @since 4.1
+    string_to_utf8_chars: *const fn (
+        GDExtensionConstStringPtr,
+        [*c]u8,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
+    /// @since 4.1
+    string_to_utf16_chars: *const fn (
+        GDExtensionConstStringPtr,
+        [*c]u16,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
+    /// @since 4.1
+    string_to_utf32_chars: *const fn (
+        GDExtensionConstStringPtr,
+        [*c]u32,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
+    /// @since 4.1
+    string_to_wide_chars: *const fn (
+        GDExtensionConstStringPtr,
+        [*c]wchar_t,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
+    /// @since 4.1
+    string_operator_index: *const fn (GDExtensionStringPtr, GDExtensionInt) callconv(.c) [*c]u32,
+    /// @since 4.1
+    string_operator_index_const: *const fn (GDExtensionConstStringPtr, GDExtensionInt) callconv(.c) [*c]const u32,
+    /// @since 4.1
+    string_operator_plus_eq_string: *const fn (GDExtensionStringPtr, GDExtensionConstStringPtr) callconv(.c) void,
+    /// @since 4.1
+    string_operator_plus_eq_char: *const fn (GDExtensionStringPtr, u32) callconv(.c) void,
+    /// @since 4.1
+    string_operator_plus_eq_cstr: *const fn (GDExtensionStringPtr, [*:0]const u8) callconv(.c) void,
+    /// @since 4.1
+    string_operator_plus_eq_wcstr: *const fn (GDExtensionStringPtr, [*c]const wchar_t) callconv(.c) void,
+    /// @since 4.1
+    string_operator_plus_eq_c32str: *const fn (GDExtensionStringPtr, [*c]const u32) callconv(.c) void,
+    /// @since 4.2
+    string_resize: *const fn (GDExtensionStringPtr, GDExtensionInt) callconv(.c) GDExtensionInt,
+    /// @since 4.2
+    string_name_new_with_latin1_chars: *const fn (
+        GDExtensionUninitializedStringNamePtr,
+        [*:0]const u8,
+        GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.2
+    string_name_new_with_utf8_chars: *const fn (GDExtensionUninitializedStringNamePtr, [*:0]const u8) callconv(.c) void,
+    /// @since 4.2
+    string_name_new_with_utf8_chars_and_len: *const fn (
+        GDExtensionUninitializedStringNamePtr,
+        [*:0]const u8,
+        GDExtensionInt,
+    ) callconv(.c) void,
+    /// @since 4.1
+    xml_parser_open_buffer: *const fn (
+        GDExtensionObjectPtr,
+        [*:0]const u8,
+        usize,
+    ) callconv(.c) GDExtensionInt,
+    /// @since 4.1
+    file_access_store_buffer: *const fn (
+        GDExtensionObjectPtr,
+        [*:0]const u8,
+        u64,
+    ) callconv(.c) void,
+    /// @since 4.1
+    file_access_get_buffer: *const fn (
+        GDExtensionConstObjectPtr,
+        [*c]u8,
+        u64,
+    ) callconv(.c) u64,
+    /// @since 4.3
+    image_ptrw: *const fn (GDExtensionObjectPtr) callconv(.c) [*c]u8,
+    /// @since 4.3
+    image_ptr: *const fn (GDExtensionObjectPtr) callconv(.c) [*:0]const u8,
+    /// @since 4.1
+    worker_thread_pool_add_native_group_task: *const fn (
+        GDExtensionObjectPtr,
+        GDExtensionWorkerThreadPoolGroupTask,
+        ?*anyopaque,
+        i32,
+        i32,
+        GDExtensionBool,
+        GDExtensionConstStringPtr,
+    ) callconv(.c) i64,
+    /// @since 4.1
+    worker_thread_pool_add_native_task: *const fn (
+        GDExtensionObjectPtr,
+        GDExtensionWorkerThreadPoolTask,
+        ?*anyopaque,
+        GDExtensionBool,
+        GDExtensionConstStringPtr,
+    ) callconv(.c) i64,
+    /// @since 4.1
+    packed_byte_array_operator_index: *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]u8,
+    /// @since 4.1
+    packed_byte_array_operator_index_const: *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*:0]const u8,
+    /// @since 4.1
+    packed_float32_array_operator_index: *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]f32,
+    /// @since 4.1
+    packed_float32_array_operator_index_const: *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const f32,
+    /// @since 4.1
+    packed_float64_array_operator_index: *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]f64,
+    /// @since 4.1
+    packed_float64_array_operator_index_const: *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const f64,
+    /// @since 4.1
+    packed_int32_array_operator_index: *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]i32,
+    /// @since 4.1
+    packed_int32_array_operator_index_const: *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const i32,
+    /// @since 4.1
+    packed_int64_array_operator_index: *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]i64,
+    /// @since 4.1
+    packed_int64_array_operator_index_const: *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const i64,
+    /// @since 4.1
+    packed_string_array_operator_index: *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionStringPtr,
+    /// @since 4.1
+    packed_string_array_operator_index_const: *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionStringPtr,
+    /// @since 4.1
+    packed_vector2_array_operator_index: *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
+    /// @since 4.1
+    packed_vector2_array_operator_index_const: *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
+    /// @since 4.1
+    packed_vector3_array_operator_index: *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
+    /// @since 4.1
+    packed_vector3_array_operator_index_const: *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
+    /// @since 4.3
+    packed_vector4_array_operator_index: *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
+    /// @since 4.3
+    packed_vector4_array_operator_index_const: *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
+    /// @since 4.1
+    packed_color_array_operator_index: *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
+    /// @since 4.1
+    packed_color_array_operator_index_const: *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr,
+    /// @since 4.1
+    array_operator_index: *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionVariantPtr,
+    /// @since 4.1
+    array_operator_index_const: *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionVariantPtr,
+    /// @since 4.1
+    array_ref: *const fn (GDExtensionTypePtr, GDExtensionConstTypePtr) callconv(.c) void,
+    /// @since 4.1
+    array_set_typed: *const fn (
+        GDExtensionTypePtr,
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+    ) callconv(.c) void,
+    /// @since 4.1
+    dictionary_operator_index: *const fn (GDExtensionTypePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantPtr,
+    /// @since 4.1
+    dictionary_operator_index_const: *const fn (GDExtensionConstTypePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantPtr,
+    /// @since 4.4
+    dictionary_set_typed: *const fn (
+        GDExtensionTypePtr,
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+    ) callconv(.c) void,
+    /// @since 4.1
+    object_method_bind_call: *const fn (
+        GDExtensionMethodBindPtr,
+        GDExtensionObjectPtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
+    /// @since 4.1
+    object_method_bind_ptrcall: *const fn (
+        GDExtensionMethodBindPtr,
+        GDExtensionObjectPtr,
+        [*c]const GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void,
+    /// @since 4.1
+    object_destroy: *const fn (GDExtensionObjectPtr) callconv(.c) void,
+    /// @since 4.1
+    global_get_singleton: *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr,
+    /// @since 4.1
+    object_get_instance_binding: *const fn (
+        GDExtensionObjectPtr,
+        ?*anyopaque,
+        [*c]const GDExtensionInstanceBindingCallbacks,
+    ) callconv(.c) ?*anyopaque,
+    /// @since 4.1
+    object_set_instance_binding: *const fn (
+        GDExtensionObjectPtr,
+        ?*anyopaque,
+        ?*anyopaque,
+        [*c]const GDExtensionInstanceBindingCallbacks,
+    ) callconv(.c) void,
+    /// @since 4.2
+    object_free_instance_binding: *const fn (GDExtensionObjectPtr, ?*anyopaque) callconv(.c) void,
+    /// @since 4.1
+    object_set_instance: *const fn (
+        GDExtensionObjectPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionClassInstancePtr,
+    ) callconv(.c) void,
+    /// @since 4.1
+    object_get_class_name: *const fn (
+        GDExtensionConstObjectPtr,
+        GDExtensionClassLibraryPtr,
+        GDExtensionUninitializedStringNamePtr,
+    ) callconv(.c) GDExtensionBool,
+    /// @since 4.1
+    object_cast_to: *const fn (GDExtensionConstObjectPtr, ?*anyopaque) callconv(.c) GDExtensionObjectPtr,
+    /// @since 4.1
+    object_get_instance_from_id: *const fn (GDObjectInstanceID) callconv(.c) GDExtensionObjectPtr,
+    /// @since 4.1
+    object_get_instance_id: *const fn (GDExtensionConstObjectPtr) callconv(.c) GDObjectInstanceID,
+    /// @since 4.3
+    object_has_script_method: *const fn (GDExtensionConstObjectPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool,
+    /// @since 4.3
+    object_call_script_method: *const fn (
+        GDExtensionObjectPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
+    /// @since 4.1
+    ref_get_object: *const fn (GDExtensionConstRefPtr) callconv(.c) GDExtensionObjectPtr,
+    /// @since 4.1
+    ref_set_object: *const fn (GDExtensionRefPtr, GDExtensionObjectPtr) callconv(.c) void,
+    /// @since 4.1
+    script_instance_create: *const fn ([*c]const GDExtensionScriptInstanceInfo, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr,
+    /// @since 4.2
+    script_instance_create2: *const fn ([*c]const GDExtensionScriptInstanceInfo2, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr,
+    /// @since 4.3
+    script_instance_create3: *const fn ([*c]const GDExtensionScriptInstanceInfo3, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr,
+    /// @since 4.2
+    placeholder_script_instance_create: *const fn (
+        GDExtensionObjectPtr,
+        GDExtensionObjectPtr,
+        GDExtensionObjectPtr,
+    ) callconv(.c) GDExtensionScriptInstancePtr,
+    /// @since 4.2
+    placeholder_script_instance_update: *const fn (
+        GDExtensionScriptInstancePtr,
+        GDExtensionConstTypePtr,
+        GDExtensionConstTypePtr,
+    ) callconv(.c) void,
+    /// @since 4.2
+    object_get_script_instance: *const fn (GDExtensionConstObjectPtr, GDExtensionObjectPtr) callconv(.c) GDExtensionScriptInstanceDataPtr,
+    /// @since 4.5
+    object_set_script_instance: *const fn (GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr) callconv(.c) void,
+    /// @since 4.2
+    callable_custom_create: *const fn (GDExtensionUninitializedTypePtr, [*c]GDExtensionCallableCustomInfo) callconv(.c) void,
+    /// @since 4.3
+    callable_custom_create2: *const fn (GDExtensionUninitializedTypePtr, [*c]GDExtensionCallableCustomInfo2) callconv(.c) void,
+    /// @since 4.2
+    callable_custom_get_userdata: *const fn (GDExtensionConstTypePtr, ?*anyopaque) callconv(.c) ?*anyopaque,
+    /// @since 4.1
+    classdb_construct_object: *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr,
+    /// @since 4.4
+    classdb_construct_object2: *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr,
+    /// @since 4.7
+    classdb_construct_object3: *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr,
+    /// @since 4.1
+    classdb_get_method_bind: *const fn (
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionMethodBindPtr,
+    /// @since 4.1
+    classdb_get_class_tag: *const fn (GDExtensionConstStringNamePtr) callconv(.c) ?*anyopaque,
+    /// @since 4.1
+    classdb_register_extension_class: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo,
+    ) callconv(.c) void,
+    /// @since 4.2
+    classdb_register_extension_class2: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo2,
+    ) callconv(.c) void,
+    /// @since 4.3
+    classdb_register_extension_class3: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo3,
+    ) callconv(.c) void,
+    /// @since 4.4
+    classdb_register_extension_class4: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo4,
+    ) callconv(.c) void,
+    /// @since 4.5
+    classdb_register_extension_class5: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo5,
+    ) callconv(.c) void,
+    /// @since 4.7
+    classdb_register_extension_class6: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo6,
+    ) callconv(.c) void,
+    /// @since 4.1
+    classdb_register_extension_class_method: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassMethodInfo,
+    ) callconv(.c) void,
+    /// @since 4.3
+    classdb_register_extension_class_virtual_method: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassVirtualMethodInfo,
+    ) callconv(.c) void,
+    /// @since 4.1
+    classdb_register_extension_class_integer_constant: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionInt,
+        GDExtensionBool,
+    ) callconv(.c) void,
+    /// @since 4.1
+    classdb_register_extension_class_property: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionPropertyInfo,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+    ) callconv(.c) void,
+    /// @since 4.2
+    classdb_register_extension_class_property_indexed: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionPropertyInfo,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionInt,
+    ) callconv(.c) void,
+    /// @since 4.1
+    classdb_register_extension_class_property_group: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringPtr,
+        GDExtensionConstStringPtr,
+    ) callconv(.c) void,
+    /// @since 4.1
+    classdb_register_extension_class_property_subgroup: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringPtr,
+        GDExtensionConstStringPtr,
+    ) callconv(.c) void,
+    /// @since 4.1
+    classdb_register_extension_class_signal: *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionPropertyInfo,
+        GDExtensionInt,
+    ) callconv(.c) void,
+    /// @since 4.1
+    classdb_unregister_extension_class: *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr) callconv(.c) void,
+    /// @since 4.1
+    get_library_path: *const fn (GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr) callconv(.c) void,
+    /// @since 4.1
+    editor_add_plugin: *const fn (GDExtensionConstStringNamePtr) callconv(.c) void,
+    /// @since 4.1
+    editor_remove_plugin: *const fn (GDExtensionConstStringNamePtr) callconv(.c) void,
+    /// @since 4.3
+    editor_help_load_xml_from_utf8_chars: *const fn ([*:0]const u8) callconv(.c) void,
+    /// @since 4.3
+    editor_help_load_xml_from_utf8_chars_and_len: *const fn ([*:0]const u8, GDExtensionInt) callconv(.c) void,
+    /// @since 4.5
+    editor_register_get_classes_used_callback: *const fn (GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback) callconv(.c) void,
+    /// @since 4.5
+    register_main_loop_callbacks: *const fn (GDExtensionClassLibraryPtr, [*c]const GDExtensionMainLoopCallbacks) callconv(.c) void,
+};
+
+/// Returns proc address from get_proc_address lookup table function.
+fn fp(
+    get_proc_address: GDExtensionInterfaceGetProcAddress,
+    comptime name: [:0]const u8,
+    comptime T: type,
+) !T {
+    const ptr = get_proc_address.?(name.ptr) orelse return error.MissingFunction;
+    return @ptrCast(@alignCast(ptr));
+}
+
+pub fn loadInterface(get_proc_address: GDExtensionInterfaceGetProcAddress) !Interface {
+    const gpa = get_proc_address orelse return error.MissingGetProcAddress;
+    return .{
+        .get_godot_version = try fp(gpa, "get_godot_version", *const fn ([*c]GDExtensionGodotVersion) callconv(.c) void),
+        .get_godot_version2 = try fp(gpa, "get_godot_version2", *const fn ([*c]GDExtensionGodotVersion2) callconv(.c) void),
+        .mem_alloc = try fp(gpa, "mem_alloc", *const fn (usize) callconv(.c) ?*anyopaque),
+        .mem_realloc = try fp(gpa, "mem_realloc", *const fn (?*anyopaque, usize) callconv(.c) ?*anyopaque),
+        .mem_free = try fp(gpa, "mem_free", *const fn (?*anyopaque) callconv(.c) void),
+        .mem_alloc2 = try fp(gpa, "mem_alloc2", *const fn (usize, GDExtensionBool) callconv(.c) ?*anyopaque),
+        .mem_realloc2 = try fp(
+            gpa,
+            "mem_realloc2",
+            *const fn (
+        ?*anyopaque,
+        usize,
+        GDExtensionBool,
+    ) callconv(.c) ?*anyopaque,
+        ),
+        .mem_free2 = try fp(gpa, "mem_free2", *const fn (?*anyopaque, GDExtensionBool) callconv(.c) void),
+        .print_error = try fp(
+            gpa,
+            "print_error",
+            *const fn (
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .print_error_with_message = try fp(
+            gpa,
+            "print_error_with_message",
+            *const fn (
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .print_warning = try fp(
+            gpa,
+            "print_warning",
+            *const fn (
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .print_warning_with_message = try fp(
+            gpa,
+            "print_warning_with_message",
+            *const fn (
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .print_script_error = try fp(
+            gpa,
+            "print_script_error",
+            *const fn (
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .print_script_error_with_message = try fp(
+            gpa,
+            "print_script_error_with_message",
+            *const fn (
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        [*:0]const u8,
+        i32,
+        GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .get_native_struct_size = try fp(gpa, "get_native_struct_size", *const fn (GDExtensionConstStringNamePtr) callconv(.c) u64),
+        .variant_new_copy = try fp(gpa, "variant_new_copy", *const fn (GDExtensionUninitializedVariantPtr, GDExtensionConstVariantPtr) callconv(.c) void),
+        .variant_new_nil = try fp(gpa, "variant_new_nil", *const fn (GDExtensionUninitializedVariantPtr) callconv(.c) void),
+        .variant_destroy = try fp(gpa, "variant_destroy", *const fn (GDExtensionVariantPtr) callconv(.c) void),
+        .variant_call = try fp(
+            gpa,
+            "variant_call",
+            *const fn (
+        GDExtensionVariantPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
+        ),
+        .variant_call_static = try fp(
+            gpa,
+            "variant_call_static",
+            *const fn (
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
+        ),
+        .variant_evaluate = try fp(
+            gpa,
+            "variant_evaluate",
+            *const fn (
+        GDExtensionVariantOperator,
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .variant_set = try fp(
+            gpa,
+            "variant_set",
+            *const fn (
+        GDExtensionVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .variant_set_named = try fp(
+            gpa,
+            "variant_set_named",
+            *const fn (
+        GDExtensionVariantPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .variant_set_keyed = try fp(
+            gpa,
+            "variant_set_keyed",
+            *const fn (
+        GDExtensionVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .variant_set_indexed = try fp(
+            gpa,
+            "variant_set_indexed",
+            *const fn (
+        GDExtensionVariantPtr,
+        GDExtensionInt,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .variant_get = try fp(
+            gpa,
+            "variant_get",
+            *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .variant_get_named = try fp(
+            gpa,
+            "variant_get_named",
+            *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .variant_get_keyed = try fp(
+            gpa,
+            "variant_get_keyed",
+            *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .variant_get_indexed = try fp(
+            gpa,
+            "variant_get_indexed",
+            *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .variant_iter_init = try fp(
+            gpa,
+            "variant_iter_init",
+            *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) GDExtensionBool,
+        ),
+        .variant_iter_next = try fp(
+            gpa,
+            "variant_iter_next",
+            *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) GDExtensionBool,
+        ),
+        .variant_iter_get = try fp(
+            gpa,
+            "variant_iter_get",
+            *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionVariantPtr,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .variant_hash = try fp(gpa, "variant_hash", *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionInt),
+        .variant_recursive_hash = try fp(gpa, "variant_recursive_hash", *const fn (GDExtensionConstVariantPtr, GDExtensionInt) callconv(.c) GDExtensionInt),
+        .variant_hash_compare = try fp(gpa, "variant_hash_compare", *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool),
+        .variant_booleanize = try fp(gpa, "variant_booleanize", *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool),
+        .variant_duplicate = try fp(
+            gpa,
+            "variant_duplicate",
+            *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionVariantPtr,
+        GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .variant_stringify = try fp(gpa, "variant_stringify", *const fn (GDExtensionConstVariantPtr, GDExtensionStringPtr) callconv(.c) void),
+        .variant_get_type = try fp(gpa, "variant_get_type", *const fn (GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantType),
+        .variant_has_method = try fp(gpa, "variant_has_method", *const fn (GDExtensionConstVariantPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool),
+        .variant_has_member = try fp(gpa, "variant_has_member", *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool),
+        .variant_has_key = try fp(
+            gpa,
+            "variant_has_key",
+            *const fn (
+        GDExtensionConstVariantPtr,
+        GDExtensionConstVariantPtr,
+        [*c]GDExtensionBool,
+    ) callconv(.c) GDExtensionBool,
+        ),
+        .variant_get_object_instance_id = try fp(gpa, "variant_get_object_instance_id", *const fn (GDExtensionConstVariantPtr) callconv(.c) GDObjectInstanceID),
+        .variant_get_type_name = try fp(gpa, "variant_get_type_name", *const fn (GDExtensionVariantType, GDExtensionUninitializedStringPtr) callconv(.c) void),
+        .variant_get_type_by_name = try fp(gpa, "variant_get_type_by_name", *const fn (GDExtensionConstStringPtr) callconv(.c) GDExtensionVariantType),
+        .variant_can_convert = try fp(gpa, "variant_can_convert", *const fn (GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionBool),
+        .variant_can_convert_strict = try fp(gpa, "variant_can_convert_strict", *const fn (GDExtensionVariantType, GDExtensionVariantType) callconv(.c) GDExtensionBool),
+        .get_variant_from_type_constructor = try fp(gpa, "get_variant_from_type_constructor", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionVariantFromTypeConstructorFunc),
+        .get_variant_to_type_constructor = try fp(gpa, "get_variant_to_type_constructor", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionTypeFromVariantConstructorFunc),
+        .variant_get_ptr_internal_getter = try fp(gpa, "variant_get_ptr_internal_getter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionVariantGetInternalPtrFunc),
+        .variant_get_ptr_operator_evaluator = try fp(
+            gpa,
+            "variant_get_ptr_operator_evaluator",
+            *const fn (
+        GDExtensionVariantOperator,
+        GDExtensionVariantType,
+        GDExtensionVariantType,
+    ) callconv(.c) GDExtensionPtrOperatorEvaluator,
+        ),
+        .variant_get_ptr_builtin_method = try fp(
+            gpa,
+            "variant_get_ptr_builtin_method",
+            *const fn (
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionPtrBuiltInMethod,
+        ),
+        .variant_get_ptr_constructor = try fp(gpa, "variant_get_ptr_constructor", *const fn (GDExtensionVariantType, i32) callconv(.c) GDExtensionPtrConstructor),
+        .variant_get_ptr_destructor = try fp(gpa, "variant_get_ptr_destructor", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrDestructor),
+        .variant_construct = try fp(
+            gpa,
+            "variant_construct",
+            *const fn (
+        GDExtensionVariantType,
+        GDExtensionUninitializedVariantPtr,
+        [*c]const GDExtensionConstVariantPtr,
+        i32,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
+        ),
+        .variant_get_ptr_setter = try fp(gpa, "variant_get_ptr_setter", *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionPtrSetter),
+        .variant_get_ptr_getter = try fp(gpa, "variant_get_ptr_getter", *const fn (GDExtensionVariantType, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionPtrGetter),
+        .variant_get_ptr_indexed_setter = try fp(gpa, "variant_get_ptr_indexed_setter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrIndexedSetter),
+        .variant_get_ptr_indexed_getter = try fp(gpa, "variant_get_ptr_indexed_getter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrIndexedGetter),
+        .variant_get_ptr_keyed_setter = try fp(gpa, "variant_get_ptr_keyed_setter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedSetter),
+        .variant_get_ptr_keyed_getter = try fp(gpa, "variant_get_ptr_keyed_getter", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedGetter),
+        .variant_get_ptr_keyed_checker = try fp(gpa, "variant_get_ptr_keyed_checker", *const fn (GDExtensionVariantType) callconv(.c) GDExtensionPtrKeyedChecker),
+        .variant_get_constant_value = try fp(
+            gpa,
+            "variant_get_constant_value",
+            *const fn (
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionUninitializedVariantPtr,
+    ) callconv(.c) void,
+        ),
+        .variant_get_ptr_utility_function = try fp(gpa, "variant_get_ptr_utility_function", *const fn (GDExtensionConstStringNamePtr, GDExtensionInt) callconv(.c) GDExtensionPtrUtilityFunction),
+        .string_new_with_latin1_chars = try fp(gpa, "string_new_with_latin1_chars", *const fn (GDExtensionUninitializedStringPtr, [*:0]const u8) callconv(.c) void),
+        .string_new_with_utf8_chars = try fp(gpa, "string_new_with_utf8_chars", *const fn (GDExtensionUninitializedStringPtr, [*:0]const u8) callconv(.c) void),
+        .string_new_with_utf16_chars = try fp(gpa, "string_new_with_utf16_chars", *const fn (GDExtensionUninitializedStringPtr, [*c]const u16) callconv(.c) void),
+        .string_new_with_utf32_chars = try fp(gpa, "string_new_with_utf32_chars", *const fn (GDExtensionUninitializedStringPtr, [*c]const u32) callconv(.c) void),
+        .string_new_with_wide_chars = try fp(gpa, "string_new_with_wide_chars", *const fn (GDExtensionUninitializedStringPtr, [*c]const wchar_t) callconv(.c) void),
+        .string_new_with_latin1_chars_and_len = try fp(
+            gpa,
+            "string_new_with_latin1_chars_and_len",
+            *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*:0]const u8,
+        GDExtensionInt,
+    ) callconv(.c) void,
+        ),
+        .string_new_with_utf8_chars_and_len = try fp(
+            gpa,
+            "string_new_with_utf8_chars_and_len",
+            *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*:0]const u8,
+        GDExtensionInt,
+    ) callconv(.c) void,
+        ),
+        .string_new_with_utf8_chars_and_len2 = try fp(
+            gpa,
+            "string_new_with_utf8_chars_and_len2",
+            *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*:0]const u8,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
+        ),
+        .string_new_with_utf16_chars_and_len = try fp(
+            gpa,
+            "string_new_with_utf16_chars_and_len",
+            *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*c]const u16,
+        GDExtensionInt,
+    ) callconv(.c) void,
+        ),
+        .string_new_with_utf16_chars_and_len2 = try fp(
+            gpa,
+            "string_new_with_utf16_chars_and_len2",
+            *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*c]const u16,
+        GDExtensionInt,
+        GDExtensionBool,
+    ) callconv(.c) GDExtensionInt,
+        ),
+        .string_new_with_utf32_chars_and_len = try fp(
+            gpa,
+            "string_new_with_utf32_chars_and_len",
+            *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*c]const u32,
+        GDExtensionInt,
+    ) callconv(.c) void,
+        ),
+        .string_new_with_wide_chars_and_len = try fp(
+            gpa,
+            "string_new_with_wide_chars_and_len",
+            *const fn (
+        GDExtensionUninitializedStringPtr,
+        [*c]const wchar_t,
+        GDExtensionInt,
+    ) callconv(.c) void,
+        ),
+        .string_to_latin1_chars = try fp(
+            gpa,
+            "string_to_latin1_chars",
+            *const fn (
+        GDExtensionConstStringPtr,
+        [*c]u8,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
+        ),
+        .string_to_utf8_chars = try fp(
+            gpa,
+            "string_to_utf8_chars",
+            *const fn (
+        GDExtensionConstStringPtr,
+        [*c]u8,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
+        ),
+        .string_to_utf16_chars = try fp(
+            gpa,
+            "string_to_utf16_chars",
+            *const fn (
+        GDExtensionConstStringPtr,
+        [*c]u16,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
+        ),
+        .string_to_utf32_chars = try fp(
+            gpa,
+            "string_to_utf32_chars",
+            *const fn (
+        GDExtensionConstStringPtr,
+        [*c]u32,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
+        ),
+        .string_to_wide_chars = try fp(
+            gpa,
+            "string_to_wide_chars",
+            *const fn (
+        GDExtensionConstStringPtr,
+        [*c]wchar_t,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionInt,
+        ),
+        .string_operator_index = try fp(gpa, "string_operator_index", *const fn (GDExtensionStringPtr, GDExtensionInt) callconv(.c) [*c]u32),
+        .string_operator_index_const = try fp(gpa, "string_operator_index_const", *const fn (GDExtensionConstStringPtr, GDExtensionInt) callconv(.c) [*c]const u32),
+        .string_operator_plus_eq_string = try fp(gpa, "string_operator_plus_eq_string", *const fn (GDExtensionStringPtr, GDExtensionConstStringPtr) callconv(.c) void),
+        .string_operator_plus_eq_char = try fp(gpa, "string_operator_plus_eq_char", *const fn (GDExtensionStringPtr, u32) callconv(.c) void),
+        .string_operator_plus_eq_cstr = try fp(gpa, "string_operator_plus_eq_cstr", *const fn (GDExtensionStringPtr, [*:0]const u8) callconv(.c) void),
+        .string_operator_plus_eq_wcstr = try fp(gpa, "string_operator_plus_eq_wcstr", *const fn (GDExtensionStringPtr, [*c]const wchar_t) callconv(.c) void),
+        .string_operator_plus_eq_c32str = try fp(gpa, "string_operator_plus_eq_c32str", *const fn (GDExtensionStringPtr, [*c]const u32) callconv(.c) void),
+        .string_resize = try fp(gpa, "string_resize", *const fn (GDExtensionStringPtr, GDExtensionInt) callconv(.c) GDExtensionInt),
+        .string_name_new_with_latin1_chars = try fp(
+            gpa,
+            "string_name_new_with_latin1_chars",
+            *const fn (
+        GDExtensionUninitializedStringNamePtr,
+        [*:0]const u8,
+        GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .string_name_new_with_utf8_chars = try fp(gpa, "string_name_new_with_utf8_chars", *const fn (GDExtensionUninitializedStringNamePtr, [*:0]const u8) callconv(.c) void),
+        .string_name_new_with_utf8_chars_and_len = try fp(
+            gpa,
+            "string_name_new_with_utf8_chars_and_len",
+            *const fn (
+        GDExtensionUninitializedStringNamePtr,
+        [*:0]const u8,
+        GDExtensionInt,
+    ) callconv(.c) void,
+        ),
+        .xml_parser_open_buffer = try fp(
+            gpa,
+            "xml_parser_open_buffer",
+            *const fn (
+        GDExtensionObjectPtr,
+        [*:0]const u8,
+        usize,
+    ) callconv(.c) GDExtensionInt,
+        ),
+        .file_access_store_buffer = try fp(
+            gpa,
+            "file_access_store_buffer",
+            *const fn (
+        GDExtensionObjectPtr,
+        [*:0]const u8,
+        u64,
+    ) callconv(.c) void,
+        ),
+        .file_access_get_buffer = try fp(
+            gpa,
+            "file_access_get_buffer",
+            *const fn (
+        GDExtensionConstObjectPtr,
+        [*c]u8,
+        u64,
+    ) callconv(.c) u64,
+        ),
+        .image_ptrw = try fp(gpa, "image_ptrw", *const fn (GDExtensionObjectPtr) callconv(.c) [*c]u8),
+        .image_ptr = try fp(gpa, "image_ptr", *const fn (GDExtensionObjectPtr) callconv(.c) [*:0]const u8),
+        .worker_thread_pool_add_native_group_task = try fp(
+            gpa,
+            "worker_thread_pool_add_native_group_task",
+            *const fn (
+        GDExtensionObjectPtr,
+        GDExtensionWorkerThreadPoolGroupTask,
+        ?*anyopaque,
+        i32,
+        i32,
+        GDExtensionBool,
+        GDExtensionConstStringPtr,
+    ) callconv(.c) i64,
+        ),
+        .worker_thread_pool_add_native_task = try fp(
+            gpa,
+            "worker_thread_pool_add_native_task",
+            *const fn (
+        GDExtensionObjectPtr,
+        GDExtensionWorkerThreadPoolTask,
+        ?*anyopaque,
+        GDExtensionBool,
+        GDExtensionConstStringPtr,
+    ) callconv(.c) i64,
+        ),
+        .packed_byte_array_operator_index = try fp(gpa, "packed_byte_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]u8),
+        .packed_byte_array_operator_index_const = try fp(gpa, "packed_byte_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*:0]const u8),
+        .packed_float32_array_operator_index = try fp(gpa, "packed_float32_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]f32),
+        .packed_float32_array_operator_index_const = try fp(gpa, "packed_float32_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const f32),
+        .packed_float64_array_operator_index = try fp(gpa, "packed_float64_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]f64),
+        .packed_float64_array_operator_index_const = try fp(gpa, "packed_float64_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const f64),
+        .packed_int32_array_operator_index = try fp(gpa, "packed_int32_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]i32),
+        .packed_int32_array_operator_index_const = try fp(gpa, "packed_int32_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const i32),
+        .packed_int64_array_operator_index = try fp(gpa, "packed_int64_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) [*c]i64),
+        .packed_int64_array_operator_index_const = try fp(gpa, "packed_int64_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) [*c]const i64),
+        .packed_string_array_operator_index = try fp(gpa, "packed_string_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionStringPtr),
+        .packed_string_array_operator_index_const = try fp(gpa, "packed_string_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionStringPtr),
+        .packed_vector2_array_operator_index = try fp(gpa, "packed_vector2_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_vector2_array_operator_index_const = try fp(gpa, "packed_vector2_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_vector3_array_operator_index = try fp(gpa, "packed_vector3_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_vector3_array_operator_index_const = try fp(gpa, "packed_vector3_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_vector4_array_operator_index = try fp(gpa, "packed_vector4_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_vector4_array_operator_index_const = try fp(gpa, "packed_vector4_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_color_array_operator_index = try fp(gpa, "packed_color_array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .packed_color_array_operator_index_const = try fp(gpa, "packed_color_array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionTypePtr),
+        .array_operator_index = try fp(gpa, "array_operator_index", *const fn (GDExtensionTypePtr, GDExtensionInt) callconv(.c) GDExtensionVariantPtr),
+        .array_operator_index_const = try fp(gpa, "array_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionInt) callconv(.c) GDExtensionVariantPtr),
+        .array_ref = try fp(gpa, "array_ref", *const fn (GDExtensionTypePtr, GDExtensionConstTypePtr) callconv(.c) void),
+        .array_set_typed = try fp(
+            gpa,
+            "array_set_typed",
+            *const fn (
+        GDExtensionTypePtr,
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+    ) callconv(.c) void,
+        ),
+        .dictionary_operator_index = try fp(gpa, "dictionary_operator_index", *const fn (GDExtensionTypePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantPtr),
+        .dictionary_operator_index_const = try fp(gpa, "dictionary_operator_index_const", *const fn (GDExtensionConstTypePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionVariantPtr),
+        .dictionary_set_typed = try fp(
+            gpa,
+            "dictionary_set_typed",
+            *const fn (
+        GDExtensionTypePtr,
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+        GDExtensionVariantType,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstVariantPtr,
+    ) callconv(.c) void,
+        ),
+        .object_method_bind_call = try fp(
+            gpa,
+            "object_method_bind_call",
+            *const fn (
+        GDExtensionMethodBindPtr,
+        GDExtensionObjectPtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
+        ),
+        .object_method_bind_ptrcall = try fp(
+            gpa,
+            "object_method_bind_ptrcall",
+            *const fn (
+        GDExtensionMethodBindPtr,
+        GDExtensionObjectPtr,
+        [*c]const GDExtensionConstTypePtr,
+        GDExtensionTypePtr,
+    ) callconv(.c) void,
+        ),
+        .object_destroy = try fp(gpa, "object_destroy", *const fn (GDExtensionObjectPtr) callconv(.c) void),
+        .global_get_singleton = try fp(gpa, "global_get_singleton", *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr),
+        .object_get_instance_binding = try fp(
+            gpa,
+            "object_get_instance_binding",
+            *const fn (
+        GDExtensionObjectPtr,
+        ?*anyopaque,
+        [*c]const GDExtensionInstanceBindingCallbacks,
+    ) callconv(.c) ?*anyopaque,
+        ),
+        .object_set_instance_binding = try fp(
+            gpa,
+            "object_set_instance_binding",
+            *const fn (
+        GDExtensionObjectPtr,
+        ?*anyopaque,
+        ?*anyopaque,
+        [*c]const GDExtensionInstanceBindingCallbacks,
+    ) callconv(.c) void,
+        ),
+        .object_free_instance_binding = try fp(gpa, "object_free_instance_binding", *const fn (GDExtensionObjectPtr, ?*anyopaque) callconv(.c) void),
+        .object_set_instance = try fp(
+            gpa,
+            "object_set_instance",
+            *const fn (
+        GDExtensionObjectPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionClassInstancePtr,
+    ) callconv(.c) void,
+        ),
+        .object_get_class_name = try fp(
+            gpa,
+            "object_get_class_name",
+            *const fn (
+        GDExtensionConstObjectPtr,
+        GDExtensionClassLibraryPtr,
+        GDExtensionUninitializedStringNamePtr,
+    ) callconv(.c) GDExtensionBool,
+        ),
+        .object_cast_to = try fp(gpa, "object_cast_to", *const fn (GDExtensionConstObjectPtr, ?*anyopaque) callconv(.c) GDExtensionObjectPtr),
+        .object_get_instance_from_id = try fp(gpa, "object_get_instance_from_id", *const fn (GDObjectInstanceID) callconv(.c) GDExtensionObjectPtr),
+        .object_get_instance_id = try fp(gpa, "object_get_instance_id", *const fn (GDExtensionConstObjectPtr) callconv(.c) GDObjectInstanceID),
+        .object_has_script_method = try fp(gpa, "object_has_script_method", *const fn (GDExtensionConstObjectPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool),
+        .object_call_script_method = try fp(
+            gpa,
+            "object_call_script_method",
+            *const fn (
+        GDExtensionObjectPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionConstVariantPtr,
+        GDExtensionInt,
+        GDExtensionUninitializedVariantPtr,
+        [*c]GDExtensionCallError,
+    ) callconv(.c) void,
+        ),
+        .ref_get_object = try fp(gpa, "ref_get_object", *const fn (GDExtensionConstRefPtr) callconv(.c) GDExtensionObjectPtr),
+        .ref_set_object = try fp(gpa, "ref_set_object", *const fn (GDExtensionRefPtr, GDExtensionObjectPtr) callconv(.c) void),
+        .script_instance_create = try fp(gpa, "script_instance_create", *const fn ([*c]const GDExtensionScriptInstanceInfo, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr),
+        .script_instance_create2 = try fp(gpa, "script_instance_create2", *const fn ([*c]const GDExtensionScriptInstanceInfo2, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr),
+        .script_instance_create3 = try fp(gpa, "script_instance_create3", *const fn ([*c]const GDExtensionScriptInstanceInfo3, GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptInstancePtr),
+        .placeholder_script_instance_create = try fp(
+            gpa,
+            "placeholder_script_instance_create",
+            *const fn (
+        GDExtensionObjectPtr,
+        GDExtensionObjectPtr,
+        GDExtensionObjectPtr,
+    ) callconv(.c) GDExtensionScriptInstancePtr,
+        ),
+        .placeholder_script_instance_update = try fp(
+            gpa,
+            "placeholder_script_instance_update",
+            *const fn (
+        GDExtensionScriptInstancePtr,
+        GDExtensionConstTypePtr,
+        GDExtensionConstTypePtr,
+    ) callconv(.c) void,
+        ),
+        .object_get_script_instance = try fp(gpa, "object_get_script_instance", *const fn (GDExtensionConstObjectPtr, GDExtensionObjectPtr) callconv(.c) GDExtensionScriptInstanceDataPtr),
+        .object_set_script_instance = try fp(gpa, "object_set_script_instance", *const fn (GDExtensionObjectPtr, GDExtensionScriptInstanceDataPtr) callconv(.c) void),
+        .callable_custom_create = try fp(gpa, "callable_custom_create", *const fn (GDExtensionUninitializedTypePtr, [*c]GDExtensionCallableCustomInfo) callconv(.c) void),
+        .callable_custom_create2 = try fp(gpa, "callable_custom_create2", *const fn (GDExtensionUninitializedTypePtr, [*c]GDExtensionCallableCustomInfo2) callconv(.c) void),
+        .callable_custom_get_userdata = try fp(gpa, "callable_custom_get_userdata", *const fn (GDExtensionConstTypePtr, ?*anyopaque) callconv(.c) ?*anyopaque),
+        .classdb_construct_object = try fp(gpa, "classdb_construct_object", *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr),
+        .classdb_construct_object2 = try fp(gpa, "classdb_construct_object2", *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr),
+        .classdb_construct_object3 = try fp(gpa, "classdb_construct_object3", *const fn (GDExtensionConstStringNamePtr) callconv(.c) GDExtensionObjectPtr),
+        .classdb_get_method_bind = try fp(
+            gpa,
+            "classdb_get_method_bind",
+            *const fn (
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionInt,
+    ) callconv(.c) GDExtensionMethodBindPtr,
+        ),
+        .classdb_get_class_tag = try fp(gpa, "classdb_get_class_tag", *const fn (GDExtensionConstStringNamePtr) callconv(.c) ?*anyopaque),
+        .classdb_register_extension_class = try fp(
+            gpa,
+            "classdb_register_extension_class",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo,
+    ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class2 = try fp(
+            gpa,
+            "classdb_register_extension_class2",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo2,
+    ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class3 = try fp(
+            gpa,
+            "classdb_register_extension_class3",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo3,
+    ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class4 = try fp(
+            gpa,
+            "classdb_register_extension_class4",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo4,
+    ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class5 = try fp(
+            gpa,
+            "classdb_register_extension_class5",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo5,
+    ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class6 = try fp(
+            gpa,
+            "classdb_register_extension_class6",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassCreationInfo6,
+    ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class_method = try fp(
+            gpa,
+            "classdb_register_extension_class_method",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassMethodInfo,
+    ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class_virtual_method = try fp(
+            gpa,
+            "classdb_register_extension_class_virtual_method",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionClassVirtualMethodInfo,
+    ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class_integer_constant = try fp(
+            gpa,
+            "classdb_register_extension_class_integer_constant",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionInt,
+        GDExtensionBool,
+    ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class_property = try fp(
+            gpa,
+            "classdb_register_extension_class_property",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionPropertyInfo,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+    ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class_property_indexed = try fp(
+            gpa,
+            "classdb_register_extension_class_property_indexed",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionPropertyInfo,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionInt,
+    ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class_property_group = try fp(
+            gpa,
+            "classdb_register_extension_class_property_group",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringPtr,
+        GDExtensionConstStringPtr,
+    ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class_property_subgroup = try fp(
+            gpa,
+            "classdb_register_extension_class_property_subgroup",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringPtr,
+        GDExtensionConstStringPtr,
+    ) callconv(.c) void,
+        ),
+        .classdb_register_extension_class_signal = try fp(
+            gpa,
+            "classdb_register_extension_class_signal",
+            *const fn (
+        GDExtensionClassLibraryPtr,
+        GDExtensionConstStringNamePtr,
+        GDExtensionConstStringNamePtr,
+        [*c]const GDExtensionPropertyInfo,
+        GDExtensionInt,
+    ) callconv(.c) void,
+        ),
+        .classdb_unregister_extension_class = try fp(gpa, "classdb_unregister_extension_class", *const fn (GDExtensionClassLibraryPtr, GDExtensionConstStringNamePtr) callconv(.c) void),
+        .get_library_path = try fp(gpa, "get_library_path", *const fn (GDExtensionClassLibraryPtr, GDExtensionUninitializedStringPtr) callconv(.c) void),
+        .editor_add_plugin = try fp(gpa, "editor_add_plugin", *const fn (GDExtensionConstStringNamePtr) callconv(.c) void),
+        .editor_remove_plugin = try fp(gpa, "editor_remove_plugin", *const fn (GDExtensionConstStringNamePtr) callconv(.c) void),
+        .editor_help_load_xml_from_utf8_chars = try fp(gpa, "editor_help_load_xml_from_utf8_chars", *const fn ([*:0]const u8) callconv(.c) void),
+        .editor_help_load_xml_from_utf8_chars_and_len = try fp(gpa, "editor_help_load_xml_from_utf8_chars_and_len", *const fn ([*:0]const u8, GDExtensionInt) callconv(.c) void),
+        .editor_register_get_classes_used_callback = try fp(gpa, "editor_register_get_classes_used_callback", *const fn (GDExtensionClassLibraryPtr, GDExtensionEditorGetClassesUsedCallback) callconv(.c) void),
+        .register_main_loop_callbacks = try fp(gpa, "register_main_loop_callbacks", *const fn (GDExtensionClassLibraryPtr, [*c]const GDExtensionMainLoopCallbacks) callconv(.c) void),
+    };
+}
+
+// Total parse+render: 48729877ns

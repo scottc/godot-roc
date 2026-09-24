@@ -23,7 +23,8 @@ pub const std_options: std.Options = .{
 const abi = @import("roc_platform_abi.zig");
 
 // godot-roc "godot 4.5.1 compatible" - ABI & APIs.
-const gde_if = @import("engine/gdextension_interface.manual.zig");
+//const gde_if = @import("engine/gdextension_interface.manual.zig");
+const gde_if = @import("engine/gdextension_interface.generated.zig");
 const eapi = @import("engine/extension_api.manual.zig");
 // TODO: generated bindings bindings...
 // TODO: full first-class multi-engine support.
