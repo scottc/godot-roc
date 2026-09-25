@@ -1,51 +1,54 @@
 import Host
 import Vector3
-import Size
+import GodotRoc
 
 ## A generic godot-4.5.1-like game engine interface.
 Engine := [].{
-    register_class! : Str, Str => {} # Try({}, [RegisterClassErr(Str), ..])
+    register_class! : Str, Str => GodotRoc.ClassId # Try({}, [RegisterClassErr(Str), ..])
     register_class! = |class_name, parent_class_name|
-        Host.register_class!(class_name, parent_class_name)
+        match Host.register_class!(class_name, parent_class_name) {
+            Ok(cid) => cid
+            Err(_) => crash "register_class! class panic"
+        }
 
-    print! : Str => {} # Try({}, [PrintErr(Str), ..])
-    print! = |str|
-        Host.print!(str)
+    print_error! : Str => {} # Try({}, [PrintErr(Str), ..])
+    print_error! = |str|
+        Host.print_error!(str)
 
     # Input.is_action_pressed
-    is_action_pressed! : Str => U8 # TODO: Str => bool
+    is_action_pressed! : Str => GodotRoc.Bool # TODO: Str => bool
     is_action_pressed! = |action| {
         result = Host.input_is_action_pressed!(action)
         result
     }
 
-    is_on_floor! : Size.GDExtensionObjectPtr => Bool
-    is_on_floor! = |handle| {
-        result = Host.is_on_floor!(handle)
+    is_on_floor! : () => GodotRoc.Bool
+    is_on_floor! = || {
+        result = Host.is_on_floor!()
         result
     }
 
-    get_gravity! : Size.GDExtensionObjectPtr => Vector3
-    get_gravity! = |handle| {
-        result = Host.get_gravity!(handle)
+    get_gravity! : () => Vector3
+    get_gravity! = || {
+        result = Host.get_gravity!()
         result
     }
 
-    get_velocity! : Size.GDExtensionObjectPtr => Vector3
-    get_velocity! = |handle| {
-        result = Host.get_velocity!(handle)
+    get_velocity! : () => Vector3
+    get_velocity! = || {
+        result = Host.get_velocity!()
         result
     }
 
-    set_velocity! : Size.GDExtensionObjectPtr, Vector3 => {}
-    set_velocity! = |handle, vector| {
-        Host.set_velocity!(handle, vector)
+    set_velocity! : Vector3 => {}
+    set_velocity! = |vector| {
+        Host.set_velocity!(vector)
         {}
     }
 
-    move_and_slide! : Size.GDExtensionObjectPtr => {}
-    move_and_slide! = |handle| {
-        Host.move_and_slide!(handle)
+    move_and_slide! : () => {}
+    move_and_slide! = || {
+        Host.move_and_slide!()
         {}
     }
 }

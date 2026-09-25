@@ -1,13 +1,13 @@
 platform ""
     requires {} {
-        scene_init! : {} => {},
-        ready! : {} => {},
-        process! : Size.GDExtensionObjectPtr, F64 => {},
-        physics_process! : Str, Size.GDExtensionObjectPtr, F64 => {}
+        scene_init! : () => {},
+        ready! : () => {},
+        process! : GodotRoc.ClassId, F64 => {},
+        physics_process! : GodotRoc.ClassId, F64 => {}
     }
     exposes [
         Engine,
-        Size
+        GodotRoc
     ]
     packages { roc: "nightly-2026-09-12-220fd47" }
     provides {
@@ -17,7 +17,7 @@ platform ""
         "godot_roc_physics_process": physics_process_for_host!,
     }
     hosted {
-        "godot_roc_print": Host.print!,
+        "godot_roc_print_error": Host.print_error!,
         "godot_roc_register_class": Host.register_class!,
         "godot_roc_get_velocity": Host.get_velocity!,
         "godot_roc_set_velocity": Host.set_velocity!,
@@ -60,34 +60,34 @@ platform ""
 
 import Engine
 import Host
-import Size
+import GodotRoc
 
-scene_init_for_host! : {} => {}
-scene_init_for_host! = |{}| {
-    _ = Engine.print!("[platform/main.roc] init_for_host!")
-    _result = scene_init!({})
+scene_init_for_host! : () => {}
+scene_init_for_host! = || {
+    _ = Engine.print_error!("[platform/main.roc] init_for_host!")
+    _result = scene_init!()
     {}
 }
 
-ready_for_host! : {} => {}
-ready_for_host! = |{}| {
-    _ = Engine.print!("[platform/main.roc] ready_for_host!")
-    _result = ready!({})
+ready_for_host! : () => {}
+ready_for_host! = || {
+    _ = Engine.print_error!("[platform/main.roc] ready_for_host!")
+    _result = ready!()
     {}
 }
 
-process_for_host! : Size.GDExtensionObjectPtr, F64 => {}
-process_for_host! = |handle, delta| {
+process_for_host! : GodotRoc.ClassId, F64 => {}
+process_for_host! = |class_id, delta| {
     # too verbose...
     # _ = Engine.print!("[platform/main.roc] process_for_host! ${handle.to_str()} ${delta.to_str()}")
-    _result = process!(handle, delta)
+    _result = process!(class_id, delta)
     {}
 }
 
-physics_process_for_host! : Str, Size.GDExtensionObjectPtr, F64 => {}
-physics_process_for_host! = |class_name, handle, delta| {
+physics_process_for_host! : GodotRoc.ClassId, F64 => {}
+physics_process_for_host! = |class_id, delta| {
     # too verbose...
     # _ = Godot.print!("[platform/main.roc] process_physics_for_host! ${handle.to_str()} ${delta.to_str()}")
-    _result = physics_process!(class_name, handle, delta)
+    _result = physics_process!(class_id, delta)
     {}
 }

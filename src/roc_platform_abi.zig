@@ -751,6 +751,138 @@ comptime {
     }
 }
 
+/// Tag discriminant for Try.
+pub const HostRegister_classResultTag = enum(u8) {
+    @"Err" = 0,
+    @"Ok" = 1,
+};
+
+/// Payload union for Try.
+pub const HostRegister_classResultPayload = extern union {
+        @"err": NameLengthErrOrOutOfMemoryClassErr,
+        @"ok": u32,
+};
+
+/// Tag union: Try
+pub const HostRegister_classResult = if (@sizeOf(usize) == 4) extern struct {
+    payload: [16]u8 align(4),
+    tag: HostRegister_classResultTag,
+    pub fn payload_err(self: *const @This()) NameLengthErrOrOutOfMemoryClassErr {
+        const ptr: *const NameLengthErrOrOutOfMemoryClassErr = @ptrCast(@alignCast(&self.payload));
+        return ptr.*;
+    }
+    pub fn payload_ok(self: *const @This()) u32 {
+        const ptr: *const u32 = @ptrCast(@alignCast(&self.payload));
+        return ptr.*;
+    }
+    /// Recursively decrement Roc-owned payloads.
+    pub fn decref(self: @This(), roc_host: *RocHost) void {
+        decrefHostRegister_classResult(self, roc_host);
+    }
+
+    /// Increment Roc-owned payloads.
+    pub fn incref(self: @This(), amount: isize) void {
+        increfHostRegister_classResult(self, amount);
+    }
+} else extern struct {
+    payload: HostRegister_classResultPayload,
+    tag: HostRegister_classResultTag,
+    pub fn payload_err(self: *const @This()) NameLengthErrOrOutOfMemoryClassErr {
+        return self.payload.@"err";
+    }
+    pub fn payload_ok(self: *const @This()) u32 {
+        return self.payload.@"ok";
+    }
+    /// Recursively decrement Roc-owned payloads.
+    pub fn decref(self: @This(), roc_host: *RocHost) void {
+        decrefHostRegister_classResult(self, roc_host);
+    }
+
+    /// Increment Roc-owned payloads.
+    pub fn incref(self: @This(), amount: isize) void {
+        increfHostRegister_classResult(self, amount);
+    }
+};
+
+comptime {
+    if (@sizeOf(usize) == 8) {
+        if (@sizeOf(HostRegister_classResult) != 40) @compileError("HostRegister_classResult size mismatch");
+        if (@alignOf(HostRegister_classResult) != 8) @compileError("HostRegister_classResult alignment mismatch");
+        if (@offsetOf(HostRegister_classResult, "tag") != 32) @compileError("HostRegister_classResult tag offset mismatch");
+    }
+    if (@sizeOf(usize) == 4) {
+        if (@sizeOf(HostRegister_classResult) != 20) @compileError("HostRegister_classResult size mismatch");
+        if (@alignOf(HostRegister_classResult) != 4) @compileError("HostRegister_classResult alignment mismatch");
+        if (@offsetOf(HostRegister_classResult, "tag") != 16) @compileError("HostRegister_classResult tag offset mismatch");
+    }
+}
+
+/// Tag discriminant for NameLengthErrOrOutOfMemoryClassErr.
+pub const NameLengthErrOrOutOfMemoryClassErrTag = enum(u8) {
+    @"NameLengthErr" = 0,
+    @"OutOfMemoryClassErr" = 1,
+};
+
+/// Payload union for NameLengthErrOrOutOfMemoryClassErr.
+pub const NameLengthErrOrOutOfMemoryClassErrPayload = extern union {
+        @"name_length_err": RocStr,
+        @"out_of_memory_class_err": RocStr,
+};
+
+/// Tag union: NameLengthErrOrOutOfMemoryClassErr
+pub const NameLengthErrOrOutOfMemoryClassErr = if (@sizeOf(usize) == 4) extern struct {
+    payload: [12]u8 align(4),
+    tag: NameLengthErrOrOutOfMemoryClassErrTag,
+    pub fn payload_name_length_err(self: *const @This()) RocStr {
+        const ptr: *const RocStr = @ptrCast(@alignCast(&self.payload));
+        return ptr.*;
+    }
+    pub fn payload_out_of_memory_class_err(self: *const @This()) RocStr {
+        const ptr: *const RocStr = @ptrCast(@alignCast(&self.payload));
+        return ptr.*;
+    }
+    /// Recursively decrement Roc-owned payloads.
+    pub fn decref(self: @This(), roc_host: *RocHost) void {
+        decrefNameLengthErrOrOutOfMemoryClassErr(self, roc_host);
+    }
+
+    /// Increment Roc-owned payloads.
+    pub fn incref(self: @This(), amount: isize) void {
+        increfNameLengthErrOrOutOfMemoryClassErr(self, amount);
+    }
+} else extern struct {
+    payload: NameLengthErrOrOutOfMemoryClassErrPayload,
+    tag: NameLengthErrOrOutOfMemoryClassErrTag,
+    pub fn payload_name_length_err(self: *const @This()) RocStr {
+        return self.payload.@"name_length_err";
+    }
+    pub fn payload_out_of_memory_class_err(self: *const @This()) RocStr {
+        return self.payload.@"out_of_memory_class_err";
+    }
+    /// Recursively decrement Roc-owned payloads.
+    pub fn decref(self: @This(), roc_host: *RocHost) void {
+        decrefNameLengthErrOrOutOfMemoryClassErr(self, roc_host);
+    }
+
+    /// Increment Roc-owned payloads.
+    pub fn incref(self: @This(), amount: isize) void {
+        increfNameLengthErrOrOutOfMemoryClassErr(self, amount);
+    }
+};
+
+comptime {
+    if (@sizeOf(usize) == 8) {
+        if (@sizeOf(NameLengthErrOrOutOfMemoryClassErr) != 32) @compileError("NameLengthErrOrOutOfMemoryClassErr size mismatch");
+        if (@alignOf(NameLengthErrOrOutOfMemoryClassErr) != 8) @compileError("NameLengthErrOrOutOfMemoryClassErr alignment mismatch");
+        if (@offsetOf(NameLengthErrOrOutOfMemoryClassErr, "tag") != 24) @compileError("NameLengthErrOrOutOfMemoryClassErr tag offset mismatch");
+    }
+    if (@sizeOf(usize) == 4) {
+        if (@sizeOf(NameLengthErrOrOutOfMemoryClassErr) != 16) @compileError("NameLengthErrOrOutOfMemoryClassErr size mismatch");
+        if (@alignOf(NameLengthErrOrOutOfMemoryClassErr) != 4) @compileError("NameLengthErrOrOutOfMemoryClassErr alignment mismatch");
+        if (@offsetOf(NameLengthErrOrOutOfMemoryClassErr, "tag") != 12) @compileError("NameLengthErrOrOutOfMemoryClassErr tag offset mismatch");
+    }
+}
+
 /// Return type record for Host.get_velocity!
 /// Fields ordered by compiler-emitted ABI offsets.
 pub const HostGet_velocityRetRecord = if (@sizeOf(usize) == 4) extern struct {
@@ -797,35 +929,70 @@ comptime {
     }
 }
 
-/// Arguments for Host.print!
+/// Arguments for Host.print_error!
 /// Roc signature: Str => {}
 /// Refcounted fields are owned by the hosted function.
-pub const HostPrintArgs = extern struct {
+pub const HostPrint_errorArgs = extern struct {
     arg0: RocStr,
 };
 
 /// Arguments for Host.register_class!
-/// Roc signature: Str, Str => {}
+/// Roc signature: Str, Str => Try(U32, [NameLengthErr(Str), OutOfMemoryClassErr(Str)])
 /// Refcounted fields are owned by the hosted function.
 pub const HostRegister_classArgs = extern struct {
     arg0: RocStr,
     arg1: RocStr,
 };
 
-/// Arguments for Host.get_velocity!
-/// Roc signature: U64 => Vector3
+/// Arguments for Host.set_velocity!
+/// Roc signature: Vector3 => {}
 /// Refcounted fields are owned by the hosted function.
-pub const HostGet_velocityArgs = extern struct {
-    arg0: u64,
+pub const HostSet_velocityArgs = if (@sizeOf(usize) == 4) extern struct {
+    @"x": f32,
+    @"y": f32,
+    @"z": f32,
+    /// Recursively decrement Roc-owned fields.
+    pub fn decref(self: @This(), roc_host: *RocHost) void {
+        const value = self;
+        _ = value;
+        _ = roc_host;
+    }
+
+    /// Increment Roc-owned fields.
+    pub fn incref(self: @This(), amount: isize) void {
+        const value = self;
+        _ = value;
+        _ = amount;
+    }
+} else extern struct {
+    @"x": f32,
+    @"y": f32,
+    @"z": f32,
+    /// Recursively decrement Roc-owned fields.
+    pub fn decref(self: @This(), roc_host: *RocHost) void {
+        const value = self;
+        _ = value;
+        _ = roc_host;
+    }
+
+    /// Increment Roc-owned fields.
+    pub fn incref(self: @This(), amount: isize) void {
+        const value = self;
+        _ = value;
+        _ = amount;
+    }
 };
 
-/// Arguments for Host.set_velocity!
-/// Roc signature: U64, Vector3 => {}
-/// Refcounted fields are owned by the hosted function.
-pub const HostSet_velocityArgs = extern struct {
-    arg0: u64,
-    arg1: Vector3,
-};
+comptime {
+    if (@sizeOf(usize) == 8) {
+        if (@sizeOf(HostSet_velocityArgs) != 12) @compileError("HostSet_velocityArgs size mismatch");
+        if (@alignOf(HostSet_velocityArgs) != 4) @compileError("HostSet_velocityArgs alignment mismatch");
+    }
+    if (@sizeOf(usize) == 4) {
+        if (@sizeOf(HostSet_velocityArgs) != 12) @compileError("HostSet_velocityArgs size mismatch");
+        if (@alignOf(HostSet_velocityArgs) != 4) @compileError("HostSet_velocityArgs alignment mismatch");
+    }
+}
 
 /// Arguments for Host.input_is_action_pressed!
 /// Roc signature: Str => U8
@@ -834,28 +1001,65 @@ pub const HostInput_is_action_pressedArgs = extern struct {
     arg0: RocStr,
 };
 
-/// Arguments for Host.move_and_slide!
-/// Roc signature: U64 => {}
-/// Refcounted fields are owned by the hosted function.
-pub const HostMove_and_slideArgs = extern struct {
-    arg0: u64,
-};
+// Platform Type Aliases
 
-/// Arguments for Host.is_on_floor!
-/// Roc signature: U64 => Bool
-/// Refcounted fields are owned by the hosted function.
-pub const HostIs_on_floorArgs = extern struct {
-    arg0: u64,
-};
-
-/// Arguments for Host.get_gravity!
-/// Roc signature: U64 => Vector3
-/// Refcounted fields are owned by the hosted function.
-pub const HostGet_gravityArgs = extern struct {
-    arg0: u64,
-};
+pub const HostRegister_classErr = NameLengthErrOrOutOfMemoryClassErr;
+pub const HostRegister_classErrPayload = NameLengthErrOrOutOfMemoryClassErrPayload;
+pub const HostRegister_classErrTag = NameLengthErrOrOutOfMemoryClassErrTag;
 
 // Generated Refcount Helpers
+
+fn decrefHostRegister_classResult(value: HostRegister_classResult, roc_host: *RocHost) void {
+    switch (value.tag) {
+        .@"Err" => {
+        value.payload_err().decref(roc_host);
+        },
+        .@"Ok" => {},
+    }
+}
+
+fn increfHostRegister_classResult(value: HostRegister_classResult, amount: isize) void {
+    switch (value.tag) {
+        .@"Err" => {
+        value.payload_err().incref(amount);
+        },
+        .@"Ok" => {},
+    }
+}
+
+pub const HostRegister_classResultRelease = struct {
+    pub fn release(value: HostRegister_classResult, roc_host: *RocHost) void {
+        value.decref(roc_host);
+    }
+};
+
+fn decrefNameLengthErrOrOutOfMemoryClassErr(value: NameLengthErrOrOutOfMemoryClassErr, roc_host: *RocHost) void {
+    switch (value.tag) {
+        .@"NameLengthErr" => {
+        value.payload_name_length_err().decref(roc_host);
+        },
+        .@"OutOfMemoryClassErr" => {
+        value.payload_out_of_memory_class_err().decref(roc_host);
+        },
+    }
+}
+
+fn increfNameLengthErrOrOutOfMemoryClassErr(value: NameLengthErrOrOutOfMemoryClassErr, amount: isize) void {
+    switch (value.tag) {
+        .@"NameLengthErr" => {
+        value.payload_name_length_err().incref(amount);
+        },
+        .@"OutOfMemoryClassErr" => {
+        value.payload_out_of_memory_class_err().incref(amount);
+        },
+    }
+}
+
+pub const NameLengthErrOrOutOfMemoryClassErrRelease = struct {
+    pub fn release(value: NameLengthErrOrOutOfMemoryClassErr, roc_host: *RocHost) void {
+        value.decref(roc_host);
+    }
+};
 
 pub const Vector3Release = struct {
     pub fn release(value: Vector3, roc_host: *RocHost) void {
@@ -866,6 +1070,8 @@ pub const Vector3Release = struct {
 
 fn rocReleasePolicy(comptime T: type) type {
     if (T == RocStr) return RocStrRelease;
+    if (T == HostRegister_classResult) return HostRegister_classResultRelease;
+    if (T == NameLengthErrOrOutOfMemoryClassErr) return NameLengthErrOrOutOfMemoryClassErrRelease;
     if (T == RocErasedCallable) return RocErasedCallableRelease;
     @compileError("generated glue has no recursive release policy for " ++ @typeName(T));
 }
@@ -887,31 +1093,32 @@ pub extern fn roc_crashed(bytes: [*]const u8, len: usize) callconv(.c) void;
 // The platform host must export these symbols with the exact direct C ABI signatures.
 // Refcounted arguments are owned by the hosted function.
 
-/// Hosted symbol for Host.print!
+/// Hosted symbol for Host.print_error!
 /// Roc signature: Str => {}
 /// Owned arguments. Release each exactly once before returning, unless it is
 /// moved into storage or into the result:
 ///     arg0.decref(roc_host);
-pub extern fn godot_roc_print(arg0: RocStr) callconv(.c) void;
+pub extern fn godot_roc_print_error(arg0: RocStr) callconv(.c) void;
 
 /// Hosted symbol for Host.register_class!
-/// Roc signature: Str, Str => {}
+/// Roc signature: Str, Str => Try(U32, [NameLengthErr(Str), OutOfMemoryClassErr(Str)])
 /// Owned arguments. Release each exactly once before returning, unless it is
 /// moved into storage or into the result:
 ///     arg0.decref(roc_host);
 ///     arg1.decref(roc_host);
-pub extern fn godot_roc_register_class(arg0: RocStr, arg1: RocStr) callconv(.c) void;
+/// The result is owned by Roc: return exactly one owned reference.
+pub extern fn godot_roc_register_class(arg0: RocStr, arg1: RocStr) callconv(.c) HostRegister_classResult;
 
 /// Hosted symbol for Host.get_velocity!
-/// Roc signature: U64 => Vector3
-pub extern fn godot_roc_get_velocity(arg0: u64) callconv(.c) Vector3;
+/// Roc signature: {} => Vector3
+pub extern fn godot_roc_get_velocity() callconv(.c) Vector3;
 
 /// Hosted symbol for Host.set_velocity!
-/// Roc signature: U64, Vector3 => {}
+/// Roc signature: Vector3 => {}
 /// Owned arguments. Release each exactly once before returning, unless it is
 /// moved into storage or into the result:
-///     arg1.decref(roc_host);
-pub extern fn godot_roc_set_velocity(arg0: u64, arg1: Vector3) callconv(.c) void;
+///     arg0.decref(roc_host);
+pub extern fn godot_roc_set_velocity(arg0: Vector3) callconv(.c) void;
 
 /// Hosted symbol for Host.input_is_action_pressed!
 /// Roc signature: Str => U8
@@ -921,16 +1128,16 @@ pub extern fn godot_roc_set_velocity(arg0: u64, arg1: Vector3) callconv(.c) void
 pub extern fn godot_roc_input_is_action_pressed(arg0: RocStr) callconv(.c) u8;
 
 /// Hosted symbol for Host.move_and_slide!
-/// Roc signature: U64 => {}
-pub extern fn godot_roc_move_and_slide(arg0: u64) callconv(.c) void;
+/// Roc signature: {} => {}
+pub extern fn godot_roc_move_and_slide() callconv(.c) void;
 
 /// Hosted symbol for Host.is_on_floor!
-/// Roc signature: U64 => Bool
-pub extern fn godot_roc_is_on_floor(arg0: u64) callconv(.c) bool;
+/// Roc signature: {} => U8
+pub extern fn godot_roc_is_on_floor() callconv(.c) u8;
 
 /// Hosted symbol for Host.get_gravity!
-/// Roc signature: U64 => Vector3
-pub extern fn godot_roc_get_gravity(arg0: u64) callconv(.c) Vector3;
+/// Roc signature: {} => Vector3
+pub extern fn godot_roc_get_gravity() callconv(.c) Vector3;
 
 
 /// Default memory management functions for Roc platforms.
@@ -1079,8 +1286,8 @@ pub extern fn godot_roc_scene_init() callconv(.c) void;
 pub extern fn godot_roc_ready() callconv(.c) void;
 
 /// Entrypoint: process_for_host!
-pub extern fn godot_roc_process(arg0: u64, arg1: f64) callconv(.c) void;
+pub extern fn godot_roc_process(arg0: u32, arg1: f64) callconv(.c) void;
 
 /// Entrypoint: physics_process_for_host!
-pub extern fn godot_roc_physics_process(arg0: RocStr, arg1: u64, arg2: f64) callconv(.c) void;
+pub extern fn godot_roc_physics_process(arg0: u32, arg1: f64) callconv(.c) void;
 

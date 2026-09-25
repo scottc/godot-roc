@@ -447,11 +447,8 @@ format_fn_params : List(ParamInfo) -> Str
 format_fn_params = |parameters| {
     if parameters.len() == 0 {
         ""
-    } else if parameters.len() <= 2 {
-        join_with(parameters.map(|p| zig_type(p.type_str)), ", ")
     } else {
-        inner = join_with(parameters.map(|p| "        ${zig_type(p.type_str)},"), "\n")
-        "\n${inner}\n    "
+        join_with(parameters.map(|p| zig_type(p.type_str)), ", ")
     }
 }
 
@@ -496,20 +493,9 @@ render_load_interface = |fns| {
     var $inits = []
     for f in fns {
         ty = fn_ptr_type_str(f.return_type, f.parameters)
-        # multi-line fp() when type is long
-        if f.parameters.len() > 2 {
-            $inits = $inits.append(
-                \\        .${f.api_name} = try pa(
-                \\            gpa,
-                \\            "${f.api_name}",
-                \\            ${ty},
-                \\        ),
-            )
-        } else {
-            $inits = $inits.append(
-                \\        .${f.api_name} = try pa(gpa, "${f.api_name}", ${ty}),
-            )
-        }
+        $inits = $inits.append(
+            \\.${f.api_name} = try pa(gpa, "${f.api_name}", ${ty}),
+        )
     }
     body = join_with($inits, "\n")
     \\pub fn loadInterface(get_proc_address: GDExtensionInterfaceGetProcAddress) !Interface {

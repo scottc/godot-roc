@@ -1,26 +1,13 @@
 ### MyPlayerCharacter.roc - A player controlled character
-
 import pf.Engine
-import pf.Size
-
-class_name = "MyPlayerCharacter"
-parent_class = "CharacterBody3D"
-
-register_class! = || {
-    _handle = Engine.register_class!(
-        class_name,
-        parent_class
-    )
-    {}
-}
 
 gravity = 9.8 # TODO: Godot.get_gravity!(handle)
 movement_speed = 2.0
 idle_speed = 0.0
 jump_force = 50.0
 
-physics_process! : Size.GDExtensionObjectPtr, F64 => {}
-physics_process! = |handle, _delta| {
+physics_process! : F64 => {}
+physics_process! = |_delta| {
     # Note: physics_process!, runs at a fixed delta, so delta is optional to use here...
     # Note: process!, runs at a variable delta, once per render cycle.
     # Read the godot docos, to understand the differences.
@@ -33,7 +20,7 @@ physics_process! = |handle, _delta| {
     is_jump = Engine.is_action_pressed!("jump") == 1
 
     # current velocity
-    velocity = Engine.get_velocity!(handle)
+    velocity = Engine.get_velocity!()
 
     # next velocity
     vx =
@@ -54,15 +41,15 @@ physics_process! = |handle, _delta| {
     vy =
         velocity.y # preserve existing y-axis momentum, plus add vector modifiers:
         + -gravity
-        + if is_jump and Engine.is_on_floor!(handle)
+        + if is_jump and (Engine.is_on_floor!() == 1)
             jump_force
         else
             idle_speed
 
-    Engine.set_velocity!(handle, { x: vx, y: vy, z: vz })
+    Engine.set_velocity!({ x: vx, y: vy, z: vz })
 
     # Process physics for this class / node.
-    Engine.move_and_slide!(handle)
+    Engine.move_and_slide!()
 
     {}
 }

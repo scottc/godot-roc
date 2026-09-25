@@ -6,47 +6,58 @@ app [ready!, process!, scene_init!, physics_process!] {
 }
 
 import pf.Engine
-import pf.Size
+import pf.GodotRoc
 
 import MyPlayerCharacter
 import Npc
 
-## Called when godot initializes the Scene Tree, this includes all scenes.
-scene_init! : {} => {}
-scene_init! = |_| {
-    _ = Engine.print!("Hello World!")
+# class_name = "Npc"
+# parent_class = "CharacterBody3D"
+# var $npc_class_id = 0 # compiler doesn't allow here
 
-    MyPlayerCharacter.register_class!()
-    Npc.register_class!()
+# class_name = "MyPlayerCharacter"
+# parent_class = "CharacterBody3D"
+# var $player_class_id = 0 # compiler doesn't allow here
+
+## Called when godot initializes the Scene Tree, this includes all scenes.
+scene_init! : () => {}
+scene_init! = || {
+    Engine.print_error!("Hello World!")
+
+    player_class_id = Engine.register_class!("MyPlayerCharacter", "CharacterBody3D")
+    Engine.print_error!("Registered MyPlayerCharacter id= ${player_class_id.to_str()}")
+
+    npc_class_id = Engine.register_class!("Npc", "CharacterBody3D")
+    Engine.print_error!("Registered Npc id= ${npc_class_id.to_str()}")
 }
 
 ## class_id(u64) | class_name(str) = which type / behaviour. Example: (PlayerType vs NPCType)
 ## handle(usize) = which object / instance. Example: (NPC#12 vs NPC#15)
 ## delta = time elapsed since previous tick
-physics_process! : Str, Size.GDExtensionObjectPtr, F64 => {}
-physics_process! = |class_name, handle, delta| {
-    _ = match class_name {
-        "PlayerCharacter" => MyPlayerCharacter.physics_process!(handle, delta)
-        "NpcCharacter" => Npc.physics_process!(handle, delta)
+physics_process! : GodotRoc.ClassId, F64 => {}
+physics_process! = |class_id,  delta| {
+    _ = match class_id {
+        0 => MyPlayerCharacter.physics_process!(delta)
+        1 => Npc.physics_process!(delta)
         _ => {
-            _ = Engine.print!("Unhandled class! ${class_name}")
+            _ = Engine.print_error!("Unhandled class! (class_id=${class_id.to_str()})")
         }
     }
     {}
 }
 
-process! : Size.GDExtensionObjectPtr, F64 => {}
-process! = |_handle, _delta| {
+process! : GodotRoc.ClassId, F64 => {}
+process! = |_class_id, _delta| {
     {}
 }
 
-unhandled_input! : {} => {}
-unhandled_input! = |_| {
+unhandled_input! : () => {}
+unhandled_input! = || {
     {}
 }
 
-ready! : {} => {}
-ready! = |_| {
+ready! : () => {}
+ready! = || {
     {}
 }
 
