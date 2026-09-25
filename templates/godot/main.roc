@@ -1,6 +1,6 @@
 ## My Project
 app [ready!, process!, scene_init!, physics_process!] {
-    roc: "nightly-2026-09-12-220fd47",
+    roc: "nightly-2026-09-18-1d982dc",
     pf: platform "https://github.com/scottc/godot-roc/releases/download/0.0.1-pre-alpha-test2/GbukRHC46qgdGqBVnpcSBVuSjZpT2GEC2KPV1B5Ddvhw.tar.zst",
 }
 

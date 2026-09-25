@@ -15,8 +15,9 @@
     # this can be useful
     # if you want to explicitly stick to a version.
     # We use the short hash here, to be consistant with other useages.
-    # Searchable string: nightly-2026-09-12-220fd47
-    roc.url = "github:roc-lang/roc/220fd47?dir=src";
+    # Searchable string: nightly-2026-09-18-1d982dc
+    roc.url = "github:roc-lang/roc/1d982dc?dir=src";
+    #roc.url = "path:./flakes/roc-nix"; # TODO:
     roc.inputs.nixpkgs.follows = "nixpkgs";
 
     redot.url = "path:./flakes/redot-nix";
@@ -68,7 +69,7 @@
 # These are some of tools that are avaliable:
 #
 # =Compilers=
-# roc:          $(roc version)
+# roc:          $(roc version) nightly-2026-09-18-1d982dc
 # zig:          $(zig version)
 #
 # =Engines=

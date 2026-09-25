@@ -8,7 +8,7 @@
 
 ## Continous Intergration
 app [main!] {
-    roc: "nightly-2026-09-12-220fd47",
+    roc: "nightly-2026-09-18-1d982dc",
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.22.2/9zUBxb1LtXYVc4eR4hAtd1WQDwBYDhM6HQdZz1UFCm2m.tar.zst"
 }
 
