@@ -1,20 +1,10 @@
-# engine class VisualShaderNodeVectorDistance → VisualShaderNodeVectorDistance
-# api_type: core
-# instantiable, refcounted
+# class VisualShaderNodeVectorDistance → VisualShaderNodeVectorDistance
 # inherits: VisualShaderNodeVectorBase
 VisualShaderNodeVectorDistance := {
-    # opaque host handle — concrete layout lives on the Zig side
     ptr : U64,
 }.{
-    # --- enums ---
 
 
-    # --- properties ---
 
-
-    # --- methods ---
-
-
-    # --- signals ---
 
 }

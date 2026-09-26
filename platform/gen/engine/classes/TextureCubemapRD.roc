@@ -1,20 +1,10 @@
-# engine class TextureCubemapRD → TextureCubemapRD
-# api_type: core
-# instantiable, refcounted
+# class TextureCubemapRD → TextureCubemapRD
 # inherits: TextureLayeredRD
 TextureCubemapRD := {
-    # opaque host handle — concrete layout lives on the Zig side
     ptr : U64,
 }.{
-    # --- enums ---
 
 
-    # --- properties ---
 
-
-    # --- methods ---
-
-
-    # --- signals ---
 
 }

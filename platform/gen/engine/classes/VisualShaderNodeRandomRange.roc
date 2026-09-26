@@ -1,20 +1,10 @@
-# engine class VisualShaderNodeRandomRange → VisualShaderNodeRandomRange
-# api_type: core
-# instantiable, refcounted
+# class VisualShaderNodeRandomRange → VisualShaderNodeRandomRange
 # inherits: VisualShaderNode
 VisualShaderNodeRandomRange := {
-    # opaque host handle — concrete layout lives on the Zig side
     ptr : U64,
 }.{
-    # --- enums ---
 
 
-    # --- properties ---
 
-
-    # --- methods ---
-
-
-    # --- signals ---
 
 }

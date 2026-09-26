@@ -1,27 +1,13 @@
-# engine class VisualShaderNodeUIntOp → VisualShaderNodeUIntOp
-# api_type: core
-# instantiable, refcounted
+# class VisualShaderNodeUIntOp → VisualShaderNodeUIntOp
 # inherits: VisualShaderNode
 VisualShaderNodeUIntOp := {
-    # opaque host handle — concrete layout lives on the Zig side
     ptr : U64,
 }.{
-    # --- enums ---
     Operator : [OP_ADD, OP_SUB, OP_MUL, OP_DIV, OP_MOD, OP_MAX, OP_MIN, OP_BITWISE_AND, OP_BITWISE_OR, OP_BITWISE_XOR, OP_BITWISE_LEFT_SHIFT, OP_BITWISE_RIGHT_SHIFT, OP_ENUM_SIZE]
-
-    # --- properties ---
     # property operator : I32
-    #   getter: get_operator
-    #   setter: set_operator
-
-    # --- methods ---
-    # set_operator!  is_const=False is_static=False is_vararg=False
-    #set_operator! : enum::VisualShaderNodeUIntOp.Operator -> {}
-    #set_operator! = Host.set_operator_3463048345!
-    # get_operator!  is_const=True is_static=False is_vararg=False
-    #get_operator! : () -> enum::VisualShaderNodeUIntOp.Operator
-    #get_operator! = Host.get_operator_256631461!
-
-    # --- signals ---
+    # set_operator! : enum::VisualShaderNodeUIntOp.Operator -> {}
+    # set_operator! = Host.set_operator_3463048345!
+    # get_operator! : () -> enum::VisualShaderNodeUIntOp.Operator
+    # get_operator! = Host.get_operator_256631461!
 
 }

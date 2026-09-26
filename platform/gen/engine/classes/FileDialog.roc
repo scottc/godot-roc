@@ -1,238 +1,134 @@
-# engine class FileDialog → FileDialog
-# api_type: core
-# instantiable, not refcounted
+# class FileDialog → FileDialog
 # inherits: ConfirmationDialog
 FileDialog := {
-    # opaque host handle — concrete layout lives on the Zig side
     ptr : U64,
 }.{
-    # --- enums ---
     FileMode : [FILE_MODE_OPEN_FILE, FILE_MODE_OPEN_FILES, FILE_MODE_OPEN_DIR, FILE_MODE_OPEN_ANY, FILE_MODE_SAVE_FILE]
     Access : [ACCESS_RESOURCES, ACCESS_USERDATA, ACCESS_FILESYSTEM]
     DisplayMode : [DISPLAY_THUMBNAILS, DISPLAY_LIST]
     Customization : [CUSTOMIZATION_HIDDEN_FILES, CUSTOMIZATION_CREATE_FOLDER, CUSTOMIZATION_FILE_FILTER, CUSTOMIZATION_FILE_SORT, CUSTOMIZATION_FAVORITES, CUSTOMIZATION_RECENT, CUSTOMIZATION_LAYOUT, CUSTOMIZATION_OVERWRITE_WARNING, CUSTOMIZATION_DELETE]
-
-    # --- properties ---
     # property mode_overrides_title : Bool
-    #   getter: is_mode_overriding_title
-    #   setter: set_mode_overrides_title
     # property file_mode : I32
-    #   getter: get_file_mode
-    #   setter: set_file_mode
     # property display_mode : I32
-    #   getter: get_display_mode
-    #   setter: set_display_mode
     # property access : I32
-    #   getter: get_access
-    #   setter: set_access
     # property root_subfolder : String
-    #   getter: get_root_subfolder
-    #   setter: set_root_subfolder
     # property filters : PackedStringArray
-    #   getter: get_filters
-    #   setter: set_filters
     # property filename_filter : String
-    #   getter: get_filename_filter
-    #   setter: set_filename_filter
     # property show_hidden_files : Bool
-    #   getter: is_showing_hidden_files
-    #   setter: set_show_hidden_files
     # property use_native_dialog : Bool
-    #   getter: get_use_native_dialog
-    #   setter: set_use_native_dialog
     # property option_count : I32
-    #   getter: get_option_count
-    #   setter: set_option_count
     # property hidden_files_toggle_enabled : Bool
-    #   getter: is_customization_flag_enabled
-    #   setter: set_customization_flag_enabled
     # property file_filter_toggle_enabled : Bool
-    #   getter: is_customization_flag_enabled
-    #   setter: set_customization_flag_enabled
     # property file_sort_options_enabled : Bool
-    #   getter: is_customization_flag_enabled
-    #   setter: set_customization_flag_enabled
     # property folder_creation_enabled : Bool
-    #   getter: is_customization_flag_enabled
-    #   setter: set_customization_flag_enabled
     # property favorites_enabled : Bool
-    #   getter: is_customization_flag_enabled
-    #   setter: set_customization_flag_enabled
     # property recent_list_enabled : Bool
-    #   getter: is_customization_flag_enabled
-    #   setter: set_customization_flag_enabled
     # property layout_toggle_enabled : Bool
-    #   getter: is_customization_flag_enabled
-    #   setter: set_customization_flag_enabled
     # property overwrite_warning_enabled : Bool
-    #   getter: is_customization_flag_enabled
-    #   setter: set_customization_flag_enabled
     # property deleting_enabled : Bool
-    #   getter: is_customization_flag_enabled
-    #   setter: set_customization_flag_enabled
     # property current_dir : String
-    #   getter: get_current_dir
-    #   setter: set_current_dir
     # property current_file : String
-    #   getter: get_current_file
-    #   setter: set_current_file
     # property current_path : String
-    #   getter: get_current_path
-    #   setter: set_current_path
-
-    # --- methods ---
-    # clear_filters!  is_const=False is_static=False is_vararg=False
-    #clear_filters! : () -> {}
-    #clear_filters! = Host.clear_filters_3218959716!
-    # add_filter!  is_const=False is_static=False is_vararg=False
-    #add_filter! : String, String, String -> {}
-    #add_filter! = Host.add_filter_914921954!
-    # set_filters!  is_const=False is_static=False is_vararg=False
-    #set_filters! : PackedStringArray -> {}
-    #set_filters! = Host.set_filters_4015028928!
-    # get_filters!  is_const=True is_static=False is_vararg=False
-    #get_filters! : () -> PackedStringArray
-    #get_filters! = Host.get_filters_1139954409!
-    # clear_filename_filter!  is_const=False is_static=False is_vararg=False
-    #clear_filename_filter! : () -> {}
-    #clear_filename_filter! = Host.clear_filename_filter_3218959716!
-    # set_filename_filter!  is_const=False is_static=False is_vararg=False
-    #set_filename_filter! : String -> {}
-    #set_filename_filter! = Host.set_filename_filter_83702148!
-    # get_filename_filter!  is_const=True is_static=False is_vararg=False
-    #get_filename_filter! : () -> String
-    #get_filename_filter! = Host.get_filename_filter_201670096!
-    # get_option_name!  is_const=True is_static=False is_vararg=False
-    #get_option_name! : I32 -> String
-    #get_option_name! = Host.get_option_name_844755477!
-    # get_option_values!  is_const=True is_static=False is_vararg=False
-    #get_option_values! : I32 -> PackedStringArray
-    #get_option_values! = Host.get_option_values_647634434!
-    # get_option_default!  is_const=True is_static=False is_vararg=False
-    #get_option_default! : I32 -> I32
-    #get_option_default! = Host.get_option_default_923996154!
-    # set_option_name!  is_const=False is_static=False is_vararg=False
-    #set_option_name! : I32, String -> {}
-    #set_option_name! = Host.set_option_name_501894301!
-    # set_option_values!  is_const=False is_static=False is_vararg=False
-    #set_option_values! : I32, PackedStringArray -> {}
-    #set_option_values! = Host.set_option_values_3353661094!
-    # set_option_default!  is_const=False is_static=False is_vararg=False
-    #set_option_default! : I32, I32 -> {}
-    #set_option_default! = Host.set_option_default_3937882851!
-    # set_option_count!  is_const=False is_static=False is_vararg=False
-    #set_option_count! : I32 -> {}
-    #set_option_count! = Host.set_option_count_1286410249!
-    # get_option_count!  is_const=True is_static=False is_vararg=False
-    #get_option_count! : () -> I32
-    #get_option_count! = Host.get_option_count_3905245786!
-    # add_option!  is_const=False is_static=False is_vararg=False
-    #add_option! : String, PackedStringArray, I32 -> {}
-    #add_option! = Host.add_option_149592325!
-    # get_selected_options!  is_const=True is_static=False is_vararg=False
-    #get_selected_options! : () -> Dictionary
-    #get_selected_options! = Host.get_selected_options_3102165223!
-    # get_current_dir!  is_const=True is_static=False is_vararg=False
-    #get_current_dir! : () -> String
-    #get_current_dir! = Host.get_current_dir_201670096!
-    # get_current_file!  is_const=True is_static=False is_vararg=False
-    #get_current_file! : () -> String
-    #get_current_file! = Host.get_current_file_201670096!
-    # get_current_path!  is_const=True is_static=False is_vararg=False
-    #get_current_path! : () -> String
-    #get_current_path! = Host.get_current_path_201670096!
-    # set_current_dir!  is_const=False is_static=False is_vararg=False
-    #set_current_dir! : String -> {}
-    #set_current_dir! = Host.set_current_dir_83702148!
-    # set_current_file!  is_const=False is_static=False is_vararg=False
-    #set_current_file! : String -> {}
-    #set_current_file! = Host.set_current_file_83702148!
-    # set_current_path!  is_const=False is_static=False is_vararg=False
-    #set_current_path! : String -> {}
-    #set_current_path! = Host.set_current_path_83702148!
-    # set_mode_overrides_title!  is_const=False is_static=False is_vararg=False
-    #set_mode_overrides_title! : Bool -> {}
-    #set_mode_overrides_title! = Host.set_mode_overrides_title_2586408642!
-    # is_mode_overriding_title!  is_const=True is_static=False is_vararg=False
-    #is_mode_overriding_title! : () -> Bool
-    #is_mode_overriding_title! = Host.is_mode_overriding_title_36873697!
-    # set_file_mode!  is_const=False is_static=False is_vararg=False
-    #set_file_mode! : enum::FileDialog.FileMode -> {}
-    #set_file_mode! = Host.set_file_mode_3654936397!
-    # get_file_mode!  is_const=True is_static=False is_vararg=False
-    #get_file_mode! : () -> enum::FileDialog.FileMode
-    #get_file_mode! = Host.get_file_mode_4074825319!
-    # set_display_mode!  is_const=False is_static=False is_vararg=False
-    #set_display_mode! : enum::FileDialog.DisplayMode -> {}
-    #set_display_mode! = Host.set_display_mode_2692197101!
-    # get_display_mode!  is_const=True is_static=False is_vararg=False
-    #get_display_mode! : () -> enum::FileDialog.DisplayMode
-    #get_display_mode! = Host.get_display_mode_1092104624!
-    # get_vbox!  is_const=False is_static=False is_vararg=False
-    #get_vbox! : () -> VBoxContainer
-    #get_vbox! = Host.get_vbox_915758477!
-    # get_line_edit!  is_const=False is_static=False is_vararg=False
-    #get_line_edit! : () -> LineEdit
-    #get_line_edit! = Host.get_line_edit_4071694264!
-    # set_access!  is_const=False is_static=False is_vararg=False
-    #set_access! : enum::FileDialog.Access -> {}
-    #set_access! = Host.set_access_4104413466!
-    # get_access!  is_const=True is_static=False is_vararg=False
-    #get_access! : () -> enum::FileDialog.Access
-    #get_access! = Host.get_access_3344081076!
-    # set_root_subfolder!  is_const=False is_static=False is_vararg=False
-    #set_root_subfolder! : String -> {}
-    #set_root_subfolder! = Host.set_root_subfolder_83702148!
-    # get_root_subfolder!  is_const=True is_static=False is_vararg=False
-    #get_root_subfolder! : () -> String
-    #get_root_subfolder! = Host.get_root_subfolder_201670096!
-    # set_show_hidden_files!  is_const=False is_static=False is_vararg=False
-    #set_show_hidden_files! : Bool -> {}
-    #set_show_hidden_files! = Host.set_show_hidden_files_2586408642!
-    # is_showing_hidden_files!  is_const=True is_static=False is_vararg=False
-    #is_showing_hidden_files! : () -> Bool
-    #is_showing_hidden_files! = Host.is_showing_hidden_files_36873697!
-    # set_use_native_dialog!  is_const=False is_static=False is_vararg=False
-    #set_use_native_dialog! : Bool -> {}
-    #set_use_native_dialog! = Host.set_use_native_dialog_2586408642!
-    # get_use_native_dialog!  is_const=True is_static=False is_vararg=False
-    #get_use_native_dialog! : () -> Bool
-    #get_use_native_dialog! = Host.get_use_native_dialog_36873697!
-    # set_customization_flag_enabled!  is_const=False is_static=False is_vararg=False
-    #set_customization_flag_enabled! : enum::FileDialog.Customization, Bool -> {}
-    #set_customization_flag_enabled! = Host.set_customization_flag_enabled_3849177100!
-    # is_customization_flag_enabled!  is_const=True is_static=False is_vararg=False
-    #is_customization_flag_enabled! : enum::FileDialog.Customization -> Bool
-    #is_customization_flag_enabled! = Host.is_customization_flag_enabled_3722277863!
-    # deselect_all!  is_const=False is_static=False is_vararg=False
-    #deselect_all! : () -> {}
-    #deselect_all! = Host.deselect_all_3218959716!
-    # set_favorite_list!  is_const=False is_static=True is_vararg=False
-    #set_favorite_list! : PackedStringArray -> {}
-    #set_favorite_list! = Host.set_favorite_list_4015028928!
-    # get_favorite_list!  is_const=False is_static=True is_vararg=False
-    #get_favorite_list! : () -> PackedStringArray
-    #get_favorite_list! = Host.get_favorite_list_2981934095!
-    # set_recent_list!  is_const=False is_static=True is_vararg=False
-    #set_recent_list! : PackedStringArray -> {}
-    #set_recent_list! = Host.set_recent_list_4015028928!
-    # get_recent_list!  is_const=False is_static=True is_vararg=False
-    #get_recent_list! : () -> PackedStringArray
-    #get_recent_list! = Host.get_recent_list_2981934095!
-    # set_get_icon_callback!  is_const=False is_static=True is_vararg=False
-    #set_get_icon_callback! : Callable -> {}
-    #set_get_icon_callback! = Host.set_get_icon_callback_1611583062!
-    # set_get_thumbnail_callback!  is_const=False is_static=True is_vararg=False
-    #set_get_thumbnail_callback! : Callable -> {}
-    #set_get_thumbnail_callback! = Host.set_get_thumbnail_callback_1611583062!
-    # popup_file_dialog!  is_const=False is_static=False is_vararg=False
-    #popup_file_dialog! : () -> {}
-    #popup_file_dialog! = Host.popup_file_dialog_3218959716!
-    # invalidate!  is_const=False is_static=False is_vararg=False
-    #invalidate! : () -> {}
-    #invalidate! = Host.invalidate_3218959716!
-
-    # --- signals ---
+    # clear_filters! : () -> {}
+    # clear_filters! = Host.clear_filters_3218959716!
+    # add_filter! : String, String, String -> {}
+    # add_filter! = Host.add_filter_914921954!
+    # set_filters! : PackedStringArray -> {}
+    # set_filters! = Host.set_filters_4015028928!
+    # get_filters! : () -> PackedStringArray
+    # get_filters! = Host.get_filters_1139954409!
+    # clear_filename_filter! : () -> {}
+    # clear_filename_filter! = Host.clear_filename_filter_3218959716!
+    # set_filename_filter! : String -> {}
+    # set_filename_filter! = Host.set_filename_filter_83702148!
+    # get_filename_filter! : () -> String
+    # get_filename_filter! = Host.get_filename_filter_201670096!
+    # get_option_name! : I32 -> String
+    # get_option_name! = Host.get_option_name_844755477!
+    # get_option_values! : I32 -> PackedStringArray
+    # get_option_values! = Host.get_option_values_647634434!
+    # get_option_default! : I32 -> I32
+    # get_option_default! = Host.get_option_default_923996154!
+    # set_option_name! : I32, String -> {}
+    # set_option_name! = Host.set_option_name_501894301!
+    # set_option_values! : I32, PackedStringArray -> {}
+    # set_option_values! = Host.set_option_values_3353661094!
+    # set_option_default! : I32, I32 -> {}
+    # set_option_default! = Host.set_option_default_3937882851!
+    # set_option_count! : I32 -> {}
+    # set_option_count! = Host.set_option_count_1286410249!
+    # get_option_count! : () -> I32
+    # get_option_count! = Host.get_option_count_3905245786!
+    # add_option! : String, PackedStringArray, I32 -> {}
+    # add_option! = Host.add_option_149592325!
+    # get_selected_options! : () -> Dictionary
+    # get_selected_options! = Host.get_selected_options_3102165223!
+    # get_current_dir! : () -> String
+    # get_current_dir! = Host.get_current_dir_201670096!
+    # get_current_file! : () -> String
+    # get_current_file! = Host.get_current_file_201670096!
+    # get_current_path! : () -> String
+    # get_current_path! = Host.get_current_path_201670096!
+    # set_current_dir! : String -> {}
+    # set_current_dir! = Host.set_current_dir_83702148!
+    # set_current_file! : String -> {}
+    # set_current_file! = Host.set_current_file_83702148!
+    # set_current_path! : String -> {}
+    # set_current_path! = Host.set_current_path_83702148!
+    # set_mode_overrides_title! : Bool -> {}
+    # set_mode_overrides_title! = Host.set_mode_overrides_title_2586408642!
+    # is_mode_overriding_title! : () -> Bool
+    # is_mode_overriding_title! = Host.is_mode_overriding_title_36873697!
+    # set_file_mode! : enum::FileDialog.FileMode -> {}
+    # set_file_mode! = Host.set_file_mode_3654936397!
+    # get_file_mode! : () -> enum::FileDialog.FileMode
+    # get_file_mode! = Host.get_file_mode_4074825319!
+    # set_display_mode! : enum::FileDialog.DisplayMode -> {}
+    # set_display_mode! = Host.set_display_mode_2692197101!
+    # get_display_mode! : () -> enum::FileDialog.DisplayMode
+    # get_display_mode! = Host.get_display_mode_1092104624!
+    # get_vbox! : () -> VBoxContainer
+    # get_vbox! = Host.get_vbox_915758477!
+    # get_line_edit! : () -> LineEdit
+    # get_line_edit! = Host.get_line_edit_4071694264!
+    # set_access! : enum::FileDialog.Access -> {}
+    # set_access! = Host.set_access_4104413466!
+    # get_access! : () -> enum::FileDialog.Access
+    # get_access! = Host.get_access_3344081076!
+    # set_root_subfolder! : String -> {}
+    # set_root_subfolder! = Host.set_root_subfolder_83702148!
+    # get_root_subfolder! : () -> String
+    # get_root_subfolder! = Host.get_root_subfolder_201670096!
+    # set_show_hidden_files! : Bool -> {}
+    # set_show_hidden_files! = Host.set_show_hidden_files_2586408642!
+    # is_showing_hidden_files! : () -> Bool
+    # is_showing_hidden_files! = Host.is_showing_hidden_files_36873697!
+    # set_use_native_dialog! : Bool -> {}
+    # set_use_native_dialog! = Host.set_use_native_dialog_2586408642!
+    # get_use_native_dialog! : () -> Bool
+    # get_use_native_dialog! = Host.get_use_native_dialog_36873697!
+    # set_customization_flag_enabled! : enum::FileDialog.Customization, Bool -> {}
+    # set_customization_flag_enabled! = Host.set_customization_flag_enabled_3849177100!
+    # is_customization_flag_enabled! : enum::FileDialog.Customization -> Bool
+    # is_customization_flag_enabled! = Host.is_customization_flag_enabled_3722277863!
+    # deselect_all! : () -> {}
+    # deselect_all! = Host.deselect_all_3218959716!
+    # set_favorite_list! : PackedStringArray -> {}
+    # set_favorite_list! = Host.set_favorite_list_4015028928!
+    # get_favorite_list! : () -> PackedStringArray
+    # get_favorite_list! = Host.get_favorite_list_2981934095!
+    # set_recent_list! : PackedStringArray -> {}
+    # set_recent_list! = Host.set_recent_list_4015028928!
+    # get_recent_list! : () -> PackedStringArray
+    # get_recent_list! = Host.get_recent_list_2981934095!
+    # set_get_icon_callback! : Callable -> {}
+    # set_get_icon_callback! = Host.set_get_icon_callback_1611583062!
+    # set_get_thumbnail_callback! : Callable -> {}
+    # set_get_thumbnail_callback! = Host.set_get_thumbnail_callback_1611583062!
+    # popup_file_dialog! : () -> {}
+    # popup_file_dialog! = Host.popup_file_dialog_3218959716!
+    # invalidate! : () -> {}
+    # invalidate! = Host.invalidate_3218959716!
     # signal file_selected : path : String
     # signal files_selected : paths : PackedStringArray
     # signal dir_selected : dir : String

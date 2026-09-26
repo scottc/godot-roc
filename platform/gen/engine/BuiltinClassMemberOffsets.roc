@@ -1,257 +1,256 @@
 # AUTO-GENERATED builtin_class_member_offsets
-
-# build_configuration: float_32
-#   class Vector2
-#     x offset=0 meta=float
-#     y offset=4 meta=float
-#   class Vector2i
-#     x offset=0 meta=int32
-#     y offset=4 meta=int32
-#   class Rect2
-#     position offset=0 meta=Vector2
-#     size offset=8 meta=Vector2
-#   class Rect2i
-#     position offset=0 meta=Vector2i
-#     size offset=8 meta=Vector2i
-#   class Vector3
-#     x offset=0 meta=float
-#     y offset=4 meta=float
-#     z offset=8 meta=float
-#   class Vector3i
-#     x offset=0 meta=int32
-#     y offset=4 meta=int32
-#     z offset=8 meta=int32
-#   class Transform2D
-#     x offset=0 meta=Vector2
-#     y offset=8 meta=Vector2
-#     origin offset=16 meta=Vector2
-#   class Vector4
-#     x offset=0 meta=float
-#     y offset=4 meta=float
-#     z offset=8 meta=float
-#     w offset=12 meta=float
-#   class Vector4i
-#     x offset=0 meta=int32
-#     y offset=4 meta=int32
-#     z offset=8 meta=int32
-#     w offset=12 meta=int32
-#   class Plane
-#     normal offset=0 meta=Vector3
-#     d offset=12 meta=float
-#   class Quaternion
-#     x offset=0 meta=float
-#     y offset=4 meta=float
-#     z offset=8 meta=float
-#     w offset=12 meta=float
-#   class AABB
-#     position offset=0 meta=Vector3
-#     size offset=12 meta=Vector3
-#   class Basis
-#     x offset=0 meta=Vector3
-#     y offset=12 meta=Vector3
-#     z offset=24 meta=Vector3
-#   class Transform3D
-#     basis offset=0 meta=Basis
-#     origin offset=36 meta=Vector3
-#   class Projection
-#     x offset=0 meta=Vector4
-#     y offset=16 meta=Vector4
-#     z offset=32 meta=Vector4
-#     w offset=48 meta=Vector4
-#   class Color
-#     r offset=0 meta=float
-#     g offset=4 meta=float
-#     b offset=8 meta=float
-#     a offset=12 meta=float
-
-# build_configuration: float_64
-#   class Vector2
-#     x offset=0 meta=float
-#     y offset=4 meta=float
-#   class Vector2i
-#     x offset=0 meta=int32
-#     y offset=4 meta=int32
-#   class Rect2
-#     position offset=0 meta=Vector2
-#     size offset=8 meta=Vector2
-#   class Rect2i
-#     position offset=0 meta=Vector2i
-#     size offset=8 meta=Vector2i
-#   class Vector3
-#     x offset=0 meta=float
-#     y offset=4 meta=float
-#     z offset=8 meta=float
-#   class Vector3i
-#     x offset=0 meta=int32
-#     y offset=4 meta=int32
-#     z offset=8 meta=int32
-#   class Transform2D
-#     x offset=0 meta=Vector2
-#     y offset=8 meta=Vector2
-#     origin offset=16 meta=Vector2
-#   class Vector4
-#     x offset=0 meta=float
-#     y offset=4 meta=float
-#     z offset=8 meta=float
-#     w offset=12 meta=float
-#   class Vector4i
-#     x offset=0 meta=int32
-#     y offset=4 meta=int32
-#     z offset=8 meta=int32
-#     w offset=12 meta=int32
-#   class Plane
-#     normal offset=0 meta=Vector3
-#     d offset=12 meta=float
-#   class Quaternion
-#     x offset=0 meta=float
-#     y offset=4 meta=float
-#     z offset=8 meta=float
-#     w offset=12 meta=float
-#   class AABB
-#     position offset=0 meta=Vector3
-#     size offset=12 meta=Vector3
-#   class Basis
-#     x offset=0 meta=Vector3
-#     y offset=12 meta=Vector3
-#     z offset=24 meta=Vector3
-#   class Transform3D
-#     basis offset=0 meta=Basis
-#     origin offset=36 meta=Vector3
-#   class Projection
-#     x offset=0 meta=Vector4
-#     y offset=16 meta=Vector4
-#     z offset=32 meta=Vector4
-#     w offset=48 meta=Vector4
-#   class Color
-#     r offset=0 meta=float
-#     g offset=4 meta=float
-#     b offset=8 meta=float
-#     a offset=12 meta=float
-
-# build_configuration: double_32
-#   class Vector2
-#     x offset=0 meta=double
-#     y offset=8 meta=double
-#   class Vector2i
-#     x offset=0 meta=int32
-#     y offset=4 meta=int32
-#   class Rect2
-#     position offset=0 meta=Vector2
-#     size offset=16 meta=Vector2
-#   class Rect2i
-#     position offset=0 meta=Vector2i
-#     size offset=8 meta=Vector2i
-#   class Vector3
-#     x offset=0 meta=double
-#     y offset=8 meta=double
-#     z offset=16 meta=double
-#   class Vector3i
-#     x offset=0 meta=int32
-#     y offset=4 meta=int32
-#     z offset=8 meta=int32
-#   class Transform2D
-#     x offset=0 meta=Vector2
-#     y offset=16 meta=Vector2
-#     origin offset=32 meta=Vector2
-#   class Vector4
-#     x offset=0 meta=double
-#     y offset=8 meta=double
-#     z offset=16 meta=double
-#     w offset=24 meta=double
-#   class Vector4i
-#     x offset=0 meta=int32
-#     y offset=4 meta=int32
-#     z offset=8 meta=int32
-#     w offset=12 meta=int32
-#   class Plane
-#     normal offset=0 meta=Vector3
-#     d offset=24 meta=double
-#   class Quaternion
-#     x offset=0 meta=double
-#     y offset=8 meta=double
-#     z offset=16 meta=double
-#     w offset=24 meta=double
-#   class AABB
-#     position offset=0 meta=Vector3
-#     size offset=24 meta=Vector3
-#   class Basis
-#     x offset=0 meta=Vector3
-#     y offset=24 meta=Vector3
-#     z offset=48 meta=Vector3
-#   class Transform3D
-#     basis offset=0 meta=Basis
-#     origin offset=72 meta=Vector3
-#   class Projection
-#     x offset=0 meta=Vector4
-#     y offset=32 meta=Vector4
-#     z offset=64 meta=Vector4
-#     w offset=96 meta=Vector4
-#   class Color
-#     r offset=0 meta=float
-#     g offset=4 meta=float
-#     b offset=8 meta=float
-#     a offset=12 meta=float
-
-# build_configuration: double_64
-#   class Vector2
-#     x offset=0 meta=double
-#     y offset=8 meta=double
-#   class Vector2i
-#     x offset=0 meta=int32
-#     y offset=4 meta=int32
-#   class Rect2
-#     position offset=0 meta=Vector2
-#     size offset=16 meta=Vector2
-#   class Rect2i
-#     position offset=0 meta=Vector2i
-#     size offset=8 meta=Vector2i
-#   class Vector3
-#     x offset=0 meta=double
-#     y offset=8 meta=double
-#     z offset=16 meta=double
-#   class Vector3i
-#     x offset=0 meta=int32
-#     y offset=4 meta=int32
-#     z offset=8 meta=int32
-#   class Transform2D
-#     x offset=0 meta=Vector2
-#     y offset=16 meta=Vector2
-#     origin offset=32 meta=Vector2
-#   class Vector4
-#     x offset=0 meta=double
-#     y offset=8 meta=double
-#     z offset=16 meta=double
-#     w offset=24 meta=double
-#   class Vector4i
-#     x offset=0 meta=int32
-#     y offset=4 meta=int32
-#     z offset=8 meta=int32
-#     w offset=12 meta=int32
-#   class Plane
-#     normal offset=0 meta=Vector3
-#     d offset=24 meta=double
-#   class Quaternion
-#     x offset=0 meta=double
-#     y offset=8 meta=double
-#     z offset=16 meta=double
-#     w offset=24 meta=double
-#   class AABB
-#     position offset=0 meta=Vector3
-#     size offset=24 meta=Vector3
-#   class Basis
-#     x offset=0 meta=Vector3
-#     y offset=24 meta=Vector3
-#     z offset=48 meta=Vector3
-#   class Transform3D
-#     basis offset=0 meta=Basis
-#     origin offset=72 meta=Vector3
-#   class Projection
-#     x offset=0 meta=Vector4
-#     y offset=32 meta=Vector4
-#     z offset=64 meta=Vector4
-#     w offset=96 meta=Vector4
-#   class Color
-#     r offset=0 meta=float
-#     g offset=4 meta=float
-#     b offset=8 meta=float
-#     a offset=12 meta=float
+BuiltinClassMemberOffsets := {
+}.{
+    # build_configuration: float_32
+    # class Vector2
+    #   x @ 0
+    #   y @ 4
+    # class Vector2i
+    #   x @ 0
+    #   y @ 4
+    # class Rect2
+    #   position @ 0
+    #   size @ 8
+    # class Rect2i
+    #   position @ 0
+    #   size @ 8
+    # class Vector3
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    # class Vector3i
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    # class Transform2D
+    #   x @ 0
+    #   y @ 8
+    #   origin @ 16
+    # class Vector4
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    #   w @ 12
+    # class Vector4i
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    #   w @ 12
+    # class Plane
+    #   normal @ 0
+    #   d @ 12
+    # class Quaternion
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    #   w @ 12
+    # class AABB
+    #   position @ 0
+    #   size @ 12
+    # class Basis
+    #   x @ 0
+    #   y @ 12
+    #   z @ 24
+    # class Transform3D
+    #   basis @ 0
+    #   origin @ 36
+    # class Projection
+    #   x @ 0
+    #   y @ 16
+    #   z @ 32
+    #   w @ 48
+    # class Color
+    #   r @ 0
+    #   g @ 4
+    #   b @ 8
+    #   a @ 12
+    # build_configuration: float_64
+    # class Vector2
+    #   x @ 0
+    #   y @ 4
+    # class Vector2i
+    #   x @ 0
+    #   y @ 4
+    # class Rect2
+    #   position @ 0
+    #   size @ 8
+    # class Rect2i
+    #   position @ 0
+    #   size @ 8
+    # class Vector3
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    # class Vector3i
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    # class Transform2D
+    #   x @ 0
+    #   y @ 8
+    #   origin @ 16
+    # class Vector4
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    #   w @ 12
+    # class Vector4i
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    #   w @ 12
+    # class Plane
+    #   normal @ 0
+    #   d @ 12
+    # class Quaternion
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    #   w @ 12
+    # class AABB
+    #   position @ 0
+    #   size @ 12
+    # class Basis
+    #   x @ 0
+    #   y @ 12
+    #   z @ 24
+    # class Transform3D
+    #   basis @ 0
+    #   origin @ 36
+    # class Projection
+    #   x @ 0
+    #   y @ 16
+    #   z @ 32
+    #   w @ 48
+    # class Color
+    #   r @ 0
+    #   g @ 4
+    #   b @ 8
+    #   a @ 12
+    # build_configuration: double_32
+    # class Vector2
+    #   x @ 0
+    #   y @ 8
+    # class Vector2i
+    #   x @ 0
+    #   y @ 4
+    # class Rect2
+    #   position @ 0
+    #   size @ 16
+    # class Rect2i
+    #   position @ 0
+    #   size @ 8
+    # class Vector3
+    #   x @ 0
+    #   y @ 8
+    #   z @ 16
+    # class Vector3i
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    # class Transform2D
+    #   x @ 0
+    #   y @ 16
+    #   origin @ 32
+    # class Vector4
+    #   x @ 0
+    #   y @ 8
+    #   z @ 16
+    #   w @ 24
+    # class Vector4i
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    #   w @ 12
+    # class Plane
+    #   normal @ 0
+    #   d @ 24
+    # class Quaternion
+    #   x @ 0
+    #   y @ 8
+    #   z @ 16
+    #   w @ 24
+    # class AABB
+    #   position @ 0
+    #   size @ 24
+    # class Basis
+    #   x @ 0
+    #   y @ 24
+    #   z @ 48
+    # class Transform3D
+    #   basis @ 0
+    #   origin @ 72
+    # class Projection
+    #   x @ 0
+    #   y @ 32
+    #   z @ 64
+    #   w @ 96
+    # class Color
+    #   r @ 0
+    #   g @ 4
+    #   b @ 8
+    #   a @ 12
+    # build_configuration: double_64
+    # class Vector2
+    #   x @ 0
+    #   y @ 8
+    # class Vector2i
+    #   x @ 0
+    #   y @ 4
+    # class Rect2
+    #   position @ 0
+    #   size @ 16
+    # class Rect2i
+    #   position @ 0
+    #   size @ 8
+    # class Vector3
+    #   x @ 0
+    #   y @ 8
+    #   z @ 16
+    # class Vector3i
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    # class Transform2D
+    #   x @ 0
+    #   y @ 16
+    #   origin @ 32
+    # class Vector4
+    #   x @ 0
+    #   y @ 8
+    #   z @ 16
+    #   w @ 24
+    # class Vector4i
+    #   x @ 0
+    #   y @ 4
+    #   z @ 8
+    #   w @ 12
+    # class Plane
+    #   normal @ 0
+    #   d @ 24
+    # class Quaternion
+    #   x @ 0
+    #   y @ 8
+    #   z @ 16
+    #   w @ 24
+    # class AABB
+    #   position @ 0
+    #   size @ 24
+    # class Basis
+    #   x @ 0
+    #   y @ 24
+    #   z @ 48
+    # class Transform3D
+    #   basis @ 0
+    #   origin @ 72
+    # class Projection
+    #   x @ 0
+    #   y @ 32
+    #   z @ 64
+    #   w @ 96
+    # class Color
+    #   r @ 0
+    #   g @ 4
+    #   b @ 8
+    #   a @ 12
+}

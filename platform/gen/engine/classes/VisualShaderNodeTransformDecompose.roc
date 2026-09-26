@@ -1,20 +1,10 @@
-# engine class VisualShaderNodeTransformDecompose → VisualShaderNodeTransformDecompose
-# api_type: core
-# instantiable, refcounted
+# class VisualShaderNodeTransformDecompose → VisualShaderNodeTransformDecompose
 # inherits: VisualShaderNode
 VisualShaderNodeTransformDecompose := {
-    # opaque host handle — concrete layout lives on the Zig side
     ptr : U64,
 }.{
-    # --- enums ---
 
 
-    # --- properties ---
 
-
-    # --- methods ---
-
-
-    # --- signals ---
 
 }

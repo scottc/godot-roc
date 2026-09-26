@@ -1,46 +1,26 @@
-# AUTO-GENERATED global_constants from extension_api.json
-# Module GlobalConstants exposes these as top-level values.
-
-# UINT8_MAX
-UINT8_MAX : I64
-UINT8_MAX = 255
-
-# UINT16_MAX
-UINT16_MAX : I64
-UINT16_MAX = 65535
-
-# UINT32_MAX
-UINT32_MAX : I64
-UINT32_MAX = 4294967295
-
-# INT8_MIN
-INT8_MIN : I64
-INT8_MIN = -128
-
-# INT8_MAX
-INT8_MAX : I64
-INT8_MAX = 127
-
-# INT16_MIN
-INT16_MIN : I64
-INT16_MIN = -32768
-
-# INT16_MAX
-INT16_MAX : I64
-INT16_MAX = 32767
-
-# INT32_MIN
-INT32_MIN : I64
-INT32_MIN = -2147483648
-
-# INT32_MAX
-INT32_MAX : I64
-INT32_MAX = 2147483647
-
-# INT64_MIN
-INT64_MIN : I64
-INT64_MIN = -9223372036854775808
-
-# INT64_MAX
-INT64_MAX : I64
-INT64_MAX = 9223372036854775807
+# AUTO-GENERATED global_constants
+GlobalConstants := {
+}.{
+    uint8_max : I64
+    uint8_max = 255
+    uint16_max : I64
+    uint16_max = 65535
+    uint32_max : I64
+    uint32_max = 4294967295
+    int8_min : I64
+    int8_min = -128
+    int8_max : I64
+    int8_max = 127
+    int16_min : I64
+    int16_min = -32768
+    int16_max : I64
+    int16_max = 32767
+    int32_min : I64
+    int32_min = -2147483648
+    int32_max : I64
+    int32_max = 2147483647
+    int64_min : I64
+    int64_min = -9223372036854775808
+    int64_max : I64
+    int64_max = 9223372036854775807
+}

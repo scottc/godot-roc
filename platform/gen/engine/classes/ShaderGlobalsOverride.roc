@@ -1,20 +1,10 @@
-# engine class ShaderGlobalsOverride → ShaderGlobalsOverride
-# api_type: core
-# instantiable, not refcounted
+# class ShaderGlobalsOverride → ShaderGlobalsOverride
 # inherits: Node
 ShaderGlobalsOverride := {
-    # opaque host handle — concrete layout lives on the Zig side
     ptr : U64,
 }.{
-    # --- enums ---
 
 
-    # --- properties ---
 
-
-    # --- methods ---
-
-
-    # --- signals ---
 
 }

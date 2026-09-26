@@ -1,20 +1,10 @@
-# engine class VisualShaderNodeDotProduct → VisualShaderNodeDotProduct
-# api_type: core
-# instantiable, refcounted
+# class VisualShaderNodeDotProduct → VisualShaderNodeDotProduct
 # inherits: VisualShaderNode
 VisualShaderNodeDotProduct := {
-    # opaque host handle — concrete layout lives on the Zig side
     ptr : U64,
 }.{
-    # --- enums ---
 
 
-    # --- properties ---
 
-
-    # --- methods ---
-
-
-    # --- signals ---
 
 }

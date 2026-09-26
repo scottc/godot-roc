@@ -1,20 +1,10 @@
-# engine class EditorExportPlatformMacOS → EditorExportPlatformMacOS
-# api_type: editor
-# instantiable, refcounted
+# class EditorExportPlatformMacOS → EditorExportPlatformMacOS
 # inherits: EditorExportPlatform
 EditorExportPlatformMacOS := {
-    # opaque host handle — concrete layout lives on the Zig side
     ptr : U64,
 }.{
-    # --- enums ---
 
 
-    # --- properties ---
 
-
-    # --- methods ---
-
-
-    # --- signals ---
 
 }

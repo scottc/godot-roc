@@ -1,8 +1,5 @@
-# Singleton NavigationMeshGenerator (engine type: NavigationMeshGenerator) → NavigationMeshGeneratorSingleton
-# The class API lives under NavigationMeshGenerator; this is the process-wide instance handle.
+# singleton NavigationMeshGenerator → NavigationMeshGeneratorSingleton
 NavigationMeshGeneratorSingleton := {
     ptr : U64,
 }.{
-    # get! : {} -> NavigationMeshGeneratorSingleton
-    # get! = |_| { { ptr: Host.get_singleton_ptr!("NavigationMeshGenerator") } }
 }

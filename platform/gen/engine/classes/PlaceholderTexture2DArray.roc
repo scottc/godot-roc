@@ -1,20 +1,10 @@
-# engine class PlaceholderTexture2DArray → PlaceholderTexture2DArray
-# api_type: core
-# instantiable, refcounted
+# class PlaceholderTexture2DArray → PlaceholderTexture2DArray
 # inherits: PlaceholderTextureLayered
 PlaceholderTexture2DArray := {
-    # opaque host handle — concrete layout lives on the Zig side
     ptr : U64,
 }.{
-    # --- enums ---
 
 
-    # --- properties ---
 
-
-    # --- methods ---
-
-
-    # --- signals ---
 
 }

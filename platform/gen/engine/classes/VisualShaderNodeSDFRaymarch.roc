@@ -1,20 +1,10 @@
-# engine class VisualShaderNodeSDFRaymarch → VisualShaderNodeSDFRaymarch
-# api_type: core
-# instantiable, refcounted
+# class VisualShaderNodeSDFRaymarch → VisualShaderNodeSDFRaymarch
 # inherits: VisualShaderNode
 VisualShaderNodeSDFRaymarch := {
-    # opaque host handle — concrete layout lives on the Zig side
     ptr : U64,
 }.{
-    # --- enums ---
 
 
-    # --- properties ---
 
-
-    # --- methods ---
-
-
-    # --- signals ---
 
 }
