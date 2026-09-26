@@ -375,34 +375,34 @@ builtin_class_to_roc_source_str = |bic| {
     \\}.{
     \\    # constructors
     \\    construct_default : ${match (bic.members) {
-        Ok(ms) => ms.fold("", |s, m| "${s} ${c_to_roc_type(m.type)},")
+        Ok(ms) => ms.fold("", |s4, m| "${s4} ${c_to_roc_type(m.type)},")
         _ => ""
     }} -> ${bic.name}
     \\    construct_default = |${match (bic.members) {
-        Ok(ms) => ms.fold("", |s, m| "${s} ${m.name},")
+        Ok(ms) => ms.fold("", |s5, m| "${s5} ${m.name},")
         _ => ""
     }}| { { ${match (bic.members) {
-        Ok(ms) => ms.fold("", |s, m| "${s}${m.name},")
+        Ok(ms) => ms.fold("", |s6, m| "${s6}${m.name},")
         _ => ""
     }} } }
-    \\${bic.constructors.keep_if(|c| c.arguments != Err(Missing)).fold("", |s, c|
-        \\${s}
+    \\${bic.constructors.keep_if(|c| c.arguments != Err(Missing)).fold("", |s0, c|
+        \\${s0}
         \\    contruct${match c.arguments {
-            Ok(args) => args.fold("", |s, a| "${s}_${a.name}_${a.type}")
+            Ok(args) => args.fold("", |s1, a| "${s1}_${a.name}_${a.type}")
             _ => ""
         }} : ${match c.arguments {
-            Ok(args) => args.fold("", |s, a| "${s}${a.type}, ")
+            Ok(args) => args.fold("", |s2, a| "${s2}${a.type}, ")
             _ => ""
         }} -> ${bic.name}
         \\    #contruct${match c.arguments {
-            Ok(args) => args.fold("", |s, a| "${s}_${a.name}")
+            Ok(args) => args.fold("", |s3, a| "${s3}_${a.name}")
             _ => ""
         }} = || { "" }
     )}
     \\    # constants
     \\${match bic.constants {
-        Ok(cs) => cs.fold("", |s, c|
-            \\${s}
+        Ok(cs) => cs.fold("", |s7, c|
+            \\${s7}
             \\    ${c.name} : ${c.type}
             \\    ${c.name} = ${c.value}
         )
@@ -410,8 +410,8 @@ builtin_class_to_roc_source_str = |bic| {
     }}
     \\    # enums
     \\${match bic.enums {
-        Ok(ens) => ens.fold("", |s1, e| "    ${s1}${e.name} = [${
-            e.values.fold("", |s2, v| "${s2}${v.name}, ")
+        Ok(ens) => ens.fold("", |s8, e| "    ${s8}${e.name} = [${
+            e.values.fold("", |s9, v| "${s9}${v.name}, ")
         }]\n")
         _ => ""
     }}
@@ -421,8 +421,8 @@ builtin_class_to_roc_source_str = |bic| {
         _ => ""
     })}
     \\    # operators
-    \\${bic.operators.fold("", |s, op|
-        \\${s}
+    \\${bic.operators.fold("", |so, op|
+        \\${so}
         \\    # name: "${op.name}"
         \\    # op_${op.name} : ${bic.name}${match op.right_type { Ok(rt) => ", ${rt}" _ => "" }} -> ${match op.return_type { Ok(rt) => rt _ => "{}" }}
     )}
