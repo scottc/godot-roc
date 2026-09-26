@@ -41,20 +41,24 @@
 
         devShells.default = pkgs.mkShell {
           packages = [
+            # compilers
             pkgs.zig
+            rocPkg
+
+            # engines
+            pkgs.godot # latest 4.7.1
+            pkgs.godotPackages_4_5.godot # 4.5.1, why 4.5.1? most compatable/featureful, version with redot support etc.
+            pkgs.godotPackages_4_3.godot # 4.3.x, ... more support is better then less?
+            redotPkg
+            rexPkg
+
+            # Web wasm32-emscripten, support & tools.
             pkgs.emscripten # godot 4.5 docs expects emscripten 3.1.62+ when building web templates.
             pkgs.lld # provides wasm-ld, a lower level alternative to emscripten's emcc wasm-ld driver.
             pkgs.wabt # for wasm-objdump, cli helper utility
 
-
-            pkgs.zip # for zipping the templates
-            pkgs.godot # latest 4.7.1
-            pkgs.godotPackages_4_5.godot # 4.5.1, why 4.5.1? most compatable with redot.
-
-
-            rocPkg
-            redotPkg
-            rexPkg
+            # Package & publish tools
+            pkgs.zip # for zipping & publishing *templates* (not for platform releases)
 
             # Export templates, if you want to publish to a target platform.
             # Or, you can just install them into your home directory, using the UI, via godot.
@@ -75,12 +79,15 @@
 # =Engines=
 # godot:        $(godot --version)
 # godot4.5:     $(godot4.5 --version)
+# godot4.3:     $(godot4.3 --version)
 # redot:        $(redot --version)
 # rex:          $(rex --version)
 #
 # =Optional=
 # emcc:         $(emcc -v 2>&1 | head -n1)
 # wasm-objdump: $(wasm-objdump --version)
+# wasm-ld:      $(wasm-ld --version)
+# zip:          $(zip --version 2>&1 | head -n2 | tail -n1)
 #
 # Tip - To get started run the following command:
 # roc run create-godot-roc-app.roc

@@ -1,673 +1,10 @@
-// Path.utf8("vendor/godot/gdextension_interface.h") Read time: 224865ns
-// pre-parse n=1
-// post-parse n=1 ok
-// pre-parse n=2
-// post-parse n=2 ok
-// pre-parse n=3
-// post-parse n=3 ok
-// pre-parse n=4
-// post-parse n=4 ok
-// pre-parse n=5
-// post-parse n=5 ok
-// pre-parse n=6
-// post-parse n=6 ok
-// pre-parse n=7
-// post-parse n=7 ok
-// pre-parse n=8
-// post-parse n=8 ok
-// pre-parse n=9
-// post-parse n=9 ok
-// pre-parse n=10
-// post-parse n=10 ok
-// pre-parse n=11
-// post-parse n=11 ok
-// pre-parse n=12
-// post-parse n=12 ok
-// pre-parse n=13
-// post-parse n=13 ok
-// pre-parse n=14
-// post-parse n=14 ok
-// pre-parse n=15
-// post-parse n=15 ok
-// pre-parse n=16
-// post-parse n=16 ok
-// pre-parse n=17
-// post-parse n=17 ok
-// pre-parse n=18
-// post-parse n=18 ok
-// pre-parse n=19
-// post-parse n=19 ok
-// pre-parse n=20
-// post-parse n=20 ok
-// pre-parse n=21
-// post-parse n=21 ok
-// pre-parse n=22
-// post-parse n=22 ok
-// pre-parse n=23
-// post-parse n=23 ok
-// pre-parse n=24
-// post-parse n=24 ok
-// pre-parse n=25
-// post-parse n=25 ok
-// pre-parse n=26
-// post-parse n=26 ok
-// pre-parse n=27
-// post-parse n=27 ok
-// pre-parse n=28
-// post-parse n=28 ok
-// pre-parse n=29
-// post-parse n=29 ok
-// pre-parse n=30
-// post-parse n=30 ok
-// pre-parse n=31
-// post-parse n=31 ok
-// pre-parse n=32
-// post-parse n=32 ok
-// pre-parse n=33
-// post-parse n=33 ok
-// pre-parse n=34
-// post-parse n=34 ok
-// pre-parse n=35
-// post-parse n=35 ok
-// pre-parse n=36
-// post-parse n=36 ok
-// pre-parse n=37
-// post-parse n=37 ok
-// pre-parse n=38
-// post-parse n=38 ok
-// pre-parse n=39
-// post-parse n=39 ok
-// pre-parse n=40
-// post-parse n=40 ok
-// pre-parse n=41
-// post-parse n=41 ok
-// pre-parse n=42
-// post-parse n=42 ok
-// pre-parse n=43
-// post-parse n=43 ok
-// pre-parse n=44
-// post-parse n=44 ok
-// pre-parse n=45
-// post-parse n=45 ok
-// pre-parse n=46
-// post-parse n=46 ok
-// pre-parse n=47
-// post-parse n=47 ok
-// pre-parse n=48
-// post-parse n=48 ok
-// pre-parse n=49
-// post-parse n=49 ok
-// pre-parse n=50
-// post-parse n=50 ok
-// pre-parse n=51
-// post-parse n=51 ok
-// pre-parse n=52
-// post-parse n=52 ok
-// pre-parse n=53
-// post-parse n=53 ok
-// pre-parse n=54
-// post-parse n=54 ok
-// pre-parse n=55
-// post-parse n=55 ok
-// pre-parse n=56
-// post-parse n=56 ok
-// pre-parse n=57
-// post-parse n=57 ok
-// pre-parse n=58
-// post-parse n=58 ok
-// pre-parse n=59
-// post-parse n=59 ok
-// pre-parse n=60
-// post-parse n=60 ok
-// pre-parse n=61
-// post-parse n=61 ok
-// pre-parse n=62
-// post-parse n=62 ok
-// pre-parse n=63
-// post-parse n=63 ok
-// pre-parse n=64
-// post-parse n=64 ok
-// pre-parse n=65
-// post-parse n=65 ok
-// pre-parse n=66
-// post-parse n=66 ok
-// pre-parse n=67
-// post-parse n=67 ok
-// pre-parse n=68
-// post-parse n=68 ok
-// pre-parse n=69
-// post-parse n=69 ok
-// pre-parse n=70
-// post-parse n=70 ok
-// pre-parse n=71
-// post-parse n=71 ok
-// pre-parse n=72
-// post-parse n=72 ok
-// pre-parse n=73
-// post-parse n=73 ok
-// pre-parse n=74
-// post-parse n=74 ok
-// pre-parse n=75
-// post-parse n=75 ok
-// pre-parse n=76
-// post-parse n=76 ok
-// pre-parse n=77
-// post-parse n=77 ok
-// pre-parse n=78
-// post-parse n=78 ok
-// pre-parse n=79
-// post-parse n=79 ok
-// pre-parse n=80
-// post-parse n=80 ok
-// pre-parse n=81
-// post-parse n=81 ok
-// pre-parse n=82
-// post-parse n=82 ok
-// pre-parse n=83
-// post-parse n=83 ok
-// pre-parse n=84
-// post-parse n=84 ok
-// pre-parse n=85
-// post-parse n=85 ok
-// pre-parse n=86
-// post-parse n=86 ok
-// pre-parse n=87
-// post-parse n=87 ok
-// pre-parse n=88
-// post-parse n=88 ok
-// pre-parse n=89
-// post-parse n=89 ok
-// pre-parse n=90
-// post-parse n=90 ok
-// pre-parse n=91
-// post-parse n=91 ok
-// pre-parse n=92
-// post-parse n=92 ok
-// pre-parse n=93
-// post-parse n=93 ok
-// pre-parse n=94
-// post-parse n=94 ok
-// pre-parse n=95
-// post-parse n=95 ok
-// pre-parse n=96
-// post-parse n=96 ok
-// pre-parse n=97
-// post-parse n=97 ok
-// pre-parse n=98
-// post-parse n=98 ok
-// pre-parse n=99
-// post-parse n=99 ok
-// pre-parse n=100
-// post-parse n=100 ok
-// pre-parse n=101
-// post-parse n=101 ok
-// pre-parse n=102
-// post-parse n=102 ok
-// pre-parse n=103
-// post-parse n=103 ok
-// pre-parse n=104
-// post-parse n=104 ok
-// pre-parse n=105
-// post-parse n=105 ok
-// pre-parse n=106
-// post-parse n=106 ok
-// pre-parse n=107
-// post-parse n=107 ok
-// pre-parse n=108
-// post-parse n=108 ok
-// pre-parse n=109
-// post-parse n=109 ok
-// pre-parse n=110
-// post-parse n=110 ok
-// pre-parse n=111
-// post-parse n=111 ok
-// pre-parse n=112
-// post-parse n=112 ok
-// pre-parse n=113
-// post-parse n=113 ok
-// pre-parse n=114
-// post-parse n=114 ok
-// pre-parse n=115
-// post-parse n=115 ok
-// pre-parse n=116
-// post-parse n=116 ok
-// pre-parse n=117
-// post-parse n=117 ok
-// pre-parse n=118
-// post-parse n=118 ok
-// pre-parse n=119
-// post-parse n=119 ok
-// pre-parse n=120
-// post-parse n=120 ok
-// pre-parse n=121
-// post-parse n=121 ok
-// pre-parse n=122
-// post-parse n=122 ok
-// pre-parse n=123
-// post-parse n=123 ok
-// pre-parse n=124
-// post-parse n=124 ok
-// pre-parse n=125
-// post-parse n=125 ok
-// pre-parse n=126
-// post-parse n=126 ok
-// pre-parse n=127
-// post-parse n=127 ok
-// pre-parse n=128
-// post-parse n=128 ok
-// pre-parse n=129
-// post-parse n=129 ok
-// pre-parse n=130
-// post-parse n=130 ok
-// pre-parse n=131
-// post-parse n=131 ok
-// pre-parse n=132
-// post-parse n=132 ok
-// pre-parse n=133
-// post-parse n=133 ok
-// pre-parse n=134
-// post-parse n=134 ok
-// pre-parse n=135
-// post-parse n=135 ok
-// pre-parse n=136
-// post-parse n=136 ok
-// pre-parse n=137
-// post-parse n=137 ok
-// pre-parse n=138
-// post-parse n=138 ok
-// pre-parse n=139
-// post-parse n=139 ok
-// pre-parse n=140
-// post-parse n=140 ok
-// pre-parse n=141
-// post-parse n=141 ok
-// pre-parse n=142
-// post-parse n=142 ok
-// pre-parse n=143
-// post-parse n=143 ok
-// pre-parse n=144
-// post-parse n=144 ok
-// pre-parse n=145
-// post-parse n=145 ok
-// pre-parse n=146
-// post-parse n=146 ok
-// pre-parse n=147
-// post-parse n=147 ok
-// pre-parse n=148
-// post-parse n=148 ok
-// pre-parse n=149
-// post-parse n=149 ok
-// pre-parse n=150
-// post-parse n=150 ok
-// pre-parse n=151
-// post-parse n=151 ok
-// pre-parse n=152
-// post-parse n=152 ok
-// pre-parse n=153
-// post-parse n=153 ok
-// pre-parse n=154
-// post-parse n=154 ok
-// pre-parse n=155
-// post-parse n=155 ok
-// pre-parse n=156
-// post-parse n=156 ok
-// pre-parse n=157
-// post-parse n=157 ok
-// pre-parse n=158
-// post-parse n=158 ok
-// pre-parse n=159
-// post-parse n=159 ok
-// pre-parse n=160
-// post-parse n=160 ok
-// pre-parse n=161
-// post-parse n=161 ok
-// pre-parse n=162
-// post-parse n=162 ok
-// pre-parse n=163
-// post-parse n=163 ok
-// pre-parse n=164
-// post-parse n=164 ok
-// pre-parse n=165
-// post-parse n=165 ok
-// pre-parse n=166
-// post-parse n=166 ok
-// pre-parse n=167
-// post-parse n=167 ok
-// pre-parse n=168
-// post-parse n=168 ok
-// pre-parse n=169
-// post-parse n=169 ok
-// pre-parse n=170
-// post-parse n=170 ok
-// pre-parse n=171
-// post-parse n=171 ok
-// pre-parse n=172
-// post-parse n=172 ok
-// pre-parse n=173
-// post-parse n=173 ok
-// pre-parse n=174
-// post-parse n=174 ok
-// pre-parse n=175
-// post-parse n=175 ok
-// pre-parse n=176
-// post-parse n=176 ok
-// pre-parse n=177
-// post-parse n=177 ok
-// pre-parse n=178
-// post-parse n=178 ok
-// pre-parse n=179
-// post-parse n=179 ok
-// pre-parse n=180
-// post-parse n=180 ok
-// pre-parse n=181
-// post-parse n=181 ok
-// pre-parse n=182
-// post-parse n=182 ok
-// pre-parse n=183
-// post-parse n=183 ok
-// pre-parse n=184
-// post-parse n=184 ok
-// pre-parse n=185
-// post-parse n=185 ok
-// pre-parse n=186
-// post-parse n=186 ok
-// pre-parse n=187
-// post-parse n=187 ok
-// pre-parse n=188
-// post-parse n=188 ok
-// pre-parse n=189
-// post-parse n=189 ok
-// pre-parse n=190
-// post-parse n=190 ok
-// pre-parse n=191
-// post-parse n=191 ok
-// pre-parse n=192
-// post-parse n=192 ok
-// pre-parse n=193
-// post-parse n=193 ok
-// pre-parse n=194
-// post-parse n=194 ok
-// pre-parse n=195
-// post-parse n=195 ok
-// pre-parse n=196
-// post-parse n=196 ok
-// pre-parse n=197
-// post-parse n=197 ok
-// pre-parse n=198
-// post-parse n=198 ok
-// pre-parse n=199
-// post-parse n=199 ok
-// pre-parse n=200
-// post-parse n=200 ok
-// pre-parse n=201
-// post-parse n=201 ok
-// pre-parse n=202
-// post-parse n=202 ok
-// pre-parse n=203
-// post-parse n=203 ok
-// pre-parse n=204
-// post-parse n=204 ok
-// pre-parse n=205
-// post-parse n=205 ok
-// pre-parse n=206
-// post-parse n=206 ok
-// pre-parse n=207
-// post-parse n=207 ok
-// pre-parse n=208
-// post-parse n=208 ok
-// pre-parse n=209
-// post-parse n=209 ok
-// pre-parse n=210
-// post-parse n=210 ok
-// pre-parse n=211
-// post-parse n=211 ok
-// pre-parse n=212
-// post-parse n=212 ok
-// pre-parse n=213
-// post-parse n=213 ok
-// pre-parse n=214
-// post-parse n=214 ok
-// pre-parse n=215
-// post-parse n=215 ok
-// pre-parse n=216
-// post-parse n=216 ok
-// pre-parse n=217
-// post-parse n=217 ok
-// pre-parse n=218
-// post-parse n=218 ok
-// pre-parse n=219
-// post-parse n=219 ok
-// pre-parse n=220
-// post-parse n=220 ok
-// pre-parse n=221
-// post-parse n=221 ok
-// pre-parse n=222
-// post-parse n=222 ok
-// pre-parse n=223
-// post-parse n=223 ok
-// pre-parse n=224
-// post-parse n=224 ok
-// pre-parse n=225
-// post-parse n=225 ok
-// pre-parse n=226
-// post-parse n=226 ok
-// pre-parse n=227
-// post-parse n=227 ok
-// pre-parse n=228
-// post-parse n=228 ok
-// pre-parse n=229
-// post-parse n=229 ok
-// pre-parse n=230
-// post-parse n=230 ok
-// pre-parse n=231
-// post-parse n=231 ok
-// pre-parse n=232
-// post-parse n=232 ok
-// pre-parse n=233
-// post-parse n=233 ok
-// pre-parse n=234
-// post-parse n=234 ok
-// pre-parse n=235
-// post-parse n=235 ok
-// pre-parse n=236
-// post-parse n=236 ok
-// pre-parse n=237
-// post-parse n=237 ok
-// pre-parse n=238
-// post-parse n=238 ok
-// pre-parse n=239
-// post-parse n=239 ok
-// pre-parse n=240
-// post-parse n=240 ok
-// pre-parse n=241
-// post-parse n=241 ok
-// pre-parse n=242
-// post-parse n=242 ok
-// pre-parse n=243
-// post-parse n=243 ok
-// pre-parse n=244
-// post-parse n=244 ok
-// pre-parse n=245
-// post-parse n=245 ok
-// pre-parse n=246
-// post-parse n=246 ok
-// pre-parse n=247
-// post-parse n=247 ok
-// pre-parse n=248
-// post-parse n=248 ok
-// pre-parse n=249
-// post-parse n=249 ok
-// pre-parse n=250
-// post-parse n=250 ok
-// pre-parse n=251
-// post-parse n=251 ok
-// pre-parse n=252
-// post-parse n=252 ok
-// pre-parse n=253
-// post-parse n=253 ok
-// pre-parse n=254
-// post-parse n=254 ok
-// pre-parse n=255
-// post-parse n=255 ok
-// pre-parse n=256
-// post-parse n=256 ok
-// pre-parse n=257
-// post-parse n=257 ok
-// pre-parse n=258
-// post-parse n=258 ok
-// pre-parse n=259
-// post-parse n=259 ok
-// pre-parse n=260
-// post-parse n=260 ok
-// pre-parse n=261
-// post-parse n=261 ok
-// pre-parse n=262
-// post-parse n=262 ok
-// pre-parse n=263
-// post-parse n=263 ok
-// pre-parse n=264
-// post-parse n=264 ok
-// pre-parse n=265
-// post-parse n=265 ok
-// pre-parse n=266
-// post-parse n=266 ok
-// pre-parse n=267
-// post-parse n=267 ok
-// pre-parse n=268
-// post-parse n=268 ok
-// pre-parse n=269
-// post-parse n=269 ok
-// pre-parse n=270
-// post-parse n=270 ok
-// pre-parse n=271
-// post-parse n=271 ok
-// pre-parse n=272
-// post-parse n=272 ok
-// pre-parse n=273
-// post-parse n=273 ok
-// pre-parse n=274
-// post-parse n=274 ok
-// pre-parse n=275
-// post-parse n=275 ok
-// pre-parse n=276
-// post-parse n=276 ok
-// pre-parse n=277
-// post-parse n=277 ok
-// pre-parse n=278
-// post-parse n=278 ok
-// pre-parse n=279
-// post-parse n=279 ok
-// pre-parse n=280
-// post-parse n=280 ok
-// pre-parse n=281
-// post-parse n=281 ok
-// pre-parse n=282
-// post-parse n=282 ok
-// pre-parse n=283
-// post-parse n=283 ok
-// pre-parse n=284
-// post-parse n=284 ok
-// pre-parse n=285
-// post-parse n=285 ok
-// pre-parse n=286
-// post-parse n=286 ok
-// pre-parse n=287
-// post-parse n=287 ok
-// pre-parse n=288
-// post-parse n=288 ok
-// pre-parse n=289
-// post-parse n=289 ok
-// pre-parse n=290
-// post-parse n=290 ok
-// pre-parse n=291
-// post-parse n=291 ok
-// pre-parse n=292
-// post-parse n=292 ok
-// pre-parse n=293
-// post-parse n=293 ok
-// pre-parse n=294
-// post-parse n=294 ok
-// pre-parse n=295
-// post-parse n=295 ok
-// pre-parse n=296
-// post-parse n=296 ok
-// pre-parse n=297
-// post-parse n=297 ok
-// pre-parse n=298
-// post-parse n=298 ok
-// pre-parse n=299
-// post-parse n=299 ok
-// pre-parse n=300
-// post-parse n=300 ok
-// pre-parse n=301
-// post-parse n=301 ok
-// pre-parse n=302
-// post-parse n=302 ok
-// pre-parse n=303
-// post-parse n=303 ok
-// pre-parse n=304
-// post-parse n=304 ok
-// pre-parse n=305
-// post-parse n=305 ok
-// pre-parse n=306
-// post-parse n=306 ok
-// pre-parse n=307
-// post-parse n=307 ok
-// pre-parse n=308
-// post-parse n=308 ok
-// pre-parse n=309
-// post-parse n=309 ok
-// pre-parse n=310
-// post-parse n=310 ok
-// pre-parse n=311
-// post-parse n=311 ok
-// pre-parse n=312
-// post-parse n=312 ok
-// pre-parse n=313
-// post-parse n=313 ok
-// pre-parse n=314
-// post-parse n=314 ok
-// pre-parse n=315
-// post-parse n=315 ok
-// pre-parse n=316
-// post-parse n=316 ok
-// pre-parse n=317
-// post-parse n=317 ok
-// pre-parse n=318
-// post-parse n=318 ok
-// pre-parse n=319
-// post-parse n=319 ok
-// pre-parse n=320
-// post-parse n=320 ok
-// pre-parse n=321
-// post-parse n=321 ok
-// pre-parse n=322
-// post-parse n=322 ok
-// pre-parse n=323
-// post-parse n=323 ok
-// pre-parse n=324
-// post-parse n=324 ok
-// pre-parse n=325
-// post-parse n=325 ok
-// pre-parse n=326
-// post-parse n=326 ok
-// pre-parse n=327
-// post-parse n=327 ok
-// pre-parse n=328
-// post-parse n=328 ok
-// parse done n=328 ok=328 err=0 items=328
-// parse time: 11053938ns
-// types=149 api_fns=179
 //!
-//! Godot GDExtension interface — generated from gdextension_interface.h
-//! DO NOT EDIT BY HAND
+//! GDExtension interface
+//! generated by scripts/gdextension_interface.generate.roc
+//! generated from gdextension_interface.h
 //!
 
-pub const char32_t = u32;
-
-pub const char16_t = u16;
-
-pub const GDExtensionVariantType = enum(c_int) {
+pub const char32_t = u32;pub const char16_t = u16;pub const GDExtensionVariantType = enum(c_int) {
     nil = 0,
     bool = 1,
     int = 2,
@@ -708,9 +45,7 @@ pub const GDExtensionVariantType = enum(c_int) {
     packed_color_array = 37,
     packed_vector4_array = 38,
     variant_max = 39,
-};
-
-pub const GDExtensionVariantOperator = enum(c_int) {
+};pub const GDExtensionVariantOperator = enum(c_int) {
     equal = 0,
     not_equal = 1,
     less = 2,
@@ -737,51 +72,7 @@ pub const GDExtensionVariantOperator = enum(c_int) {
     not = 23,
     in = 24,
     max = 25,
-};
-
-pub const GDExtensionVariantPtr = ?*anyopaque;
-
-pub const GDExtensionConstVariantPtr = ?*const anyopaque;
-
-pub const GDExtensionUninitializedVariantPtr = ?*anyopaque;
-
-pub const GDExtensionStringNamePtr = ?*anyopaque;
-
-pub const GDExtensionConstStringNamePtr = ?*const anyopaque;
-
-pub const GDExtensionUninitializedStringNamePtr = ?*anyopaque;
-
-pub const GDExtensionStringPtr = ?*anyopaque;
-
-pub const GDExtensionConstStringPtr = ?*const anyopaque;
-
-pub const GDExtensionUninitializedStringPtr = ?*anyopaque;
-
-pub const GDExtensionObjectPtr = ?*anyopaque;
-
-pub const GDExtensionConstObjectPtr = ?*const anyopaque;
-
-pub const GDExtensionUninitializedObjectPtr = ?*anyopaque;
-
-pub const GDExtensionTypePtr = ?*anyopaque;
-
-pub const GDExtensionConstTypePtr = ?*const anyopaque;
-
-pub const GDExtensionUninitializedTypePtr = ?*anyopaque;
-
-pub const GDExtensionMethodBindPtr = ?*const anyopaque;
-
-pub const GDExtensionInt = i64;
-
-pub const GDExtensionBool = u8;
-
-pub const GDObjectInstanceID = u64;
-
-pub const GDExtensionRefPtr = ?*anyopaque;
-
-pub const GDExtensionConstRefPtr = ?*const anyopaque;
-
-pub const GDExtensionCallErrorType = enum(c_int) {
+};pub const GDExtensionVariantPtr = ?*anyopaque;pub const GDExtensionConstVariantPtr = ?*const anyopaque;pub const GDExtensionUninitializedVariantPtr = ?*anyopaque;pub const GDExtensionStringNamePtr = ?*anyopaque;pub const GDExtensionConstStringNamePtr = ?*const anyopaque;pub const GDExtensionUninitializedStringNamePtr = ?*anyopaque;pub const GDExtensionStringPtr = ?*anyopaque;pub const GDExtensionConstStringPtr = ?*const anyopaque;pub const GDExtensionUninitializedStringPtr = ?*anyopaque;pub const GDExtensionObjectPtr = ?*anyopaque;pub const GDExtensionConstObjectPtr = ?*const anyopaque;pub const GDExtensionUninitializedObjectPtr = ?*anyopaque;pub const GDExtensionTypePtr = ?*anyopaque;pub const GDExtensionConstTypePtr = ?*const anyopaque;pub const GDExtensionUninitializedTypePtr = ?*anyopaque;pub const GDExtensionMethodBindPtr = ?*const anyopaque;pub const GDExtensionInt = i64;pub const GDExtensionBool = u8;pub const GDObjectInstanceID = u64;pub const GDExtensionRefPtr = ?*anyopaque;pub const GDExtensionConstRefPtr = ?*const anyopaque;pub const GDExtensionCallErrorType = enum(c_int) {
     ok = 0,
     error_invalid_method = 1,
     error_invalid_argument = 2,
@@ -789,76 +80,22 @@ pub const GDExtensionCallErrorType = enum(c_int) {
     error_too_few_arguments = 4,
     error_instance_is_null = 5,
     error_method_not_const = 6,
-};
-
-pub const GDExtensionCallError = extern struct {
+};pub const GDExtensionCallError = extern struct {
     @"error": GDExtensionCallErrorType,
     argument: i32,
     expected: i32,
-};
-
-pub const GDExtensionVariantFromTypeConstructorFunc = *const fn (GDExtensionUninitializedVariantPtr, GDExtensionTypePtr) callconv(.c) void;
-
-pub const GDExtensionTypeFromVariantConstructorFunc = *const fn (GDExtensionUninitializedTypePtr, GDExtensionVariantPtr) callconv(.c) void;
-
-pub const GDExtensionVariantGetInternalPtrFunc = *const fn (GDExtensionVariantPtr) callconv(.c) ?*anyopaque;
-
-pub const GDExtensionPtrOperatorEvaluator = *const fn (GDExtensionConstTypePtr, GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;
-
-pub const GDExtensionPtrBuiltInMethod = *const fn (GDExtensionTypePtr, [*c]const GDExtensionConstTypePtr, GDExtensionTypePtr, i32) callconv(.c) void;
-
-pub const GDExtensionPtrConstructor = *const fn (GDExtensionUninitializedTypePtr, [*c]const GDExtensionConstTypePtr) callconv(.c) void;
-
-pub const GDExtensionPtrDestructor = *const fn (GDExtensionTypePtr) callconv(.c) void;
-
-pub const GDExtensionPtrSetter = *const fn (GDExtensionTypePtr, GDExtensionConstTypePtr) callconv(.c) void;
-
-pub const GDExtensionPtrGetter = *const fn (GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;
-
-pub const GDExtensionPtrIndexedSetter = *const fn (GDExtensionTypePtr, GDExtensionInt, GDExtensionConstTypePtr) callconv(.c) void;
-
-pub const GDExtensionPtrIndexedGetter = *const fn (GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr) callconv(.c) void;
-
-pub const GDExtensionPtrKeyedSetter = *const fn (GDExtensionTypePtr, GDExtensionConstTypePtr, GDExtensionConstTypePtr) callconv(.c) void;
-
-pub const GDExtensionPtrKeyedGetter = *const fn (GDExtensionConstTypePtr, GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;
-
-pub const GDExtensionPtrKeyedChecker = *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr) callconv(.c) u32;
-
-pub const GDExtensionPtrUtilityFunction = *const fn (GDExtensionTypePtr, [*c]const GDExtensionConstTypePtr, i32) callconv(.c) void;
-
-pub const GDExtensionClassConstructor = *const fn () callconv(.c) GDExtensionObjectPtr;
-
-pub const GDExtensionInstanceBindingCreateCallback = *const fn (?*anyopaque, ?*anyopaque) callconv(.c) ?*anyopaque;
-
-pub const GDExtensionInstanceBindingFreeCallback = *const fn (?*anyopaque, ?*anyopaque, ?*anyopaque) callconv(.c) void;
-
-pub const GDExtensionInstanceBindingReferenceCallback = *const fn (?*anyopaque, ?*anyopaque, GDExtensionBool) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionInstanceBindingCallbacks = extern struct {
+};pub const GDExtensionVariantFromTypeConstructorFunc = *const fn (GDExtensionUninitializedVariantPtr, GDExtensionTypePtr) callconv(.c) void;pub const GDExtensionTypeFromVariantConstructorFunc = *const fn (GDExtensionUninitializedTypePtr, GDExtensionVariantPtr) callconv(.c) void;pub const GDExtensionVariantGetInternalPtrFunc = *const fn (GDExtensionVariantPtr) callconv(.c) ?*anyopaque;pub const GDExtensionPtrOperatorEvaluator = *const fn (GDExtensionConstTypePtr, GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;pub const GDExtensionPtrBuiltInMethod = *const fn (GDExtensionTypePtr, [*c]const GDExtensionConstTypePtr, GDExtensionTypePtr, i32) callconv(.c) void;pub const GDExtensionPtrConstructor = *const fn (GDExtensionUninitializedTypePtr, [*c]const GDExtensionConstTypePtr) callconv(.c) void;pub const GDExtensionPtrDestructor = *const fn (GDExtensionTypePtr) callconv(.c) void;pub const GDExtensionPtrSetter = *const fn (GDExtensionTypePtr, GDExtensionConstTypePtr) callconv(.c) void;pub const GDExtensionPtrGetter = *const fn (GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;pub const GDExtensionPtrIndexedSetter = *const fn (GDExtensionTypePtr, GDExtensionInt, GDExtensionConstTypePtr) callconv(.c) void;pub const GDExtensionPtrIndexedGetter = *const fn (GDExtensionConstTypePtr, GDExtensionInt, GDExtensionTypePtr) callconv(.c) void;pub const GDExtensionPtrKeyedSetter = *const fn (GDExtensionTypePtr, GDExtensionConstTypePtr, GDExtensionConstTypePtr) callconv(.c) void;pub const GDExtensionPtrKeyedGetter = *const fn (GDExtensionConstTypePtr, GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;pub const GDExtensionPtrKeyedChecker = *const fn (GDExtensionConstVariantPtr, GDExtensionConstVariantPtr) callconv(.c) u32;pub const GDExtensionPtrUtilityFunction = *const fn (GDExtensionTypePtr, [*c]const GDExtensionConstTypePtr, i32) callconv(.c) void;pub const GDExtensionClassConstructor = *const fn () callconv(.c) GDExtensionObjectPtr;pub const GDExtensionInstanceBindingCreateCallback = *const fn (?*anyopaque, ?*anyopaque) callconv(.c) ?*anyopaque;pub const GDExtensionInstanceBindingFreeCallback = *const fn (?*anyopaque, ?*anyopaque, ?*anyopaque) callconv(.c) void;pub const GDExtensionInstanceBindingReferenceCallback = *const fn (?*anyopaque, ?*anyopaque, GDExtensionBool) callconv(.c) GDExtensionBool;pub const GDExtensionInstanceBindingCallbacks = extern struct {
     create_callback: GDExtensionInstanceBindingCreateCallback,
     free_callback: GDExtensionInstanceBindingFreeCallback,
     reference_callback: GDExtensionInstanceBindingReferenceCallback,
-};
-
-pub const GDExtensionClassInstancePtr = ?*anyopaque;
-
-pub const GDExtensionClassSet = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionClassGet = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, GDExtensionVariantPtr) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionClassGetRID = *const fn (GDExtensionClassInstancePtr) callconv(.c) u64;
-
-pub const GDExtensionPropertyInfo = extern struct {
+};pub const GDExtensionClassInstancePtr = ?*anyopaque;pub const GDExtensionClassSet = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool;pub const GDExtensionClassGet = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, GDExtensionVariantPtr) callconv(.c) GDExtensionBool;pub const GDExtensionClassGetRID = *const fn (GDExtensionClassInstancePtr) callconv(.c) u64;pub const GDExtensionPropertyInfo = extern struct {
     @"type": GDExtensionVariantType,
     name: GDExtensionStringNamePtr,
     class_name: GDExtensionStringNamePtr,
     hint: u32,
     hint_string: GDExtensionStringPtr,
     usage: u32,
-};
-
-pub const GDExtensionMethodInfo = extern struct {
+};pub const GDExtensionMethodInfo = extern struct {
     name: GDExtensionStringNamePtr,
     return_value: GDExtensionPropertyInfo,
     flags: u32,
@@ -867,53 +104,7 @@ pub const GDExtensionMethodInfo = extern struct {
     arguments: [*c]GDExtensionPropertyInfo,
     default_argument_count: u32,
     default_arguments: [*c]GDExtensionVariantPtr,
-};
-
-pub const GDExtensionClassGetPropertyList = *const fn (GDExtensionClassInstancePtr, [*c]u32) callconv(.c) [*c]const GDExtensionPropertyInfo;
-
-pub const GDExtensionClassFreePropertyList = *const fn (GDExtensionClassInstancePtr, [*c]const GDExtensionPropertyInfo) callconv(.c) void;
-
-pub const GDExtensionClassFreePropertyList2 = *const fn (GDExtensionClassInstancePtr, [*c]const GDExtensionPropertyInfo, u32) callconv(.c) void;
-
-pub const GDExtensionClassPropertyCanRevert = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionClassPropertyGetRevert = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, GDExtensionVariantPtr) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionClassValidateProperty = *const fn (GDExtensionClassInstancePtr, [*c]GDExtensionPropertyInfo) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionClassNotification = *const fn (GDExtensionClassInstancePtr, i32) callconv(.c) void;
-
-pub const GDExtensionClassNotification2 = *const fn (GDExtensionClassInstancePtr, i32, GDExtensionBool) callconv(.c) void;
-
-pub const GDExtensionClassToString = *const fn (GDExtensionClassInstancePtr, [*c]GDExtensionBool, GDExtensionStringPtr) callconv(.c) void;
-
-pub const GDExtensionClassReference = *const fn (GDExtensionClassInstancePtr) callconv(.c) void;
-
-pub const GDExtensionClassUnreference = *const fn (GDExtensionClassInstancePtr) callconv(.c) void;
-
-pub const GDExtensionClassCallVirtual = *const fn (GDExtensionClassInstancePtr, [*c]const GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;
-
-pub const GDExtensionClassCreateInstance = *const fn (?*anyopaque) callconv(.c) GDExtensionObjectPtr;
-
-pub const GDExtensionClassCreateInstance2 = *const fn (?*anyopaque, GDExtensionBool) callconv(.c) GDExtensionObjectPtr;
-
-pub const GDExtensionClassCreateInstance3 = *const fn (?*anyopaque, GDExtensionBool) callconv(.c) GDExtensionObjectPtr;
-
-pub const GDExtensionClassFreeInstance = *const fn (?*anyopaque, GDExtensionClassInstancePtr) callconv(.c) void;
-
-pub const GDExtensionClassRecreateInstance = *const fn (?*anyopaque, GDExtensionObjectPtr) callconv(.c) GDExtensionClassInstancePtr;
-
-pub const GDExtensionClassGetVirtual = *const fn (?*anyopaque, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionClassCallVirtual;
-
-pub const GDExtensionClassGetVirtual2 = *const fn (?*anyopaque, GDExtensionConstStringNamePtr, u32) callconv(.c) GDExtensionClassCallVirtual;
-
-pub const GDExtensionClassGetVirtualCallData = *const fn (?*anyopaque, GDExtensionConstStringNamePtr) callconv(.c) ?*anyopaque;
-
-pub const GDExtensionClassGetVirtualCallData2 = *const fn (?*anyopaque, GDExtensionConstStringNamePtr, u32) callconv(.c) ?*anyopaque;
-
-pub const GDExtensionClassCallVirtualWithData = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, ?*anyopaque, [*c]const GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;
-
-pub const GDExtensionClassCreationInfo = extern struct {
+};pub const GDExtensionClassGetPropertyList = *const fn (GDExtensionClassInstancePtr, [*c]u32) callconv(.c) [*c]const GDExtensionPropertyInfo;pub const GDExtensionClassFreePropertyList = *const fn (GDExtensionClassInstancePtr, [*c]const GDExtensionPropertyInfo) callconv(.c) void;pub const GDExtensionClassFreePropertyList2 = *const fn (GDExtensionClassInstancePtr, [*c]const GDExtensionPropertyInfo, u32) callconv(.c) void;pub const GDExtensionClassPropertyCanRevert = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;pub const GDExtensionClassPropertyGetRevert = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, GDExtensionVariantPtr) callconv(.c) GDExtensionBool;pub const GDExtensionClassValidateProperty = *const fn (GDExtensionClassInstancePtr, [*c]GDExtensionPropertyInfo) callconv(.c) GDExtensionBool;pub const GDExtensionClassNotification = *const fn (GDExtensionClassInstancePtr, i32) callconv(.c) void;pub const GDExtensionClassNotification2 = *const fn (GDExtensionClassInstancePtr, i32, GDExtensionBool) callconv(.c) void;pub const GDExtensionClassToString = *const fn (GDExtensionClassInstancePtr, [*c]GDExtensionBool, GDExtensionStringPtr) callconv(.c) void;pub const GDExtensionClassReference = *const fn (GDExtensionClassInstancePtr) callconv(.c) void;pub const GDExtensionClassUnreference = *const fn (GDExtensionClassInstancePtr) callconv(.c) void;pub const GDExtensionClassCallVirtual = *const fn (GDExtensionClassInstancePtr, [*c]const GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;pub const GDExtensionClassCreateInstance = *const fn (?*anyopaque) callconv(.c) GDExtensionObjectPtr;pub const GDExtensionClassCreateInstance2 = *const fn (?*anyopaque, GDExtensionBool) callconv(.c) GDExtensionObjectPtr;pub const GDExtensionClassCreateInstance3 = *const fn (?*anyopaque, GDExtensionBool) callconv(.c) GDExtensionObjectPtr;pub const GDExtensionClassFreeInstance = *const fn (?*anyopaque, GDExtensionClassInstancePtr) callconv(.c) void;pub const GDExtensionClassRecreateInstance = *const fn (?*anyopaque, GDExtensionObjectPtr) callconv(.c) GDExtensionClassInstancePtr;pub const GDExtensionClassGetVirtual = *const fn (?*anyopaque, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionClassCallVirtual;pub const GDExtensionClassGetVirtual2 = *const fn (?*anyopaque, GDExtensionConstStringNamePtr, u32) callconv(.c) GDExtensionClassCallVirtual;pub const GDExtensionClassGetVirtualCallData = *const fn (?*anyopaque, GDExtensionConstStringNamePtr) callconv(.c) ?*anyopaque;pub const GDExtensionClassGetVirtualCallData2 = *const fn (?*anyopaque, GDExtensionConstStringNamePtr, u32) callconv(.c) ?*anyopaque;pub const GDExtensionClassCallVirtualWithData = *const fn (GDExtensionClassInstancePtr, GDExtensionConstStringNamePtr, ?*anyopaque, [*c]const GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;pub const GDExtensionClassCreationInfo = extern struct {
     is_virtual: GDExtensionBool,
     is_abstract: GDExtensionBool,
     set_func: GDExtensionClassSet,
@@ -931,9 +122,7 @@ pub const GDExtensionClassCreationInfo = extern struct {
     get_virtual_func: GDExtensionClassGetVirtual,
     get_rid_func: GDExtensionClassGetRID,
     class_userdata: ?*anyopaque,
-};
-
-pub const GDExtensionClassCreationInfo2 = extern struct {
+};pub const GDExtensionClassCreationInfo2 = extern struct {
     is_virtual: GDExtensionBool,
     is_abstract: GDExtensionBool,
     is_exposed: GDExtensionBool,
@@ -956,9 +145,7 @@ pub const GDExtensionClassCreationInfo2 = extern struct {
     call_virtual_with_data_func: GDExtensionClassCallVirtualWithData,
     get_rid_func: GDExtensionClassGetRID,
     class_userdata: ?*anyopaque,
-};
-
-pub const GDExtensionClassCreationInfo3 = extern struct {
+};pub const GDExtensionClassCreationInfo3 = extern struct {
     is_virtual: GDExtensionBool,
     is_abstract: GDExtensionBool,
     is_exposed: GDExtensionBool,
@@ -982,9 +169,7 @@ pub const GDExtensionClassCreationInfo3 = extern struct {
     call_virtual_with_data_func: GDExtensionClassCallVirtualWithData,
     get_rid_func: GDExtensionClassGetRID,
     class_userdata: ?*anyopaque,
-};
-
-pub const GDExtensionClassCreationInfo4 = extern struct {
+};pub const GDExtensionClassCreationInfo4 = extern struct {
     is_virtual: GDExtensionBool,
     is_abstract: GDExtensionBool,
     is_exposed: GDExtensionBool,
@@ -1008,11 +193,7 @@ pub const GDExtensionClassCreationInfo4 = extern struct {
     get_virtual_call_data_func: GDExtensionClassGetVirtualCallData2,
     call_virtual_with_data_func: GDExtensionClassCallVirtualWithData,
     class_userdata: ?*anyopaque,
-};
-
-pub const GDExtensionClassCreationInfo5 = GDExtensionClassCreationInfo4;
-
-pub const GDExtensionClassCreationInfo6 = extern struct {
+};pub const GDExtensionClassCreationInfo5 = GDExtensionClassCreationInfo4;pub const GDExtensionClassCreationInfo6 = extern struct {
     is_virtual: GDExtensionBool,
     is_abstract: GDExtensionBool,
     is_exposed: GDExtensionBool,
@@ -1036,13 +217,7 @@ pub const GDExtensionClassCreationInfo6 = extern struct {
     get_virtual_call_data_func: GDExtensionClassGetVirtualCallData2,
     call_virtual_with_data_func: GDExtensionClassCallVirtualWithData,
     class_userdata: ?*anyopaque,
-};
-
-pub const GDExtensionClassLibraryPtr = ?*anyopaque;
-
-pub const GDExtensionEditorGetClassesUsedCallback = *const fn (GDExtensionTypePtr) callconv(.c) void;
-
-pub const GDExtensionClassMethodFlags = enum(c_int) {
+};pub const GDExtensionClassLibraryPtr = ?*anyopaque;pub const GDExtensionEditorGetClassesUsedCallback = *const fn (GDExtensionTypePtr) callconv(.c) void;pub const GDExtensionClassMethodFlags = enum(c_int) {
     flag_normal = 1,
     flag_editor = 2,
     flag_const = 4,
@@ -1051,9 +226,7 @@ pub const GDExtensionClassMethodFlags = enum(c_int) {
     flag_static = 32,
     flag_virtual_required = 128,
     flags_default = 1,
-};
-
-pub const GDExtensionClassMethodArgumentMetadata = enum(c_int) {
+};pub const GDExtensionClassMethodArgumentMetadata = enum(c_int) {
     none = 0,
     int_is_int8 = 1,
     int_is_int16 = 2,
@@ -1068,15 +241,7 @@ pub const GDExtensionClassMethodArgumentMetadata = enum(c_int) {
     int_is_char16 = 11,
     int_is_char32 = 12,
     object_is_required = 13,
-};
-
-pub const GDExtensionClassMethodCall = *const fn (?*anyopaque, GDExtensionClassInstancePtr, [*c]const GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionVariantPtr, [*c]GDExtensionCallError) callconv(.c) void;
-
-pub const GDExtensionClassMethodValidatedCall = *const fn (?*anyopaque, GDExtensionClassInstancePtr, [*c]const GDExtensionConstVariantPtr, GDExtensionVariantPtr) callconv(.c) void;
-
-pub const GDExtensionClassMethodPtrCall = *const fn (?*anyopaque, GDExtensionClassInstancePtr, [*c]const GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;
-
-pub const GDExtensionClassMethodInfo = extern struct {
+};pub const GDExtensionClassMethodCall = *const fn (?*anyopaque, GDExtensionClassInstancePtr, [*c]const GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionVariantPtr, [*c]GDExtensionCallError) callconv(.c) void;pub const GDExtensionClassMethodValidatedCall = *const fn (?*anyopaque, GDExtensionClassInstancePtr, [*c]const GDExtensionConstVariantPtr, GDExtensionVariantPtr) callconv(.c) void;pub const GDExtensionClassMethodPtrCall = *const fn (?*anyopaque, GDExtensionClassInstancePtr, [*c]const GDExtensionConstTypePtr, GDExtensionTypePtr) callconv(.c) void;pub const GDExtensionClassMethodInfo = extern struct {
     name: GDExtensionStringNamePtr,
     method_userdata: ?*anyopaque,
     call_func: GDExtensionClassMethodCall,
@@ -1090,9 +255,7 @@ pub const GDExtensionClassMethodInfo = extern struct {
     arguments_metadata: [*c]GDExtensionClassMethodArgumentMetadata,
     default_argument_count: u32,
     default_arguments: [*c]GDExtensionVariantPtr,
-};
-
-pub const GDExtensionClassVirtualMethodInfo = extern struct {
+};pub const GDExtensionClassVirtualMethodInfo = extern struct {
     name: GDExtensionStringNamePtr,
     method_flags: u32,
     return_value: GDExtensionPropertyInfo,
@@ -1100,25 +263,7 @@ pub const GDExtensionClassVirtualMethodInfo = extern struct {
     argument_count: u32,
     arguments: [*c]GDExtensionPropertyInfo,
     arguments_metadata: [*c]GDExtensionClassMethodArgumentMetadata,
-};
-
-pub const GDExtensionCallableCustomCall = *const fn (?*anyopaque, [*c]const GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionVariantPtr, [*c]GDExtensionCallError) callconv(.c) void;
-
-pub const GDExtensionCallableCustomIsValid = *const fn (?*anyopaque) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionCallableCustomFree = *const fn (?*anyopaque) callconv(.c) void;
-
-pub const GDExtensionCallableCustomHash = *const fn (?*anyopaque) callconv(.c) u32;
-
-pub const GDExtensionCallableCustomEqual = *const fn (?*anyopaque, ?*anyopaque) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionCallableCustomLessThan = *const fn (?*anyopaque, ?*anyopaque) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionCallableCustomToString = *const fn (?*anyopaque, [*c]GDExtensionBool, GDExtensionStringPtr) callconv(.c) void;
-
-pub const GDExtensionCallableCustomGetArgumentCount = *const fn (?*anyopaque, [*c]GDExtensionBool) callconv(.c) GDExtensionInt;
-
-pub const GDExtensionCallableCustomInfo = extern struct {
+};pub const GDExtensionCallableCustomCall = *const fn (?*anyopaque, [*c]const GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionVariantPtr, [*c]GDExtensionCallError) callconv(.c) void;pub const GDExtensionCallableCustomIsValid = *const fn (?*anyopaque) callconv(.c) GDExtensionBool;pub const GDExtensionCallableCustomFree = *const fn (?*anyopaque) callconv(.c) void;pub const GDExtensionCallableCustomHash = *const fn (?*anyopaque) callconv(.c) u32;pub const GDExtensionCallableCustomEqual = *const fn (?*anyopaque, ?*anyopaque) callconv(.c) GDExtensionBool;pub const GDExtensionCallableCustomLessThan = *const fn (?*anyopaque, ?*anyopaque) callconv(.c) GDExtensionBool;pub const GDExtensionCallableCustomToString = *const fn (?*anyopaque, [*c]GDExtensionBool, GDExtensionStringPtr) callconv(.c) void;pub const GDExtensionCallableCustomGetArgumentCount = *const fn (?*anyopaque, [*c]GDExtensionBool) callconv(.c) GDExtensionInt;pub const GDExtensionCallableCustomInfo = extern struct {
     callable_userdata: ?*anyopaque,
     token: ?*anyopaque,
     object_id: GDObjectInstanceID,
@@ -1129,9 +274,7 @@ pub const GDExtensionCallableCustomInfo = extern struct {
     equal_func: GDExtensionCallableCustomEqual,
     less_than_func: GDExtensionCallableCustomLessThan,
     to_string_func: GDExtensionCallableCustomToString,
-};
-
-pub const GDExtensionCallableCustomInfo2 = extern struct {
+};pub const GDExtensionCallableCustomInfo2 = extern struct {
     callable_userdata: ?*anyopaque,
     token: ?*anyopaque,
     object_id: GDObjectInstanceID,
@@ -1143,71 +286,7 @@ pub const GDExtensionCallableCustomInfo2 = extern struct {
     less_than_func: GDExtensionCallableCustomLessThan,
     to_string_func: GDExtensionCallableCustomToString,
     get_argument_count_func: GDExtensionCallableCustomGetArgumentCount,
-};
-
-pub const GDExtensionScriptInstanceDataPtr = ?*anyopaque;
-
-pub const GDExtensionScriptInstanceSet = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionScriptInstanceGet = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionVariantPtr) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionScriptInstanceGetPropertyList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]u32) callconv(.c) [*c]const GDExtensionPropertyInfo;
-
-pub const GDExtensionScriptInstanceFreePropertyList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]const GDExtensionPropertyInfo) callconv(.c) void;
-
-pub const GDExtensionScriptInstanceFreePropertyList2 = *const fn (GDExtensionScriptInstanceDataPtr, [*c]const GDExtensionPropertyInfo, u32) callconv(.c) void;
-
-pub const GDExtensionScriptInstanceGetClassCategory = *const fn (GDExtensionScriptInstanceDataPtr, [*c]GDExtensionPropertyInfo) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionScriptInstanceGetPropertyType = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, [*c]GDExtensionBool) callconv(.c) GDExtensionVariantType;
-
-pub const GDExtensionScriptInstanceValidateProperty = *const fn (GDExtensionScriptInstanceDataPtr, [*c]GDExtensionPropertyInfo) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionScriptInstancePropertyCanRevert = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionScriptInstancePropertyGetRevert = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionVariantPtr) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionScriptInstanceGetOwner = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionObjectPtr;
-
-pub const GDExtensionScriptInstancePropertyStateAdd = *const fn (GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, ?*anyopaque) callconv(.c) void;
-
-pub const GDExtensionScriptInstanceGetPropertyState = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePropertyStateAdd, ?*anyopaque) callconv(.c) void;
-
-pub const GDExtensionScriptInstanceGetMethodList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]u32) callconv(.c) [*c]const GDExtensionMethodInfo;
-
-pub const GDExtensionScriptInstanceFreeMethodList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]const GDExtensionMethodInfo) callconv(.c) void;
-
-pub const GDExtensionScriptInstanceFreeMethodList2 = *const fn (GDExtensionScriptInstanceDataPtr, [*c]const GDExtensionMethodInfo, u32) callconv(.c) void;
-
-pub const GDExtensionScriptInstanceHasMethod = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionScriptInstanceGetMethodArgumentCount = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, [*c]GDExtensionBool) callconv(.c) GDExtensionInt;
-
-pub const GDExtensionScriptInstanceCall = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, [*c]const GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionVariantPtr, [*c]GDExtensionCallError) callconv(.c) void;
-
-pub const GDExtensionScriptInstanceNotification = *const fn (GDExtensionScriptInstanceDataPtr, i32) callconv(.c) void;
-
-pub const GDExtensionScriptInstanceNotification2 = *const fn (GDExtensionScriptInstanceDataPtr, i32, GDExtensionBool) callconv(.c) void;
-
-pub const GDExtensionScriptInstanceToString = *const fn (GDExtensionScriptInstanceDataPtr, [*c]GDExtensionBool, GDExtensionStringPtr) callconv(.c) void;
-
-pub const GDExtensionScriptInstanceRefCountIncremented = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) void;
-
-pub const GDExtensionScriptInstanceRefCountDecremented = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionScriptInstanceGetScript = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionObjectPtr;
-
-pub const GDExtensionScriptInstanceIsPlaceholder = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionScriptLanguagePtr = ?*anyopaque;
-
-pub const GDExtensionScriptInstanceGetLanguage = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptLanguagePtr;
-
-pub const GDExtensionScriptInstanceFree = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) void;
-
-pub const GDExtensionScriptInstancePtr = ?*anyopaque;
-
-pub const GDExtensionScriptInstanceInfo = extern struct {
+};pub const GDExtensionScriptInstanceDataPtr = ?*anyopaque;pub const GDExtensionScriptInstanceSet = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr) callconv(.c) GDExtensionBool;pub const GDExtensionScriptInstanceGet = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionVariantPtr) callconv(.c) GDExtensionBool;pub const GDExtensionScriptInstanceGetPropertyList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]u32) callconv(.c) [*c]const GDExtensionPropertyInfo;pub const GDExtensionScriptInstanceFreePropertyList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]const GDExtensionPropertyInfo) callconv(.c) void;pub const GDExtensionScriptInstanceFreePropertyList2 = *const fn (GDExtensionScriptInstanceDataPtr, [*c]const GDExtensionPropertyInfo, u32) callconv(.c) void;pub const GDExtensionScriptInstanceGetClassCategory = *const fn (GDExtensionScriptInstanceDataPtr, [*c]GDExtensionPropertyInfo) callconv(.c) GDExtensionBool;pub const GDExtensionScriptInstanceGetPropertyType = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, [*c]GDExtensionBool) callconv(.c) GDExtensionVariantType;pub const GDExtensionScriptInstanceValidateProperty = *const fn (GDExtensionScriptInstanceDataPtr, [*c]GDExtensionPropertyInfo) callconv(.c) GDExtensionBool;pub const GDExtensionScriptInstancePropertyCanRevert = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;pub const GDExtensionScriptInstancePropertyGetRevert = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, GDExtensionVariantPtr) callconv(.c) GDExtensionBool;pub const GDExtensionScriptInstanceGetOwner = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionObjectPtr;pub const GDExtensionScriptInstancePropertyStateAdd = *const fn (GDExtensionConstStringNamePtr, GDExtensionConstVariantPtr, ?*anyopaque) callconv(.c) void;pub const GDExtensionScriptInstanceGetPropertyState = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionScriptInstancePropertyStateAdd, ?*anyopaque) callconv(.c) void;pub const GDExtensionScriptInstanceGetMethodList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]u32) callconv(.c) [*c]const GDExtensionMethodInfo;pub const GDExtensionScriptInstanceFreeMethodList = *const fn (GDExtensionScriptInstanceDataPtr, [*c]const GDExtensionMethodInfo) callconv(.c) void;pub const GDExtensionScriptInstanceFreeMethodList2 = *const fn (GDExtensionScriptInstanceDataPtr, [*c]const GDExtensionMethodInfo, u32) callconv(.c) void;pub const GDExtensionScriptInstanceHasMethod = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr) callconv(.c) GDExtensionBool;pub const GDExtensionScriptInstanceGetMethodArgumentCount = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, [*c]GDExtensionBool) callconv(.c) GDExtensionInt;pub const GDExtensionScriptInstanceCall = *const fn (GDExtensionScriptInstanceDataPtr, GDExtensionConstStringNamePtr, [*c]const GDExtensionConstVariantPtr, GDExtensionInt, GDExtensionVariantPtr, [*c]GDExtensionCallError) callconv(.c) void;pub const GDExtensionScriptInstanceNotification = *const fn (GDExtensionScriptInstanceDataPtr, i32) callconv(.c) void;pub const GDExtensionScriptInstanceNotification2 = *const fn (GDExtensionScriptInstanceDataPtr, i32, GDExtensionBool) callconv(.c) void;pub const GDExtensionScriptInstanceToString = *const fn (GDExtensionScriptInstanceDataPtr, [*c]GDExtensionBool, GDExtensionStringPtr) callconv(.c) void;pub const GDExtensionScriptInstanceRefCountIncremented = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) void;pub const GDExtensionScriptInstanceRefCountDecremented = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionBool;pub const GDExtensionScriptInstanceGetScript = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionObjectPtr;pub const GDExtensionScriptInstanceIsPlaceholder = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionBool;pub const GDExtensionScriptLanguagePtr = ?*anyopaque;pub const GDExtensionScriptInstanceGetLanguage = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) GDExtensionScriptLanguagePtr;pub const GDExtensionScriptInstanceFree = *const fn (GDExtensionScriptInstanceDataPtr) callconv(.c) void;pub const GDExtensionScriptInstancePtr = ?*anyopaque;pub const GDExtensionScriptInstanceInfo = extern struct {
     set_func: GDExtensionScriptInstanceSet,
     get_func: GDExtensionScriptInstanceGet,
     get_property_list_func: GDExtensionScriptInstanceGetPropertyList,
@@ -1231,9 +310,7 @@ pub const GDExtensionScriptInstanceInfo = extern struct {
     get_fallback_func: GDExtensionScriptInstanceGet,
     get_language_func: GDExtensionScriptInstanceGetLanguage,
     free_func: GDExtensionScriptInstanceFree,
-};
-
-pub const GDExtensionScriptInstanceInfo2 = extern struct {
+};pub const GDExtensionScriptInstanceInfo2 = extern struct {
     set_func: GDExtensionScriptInstanceSet,
     get_func: GDExtensionScriptInstanceGet,
     get_property_list_func: GDExtensionScriptInstanceGetPropertyList,
@@ -1259,9 +336,7 @@ pub const GDExtensionScriptInstanceInfo2 = extern struct {
     get_fallback_func: GDExtensionScriptInstanceGet,
     get_language_func: GDExtensionScriptInstanceGetLanguage,
     free_func: GDExtensionScriptInstanceFree,
-};
-
-pub const GDExtensionScriptInstanceInfo3 = extern struct {
+};pub const GDExtensionScriptInstanceInfo3 = extern struct {
     set_func: GDExtensionScriptInstanceSet,
     get_func: GDExtensionScriptInstanceGet,
     get_property_list_func: GDExtensionScriptInstanceGetPropertyList,
@@ -1288,45 +363,23 @@ pub const GDExtensionScriptInstanceInfo3 = extern struct {
     get_fallback_func: GDExtensionScriptInstanceGet,
     get_language_func: GDExtensionScriptInstanceGetLanguage,
     free_func: GDExtensionScriptInstanceFree,
-};
-
-pub const GDExtensionWorkerThreadPoolGroupTask = *const fn (?*anyopaque, u32) callconv(.c) void;
-
-pub const GDExtensionWorkerThreadPoolTask = *const fn (?*anyopaque) callconv(.c) void;
-
-pub const GDExtensionInitializationLevel = enum(c_int) {
+};pub const GDExtensionWorkerThreadPoolGroupTask = *const fn (?*anyopaque, u32) callconv(.c) void;pub const GDExtensionWorkerThreadPoolTask = *const fn (?*anyopaque) callconv(.c) void;pub const GDExtensionInitializationLevel = enum(c_int) {
     initialization_core = 0,
     initialization_servers = 1,
     initialization_scene = 2,
     initialization_editor = 3,
     max_initialization_level = 4,
-};
-
-pub const GDExtensionInitializeCallback = *const fn (?*anyopaque, GDExtensionInitializationLevel) callconv(.c) void;
-
-pub const GDExtensionDeinitializeCallback = *const fn (?*anyopaque, GDExtensionInitializationLevel) callconv(.c) void;
-
-pub const GDExtensionInitialization = extern struct {
+};pub const GDExtensionInitializeCallback = *const fn (?*anyopaque, GDExtensionInitializationLevel) callconv(.c) void;pub const GDExtensionDeinitializeCallback = *const fn (?*anyopaque, GDExtensionInitializationLevel) callconv(.c) void;pub const GDExtensionInitialization = extern struct {
     minimum_initialization_level: GDExtensionInitializationLevel,
     userdata: ?*anyopaque,
     initialize: GDExtensionInitializeCallback,
     deinitialize: GDExtensionDeinitializeCallback,
-};
-
-pub const GDExtensionInterfaceFunctionPtr = *const fn () callconv(.c) void;
-
-pub const GDExtensionInterfaceGetProcAddress = *const fn ([*:0]const u8) callconv(.c) GDExtensionInterfaceFunctionPtr;
-
-pub const GDExtensionInitializationFunction = *const fn (GDExtensionInterfaceGetProcAddress, GDExtensionClassLibraryPtr, [*c]GDExtensionInitialization) callconv(.c) GDExtensionBool;
-
-pub const GDExtensionGodotVersion = extern struct {
+};pub const GDExtensionInterfaceFunctionPtr = *const fn () callconv(.c) void;pub const GDExtensionInterfaceGetProcAddress = *const fn ([*:0]const u8) callconv(.c) GDExtensionInterfaceFunctionPtr;pub const GDExtensionInitializationFunction = *const fn (GDExtensionInterfaceGetProcAddress, GDExtensionClassLibraryPtr, [*c]GDExtensionInitialization) callconv(.c) GDExtensionBool;pub const GDExtensionGodotVersion = extern struct {
     major: u32,
     minor: u32,
     patch: u32,
     string: [*:0]const u8,
-};
-
-pub const GDExtensionGodotVersion2 = extern struct {
+};pub const GDExtensionGodotVersion2 = extern struct {
     major: u32,
     minor: u32,
     patch: u32,
@@ -1336,15 +389,7 @@ pub const GDExtensionGodotVersion2 = extern struct {
     hash: [*:0]const u8,
     timestamp: u64,
     string: [*:0]const u8,
-};
-
-pub const GDExtensionMainLoopStartupCallback = *const fn () callconv(.c) void;
-
-pub const GDExtensionMainLoopShutdownCallback = *const fn () callconv(.c) void;
-
-pub const GDExtensionMainLoopFrameCallback = *const fn () callconv(.c) void;
-
-pub const GDExtensionMainLoopCallbacks = extern struct {
+};pub const GDExtensionMainLoopStartupCallback = *const fn () callconv(.c) void;pub const GDExtensionMainLoopShutdownCallback = *const fn () callconv(.c) void;pub const GDExtensionMainLoopFrameCallback = *const fn () callconv(.c) void;pub const GDExtensionMainLoopCallbacks = extern struct {
     startup_func: GDExtensionMainLoopStartupCallback,
     shutdown_func: GDExtensionMainLoopShutdownCallback,
     frame_func: GDExtensionMainLoopFrameCallback,
@@ -1905,5 +950,3 @@ pub fn loadInterface(get_proc_address: GDExtensionInterfaceGetProcAddress) !Inte
 .register_main_loop_callbacks = try pa(gpa, "register_main_loop_callbacks", *const fn (GDExtensionClassLibraryPtr, [*c]const GDExtensionMainLoopCallbacks) callconv(.c) void),
     };
 }
-
-// Total parse+render: 29465809ns

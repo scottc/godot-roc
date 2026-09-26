@@ -194,13 +194,14 @@ main! = |_args| {
 	# )?
 	# Stdout.line!("Desktop roc app compiled ${(Utc.now!() - roc_mac_start).to_str()}ns")?
 
-
 	# emcc
 	# Ideally, roc could emit a "wasm32-emscripten SIDE_MODULE=2"
 	# and then we can drop emcc & emscripten entirely.
+	# This depends on https://github.com/roc-lang/roc/pull/11474
+	# merged 2026-09-24 git: ac12f2e9a55bf332f4e15f46eecc5f97c44f3446
+	# just waiting on new nightly build to be released.
 	pr11474 = False
-	if (pr11474) { # This depends on https://github.com/roc-lang/roc/pull/11474
-
+	if (pr11474) {
     	Stdout.line!("Generating glue.. roc run scripts/glue.roc")?
     	_roc_glue_out2 = Cmd.exec!("roc", ["run", "scripts/glue.roc", "wasm32" ])?
     	Stdout.line!("Glue generated!")?

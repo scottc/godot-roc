@@ -152,9 +152,9 @@ export fn godot_roc_init(
         var ver_buf: [256]u8 = undefined;
         const ver_msg = std.fmt.bufPrintZ(
             &ver_buf,
-            "Expected engine version ~4.x, but got: {s}. Mismatched APIs may crash; refusing to treat this as a hard error for now.",
+            "This version of godot-roc was compiled specifically for godot 4.7.2, but got: {s}. Mismatched (newer) APIs may crash; or have missing features (older).",
             .{g_engine_runtime_version.string},
-        ) catch "Expected engine version ~4.x (version string truncated).";
+        ) catch "This version of godot-roc was compiled specifically for godot 4.7.2, but got: (version string truncated). Mismatched (newer) APIs may crash; or have missing features (older).";
 
         g_engine_interface.print_error(ver_msg, "godot_roc_init", "host.zig", @src().line, 1);
         // Just a warning for now.
@@ -169,9 +169,9 @@ export fn godot_roc_init(
         var ver_buf: [256]u8 = undefined;
         const ver_msg = std.fmt.bufPrintZ(
             &ver_buf,
-            "Expected engine version ~4.x, but got: {s}. Mismatched APIs may crash; refusing to treat this as a hard error for now.",
+            "This version of godot-roc was compiled specifically for godot 4.7.2, but got: {s}. Mismatched (newer) APIs may crash; or have missing features (older).",
             .{g_engine_runtime_version2.string},
-        ) catch "Expected engine version ~4.x (version string truncated).";
+        ) catch "This version of godot-roc was compiled specifically for godot 4.7.2, but got: (version string truncated). Mismatched (newer) APIs may crash; or have missing features (older).";
 
         g_engine_interface.print_error(ver_msg, "godot_roc_init", "host.zig", @src().line, 1);
         // Just a warning for now.

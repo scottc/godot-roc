@@ -1,4 +1,4 @@
-import Vector3
+import gen/engine/Vector3
 import GodotRoc
 
 Host := [].{
