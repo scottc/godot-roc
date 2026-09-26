@@ -226,6 +226,11 @@ main! = |_args| {
     source : Path
     source = "vendor/godot/extension_api.json"
 
+    # TODO: provide aliases...?
+    # so users can reference either implicit or explicit:
+    # Engine.Vector3 = Godot_4_7_2.Vector3
+    # Engine.Vector3 = Redot_26_2.Vector3
+    # Helps users with engine migration & compatability etc.
     roc_out_path : Path
     roc_out_path = "platform/gen/"
 
@@ -276,10 +281,9 @@ main! = |_args| {
                 }
                 fo
             })
-
     for fo in fo_results {
-        _ = Stdout.line!(Str.inspect(fo))?
-        _ = fo.path.write_utf8!(fo.contents)?
+        Stdout.line!(Str.inspect(fo.path))?
+        fo.path.write_utf8!(fo.contents)?
     }
 
     Ok({})
