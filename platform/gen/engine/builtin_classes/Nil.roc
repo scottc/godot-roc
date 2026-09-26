@@ -4,14 +4,17 @@ Nil := {
 
 }.{
     # constructors
-    construct_default :  -> Nil
-    construct_default = || { {  } }
+    construct_default! :  -> Nil
+    construct_default! = || { {  } }
 
-    contruct_from_Variant : Variant,  -> Nil
-    #contruct_from = || { "" }
+    #contruct_from_Variant! : Variant -> Nil
+    #contruct_from! = || { "" }
+
     # constants
 
+
     # enums
+
 
     # methods
     

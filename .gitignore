@@ -3,8 +3,6 @@
 # ci.roc
 ci-out/
 platform/targets/
-wip-targets-bak/
-# TODO: write targets into ci-out subdirectory.
 
 # bundle.roc
 bundle-out/
@@ -33,3 +31,4 @@ zig-cache/
 zig-out/
 
 # roc
+generated-docs/

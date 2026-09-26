@@ -297,7 +297,8 @@ c_to_roc_type = |str| {
         "double" => "I64"
         "float" => "F32"
         "long" => "F64"
-        "bool" => "Bool"
+        "bool" => "GodotRoc.Bool"
+        "inf" => "F32.infinity"
         other => other
     }
 }
@@ -308,15 +309,15 @@ render_header = |eapi|
     \\# ${eapi.header.version_full_name}
     \\# ${eapi.header.precision} precision
     \\#
-    \\# ${eapi.builtin_class_sizes.fold(0.U32, |a, _b| a + 1).to_str()} builtin_class_sizes
-    \\# ${eapi.builtin_class_member_offsets.fold(0.U32, |a, _b| a + 1).to_str()} builtin_class_member_offsets
-    \\# ${eapi.global_constants.fold(0.U32, |a, _b| a + 1).to_str()} global_constants
-    \\# ${eapi.global_enums.fold(0.U32, |a, _b| a + 1).to_str()} global_enums
-    \\# ${eapi.utility_functions.fold(0.U32, |a, _b| a + 1).to_str()} utility_functions
-    \\# ${eapi.builtin_classes.fold(0.U32, |a, _b| a + 1).to_str()} builtin_classes
-    \\# ${eapi.classes.fold(0.U32, |a, _b| a + 1).to_str()} classes
-    \\# ${eapi.singletons.fold(0.U32, |a, _b| a + 1).to_str()} singletons
-    \\# ${eapi.native_structures.fold(0.U32, |a, _b| a + 1).to_str()} native_structures
+    \\# ${eapi.builtin_class_sizes.len().to_str()} builtin_class_sizes
+    \\# ${eapi.builtin_class_member_offsets.len().to_str()} builtin_class_member_offsets
+    \\# ${eapi.global_constants.len().to_str()} global_constants
+    \\# ${eapi.global_enums.len().to_str()} global_enums
+    \\# ${eapi.utility_functions.len().to_str()} utility_functions
+    \\# ${eapi.builtin_classes.len().to_str()} builtin_classes
+    \\# ${eapi.classes.len().to_str()} classes
+    \\# ${eapi.singletons.len().to_str()} singletons
+    \\# ${eapi.native_structures.len().to_str()} native_structures
 
 fold_prop_def : Str, MethodDef -> Str
 fold_prop_def = |s, md|
@@ -328,7 +329,7 @@ fold_prop_def = |s, md|
         Ok(args) => Str.join_with(args.map(|a| a.name), ", ")
         _ => ""
     }}|
-    \\    ${md.name}! : ${
+    \\    #${md.name}! : ${
         match md.arguments {
             Ok(args) =>
                 if args.is_empty() {
@@ -341,7 +342,7 @@ fold_prop_def = |s, md|
     } -> ${match md.return_type {
         Ok(rt) => c_to_roc_type(rt)
         _ => "{}" }}
-    \\    ${md.name}! = Host.${md.name}_${md.hash.to_str()}!
+    \\    #${md.name}! = Host.${md.name}_${md.hash.to_str()}!
 
 fold_operator_defs : BuiltinClass, Str, OperatorDef -> Str
 fold_operator_defs = |bic, s, op| {
@@ -369,52 +370,52 @@ builtin_class_to_roc_source_str = |bic| {
     \\${c_to_roc_type(bic.name)} := {
     \\    # members
     \\${match (bic.members) {
-        Ok(ms) => ms.fold("", |s, m| "${s}    ${m.name} : ${c_to_roc_type(m.type)},\n")
+        Ok(ms) => Str.join_with(ms.map(|m| "    ${m.name} : ${c_to_roc_type(m.type)}"), ",\n")
         _ => ""
     }}
     \\}.{
     \\    # constructors
-    \\    construct_default : ${match (bic.members) {
-        Ok(ms) => ms.fold("", |s4, m| "${s4} ${c_to_roc_type(m.type)},")
+    \\    construct_default! : ${match (bic.members) {
+        Ok(ms) => Str.join_with(ms.map(|m| c_to_roc_type(m.type)), ", ")
         _ => ""
     }} -> ${bic.name}
-    \\    construct_default = |${match (bic.members) {
-        Ok(ms) => ms.fold("", |s5, m| "${s5} ${m.name},")
+    \\    construct_default! = |${match (bic.members) {
+        Ok(ms) => Str.join_with(ms.map(|m| m.name), ", ")
         _ => ""
     }}| { { ${match (bic.members) {
-        Ok(ms) => ms.fold("", |s6, m| "${s6}${m.name},")
+        Ok(ms) => Str.join_with(ms.map(|m| m.name), ", ")
         _ => ""
     }} } }
     \\${bic.constructors.keep_if(|c| c.arguments != Err(Missing)).fold("", |s0, c|
         \\${s0}
-        \\    contruct${match c.arguments {
-            Ok(args) => args.fold("", |s1, a| "${s1}_${a.name}_${a.type}")
+        \\    #contruct_${match c.arguments {
+            Ok(args) => Str.join_with(args.map(|a| "${a.name}_${a.type}"), "_")
             _ => ""
-        }} : ${match c.arguments {
-            Ok(args) => args.fold("", |s2, a| "${s2}${a.type}, ")
+        }}! : ${match c.arguments {
+            Ok(args) => Str.join_with(args.map(|a| a.type), ", ")
             _ => ""
         }} -> ${bic.name}
-        \\    #contruct${match c.arguments {
-            Ok(args) => args.fold("", |s3, a| "${s3}_${a.name}")
+        \\    #contruct_${match c.arguments {
+            Ok(args) => Str.join_with(args.map(|a| a.name), "_")
             _ => ""
-        }} = || { "" }
+        }}! = || { "" }
     )}
+    \\
     \\    # constants
     \\${match bic.constants {
-        Ok(cs) => cs.fold("", |s7, c|
-            \\${s7}
-            \\    ${c.name} : ${c.type}
-            \\    ${c.name} = ${c.value}
-        )
+        Ok(cs) => Str.join_with(cs.map(|c|
+            \\    #${c.name.with_ascii_lowercased()} : ${c.type}
+            \\    ${c.name.with_ascii_lowercased()} = ${parse_godot_ctor_value(bic.name, c.value)}
+        ), "\n")
         _ => ""
     }}
+    \\
     \\    # enums
     \\${match bic.enums {
-        Ok(ens) => ens.fold("", |s8, e| "    ${s8}${e.name} = [${
-            e.values.fold("", |s9, v| "${s9}${v.name}, ")
-        }]\n")
+        Ok(ens) => Str.join_with(ens.map(|e| "    ${e.name} : [${Str.join_with(e.values.map(|v| v.name), ", ")}]"), "\n")
         _ => ""
     }}
+    \\
     \\    # methods
     \\    ${(match (bic.methods) {
         Ok(ms) => ms.fold("", fold_prop_def)
@@ -427,6 +428,30 @@ builtin_class_to_roc_source_str = |bic| {
         \\    # op_${op.name} : ${bic.name}${match op.right_type { Ok(rt) => ", ${rt}" _ => "" }} -> ${match op.return_type { Ok(rt) => rt _ => "{}" }}
     )}
     \\}
+}
+
+# rough sketch
+parse_godot_ctor_value : Str, Str -> Str
+parse_godot_ctor_value = |type_name, value| {
+    # value is e.g. "Vector3(inf, inf, inf)" or "Vector3(0, 1, 0)"
+    inner =
+        value
+            .replace_first("${type_name}(", "")
+            .replace_last(")", "")          # or drop the trailing ')'
+
+    args =
+        inner
+            .split_on(", ")
+            .map(|tok|
+                match tok {
+                    "inf"  => "F32.infinity"
+                    "-inf" => "F32.negate(F32.infinity)"   # just in case
+                    "nan"  => "F32.nan"
+                    other  => other
+                }
+            )
+
+    "construct_default!(${Str.join_with(args, ", ")})"
 }
 
 render_native_structures : ExtensionApi -> Str

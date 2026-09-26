@@ -4,20 +4,23 @@ I32 := {
 
 }.{
     # constructors
-    construct_default :  -> int
-    construct_default = || { {  } }
+    construct_default! :  -> int
+    construct_default! = || { {  } }
 
-    contruct_from_int : int,  -> int
-    #contruct_from = || { "" }
-    contruct_from_float : float,  -> int
-    #contruct_from = || { "" }
-    contruct_from_bool : bool,  -> int
-    #contruct_from = || { "" }
-    contruct_from_String : String,  -> int
-    #contruct_from = || { "" }
+    #contruct_from_int! : int -> int
+    #contruct_from! = || { "" }
+    #contruct_from_float! : float -> int
+    #contruct_from! = || { "" }
+    #contruct_from_bool! : bool -> int
+    #contruct_from! = || { "" }
+    #contruct_from_String! : String -> int
+    #contruct_from! = || { "" }
+
     # constants
 
+
     # enums
+
 
     # methods
     

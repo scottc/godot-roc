@@ -4,20 +4,23 @@ F32 := {
 
 }.{
     # constructors
-    construct_default :  -> float
-    construct_default = || { {  } }
+    construct_default! :  -> float
+    construct_default! = || { {  } }
 
-    contruct_from_float : float,  -> float
-    #contruct_from = || { "" }
-    contruct_from_int : int,  -> float
-    #contruct_from = || { "" }
-    contruct_from_bool : bool,  -> float
-    #contruct_from = || { "" }
-    contruct_from_String : String,  -> float
-    #contruct_from = || { "" }
+    #contruct_from_float! : float -> float
+    #contruct_from! = || { "" }
+    #contruct_from_int! : int -> float
+    #contruct_from! = || { "" }
+    #contruct_from_bool! : bool -> float
+    #contruct_from! = || { "" }
+    #contruct_from_String! : String -> float
+    #contruct_from! = || { "" }
+
     # constants
 
+
     # enums
+
 
     # methods
     

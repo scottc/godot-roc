@@ -4,15 +4,15 @@ Bool := {
 
 }.{
     # constructors
-    construct_default :  -> bool
-    construct_default = || { {  } }
+    construct_default! :  -> bool
+    construct_default! = || { {  } }
 
-    contruct_from_bool : bool,  -> bool
-    #contruct_from = || { "" }
-    contruct_from_int : int,  -> bool
-    #contruct_from = || { "" }
-    contruct_from_float : float,  -> bool
-    #contruct_from = || { "" }
+    contruct_from_bool! : bool,  -> bool
+    #contruct_from! = || { "" }
+    contruct_from_int! : int,  -> bool
+    #contruct_from! = || { "" }
+    contruct_from_float! : float,  -> bool
+    #contruct_from! = || { "" }
     # constants
 
     # enums

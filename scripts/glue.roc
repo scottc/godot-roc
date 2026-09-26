@@ -32,7 +32,7 @@ main! = |_args| {
 
 	_platform_check_out = Cmd.exec!("roc", ["check", "platform/main.roc"])?
 
-    _glue_out = Cmd.exec!("roc", ["glue", "vendor/roc/ZigGlue.roc", "src/", "platform/main.roc"])?
+    _glue_out = Cmd.exec!("roc", ["glue", "vendor/roc/git-1d982dc/ZigGlue.roc", "src/", "platform/main.roc"])?
 
     # Patch glue..
 
