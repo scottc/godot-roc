@@ -53,7 +53,7 @@ main! = |_args| {
 	# )?
 
 	# generate roc platfrom bindings for engine...
-	_glue_out = Cmd.exec!("roc", ["run", "scripts/extension_api.generate.roc"])?
+	_bindings_out = Cmd.exec!("roc", ["run", "scripts/extension_api.generate.roc"])?
 
     _glue_out = Cmd.exec!("roc", ["glue", "vendor/roc/ZigGlue.roc", "src/", "platform/main.roc"])?
 
