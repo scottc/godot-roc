@@ -7,14 +7,14 @@ I32 := {
     construct_default! :  -> int
     construct_default! = || { {  } }
 
-    #contruct_from_int! : int -> int
-    #contruct_from! = || { "" }
-    #contruct_from_float! : float -> int
-    #contruct_from! = || { "" }
-    #contruct_from_bool! : bool -> int
-    #contruct_from! = || { "" }
-    #contruct_from_String! : String -> int
-    #contruct_from! = || { "" }
+    #construct_from_int! : I32 -> int
+    #construct_from_int! = |from| { /* TODO host call */ }
+    #construct_from_float! : F32 -> int
+    #construct_from_float! = |from| { /* TODO host call */ }
+    #construct_from_bool! : Bool -> int
+    #construct_from_bool! = |from| { /* TODO host call */ }
+    #construct_from_String! : Str -> int
+    #construct_from_String! = |from| { /* TODO host call */ }
 
     # constants
 
@@ -23,101 +23,102 @@ I32 := {
 
 
     # methods
-    
+
+
     # operators
 
     # name: "=="
-    # op_== : int, Variant -> bool
+    # op_== : int, Variant -> Bool
     # name: "!="
-    # op_!= : int, Variant -> bool
+    # op_!= : int, Variant -> Bool
     # name: "unary-"
-    # op_unary- : int -> int
+    # op_unary- : int -> I32
     # name: "unary+"
-    # op_unary+ : int -> int
+    # op_unary+ : int -> I32
     # name: "~"
-    # op_~ : int -> int
+    # op_~ : int -> I32
     # name: "and"
-    # op_and : int, Variant -> bool
+    # op_and : int, Variant -> Bool
     # name: "or"
-    # op_or : int, Variant -> bool
+    # op_or : int, Variant -> Bool
     # name: "xor"
-    # op_xor : int, Variant -> bool
+    # op_xor : int, Variant -> Bool
     # name: "not"
-    # op_not : int -> bool
+    # op_not : int -> Bool
     # name: "and"
-    # op_and : int, bool -> bool
+    # op_and : int, Bool -> Bool
     # name: "or"
-    # op_or : int, bool -> bool
+    # op_or : int, Bool -> Bool
     # name: "xor"
-    # op_xor : int, bool -> bool
+    # op_xor : int, Bool -> Bool
     # name: "=="
-    # op_== : int, int -> bool
+    # op_== : int, I32 -> Bool
     # name: "!="
-    # op_!= : int, int -> bool
+    # op_!= : int, I32 -> Bool
     # name: "<"
-    # op_< : int, int -> bool
+    # op_< : int, I32 -> Bool
     # name: "<="
-    # op_<= : int, int -> bool
+    # op_<= : int, I32 -> Bool
     # name: ">"
-    # op_> : int, int -> bool
+    # op_> : int, I32 -> Bool
     # name: ">="
-    # op_>= : int, int -> bool
+    # op_>= : int, I32 -> Bool
     # name: "+"
-    # op_+ : int, int -> int
+    # op_+ : int, I32 -> I32
     # name: "-"
-    # op_- : int, int -> int
+    # op_- : int, I32 -> I32
     # name: "*"
-    # op_* : int, int -> int
+    # op_* : int, I32 -> I32
     # name: "/"
-    # op_/ : int, int -> int
+    # op_/ : int, I32 -> I32
     # name: "%"
-    # op_% : int, int -> int
+    # op_% : int, I32 -> I32
     # name: "**"
-    # op_** : int, int -> int
+    # op_** : int, I32 -> I32
     # name: "<<"
-    # op_<< : int, int -> int
+    # op_<< : int, I32 -> I32
     # name: ">>"
-    # op_>> : int, int -> int
+    # op_>> : int, I32 -> I32
     # name: "&"
-    # op_& : int, int -> int
+    # op_& : int, I32 -> I32
     # name: "|"
-    # op_| : int, int -> int
+    # op_| : int, I32 -> I32
     # name: "^"
-    # op_^ : int, int -> int
+    # op_^ : int, I32 -> I32
     # name: "and"
-    # op_and : int, int -> bool
+    # op_and : int, I32 -> Bool
     # name: "or"
-    # op_or : int, int -> bool
+    # op_or : int, I32 -> Bool
     # name: "xor"
-    # op_xor : int, int -> bool
+    # op_xor : int, I32 -> Bool
     # name: "=="
-    # op_== : int, float -> bool
+    # op_== : int, F32 -> Bool
     # name: "!="
-    # op_!= : int, float -> bool
+    # op_!= : int, F32 -> Bool
     # name: "<"
-    # op_< : int, float -> bool
+    # op_< : int, F32 -> Bool
     # name: "<="
-    # op_<= : int, float -> bool
+    # op_<= : int, F32 -> Bool
     # name: ">"
-    # op_> : int, float -> bool
+    # op_> : int, F32 -> Bool
     # name: ">="
-    # op_>= : int, float -> bool
+    # op_>= : int, F32 -> Bool
     # name: "+"
-    # op_+ : int, float -> float
+    # op_+ : int, F32 -> F32
     # name: "-"
-    # op_- : int, float -> float
+    # op_- : int, F32 -> F32
     # name: "*"
-    # op_* : int, float -> float
+    # op_* : int, F32 -> F32
     # name: "/"
-    # op_/ : int, float -> float
+    # op_/ : int, F32 -> F32
     # name: "**"
-    # op_** : int, float -> float
+    # op_** : int, F32 -> F32
     # name: "and"
-    # op_and : int, float -> bool
+    # op_and : int, F32 -> Bool
     # name: "or"
-    # op_or : int, float -> bool
+    # op_or : int, F32 -> Bool
     # name: "xor"
-    # op_xor : int, float -> bool
+    # op_xor : int, F32 -> Bool
     # name: "*"
     # op_* : int, Vector2 -> Vector2
     # name: "*"
@@ -135,23 +136,23 @@ I32 := {
     # name: "*"
     # op_* : int, Color -> Color
     # name: "and"
-    # op_and : int, Object -> bool
+    # op_and : int, Object -> Bool
     # name: "or"
-    # op_or : int, Object -> bool
+    # op_or : int, Object -> Bool
     # name: "xor"
-    # op_xor : int, Object -> bool
+    # op_xor : int, Object -> Bool
     # name: "in"
-    # op_in : int, Dictionary -> bool
+    # op_in : int, Dictionary -> Bool
     # name: "in"
-    # op_in : int, Array -> bool
+    # op_in : int, Array -> Bool
     # name: "in"
-    # op_in : int, PackedByteArray -> bool
+    # op_in : int, PackedByteArray -> Bool
     # name: "in"
-    # op_in : int, PackedInt32Array -> bool
+    # op_in : int, PackedInt32Array -> Bool
     # name: "in"
-    # op_in : int, PackedInt64Array -> bool
+    # op_in : int, PackedInt64Array -> Bool
     # name: "in"
-    # op_in : int, PackedFloat32Array -> bool
+    # op_in : int, PackedFloat32Array -> Bool
     # name: "in"
-    # op_in : int, PackedFloat64Array -> bool
+    # op_in : int, PackedFloat64Array -> Bool
 }

@@ -1,7 +1,6 @@
 #!/usr/bin/env roc
 
-## ...
-
+## Generate Roc bindings from Godot's extension_api.json
 app [main!] {
     roc: "nightly-2026-09-18-1d982dc",
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.22.2/9zUBxb1LtXYVc4eR4hAtd1WQDwBYDhM6HQdZz1UFCm2m.tar.zst"
@@ -12,10 +11,6 @@ import pf.Stdout
 import pf.Utc
 import pf.OsStr
 
-# OptionalField(a) : Try(a, [Missing])
-
-## Root document from `godot --dump-extension-api`
-## extension_api.json
 ExtensionApi : {
     header : Header,
     builtin_class_sizes : List(BuiltinClassSizes),
@@ -29,19 +24,15 @@ ExtensionApi : {
     native_structures : List(NativeStructure),
 }
 
-# --- header -----------------------------------------------------------
-
 Header : {
     version_major : U64,
     version_minor : U64,
     version_patch : U64,
-    version_status : Str,      # e.g. "stable"
-    version_build : Str,       # e.g. "official"
-    version_full_name : Str,   # e.g. "Godot Engine 4.7.2.stable"
-    precision : Str,           # "single" | "double"
+    version_status : Str,
+    version_build : Str,
+    version_full_name : Str,
+    precision : Str,
 }
-
-# --- builtin sizes / offsets ------------------------------------------
 
 BuiltinClassSizes : {
     build_configuration : Str,
@@ -69,9 +60,6 @@ MemberOffset : {
     meta : Try(Str, [Missing]),
 }
 
-# --- globals ----------------------------------------------------------
-
-## Usually an empty array in dumps; keep flexible
 GlobalConstant : {
     name : Str,
     value : I64,
@@ -88,29 +76,25 @@ EnumDef : {
 EnumValue : {
     name : Str,
     value : I64,
-    description : Try(Str, [Missing]),       # optional
+    description : Try(Str, [Missing]),
 }
-
-# --- utility functions (@GlobalScope) ---------------------------------
 
 UtilityFunction : {
     name : Str,
-    return_type : Try(Str, [Missing]),         # optional in JSON — use "" or prefer optional field
-    category : Str,            # e.g. "math", "random"
+    return_type : Try(Str, [Missing]),
+    category : Str,
     is_vararg : Bool,
     hash : U64,
-    arguments : Try(List(Argument), [Missing]), # seems to be optional? # panic
-    description : Try(Str, [Missing]),       # optional
+    arguments : Try(List(Argument), [Missing]),
+    description : Try(Str, [Missing]),
 }
 
 Argument : {
     name : Str,
     type : Str,
-    meta : Try(Str, [Missing]),                # optional in JSON
-    default_value : Try(Str, [Missing]),     # optional
+    meta : Try(Str, [Missing]),
+    default_value : Try(Str, [Missing]),
 }
-
-# --- shared method-like shapes ----------------------------------------
 
 MethodDef : {
     name : Str,
@@ -145,8 +129,6 @@ SignalDef : {
     arguments : Try(List(Argument), [Missing]),
     description : Try(Str, [Missing]),
 }
-
-# --- builtin classes (Variant types) ----------------------------------
 
 BuiltinClass : {
     name : Str,
@@ -183,8 +165,6 @@ ConstructorDef : {
     description : Try(Str, [Missing]),
 }
 
-# --- engine classes ---------------------------------------------------
-
 ClassDef : {
     name : Str,
     is_refcounted : Bool,
@@ -193,31 +173,20 @@ ClassDef : {
     api_type : Str,
     brief_description : Try(Str, [Missing]),
     description : Try(Str, [Missing]),
-    #constants : Try(List(NamedValue), [Missing]), # invalid json?????
     enums : Try(List(EnumDef), [Missing]),
     methods : Try(List(MethodDef), [Missing]),
     properties : Try(List(PropertyDef), [Missing]),
     signals : Try(List(SignalDef), [Missing]),
-
-    # optional / version-dependent:
-    # detailed_* : …
 }
 
-# --- singletons & native structs --------------------------------------
-
 Singleton : {
-    name : Str,                # e.g. "Engine", "Input"
-    type : Str,                # e.g. "Engine", "Input"
+    name : Str,
+    type : Str,
 }
 
 NativeStructure : {
-    name : Str,                # e.g. "ObjectID"
-    format : Str,              # C-ish layout string from Godot
-}
-
-FileOut : {
-    path : Path,
-    contents : Str,
+    name : Str,
+    format : Str,
 }
 
 main! : List(OsStr) => Try({}, _)
@@ -226,13 +195,8 @@ main! = |_args| {
     source : Path
     source = "vendor/godot/extension_api.json"
 
-    # TODO: provide aliases...?
-    # so users can reference either implicit or explicit:
-    # Engine.Vector3 = Godot_4_7_2.Vector3
-    # Engine.Vector3 = Redot_26_2.Vector3
-    # Helps users with engine migration & compatability etc.
     roc_out_path : Path
-    roc_out_path = "platform/gen/"
+    roc_out_path = "platform/gen"
 
     zig_out_path : Path
     zig_out_path = "src/engine/extension_api.generated.zig"
@@ -264,43 +228,323 @@ main! = |_args| {
         \\${render_header(decoded)}
         \\
     )?
+    Stdout.line!("# Render header time: ${(Utc.now!() - render_start).to_str()}ns")?
 
-    # Stdout.line!("# ${render_native_structures(decoded)}")?
+    t_host = Utc.now!()
+    Path.join(roc_out_path, "Host.roc").write_utf8!(host_to_roc_source_str(decoded))?
+    Stdout.line!("# Host.roc in ${(Utc.now!() - t_host).to_str()}ns")?
 
-    Stdout.line!("# Render time: ${(Utc.now!() - render_start).to_str()}ns")?
+    t_meta = Utc.now!()
+    Path.join(roc_out_path, "engine/GlobalConstants.roc").write_utf8!(global_constants_to_roc_source_str(decoded))?
+    Path.join(roc_out_path, "engine/GlobalEnums.roc").write_utf8!(global_enums_to_roc_source_str(decoded))?
+    Path.join(roc_out_path, "engine/BuiltinClassSizes.roc").write_utf8!(builtin_class_sizes_to_roc_source_str(decoded))?
+    Path.join(roc_out_path, "engine/BuiltinClassMemberOffsets.roc").write_utf8!(builtin_class_member_offsets_to_roc_source_str(decoded))?
+    Path.join(roc_out_path, "engine/NativeStructures.roc").write_utf8!(native_structures_to_roc_source_str(decoded))?
+    Path.join(roc_out_path, "engine/UtilityFunctions.roc").write_utf8!(utility_functions_to_roc_source_str(decoded))?
+    Stdout.line!("# meta modules in ${(Utc.now!() - t_meta).to_str()}ns")?
 
-    # --- emit ---
-    fo_results =
-        decoded
-            .builtin_classes
-            .map(|bic| {
-                fo : FileOut
-                fo = {
-                    path: Path.join(roc_out_path, "engine/builtin_classes/${c_to_roc_type(bic.name)}.roc"),
-                    contents: builtin_class_to_roc_source_str(bic)
-                }
-                fo
-            })
-    for fo in fo_results {
-        Stdout.line!(Str.inspect(fo.path))?
-        fo.path.write_utf8!(fo.contents)?
+    t0 = Utc.now!()
+    for bic in decoded.builtin_classes {
+        mod_name = builtin_module_name(bic.name)
+        path = Path.join(roc_out_path, "engine/builtin_classes/${mod_name}.roc")
+        path.write_utf8!(builtin_class_to_roc_source_str(bic))?
     }
+    Stdout.line!("# builtins: ${decoded.builtin_classes.len().to_str()} files in ${(Utc.now!() - t0).to_str()}ns")?
+
+    t1 = Utc.now!()
+    for cls in decoded.classes {
+        mod_name = class_module_name(cls.name)
+        path = Path.join(roc_out_path, "engine/classes/${mod_name}.roc")
+        path.write_utf8!(class_to_roc_source_str(cls))?
+    }
+    Stdout.line!("# classes: ${decoded.classes.len().to_str()} files in ${(Utc.now!() - t1).to_str()}ns")?
+
+    t2 = Utc.now!()
+    for s in decoded.singletons {
+        mod_name = singleton_module_name(s.name)
+        path = Path.join(roc_out_path, "engine/singletons/${mod_name}.roc")
+        path.write_utf8!(singleton_to_roc_source_str(s))?
+    }
+    Stdout.line!("# singletons: ${decoded.singletons.len().to_str()} files in ${(Utc.now!() - t2).to_str()}ns")?
+
+    t3 = Utc.now!()
+    main_roc_path = Path.join(roc_out_path, "main.roc")
+    main_roc_contents = gen_package_main_roc(decoded)
+    main_roc_path.write_utf8!(main_roc_contents)?
+    Stdout.line!("# main.roc: ${(Utc.now!() - t3).to_str()}ns (${main_roc_contents.count_utf8_bytes().to_str()} bytes)")?
+
+    t_zig = Utc.now!()
+    zig_abi_path : Path
+    zig_abi_path = "src/zig_platform_abi_impl.zig"
+    zig_abi_path.write_utf8!(zig_platform_abi_impl_to_str(decoded))?
+    Stdout.line!("# zig_platform_abi_impl.zig in ${(Utc.now!() - t_zig).to_str()}ns")?
+
+
+
+    Stdout.line!("# total after parse: ${(Utc.now!() - parse_start).to_str()}ns")?
 
     Ok({})
 }
 
+# ---------------------------------------------------------------------------
+# Zig C-ABI host stubs (pair with Host.roc / roc glue)
+# ---------------------------------------------------------------------------
+
+zig_platform_abi_impl_to_str : ExtensionApi -> Str
+zig_platform_abi_impl_to_str = |eapi| {
+
+    util_exports =
+        Str.join_with(
+            eapi.utility_functions.map(|uf| {
+                # C symbol must stay stable for roc glue / Host.util_*_
+                c_name = "godot_roc_util_${uf.name}_${uf.hash.to_str()}"
+                ret_c =
+                    match uf.return_type {
+                        Ok("bool") => "bool"
+                        Ok("int") => "i64"
+                        Ok("float") => "f64"
+                        Ok("double") => "f64"
+                        Ok("String") => "void /* TODO: RocStr out-param */"
+                        _ => "void"
+                    }
+                \\
+                \\/// @GlobalScope.${uf.name}  hash=${uf.hash.to_str()}  category=${uf.category}
+                \\/// Roc: Host.util_${uf.name}_${uf.hash.to_str()}!
+                \\export fn ${c_name}() callconv(.c) ${ret_c} {
+                \\    // TODO: variant_get_ptr_utility_function("${uf.name}", ${uf.hash.to_str()})
+                \\    // TODO: call with packed arguments from Roc
+                \\    return ${match uf.return_type { Ok("bool") => "false" Ok("int") => "0" Ok("float") | Ok("double") => "0.0" _ => "" }};
+                \\}
+            }),
+            "\n",
+        )
+
+    singleton_exports =
+        Str.join_with(
+            eapi.singletons.map(|s|
+                \\
+                \\/// Singleton ${s.name} (type ${s.type})
+                \\/// Roc: Host.get_singleton_${s.name}! / get_singleton_ptr!("${s.name}")
+                \\export fn godot_roc_get_singleton_${s.name}() callconv(.c) u64 {
+                \\    // TODO: gdextension interface get_singleton(StringName("${s.name}"))
+                \\    return 0;
+                \\}
+            ),
+            "\n",
+        )
+
+    \\//! AUTO-GENERATED by scripts/extension_api.generate.roc — do not edit by hand
+    \\//! C-ABI surface for the Roc Godot host (roc glue ↔ Zig ↔ GDExtension).
+    \\//!
+    \\//! Naming convention:
+    \\//!   Host.util_<name>_<hash>!     →  export fn godot_roc_util_<name>_<hash>
+    \\//!   Host.get_singleton_<Name>! →  export fn godot_roc_get_singleton_<Name>
+    \\//!   Host.<method>_<hash>!      →  export fn godot_roc_<method>_<hash>  (add per bind)
+    \\//!
+    \\//! After `roc glue`, align symbol names with the generated host header if they differ.
+    \\
+    \\const std = @import("std");
+    \\// const abi = @import("roc_std");           // RocStr, etc. — wire to your glue output
+    \\// const gde = @import("gdextension_interface");
+    \\// const baseline_gde_if = gde;
+    \\
+    \\// ---------------------------------------------------------------------------
+    \\// Helpers (fill in from your existing native_host.zig)
+    \\// ---------------------------------------------------------------------------
+    \\
+    \\// var g_roc_host: ?*abi.RocHost = null;
+    \\// fn getMethodBind(class_name: []const u8, method: []const u8, hash: u64) gde.GDExtensionMethodBindPtr { ... }
+    \\// fn ptrcall(mb: gde.GDExtensionMethodBindPtr, obj: gde.GDExtensionObjectPtr, args: ?[*]const gde.GDExtensionConstTypePtr, ret: gde.GDExtensionTypePtr) void { ... }
+    \\
+    \\/// Example: borrow RocStr → temporary null-terminated slice (stack if short).
+    \\fn rocStrToZ(action: anytype, buf: []u8) ?[:0]const u8 {
+    \\    // var owned = action;
+    \\    // defer owned.decref(g_roc_host.?);
+    \\    // const s = owned.asSlice();
+    \\    // if (s.len >= buf.len) return null;
+    \\    // @memcpy(buf[0..s.len], s);
+    \\    // buf[s.len] = 0;
+    \\    // return buf[0..s.len :0];
+    \\    _ = action;
+    \\    _ = buf;
+    \\    return null;
+    \\}
+    \\
+    \\// ---------------------------------------------------------------------------
+    \\// Singletons
+    \\// ---------------------------------------------------------------------------
+    \\${singleton_exports}
+    \\
+    \\export fn godot_roc_get_singleton_ptr(name_ptr: [*]const u8, name_len: usize) callconv(.c) u64 {
+    \\    _ = name_ptr;
+    \\    _ = name_len;
+    \\    // TODO: lookup singleton by name
+    \\    return 0;
+    \\}
+    \\
+    \\// ---------------------------------------------------------------------------
+    \\// @GlobalScope utility functions
+    \\// ---------------------------------------------------------------------------
+    \\${util_exports}
+    \\
+    \\// ---------------------------------------------------------------------------
+    \\// Example class method pattern (CharacterBody3D) — copy for Host.<m>_<hash>!
+    \\// ---------------------------------------------------------------------------
+    \\
+    \\// var g_mb_move_and_slide: ?*anyopaque = null;
+    \\//
+    \\// export fn godot_roc_move_and_slide() callconv(.c) void {
+    \\//     // ensureMethodBinds();
+    \\//     // const self = requireCurrent() orelse return;
+    \\//     // ptrcall(g_mb_move_and_slide, self.object, null, ...);
+    \\// }
+    \\
+    \\// export fn godot_roc_input_is_action_pressed(/* action: RocStr */) callconv(.c) u8 {
+    \\//     var buf: [64]u8 = undefined;
+    \\//     // const z = rocStrToZ(action, &buf) orelse return 0;
+    \\//     // return if (isActionPressed(z)) 1 else 0;
+    \\//     return 0;
+    \\// }
+    \\
+}
+
+# ---------------------------------------------------------------------------
+# naming — valid Roc module / type identifiers
+# ---------------------------------------------------------------------------
+
+## Primitive Variant builtins are lowercase in the API
+builtin_module_name : Str -> Str
+builtin_module_name = |name| {
+    match name {
+        "bool" => "GodotBool"
+        "int" => "GodotInt"
+        "float" => "GodotFloat"
+        other => other
+    }
+}
+
+## Avoid clashing with Roc builtins (Crypto, Range, …)
+class_module_name : Str -> Str
+class_module_name = |name| {
+    match name {
+        "Crypto" => "GodotCrypto"
+        "Range" => "GodotRange"
+        other => other
+    }
+}
+
+## Singletons share class names (Engine, Input, …) — always suffix
+singleton_module_name : Str -> Str
+singleton_module_name = |name| "${name}Singleton"
+
+## Enum / type names may contain '.' or '::'
+roc_type_ident : Str -> Str
+roc_type_ident = |s|
+    s
+        .replace_each("::", "_")
+        .replace_each(".", "_")
+        .replace_each(" ", "_")
+        .replace_each("/", "_")
+
+## Types in signatures: primitives → Roc; Godot types → module names
 c_to_roc_type : Str -> Str
 c_to_roc_type = |str| {
     match str {
-        "String" => "Str"
         "int" => "I32"
-        "double" => "I64"
         "float" => "F32"
-        "long" => "F64"
-        "bool" => "GodotRoc.Bool"
-        "inf" => "F32.infinity"
-        other => other
+        "double" => "F64"
+        "bool" => "Bool"
+        "void" => "{}"
+        "Crypto" => "GodotCrypto"
+        "Range" => "GodotRange"
+        other => builtin_module_name(other)
     }
+}
+
+## True if this type name is another generated builtin module (needs import)
+is_godot_builtin_type_name : Str -> Bool
+is_godot_builtin_type_name = |t| {
+    match t {
+        "I32" | "F32" | "F64" | "Bool" | "{}" | "U64" => Bool.False
+        _ =>
+            # Heuristic: PascalCase / Godot* names from API
+            Bool.True
+    }
+}
+
+# ---------------------------------------------------------------------------
+# package root
+# ---------------------------------------------------------------------------
+
+gen_package_main_roc : ExtensionApi -> Str
+gen_package_main_roc = |eapi| {
+
+    builtin_names = eapi.builtin_classes.map(|b| builtin_module_name(b.name))
+    class_names = eapi.classes.map(|c| class_module_name(c.name))
+    singleton_names = eapi.singletons.map(|s| singleton_module_name(s.name))
+
+    meta_names = [
+        "Host",
+        "GlobalConstants",
+        "GlobalEnums",
+        "BuiltinClassSizes",
+        "BuiltinClassMemberOffsets",
+        "NativeStructures",
+        "UtilityFunctions",
+    ]
+
+    all_names =
+        List.concat(
+            meta_names,
+            List.concat(builtin_names, List.concat(class_names, singleton_names)),
+        )
+
+    expose_list_clean = Str.join_with(all_names.map(|n| "    ${n}"), ",\n")
+
+    meta_imports =
+        \\import Host as Host
+        \\import engine/GlobalConstants as GlobalConstants
+        \\import engine/GlobalEnums as GlobalEnums
+        \\import engine/BuiltinClassSizes as BuiltinClassSizes
+        \\import engine/BuiltinClassMemberOffsets as BuiltinClassMemberOffsets
+        \\import engine/NativeStructures as NativeStructures
+        \\import engine/UtilityFunctions as UtilityFunctions
+
+    builtin_imports =
+        Str.join_with(
+            builtin_names.map(|n| "import engine/builtin_classes/${n} as ${n}"),
+            "\n",
+        )
+
+    class_imports =
+        Str.join_with(
+            class_names.map(|n| "import engine/classes/${n} as ${n}"),
+            "\n",
+        )
+
+    singleton_imports =
+        Str.join_with(
+            singleton_names.map(|n| "import engine/singletons/${n} as ${n}"),
+            "\n",
+        )
+
+    \\# AUTO-GENERATED by scripts/extension_api.generate.roc — do not edit
+    \\package [
+    \\${expose_list_clean}
+    \\] {}
+    \\
+    \\# --- meta / host ---
+    \\${meta_imports}
+    \\
+    \\# --- builtin classes ---
+    \\${builtin_imports}
+    \\
+    \\# --- engine classes ---
+    \\${class_imports}
+    \\
+    \\# --- singletons (suffixed; class type is separate) ---
+    \\${singleton_imports}
+    \\
 }
 
 render_header : ExtensionApi -> Str
@@ -319,172 +563,549 @@ render_header = |eapi|
     \\# ${eapi.singletons.len().to_str()} singletons
     \\# ${eapi.native_structures.len().to_str()} native_structures
 
-fold_prop_def : Str, MethodDef -> Str
-fold_prop_def = |s, md|
-    \\${s}
-    #\\# is_vararg: ${Str.inspect(md.is_vararg)}
-    #\\# is_const: ${Str.inspect(md.is_const)}
-    #\\# is_static: ${Str.inspect(md.is_static)}
-    \\    # ${md.name}! = |${match md.arguments {
-        Ok(args) => Str.join_with(args.map(|a| a.name), ", ")
-        _ => ""
-    }}|
-    \\    #${md.name}! : ${
-        match md.arguments {
+# ---------------------------------------------------------------------------
+# Host.roc
+# ---------------------------------------------------------------------------
+
+host_to_roc_source_str : ExtensionApi -> Str
+host_to_roc_source_str = |eapi| {
+
+    util_stubs =
+        Str.join_with(
+            eapi.utility_functions.map(|uf| {
+                ret =
+                    match uf.return_type {
+                        Ok(rt) => c_to_roc_type(rt)
+                        _ => "{}"
+                    }
+                args =
+                    match uf.arguments {
+                        Ok(as_) =>
+                            if as_.is_empty() {
+                                "{}"
+                            } else {
+                                Str.join_with(as_.map(|a| c_to_roc_type(a.type)), ", ")
+                            }
+                        _ => "{}"
+                    }
+                \\    # util ${uf.name}  category=${uf.category} vararg=${Str.inspect(uf.is_vararg)}
+                \\    # util_${uf.name}_${uf.hash.to_str()}! : ${args} -> ${ret}
+            }),
+            "\n",
+        )
+
+    singleton_stubs =
+        Str.join_with(
+            eapi.singletons.map(|s|
+                \\    # get_singleton_${s.name}! : {} -> U64
+            ),
+            "\n",
+        )
+
+    \\# AUTO-GENERATED Host surface for Godot GDExtension
+    \\# Wire these to the Zig host as hosted functions.
+    \\Host := {
+    \\}.{
+    \\    # --- singleton registry ---
+    \\${singleton_stubs}
+    \\
+    \\    # get_singleton_ptr! : Str -> U64
+    \\
+    \\    # --- @GlobalScope utility functions ---
+    \\${util_stubs}
+    \\}
+}
+
+# ---------------------------------------------------------------------------
+# Global constants — top-level bindings (not associated items)
+# ---------------------------------------------------------------------------
+
+global_constants_to_roc_source_str : ExtensionApi -> Str
+global_constants_to_roc_source_str = |eapi| {
+
+    body =
+        Str.join_with(
+            eapi.global_constants.map(|gc|
+                \\# ${gc.name}
+                \\${gc.name} : I64
+                \\${gc.name} = ${gc.value.to_str()}
+            ),
+            "\n\n",
+        )
+
+    \\# AUTO-GENERATED global_constants from extension_api.json
+    \\# Module GlobalConstants exposes these as top-level values.
+    \\
+    \\${body}
+    \\
+}
+
+# ---------------------------------------------------------------------------
+# Global enums
+# ---------------------------------------------------------------------------
+
+global_enums_to_roc_source_str : ExtensionApi -> Str
+global_enums_to_roc_source_str = |eapi| {
+
+    body =
+        Str.join_with(
+            eapi.global_enums.map(|e| {
+                ename = roc_type_ident(e.name)
+                values = Str.join_with(e.values.map(|v| v.name), ", ")
+                bitfield =
+                    match e.is_bitfield {
+                        Ok(True) => "  # bitfield"
+                        _ => ""
+                    }
+                value_consts =
+                    Str.join_with(
+                        e.values.map(|v|
+                            \\# ${ename}_${v.name} = ${v.value.to_str()}
+                        ),
+                        "\n",
+                    )
+                \\# enum ${e.name} → ${ename}
+                \\${ename} : [${values}]${bitfield}
+                \\${value_consts}
+            }),
+            "\n\n",
+        )
+
+    \\# AUTO-GENERATED global_enums from extension_api.json
+    \\
+    \\${body}
+    \\
+}
+
+# ---------------------------------------------------------------------------
+# Builtin class sizes / offsets / native / utility
+# ---------------------------------------------------------------------------
+
+builtin_class_sizes_to_roc_source_str : ExtensionApi -> Str
+builtin_class_sizes_to_roc_source_str = |eapi| {
+
+    body =
+        Str.join_with(
+            eapi.builtin_class_sizes.map(|bcs| {
+                sizes =
+                    Str.join_with(
+                        bcs.sizes.map(|ns|
+                            \\#   ${ns.name} = ${ns.size.to_str()}
+                        ),
+                        "\n",
+                    )
+                \\# build_configuration: ${bcs.build_configuration}
+                \\${sizes}
+            }),
+            "\n\n",
+        )
+
+    \\# AUTO-GENERATED builtin_class_sizes
+    \\
+    \\${body}
+    \\
+}
+
+builtin_class_member_offsets_to_roc_source_str : ExtensionApi -> Str
+builtin_class_member_offsets_to_roc_source_str = |eapi| {
+
+    body =
+        Str.join_with(
+            eapi.builtin_class_member_offsets.map(|bco| {
+                classes =
+                    Str.join_with(
+                        bco.classes.map(|bc| {
+                            members =
+                                Str.join_with(
+                                    bc.members.map(|m| {
+                                        meta =
+                                            match m.meta {
+                                                Ok(x) => " meta=${x}"
+                                                _ => ""
+                                            }
+                                        \\#     ${m.member} offset=${m.offset.to_str()}${meta}
+                                    }),
+                                    "\n",
+                                )
+                            \\#   class ${bc.name}
+                            \\${members}
+                        }),
+                        "\n",
+                    )
+                \\# build_configuration: ${bco.build_configuration}
+                \\${classes}
+            }),
+            "\n\n",
+        )
+
+    \\# AUTO-GENERATED builtin_class_member_offsets
+    \\
+    \\${body}
+    \\
+}
+
+native_structures_to_roc_source_str : ExtensionApi -> Str
+native_structures_to_roc_source_str = |eapi| {
+
+    body =
+        Str.join_with(
+            eapi.native_structures.map(|ns|
+                \\# ${ns.name}
+                \\# format: ${ns.format}
+            ),
+            "\n\n",
+        )
+
+    \\# AUTO-GENERATED native_structures
+    \\
+    \\${body}
+    \\
+}
+
+utility_functions_to_roc_source_str : ExtensionApi -> Str
+utility_functions_to_roc_source_str = |eapi| {
+
+    body =
+        Str.join_with(
+            eapi.utility_functions.map(|uf| {
+                ret =
+                    match uf.return_type {
+                        Ok(rt) => c_to_roc_type(rt)
+                        _ => "{}"
+                    }
+                arg_types =
+                    match uf.arguments {
+                        Ok(args) =>
+                            if args.is_empty() {
+                                "{}"
+                            } else {
+                                Str.join_with(args.map(|a| c_to_roc_type(a.type)), ", ")
+                            }
+                        _ => "{}"
+                    }
+                \\# ${uf.name}!  category=${uf.category} vararg=${Str.inspect(uf.is_vararg)}
+                \\# ${uf.name}! : ${arg_types} -> ${ret}
+                \\# ${uf.name}! = Host.util_${uf.name}_${uf.hash.to_str()}!
+            }),
+            "\n\n",
+        )
+
+    \\# AUTO-GENERATED utility_functions (@GlobalScope)
+    \\
+    \\${body}
+    \\
+}
+
+# ---------------------------------------------------------------------------
+# method / property / signal / enum lines
+# ---------------------------------------------------------------------------
+
+method_arg_types : MethodDef -> Str
+method_arg_types = |md|
+    match md.arguments {
+        Ok(args) =>
+            if args.is_empty() {
+                "()"
+            } else {
+                Str.join_with(args.map(|a| c_to_roc_type(a.type)), ", ")
+            }
+        _ => "()"
+    }
+
+method_return_type : MethodDef -> Str
+method_return_type = |md|
+    match md.return_type {
+        Ok(rt) => c_to_roc_type(rt)
+        _ =>
+            match md.return_value {
+                Ok(rv) => c_to_roc_type(rv.type)
+                _ => "{}"
+            }
+    }
+
+method_def_line : MethodDef -> Str
+method_def_line = |md|
+    \\    # ${md.name}!  is_const=${Str.inspect(md.is_const)} is_static=${Str.inspect(md.is_static)} is_vararg=${Str.inspect(md.is_vararg)}
+    \\    #${md.name}! : ${method_arg_types(md)} -> ${method_return_type(md)}
+    \\    #${md.name}! = Host.${md.name}_${md.hash.to_str()}!
+
+property_def_line : PropertyDef -> Str
+property_def_line = |p|
+    \\    # property ${p.name} : ${c_to_roc_type(p.type)}
+    \\    #   getter: ${match p.getter { Ok(g) => g _ => "(none)" }}
+    \\    #   setter: ${match p.setter { Ok(st) => st _ => "(none)" }}
+
+signal_def_line : SignalDef -> Str
+signal_def_line = |sig| {
+    args_str =
+        match sig.arguments {
             Ok(args) =>
                 if args.is_empty() {
                     "()"
                 } else {
-                    Str.join_with(args.map(|a| c_to_roc_type(a.type)), ", ")
+                    Str.join_with(args.map(|a| "${a.name} : ${c_to_roc_type(a.type)}"), ", ")
                 }
             _ => "()"
         }
-    } -> ${match md.return_type {
-        Ok(rt) => c_to_roc_type(rt)
-        _ => "{}" }}
-    \\    #${md.name}! = Host.${md.name}_${md.hash.to_str()}!
-
-fold_operator_defs : BuiltinClass, Str, OperatorDef -> Str
-fold_operator_defs = |bic, s, op| {
-    rit : Str
-    rit = match op.right_type { Ok(v) => v _ => "" }
-
-    ret : Str
-    ret = match op.return_type { Ok(v) => v _ => "" }
-
-    \\ ${s}
-    \\ ${bic.name}_${op.name}_ : ${bic.name}, ${rit} -> ${ret}
-    \\ ${bic.name}_${op.name}_ = Host.${bic.name}_${op.name}_ # TODO: impl? (${bic.name}, ${rit} -> ${ret})
+    \\    # signal ${sig.name} : ${args_str}
 }
+
+enum_def_line : EnumDef -> Str
+enum_def_line = |e| {
+    ename = roc_type_ident(e.name)
+    values = Str.join_with(e.values.map(|v| v.name), ", ")
+    bitfield_note =
+        match e.is_bitfield {
+            Ok(True) => "  # bitfield"
+            _ => ""
+        }
+    \\    ${ename} : [${values}]${bitfield_note}
+}
+
+methods_block : Try(List(MethodDef), [Missing]) -> Str
+methods_block = |maybe|
+    match maybe {
+        Ok(ms) => Str.join_with(ms.map(method_def_line), "\n")
+        _ => ""
+    }
+
+properties_block : Try(List(PropertyDef), [Missing]) -> Str
+properties_block = |maybe|
+    match maybe {
+        Ok(ps) => Str.join_with(ps.map(property_def_line), "\n")
+        _ => ""
+    }
+
+signals_block : Try(List(SignalDef), [Missing]) -> Str
+signals_block = |maybe|
+    match maybe {
+        Ok(sigs) => Str.join_with(sigs.map(signal_def_line), "\n")
+        _ => ""
+    }
+
+enums_block : Try(List(EnumDef), [Missing]) -> Str
+enums_block = |maybe|
+    match maybe {
+        Ok(ens) => Str.join_with(ens.map(enum_def_line), "\n")
+        _ => ""
+    }
+
+# ---------------------------------------------------------------------------
+# builtin classes (with sibling imports for member types)
+# ---------------------------------------------------------------------------
 
 builtin_class_to_roc_source_str : BuiltinClass -> Str
 builtin_class_to_roc_source_str = |bic| {
 
-    # operators_str : Str
-    # operators_str = match (bic.operators) {
-    #     Ok(opds) => opds.fold("", |s, opd| fold_operator_defs(bic, s, opd))
-    #     _ => ""
-    # }
+    type_name = builtin_module_name(bic.name)
 
-    \\# builtin_class ${bic.name}
-    \\${c_to_roc_type(bic.name)} := {
-    \\    # members
-    \\${match (bic.members) {
-        Ok(ms) => Str.join_with(ms.map(|m| "    ${m.name} : ${c_to_roc_type(m.type)}"), ",\n")
-        _ => ""
-    }}
+    members_list : List(PropertyDef)
+    members_list =
+        match bic.members {
+            Ok(ms) => ms
+            _ => []
+        }
+
+    has_members = !(members_list.is_empty())
+
+    dep_types =
+        members_list.map(|m| c_to_roc_type(m.type))
+
+    unique =
+        dep_types.fold(
+            [],
+            |acc, t| {
+                is_prim =
+                    match t {
+                        "I32" | "F32" | "F64" | "Bool" | "{}" | "U64" => Bool.True
+                        _ => Bool.False
+                    }
+                if is_prim {
+                    acc
+                } else {
+                    if t == type_name {
+                        acc
+                    } else {
+                        if List.contains(acc, t) {
+                            acc
+                        } else {
+                            List.append(acc, t)
+                        }
+                    }
+                }
+            },
+        )
+
+    import_lines =
+        Str.join_with(
+            unique.map(|t| "import engine/builtin_classes/${t} as ${t}"),
+            "\n",
+        )
+
+    members_str =
+        if has_members {
+            Str.join_with(members_list.map(|m| "    ${m.name} : ${c_to_roc_type(m.type)}"), ",\n")
+        } else {
+            "    # opaque — layout lives on the host\n    ptr : U64"
+        }
+
+    construct_sig =
+        if has_members {
+            arg_tys = Str.join_with(members_list.map(|m| c_to_roc_type(m.type)), ", ")
+            arg_ns = Str.join_with(members_list.map(|m| m.name), ", ")
+            \\    construct_default! : ${arg_tys} -> ${type_name}
+            \\    construct_default! = |${arg_ns}| { { ${arg_ns} } }
+        } else {
+            \\    construct_default! : {} -> ${type_name}
+            \\    construct_default! = |_| { { ptr: 0 } }
+        }
+
+    constructors_str =
+        Str.join_with(
+            bic.constructors
+                .keep_if(|c| c.arguments != Err(Missing))
+                .map(|c| {
+                    arg_types =
+                        match c.arguments {
+                            Ok(args) => Str.join_with(args.map(|a| c_to_roc_type(a.type)), ", ")
+                            _ => ""
+                        }
+                    arg_names =
+                        match c.arguments {
+                            Ok(args) => Str.join_with(args.map(|a| a.name), ", ")
+                            _ => ""
+                        }
+                    name_suffix =
+                        match c.arguments {
+                            Ok(args) => Str.join_with(args.map(|a| "${a.name}_${a.type}"), "_")
+                            _ => "default"
+                        }
+                    \\    #construct_${name_suffix}! : ${arg_types} -> ${type_name}
+                    \\    #construct_${name_suffix}! = |${arg_names}| { /* TODO host call */ }
+                }),
+            "\n",
+        )
+
+    constants_str =
+        match bic.constants {
+            Ok(cs) =>
+                Str.join_with(
+                    cs.map(|c| {
+                        value_str =
+                            c.value
+                                .replace_first(bic.name, "construct_default!")
+                                .replace_each("inf", "F32.infinity")
+                        \\    #${c.name.with_ascii_lowercased()} : ${type_name}
+                        \\    #${c.name.with_ascii_lowercased()} = ${value_str}
+                    }),
+                    "\n",
+                )
+            _ => ""
+        }
+
+    operators_str =
+        Str.join_with(
+            bic.operators.map(|op|
+                \\    # name: "${op.name}"
+                \\    # op_${op.name} : ${type_name}${match op.right_type { Ok(rt) => ", ${c_to_roc_type(rt)}" _ => "" }} -> ${match op.return_type { Ok(rt) => c_to_roc_type(rt) _ => "{}" }}
+            ),
+            "\n",
+        )
+
+    imports_section =
+        if import_lines == "" {
+            ""
+        } else {
+            "${import_lines}\n\n"
+        }
+
+    \\# builtin_class ${bic.name} → ${type_name}
+    \\${imports_section}${type_name} := {
+    \\${members_str}
     \\}.{
     \\    # constructors
-    \\    construct_default! : ${match (bic.members) {
-        Ok(ms) => Str.join_with(ms.map(|m| c_to_roc_type(m.type)), ", ")
-        _ => ""
-    }} -> ${bic.name}
-    \\    construct_default! = |${match (bic.members) {
-        Ok(ms) => Str.join_with(ms.map(|m| m.name), ", ")
-        _ => ""
-    }}| { { ${match (bic.members) {
-        Ok(ms) => Str.join_with(ms.map(|m| m.name), ", ")
-        _ => ""
-    }} } }
-    \\${bic.constructors.keep_if(|c| c.arguments != Err(Missing)).fold("", |s0, c|
-        \\${s0}
-        \\    #contruct_${match c.arguments {
-            Ok(args) => Str.join_with(args.map(|a| "${a.name}_${a.type}"), "_")
-            _ => ""
-        }}! : ${match c.arguments {
-            Ok(args) => Str.join_with(args.map(|a| a.type), ", ")
-            _ => ""
-        }} -> ${bic.name}
-        \\    #contruct_${match c.arguments {
-            Ok(args) => Str.join_with(args.map(|a| a.name), "_")
-            _ => ""
-        }}! = || { "" }
-    )}
+    \\${construct_sig}
+    \\${constructors_str}
     \\
     \\    # constants
-    \\${match bic.constants {
-        Ok(cs) => Str.join_with(cs.map(|c|
-            \\    #${c.name.with_ascii_lowercased()} : ${c.type}
-            \\    ${c.name.with_ascii_lowercased()} = ${parse_godot_ctor_value(bic.name, c.value)}
-        ), "\n")
-        _ => ""
-    }}
+    \\${constants_str}
     \\
     \\    # enums
-    \\${match bic.enums {
-        Ok(ens) => Str.join_with(ens.map(|e| "    ${e.name} : [${Str.join_with(e.values.map(|v| v.name), ", ")}]"), "\n")
-        _ => ""
-    }}
+    \\${enums_block(bic.enums)}
     \\
     \\    # methods
-    \\    ${(match (bic.methods) {
-        Ok(ms) => ms.fold("", fold_prop_def)
-        _ => ""
-    })}
+    \\${methods_block(bic.methods)}
+    \\
     \\    # operators
-    \\${bic.operators.fold("", |so, op|
-        \\${so}
-        \\    # name: "${op.name}"
-        \\    # op_${op.name} : ${bic.name}${match op.right_type { Ok(rt) => ", ${rt}" _ => "" }} -> ${match op.return_type { Ok(rt) => rt _ => "{}" }}
-    )}
+    \\${operators_str}
     \\}
 }
 
-# rough sketch
-parse_godot_ctor_value : Str, Str -> Str
-parse_godot_ctor_value = |type_name, value| {
-    # value is e.g. "Vector3(inf, inf, inf)" or "Vector3(0, 1, 0)"
-    inner =
-        value
-            .replace_first("${type_name}(", "")
-            .replace_last(")", "")          # or drop the trailing ')'
+# ---------------------------------------------------------------------------
+# engine classes
+# ---------------------------------------------------------------------------
 
-    args =
-        inner
-            .split_on(", ")
-            .map(|tok|
-                match tok {
-                    "inf"  => "F32.infinity"
-                    "-inf" => "F32.negate(F32.infinity)"   # just in case
-                    "nan"  => "F32.nan"
-                    other  => other
-                }
-            )
+class_to_roc_source_str : ClassDef -> Str
+class_to_roc_source_str = |cls| {
 
-    "construct_default!(${Str.join_with(args, ", ")})"
+    type_name = class_module_name(cls.name)
+
+    inherits_line =
+        match cls.inherits {
+            Ok(parent) => "# inherits: ${parent}\n"
+            _ => ""
+        }
+
+    instantiable_note =
+        if cls.is_instantiable {
+            "instantiable"
+        } else {
+            "not instantiable"
+        }
+
+    refcounted_note =
+        if cls.is_refcounted {
+            "refcounted"
+        } else {
+            "not refcounted"
+        }
+
+    \\# engine class ${cls.name} → ${type_name}
+    \\# api_type: ${cls.api_type}
+    \\# ${instantiable_note}, ${refcounted_note}
+    \\${inherits_line}${type_name} := {
+    \\    # opaque host handle — concrete layout lives on the Zig side
+    \\    ptr : U64,
+    \\}.{
+    \\    # --- enums ---
+    \\${enums_block(cls.enums)}
+    \\
+    \\    # --- properties ---
+    \\${properties_block(cls.properties)}
+    \\
+    \\    # --- methods ---
+    \\${methods_block(cls.methods)}
+    \\
+    \\    # --- signals ---
+    \\${signals_block(cls.signals)}
+    \\}
 }
 
-render_native_structures : ExtensionApi -> Str
-render_native_structures = |eapi| {
-    eapi.native_structures.fold("# native_structures", |a, b| "# ${a} ${native_structure_to_roc_source_str(b)}\n")
-}
-
-native_structure_to_roc_source_str : NativeStructure -> Str
-native_structure_to_roc_source_str = |ns| {
-    "# Native Structure ${ns.name} : ${ns.format}"
-}
-
-render_singletons : ExtensionApi -> Str
-render_singletons = |eapi| {
-    eapi.singletons.fold("# singletons", |a, b| "# ${a} ${singleton_to_roc_source_str(b)}\n")
-}
+# ---------------------------------------------------------------------------
+# singletons
+# ---------------------------------------------------------------------------
 
 singleton_to_roc_source_str : Singleton -> Str
 singleton_to_roc_source_str = |st| {
-    \\"## Singleton ${st.name} : ${st.type}"
-    \\${st.name} := [].{
-    \\   # TODO: fill.
+    mod_name = singleton_module_name(st.name)
+    class_ty = class_module_name(st.type)
+
+    \\# Singleton ${st.name} (engine type: ${st.type}) → ${mod_name}
+    \\# The class API lives under ${class_ty}; this is the process-wide instance handle.
+    \\${mod_name} := {
+    \\    ptr : U64,
+    \\}.{
+    \\    # get! : {} -> ${mod_name}
+    \\    # get! = |_| { { ptr: Host.get_singleton_ptr!("${st.name}") } }
     \\}
-}
-
-render_global_constants : ExtensionApi -> Str
-render_global_constants = |eapi| {
-    eapi.global_constants.fold("# global_constants", |a, b| "# ${a} ${global_constant_to_roc_source_str(b)}\n")
-}
-
-global_constant_to_roc_source_str : GlobalConstant -> Str
-global_constant_to_roc_source_str = |gc| {
-    \\# ${gc.name} = ${gc.value.to_str()}
-    \\${gc.name} : I64
-    \\${gc.name} = ${gc.value.to_str()}
 }
