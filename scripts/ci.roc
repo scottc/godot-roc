@@ -76,10 +76,8 @@ main! = |_args| {
     project_template : Str
     project_template = "ci"
 
-    project_roc_entrypoint32 : Str
-    project_roc_entrypoint32 = "main.roc"
-    project_roc_entrypoint64 : Str
-    project_roc_entrypoint64 = "main.roc"
+    project_roc_entrypoint : Str
+    project_roc_entrypoint = "main.roc"
 
     # project_godot_entrypoint : Str
     # project_godot_entrypoint = "project.godot"
@@ -120,7 +118,7 @@ main! = |_args| {
 	# TODO: generate: godot api -> roc types -> zig..
 
 	Stdout.line!("Generating glue.. roc run scripts/glue.roc")?
-	_roc_glue_out = Cmd.exec!("roc", ["run", "scripts/glue.roc", "native64" ])?
+	_roc_glue_out = Cmd.exec!("roc", ["run", "scripts/glue.roc" ])?
 	Stdout.line!("Glue generated!")?
 
 	# Precompile?
@@ -163,11 +161,11 @@ main! = |_args| {
 
 	# compile roc - to native
 	Stdout.line!("Compiling desktop roc app...")?
-	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint64).display()} --target=x64musl --no-cache --output=${Path.join(Path.join(ci_workspace, project), project_target_linux_binary).display()}")? # To inform the user
+	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).display()} --target=x64musl --no-cache --output=${Path.join(Path.join(ci_workspace, project), project_target_linux_binary).display()}")? # To inform the user
 	roc_linux_start = Utc.now!()
 	_roc_linux_out = Cmd.exec!("roc", [
 	    "build",
-		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint64).to_os_str(),
+		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
 		"--target=x64musl",
 		"--no-cache",
 		"--output=${Path.join(Path.join(ci_workspace, project), project_target_linux_binary).display()}"]
@@ -202,30 +200,13 @@ main! = |_args| {
 	# just waiting on new nightly build to be released.
 	pr11474 = False
 	if (pr11474) {
-    	Stdout.line!("Generating glue.. roc run scripts/glue.roc")?
-    	_roc_glue_out2 = Cmd.exec!("roc", ["run", "scripts/glue.roc", "wasm32" ])?
-    	Stdout.line!("Glue generated!")?
-
-    	Stdout.line!("Roc build all host (zig) targets...")?
-    	Stdout.line!("roc run scripts/build.roc")? # To inform the user
-    	roc_zig_start2 = Utc.now!()
-    	_roc_zig_out2 = Cmd.exec!("roc", [
-    	    "scripts/build.roc",
-    		"-Doptimize=Debug"
-    		# Debug = fastest build time (default)
-    		# ReleaseFast = fastest runtime speed.
-    		# For CI, we want build speed.
-    		# For releases, we want run speed.
-    	])?
-    	Stdout.line!("All host targets built ${(Utc.now!() - roc_zig_start2).to_str()}ns")?
-
     	# compile roc - to web
     	Stdout.line!("Compiling web roc app...")?
-    	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint32).display()} --target=wasm32 --output=${Path.join(Path.join(ci_workspace, project), "temp.a.wasm").display()}")? # To inform the user
+    	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).display()} --target=wasm32 --output=${Path.join(Path.join(ci_workspace, project), "temp.a.wasm").display()}")? # To inform the user
     	roc_web_start = Utc.now!()
     	_roc_web_out = Cmd.exec!("/home/anon/Projects/roc/zig-out/bin/roc", [
     	    "build",
-    		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint32).to_os_str(),
+    		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
     		"--target=wasm32",
     		"--output=${Path.join(Path.join(ci_workspace, project), "temp.a").display()}"
     	])?

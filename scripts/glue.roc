@@ -21,7 +21,7 @@ import pf.Cmd
 import pf.Env
 
 #main! : List(OsStr) => Try({}, _)
-main! = |args| {
+main! = |_args| {
 
     # Stdout.line!("args: ${Str.inspect(args)}")?
     # Stdout.line!("display: ${args.last()?.display()}")?
