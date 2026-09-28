@@ -1,5 +1,5 @@
 import Host
-import gen/engine/builtin_classes/Vector3
+import Vector3
 import GodotRoc
 
 ## A generic godot-4.5.1-like game engine interface.
