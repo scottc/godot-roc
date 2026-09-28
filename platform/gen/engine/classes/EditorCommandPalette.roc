@@ -1,18 +1,20 @@
 # class EditorCommandPalette
+import ../../Host
+
 # inherits: ConfirmationDialog
 EditorCommandPalette := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    add_command! : String, String, Callable, String -> {}
-    add_command! = |command_name, key_name, binded_callable, shortcut_text| Host.EditorCommandPalette_add_command_864043298!(command_name, key_name, binded_callable, shortcut_text)
-    remove_command! : String -> {}
-    remove_command! = |key_name| Host.EditorCommandPalette_remove_command_83702148!(key_name)
+    add_command! : Str, Str, U64, Str => {}
+    add_command! = Host.editorcommandpalette_add_command_864043298!
+    remove_command! : Str => {}
+    remove_command! = Host.editorcommandpalette_remove_command_83702148!
 
 
 }

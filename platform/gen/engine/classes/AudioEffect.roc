@@ -1,16 +1,18 @@
 # class AudioEffect
+import ../../Host
+
 # inherits: Resource
 AudioEffect := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    _instantiate! : () -> AudioEffectInstance
-    _instantiate! = |_| Host.AudioEffect__instantiate_1659796816!
+    _instantiate! : () => U64
+    _instantiate! = Host.audioeffect__instantiate_1659796816!
 
 
 }

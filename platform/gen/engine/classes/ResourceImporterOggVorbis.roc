@@ -1,18 +1,20 @@
 # class ResourceImporterOggVorbis
+import ../../Host
+
 # inherits: ResourceImporter
 ResourceImporterOggVorbis := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    load_from_buffer! : PackedByteArray -> AudioStreamOggVorbis
-    load_from_buffer! = |stream_data| Host.ResourceImporterOggVorbis_load_from_buffer_354904730!(stream_data)
-    load_from_file! : String -> AudioStreamOggVorbis
-    load_from_file! = |path| Host.ResourceImporterOggVorbis_load_from_file_797568536!(path)
+    load_from_buffer! : U64 => U64
+    load_from_buffer! = Host.resourceimporteroggvorbis_load_from_buffer_354904730!
+    load_from_file! : Str => U64
+    load_from_file! = Host.resourceimporteroggvorbis_load_from_file_797568536!
 
 
 }

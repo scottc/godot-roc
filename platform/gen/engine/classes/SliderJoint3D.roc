@@ -1,18 +1,20 @@
 # class SliderJoint3D
+import ../../Host
+
 # inherits: Joint3D
 SliderJoint3D := {
     ptr : U64,
 }.{
     Param : [PARAM_LINEAR_LIMIT_UPPER, PARAM_LINEAR_LIMIT_LOWER, PARAM_LINEAR_LIMIT_SOFTNESS, PARAM_LINEAR_LIMIT_RESTITUTION, PARAM_LINEAR_LIMIT_DAMPING, PARAM_LINEAR_MOTION_SOFTNESS, PARAM_LINEAR_MOTION_RESTITUTION, PARAM_LINEAR_MOTION_DAMPING, PARAM_LINEAR_ORTHOGONAL_SOFTNESS, PARAM_LINEAR_ORTHOGONAL_RESTITUTION, PARAM_LINEAR_ORTHOGONAL_DAMPING, PARAM_ANGULAR_LIMIT_UPPER, PARAM_ANGULAR_LIMIT_LOWER, PARAM_ANGULAR_LIMIT_SOFTNESS, PARAM_ANGULAR_LIMIT_RESTITUTION, PARAM_ANGULAR_LIMIT_DAMPING, PARAM_ANGULAR_MOTION_SOFTNESS, PARAM_ANGULAR_MOTION_RESTITUTION, PARAM_ANGULAR_MOTION_DAMPING, PARAM_ANGULAR_ORTHOGONAL_SOFTNESS, PARAM_ANGULAR_ORTHOGONAL_RESTITUTION, PARAM_ANGULAR_ORTHOGONAL_DAMPING, PARAM_MAX]
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    set_param! : SliderJoint3D_Param, F32 -> {}
-    set_param! = |param, value| Host.SliderJoint3D_set_param_918243683!(param, value)
-    get_param! : SliderJoint3D_Param -> F32
-    get_param! = |param| Host.SliderJoint3D_get_param_959925627!(param)
+    set_param! : U64, F64 => {}
+    set_param! = Host.sliderjoint3d_set_param_918243683!
+    get_param! : U64 => F64
+    get_param! = Host.sliderjoint3d_get_param_959925627!
 
 
 }

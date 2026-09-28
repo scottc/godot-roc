@@ -1,4 +1,6 @@
 # builtin float
+import ../../Host
+
 GodotFloat := {
     ptr : U64
 }.{

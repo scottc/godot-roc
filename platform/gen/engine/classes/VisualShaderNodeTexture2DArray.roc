@@ -1,22 +1,20 @@
 # class VisualShaderNodeTexture2DArray
+import ../../Host
+
 # inherits: VisualShaderNodeSample3D
 VisualShaderNodeTexture2DArray := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property texture_array : Texture2DArray,CompressedTexture2DArray,PlaceholderTexture2DArray,Texture2DArrayRD
-    get_texture_array! : () -> Texture2DArray,CompressedTexture2DArray,PlaceholderTexture2DArray,Texture2DArrayRD
-    get_texture_array! = |_| Host.VisualShaderNodeTexture2DArray_get_texture_array_prop!
-    set_texture_array! : Texture2DArray,CompressedTexture2DArray,PlaceholderTexture2DArray,Texture2DArrayRD -> {}
-    set_texture_array! = |v| Host.VisualShaderNodeTexture2DArray_set_texture_array_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property texture_array : U64  getter=get_texture_array setter=set_texture_array
 
     # --- methods ---
-    set_texture_array! : TextureLayered -> {}
-    set_texture_array! = |value| Host.VisualShaderNodeTexture2DArray_set_texture_array_1278366092!(value)
-    get_texture_array! : () -> TextureLayered
-    get_texture_array! = |_| Host.VisualShaderNodeTexture2DArray_get_texture_array_3984243839!
+    set_texture_array! : U64 => {}
+    set_texture_array! = Host.visualshadernodetexture2darray_set_texture_array_1278366092!
+    get_texture_array! : () => U64
+    get_texture_array! = Host.visualshadernodetexture2darray_get_texture_array_3984243839!
 
 
 }

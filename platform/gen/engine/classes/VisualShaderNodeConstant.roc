@@ -1,11 +1,13 @@
 # class VisualShaderNodeConstant
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeConstant := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

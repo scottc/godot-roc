@@ -1,6 +1,8 @@
+import ../../Host
+
 TranslationServerSingleton := {
     ptr : U64,
 }.{
-    get! : () -> TranslationServerSingleton
-    get! = |_| { { ptr: Host.get_singleton_TranslationServer!() } }
+    get! : () => TranslationServerSingleton
+    get! = || { { ptr: Host.get_singleton_translationserver!() } }
 }

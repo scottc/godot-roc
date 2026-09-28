@@ -1,68 +1,50 @@
 # class DPITexture
+import ../../Host
+
 # inherits: Texture2D
 DPITexture := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property fix_alpha_border : Bool
-    get_fix_alpha_border! : () -> Bool
-    get_fix_alpha_border! = |_| Host.DPITexture_get_fix_alpha_border_prop!
-    set_fix_alpha_border! : Bool -> {}
-    set_fix_alpha_border! = |v| Host.DPITexture_set_fix_alpha_border_prop!(v)
-    # property premult_alpha : Bool
-    get_premult_alpha! : () -> Bool
-    get_premult_alpha! = |_| Host.DPITexture_get_premult_alpha_prop!
-    set_premult_alpha! : Bool -> {}
-    set_premult_alpha! = |v| Host.DPITexture_set_premult_alpha_prop!(v)
-    # property base_scale : F32
-    get_base_scale! : () -> F32
-    get_base_scale! = |_| Host.DPITexture_get_base_scale_prop!
-    set_base_scale! : F32 -> {}
-    set_base_scale! = |v| Host.DPITexture_set_base_scale_prop!(v)
-    # property saturation : F32
-    get_saturation! : () -> F32
-    get_saturation! = |_| Host.DPITexture_get_saturation_prop!
-    set_saturation! : F32 -> {}
-    set_saturation! = |v| Host.DPITexture_set_saturation_prop!(v)
-    # property color_map : typeddictionary::Color;Color
-    get_color_map! : () -> typeddictionary::Color;Color
-    get_color_map! = |_| Host.DPITexture_get_color_map_prop!
-    set_color_map! : typeddictionary::Color;Color -> {}
-    set_color_map! = |v| Host.DPITexture_set_color_map_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property fix_alpha_border : Bool  getter=get_fix_alpha_border setter=set_fix_alpha_border
+    # property premult_alpha : Bool  getter=get_premult_alpha setter=set_premult_alpha
+    # property base_scale : F64  getter=get_base_scale setter=set_base_scale
+    # property saturation : F64  getter=get_saturation setter=set_saturation
+    # property color_map : U64  getter=get_color_map setter=set_color_map
 
     # --- methods ---
-    create_from_string! : String, F32, F32, Dictionary -> DPITexture
-    create_from_string! = |source, scale, saturation, color_map| Host.DPITexture_create_from_string_755140520!(source, scale, saturation, color_map)
-    set_source! : String -> {}
-    set_source! = |source| Host.DPITexture_set_source_83702148!(source)
-    get_source! : () -> String
-    get_source! = |_| Host.DPITexture_get_source_201670096!
-    set_fix_alpha_border! : Bool -> {}
-    set_fix_alpha_border! = |fix_alpha_border| Host.DPITexture_set_fix_alpha_border_2586408642!(fix_alpha_border)
-    get_fix_alpha_border! : () -> Bool
-    get_fix_alpha_border! = |_| Host.DPITexture_get_fix_alpha_border_36873697!
-    set_premult_alpha! : Bool -> {}
-    set_premult_alpha! = |premult_alpha| Host.DPITexture_set_premult_alpha_2586408642!(premult_alpha)
-    get_premult_alpha! : () -> Bool
-    get_premult_alpha! = |_| Host.DPITexture_get_premult_alpha_36873697!
-    set_base_scale! : F32 -> {}
-    set_base_scale! = |base_scale| Host.DPITexture_set_base_scale_373806689!(base_scale)
-    get_base_scale! : () -> F32
-    get_base_scale! = |_| Host.DPITexture_get_base_scale_1740695150!
-    set_saturation! : F32 -> {}
-    set_saturation! = |saturation| Host.DPITexture_set_saturation_373806689!(saturation)
-    get_saturation! : () -> F32
-    get_saturation! = |_| Host.DPITexture_get_saturation_1740695150!
-    set_color_map! : Dictionary -> {}
-    set_color_map! = |color_map| Host.DPITexture_set_color_map_4155329257!(color_map)
-    get_color_map! : () -> Dictionary
-    get_color_map! = |_| Host.DPITexture_get_color_map_3102165223!
-    set_size_override! : Vector2i -> {}
-    set_size_override! = |size| Host.DPITexture_set_size_override_1130785943!(size)
-    get_scaled_rid! : () -> RID
-    get_scaled_rid! = |_| Host.DPITexture_get_scaled_rid_2944877500!
+    create_from_string! : Str, F64, F64, U64 => U64
+    create_from_string! = Host.dpitexture_create_from_string_755140520!
+    set_source! : Str => {}
+    set_source! = Host.dpitexture_set_source_83702148!
+    get_source! : () => Str
+    get_source! = Host.dpitexture_get_source_201670096!
+    set_fix_alpha_border! : Bool => {}
+    set_fix_alpha_border! = Host.dpitexture_set_fix_alpha_border_2586408642!
+    get_fix_alpha_border! : () => Bool
+    get_fix_alpha_border! = Host.dpitexture_get_fix_alpha_border_36873697!
+    set_premult_alpha! : Bool => {}
+    set_premult_alpha! = Host.dpitexture_set_premult_alpha_2586408642!
+    get_premult_alpha! : () => Bool
+    get_premult_alpha! = Host.dpitexture_get_premult_alpha_36873697!
+    set_base_scale! : F64 => {}
+    set_base_scale! = Host.dpitexture_set_base_scale_373806689!
+    get_base_scale! : () => F64
+    get_base_scale! = Host.dpitexture_get_base_scale_1740695150!
+    set_saturation! : F64 => {}
+    set_saturation! = Host.dpitexture_set_saturation_373806689!
+    get_saturation! : () => F64
+    get_saturation! = Host.dpitexture_get_saturation_1740695150!
+    set_color_map! : U64 => {}
+    set_color_map! = Host.dpitexture_set_color_map_4155329257!
+    get_color_map! : () => U64
+    get_color_map! = Host.dpitexture_get_color_map_3102165223!
+    set_size_override! : U64 => {}
+    set_size_override! = Host.dpitexture_set_size_override_1130785943!
+    get_scaled_rid! : () => U64
+    get_scaled_rid! = Host.dpitexture_get_scaled_rid_2944877500!
 
 
 }

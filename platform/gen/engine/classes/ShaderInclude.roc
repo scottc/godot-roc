@@ -1,22 +1,20 @@
 # class ShaderInclude
+import ../../Host
+
 # inherits: Resource
 ShaderInclude := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property code : String
-    get_code! : () -> String
-    get_code! = |_| Host.ShaderInclude_get_code_prop!
-    set_code! : String -> {}
-    set_code! = |v| Host.ShaderInclude_set_code_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property code : Str  getter=get_code setter=set_code
 
     # --- methods ---
-    set_code! : String -> {}
-    set_code! = |code| Host.ShaderInclude_set_code_83702148!(code)
-    get_code! : () -> String
-    get_code! = |_| Host.ShaderInclude_get_code_201670096!
+    set_code! : Str => {}
+    set_code! = Host.shaderinclude_set_code_83702148!
+    get_code! : () => Str
+    get_code! = Host.shaderinclude_get_code_201670096!
 
 
 }

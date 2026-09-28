@@ -1,11 +1,13 @@
 # class VisualShaderNodeGlobalExpression
+import ../../Host
+
 # inherits: VisualShaderNodeExpression
 VisualShaderNodeGlobalExpression := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

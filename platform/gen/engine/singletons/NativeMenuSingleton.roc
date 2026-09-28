@@ -1,6 +1,8 @@
+import ../../Host
+
 NativeMenuSingleton := {
     ptr : U64,
 }.{
-    get! : () -> NativeMenuSingleton
-    get! = |_| { { ptr: Host.get_singleton_NativeMenu!() } }
+    get! : () => NativeMenuSingleton
+    get! = || { { ptr: Host.get_singleton_nativemenu!() } }
 }

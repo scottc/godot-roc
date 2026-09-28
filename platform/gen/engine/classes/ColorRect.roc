@@ -1,22 +1,20 @@
 # class ColorRect
+import ../../Host
+
 # inherits: Control
 ColorRect := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property color : Color
-    get_color! : () -> Color
-    get_color! = |_| Host.ColorRect_get_color_prop!
-    set_color! : Color -> {}
-    set_color! = |v| Host.ColorRect_set_color_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property color : U64  getter=get_color setter=set_color
 
     # --- methods ---
-    set_color! : Color -> {}
-    set_color! = |color| Host.ColorRect_set_color_2920490490!(color)
-    get_color! : () -> Color
-    get_color! = |_| Host.ColorRect_get_color_3444240500!
+    set_color! : U64 => {}
+    set_color! = Host.colorrect_set_color_2920490490!
+    get_color! : () => U64
+    get_color! = Host.colorrect_get_color_3444240500!
 
 
 }

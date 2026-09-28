@@ -1,16 +1,18 @@
 # class CubemapArray
+import ../../Host
+
 # inherits: ImageTextureLayered
 CubemapArray := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    create_placeholder! : () -> Resource
-    create_placeholder! = |_| Host.CubemapArray_create_placeholder_121922552!
+    create_placeholder! : () => U64
+    create_placeholder! = Host.cubemaparray_create_placeholder_121922552!
 
 
 }

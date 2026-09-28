@@ -1,11 +1,13 @@
 # class VisualShaderNodeRotationByAxis
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeRotationByAxis := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

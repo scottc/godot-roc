@@ -1,20 +1,18 @@
 # class VisualShaderNodeReroute
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeReroute := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property port_type : I32
-    get_port_type! : () -> I32
-    get_port_type! = |_| Host.VisualShaderNodeReroute_get_port_type_prop!
-    _set_port_type! : I32 -> {}
-    _set_port_type! = |v| Host.VisualShaderNodeReroute__set_port_type_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property port_type : I64  getter=get_port_type setter=_set_port_type
 
     # --- methods ---
-    get_port_type! : () -> VisualShaderNode_PortType
-    get_port_type! = |_| Host.VisualShaderNodeReroute_get_port_type_1287173294!
+    get_port_type! : () => U64
+    get_port_type! = Host.visualshadernodereroute_get_port_type_1287173294!
 
 
 }

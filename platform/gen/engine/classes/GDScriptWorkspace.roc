@@ -1,30 +1,32 @@
 # class GDScriptWorkspace
+import ../../Host
+
 # inherits: RefCounted
 GDScriptWorkspace := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    apply_new_signal! : Object, String, PackedStringArray -> {}
-    apply_new_signal! = |obj, function, args| Host.GDScriptWorkspace_apply_new_signal_3682583557!(obj, function, args)
-    get_file_path! : String -> String
-    get_file_path! = |uri| Host.GDScriptWorkspace_get_file_path_1703090593!(uri)
-    get_file_uri! : String -> String
-    get_file_uri! = |path| Host.GDScriptWorkspace_get_file_uri_3135753539!(path)
-    generate_script_api! : String -> Dictionary
-    generate_script_api! = |path| Host.GDScriptWorkspace_generate_script_api_2786125124!(path)
-    didDeleteFiles! : Dictionary -> {}
-    didDeleteFiles! = |params| Host.GDScriptWorkspace_didDeleteFiles_4155329257!(params)
-    parse_script! : String, String -> Error
-    parse_script! = |path, content| Host.GDScriptWorkspace_parse_script_852856452!(path, content)
-    parse_local_script! : String -> Error
-    parse_local_script! = |path| Host.GDScriptWorkspace_parse_local_script_166001499!(path)
-    publish_diagnostics! : String -> {}
-    publish_diagnostics! = |path| Host.GDScriptWorkspace_publish_diagnostics_83702148!(path)
+    apply_new_signal! : U64, Str, U64 => {}
+    apply_new_signal! = Host.gdscriptworkspace_apply_new_signal_3682583557!
+    get_file_path! : Str => Str
+    get_file_path! = Host.gdscriptworkspace_get_file_path_1703090593!
+    get_file_uri! : Str => Str
+    get_file_uri! = Host.gdscriptworkspace_get_file_uri_3135753539!
+    generate_script_api! : Str => U64
+    generate_script_api! = Host.gdscriptworkspace_generate_script_api_2786125124!
+    didDeleteFiles! : U64 => {}
+    didDeleteFiles! = Host.gdscriptworkspace_diddeletefiles_4155329257!
+    parse_script! : Str, Str => U64
+    parse_script! = Host.gdscriptworkspace_parse_script_852856452!
+    parse_local_script! : Str => U64
+    parse_local_script! = Host.gdscriptworkspace_parse_local_script_166001499!
+    publish_diagnostics! : Str => {}
+    publish_diagnostics! = Host.gdscriptworkspace_publish_diagnostics_83702148!
 
 
 }

@@ -1,151 +1,97 @@
 # class VehicleWheel3D
+import ../../Host
+
 # inherits: Node3D
 VehicleWheel3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property engine_force : F32
-    get_engine_force! : () -> F32
-    get_engine_force! = |_| Host.VehicleWheel3D_get_engine_force_prop!
-    set_engine_force! : F32 -> {}
-    set_engine_force! = |v| Host.VehicleWheel3D_set_engine_force_prop!(v)
-    # property brake : F32
-    get_brake! : () -> F32
-    get_brake! = |_| Host.VehicleWheel3D_get_brake_prop!
-    set_brake! : F32 -> {}
-    set_brake! = |v| Host.VehicleWheel3D_set_brake_prop!(v)
-    # property steering : F32
-    get_steering! : () -> F32
-    get_steering! = |_| Host.VehicleWheel3D_get_steering_prop!
-    set_steering! : F32 -> {}
-    set_steering! = |v| Host.VehicleWheel3D_set_steering_prop!(v)
-    # property use_as_traction : Bool
-    is_used_as_traction! : () -> Bool
-    is_used_as_traction! = |_| Host.VehicleWheel3D_is_used_as_traction_prop!
-    set_use_as_traction! : Bool -> {}
-    set_use_as_traction! = |v| Host.VehicleWheel3D_set_use_as_traction_prop!(v)
-    # property use_as_steering : Bool
-    is_used_as_steering! : () -> Bool
-    is_used_as_steering! = |_| Host.VehicleWheel3D_is_used_as_steering_prop!
-    set_use_as_steering! : Bool -> {}
-    set_use_as_steering! = |v| Host.VehicleWheel3D_set_use_as_steering_prop!(v)
-    # property wheel_roll_influence : F32
-    get_roll_influence! : () -> F32
-    get_roll_influence! = |_| Host.VehicleWheel3D_get_roll_influence_prop!
-    set_roll_influence! : F32 -> {}
-    set_roll_influence! = |v| Host.VehicleWheel3D_set_roll_influence_prop!(v)
-    # property wheel_radius : F32
-    get_radius! : () -> F32
-    get_radius! = |_| Host.VehicleWheel3D_get_radius_prop!
-    set_radius! : F32 -> {}
-    set_radius! = |v| Host.VehicleWheel3D_set_radius_prop!(v)
-    # property wheel_rest_length : F32
-    get_suspension_rest_length! : () -> F32
-    get_suspension_rest_length! = |_| Host.VehicleWheel3D_get_suspension_rest_length_prop!
-    set_suspension_rest_length! : F32 -> {}
-    set_suspension_rest_length! = |v| Host.VehicleWheel3D_set_suspension_rest_length_prop!(v)
-    # property wheel_friction_slip : F32
-    get_friction_slip! : () -> F32
-    get_friction_slip! = |_| Host.VehicleWheel3D_get_friction_slip_prop!
-    set_friction_slip! : F32 -> {}
-    set_friction_slip! = |v| Host.VehicleWheel3D_set_friction_slip_prop!(v)
-    # property suspension_travel : F32
-    get_suspension_travel! : () -> F32
-    get_suspension_travel! = |_| Host.VehicleWheel3D_get_suspension_travel_prop!
-    set_suspension_travel! : F32 -> {}
-    set_suspension_travel! = |v| Host.VehicleWheel3D_set_suspension_travel_prop!(v)
-    # property suspension_stiffness : F32
-    get_suspension_stiffness! : () -> F32
-    get_suspension_stiffness! = |_| Host.VehicleWheel3D_get_suspension_stiffness_prop!
-    set_suspension_stiffness! : F32 -> {}
-    set_suspension_stiffness! = |v| Host.VehicleWheel3D_set_suspension_stiffness_prop!(v)
-    # property suspension_max_force : F32
-    get_suspension_max_force! : () -> F32
-    get_suspension_max_force! = |_| Host.VehicleWheel3D_get_suspension_max_force_prop!
-    set_suspension_max_force! : F32 -> {}
-    set_suspension_max_force! = |v| Host.VehicleWheel3D_set_suspension_max_force_prop!(v)
-    # property damping_compression : F32
-    get_damping_compression! : () -> F32
-    get_damping_compression! = |_| Host.VehicleWheel3D_get_damping_compression_prop!
-    set_damping_compression! : F32 -> {}
-    set_damping_compression! = |v| Host.VehicleWheel3D_set_damping_compression_prop!(v)
-    # property damping_relaxation : F32
-    get_damping_relaxation! : () -> F32
-    get_damping_relaxation! = |_| Host.VehicleWheel3D_get_damping_relaxation_prop!
-    set_damping_relaxation! : F32 -> {}
-    set_damping_relaxation! = |v| Host.VehicleWheel3D_set_damping_relaxation_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property engine_force : F64  getter=get_engine_force setter=set_engine_force
+    # property brake : F64  getter=get_brake setter=set_brake
+    # property steering : F64  getter=get_steering setter=set_steering
+    # property use_as_traction : Bool  getter=is_used_as_traction setter=set_use_as_traction
+    # property use_as_steering : Bool  getter=is_used_as_steering setter=set_use_as_steering
+    # property wheel_roll_influence : F64  getter=get_roll_influence setter=set_roll_influence
+    # property wheel_radius : F64  getter=get_radius setter=set_radius
+    # property wheel_rest_length : F64  getter=get_suspension_rest_length setter=set_suspension_rest_length
+    # property wheel_friction_slip : F64  getter=get_friction_slip setter=set_friction_slip
+    # property suspension_travel : F64  getter=get_suspension_travel setter=set_suspension_travel
+    # property suspension_stiffness : F64  getter=get_suspension_stiffness setter=set_suspension_stiffness
+    # property suspension_max_force : F64  getter=get_suspension_max_force setter=set_suspension_max_force
+    # property damping_compression : F64  getter=get_damping_compression setter=set_damping_compression
+    # property damping_relaxation : F64  getter=get_damping_relaxation setter=set_damping_relaxation
 
     # --- methods ---
-    set_radius! : F32 -> {}
-    set_radius! = |length| Host.VehicleWheel3D_set_radius_373806689!(length)
-    get_radius! : () -> F32
-    get_radius! = |_| Host.VehicleWheel3D_get_radius_1740695150!
-    set_suspension_rest_length! : F32 -> {}
-    set_suspension_rest_length! = |length| Host.VehicleWheel3D_set_suspension_rest_length_373806689!(length)
-    get_suspension_rest_length! : () -> F32
-    get_suspension_rest_length! = |_| Host.VehicleWheel3D_get_suspension_rest_length_1740695150!
-    set_suspension_travel! : F32 -> {}
-    set_suspension_travel! = |length| Host.VehicleWheel3D_set_suspension_travel_373806689!(length)
-    get_suspension_travel! : () -> F32
-    get_suspension_travel! = |_| Host.VehicleWheel3D_get_suspension_travel_1740695150!
-    set_suspension_stiffness! : F32 -> {}
-    set_suspension_stiffness! = |length| Host.VehicleWheel3D_set_suspension_stiffness_373806689!(length)
-    get_suspension_stiffness! : () -> F32
-    get_suspension_stiffness! = |_| Host.VehicleWheel3D_get_suspension_stiffness_1740695150!
-    set_suspension_max_force! : F32 -> {}
-    set_suspension_max_force! = |length| Host.VehicleWheel3D_set_suspension_max_force_373806689!(length)
-    get_suspension_max_force! : () -> F32
-    get_suspension_max_force! = |_| Host.VehicleWheel3D_get_suspension_max_force_1740695150!
-    set_damping_compression! : F32 -> {}
-    set_damping_compression! = |length| Host.VehicleWheel3D_set_damping_compression_373806689!(length)
-    get_damping_compression! : () -> F32
-    get_damping_compression! = |_| Host.VehicleWheel3D_get_damping_compression_1740695150!
-    set_damping_relaxation! : F32 -> {}
-    set_damping_relaxation! = |length| Host.VehicleWheel3D_set_damping_relaxation_373806689!(length)
-    get_damping_relaxation! : () -> F32
-    get_damping_relaxation! = |_| Host.VehicleWheel3D_get_damping_relaxation_1740695150!
-    set_use_as_traction! : Bool -> {}
-    set_use_as_traction! = |enable| Host.VehicleWheel3D_set_use_as_traction_2586408642!(enable)
-    is_used_as_traction! : () -> Bool
-    is_used_as_traction! = |_| Host.VehicleWheel3D_is_used_as_traction_36873697!
-    set_use_as_steering! : Bool -> {}
-    set_use_as_steering! = |enable| Host.VehicleWheel3D_set_use_as_steering_2586408642!(enable)
-    is_used_as_steering! : () -> Bool
-    is_used_as_steering! = |_| Host.VehicleWheel3D_is_used_as_steering_36873697!
-    set_friction_slip! : F32 -> {}
-    set_friction_slip! = |length| Host.VehicleWheel3D_set_friction_slip_373806689!(length)
-    get_friction_slip! : () -> F32
-    get_friction_slip! = |_| Host.VehicleWheel3D_get_friction_slip_1740695150!
-    is_in_contact! : () -> Bool
-    is_in_contact! = |_| Host.VehicleWheel3D_is_in_contact_36873697!
-    get_contact_body! : () -> Node3D
-    get_contact_body! = |_| Host.VehicleWheel3D_get_contact_body_151077316!
-    get_contact_point! : () -> Vector3
-    get_contact_point! = |_| Host.VehicleWheel3D_get_contact_point_3360562783!
-    get_contact_normal! : () -> Vector3
-    get_contact_normal! = |_| Host.VehicleWheel3D_get_contact_normal_3360562783!
-    set_roll_influence! : F32 -> {}
-    set_roll_influence! = |roll_influence| Host.VehicleWheel3D_set_roll_influence_373806689!(roll_influence)
-    get_roll_influence! : () -> F32
-    get_roll_influence! = |_| Host.VehicleWheel3D_get_roll_influence_1740695150!
-    get_skidinfo! : () -> F32
-    get_skidinfo! = |_| Host.VehicleWheel3D_get_skidinfo_1740695150!
-    get_rpm! : () -> F32
-    get_rpm! = |_| Host.VehicleWheel3D_get_rpm_1740695150!
-    set_engine_force! : F32 -> {}
-    set_engine_force! = |engine_force| Host.VehicleWheel3D_set_engine_force_373806689!(engine_force)
-    get_engine_force! : () -> F32
-    get_engine_force! = |_| Host.VehicleWheel3D_get_engine_force_1740695150!
-    set_brake! : F32 -> {}
-    set_brake! = |brake| Host.VehicleWheel3D_set_brake_373806689!(brake)
-    get_brake! : () -> F32
-    get_brake! = |_| Host.VehicleWheel3D_get_brake_1740695150!
-    set_steering! : F32 -> {}
-    set_steering! = |steering| Host.VehicleWheel3D_set_steering_373806689!(steering)
-    get_steering! : () -> F32
-    get_steering! = |_| Host.VehicleWheel3D_get_steering_1740695150!
+    set_radius! : F64 => {}
+    set_radius! = Host.vehiclewheel3d_set_radius_373806689!
+    get_radius! : () => F64
+    get_radius! = Host.vehiclewheel3d_get_radius_1740695150!
+    set_suspension_rest_length! : F64 => {}
+    set_suspension_rest_length! = Host.vehiclewheel3d_set_suspension_rest_length_373806689!
+    get_suspension_rest_length! : () => F64
+    get_suspension_rest_length! = Host.vehiclewheel3d_get_suspension_rest_length_1740695150!
+    set_suspension_travel! : F64 => {}
+    set_suspension_travel! = Host.vehiclewheel3d_set_suspension_travel_373806689!
+    get_suspension_travel! : () => F64
+    get_suspension_travel! = Host.vehiclewheel3d_get_suspension_travel_1740695150!
+    set_suspension_stiffness! : F64 => {}
+    set_suspension_stiffness! = Host.vehiclewheel3d_set_suspension_stiffness_373806689!
+    get_suspension_stiffness! : () => F64
+    get_suspension_stiffness! = Host.vehiclewheel3d_get_suspension_stiffness_1740695150!
+    set_suspension_max_force! : F64 => {}
+    set_suspension_max_force! = Host.vehiclewheel3d_set_suspension_max_force_373806689!
+    get_suspension_max_force! : () => F64
+    get_suspension_max_force! = Host.vehiclewheel3d_get_suspension_max_force_1740695150!
+    set_damping_compression! : F64 => {}
+    set_damping_compression! = Host.vehiclewheel3d_set_damping_compression_373806689!
+    get_damping_compression! : () => F64
+    get_damping_compression! = Host.vehiclewheel3d_get_damping_compression_1740695150!
+    set_damping_relaxation! : F64 => {}
+    set_damping_relaxation! = Host.vehiclewheel3d_set_damping_relaxation_373806689!
+    get_damping_relaxation! : () => F64
+    get_damping_relaxation! = Host.vehiclewheel3d_get_damping_relaxation_1740695150!
+    set_use_as_traction! : Bool => {}
+    set_use_as_traction! = Host.vehiclewheel3d_set_use_as_traction_2586408642!
+    is_used_as_traction! : () => Bool
+    is_used_as_traction! = Host.vehiclewheel3d_is_used_as_traction_36873697!
+    set_use_as_steering! : Bool => {}
+    set_use_as_steering! = Host.vehiclewheel3d_set_use_as_steering_2586408642!
+    is_used_as_steering! : () => Bool
+    is_used_as_steering! = Host.vehiclewheel3d_is_used_as_steering_36873697!
+    set_friction_slip! : F64 => {}
+    set_friction_slip! = Host.vehiclewheel3d_set_friction_slip_373806689!
+    get_friction_slip! : () => F64
+    get_friction_slip! = Host.vehiclewheel3d_get_friction_slip_1740695150!
+    is_in_contact! : () => Bool
+    is_in_contact! = Host.vehiclewheel3d_is_in_contact_36873697!
+    get_contact_body! : () => U64
+    get_contact_body! = Host.vehiclewheel3d_get_contact_body_151077316!
+    get_contact_point! : () => U64
+    get_contact_point! = Host.vehiclewheel3d_get_contact_point_3360562783!
+    get_contact_normal! : () => U64
+    get_contact_normal! = Host.vehiclewheel3d_get_contact_normal_3360562783!
+    set_roll_influence! : F64 => {}
+    set_roll_influence! = Host.vehiclewheel3d_set_roll_influence_373806689!
+    get_roll_influence! : () => F64
+    get_roll_influence! = Host.vehiclewheel3d_get_roll_influence_1740695150!
+    get_skidinfo! : () => F64
+    get_skidinfo! = Host.vehiclewheel3d_get_skidinfo_1740695150!
+    get_rpm! : () => F64
+    get_rpm! = Host.vehiclewheel3d_get_rpm_1740695150!
+    set_engine_force! : F64 => {}
+    set_engine_force! = Host.vehiclewheel3d_set_engine_force_373806689!
+    get_engine_force! : () => F64
+    get_engine_force! = Host.vehiclewheel3d_get_engine_force_1740695150!
+    set_brake! : F64 => {}
+    set_brake! = Host.vehiclewheel3d_set_brake_373806689!
+    get_brake! : () => F64
+    get_brake! = Host.vehiclewheel3d_get_brake_1740695150!
+    set_steering! : F64 => {}
+    set_steering! = Host.vehiclewheel3d_set_steering_373806689!
+    get_steering! : () => F64
+    get_steering! = Host.vehiclewheel3d_get_steering_1740695150!
 
 
 }

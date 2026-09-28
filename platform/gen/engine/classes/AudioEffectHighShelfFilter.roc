@@ -1,11 +1,13 @@
 # class AudioEffectHighShelfFilter
+import ../../Host
+
 # inherits: AudioEffectFilter
 AudioEffectHighShelfFilter := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

@@ -1,11 +1,13 @@
 # class VisualShaderNodeUVPolarCoord
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeUVPolarCoord := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

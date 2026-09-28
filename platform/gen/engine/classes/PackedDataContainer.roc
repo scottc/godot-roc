@@ -1,18 +1,20 @@
 # class PackedDataContainer
+import ../../Host
+
 # inherits: Resource
 PackedDataContainer := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    pack! : Variant -> Error
-    pack! = |value| Host.PackedDataContainer_pack_966674026!(value)
-    size! : () -> I32
-    size! = |_| Host.PackedDataContainer_size_3905245786!
+    pack! : U64 => U64
+    pack! = Host.packeddatacontainer_pack_966674026!
+    size! : () => I64
+    size! = Host.packeddatacontainer_size_3905245786!
 
 
 }

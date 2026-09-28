@@ -1,22 +1,20 @@
 # class BlitMaterial
+import ../../Host
+
 # inherits: Material
 BlitMaterial := {
     ptr : U64,
 }.{
     BlendMode : [BLEND_MODE_MIX, BLEND_MODE_ADD, BLEND_MODE_SUB, BLEND_MODE_MUL, BLEND_MODE_DISABLED]
 
-    # --- properties ---
-    # property blend_mode : I32
-    get_blend_mode! : () -> I32
-    get_blend_mode! = |_| Host.BlitMaterial_get_blend_mode_prop!
-    set_blend_mode! : I32 -> {}
-    set_blend_mode! = |v| Host.BlitMaterial_set_blend_mode_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property blend_mode : I64  getter=get_blend_mode setter=set_blend_mode
 
     # --- methods ---
-    set_blend_mode! : BlitMaterial_BlendMode -> {}
-    set_blend_mode! = |blend_mode| Host.BlitMaterial_set_blend_mode_80206916!(blend_mode)
-    get_blend_mode! : () -> BlitMaterial_BlendMode
-    get_blend_mode! = |_| Host.BlitMaterial_get_blend_mode_4234246416!
+    set_blend_mode! : U64 => {}
+    set_blend_mode! = Host.blitmaterial_set_blend_mode_80206916!
+    get_blend_mode! : () => U64
+    get_blend_mode! = Host.blitmaterial_get_blend_mode_4234246416!
 
 
 }

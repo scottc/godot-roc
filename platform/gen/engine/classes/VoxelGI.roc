@@ -1,53 +1,39 @@
 # class VoxelGI
+import ../../Host
+
 # inherits: VisualInstance3D
 VoxelGI := {
     ptr : U64,
 }.{
     Subdiv : [SUBDIV_64, SUBDIV_128, SUBDIV_256, SUBDIV_512, SUBDIV_MAX]
 
-    # --- properties ---
-    # property subdiv : I32
-    get_subdiv! : () -> I32
-    get_subdiv! = |_| Host.VoxelGI_get_subdiv_prop!
-    set_subdiv! : I32 -> {}
-    set_subdiv! = |v| Host.VoxelGI_set_subdiv_prop!(v)
-    # property size : Vector3
-    get_size! : () -> Vector3
-    get_size! = |_| Host.VoxelGI_get_size_prop!
-    set_size! : Vector3 -> {}
-    set_size! = |v| Host.VoxelGI_set_size_prop!(v)
-    # property camera_attributes : CameraAttributesPractical,CameraAttributesPhysical
-    get_camera_attributes! : () -> CameraAttributesPractical,CameraAttributesPhysical
-    get_camera_attributes! = |_| Host.VoxelGI_get_camera_attributes_prop!
-    set_camera_attributes! : CameraAttributesPractical,CameraAttributesPhysical -> {}
-    set_camera_attributes! = |v| Host.VoxelGI_set_camera_attributes_prop!(v)
-    # property data : VoxelGIData
-    get_probe_data! : () -> VoxelGIData
-    get_probe_data! = |_| Host.VoxelGI_get_probe_data_prop!
-    set_probe_data! : VoxelGIData -> {}
-    set_probe_data! = |v| Host.VoxelGI_set_probe_data_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property subdiv : I64  getter=get_subdiv setter=set_subdiv
+    # property size : U64  getter=get_size setter=set_size
+    # property camera_attributes : U64  getter=get_camera_attributes setter=set_camera_attributes
+    # property data : U64  getter=get_probe_data setter=set_probe_data
 
     # --- methods ---
-    set_probe_data! : VoxelGIData -> {}
-    set_probe_data! = |data| Host.VoxelGI_set_probe_data_1637849675!(data)
-    get_probe_data! : () -> VoxelGIData
-    get_probe_data! = |_| Host.VoxelGI_get_probe_data_1730645405!
-    set_subdiv! : VoxelGI_Subdiv -> {}
-    set_subdiv! = |subdiv| Host.VoxelGI_set_subdiv_2240898472!(subdiv)
-    get_subdiv! : () -> VoxelGI_Subdiv
-    get_subdiv! = |_| Host.VoxelGI_get_subdiv_4261647950!
-    set_size! : Vector3 -> {}
-    set_size! = |size| Host.VoxelGI_set_size_3460891852!(size)
-    get_size! : () -> Vector3
-    get_size! = |_| Host.VoxelGI_get_size_3360562783!
-    set_camera_attributes! : CameraAttributes -> {}
-    set_camera_attributes! = |camera_attributes| Host.VoxelGI_set_camera_attributes_2817810567!(camera_attributes)
-    get_camera_attributes! : () -> CameraAttributes
-    get_camera_attributes! = |_| Host.VoxelGI_get_camera_attributes_3921283215!
-    bake! : Node, Bool -> {}
-    bake! = |from_node, create_visual_debug| Host.VoxelGI_bake_2781551026!(from_node, create_visual_debug)
-    debug_bake! : () -> {}
-    debug_bake! = |_| Host.VoxelGI_debug_bake_3218959716!
+    set_probe_data! : U64 => {}
+    set_probe_data! = Host.voxelgi_set_probe_data_1637849675!
+    get_probe_data! : () => U64
+    get_probe_data! = Host.voxelgi_get_probe_data_1730645405!
+    set_subdiv! : U64 => {}
+    set_subdiv! = Host.voxelgi_set_subdiv_2240898472!
+    get_subdiv! : () => U64
+    get_subdiv! = Host.voxelgi_get_subdiv_4261647950!
+    set_size! : U64 => {}
+    set_size! = Host.voxelgi_set_size_3460891852!
+    get_size! : () => U64
+    get_size! = Host.voxelgi_get_size_3360562783!
+    set_camera_attributes! : U64 => {}
+    set_camera_attributes! = Host.voxelgi_set_camera_attributes_2817810567!
+    get_camera_attributes! : () => U64
+    get_camera_attributes! = Host.voxelgi_get_camera_attributes_3921283215!
+    bake! : U64, Bool => {}
+    bake! = Host.voxelgi_bake_2781551026!
+    debug_bake! : () => {}
+    debug_bake! = Host.voxelgi_debug_bake_3218959716!
 
 
 }

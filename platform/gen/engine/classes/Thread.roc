@@ -1,28 +1,30 @@
 # class Thread
+import ../../Host
+
 # inherits: RefCounted
 Thread := {
     ptr : U64,
 }.{
     Priority : [PRIORITY_LOW, PRIORITY_NORMAL, PRIORITY_HIGH]
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    start! : Callable, Thread_Priority -> Error
-    start! = |callable, priority| Host.Thread_start_1327203254!(callable, priority)
-    get_id! : () -> String
-    get_id! = |_| Host.Thread_get_id_201670096!
-    is_started! : () -> Bool
-    is_started! = |_| Host.Thread_is_started_36873697!
-    is_alive! : () -> Bool
-    is_alive! = |_| Host.Thread_is_alive_36873697!
-    wait_to_finish! : () -> Variant
-    wait_to_finish! = |_| Host.Thread_wait_to_finish_1460262497!
-    set_thread_safety_checks_enabled! : Bool -> {}
-    set_thread_safety_checks_enabled! = |enabled| Host.Thread_set_thread_safety_checks_enabled_2586408642!(enabled)
-    is_main_thread! : () -> Bool
-    is_main_thread! = |_| Host.Thread_is_main_thread_2240911060!
+    start! : U64, U64 => U64
+    start! = Host.thread_start_1327203254!
+    get_id! : () => Str
+    get_id! = Host.thread_get_id_201670096!
+    is_started! : () => Bool
+    is_started! = Host.thread_is_started_36873697!
+    is_alive! : () => Bool
+    is_alive! = Host.thread_is_alive_36873697!
+    wait_to_finish! : () => U64
+    wait_to_finish! = Host.thread_wait_to_finish_1460262497!
+    set_thread_safety_checks_enabled! : Bool => {}
+    set_thread_safety_checks_enabled! = Host.thread_set_thread_safety_checks_enabled_2586408642!
+    is_main_thread! : () => Bool
+    is_main_thread! = Host.thread_is_main_thread_2240911060!
 
 
 }

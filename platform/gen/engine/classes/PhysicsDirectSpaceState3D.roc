@@ -1,26 +1,28 @@
 # class PhysicsDirectSpaceState3D
+import ../../Host
+
 # inherits: Object
 PhysicsDirectSpaceState3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    intersect_point! : PhysicsPointQueryParameters3D, I32 -> typedarray::Dictionary
-    intersect_point! = |parameters, max_results| Host.PhysicsDirectSpaceState3D_intersect_point_975173756!(parameters, max_results)
-    intersect_ray! : PhysicsRayQueryParameters3D -> Dictionary
-    intersect_ray! = |parameters| Host.PhysicsDirectSpaceState3D_intersect_ray_3957970750!(parameters)
-    intersect_shape! : PhysicsShapeQueryParameters3D, I32 -> typedarray::Dictionary
-    intersect_shape! = |parameters, max_results| Host.PhysicsDirectSpaceState3D_intersect_shape_3762137681!(parameters, max_results)
-    cast_motion! : PhysicsShapeQueryParameters3D -> PackedFloat32Array
-    cast_motion! = |parameters| Host.PhysicsDirectSpaceState3D_cast_motion_1778757334!(parameters)
-    collide_shape! : PhysicsShapeQueryParameters3D, I32 -> typedarray::Vector3
-    collide_shape! = |parameters, max_results| Host.PhysicsDirectSpaceState3D_collide_shape_3762137681!(parameters, max_results)
-    get_rest_info! : PhysicsShapeQueryParameters3D -> Dictionary
-    get_rest_info! = |parameters| Host.PhysicsDirectSpaceState3D_get_rest_info_1376751592!(parameters)
+    intersect_point! : U64, I64 => U64
+    intersect_point! = Host.physicsdirectspacestate3d_intersect_point_975173756!
+    intersect_ray! : U64 => U64
+    intersect_ray! = Host.physicsdirectspacestate3d_intersect_ray_3957970750!
+    intersect_shape! : U64, I64 => U64
+    intersect_shape! = Host.physicsdirectspacestate3d_intersect_shape_3762137681!
+    cast_motion! : U64 => U64
+    cast_motion! = Host.physicsdirectspacestate3d_cast_motion_1778757334!
+    collide_shape! : U64, I64 => U64
+    collide_shape! = Host.physicsdirectspacestate3d_collide_shape_3762137681!
+    get_rest_info! : U64 => U64
+    get_rest_info! = Host.physicsdirectspacestate3d_get_rest_info_1376751592!
 
 
 }

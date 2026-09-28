@@ -1,11 +1,13 @@
 # class ResourceImporterCSVTranslation
+import ../../Host
+
 # inherits: ResourceImporter
 ResourceImporterCSVTranslation := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

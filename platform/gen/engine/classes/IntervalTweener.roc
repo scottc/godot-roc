@@ -1,11 +1,13 @@
 # class IntervalTweener
+import ../../Host
+
 # inherits: Tweener
 IntervalTweener := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

@@ -1,11 +1,13 @@
 # class VisualShaderNodeVectorDistance
+import ../../Host
+
 # inherits: VisualShaderNodeVectorBase
 VisualShaderNodeVectorDistance := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

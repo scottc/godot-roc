@@ -1,22 +1,20 @@
 # class GPUParticlesCollisionBox3D
+import ../../Host
+
 # inherits: GPUParticlesCollision3D
 GPUParticlesCollisionBox3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property size : Vector3
-    get_size! : () -> Vector3
-    get_size! = |_| Host.GPUParticlesCollisionBox3D_get_size_prop!
-    set_size! : Vector3 -> {}
-    set_size! = |v| Host.GPUParticlesCollisionBox3D_set_size_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property size : U64  getter=get_size setter=set_size
 
     # --- methods ---
-    set_size! : Vector3 -> {}
-    set_size! = |size| Host.GPUParticlesCollisionBox3D_set_size_3460891852!(size)
-    get_size! : () -> Vector3
-    get_size! = |_| Host.GPUParticlesCollisionBox3D_get_size_3360562783!
+    set_size! : U64 => {}
+    set_size! = Host.gpuparticlescollisionbox3d_set_size_3460891852!
+    get_size! : () => U64
+    get_size! = Host.gpuparticlescollisionbox3d_get_size_3360562783!
 
 
 }

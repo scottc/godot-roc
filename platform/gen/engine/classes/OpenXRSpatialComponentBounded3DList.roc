@@ -1,18 +1,20 @@
 # class OpenXRSpatialComponentBounded3DList
+import ../../Host
+
 # inherits: OpenXRSpatialComponentData
 OpenXRSpatialComponentBounded3DList := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    get_center_pose! : I32 -> Transform3D
-    get_center_pose! = |index| Host.OpenXRSpatialComponentBounded3DList_get_center_pose_1965739696!(index)
-    get_size! : I32 -> Vector3
-    get_size! = |index| Host.OpenXRSpatialComponentBounded3DList_get_size_711720468!(index)
+    get_center_pose! : I64 => U64
+    get_center_pose! = Host.openxrspatialcomponentbounded3dlist_get_center_pose_1965739696!
+    get_size! : I64 => U64
+    get_size! = Host.openxrspatialcomponentbounded3dlist_get_size_711720468!
 
 
 }

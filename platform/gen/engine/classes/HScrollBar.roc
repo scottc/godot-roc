@@ -1,11 +1,13 @@
 # class HScrollBar
+import ../../Host
+
 # inherits: ScrollBar
 HScrollBar := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

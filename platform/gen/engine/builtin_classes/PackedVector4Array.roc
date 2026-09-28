@@ -1,4 +1,6 @@
 # builtin PackedVector4Array
+import ../../Host
+
 PackedVector4Array := {
     ptr : U64
 }.{
@@ -7,50 +9,50 @@ PackedVector4Array := {
 
 
     # --- methods ---
-    get! : I32 -> Vector4
-    get! = |index| Host.PackedVector4Array_get_1227817084!(index)
-    set! : I32, Vector4 -> {}
-    set! = |index, value| Host.PackedVector4Array_set_1350366223!(index, value)
-    size! : () -> I32
-    size! = |_| Host.PackedVector4Array_size_3173160232!
-    is_empty! : () -> Bool
-    is_empty! = |_| Host.PackedVector4Array_is_empty_3918633141!
-    push_back! : Vector4 -> Bool
-    push_back! = |value| Host.PackedVector4Array_push_back_3289167688!(value)
-    append! : Vector4 -> Bool
-    append! = |value| Host.PackedVector4Array_append_3289167688!(value)
-    append_array! : PackedVector4Array -> {}
-    append_array! = |array| Host.PackedVector4Array_append_array_537428395!(array)
-    remove_at! : I32 -> {}
-    remove_at! = |index| Host.PackedVector4Array_remove_at_2823966027!(index)
-    insert! : I32, Vector4 -> I32
-    insert! = |at_index, value| Host.PackedVector4Array_insert_11085009!(at_index, value)
-    fill! : Vector4 -> {}
-    fill! = |value| Host.PackedVector4Array_fill_3761353134!(value)
-    resize! : I32 -> I32
-    resize! = |new_size| Host.PackedVector4Array_resize_848867239!(new_size)
-    clear! : () -> {}
-    clear! = |_| Host.PackedVector4Array_clear_3218959716!
-    has! : Vector4 -> Bool
-    has! = |value| Host.PackedVector4Array_has_88913544!(value)
-    reverse! : () -> {}
-    reverse! = |_| Host.PackedVector4Array_reverse_3218959716!
-    slice! : I32, I32 -> PackedVector4Array
-    slice! = |begin, end| Host.PackedVector4Array_slice_2942803855!(begin, end)
-    to_byte_array! : () -> PackedByteArray
-    to_byte_array! = |_| Host.PackedVector4Array_to_byte_array_247621236!
-    sort! : () -> {}
-    sort! = |_| Host.PackedVector4Array_sort_3218959716!
-    bsearch! : Vector4, Bool -> I32
-    bsearch! = |value, before| Host.PackedVector4Array_bsearch_1822067054!(value, before)
-    duplicate! : () -> PackedVector4Array
-    duplicate! = |_| Host.PackedVector4Array_duplicate_146203628!
-    find! : Vector4, I32 -> I32
-    find! = |value, from| Host.PackedVector4Array_find_3091171314!(value, from)
-    rfind! : Vector4, I32 -> I32
-    rfind! = |value, from| Host.PackedVector4Array_rfind_3091171314!(value, from)
-    count! : Vector4 -> I32
-    count! = |value| Host.PackedVector4Array_count_3956594488!(value)
-    erase! : Vector4 -> Bool
-    erase! = |value| Host.PackedVector4Array_erase_3289167688!(value)
+    get! : I64 => U64
+    get! = Host.packedvector4array_get_1227817084!
+    set! : I64, U64 => {}
+    set! = Host.packedvector4array_set_1350366223!
+    size! : () => I64
+    size! = Host.packedvector4array_size_3173160232!
+    is_empty! : () => Bool
+    is_empty! = Host.packedvector4array_is_empty_3918633141!
+    push_back! : U64 => Bool
+    push_back! = Host.packedvector4array_push_back_3289167688!
+    append! : U64 => Bool
+    append! = Host.packedvector4array_append_3289167688!
+    append_array! : U64 => {}
+    append_array! = Host.packedvector4array_append_array_537428395!
+    remove_at! : I64 => {}
+    remove_at! = Host.packedvector4array_remove_at_2823966027!
+    insert! : I64, U64 => I64
+    insert! = Host.packedvector4array_insert_11085009!
+    fill! : U64 => {}
+    fill! = Host.packedvector4array_fill_3761353134!
+    resize! : I64 => I64
+    resize! = Host.packedvector4array_resize_848867239!
+    clear! : () => {}
+    clear! = Host.packedvector4array_clear_3218959716!
+    has! : U64 => Bool
+    has! = Host.packedvector4array_has_88913544!
+    reverse! : () => {}
+    reverse! = Host.packedvector4array_reverse_3218959716!
+    slice! : I64, I64 => U64
+    slice! = Host.packedvector4array_slice_2942803855!
+    to_byte_array! : () => U64
+    to_byte_array! = Host.packedvector4array_to_byte_array_247621236!
+    sort! : () => {}
+    sort! = Host.packedvector4array_sort_3218959716!
+    bsearch! : U64, Bool => I64
+    bsearch! = Host.packedvector4array_bsearch_1822067054!
+    duplicate! : () => U64
+    duplicate! = Host.packedvector4array_duplicate_146203628!
+    find! : U64, I64 => I64
+    find! = Host.packedvector4array_find_3091171314!
+    rfind! : U64, I64 => I64
+    rfind! = Host.packedvector4array_rfind_3091171314!
+    count! : U64 => I64
+    count! = Host.packedvector4array_count_3956594488!
+    erase! : U64 => Bool
+    erase! = Host.packedvector4array_erase_3289167688!
 }

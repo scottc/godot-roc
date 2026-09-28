@@ -1,11 +1,13 @@
 # class VisualShaderNodeParticleConeVelocity
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeParticleConeVelocity := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

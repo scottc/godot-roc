@@ -1,49 +1,35 @@
 # class SpringBoneCollisionCapsule3D
+import ../../Host
+
 # inherits: SpringBoneCollision3D
 SpringBoneCollisionCapsule3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property radius : F32
-    get_radius! : () -> F32
-    get_radius! = |_| Host.SpringBoneCollisionCapsule3D_get_radius_prop!
-    set_radius! : F32 -> {}
-    set_radius! = |v| Host.SpringBoneCollisionCapsule3D_set_radius_prop!(v)
-    # property height : F32
-    get_height! : () -> F32
-    get_height! = |_| Host.SpringBoneCollisionCapsule3D_get_height_prop!
-    set_height! : F32 -> {}
-    set_height! = |v| Host.SpringBoneCollisionCapsule3D_set_height_prop!(v)
-    # property mid_height : F32
-    get_mid_height! : () -> F32
-    get_mid_height! = |_| Host.SpringBoneCollisionCapsule3D_get_mid_height_prop!
-    set_mid_height! : F32 -> {}
-    set_mid_height! = |v| Host.SpringBoneCollisionCapsule3D_set_mid_height_prop!(v)
-    # property inside : Bool
-    is_inside! : () -> Bool
-    is_inside! = |_| Host.SpringBoneCollisionCapsule3D_is_inside_prop!
-    set_inside! : Bool -> {}
-    set_inside! = |v| Host.SpringBoneCollisionCapsule3D_set_inside_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property radius : F64  getter=get_radius setter=set_radius
+    # property height : F64  getter=get_height setter=set_height
+    # property mid_height : F64  getter=get_mid_height setter=set_mid_height
+    # property inside : Bool  getter=is_inside setter=set_inside
 
     # --- methods ---
-    set_radius! : F32 -> {}
-    set_radius! = |radius| Host.SpringBoneCollisionCapsule3D_set_radius_373806689!(radius)
-    get_radius! : () -> F32
-    get_radius! = |_| Host.SpringBoneCollisionCapsule3D_get_radius_1740695150!
-    set_height! : F32 -> {}
-    set_height! = |height| Host.SpringBoneCollisionCapsule3D_set_height_373806689!(height)
-    get_height! : () -> F32
-    get_height! = |_| Host.SpringBoneCollisionCapsule3D_get_height_1740695150!
-    set_mid_height! : F32 -> {}
-    set_mid_height! = |mid_height| Host.SpringBoneCollisionCapsule3D_set_mid_height_373806689!(mid_height)
-    get_mid_height! : () -> F32
-    get_mid_height! = |_| Host.SpringBoneCollisionCapsule3D_get_mid_height_1740695150!
-    set_inside! : Bool -> {}
-    set_inside! = |enabled| Host.SpringBoneCollisionCapsule3D_set_inside_2586408642!(enabled)
-    is_inside! : () -> Bool
-    is_inside! = |_| Host.SpringBoneCollisionCapsule3D_is_inside_36873697!
+    set_radius! : F64 => {}
+    set_radius! = Host.springbonecollisioncapsule3d_set_radius_373806689!
+    get_radius! : () => F64
+    get_radius! = Host.springbonecollisioncapsule3d_get_radius_1740695150!
+    set_height! : F64 => {}
+    set_height! = Host.springbonecollisioncapsule3d_set_height_373806689!
+    get_height! : () => F64
+    get_height! = Host.springbonecollisioncapsule3d_get_height_1740695150!
+    set_mid_height! : F64 => {}
+    set_mid_height! = Host.springbonecollisioncapsule3d_set_mid_height_373806689!
+    get_mid_height! : () => F64
+    get_mid_height! = Host.springbonecollisioncapsule3d_get_mid_height_1740695150!
+    set_inside! : Bool => {}
+    set_inside! = Host.springbonecollisioncapsule3d_set_inside_2586408642!
+    is_inside! : () => Bool
+    is_inside! = Host.springbonecollisioncapsule3d_is_inside_36873697!
 
 
 }

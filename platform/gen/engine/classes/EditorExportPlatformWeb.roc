@@ -1,11 +1,13 @@
 # class EditorExportPlatformWeb
+import ../../Host
+
 # inherits: EditorExportPlatform
 EditorExportPlatformWeb := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

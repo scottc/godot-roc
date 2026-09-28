@@ -1,24 +1,26 @@
 # class StreamPeerExtension
+import ../../Host
+
 # inherits: StreamPeer
 StreamPeerExtension := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    _get_data! : uint8_t*, I32, int32_t* -> Error
-    _get_data! = |r_buffer, r_bytes, r_received| Host.StreamPeerExtension__get_data_298948178!(r_buffer, r_bytes, r_received)
-    _get_partial_data! : uint8_t*, I32, int32_t* -> Error
-    _get_partial_data! = |r_buffer, r_bytes, r_received| Host.StreamPeerExtension__get_partial_data_298948178!(r_buffer, r_bytes, r_received)
-    _put_data! : const uint8_t*, I32, int32_t* -> Error
-    _put_data! = |data, bytes, r_sent| Host.StreamPeerExtension__put_data_298948178!(data, bytes, r_sent)
-    _put_partial_data! : const uint8_t*, I32, int32_t* -> Error
-    _put_partial_data! = |data, bytes, r_sent| Host.StreamPeerExtension__put_partial_data_298948178!(data, bytes, r_sent)
-    _get_available_bytes! : () -> I32
-    _get_available_bytes! = |_| Host.StreamPeerExtension__get_available_bytes_3905245786!
+    _get_data! : U64, I64, U64 => U64
+    _get_data! = Host.streampeerextension__get_data_298948178!
+    _get_partial_data! : U64, I64, U64 => U64
+    _get_partial_data! = Host.streampeerextension__get_partial_data_298948178!
+    _put_data! : U64, I64, U64 => U64
+    _put_data! = Host.streampeerextension__put_data_298948178!
+    _put_partial_data! : U64, I64, U64 => U64
+    _put_partial_data! = Host.streampeerextension__put_partial_data_298948178!
+    _get_available_bytes! : () => I64
+    _get_available_bytes! = Host.streampeerextension__get_available_bytes_3905245786!
 
 
 }

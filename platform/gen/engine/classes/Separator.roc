@@ -1,11 +1,13 @@
 # class Separator
+import ../../Host
+
 # inherits: Control
 Separator := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

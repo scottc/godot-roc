@@ -1,4 +1,6 @@
 # builtin PackedColorArray
+import ../../Host
+
 PackedColorArray := {
     ptr : U64
 }.{
@@ -7,50 +9,50 @@ PackedColorArray := {
 
 
     # --- methods ---
-    get! : I32 -> Color
-    get! = |index| Host.PackedColorArray_get_2972831132!(index)
-    set! : I32, Color -> {}
-    set! = |index, value| Host.PackedColorArray_set_1444096570!(index, value)
-    size! : () -> I32
-    size! = |_| Host.PackedColorArray_size_3173160232!
-    is_empty! : () -> Bool
-    is_empty! = |_| Host.PackedColorArray_is_empty_3918633141!
-    push_back! : Color -> Bool
-    push_back! = |value| Host.PackedColorArray_push_back_1007858200!(value)
-    append! : Color -> Bool
-    append! = |value| Host.PackedColorArray_append_1007858200!(value)
-    append_array! : PackedColorArray -> {}
-    append_array! = |array| Host.PackedColorArray_append_array_798822497!(array)
-    remove_at! : I32 -> {}
-    remove_at! = |index| Host.PackedColorArray_remove_at_2823966027!(index)
-    insert! : I32, Color -> I32
-    insert! = |at_index, value| Host.PackedColorArray_insert_785289703!(at_index, value)
-    fill! : Color -> {}
-    fill! = |value| Host.PackedColorArray_fill_3730314301!(value)
-    resize! : I32 -> I32
-    resize! = |new_size| Host.PackedColorArray_resize_848867239!(new_size)
-    clear! : () -> {}
-    clear! = |_| Host.PackedColorArray_clear_3218959716!
-    has! : Color -> Bool
-    has! = |value| Host.PackedColorArray_has_3167426256!(value)
-    reverse! : () -> {}
-    reverse! = |_| Host.PackedColorArray_reverse_3218959716!
-    slice! : I32, I32 -> PackedColorArray
-    slice! = |begin, end| Host.PackedColorArray_slice_2451797139!(begin, end)
-    to_byte_array! : () -> PackedByteArray
-    to_byte_array! = |_| Host.PackedColorArray_to_byte_array_247621236!
-    sort! : () -> {}
-    sort! = |_| Host.PackedColorArray_sort_3218959716!
-    bsearch! : Color, Bool -> I32
-    bsearch! = |value, before| Host.PackedColorArray_bsearch_2639732838!(value, before)
-    duplicate! : () -> PackedColorArray
-    duplicate! = |_| Host.PackedColorArray_duplicate_3072026941!
-    find! : Color, I32 -> I32
-    find! = |value, from| Host.PackedColorArray_find_3156095363!(value, from)
-    rfind! : Color, I32 -> I32
-    rfind! = |value, from| Host.PackedColorArray_rfind_3156095363!(value, from)
-    count! : Color -> I32
-    count! = |value| Host.PackedColorArray_count_1682108616!(value)
-    erase! : Color -> Bool
-    erase! = |value| Host.PackedColorArray_erase_1007858200!(value)
+    get! : I64 => U64
+    get! = Host.packedcolorarray_get_2972831132!
+    set! : I64, U64 => {}
+    set! = Host.packedcolorarray_set_1444096570!
+    size! : () => I64
+    size! = Host.packedcolorarray_size_3173160232!
+    is_empty! : () => Bool
+    is_empty! = Host.packedcolorarray_is_empty_3918633141!
+    push_back! : U64 => Bool
+    push_back! = Host.packedcolorarray_push_back_1007858200!
+    append! : U64 => Bool
+    append! = Host.packedcolorarray_append_1007858200!
+    append_array! : U64 => {}
+    append_array! = Host.packedcolorarray_append_array_798822497!
+    remove_at! : I64 => {}
+    remove_at! = Host.packedcolorarray_remove_at_2823966027!
+    insert! : I64, U64 => I64
+    insert! = Host.packedcolorarray_insert_785289703!
+    fill! : U64 => {}
+    fill! = Host.packedcolorarray_fill_3730314301!
+    resize! : I64 => I64
+    resize! = Host.packedcolorarray_resize_848867239!
+    clear! : () => {}
+    clear! = Host.packedcolorarray_clear_3218959716!
+    has! : U64 => Bool
+    has! = Host.packedcolorarray_has_3167426256!
+    reverse! : () => {}
+    reverse! = Host.packedcolorarray_reverse_3218959716!
+    slice! : I64, I64 => U64
+    slice! = Host.packedcolorarray_slice_2451797139!
+    to_byte_array! : () => U64
+    to_byte_array! = Host.packedcolorarray_to_byte_array_247621236!
+    sort! : () => {}
+    sort! = Host.packedcolorarray_sort_3218959716!
+    bsearch! : U64, Bool => I64
+    bsearch! = Host.packedcolorarray_bsearch_2639732838!
+    duplicate! : () => U64
+    duplicate! = Host.packedcolorarray_duplicate_3072026941!
+    find! : U64, I64 => I64
+    find! = Host.packedcolorarray_find_3156095363!
+    rfind! : U64, I64 => I64
+    rfind! = Host.packedcolorarray_rfind_3156095363!
+    count! : U64 => I64
+    count! = Host.packedcolorarray_count_1682108616!
+    erase! : U64 => Bool
+    erase! = Host.packedcolorarray_erase_1007858200!
 }

@@ -1,42 +1,32 @@
 # class XRVRS
+import ../../Host
+
 # inherits: Object
 XRVRS := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property vrs_min_radius : F32
-    get_vrs_min_radius! : () -> F32
-    get_vrs_min_radius! = |_| Host.XRVRS_get_vrs_min_radius_prop!
-    set_vrs_min_radius! : F32 -> {}
-    set_vrs_min_radius! = |v| Host.XRVRS_set_vrs_min_radius_prop!(v)
-    # property vrs_strength : F32
-    get_vrs_strength! : () -> F32
-    get_vrs_strength! = |_| Host.XRVRS_get_vrs_strength_prop!
-    set_vrs_strength! : F32 -> {}
-    set_vrs_strength! = |v| Host.XRVRS_set_vrs_strength_prop!(v)
-    # property vrs_render_region : Rect2i
-    get_vrs_render_region! : () -> Rect2i
-    get_vrs_render_region! = |_| Host.XRVRS_get_vrs_render_region_prop!
-    set_vrs_render_region! : Rect2i -> {}
-    set_vrs_render_region! = |v| Host.XRVRS_set_vrs_render_region_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property vrs_min_radius : F64  getter=get_vrs_min_radius setter=set_vrs_min_radius
+    # property vrs_strength : F64  getter=get_vrs_strength setter=set_vrs_strength
+    # property vrs_render_region : U64  getter=get_vrs_render_region setter=set_vrs_render_region
 
     # --- methods ---
-    get_vrs_min_radius! : () -> F32
-    get_vrs_min_radius! = |_| Host.XRVRS_get_vrs_min_radius_1740695150!
-    set_vrs_min_radius! : F32 -> {}
-    set_vrs_min_radius! = |radius| Host.XRVRS_set_vrs_min_radius_373806689!(radius)
-    get_vrs_strength! : () -> F32
-    get_vrs_strength! = |_| Host.XRVRS_get_vrs_strength_1740695150!
-    set_vrs_strength! : F32 -> {}
-    set_vrs_strength! = |strength| Host.XRVRS_set_vrs_strength_373806689!(strength)
-    get_vrs_render_region! : () -> Rect2i
-    get_vrs_render_region! = |_| Host.XRVRS_get_vrs_render_region_410525958!
-    set_vrs_render_region! : Rect2i -> {}
-    set_vrs_render_region! = |render_region| Host.XRVRS_set_vrs_render_region_1763793166!(render_region)
-    make_vrs_texture! : Vector2, PackedVector2Array -> RID
-    make_vrs_texture! = |target_size, eye_foci| Host.XRVRS_make_vrs_texture_3647044786!(target_size, eye_foci)
+    get_vrs_min_radius! : () => F64
+    get_vrs_min_radius! = Host.xrvrs_get_vrs_min_radius_1740695150!
+    set_vrs_min_radius! : F64 => {}
+    set_vrs_min_radius! = Host.xrvrs_set_vrs_min_radius_373806689!
+    get_vrs_strength! : () => F64
+    get_vrs_strength! = Host.xrvrs_get_vrs_strength_1740695150!
+    set_vrs_strength! : F64 => {}
+    set_vrs_strength! = Host.xrvrs_set_vrs_strength_373806689!
+    get_vrs_render_region! : () => U64
+    get_vrs_render_region! = Host.xrvrs_get_vrs_render_region_410525958!
+    set_vrs_render_region! : U64 => {}
+    set_vrs_render_region! = Host.xrvrs_set_vrs_render_region_1763793166!
+    make_vrs_texture! : U64, U64 => U64
+    make_vrs_texture! = Host.xrvrs_make_vrs_texture_3647044786!
 
 
 }

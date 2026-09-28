@@ -1,16 +1,18 @@
 # class OpenXRSpatialComponentAnchorList
+import ../../Host
+
 # inherits: OpenXRSpatialComponentData
 OpenXRSpatialComponentAnchorList := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    get_entity_pose! : I32 -> Transform3D
-    get_entity_pose! = |index| Host.OpenXRSpatialComponentAnchorList_get_entity_pose_1965739696!(index)
+    get_entity_pose! : I64 => U64
+    get_entity_pose! = Host.openxrspatialcomponentanchorlist_get_entity_pose_1965739696!
 
 
 }

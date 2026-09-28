@@ -1,11 +1,13 @@
 # class PlaceholderCubemapArray
+import ../../Host
+
 # inherits: PlaceholderTextureLayered
 PlaceholderCubemapArray := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

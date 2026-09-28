@@ -1,11 +1,13 @@
 # class CSGCombiner3D
+import ../../Host
+
 # inherits: CSGShape3D
 CSGCombiner3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

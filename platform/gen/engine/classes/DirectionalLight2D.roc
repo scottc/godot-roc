@@ -1,27 +1,21 @@
 # class DirectionalLight2D
+import ../../Host
+
 # inherits: Light2D
 DirectionalLight2D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property height : F32
-    get_height! : () -> F32
-    get_height! = |_| Host.DirectionalLight2D_get_height_prop!
-    set_height! : F32 -> {}
-    set_height! = |v| Host.DirectionalLight2D_set_height_prop!(v)
-    # property max_distance : F32
-    get_max_distance! : () -> F32
-    get_max_distance! = |_| Host.DirectionalLight2D_get_max_distance_prop!
-    set_max_distance! : F32 -> {}
-    set_max_distance! = |v| Host.DirectionalLight2D_set_max_distance_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property height : F64  getter=get_height setter=set_height
+    # property max_distance : F64  getter=get_max_distance setter=set_max_distance
 
     # --- methods ---
-    set_max_distance! : F32 -> {}
-    set_max_distance! = |pixels| Host.DirectionalLight2D_set_max_distance_373806689!(pixels)
-    get_max_distance! : () -> F32
-    get_max_distance! = |_| Host.DirectionalLight2D_get_max_distance_1740695150!
+    set_max_distance! : F64 => {}
+    set_max_distance! = Host.directionallight2d_set_max_distance_373806689!
+    get_max_distance! : () => F64
+    get_max_distance! = Host.directionallight2d_get_max_distance_1740695150!
 
 
 }

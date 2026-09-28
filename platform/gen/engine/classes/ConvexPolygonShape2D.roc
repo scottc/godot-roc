@@ -1,24 +1,22 @@
 # class ConvexPolygonShape2D
+import ../../Host
+
 # inherits: Shape2D
 ConvexPolygonShape2D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property points : PackedVector2Array
-    get_points! : () -> PackedVector2Array
-    get_points! = |_| Host.ConvexPolygonShape2D_get_points_prop!
-    set_points! : PackedVector2Array -> {}
-    set_points! = |v| Host.ConvexPolygonShape2D_set_points_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property points : U64  getter=get_points setter=set_points
 
     # --- methods ---
-    set_point_cloud! : PackedVector2Array -> {}
-    set_point_cloud! = |point_cloud| Host.ConvexPolygonShape2D_set_point_cloud_1509147220!(point_cloud)
-    set_points! : PackedVector2Array -> {}
-    set_points! = |points| Host.ConvexPolygonShape2D_set_points_1509147220!(points)
-    get_points! : () -> PackedVector2Array
-    get_points! = |_| Host.ConvexPolygonShape2D_get_points_2961356807!
+    set_point_cloud! : U64 => {}
+    set_point_cloud! = Host.convexpolygonshape2d_set_point_cloud_1509147220!
+    set_points! : U64 => {}
+    set_points! = Host.convexpolygonshape2d_set_points_1509147220!
+    get_points! : () => U64
+    get_points! = Host.convexpolygonshape2d_get_points_2961356807!
 
 
 }

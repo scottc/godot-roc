@@ -1,11 +1,13 @@
 # class MarginContainer
+import ../../Host
+
 # inherits: Container
 MarginContainer := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

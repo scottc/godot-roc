@@ -1,11 +1,13 @@
 # class Tweener
+import ../../Host
+
 # inherits: RefCounted
 Tweener := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

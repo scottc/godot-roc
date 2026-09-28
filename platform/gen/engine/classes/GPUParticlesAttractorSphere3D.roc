@@ -1,22 +1,20 @@
 # class GPUParticlesAttractorSphere3D
+import ../../Host
+
 # inherits: GPUParticlesAttractor3D
 GPUParticlesAttractorSphere3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property radius : F32
-    get_radius! : () -> F32
-    get_radius! = |_| Host.GPUParticlesAttractorSphere3D_get_radius_prop!
-    set_radius! : F32 -> {}
-    set_radius! = |v| Host.GPUParticlesAttractorSphere3D_set_radius_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property radius : F64  getter=get_radius setter=set_radius
 
     # --- methods ---
-    set_radius! : F32 -> {}
-    set_radius! = |radius| Host.GPUParticlesAttractorSphere3D_set_radius_373806689!(radius)
-    get_radius! : () -> F32
-    get_radius! = |_| Host.GPUParticlesAttractorSphere3D_get_radius_1740695150!
+    set_radius! : F64 => {}
+    set_radius! = Host.gpuparticlesattractorsphere3d_set_radius_373806689!
+    get_radius! : () => F64
+    get_radius! = Host.gpuparticlesattractorsphere3d_get_radius_1740695150!
 
 
 }

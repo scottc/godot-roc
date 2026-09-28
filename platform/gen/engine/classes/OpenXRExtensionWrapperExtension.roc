@@ -1,11 +1,13 @@
 # class OpenXRExtensionWrapperExtension
+import ../../Host
+
 # inherits: OpenXRExtensionWrapper
 OpenXRExtensionWrapperExtension := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

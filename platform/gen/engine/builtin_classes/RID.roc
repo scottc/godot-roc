@@ -1,4 +1,6 @@
 # builtin RID
+import ../../Host
+
 RID := {
     ptr : U64
 }.{
@@ -7,8 +9,8 @@ RID := {
 
 
     # --- methods ---
-    is_valid! : () -> Bool
-    is_valid! = |_| Host.RID_is_valid_3918633141!
-    get_id! : () -> I32
-    get_id! = |_| Host.RID_get_id_3173160232!
+    is_valid! : () => Bool
+    is_valid! = Host.rid_is_valid_3918633141!
+    get_id! : () => I64
+    get_id! = Host.rid_get_id_3173160232!
 }

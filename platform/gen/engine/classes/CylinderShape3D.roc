@@ -1,31 +1,25 @@
 # class CylinderShape3D
+import ../../Host
+
 # inherits: Shape3D
 CylinderShape3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property height : F32
-    get_height! : () -> F32
-    get_height! = |_| Host.CylinderShape3D_get_height_prop!
-    set_height! : F32 -> {}
-    set_height! = |v| Host.CylinderShape3D_set_height_prop!(v)
-    # property radius : F32
-    get_radius! : () -> F32
-    get_radius! = |_| Host.CylinderShape3D_get_radius_prop!
-    set_radius! : F32 -> {}
-    set_radius! = |v| Host.CylinderShape3D_set_radius_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property height : F64  getter=get_height setter=set_height
+    # property radius : F64  getter=get_radius setter=set_radius
 
     # --- methods ---
-    set_radius! : F32 -> {}
-    set_radius! = |radius| Host.CylinderShape3D_set_radius_373806689!(radius)
-    get_radius! : () -> F32
-    get_radius! = |_| Host.CylinderShape3D_get_radius_1740695150!
-    set_height! : F32 -> {}
-    set_height! = |height| Host.CylinderShape3D_set_height_373806689!(height)
-    get_height! : () -> F32
-    get_height! = |_| Host.CylinderShape3D_get_height_1740695150!
+    set_radius! : F64 => {}
+    set_radius! = Host.cylindershape3d_set_radius_373806689!
+    get_radius! : () => F64
+    get_radius! = Host.cylindershape3d_get_radius_1740695150!
+    set_height! : F64 => {}
+    set_height! = Host.cylindershape3d_set_height_373806689!
+    get_height! : () => F64
+    get_height! = Host.cylindershape3d_get_height_1740695150!
 
 
 }

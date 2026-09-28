@@ -1,22 +1,20 @@
 # class InputEventMagnifyGesture
+import ../../Host
+
 # inherits: InputEventGesture
 InputEventMagnifyGesture := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property factor : F32
-    get_factor! : () -> F32
-    get_factor! = |_| Host.InputEventMagnifyGesture_get_factor_prop!
-    set_factor! : F32 -> {}
-    set_factor! = |v| Host.InputEventMagnifyGesture_set_factor_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property factor : F64  getter=get_factor setter=set_factor
 
     # --- methods ---
-    set_factor! : F32 -> {}
-    set_factor! = |factor| Host.InputEventMagnifyGesture_set_factor_373806689!(factor)
-    get_factor! : () -> F32
-    get_factor! = |_| Host.InputEventMagnifyGesture_get_factor_1740695150!
+    set_factor! : F64 => {}
+    set_factor! = Host.inputeventmagnifygesture_set_factor_373806689!
+    get_factor! : () => F64
+    get_factor! = Host.inputeventmagnifygesture_get_factor_1740695150!
 
 
 }

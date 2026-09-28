@@ -1,4 +1,6 @@
 # class FileAccess
+import ../../Host
+
 # inherits: RefCounted
 FileAccess := {
     ptr : U64,
@@ -7,150 +9,146 @@ FileAccess := {
     CompressionMode : [COMPRESSION_FASTLZ, COMPRESSION_DEFLATE, COMPRESSION_ZSTD, COMPRESSION_GZIP, COMPRESSION_BROTLI]
     UnixPermissionFlags : [UNIX_READ_OWNER, UNIX_WRITE_OWNER, UNIX_EXECUTE_OWNER, UNIX_READ_GROUP, UNIX_WRITE_GROUP, UNIX_EXECUTE_GROUP, UNIX_READ_OTHER, UNIX_WRITE_OTHER, UNIX_EXECUTE_OTHER, UNIX_SET_USER_ID, UNIX_SET_GROUP_ID, UNIX_RESTRICTED_DELETE]
 
-    # --- properties ---
-    # property big_endian : Bool
-    is_big_endian! : () -> Bool
-    is_big_endian! = |_| Host.FileAccess_is_big_endian_prop!
-    set_big_endian! : Bool -> {}
-    set_big_endian! = |v| Host.FileAccess_set_big_endian_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property big_endian : Bool  getter=is_big_endian setter=set_big_endian
 
     # --- methods ---
-    open! : String, FileAccess_ModeFlags -> FileAccess
-    open! = |path, flags| Host.FileAccess_open_1247358404!(path, flags)
-    open_encrypted! : String, FileAccess_ModeFlags, PackedByteArray, PackedByteArray -> FileAccess
-    open_encrypted! = |path, mode_flags, key, iv| Host.FileAccess_open_encrypted_788003459!(path, mode_flags, key, iv)
-    open_encrypted_with_pass! : String, FileAccess_ModeFlags, String -> FileAccess
-    open_encrypted_with_pass! = |path, mode_flags, pass| Host.FileAccess_open_encrypted_with_pass_790283377!(path, mode_flags, pass)
-    open_compressed! : String, FileAccess_ModeFlags, FileAccess_CompressionMode -> FileAccess
-    open_compressed! = |path, mode_flags, compression_mode| Host.FileAccess_open_compressed_3686439335!(path, mode_flags, compression_mode)
-    get_open_error! : () -> Error
-    get_open_error! = |_| Host.FileAccess_get_open_error_166280745!
-    create_temp! : FileAccess_ModeFlags, String, String, Bool -> FileAccess
-    create_temp! = |mode_flags, prefix, extension, keep| Host.FileAccess_create_temp_171914364!(mode_flags, prefix, extension, keep)
-    get_file_as_bytes! : String -> PackedByteArray
-    get_file_as_bytes! = |path| Host.FileAccess_get_file_as_bytes_659035735!(path)
-    get_file_as_string! : String -> String
-    get_file_as_string! = |path| Host.FileAccess_get_file_as_string_1703090593!(path)
-    resize! : I32 -> Error
-    resize! = |length| Host.FileAccess_resize_844576869!(length)
-    flush! : () -> {}
-    flush! = |_| Host.FileAccess_flush_3218959716!
-    get_path! : () -> String
-    get_path! = |_| Host.FileAccess_get_path_201670096!
-    get_path_absolute! : () -> String
-    get_path_absolute! = |_| Host.FileAccess_get_path_absolute_201670096!
-    is_open! : () -> Bool
-    is_open! = |_| Host.FileAccess_is_open_36873697!
-    seek! : I32 -> {}
-    seek! = |position| Host.FileAccess_seek_1286410249!(position)
-    seek_end! : I32 -> {}
-    seek_end! = |position| Host.FileAccess_seek_end_1995695955!(position)
-    get_position! : () -> I32
-    get_position! = |_| Host.FileAccess_get_position_3905245786!
-    get_length! : () -> I32
-    get_length! = |_| Host.FileAccess_get_length_3905245786!
-    eof_reached! : () -> Bool
-    eof_reached! = |_| Host.FileAccess_eof_reached_36873697!
-    get_8! : () -> I32
-    get_8! = |_| Host.FileAccess_get_8_3905245786!
-    get_16! : () -> I32
-    get_16! = |_| Host.FileAccess_get_16_3905245786!
-    get_32! : () -> I32
-    get_32! = |_| Host.FileAccess_get_32_3905245786!
-    get_64! : () -> I32
-    get_64! = |_| Host.FileAccess_get_64_3905245786!
-    get_half! : () -> F32
-    get_half! = |_| Host.FileAccess_get_half_1740695150!
-    get_float! : () -> F32
-    get_float! = |_| Host.FileAccess_get_float_1740695150!
-    get_double! : () -> F32
-    get_double! = |_| Host.FileAccess_get_double_1740695150!
-    get_real! : () -> F32
-    get_real! = |_| Host.FileAccess_get_real_1740695150!
-    get_buffer! : I32 -> PackedByteArray
-    get_buffer! = |length| Host.FileAccess_get_buffer_4131300905!(length)
-    get_line! : () -> String
-    get_line! = |_| Host.FileAccess_get_line_201670096!
-    get_csv_line! : String -> PackedStringArray
-    get_csv_line! = |delim| Host.FileAccess_get_csv_line_2358116058!(delim)
-    get_as_text! : () -> String
-    get_as_text! = |_| Host.FileAccess_get_as_text_201670096!
-    get_md5! : String -> String
-    get_md5! = |path| Host.FileAccess_get_md5_1703090593!(path)
-    get_sha256! : String -> String
-    get_sha256! = |path| Host.FileAccess_get_sha256_1703090593!(path)
-    is_big_endian! : () -> Bool
-    is_big_endian! = |_| Host.FileAccess_is_big_endian_36873697!
-    set_big_endian! : Bool -> {}
-    set_big_endian! = |big_endian| Host.FileAccess_set_big_endian_2586408642!(big_endian)
-    get_error! : () -> Error
-    get_error! = |_| Host.FileAccess_get_error_3185525595!
-    get_var! : Bool -> Variant
-    get_var! = |allow_objects| Host.FileAccess_get_var_189129690!(allow_objects)
-    store_8! : I32 -> Bool
-    store_8! = |value| Host.FileAccess_store_8_3067735520!(value)
-    store_16! : I32 -> Bool
-    store_16! = |value| Host.FileAccess_store_16_3067735520!(value)
-    store_32! : I32 -> Bool
-    store_32! = |value| Host.FileAccess_store_32_3067735520!(value)
-    store_64! : I32 -> Bool
-    store_64! = |value| Host.FileAccess_store_64_3067735520!(value)
-    store_half! : F32 -> Bool
-    store_half! = |value| Host.FileAccess_store_half_330693286!(value)
-    store_float! : F32 -> Bool
-    store_float! = |value| Host.FileAccess_store_float_330693286!(value)
-    store_double! : F32 -> Bool
-    store_double! = |value| Host.FileAccess_store_double_330693286!(value)
-    store_real! : F32 -> Bool
-    store_real! = |value| Host.FileAccess_store_real_330693286!(value)
-    store_buffer! : PackedByteArray -> Bool
-    store_buffer! = |buffer| Host.FileAccess_store_buffer_114037665!(buffer)
-    store_line! : String -> Bool
-    store_line! = |line| Host.FileAccess_store_line_2323990056!(line)
-    store_csv_line! : PackedStringArray, String -> Bool
-    store_csv_line! = |values, delim| Host.FileAccess_store_csv_line_1611473434!(values, delim)
-    store_string! : String -> Bool
-    store_string! = |string| Host.FileAccess_store_string_2323990056!(string)
-    store_var! : Variant, Bool -> Bool
-    store_var! = |value, full_objects| Host.FileAccess_store_var_117357437!(value, full_objects)
-    store_pascal_string! : String -> Bool
-    store_pascal_string! = |string| Host.FileAccess_store_pascal_string_2323990056!(string)
-    get_pascal_string! : () -> String
-    get_pascal_string! = |_| Host.FileAccess_get_pascal_string_2841200299!
-    close! : () -> {}
-    close! = |_| Host.FileAccess_close_3218959716!
-    file_exists! : String -> Bool
-    file_exists! = |path| Host.FileAccess_file_exists_2323990056!(path)
-    get_modified_time! : String -> I32
-    get_modified_time! = |file| Host.FileAccess_get_modified_time_1597066294!(file)
-    get_access_time! : String -> I32
-    get_access_time! = |file| Host.FileAccess_get_access_time_1597066294!(file)
-    get_size! : String -> I32
-    get_size! = |file| Host.FileAccess_get_size_1597066294!(file)
-    get_unix_permissions! : String -> FileAccess_UnixPermissionFlags
-    get_unix_permissions! = |file| Host.FileAccess_get_unix_permissions_524341837!(file)
-    set_unix_permissions! : String, FileAccess_UnixPermissionFlags -> Error
-    set_unix_permissions! = |file, permissions| Host.FileAccess_set_unix_permissions_846038644!(file, permissions)
-    get_hidden_attribute! : String -> Bool
-    get_hidden_attribute! = |file| Host.FileAccess_get_hidden_attribute_2323990056!(file)
-    set_hidden_attribute! : String, Bool -> Error
-    set_hidden_attribute! = |file, hidden| Host.FileAccess_set_hidden_attribute_2892558115!(file, hidden)
-    set_read_only_attribute! : String, Bool -> Error
-    set_read_only_attribute! = |file, ro| Host.FileAccess_set_read_only_attribute_2892558115!(file, ro)
-    get_read_only_attribute! : String -> Bool
-    get_read_only_attribute! = |file| Host.FileAccess_get_read_only_attribute_2323990056!(file)
-    get_extended_attribute! : String, String -> PackedByteArray
-    get_extended_attribute! = |file, attribute_name| Host.FileAccess_get_extended_attribute_955893464!(file, attribute_name)
-    get_extended_attribute_string! : String, String -> String
-    get_extended_attribute_string! = |file, attribute_name| Host.FileAccess_get_extended_attribute_string_1218461987!(file, attribute_name)
-    set_extended_attribute! : String, String, PackedByteArray -> Error
-    set_extended_attribute! = |file, attribute_name, data| Host.FileAccess_set_extended_attribute_2643421469!(file, attribute_name, data)
-    set_extended_attribute_string! : String, String, String -> Error
-    set_extended_attribute_string! = |file, attribute_name, data| Host.FileAccess_set_extended_attribute_string_699024349!(file, attribute_name, data)
-    remove_extended_attribute! : String, String -> Error
-    remove_extended_attribute! = |file, attribute_name| Host.FileAccess_remove_extended_attribute_852856452!(file, attribute_name)
-    get_extended_attributes_list! : String -> PackedStringArray
-    get_extended_attributes_list! = |file| Host.FileAccess_get_extended_attributes_list_3538744774!(file)
+    open! : Str, U64 => U64
+    open! = Host.fileaccess_open_1247358404!
+    open_encrypted! : Str, U64, U64, U64 => U64
+    open_encrypted! = Host.fileaccess_open_encrypted_788003459!
+    open_encrypted_with_pass! : Str, U64, Str => U64
+    open_encrypted_with_pass! = Host.fileaccess_open_encrypted_with_pass_790283377!
+    open_compressed! : Str, U64, U64 => U64
+    open_compressed! = Host.fileaccess_open_compressed_3686439335!
+    get_open_error! : () => U64
+    get_open_error! = Host.fileaccess_get_open_error_166280745!
+    create_temp! : U64, Str, Str, Bool => U64
+    create_temp! = Host.fileaccess_create_temp_171914364!
+    get_file_as_bytes! : Str => U64
+    get_file_as_bytes! = Host.fileaccess_get_file_as_bytes_659035735!
+    get_file_as_string! : Str => Str
+    get_file_as_string! = Host.fileaccess_get_file_as_string_1703090593!
+    resize! : I64 => U64
+    resize! = Host.fileaccess_resize_844576869!
+    flush! : () => {}
+    flush! = Host.fileaccess_flush_3218959716!
+    get_path! : () => Str
+    get_path! = Host.fileaccess_get_path_201670096!
+    get_path_absolute! : () => Str
+    get_path_absolute! = Host.fileaccess_get_path_absolute_201670096!
+    is_open! : () => Bool
+    is_open! = Host.fileaccess_is_open_36873697!
+    seek! : I64 => {}
+    seek! = Host.fileaccess_seek_1286410249!
+    seek_end! : I64 => {}
+    seek_end! = Host.fileaccess_seek_end_1995695955!
+    get_position! : () => I64
+    get_position! = Host.fileaccess_get_position_3905245786!
+    get_length! : () => I64
+    get_length! = Host.fileaccess_get_length_3905245786!
+    eof_reached! : () => Bool
+    eof_reached! = Host.fileaccess_eof_reached_36873697!
+    get_8! : () => I64
+    get_8! = Host.fileaccess_get_8_3905245786!
+    get_16! : () => I64
+    get_16! = Host.fileaccess_get_16_3905245786!
+    get_32! : () => I64
+    get_32! = Host.fileaccess_get_32_3905245786!
+    get_64! : () => I64
+    get_64! = Host.fileaccess_get_64_3905245786!
+    get_half! : () => F64
+    get_half! = Host.fileaccess_get_half_1740695150!
+    get_float! : () => F64
+    get_float! = Host.fileaccess_get_float_1740695150!
+    get_double! : () => F64
+    get_double! = Host.fileaccess_get_double_1740695150!
+    get_real! : () => F64
+    get_real! = Host.fileaccess_get_real_1740695150!
+    get_buffer! : I64 => U64
+    get_buffer! = Host.fileaccess_get_buffer_4131300905!
+    get_line! : () => Str
+    get_line! = Host.fileaccess_get_line_201670096!
+    get_csv_line! : Str => U64
+    get_csv_line! = Host.fileaccess_get_csv_line_2358116058!
+    get_as_text! : () => Str
+    get_as_text! = Host.fileaccess_get_as_text_201670096!
+    get_md5! : Str => Str
+    get_md5! = Host.fileaccess_get_md5_1703090593!
+    get_sha256! : Str => Str
+    get_sha256! = Host.fileaccess_get_sha256_1703090593!
+    is_big_endian! : () => Bool
+    is_big_endian! = Host.fileaccess_is_big_endian_36873697!
+    set_big_endian! : Bool => {}
+    set_big_endian! = Host.fileaccess_set_big_endian_2586408642!
+    get_error! : () => U64
+    get_error! = Host.fileaccess_get_error_3185525595!
+    get_var! : Bool => U64
+    get_var! = Host.fileaccess_get_var_189129690!
+    store_8! : I64 => Bool
+    store_8! = Host.fileaccess_store_8_3067735520!
+    store_16! : I64 => Bool
+    store_16! = Host.fileaccess_store_16_3067735520!
+    store_32! : I64 => Bool
+    store_32! = Host.fileaccess_store_32_3067735520!
+    store_64! : I64 => Bool
+    store_64! = Host.fileaccess_store_64_3067735520!
+    store_half! : F64 => Bool
+    store_half! = Host.fileaccess_store_half_330693286!
+    store_float! : F64 => Bool
+    store_float! = Host.fileaccess_store_float_330693286!
+    store_double! : F64 => Bool
+    store_double! = Host.fileaccess_store_double_330693286!
+    store_real! : F64 => Bool
+    store_real! = Host.fileaccess_store_real_330693286!
+    store_buffer! : U64 => Bool
+    store_buffer! = Host.fileaccess_store_buffer_114037665!
+    store_line! : Str => Bool
+    store_line! = Host.fileaccess_store_line_2323990056!
+    store_csv_line! : U64, Str => Bool
+    store_csv_line! = Host.fileaccess_store_csv_line_1611473434!
+    store_string! : Str => Bool
+    store_string! = Host.fileaccess_store_string_2323990056!
+    store_var! : U64, Bool => Bool
+    store_var! = Host.fileaccess_store_var_117357437!
+    store_pascal_string! : Str => Bool
+    store_pascal_string! = Host.fileaccess_store_pascal_string_2323990056!
+    get_pascal_string! : () => Str
+    get_pascal_string! = Host.fileaccess_get_pascal_string_2841200299!
+    close! : () => {}
+    close! = Host.fileaccess_close_3218959716!
+    file_exists! : Str => Bool
+    file_exists! = Host.fileaccess_file_exists_2323990056!
+    get_modified_time! : Str => I64
+    get_modified_time! = Host.fileaccess_get_modified_time_1597066294!
+    get_access_time! : Str => I64
+    get_access_time! = Host.fileaccess_get_access_time_1597066294!
+    get_size! : Str => I64
+    get_size! = Host.fileaccess_get_size_1597066294!
+    get_unix_permissions! : Str => U64
+    get_unix_permissions! = Host.fileaccess_get_unix_permissions_524341837!
+    set_unix_permissions! : Str, U64 => U64
+    set_unix_permissions! = Host.fileaccess_set_unix_permissions_846038644!
+    get_hidden_attribute! : Str => Bool
+    get_hidden_attribute! = Host.fileaccess_get_hidden_attribute_2323990056!
+    set_hidden_attribute! : Str, Bool => U64
+    set_hidden_attribute! = Host.fileaccess_set_hidden_attribute_2892558115!
+    set_read_only_attribute! : Str, Bool => U64
+    set_read_only_attribute! = Host.fileaccess_set_read_only_attribute_2892558115!
+    get_read_only_attribute! : Str => Bool
+    get_read_only_attribute! = Host.fileaccess_get_read_only_attribute_2323990056!
+    get_extended_attribute! : Str, Str => U64
+    get_extended_attribute! = Host.fileaccess_get_extended_attribute_955893464!
+    get_extended_attribute_string! : Str, Str => Str
+    get_extended_attribute_string! = Host.fileaccess_get_extended_attribute_string_1218461987!
+    set_extended_attribute! : Str, Str, U64 => U64
+    set_extended_attribute! = Host.fileaccess_set_extended_attribute_2643421469!
+    set_extended_attribute_string! : Str, Str, Str => U64
+    set_extended_attribute_string! = Host.fileaccess_set_extended_attribute_string_699024349!
+    remove_extended_attribute! : Str, Str => U64
+    remove_extended_attribute! = Host.fileaccess_remove_extended_attribute_852856452!
+    get_extended_attributes_list! : Str => U64
+    get_extended_attributes_list! = Host.fileaccess_get_extended_attributes_list_3538744774!
 
 
 }

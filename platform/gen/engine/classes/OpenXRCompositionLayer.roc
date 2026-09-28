@@ -1,4 +1,6 @@
 # class OpenXRCompositionLayer
+import ../../Host
+
 # inherits: Node3D
 OpenXRCompositionLayer := {
     ptr : U64,
@@ -9,186 +11,110 @@ OpenXRCompositionLayer := {
     Swizzle : [SWIZZLE_RED, SWIZZLE_GREEN, SWIZZLE_BLUE, SWIZZLE_ALPHA, SWIZZLE_ZERO, SWIZZLE_ONE]
     EyeVisibility : [EYE_VISIBILITY_BOTH, EYE_VISIBILITY_LEFT, EYE_VISIBILITY_RIGHT]
 
-    # --- properties ---
-    # property layer_viewport : Object
-    get_layer_viewport! : () -> Object
-    get_layer_viewport! = |_| Host.OpenXRCompositionLayer_get_layer_viewport_prop!
-    set_layer_viewport! : Object -> {}
-    set_layer_viewport! = |v| Host.OpenXRCompositionLayer_set_layer_viewport_prop!(v)
-    # property use_android_surface : Bool
-    get_use_android_surface! : () -> Bool
-    get_use_android_surface! = |_| Host.OpenXRCompositionLayer_get_use_android_surface_prop!
-    set_use_android_surface! : Bool -> {}
-    set_use_android_surface! = |v| Host.OpenXRCompositionLayer_set_use_android_surface_prop!(v)
-    # property protected_content : Bool
-    is_protected_content! : () -> Bool
-    is_protected_content! = |_| Host.OpenXRCompositionLayer_is_protected_content_prop!
-    set_protected_content! : Bool -> {}
-    set_protected_content! = |v| Host.OpenXRCompositionLayer_set_protected_content_prop!(v)
-    # property android_surface_size : Vector2i
-    get_android_surface_size! : () -> Vector2i
-    get_android_surface_size! = |_| Host.OpenXRCompositionLayer_get_android_surface_size_prop!
-    set_android_surface_size! : Vector2i -> {}
-    set_android_surface_size! = |v| Host.OpenXRCompositionLayer_set_android_surface_size_prop!(v)
-    # property sort_order : I32
-    get_sort_order! : () -> I32
-    get_sort_order! = |_| Host.OpenXRCompositionLayer_get_sort_order_prop!
-    set_sort_order! : I32 -> {}
-    set_sort_order! = |v| Host.OpenXRCompositionLayer_set_sort_order_prop!(v)
-    # property alpha_blend : Bool
-    get_alpha_blend! : () -> Bool
-    get_alpha_blend! = |_| Host.OpenXRCompositionLayer_get_alpha_blend_prop!
-    set_alpha_blend! : Bool -> {}
-    set_alpha_blend! = |v| Host.OpenXRCompositionLayer_set_alpha_blend_prop!(v)
-    # property enable_hole_punch : Bool
-    get_enable_hole_punch! : () -> Bool
-    get_enable_hole_punch! = |_| Host.OpenXRCompositionLayer_get_enable_hole_punch_prop!
-    set_enable_hole_punch! : Bool -> {}
-    set_enable_hole_punch! = |v| Host.OpenXRCompositionLayer_set_enable_hole_punch_prop!(v)
-    # property eye_visibility : I32
-    get_eye_visibility! : () -> I32
-    get_eye_visibility! = |_| Host.OpenXRCompositionLayer_get_eye_visibility_prop!
-    set_eye_visibility! : I32 -> {}
-    set_eye_visibility! = |v| Host.OpenXRCompositionLayer_set_eye_visibility_prop!(v)
-    # property swapchain_state_min_filter : I32
-    get_min_filter! : () -> I32
-    get_min_filter! = |_| Host.OpenXRCompositionLayer_get_min_filter_prop!
-    set_min_filter! : I32 -> {}
-    set_min_filter! = |v| Host.OpenXRCompositionLayer_set_min_filter_prop!(v)
-    # property swapchain_state_mag_filter : I32
-    get_mag_filter! : () -> I32
-    get_mag_filter! = |_| Host.OpenXRCompositionLayer_get_mag_filter_prop!
-    set_mag_filter! : I32 -> {}
-    set_mag_filter! = |v| Host.OpenXRCompositionLayer_set_mag_filter_prop!(v)
-    # property swapchain_state_mipmap_mode : I32
-    get_mipmap_mode! : () -> I32
-    get_mipmap_mode! = |_| Host.OpenXRCompositionLayer_get_mipmap_mode_prop!
-    set_mipmap_mode! : I32 -> {}
-    set_mipmap_mode! = |v| Host.OpenXRCompositionLayer_set_mipmap_mode_prop!(v)
-    # property swapchain_state_horizontal_wrap : I32
-    get_horizontal_wrap! : () -> I32
-    get_horizontal_wrap! = |_| Host.OpenXRCompositionLayer_get_horizontal_wrap_prop!
-    set_horizontal_wrap! : I32 -> {}
-    set_horizontal_wrap! = |v| Host.OpenXRCompositionLayer_set_horizontal_wrap_prop!(v)
-    # property swapchain_state_vertical_wrap : I32
-    get_vertical_wrap! : () -> I32
-    get_vertical_wrap! = |_| Host.OpenXRCompositionLayer_get_vertical_wrap_prop!
-    set_vertical_wrap! : I32 -> {}
-    set_vertical_wrap! = |v| Host.OpenXRCompositionLayer_set_vertical_wrap_prop!(v)
-    # property swapchain_state_red_swizzle : I32
-    get_red_swizzle! : () -> I32
-    get_red_swizzle! = |_| Host.OpenXRCompositionLayer_get_red_swizzle_prop!
-    set_red_swizzle! : I32 -> {}
-    set_red_swizzle! = |v| Host.OpenXRCompositionLayer_set_red_swizzle_prop!(v)
-    # property swapchain_state_green_swizzle : I32
-    get_green_swizzle! : () -> I32
-    get_green_swizzle! = |_| Host.OpenXRCompositionLayer_get_green_swizzle_prop!
-    set_green_swizzle! : I32 -> {}
-    set_green_swizzle! = |v| Host.OpenXRCompositionLayer_set_green_swizzle_prop!(v)
-    # property swapchain_state_blue_swizzle : I32
-    get_blue_swizzle! : () -> I32
-    get_blue_swizzle! = |_| Host.OpenXRCompositionLayer_get_blue_swizzle_prop!
-    set_blue_swizzle! : I32 -> {}
-    set_blue_swizzle! = |v| Host.OpenXRCompositionLayer_set_blue_swizzle_prop!(v)
-    # property swapchain_state_alpha_swizzle : I32
-    get_alpha_swizzle! : () -> I32
-    get_alpha_swizzle! = |_| Host.OpenXRCompositionLayer_get_alpha_swizzle_prop!
-    set_alpha_swizzle! : I32 -> {}
-    set_alpha_swizzle! = |v| Host.OpenXRCompositionLayer_set_alpha_swizzle_prop!(v)
-    # property swapchain_state_max_anisotropy : F32
-    get_max_anisotropy! : () -> F32
-    get_max_anisotropy! = |_| Host.OpenXRCompositionLayer_get_max_anisotropy_prop!
-    set_max_anisotropy! : F32 -> {}
-    set_max_anisotropy! = |v| Host.OpenXRCompositionLayer_set_max_anisotropy_prop!(v)
-    # property swapchain_state_border_color : Color
-    get_border_color! : () -> Color
-    get_border_color! = |_| Host.OpenXRCompositionLayer_get_border_color_prop!
-    set_border_color! : Color -> {}
-    set_border_color! = |v| Host.OpenXRCompositionLayer_set_border_color_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property layer_viewport : U64  getter=get_layer_viewport setter=set_layer_viewport
+    # property use_android_surface : Bool  getter=get_use_android_surface setter=set_use_android_surface
+    # property protected_content : Bool  getter=is_protected_content setter=set_protected_content
+    # property android_surface_size : U64  getter=get_android_surface_size setter=set_android_surface_size
+    # property sort_order : I64  getter=get_sort_order setter=set_sort_order
+    # property alpha_blend : Bool  getter=get_alpha_blend setter=set_alpha_blend
+    # property enable_hole_punch : Bool  getter=get_enable_hole_punch setter=set_enable_hole_punch
+    # property eye_visibility : I64  getter=get_eye_visibility setter=set_eye_visibility
+    # property swapchain_state_min_filter : I64  getter=get_min_filter setter=set_min_filter
+    # property swapchain_state_mag_filter : I64  getter=get_mag_filter setter=set_mag_filter
+    # property swapchain_state_mipmap_mode : I64  getter=get_mipmap_mode setter=set_mipmap_mode
+    # property swapchain_state_horizontal_wrap : I64  getter=get_horizontal_wrap setter=set_horizontal_wrap
+    # property swapchain_state_vertical_wrap : I64  getter=get_vertical_wrap setter=set_vertical_wrap
+    # property swapchain_state_red_swizzle : I64  getter=get_red_swizzle setter=set_red_swizzle
+    # property swapchain_state_green_swizzle : I64  getter=get_green_swizzle setter=set_green_swizzle
+    # property swapchain_state_blue_swizzle : I64  getter=get_blue_swizzle setter=set_blue_swizzle
+    # property swapchain_state_alpha_swizzle : I64  getter=get_alpha_swizzle setter=set_alpha_swizzle
+    # property swapchain_state_max_anisotropy : F64  getter=get_max_anisotropy setter=set_max_anisotropy
+    # property swapchain_state_border_color : U64  getter=get_border_color setter=set_border_color
 
     # --- methods ---
-    set_layer_viewport! : SubViewport -> {}
-    set_layer_viewport! = |viewport| Host.OpenXRCompositionLayer_set_layer_viewport_3888077664!(viewport)
-    get_layer_viewport! : () -> SubViewport
-    get_layer_viewport! = |_| Host.OpenXRCompositionLayer_get_layer_viewport_3750751911!
-    set_use_android_surface! : Bool -> {}
-    set_use_android_surface! = |enable| Host.OpenXRCompositionLayer_set_use_android_surface_2586408642!(enable)
-    get_use_android_surface! : () -> Bool
-    get_use_android_surface! = |_| Host.OpenXRCompositionLayer_get_use_android_surface_36873697!
-    set_android_surface_size! : Vector2i -> {}
-    set_android_surface_size! = |size| Host.OpenXRCompositionLayer_set_android_surface_size_1130785943!(size)
-    get_android_surface_size! : () -> Vector2i
-    get_android_surface_size! = |_| Host.OpenXRCompositionLayer_get_android_surface_size_3690982128!
-    set_enable_hole_punch! : Bool -> {}
-    set_enable_hole_punch! = |enable| Host.OpenXRCompositionLayer_set_enable_hole_punch_2586408642!(enable)
-    get_enable_hole_punch! : () -> Bool
-    get_enable_hole_punch! = |_| Host.OpenXRCompositionLayer_get_enable_hole_punch_36873697!
-    set_sort_order! : I32 -> {}
-    set_sort_order! = |order| Host.OpenXRCompositionLayer_set_sort_order_1286410249!(order)
-    get_sort_order! : () -> I32
-    get_sort_order! = |_| Host.OpenXRCompositionLayer_get_sort_order_3905245786!
-    set_alpha_blend! : Bool -> {}
-    set_alpha_blend! = |enabled| Host.OpenXRCompositionLayer_set_alpha_blend_2586408642!(enabled)
-    get_alpha_blend! : () -> Bool
-    get_alpha_blend! = |_| Host.OpenXRCompositionLayer_get_alpha_blend_36873697!
-    get_android_surface! : () -> JavaObject
-    get_android_surface! = |_| Host.OpenXRCompositionLayer_get_android_surface_3277089691!
-    is_natively_supported! : () -> Bool
-    is_natively_supported! = |_| Host.OpenXRCompositionLayer_is_natively_supported_36873697!
-    is_protected_content! : () -> Bool
-    is_protected_content! = |_| Host.OpenXRCompositionLayer_is_protected_content_36873697!
-    set_protected_content! : Bool -> {}
-    set_protected_content! = |protected_content| Host.OpenXRCompositionLayer_set_protected_content_2586408642!(protected_content)
-    set_min_filter! : OpenXRCompositionLayer_Filter -> {}
-    set_min_filter! = |mode| Host.OpenXRCompositionLayer_set_min_filter_3653437593!(mode)
-    get_min_filter! : () -> OpenXRCompositionLayer_Filter
-    get_min_filter! = |_| Host.OpenXRCompositionLayer_get_min_filter_845677307!
-    set_mag_filter! : OpenXRCompositionLayer_Filter -> {}
-    set_mag_filter! = |mode| Host.OpenXRCompositionLayer_set_mag_filter_3653437593!(mode)
-    get_mag_filter! : () -> OpenXRCompositionLayer_Filter
-    get_mag_filter! = |_| Host.OpenXRCompositionLayer_get_mag_filter_845677307!
-    set_mipmap_mode! : OpenXRCompositionLayer_MipmapMode -> {}
-    set_mipmap_mode! = |mode| Host.OpenXRCompositionLayer_set_mipmap_mode_3271133183!(mode)
-    get_mipmap_mode! : () -> OpenXRCompositionLayer_MipmapMode
-    get_mipmap_mode! = |_| Host.OpenXRCompositionLayer_get_mipmap_mode_3962697095!
-    set_horizontal_wrap! : OpenXRCompositionLayer_Wrap -> {}
-    set_horizontal_wrap! = |mode| Host.OpenXRCompositionLayer_set_horizontal_wrap_15634990!(mode)
-    get_horizontal_wrap! : () -> OpenXRCompositionLayer_Wrap
-    get_horizontal_wrap! = |_| Host.OpenXRCompositionLayer_get_horizontal_wrap_2798816834!
-    set_vertical_wrap! : OpenXRCompositionLayer_Wrap -> {}
-    set_vertical_wrap! = |mode| Host.OpenXRCompositionLayer_set_vertical_wrap_15634990!(mode)
-    get_vertical_wrap! : () -> OpenXRCompositionLayer_Wrap
-    get_vertical_wrap! = |_| Host.OpenXRCompositionLayer_get_vertical_wrap_2798816834!
-    set_red_swizzle! : OpenXRCompositionLayer_Swizzle -> {}
-    set_red_swizzle! = |mode| Host.OpenXRCompositionLayer_set_red_swizzle_741598951!(mode)
-    get_red_swizzle! : () -> OpenXRCompositionLayer_Swizzle
-    get_red_swizzle! = |_| Host.OpenXRCompositionLayer_get_red_swizzle_2334776767!
-    set_green_swizzle! : OpenXRCompositionLayer_Swizzle -> {}
-    set_green_swizzle! = |mode| Host.OpenXRCompositionLayer_set_green_swizzle_741598951!(mode)
-    get_green_swizzle! : () -> OpenXRCompositionLayer_Swizzle
-    get_green_swizzle! = |_| Host.OpenXRCompositionLayer_get_green_swizzle_2334776767!
-    set_blue_swizzle! : OpenXRCompositionLayer_Swizzle -> {}
-    set_blue_swizzle! = |mode| Host.OpenXRCompositionLayer_set_blue_swizzle_741598951!(mode)
-    get_blue_swizzle! : () -> OpenXRCompositionLayer_Swizzle
-    get_blue_swizzle! = |_| Host.OpenXRCompositionLayer_get_blue_swizzle_2334776767!
-    set_alpha_swizzle! : OpenXRCompositionLayer_Swizzle -> {}
-    set_alpha_swizzle! = |mode| Host.OpenXRCompositionLayer_set_alpha_swizzle_741598951!(mode)
-    get_alpha_swizzle! : () -> OpenXRCompositionLayer_Swizzle
-    get_alpha_swizzle! = |_| Host.OpenXRCompositionLayer_get_alpha_swizzle_2334776767!
-    set_max_anisotropy! : F32 -> {}
-    set_max_anisotropy! = |value| Host.OpenXRCompositionLayer_set_max_anisotropy_373806689!(value)
-    get_max_anisotropy! : () -> F32
-    get_max_anisotropy! = |_| Host.OpenXRCompositionLayer_get_max_anisotropy_1740695150!
-    set_border_color! : Color -> {}
-    set_border_color! = |color| Host.OpenXRCompositionLayer_set_border_color_2920490490!(color)
-    get_border_color! : () -> Color
-    get_border_color! = |_| Host.OpenXRCompositionLayer_get_border_color_3444240500!
-    set_eye_visibility! : OpenXRCompositionLayer_EyeVisibility -> {}
-    set_eye_visibility! = |eye_visibility| Host.OpenXRCompositionLayer_set_eye_visibility_156391336!(eye_visibility)
-    get_eye_visibility! : () -> OpenXRCompositionLayer_EyeVisibility
-    get_eye_visibility! = |_| Host.OpenXRCompositionLayer_get_eye_visibility_467669000!
-    intersects_ray! : Vector3, Vector3 -> Vector2
-    intersects_ray! = |origin, direction| Host.OpenXRCompositionLayer_intersects_ray_1091262597!(origin, direction)
+    set_layer_viewport! : U64 => {}
+    set_layer_viewport! = Host.openxrcompositionlayer_set_layer_viewport_3888077664!
+    get_layer_viewport! : () => U64
+    get_layer_viewport! = Host.openxrcompositionlayer_get_layer_viewport_3750751911!
+    set_use_android_surface! : Bool => {}
+    set_use_android_surface! = Host.openxrcompositionlayer_set_use_android_surface_2586408642!
+    get_use_android_surface! : () => Bool
+    get_use_android_surface! = Host.openxrcompositionlayer_get_use_android_surface_36873697!
+    set_android_surface_size! : U64 => {}
+    set_android_surface_size! = Host.openxrcompositionlayer_set_android_surface_size_1130785943!
+    get_android_surface_size! : () => U64
+    get_android_surface_size! = Host.openxrcompositionlayer_get_android_surface_size_3690982128!
+    set_enable_hole_punch! : Bool => {}
+    set_enable_hole_punch! = Host.openxrcompositionlayer_set_enable_hole_punch_2586408642!
+    get_enable_hole_punch! : () => Bool
+    get_enable_hole_punch! = Host.openxrcompositionlayer_get_enable_hole_punch_36873697!
+    set_sort_order! : I64 => {}
+    set_sort_order! = Host.openxrcompositionlayer_set_sort_order_1286410249!
+    get_sort_order! : () => I64
+    get_sort_order! = Host.openxrcompositionlayer_get_sort_order_3905245786!
+    set_alpha_blend! : Bool => {}
+    set_alpha_blend! = Host.openxrcompositionlayer_set_alpha_blend_2586408642!
+    get_alpha_blend! : () => Bool
+    get_alpha_blend! = Host.openxrcompositionlayer_get_alpha_blend_36873697!
+    get_android_surface! : () => U64
+    get_android_surface! = Host.openxrcompositionlayer_get_android_surface_3277089691!
+    is_natively_supported! : () => Bool
+    is_natively_supported! = Host.openxrcompositionlayer_is_natively_supported_36873697!
+    is_protected_content! : () => Bool
+    is_protected_content! = Host.openxrcompositionlayer_is_protected_content_36873697!
+    set_protected_content! : Bool => {}
+    set_protected_content! = Host.openxrcompositionlayer_set_protected_content_2586408642!
+    set_min_filter! : U64 => {}
+    set_min_filter! = Host.openxrcompositionlayer_set_min_filter_3653437593!
+    get_min_filter! : () => U64
+    get_min_filter! = Host.openxrcompositionlayer_get_min_filter_845677307!
+    set_mag_filter! : U64 => {}
+    set_mag_filter! = Host.openxrcompositionlayer_set_mag_filter_3653437593!
+    get_mag_filter! : () => U64
+    get_mag_filter! = Host.openxrcompositionlayer_get_mag_filter_845677307!
+    set_mipmap_mode! : U64 => {}
+    set_mipmap_mode! = Host.openxrcompositionlayer_set_mipmap_mode_3271133183!
+    get_mipmap_mode! : () => U64
+    get_mipmap_mode! = Host.openxrcompositionlayer_get_mipmap_mode_3962697095!
+    set_horizontal_wrap! : U64 => {}
+    set_horizontal_wrap! = Host.openxrcompositionlayer_set_horizontal_wrap_15634990!
+    get_horizontal_wrap! : () => U64
+    get_horizontal_wrap! = Host.openxrcompositionlayer_get_horizontal_wrap_2798816834!
+    set_vertical_wrap! : U64 => {}
+    set_vertical_wrap! = Host.openxrcompositionlayer_set_vertical_wrap_15634990!
+    get_vertical_wrap! : () => U64
+    get_vertical_wrap! = Host.openxrcompositionlayer_get_vertical_wrap_2798816834!
+    set_red_swizzle! : U64 => {}
+    set_red_swizzle! = Host.openxrcompositionlayer_set_red_swizzle_741598951!
+    get_red_swizzle! : () => U64
+    get_red_swizzle! = Host.openxrcompositionlayer_get_red_swizzle_2334776767!
+    set_green_swizzle! : U64 => {}
+    set_green_swizzle! = Host.openxrcompositionlayer_set_green_swizzle_741598951!
+    get_green_swizzle! : () => U64
+    get_green_swizzle! = Host.openxrcompositionlayer_get_green_swizzle_2334776767!
+    set_blue_swizzle! : U64 => {}
+    set_blue_swizzle! = Host.openxrcompositionlayer_set_blue_swizzle_741598951!
+    get_blue_swizzle! : () => U64
+    get_blue_swizzle! = Host.openxrcompositionlayer_get_blue_swizzle_2334776767!
+    set_alpha_swizzle! : U64 => {}
+    set_alpha_swizzle! = Host.openxrcompositionlayer_set_alpha_swizzle_741598951!
+    get_alpha_swizzle! : () => U64
+    get_alpha_swizzle! = Host.openxrcompositionlayer_get_alpha_swizzle_2334776767!
+    set_max_anisotropy! : F64 => {}
+    set_max_anisotropy! = Host.openxrcompositionlayer_set_max_anisotropy_373806689!
+    get_max_anisotropy! : () => F64
+    get_max_anisotropy! = Host.openxrcompositionlayer_get_max_anisotropy_1740695150!
+    set_border_color! : U64 => {}
+    set_border_color! = Host.openxrcompositionlayer_set_border_color_2920490490!
+    get_border_color! : () => U64
+    get_border_color! = Host.openxrcompositionlayer_get_border_color_3444240500!
+    set_eye_visibility! : U64 => {}
+    set_eye_visibility! = Host.openxrcompositionlayer_set_eye_visibility_156391336!
+    get_eye_visibility! : () => U64
+    get_eye_visibility! = Host.openxrcompositionlayer_get_eye_visibility_467669000!
+    intersects_ray! : U64, U64 => U64
+    intersects_ray! = Host.openxrcompositionlayer_intersects_ray_1091262597!
 
 
 }

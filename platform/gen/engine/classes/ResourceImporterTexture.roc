@@ -1,11 +1,13 @@
 # class ResourceImporterTexture
+import ../../Host
+
 # inherits: ResourceImporter
 ResourceImporterTexture := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

@@ -1,4 +1,6 @@
 # class XRBodyTracker
+import ../../Host
+
 # inherits: XRPositionalTracker
 XRBodyTracker := {
     ptr : U64,
@@ -7,35 +9,27 @@ XRBodyTracker := {
     Joint : [JOINT_ROOT, JOINT_HIPS, JOINT_SPINE, JOINT_CHEST, JOINT_UPPER_CHEST, JOINT_NECK, JOINT_HEAD, JOINT_HEAD_TIP, JOINT_LEFT_SHOULDER, JOINT_LEFT_UPPER_ARM, JOINT_LEFT_LOWER_ARM, JOINT_RIGHT_SHOULDER, JOINT_RIGHT_UPPER_ARM, JOINT_RIGHT_LOWER_ARM, JOINT_LEFT_UPPER_LEG, JOINT_LEFT_LOWER_LEG, JOINT_LEFT_FOOT, JOINT_LEFT_TOES, JOINT_RIGHT_UPPER_LEG, JOINT_RIGHT_LOWER_LEG, JOINT_RIGHT_FOOT, JOINT_RIGHT_TOES, JOINT_LEFT_HAND, JOINT_LEFT_PALM, JOINT_LEFT_WRIST, JOINT_LEFT_THUMB_METACARPAL, JOINT_LEFT_THUMB_PHALANX_PROXIMAL, JOINT_LEFT_THUMB_PHALANX_DISTAL, JOINT_LEFT_THUMB_TIP, JOINT_LEFT_INDEX_FINGER_METACARPAL, JOINT_LEFT_INDEX_FINGER_PHALANX_PROXIMAL, JOINT_LEFT_INDEX_FINGER_PHALANX_INTERMEDIATE, JOINT_LEFT_INDEX_FINGER_PHALANX_DISTAL, JOINT_LEFT_INDEX_FINGER_TIP, JOINT_LEFT_MIDDLE_FINGER_METACARPAL, JOINT_LEFT_MIDDLE_FINGER_PHALANX_PROXIMAL, JOINT_LEFT_MIDDLE_FINGER_PHALANX_INTERMEDIATE, JOINT_LEFT_MIDDLE_FINGER_PHALANX_DISTAL, JOINT_LEFT_MIDDLE_FINGER_TIP, JOINT_LEFT_RING_FINGER_METACARPAL, JOINT_LEFT_RING_FINGER_PHALANX_PROXIMAL, JOINT_LEFT_RING_FINGER_PHALANX_INTERMEDIATE, JOINT_LEFT_RING_FINGER_PHALANX_DISTAL, JOINT_LEFT_RING_FINGER_TIP, JOINT_LEFT_PINKY_FINGER_METACARPAL, JOINT_LEFT_PINKY_FINGER_PHALANX_PROXIMAL, JOINT_LEFT_PINKY_FINGER_PHALANX_INTERMEDIATE, JOINT_LEFT_PINKY_FINGER_PHALANX_DISTAL, JOINT_LEFT_PINKY_FINGER_TIP, JOINT_RIGHT_HAND, JOINT_RIGHT_PALM, JOINT_RIGHT_WRIST, JOINT_RIGHT_THUMB_METACARPAL, JOINT_RIGHT_THUMB_PHALANX_PROXIMAL, JOINT_RIGHT_THUMB_PHALANX_DISTAL, JOINT_RIGHT_THUMB_TIP, JOINT_RIGHT_INDEX_FINGER_METACARPAL, JOINT_RIGHT_INDEX_FINGER_PHALANX_PROXIMAL, JOINT_RIGHT_INDEX_FINGER_PHALANX_INTERMEDIATE, JOINT_RIGHT_INDEX_FINGER_PHALANX_DISTAL, JOINT_RIGHT_INDEX_FINGER_TIP, JOINT_RIGHT_MIDDLE_FINGER_METACARPAL, JOINT_RIGHT_MIDDLE_FINGER_PHALANX_PROXIMAL, JOINT_RIGHT_MIDDLE_FINGER_PHALANX_INTERMEDIATE, JOINT_RIGHT_MIDDLE_FINGER_PHALANX_DISTAL, JOINT_RIGHT_MIDDLE_FINGER_TIP, JOINT_RIGHT_RING_FINGER_METACARPAL, JOINT_RIGHT_RING_FINGER_PHALANX_PROXIMAL, JOINT_RIGHT_RING_FINGER_PHALANX_INTERMEDIATE, JOINT_RIGHT_RING_FINGER_PHALANX_DISTAL, JOINT_RIGHT_RING_FINGER_TIP, JOINT_RIGHT_PINKY_FINGER_METACARPAL, JOINT_RIGHT_PINKY_FINGER_PHALANX_PROXIMAL, JOINT_RIGHT_PINKY_FINGER_PHALANX_INTERMEDIATE, JOINT_RIGHT_PINKY_FINGER_PHALANX_DISTAL, JOINT_RIGHT_PINKY_FINGER_TIP, JOINT_LOWER_CHEST, JOINT_LEFT_SCAPULA, JOINT_LEFT_WRIST_TWIST, JOINT_RIGHT_SCAPULA, JOINT_RIGHT_WRIST_TWIST, JOINT_LEFT_FOOT_TWIST, JOINT_LEFT_HEEL, JOINT_LEFT_MIDDLE_FOOT, JOINT_RIGHT_FOOT_TWIST, JOINT_RIGHT_HEEL, JOINT_RIGHT_MIDDLE_FOOT, JOINT_MAX]
     JointFlags : [JOINT_FLAG_ORIENTATION_VALID, JOINT_FLAG_ORIENTATION_TRACKED, JOINT_FLAG_POSITION_VALID, JOINT_FLAG_POSITION_TRACKED]
 
-    # --- properties ---
-    # property has_tracking_data : Bool
-    get_has_tracking_data! : () -> Bool
-    get_has_tracking_data! = |_| Host.XRBodyTracker_get_has_tracking_data_prop!
-    set_has_tracking_data! : Bool -> {}
-    set_has_tracking_data! = |v| Host.XRBodyTracker_set_has_tracking_data_prop!(v)
-    # property body_flags : I32
-    get_body_flags! : () -> I32
-    get_body_flags! = |_| Host.XRBodyTracker_get_body_flags_prop!
-    set_body_flags! : I32 -> {}
-    set_body_flags! = |v| Host.XRBodyTracker_set_body_flags_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property has_tracking_data : Bool  getter=get_has_tracking_data setter=set_has_tracking_data
+    # property body_flags : I64  getter=get_body_flags setter=set_body_flags
 
     # --- methods ---
-    set_has_tracking_data! : Bool -> {}
-    set_has_tracking_data! = |has_data| Host.XRBodyTracker_set_has_tracking_data_2586408642!(has_data)
-    get_has_tracking_data! : () -> Bool
-    get_has_tracking_data! = |_| Host.XRBodyTracker_get_has_tracking_data_36873697!
-    set_body_flags! : XRBodyTracker_BodyFlags -> {}
-    set_body_flags! = |flags| Host.XRBodyTracker_set_body_flags_2103235750!(flags)
-    get_body_flags! : () -> XRBodyTracker_BodyFlags
-    get_body_flags! = |_| Host.XRBodyTracker_get_body_flags_3543166366!
-    set_joint_flags! : XRBodyTracker_Joint, XRBodyTracker_JointFlags -> {}
-    set_joint_flags! = |joint, flags| Host.XRBodyTracker_set_joint_flags_592144999!(joint, flags)
-    get_joint_flags! : XRBodyTracker_Joint -> XRBodyTracker_JointFlags
-    get_joint_flags! = |joint| Host.XRBodyTracker_get_joint_flags_1030162609!(joint)
-    set_joint_transform! : XRBodyTracker_Joint, Transform3D -> {}
-    set_joint_transform! = |joint, transform| Host.XRBodyTracker_set_joint_transform_2635424328!(joint, transform)
-    get_joint_transform! : XRBodyTracker_Joint -> Transform3D
-    get_joint_transform! = |joint| Host.XRBodyTracker_get_joint_transform_3474811534!(joint)
+    set_has_tracking_data! : Bool => {}
+    set_has_tracking_data! = Host.xrbodytracker_set_has_tracking_data_2586408642!
+    get_has_tracking_data! : () => Bool
+    get_has_tracking_data! = Host.xrbodytracker_get_has_tracking_data_36873697!
+    set_body_flags! : U64 => {}
+    set_body_flags! = Host.xrbodytracker_set_body_flags_2103235750!
+    get_body_flags! : () => U64
+    get_body_flags! = Host.xrbodytracker_get_body_flags_3543166366!
+    set_joint_flags! : U64, U64 => {}
+    set_joint_flags! = Host.xrbodytracker_set_joint_flags_592144999!
+    get_joint_flags! : U64 => U64
+    get_joint_flags! = Host.xrbodytracker_get_joint_flags_1030162609!
+    set_joint_transform! : U64, U64 => {}
+    set_joint_transform! = Host.xrbodytracker_set_joint_transform_2635424328!
+    get_joint_transform! : U64 => U64
+    get_joint_transform! = Host.xrbodytracker_get_joint_transform_3474811534!
 
 
 }

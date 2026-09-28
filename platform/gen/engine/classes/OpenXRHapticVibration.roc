@@ -1,40 +1,30 @@
 # class OpenXRHapticVibration
+import ../../Host
+
 # inherits: OpenXRHapticBase
 OpenXRHapticVibration := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property duration : I32
-    get_duration! : () -> I32
-    get_duration! = |_| Host.OpenXRHapticVibration_get_duration_prop!
-    set_duration! : I32 -> {}
-    set_duration! = |v| Host.OpenXRHapticVibration_set_duration_prop!(v)
-    # property frequency : F32
-    get_frequency! : () -> F32
-    get_frequency! = |_| Host.OpenXRHapticVibration_get_frequency_prop!
-    set_frequency! : F32 -> {}
-    set_frequency! = |v| Host.OpenXRHapticVibration_set_frequency_prop!(v)
-    # property amplitude : F32
-    get_amplitude! : () -> F32
-    get_amplitude! = |_| Host.OpenXRHapticVibration_get_amplitude_prop!
-    set_amplitude! : F32 -> {}
-    set_amplitude! = |v| Host.OpenXRHapticVibration_set_amplitude_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property duration : I64  getter=get_duration setter=set_duration
+    # property frequency : F64  getter=get_frequency setter=set_frequency
+    # property amplitude : F64  getter=get_amplitude setter=set_amplitude
 
     # --- methods ---
-    set_duration! : I32 -> {}
-    set_duration! = |duration| Host.OpenXRHapticVibration_set_duration_1286410249!(duration)
-    get_duration! : () -> I32
-    get_duration! = |_| Host.OpenXRHapticVibration_get_duration_3905245786!
-    set_frequency! : F32 -> {}
-    set_frequency! = |frequency| Host.OpenXRHapticVibration_set_frequency_373806689!(frequency)
-    get_frequency! : () -> F32
-    get_frequency! = |_| Host.OpenXRHapticVibration_get_frequency_1740695150!
-    set_amplitude! : F32 -> {}
-    set_amplitude! = |amplitude| Host.OpenXRHapticVibration_set_amplitude_373806689!(amplitude)
-    get_amplitude! : () -> F32
-    get_amplitude! = |_| Host.OpenXRHapticVibration_get_amplitude_1740695150!
+    set_duration! : I64 => {}
+    set_duration! = Host.openxrhapticvibration_set_duration_1286410249!
+    get_duration! : () => I64
+    get_duration! = Host.openxrhapticvibration_get_duration_3905245786!
+    set_frequency! : F64 => {}
+    set_frequency! = Host.openxrhapticvibration_set_frequency_373806689!
+    get_frequency! : () => F64
+    get_frequency! = Host.openxrhapticvibration_get_frequency_1740695150!
+    set_amplitude! : F64 => {}
+    set_amplitude! = Host.openxrhapticvibration_set_amplitude_373806689!
+    get_amplitude! : () => F64
+    get_amplitude! = Host.openxrhapticvibration_get_amplitude_1740695150!
 
 
 }

@@ -1,11 +1,13 @@
 # class VisualShaderNodeScreenUVToSDF
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeScreenUVToSDF := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

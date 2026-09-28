@@ -1,31 +1,25 @@
 # class VisualShaderNodeColorParameter
+import ../../Host
+
 # inherits: VisualShaderNodeParameter
 VisualShaderNodeColorParameter := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property default_value_enabled : Bool
-    is_default_value_enabled! : () -> Bool
-    is_default_value_enabled! = |_| Host.VisualShaderNodeColorParameter_is_default_value_enabled_prop!
-    set_default_value_enabled! : Bool -> {}
-    set_default_value_enabled! = |v| Host.VisualShaderNodeColorParameter_set_default_value_enabled_prop!(v)
-    # property default_value : Color
-    get_default_value! : () -> Color
-    get_default_value! = |_| Host.VisualShaderNodeColorParameter_get_default_value_prop!
-    set_default_value! : Color -> {}
-    set_default_value! = |v| Host.VisualShaderNodeColorParameter_set_default_value_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property default_value_enabled : Bool  getter=is_default_value_enabled setter=set_default_value_enabled
+    # property default_value : U64  getter=get_default_value setter=set_default_value
 
     # --- methods ---
-    set_default_value_enabled! : Bool -> {}
-    set_default_value_enabled! = |enabled| Host.VisualShaderNodeColorParameter_set_default_value_enabled_2586408642!(enabled)
-    is_default_value_enabled! : () -> Bool
-    is_default_value_enabled! = |_| Host.VisualShaderNodeColorParameter_is_default_value_enabled_36873697!
-    set_default_value! : Color -> {}
-    set_default_value! = |value| Host.VisualShaderNodeColorParameter_set_default_value_2920490490!(value)
-    get_default_value! : () -> Color
-    get_default_value! = |_| Host.VisualShaderNodeColorParameter_get_default_value_3444240500!
+    set_default_value_enabled! : Bool => {}
+    set_default_value_enabled! = Host.visualshadernodecolorparameter_set_default_value_enabled_2586408642!
+    is_default_value_enabled! : () => Bool
+    is_default_value_enabled! = Host.visualshadernodecolorparameter_is_default_value_enabled_36873697!
+    set_default_value! : U64 => {}
+    set_default_value! = Host.visualshadernodecolorparameter_set_default_value_2920490490!
+    get_default_value! : () => U64
+    get_default_value! = Host.visualshadernodecolorparameter_get_default_value_3444240500!
 
 
 }

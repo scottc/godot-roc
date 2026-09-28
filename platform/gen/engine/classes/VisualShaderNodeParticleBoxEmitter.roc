@@ -1,11 +1,13 @@
 # class VisualShaderNodeParticleBoxEmitter
+import ../../Host
+
 # inherits: VisualShaderNodeParticleEmitter
 VisualShaderNodeParticleBoxEmitter := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

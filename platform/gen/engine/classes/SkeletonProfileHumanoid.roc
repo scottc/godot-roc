@@ -1,11 +1,13 @@
 # class SkeletonProfileHumanoid
+import ../../Host
+
 # inherits: SkeletonProfile
 SkeletonProfileHumanoid := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

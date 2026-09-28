@@ -1,22 +1,20 @@
 # class PolygonOccluder3D
+import ../../Host
+
 # inherits: Occluder3D
 PolygonOccluder3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property polygon : PackedVector2Array
-    get_polygon! : () -> PackedVector2Array
-    get_polygon! = |_| Host.PolygonOccluder3D_get_polygon_prop!
-    set_polygon! : PackedVector2Array -> {}
-    set_polygon! = |v| Host.PolygonOccluder3D_set_polygon_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property polygon : U64  getter=get_polygon setter=set_polygon
 
     # --- methods ---
-    set_polygon! : PackedVector2Array -> {}
-    set_polygon! = |polygon| Host.PolygonOccluder3D_set_polygon_1509147220!(polygon)
-    get_polygon! : () -> PackedVector2Array
-    get_polygon! = |_| Host.PolygonOccluder3D_get_polygon_2961356807!
+    set_polygon! : U64 => {}
+    set_polygon! = Host.polygonoccluder3d_set_polygon_1509147220!
+    get_polygon! : () => U64
+    get_polygon! = Host.polygonoccluder3d_get_polygon_2961356807!
 
 
 }

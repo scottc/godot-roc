@@ -1,11 +1,13 @@
 # class AnimationNodeBlend2
+import ../../Host
+
 # inherits: AnimationNodeSync
 AnimationNodeBlend2 := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

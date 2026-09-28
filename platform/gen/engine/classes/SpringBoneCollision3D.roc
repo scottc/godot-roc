@@ -1,51 +1,37 @@
 # class SpringBoneCollision3D
+import ../../Host
+
 # inherits: Node3D
 SpringBoneCollision3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property bone_name : StringName
-    get_bone_name! : () -> StringName
-    get_bone_name! = |_| Host.SpringBoneCollision3D_get_bone_name_prop!
-    set_bone_name! : StringName -> {}
-    set_bone_name! = |v| Host.SpringBoneCollision3D_set_bone_name_prop!(v)
-    # property bone : I32
-    get_bone! : () -> I32
-    get_bone! = |_| Host.SpringBoneCollision3D_get_bone_prop!
-    set_bone! : I32 -> {}
-    set_bone! = |v| Host.SpringBoneCollision3D_set_bone_prop!(v)
-    # property position_offset : Vector3
-    get_position_offset! : () -> Vector3
-    get_position_offset! = |_| Host.SpringBoneCollision3D_get_position_offset_prop!
-    set_position_offset! : Vector3 -> {}
-    set_position_offset! = |v| Host.SpringBoneCollision3D_set_position_offset_prop!(v)
-    # property rotation_offset : Quaternion
-    get_rotation_offset! : () -> Quaternion
-    get_rotation_offset! = |_| Host.SpringBoneCollision3D_get_rotation_offset_prop!
-    set_rotation_offset! : Quaternion -> {}
-    set_rotation_offset! = |v| Host.SpringBoneCollision3D_set_rotation_offset_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property bone_name : Str  getter=get_bone_name setter=set_bone_name
+    # property bone : I64  getter=get_bone setter=set_bone
+    # property position_offset : U64  getter=get_position_offset setter=set_position_offset
+    # property rotation_offset : U64  getter=get_rotation_offset setter=set_rotation_offset
 
     # --- methods ---
-    get_skeleton! : () -> Skeleton3D
-    get_skeleton! = |_| Host.SpringBoneCollision3D_get_skeleton_1488626673!
-    set_bone_name! : String -> {}
-    set_bone_name! = |bone_name| Host.SpringBoneCollision3D_set_bone_name_83702148!(bone_name)
-    get_bone_name! : () -> String
-    get_bone_name! = |_| Host.SpringBoneCollision3D_get_bone_name_201670096!
-    set_bone! : I32 -> {}
-    set_bone! = |bone| Host.SpringBoneCollision3D_set_bone_1286410249!(bone)
-    get_bone! : () -> I32
-    get_bone! = |_| Host.SpringBoneCollision3D_get_bone_3905245786!
-    set_position_offset! : Vector3 -> {}
-    set_position_offset! = |offset| Host.SpringBoneCollision3D_set_position_offset_3460891852!(offset)
-    get_position_offset! : () -> Vector3
-    get_position_offset! = |_| Host.SpringBoneCollision3D_get_position_offset_3360562783!
-    set_rotation_offset! : Quaternion -> {}
-    set_rotation_offset! = |offset| Host.SpringBoneCollision3D_set_rotation_offset_1727505552!(offset)
-    get_rotation_offset! : () -> Quaternion
-    get_rotation_offset! = |_| Host.SpringBoneCollision3D_get_rotation_offset_1222331677!
+    get_skeleton! : () => U64
+    get_skeleton! = Host.springbonecollision3d_get_skeleton_1488626673!
+    set_bone_name! : Str => {}
+    set_bone_name! = Host.springbonecollision3d_set_bone_name_83702148!
+    get_bone_name! : () => Str
+    get_bone_name! = Host.springbonecollision3d_get_bone_name_201670096!
+    set_bone! : I64 => {}
+    set_bone! = Host.springbonecollision3d_set_bone_1286410249!
+    get_bone! : () => I64
+    get_bone! = Host.springbonecollision3d_get_bone_3905245786!
+    set_position_offset! : U64 => {}
+    set_position_offset! = Host.springbonecollision3d_set_position_offset_3460891852!
+    get_position_offset! : () => U64
+    get_position_offset! = Host.springbonecollision3d_get_position_offset_3360562783!
+    set_rotation_offset! : U64 => {}
+    set_rotation_offset! = Host.springbonecollision3d_set_rotation_offset_1727505552!
+    get_rotation_offset! : () => U64
+    get_rotation_offset! = Host.springbonecollision3d_get_rotation_offset_1222331677!
 
 
 }

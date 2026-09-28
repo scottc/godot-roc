@@ -1,4 +1,6 @@
 # builtin int
+import ../../Host
+
 GodotInt := {
     ptr : U64
 }.{

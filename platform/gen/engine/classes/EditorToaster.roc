@@ -1,16 +1,18 @@
 # class EditorToaster
+import ../../Host
+
 # inherits: HBoxContainer
 EditorToaster := {
     ptr : U64,
 }.{
     Severity : [SEVERITY_INFO, SEVERITY_WARNING, SEVERITY_ERROR]
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    push_toast! : String, EditorToaster_Severity, String -> {}
-    push_toast! = |message, severity, tooltip| Host.EditorToaster_push_toast_1813923476!(message, severity, tooltip)
+    push_toast! : Str, U64, Str => {}
+    push_toast! = Host.editortoaster_push_toast_1813923476!
 
 
 }

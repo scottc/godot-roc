@@ -1,58 +1,40 @@
 # class AudioEffectDistortion
+import ../../Host
+
 # inherits: AudioEffect
 AudioEffectDistortion := {
     ptr : U64,
 }.{
     Mode : [MODE_CLIP, MODE_ATAN, MODE_LOFI, MODE_OVERDRIVE, MODE_WAVESHAPE]
 
-    # --- properties ---
-    # property mode : I32
-    get_mode! : () -> I32
-    get_mode! = |_| Host.AudioEffectDistortion_get_mode_prop!
-    set_mode! : I32 -> {}
-    set_mode! = |v| Host.AudioEffectDistortion_set_mode_prop!(v)
-    # property pre_gain : F32
-    get_pre_gain! : () -> F32
-    get_pre_gain! = |_| Host.AudioEffectDistortion_get_pre_gain_prop!
-    set_pre_gain! : F32 -> {}
-    set_pre_gain! = |v| Host.AudioEffectDistortion_set_pre_gain_prop!(v)
-    # property keep_hf_hz : F32
-    get_keep_hf_hz! : () -> F32
-    get_keep_hf_hz! = |_| Host.AudioEffectDistortion_get_keep_hf_hz_prop!
-    set_keep_hf_hz! : F32 -> {}
-    set_keep_hf_hz! = |v| Host.AudioEffectDistortion_set_keep_hf_hz_prop!(v)
-    # property drive : F32
-    get_drive! : () -> F32
-    get_drive! = |_| Host.AudioEffectDistortion_get_drive_prop!
-    set_drive! : F32 -> {}
-    set_drive! = |v| Host.AudioEffectDistortion_set_drive_prop!(v)
-    # property post_gain : F32
-    get_post_gain! : () -> F32
-    get_post_gain! = |_| Host.AudioEffectDistortion_get_post_gain_prop!
-    set_post_gain! : F32 -> {}
-    set_post_gain! = |v| Host.AudioEffectDistortion_set_post_gain_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property mode : I64  getter=get_mode setter=set_mode
+    # property pre_gain : F64  getter=get_pre_gain setter=set_pre_gain
+    # property keep_hf_hz : F64  getter=get_keep_hf_hz setter=set_keep_hf_hz
+    # property drive : F64  getter=get_drive setter=set_drive
+    # property post_gain : F64  getter=get_post_gain setter=set_post_gain
 
     # --- methods ---
-    set_mode! : AudioEffectDistortion_Mode -> {}
-    set_mode! = |mode| Host.AudioEffectDistortion_set_mode_1314744793!(mode)
-    get_mode! : () -> AudioEffectDistortion_Mode
-    get_mode! = |_| Host.AudioEffectDistortion_get_mode_809118343!
-    set_pre_gain! : F32 -> {}
-    set_pre_gain! = |pre_gain| Host.AudioEffectDistortion_set_pre_gain_373806689!(pre_gain)
-    get_pre_gain! : () -> F32
-    get_pre_gain! = |_| Host.AudioEffectDistortion_get_pre_gain_1740695150!
-    set_keep_hf_hz! : F32 -> {}
-    set_keep_hf_hz! = |keep_hf_hz| Host.AudioEffectDistortion_set_keep_hf_hz_373806689!(keep_hf_hz)
-    get_keep_hf_hz! : () -> F32
-    get_keep_hf_hz! = |_| Host.AudioEffectDistortion_get_keep_hf_hz_1740695150!
-    set_drive! : F32 -> {}
-    set_drive! = |drive| Host.AudioEffectDistortion_set_drive_373806689!(drive)
-    get_drive! : () -> F32
-    get_drive! = |_| Host.AudioEffectDistortion_get_drive_1740695150!
-    set_post_gain! : F32 -> {}
-    set_post_gain! = |post_gain| Host.AudioEffectDistortion_set_post_gain_373806689!(post_gain)
-    get_post_gain! : () -> F32
-    get_post_gain! = |_| Host.AudioEffectDistortion_get_post_gain_1740695150!
+    set_mode! : U64 => {}
+    set_mode! = Host.audioeffectdistortion_set_mode_1314744793!
+    get_mode! : () => U64
+    get_mode! = Host.audioeffectdistortion_get_mode_809118343!
+    set_pre_gain! : F64 => {}
+    set_pre_gain! = Host.audioeffectdistortion_set_pre_gain_373806689!
+    get_pre_gain! : () => F64
+    get_pre_gain! = Host.audioeffectdistortion_get_pre_gain_1740695150!
+    set_keep_hf_hz! : F64 => {}
+    set_keep_hf_hz! = Host.audioeffectdistortion_set_keep_hf_hz_373806689!
+    get_keep_hf_hz! : () => F64
+    get_keep_hf_hz! = Host.audioeffectdistortion_get_keep_hf_hz_1740695150!
+    set_drive! : F64 => {}
+    set_drive! = Host.audioeffectdistortion_set_drive_373806689!
+    get_drive! : () => F64
+    get_drive! = Host.audioeffectdistortion_get_drive_1740695150!
+    set_post_gain! : F64 => {}
+    set_post_gain! = Host.audioeffectdistortion_set_post_gain_373806689!
+    get_post_gain! : () => F64
+    get_post_gain! = Host.audioeffectdistortion_get_post_gain_1740695150!
 
 
 }

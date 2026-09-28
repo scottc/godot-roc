@@ -1,11 +1,13 @@
 # class VisualShaderNodeDeterminant
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeDeterminant := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

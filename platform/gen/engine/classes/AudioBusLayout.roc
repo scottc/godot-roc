@@ -1,11 +1,13 @@
 # class AudioBusLayout
+import ../../Host
+
 # inherits: Resource
 AudioBusLayout := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

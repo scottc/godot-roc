@@ -1,6 +1,8 @@
+import ../../Host
+
 NavigationMeshGeneratorSingleton := {
     ptr : U64,
 }.{
-    get! : () -> NavigationMeshGeneratorSingleton
-    get! = |_| { { ptr: Host.get_singleton_NavigationMeshGenerator!() } }
+    get! : () => NavigationMeshGeneratorSingleton
+    get! = || { { ptr: Host.get_singleton_navigationmeshgenerator!() } }
 }

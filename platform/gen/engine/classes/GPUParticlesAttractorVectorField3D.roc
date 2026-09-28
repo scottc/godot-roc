@@ -1,31 +1,25 @@
 # class GPUParticlesAttractorVectorField3D
+import ../../Host
+
 # inherits: GPUParticlesAttractor3D
 GPUParticlesAttractorVectorField3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property size : Vector3
-    get_size! : () -> Vector3
-    get_size! = |_| Host.GPUParticlesAttractorVectorField3D_get_size_prop!
-    set_size! : Vector3 -> {}
-    set_size! = |v| Host.GPUParticlesAttractorVectorField3D_set_size_prop!(v)
-    # property texture : Texture3D
-    get_texture! : () -> Texture3D
-    get_texture! = |_| Host.GPUParticlesAttractorVectorField3D_get_texture_prop!
-    set_texture! : Texture3D -> {}
-    set_texture! = |v| Host.GPUParticlesAttractorVectorField3D_set_texture_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property size : U64  getter=get_size setter=set_size
+    # property texture : U64  getter=get_texture setter=set_texture
 
     # --- methods ---
-    set_size! : Vector3 -> {}
-    set_size! = |size| Host.GPUParticlesAttractorVectorField3D_set_size_3460891852!(size)
-    get_size! : () -> Vector3
-    get_size! = |_| Host.GPUParticlesAttractorVectorField3D_get_size_3360562783!
-    set_texture! : Texture3D -> {}
-    set_texture! = |texture| Host.GPUParticlesAttractorVectorField3D_set_texture_1188404210!(texture)
-    get_texture! : () -> Texture3D
-    get_texture! = |_| Host.GPUParticlesAttractorVectorField3D_get_texture_373985333!
+    set_size! : U64 => {}
+    set_size! = Host.gpuparticlesattractorvectorfield3d_set_size_3460891852!
+    get_size! : () => U64
+    get_size! = Host.gpuparticlesattractorvectorfield3d_get_size_3360562783!
+    set_texture! : U64 => {}
+    set_texture! = Host.gpuparticlesattractorvectorfield3d_set_texture_1188404210!
+    get_texture! : () => U64
+    get_texture! = Host.gpuparticlesattractorvectorfield3d_get_texture_373985333!
 
 
 }

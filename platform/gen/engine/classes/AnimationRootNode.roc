@@ -1,11 +1,13 @@
 # class AnimationRootNode
+import ../../Host
+
 # inherits: AnimationNode
 AnimationRootNode := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

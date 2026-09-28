@@ -1,16 +1,18 @@
 # class OpenXRSpatialComponentParentList
+import ../../Host
+
 # inherits: OpenXRSpatialComponentData
 OpenXRSpatialComponentParentList := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    get_parent! : I32 -> RID
-    get_parent! = |index| Host.OpenXRSpatialComponentParentList_get_parent_495598643!(index)
+    get_parent! : I64 => U64
+    get_parent! = Host.openxrspatialcomponentparentlist_get_parent_495598643!
 
 
 }

@@ -1,11 +1,13 @@
 # class AudioEffectNotchFilter
+import ../../Host
+
 # inherits: AudioEffectFilter
 AudioEffectNotchFilter := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

@@ -1,18 +1,20 @@
 # class SkinReference
+import ../../Host
+
 # inherits: RefCounted
 SkinReference := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    get_skeleton! : () -> RID
-    get_skeleton! = |_| Host.SkinReference_get_skeleton_2944877500!
-    get_skin! : () -> Skin
-    get_skin! = |_| Host.SkinReference_get_skin_2074563878!
+    get_skeleton! : () => U64
+    get_skeleton! = Host.skinreference_get_skeleton_2944877500!
+    get_skin! : () => U64
+    get_skin! = Host.skinreference_get_skin_2074563878!
 
 
 }

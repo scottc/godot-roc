@@ -1,6 +1,8 @@
+import ../../Host
+
 AudioServerSingleton := {
     ptr : U64,
 }.{
-    get! : () -> AudioServerSingleton
-    get! = |_| { { ptr: Host.get_singleton_AudioServer!() } }
+    get! : () => AudioServerSingleton
+    get! = || { { ptr: Host.get_singleton_audioserver!() } }
 }

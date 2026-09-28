@@ -1,11 +1,13 @@
 # class CheckBox
+import ../../Host
+
 # inherits: Button
 CheckBox := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

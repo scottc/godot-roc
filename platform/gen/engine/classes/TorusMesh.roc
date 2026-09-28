@@ -1,49 +1,35 @@
 # class TorusMesh
+import ../../Host
+
 # inherits: PrimitiveMesh
 TorusMesh := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property inner_radius : F32
-    get_inner_radius! : () -> F32
-    get_inner_radius! = |_| Host.TorusMesh_get_inner_radius_prop!
-    set_inner_radius! : F32 -> {}
-    set_inner_radius! = |v| Host.TorusMesh_set_inner_radius_prop!(v)
-    # property outer_radius : F32
-    get_outer_radius! : () -> F32
-    get_outer_radius! = |_| Host.TorusMesh_get_outer_radius_prop!
-    set_outer_radius! : F32 -> {}
-    set_outer_radius! = |v| Host.TorusMesh_set_outer_radius_prop!(v)
-    # property rings : I32
-    get_rings! : () -> I32
-    get_rings! = |_| Host.TorusMesh_get_rings_prop!
-    set_rings! : I32 -> {}
-    set_rings! = |v| Host.TorusMesh_set_rings_prop!(v)
-    # property ring_segments : I32
-    get_ring_segments! : () -> I32
-    get_ring_segments! = |_| Host.TorusMesh_get_ring_segments_prop!
-    set_ring_segments! : I32 -> {}
-    set_ring_segments! = |v| Host.TorusMesh_set_ring_segments_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property inner_radius : F64  getter=get_inner_radius setter=set_inner_radius
+    # property outer_radius : F64  getter=get_outer_radius setter=set_outer_radius
+    # property rings : I64  getter=get_rings setter=set_rings
+    # property ring_segments : I64  getter=get_ring_segments setter=set_ring_segments
 
     # --- methods ---
-    set_inner_radius! : F32 -> {}
-    set_inner_radius! = |radius| Host.TorusMesh_set_inner_radius_373806689!(radius)
-    get_inner_radius! : () -> F32
-    get_inner_radius! = |_| Host.TorusMesh_get_inner_radius_1740695150!
-    set_outer_radius! : F32 -> {}
-    set_outer_radius! = |radius| Host.TorusMesh_set_outer_radius_373806689!(radius)
-    get_outer_radius! : () -> F32
-    get_outer_radius! = |_| Host.TorusMesh_get_outer_radius_1740695150!
-    set_rings! : I32 -> {}
-    set_rings! = |rings| Host.TorusMesh_set_rings_1286410249!(rings)
-    get_rings! : () -> I32
-    get_rings! = |_| Host.TorusMesh_get_rings_3905245786!
-    set_ring_segments! : I32 -> {}
-    set_ring_segments! = |rings| Host.TorusMesh_set_ring_segments_1286410249!(rings)
-    get_ring_segments! : () -> I32
-    get_ring_segments! = |_| Host.TorusMesh_get_ring_segments_3905245786!
+    set_inner_radius! : F64 => {}
+    set_inner_radius! = Host.torusmesh_set_inner_radius_373806689!
+    get_inner_radius! : () => F64
+    get_inner_radius! = Host.torusmesh_get_inner_radius_1740695150!
+    set_outer_radius! : F64 => {}
+    set_outer_radius! = Host.torusmesh_set_outer_radius_373806689!
+    get_outer_radius! : () => F64
+    get_outer_radius! = Host.torusmesh_get_outer_radius_1740695150!
+    set_rings! : I64 => {}
+    set_rings! = Host.torusmesh_set_rings_1286410249!
+    get_rings! : () => I64
+    get_rings! = Host.torusmesh_get_rings_3905245786!
+    set_ring_segments! : I64 => {}
+    set_ring_segments! = Host.torusmesh_set_ring_segments_1286410249!
+    get_ring_segments! : () => I64
+    get_ring_segments! = Host.torusmesh_get_ring_segments_3905245786!
 
 
 }

@@ -1,30 +1,28 @@
 # class ResourcePreloader
+import ../../Host
+
 # inherits: Node
 ResourcePreloader := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property resources : Array
-    _get_resources! : () -> Array
-    _get_resources! = |_| Host.ResourcePreloader__get_resources_prop!
-    _set_resources! : Array -> {}
-    _set_resources! = |v| Host.ResourcePreloader__set_resources_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property resources : U64  getter=_get_resources setter=_set_resources
 
     # --- methods ---
-    add_resource! : StringName, Resource -> {}
-    add_resource! = |name, resource| Host.ResourcePreloader_add_resource_1168801743!(name, resource)
-    remove_resource! : StringName -> {}
-    remove_resource! = |name| Host.ResourcePreloader_remove_resource_3304788590!(name)
-    rename_resource! : StringName, StringName -> {}
-    rename_resource! = |name, newname| Host.ResourcePreloader_rename_resource_3740211285!(name, newname)
-    has_resource! : StringName -> Bool
-    has_resource! = |name| Host.ResourcePreloader_has_resource_2619796661!(name)
-    get_resource! : StringName -> Resource
-    get_resource! = |name| Host.ResourcePreloader_get_resource_3742749261!(name)
-    get_resource_list! : () -> PackedStringArray
-    get_resource_list! = |_| Host.ResourcePreloader_get_resource_list_1139954409!
+    add_resource! : Str, U64 => {}
+    add_resource! = Host.resourcepreloader_add_resource_1168801743!
+    remove_resource! : Str => {}
+    remove_resource! = Host.resourcepreloader_remove_resource_3304788590!
+    rename_resource! : Str, Str => {}
+    rename_resource! = Host.resourcepreloader_rename_resource_3740211285!
+    has_resource! : Str => Bool
+    has_resource! = Host.resourcepreloader_has_resource_2619796661!
+    get_resource! : Str => U64
+    get_resource! = Host.resourcepreloader_get_resource_3742749261!
+    get_resource_list! : () => U64
+    get_resource_list! = Host.resourcepreloader_get_resource_list_1139954409!
 
 
 }

@@ -1,11 +1,13 @@
 # class HSplitContainer
+import ../../Host
+
 # inherits: SplitContainer
 HSplitContainer := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

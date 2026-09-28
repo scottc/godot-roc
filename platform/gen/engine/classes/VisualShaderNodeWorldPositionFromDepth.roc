@@ -1,11 +1,13 @@
 # class VisualShaderNodeWorldPositionFromDepth
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeWorldPositionFromDepth := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

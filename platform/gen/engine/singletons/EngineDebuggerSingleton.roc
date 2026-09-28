@@ -1,6 +1,8 @@
+import ../../Host
+
 EngineDebuggerSingleton := {
     ptr : U64,
 }.{
-    get! : () -> EngineDebuggerSingleton
-    get! = |_| { { ptr: Host.get_singleton_EngineDebugger!() } }
+    get! : () => EngineDebuggerSingleton
+    get! = || { { ptr: Host.get_singleton_enginedebugger!() } }
 }

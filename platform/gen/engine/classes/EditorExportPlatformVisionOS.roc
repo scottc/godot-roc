@@ -1,11 +1,13 @@
 # class EditorExportPlatformVisionOS
+import ../../Host
+
 # inherits: EditorExportPlatformAppleEmbedded
 EditorExportPlatformVisionOS := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

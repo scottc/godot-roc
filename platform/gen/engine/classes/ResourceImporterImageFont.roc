@@ -1,11 +1,13 @@
 # class ResourceImporterImageFont
+import ../../Host
+
 # inherits: ResourceImporter
 ResourceImporterImageFont := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

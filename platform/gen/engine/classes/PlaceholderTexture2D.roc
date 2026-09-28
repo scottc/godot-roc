@@ -1,20 +1,18 @@
 # class PlaceholderTexture2D
+import ../../Host
+
 # inherits: Texture2D
 PlaceholderTexture2D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property size : Vector2
-    get_size! : () -> Vector2
-    get_size! = |_| Host.PlaceholderTexture2D_get_size_prop!
-    set_size! : Vector2 -> {}
-    set_size! = |v| Host.PlaceholderTexture2D_set_size_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property size : U64  getter=get_size setter=set_size
 
     # --- methods ---
-    set_size! : Vector2 -> {}
-    set_size! = |size| Host.PlaceholderTexture2D_set_size_743155724!(size)
+    set_size! : U64 => {}
+    set_size! = Host.placeholdertexture2d_set_size_743155724!
 
 
 }

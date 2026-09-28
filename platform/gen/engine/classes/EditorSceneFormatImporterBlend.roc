@@ -1,11 +1,13 @@
 # class EditorSceneFormatImporterBlend
+import ../../Host
+
 # inherits: EditorSceneFormatImporter
 EditorSceneFormatImporterBlend := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

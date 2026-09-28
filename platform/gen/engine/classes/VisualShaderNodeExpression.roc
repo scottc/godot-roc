@@ -1,22 +1,20 @@
 # class VisualShaderNodeExpression
+import ../../Host
+
 # inherits: VisualShaderNodeGroupBase
 VisualShaderNodeExpression := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property expression : String
-    get_expression! : () -> String
-    get_expression! = |_| Host.VisualShaderNodeExpression_get_expression_prop!
-    set_expression! : String -> {}
-    set_expression! = |v| Host.VisualShaderNodeExpression_set_expression_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property expression : Str  getter=get_expression setter=set_expression
 
     # --- methods ---
-    set_expression! : String -> {}
-    set_expression! = |expression| Host.VisualShaderNodeExpression_set_expression_83702148!(expression)
-    get_expression! : () -> String
-    get_expression! = |_| Host.VisualShaderNodeExpression_get_expression_201670096!
+    set_expression! : Str => {}
+    set_expression! = Host.visualshadernodeexpression_set_expression_83702148!
+    get_expression! : () => Str
+    get_expression! = Host.visualshadernodeexpression_get_expression_201670096!
 
 
 }

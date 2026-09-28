@@ -1,31 +1,25 @@
 # class SegmentShape2D
+import ../../Host
+
 # inherits: Shape2D
 SegmentShape2D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property a : Vector2
-    get_a! : () -> Vector2
-    get_a! = |_| Host.SegmentShape2D_get_a_prop!
-    set_a! : Vector2 -> {}
-    set_a! = |v| Host.SegmentShape2D_set_a_prop!(v)
-    # property b : Vector2
-    get_b! : () -> Vector2
-    get_b! = |_| Host.SegmentShape2D_get_b_prop!
-    set_b! : Vector2 -> {}
-    set_b! = |v| Host.SegmentShape2D_set_b_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property a : U64  getter=get_a setter=set_a
+    # property b : U64  getter=get_b setter=set_b
 
     # --- methods ---
-    set_a! : Vector2 -> {}
-    set_a! = |a| Host.SegmentShape2D_set_a_743155724!(a)
-    get_a! : () -> Vector2
-    get_a! = |_| Host.SegmentShape2D_get_a_3341600327!
-    set_b! : Vector2 -> {}
-    set_b! = |b| Host.SegmentShape2D_set_b_743155724!(b)
-    get_b! : () -> Vector2
-    get_b! = |_| Host.SegmentShape2D_get_b_3341600327!
+    set_a! : U64 => {}
+    set_a! = Host.segmentshape2d_set_a_743155724!
+    get_a! : () => U64
+    get_a! = Host.segmentshape2d_get_a_3341600327!
+    set_b! : U64 => {}
+    set_b! = Host.segmentshape2d_set_b_743155724!
+    get_b! : () => U64
+    get_b! = Host.segmentshape2d_get_b_3341600327!
 
 
 }

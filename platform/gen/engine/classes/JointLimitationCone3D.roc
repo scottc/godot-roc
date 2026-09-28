@@ -1,22 +1,20 @@
 # class JointLimitationCone3D
+import ../../Host
+
 # inherits: JointLimitation3D
 JointLimitationCone3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property angle : F32
-    get_angle! : () -> F32
-    get_angle! = |_| Host.JointLimitationCone3D_get_angle_prop!
-    set_angle! : F32 -> {}
-    set_angle! = |v| Host.JointLimitationCone3D_set_angle_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property angle : F64  getter=get_angle setter=set_angle
 
     # --- methods ---
-    set_angle! : F32 -> {}
-    set_angle! = |angle| Host.JointLimitationCone3D_set_angle_373806689!(angle)
-    get_angle! : () -> F32
-    get_angle! = |_| Host.JointLimitationCone3D_get_angle_1740695150!
+    set_angle! : F64 => {}
+    set_angle! = Host.jointlimitationcone3d_set_angle_373806689!
+    get_angle! : () => F64
+    get_angle! = Host.jointlimitationcone3d_get_angle_1740695150!
 
 
 }

@@ -1,31 +1,25 @@
 # class CSGMesh3D
+import ../../Host
+
 # inherits: CSGPrimitive3D
 CSGMesh3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property mesh : Mesh,-PlaneMesh,-PointMesh,-QuadMesh,-RibbonTrailMesh
-    get_mesh! : () -> Mesh,-PlaneMesh,-PointMesh,-QuadMesh,-RibbonTrailMesh
-    get_mesh! = |_| Host.CSGMesh3D_get_mesh_prop!
-    set_mesh! : Mesh,-PlaneMesh,-PointMesh,-QuadMesh,-RibbonTrailMesh -> {}
-    set_mesh! = |v| Host.CSGMesh3D_set_mesh_prop!(v)
-    # property material : BaseMaterial3D,ShaderMaterial
-    get_material! : () -> BaseMaterial3D,ShaderMaterial
-    get_material! = |_| Host.CSGMesh3D_get_material_prop!
-    set_material! : BaseMaterial3D,ShaderMaterial -> {}
-    set_material! = |v| Host.CSGMesh3D_set_material_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property mesh : U64  getter=get_mesh setter=set_mesh
+    # property material : U64  getter=get_material setter=set_material
 
     # --- methods ---
-    set_mesh! : Mesh -> {}
-    set_mesh! = |mesh| Host.CSGMesh3D_set_mesh_194775623!(mesh)
-    get_mesh! : () -> Mesh
-    get_mesh! = |_| Host.CSGMesh3D_get_mesh_4081188045!
-    set_material! : Material -> {}
-    set_material! = |material| Host.CSGMesh3D_set_material_2757459619!(material)
-    get_material! : () -> Material
-    get_material! = |_| Host.CSGMesh3D_get_material_5934680!
+    set_mesh! : U64 => {}
+    set_mesh! = Host.csgmesh3d_set_mesh_194775623!
+    get_mesh! : () => U64
+    get_mesh! = Host.csgmesh3d_get_mesh_4081188045!
+    set_material! : U64 => {}
+    set_material! = Host.csgmesh3d_set_material_2757459619!
+    get_material! : () => U64
+    get_material! = Host.csgmesh3d_get_material_5934680!
 
 
 }

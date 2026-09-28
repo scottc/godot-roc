@@ -1,11 +1,13 @@
 # class GLTFDocumentExtensionConvertImporterMesh
+import ../../Host
+
 # inherits: GLTFDocumentExtension
 GLTFDocumentExtensionConvertImporterMesh := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

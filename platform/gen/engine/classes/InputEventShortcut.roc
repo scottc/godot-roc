@@ -1,22 +1,20 @@
 # class InputEventShortcut
+import ../../Host
+
 # inherits: InputEvent
 InputEventShortcut := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property shortcut : Shortcut
-    get_shortcut! : () -> Shortcut
-    get_shortcut! = |_| Host.InputEventShortcut_get_shortcut_prop!
-    set_shortcut! : Shortcut -> {}
-    set_shortcut! = |v| Host.InputEventShortcut_set_shortcut_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property shortcut : U64  getter=get_shortcut setter=set_shortcut
 
     # --- methods ---
-    set_shortcut! : Shortcut -> {}
-    set_shortcut! = |shortcut| Host.InputEventShortcut_set_shortcut_857163497!(shortcut)
-    get_shortcut! : () -> Shortcut
-    get_shortcut! = |_| Host.InputEventShortcut_get_shortcut_3766804753!
+    set_shortcut! : U64 => {}
+    set_shortcut! = Host.inputeventshortcut_set_shortcut_857163497!
+    get_shortcut! : () => U64
+    get_shortcut! = Host.inputeventshortcut_get_shortcut_3766804753!
 
 
 }

@@ -1,11 +1,13 @@
 # class VisualShaderNodeVectorCompose
+import ../../Host
+
 # inherits: VisualShaderNodeVectorBase
 VisualShaderNodeVectorCompose := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

@@ -1,67 +1,45 @@
 # class ParallaxBackground
+import ../../Host
+
 # inherits: CanvasLayer
 ParallaxBackground := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property scroll_offset : Vector2
-    get_scroll_offset! : () -> Vector2
-    get_scroll_offset! = |_| Host.ParallaxBackground_get_scroll_offset_prop!
-    set_scroll_offset! : Vector2 -> {}
-    set_scroll_offset! = |v| Host.ParallaxBackground_set_scroll_offset_prop!(v)
-    # property scroll_base_offset : Vector2
-    get_scroll_base_offset! : () -> Vector2
-    get_scroll_base_offset! = |_| Host.ParallaxBackground_get_scroll_base_offset_prop!
-    set_scroll_base_offset! : Vector2 -> {}
-    set_scroll_base_offset! = |v| Host.ParallaxBackground_set_scroll_base_offset_prop!(v)
-    # property scroll_base_scale : Vector2
-    get_scroll_base_scale! : () -> Vector2
-    get_scroll_base_scale! = |_| Host.ParallaxBackground_get_scroll_base_scale_prop!
-    set_scroll_base_scale! : Vector2 -> {}
-    set_scroll_base_scale! = |v| Host.ParallaxBackground_set_scroll_base_scale_prop!(v)
-    # property scroll_limit_begin : Vector2
-    get_limit_begin! : () -> Vector2
-    get_limit_begin! = |_| Host.ParallaxBackground_get_limit_begin_prop!
-    set_limit_begin! : Vector2 -> {}
-    set_limit_begin! = |v| Host.ParallaxBackground_set_limit_begin_prop!(v)
-    # property scroll_limit_end : Vector2
-    get_limit_end! : () -> Vector2
-    get_limit_end! = |_| Host.ParallaxBackground_get_limit_end_prop!
-    set_limit_end! : Vector2 -> {}
-    set_limit_end! = |v| Host.ParallaxBackground_set_limit_end_prop!(v)
-    # property scroll_ignore_camera_zoom : Bool
-    is_ignore_camera_zoom! : () -> Bool
-    is_ignore_camera_zoom! = |_| Host.ParallaxBackground_is_ignore_camera_zoom_prop!
-    set_ignore_camera_zoom! : Bool -> {}
-    set_ignore_camera_zoom! = |v| Host.ParallaxBackground_set_ignore_camera_zoom_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property scroll_offset : U64  getter=get_scroll_offset setter=set_scroll_offset
+    # property scroll_base_offset : U64  getter=get_scroll_base_offset setter=set_scroll_base_offset
+    # property scroll_base_scale : U64  getter=get_scroll_base_scale setter=set_scroll_base_scale
+    # property scroll_limit_begin : U64  getter=get_limit_begin setter=set_limit_begin
+    # property scroll_limit_end : U64  getter=get_limit_end setter=set_limit_end
+    # property scroll_ignore_camera_zoom : Bool  getter=is_ignore_camera_zoom setter=set_ignore_camera_zoom
 
     # --- methods ---
-    set_scroll_offset! : Vector2 -> {}
-    set_scroll_offset! = |offset| Host.ParallaxBackground_set_scroll_offset_743155724!(offset)
-    get_scroll_offset! : () -> Vector2
-    get_scroll_offset! = |_| Host.ParallaxBackground_get_scroll_offset_3341600327!
-    set_scroll_base_offset! : Vector2 -> {}
-    set_scroll_base_offset! = |offset| Host.ParallaxBackground_set_scroll_base_offset_743155724!(offset)
-    get_scroll_base_offset! : () -> Vector2
-    get_scroll_base_offset! = |_| Host.ParallaxBackground_get_scroll_base_offset_3341600327!
-    set_scroll_base_scale! : Vector2 -> {}
-    set_scroll_base_scale! = |scale| Host.ParallaxBackground_set_scroll_base_scale_743155724!(scale)
-    get_scroll_base_scale! : () -> Vector2
-    get_scroll_base_scale! = |_| Host.ParallaxBackground_get_scroll_base_scale_3341600327!
-    set_limit_begin! : Vector2 -> {}
-    set_limit_begin! = |offset| Host.ParallaxBackground_set_limit_begin_743155724!(offset)
-    get_limit_begin! : () -> Vector2
-    get_limit_begin! = |_| Host.ParallaxBackground_get_limit_begin_3341600327!
-    set_limit_end! : Vector2 -> {}
-    set_limit_end! = |offset| Host.ParallaxBackground_set_limit_end_743155724!(offset)
-    get_limit_end! : () -> Vector2
-    get_limit_end! = |_| Host.ParallaxBackground_get_limit_end_3341600327!
-    set_ignore_camera_zoom! : Bool -> {}
-    set_ignore_camera_zoom! = |ignore| Host.ParallaxBackground_set_ignore_camera_zoom_2586408642!(ignore)
-    is_ignore_camera_zoom! : () -> Bool
-    is_ignore_camera_zoom! = |_| Host.ParallaxBackground_is_ignore_camera_zoom_2240911060!
+    set_scroll_offset! : U64 => {}
+    set_scroll_offset! = Host.parallaxbackground_set_scroll_offset_743155724!
+    get_scroll_offset! : () => U64
+    get_scroll_offset! = Host.parallaxbackground_get_scroll_offset_3341600327!
+    set_scroll_base_offset! : U64 => {}
+    set_scroll_base_offset! = Host.parallaxbackground_set_scroll_base_offset_743155724!
+    get_scroll_base_offset! : () => U64
+    get_scroll_base_offset! = Host.parallaxbackground_get_scroll_base_offset_3341600327!
+    set_scroll_base_scale! : U64 => {}
+    set_scroll_base_scale! = Host.parallaxbackground_set_scroll_base_scale_743155724!
+    get_scroll_base_scale! : () => U64
+    get_scroll_base_scale! = Host.parallaxbackground_get_scroll_base_scale_3341600327!
+    set_limit_begin! : U64 => {}
+    set_limit_begin! = Host.parallaxbackground_set_limit_begin_743155724!
+    get_limit_begin! : () => U64
+    get_limit_begin! = Host.parallaxbackground_get_limit_begin_3341600327!
+    set_limit_end! : U64 => {}
+    set_limit_end! = Host.parallaxbackground_set_limit_end_743155724!
+    get_limit_end! : () => U64
+    get_limit_end! = Host.parallaxbackground_get_limit_end_3341600327!
+    set_ignore_camera_zoom! : Bool => {}
+    set_ignore_camera_zoom! = Host.parallaxbackground_set_ignore_camera_zoom_2586408642!
+    is_ignore_camera_zoom! : () => Bool
+    is_ignore_camera_zoom! = Host.parallaxbackground_is_ignore_camera_zoom_2240911060!
 
 
 }

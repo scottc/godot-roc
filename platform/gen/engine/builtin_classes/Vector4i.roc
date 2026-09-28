@@ -1,4 +1,6 @@
 # builtin Vector4i
+import ../../Host
+
 Vector4i := {
     x : I32,
     y : I32,
@@ -10,36 +12,36 @@ Vector4i := {
     Axis : [AXIS_X, AXIS_Y, AXIS_Z, AXIS_W]
 
     # --- methods ---
-    min_axis_index! : () -> I32
-    min_axis_index! = |_| Host.Vector4i_min_axis_index_3173160232!
-    max_axis_index! : () -> I32
-    max_axis_index! = |_| Host.Vector4i_max_axis_index_3173160232!
-    length! : () -> F32
-    length! = |_| Host.Vector4i_length_466405837!
-    length_squared! : () -> I32
-    length_squared! = |_| Host.Vector4i_length_squared_3173160232!
-    sign! : () -> Vector4i
-    sign! = |_| Host.Vector4i_sign_4134919947!
-    abs! : () -> Vector4i
-    abs! = |_| Host.Vector4i_abs_4134919947!
-    clamp! : Vector4i, Vector4i -> Vector4i
-    clamp! = |min, max| Host.Vector4i_clamp_3046490913!(min, max)
-    clampi! : I32, I32 -> Vector4i
-    clampi! = |min, max| Host.Vector4i_clampi_2994578256!(min, max)
-    snapped! : Vector4i -> Vector4i
-    snapped! = |step| Host.Vector4i_snapped_1181693102!(step)
-    snappedi! : I32 -> Vector4i
-    snappedi! = |step| Host.Vector4i_snappedi_1476494415!(step)
-    min! : Vector4i -> Vector4i
-    min! = |with| Host.Vector4i_min_1181693102!(with)
-    mini! : I32 -> Vector4i
-    mini! = |with| Host.Vector4i_mini_1476494415!(with)
-    max! : Vector4i -> Vector4i
-    max! = |with| Host.Vector4i_max_1181693102!(with)
-    maxi! : I32 -> Vector4i
-    maxi! = |with| Host.Vector4i_maxi_1476494415!(with)
-    distance_to! : Vector4i -> F32
-    distance_to! = |to| Host.Vector4i_distance_to_3446086573!(to)
-    distance_squared_to! : Vector4i -> I32
-    distance_squared_to! = |to| Host.Vector4i_distance_squared_to_346708794!(to)
+    min_axis_index! : () => I64
+    min_axis_index! = Host.vector4i_min_axis_index_3173160232!
+    max_axis_index! : () => I64
+    max_axis_index! = Host.vector4i_max_axis_index_3173160232!
+    length! : () => F64
+    length! = Host.vector4i_length_466405837!
+    length_squared! : () => I64
+    length_squared! = Host.vector4i_length_squared_3173160232!
+    sign! : () => U64
+    sign! = Host.vector4i_sign_4134919947!
+    abs! : () => U64
+    abs! = Host.vector4i_abs_4134919947!
+    clamp! : U64, U64 => U64
+    clamp! = Host.vector4i_clamp_3046490913!
+    clampi! : I64, I64 => U64
+    clampi! = Host.vector4i_clampi_2994578256!
+    snapped! : U64 => U64
+    snapped! = Host.vector4i_snapped_1181693102!
+    snappedi! : I64 => U64
+    snappedi! = Host.vector4i_snappedi_1476494415!
+    min! : U64 => U64
+    min! = Host.vector4i_min_1181693102!
+    mini! : I64 => U64
+    mini! = Host.vector4i_mini_1476494415!
+    max! : U64 => U64
+    max! = Host.vector4i_max_1181693102!
+    maxi! : I64 => U64
+    maxi! = Host.vector4i_maxi_1476494415!
+    distance_to! : U64 => F64
+    distance_to! = Host.vector4i_distance_to_3446086573!
+    distance_squared_to! : U64 => I64
+    distance_squared_to! = Host.vector4i_distance_squared_to_346708794!
 }

@@ -1,26 +1,28 @@
 # class EditorSelection
+import ../../Host
+
 # inherits: Object
 EditorSelection := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    clear! : () -> {}
-    clear! = |_| Host.EditorSelection_clear_3218959716!
-    add_node! : Node -> {}
-    add_node! = |node| Host.EditorSelection_add_node_1078189570!(node)
-    remove_node! : Node -> {}
-    remove_node! = |node| Host.EditorSelection_remove_node_1078189570!(node)
-    get_selected_nodes! : () -> typedarray::Node
-    get_selected_nodes! = |_| Host.EditorSelection_get_selected_nodes_2915620761!
-    get_top_selected_nodes! : () -> typedarray::Node
-    get_top_selected_nodes! = |_| Host.EditorSelection_get_top_selected_nodes_2915620761!
-    get_transformable_selected_nodes! : () -> typedarray::Node
-    get_transformable_selected_nodes! = |_| Host.EditorSelection_get_transformable_selected_nodes_2915620761!
+    clear! : () => {}
+    clear! = Host.editorselection_clear_3218959716!
+    add_node! : U64 => {}
+    add_node! = Host.editorselection_add_node_1078189570!
+    remove_node! : U64 => {}
+    remove_node! = Host.editorselection_remove_node_1078189570!
+    get_selected_nodes! : () => U64
+    get_selected_nodes! = Host.editorselection_get_selected_nodes_2915620761!
+    get_top_selected_nodes! : () => U64
+    get_top_selected_nodes! = Host.editorselection_get_top_selected_nodes_2915620761!
+    get_transformable_selected_nodes! : () => U64
+    get_transformable_selected_nodes! = Host.editorselection_get_transformable_selected_nodes_2915620761!
 
     # signal selection_changed : ()
 }

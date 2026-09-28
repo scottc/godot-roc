@@ -1,11 +1,13 @@
 # class VBoxContainer
+import ../../Host
+
 # inherits: BoxContainer
 VBoxContainer := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

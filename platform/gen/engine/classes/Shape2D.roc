@@ -1,34 +1,32 @@
 # class Shape2D
+import ../../Host
+
 # inherits: Resource
 Shape2D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property custom_solver_bias : F32
-    get_custom_solver_bias! : () -> F32
-    get_custom_solver_bias! = |_| Host.Shape2D_get_custom_solver_bias_prop!
-    set_custom_solver_bias! : F32 -> {}
-    set_custom_solver_bias! = |v| Host.Shape2D_set_custom_solver_bias_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property custom_solver_bias : F64  getter=get_custom_solver_bias setter=set_custom_solver_bias
 
     # --- methods ---
-    set_custom_solver_bias! : F32 -> {}
-    set_custom_solver_bias! = |bias| Host.Shape2D_set_custom_solver_bias_373806689!(bias)
-    get_custom_solver_bias! : () -> F32
-    get_custom_solver_bias! = |_| Host.Shape2D_get_custom_solver_bias_1740695150!
-    collide! : Transform2D, Shape2D, Transform2D -> Bool
-    collide! = |local_xform, with_shape, shape_xform| Host.Shape2D_collide_3709843132!(local_xform, with_shape, shape_xform)
-    collide_with_motion! : Transform2D, Vector2, Shape2D, Transform2D, Vector2 -> Bool
-    collide_with_motion! = |local_xform, local_motion, with_shape, shape_xform, shape_motion| Host.Shape2D_collide_with_motion_2869556801!(local_xform, local_motion, with_shape, shape_xform, shape_motion)
-    collide_and_get_contacts! : Transform2D, Shape2D, Transform2D -> PackedVector2Array
-    collide_and_get_contacts! = |local_xform, with_shape, shape_xform| Host.Shape2D_collide_and_get_contacts_3056932662!(local_xform, with_shape, shape_xform)
-    collide_with_motion_and_get_contacts! : Transform2D, Vector2, Shape2D, Transform2D, Vector2 -> PackedVector2Array
-    collide_with_motion_and_get_contacts! = |local_xform, local_motion, with_shape, shape_xform, shape_motion| Host.Shape2D_collide_with_motion_and_get_contacts_3620351573!(local_xform, local_motion, with_shape, shape_xform, shape_motion)
-    draw! : RID, Color -> {}
-    draw! = |canvas_item, color| Host.Shape2D_draw_2948539648!(canvas_item, color)
-    get_rect! : () -> Rect2
-    get_rect! = |_| Host.Shape2D_get_rect_1639390495!
+    set_custom_solver_bias! : F64 => {}
+    set_custom_solver_bias! = Host.shape2d_set_custom_solver_bias_373806689!
+    get_custom_solver_bias! : () => F64
+    get_custom_solver_bias! = Host.shape2d_get_custom_solver_bias_1740695150!
+    collide! : U64, U64, U64 => Bool
+    collide! = Host.shape2d_collide_3709843132!
+    collide_with_motion! : U64, U64, U64, U64, U64 => Bool
+    collide_with_motion! = Host.shape2d_collide_with_motion_2869556801!
+    collide_and_get_contacts! : U64, U64, U64 => U64
+    collide_and_get_contacts! = Host.shape2d_collide_and_get_contacts_3056932662!
+    collide_with_motion_and_get_contacts! : U64, U64, U64, U64, U64 => U64
+    collide_with_motion_and_get_contacts! = Host.shape2d_collide_with_motion_and_get_contacts_3620351573!
+    draw! : U64, U64 => {}
+    draw! = Host.shape2d_draw_2948539648!
+    get_rect! : () => U64
+    get_rect! = Host.shape2d_get_rect_1639390495!
 
 
 }

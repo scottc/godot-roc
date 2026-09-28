@@ -1,4 +1,6 @@
 # class VisualShaderNodeDerivativeFunc
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeDerivativeFunc := {
     ptr : U64,
@@ -7,36 +9,24 @@ VisualShaderNodeDerivativeFunc := {
     Function : [FUNC_SUM, FUNC_X, FUNC_Y, FUNC_MAX]
     Precision : [PRECISION_NONE, PRECISION_COARSE, PRECISION_FINE, PRECISION_MAX]
 
-    # --- properties ---
-    # property op_type : I32
-    get_op_type! : () -> I32
-    get_op_type! = |_| Host.VisualShaderNodeDerivativeFunc_get_op_type_prop!
-    set_op_type! : I32 -> {}
-    set_op_type! = |v| Host.VisualShaderNodeDerivativeFunc_set_op_type_prop!(v)
-    # property function : I32
-    get_function! : () -> I32
-    get_function! = |_| Host.VisualShaderNodeDerivativeFunc_get_function_prop!
-    set_function! : I32 -> {}
-    set_function! = |v| Host.VisualShaderNodeDerivativeFunc_set_function_prop!(v)
-    # property precision : I32
-    get_precision! : () -> I32
-    get_precision! = |_| Host.VisualShaderNodeDerivativeFunc_get_precision_prop!
-    set_precision! : I32 -> {}
-    set_precision! = |v| Host.VisualShaderNodeDerivativeFunc_set_precision_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property op_type : I64  getter=get_op_type setter=set_op_type
+    # property function : I64  getter=get_function setter=set_function
+    # property precision : I64  getter=get_precision setter=set_precision
 
     # --- methods ---
-    set_op_type! : VisualShaderNodeDerivativeFunc_OpType -> {}
-    set_op_type! = |type| Host.VisualShaderNodeDerivativeFunc_set_op_type_377800221!(type)
-    get_op_type! : () -> VisualShaderNodeDerivativeFunc_OpType
-    get_op_type! = |_| Host.VisualShaderNodeDerivativeFunc_get_op_type_3997800514!
-    set_function! : VisualShaderNodeDerivativeFunc_Function -> {}
-    set_function! = |func| Host.VisualShaderNodeDerivativeFunc_set_function_1944704156!(func)
-    get_function! : () -> VisualShaderNodeDerivativeFunc_Function
-    get_function! = |_| Host.VisualShaderNodeDerivativeFunc_get_function_2389093396!
-    set_precision! : VisualShaderNodeDerivativeFunc_Precision -> {}
-    set_precision! = |precision| Host.VisualShaderNodeDerivativeFunc_set_precision_797270566!(precision)
-    get_precision! : () -> VisualShaderNodeDerivativeFunc_Precision
-    get_precision! = |_| Host.VisualShaderNodeDerivativeFunc_get_precision_3822547323!
+    set_op_type! : U64 => {}
+    set_op_type! = Host.visualshadernodederivativefunc_set_op_type_377800221!
+    get_op_type! : () => U64
+    get_op_type! = Host.visualshadernodederivativefunc_get_op_type_3997800514!
+    set_function! : U64 => {}
+    set_function! = Host.visualshadernodederivativefunc_set_function_1944704156!
+    get_function! : () => U64
+    get_function! = Host.visualshadernodederivativefunc_get_function_2389093396!
+    set_precision! : U64 => {}
+    set_precision! = Host.visualshadernodederivativefunc_set_precision_797270566!
+    get_precision! : () => U64
+    get_precision! = Host.visualshadernodederivativefunc_get_precision_3822547323!
 
 
 }

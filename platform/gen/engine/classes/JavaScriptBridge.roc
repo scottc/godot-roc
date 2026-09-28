@@ -1,34 +1,36 @@
 # class JavaScriptBridge
+import ../../Host
+
 # inherits: Object
 JavaScriptBridge := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    eval! : String, Bool -> Variant
-    eval! = |code, use_global_execution_context| Host.JavaScriptBridge_eval_218087648!(code, use_global_execution_context)
-    get_interface! : String -> JavaScriptObject
-    get_interface! = |interface| Host.JavaScriptBridge_get_interface_1355533281!(interface)
-    create_callback! : Callable -> JavaScriptObject
-    create_callback! = |callable| Host.JavaScriptBridge_create_callback_422818440!(callable)
-    is_js_buffer! : JavaScriptObject -> Bool
-    is_js_buffer! = |javascript_object| Host.JavaScriptBridge_is_js_buffer_821968997!(javascript_object)
-    js_buffer_to_packed_byte_array! : JavaScriptObject -> PackedByteArray
-    js_buffer_to_packed_byte_array! = |javascript_buffer| Host.JavaScriptBridge_js_buffer_to_packed_byte_array_64409880!(javascript_buffer)
-    create_object! : String -> Variant
-    create_object! = |object| Host.JavaScriptBridge_create_object_3093893586!(object)
-    download_buffer! : PackedByteArray, String, String -> {}
-    download_buffer! = |buffer, name, mime| Host.JavaScriptBridge_download_buffer_3352272093!(buffer, name, mime)
-    pwa_needs_update! : () -> Bool
-    pwa_needs_update! = |_| Host.JavaScriptBridge_pwa_needs_update_36873697!
-    pwa_update! : () -> Error
-    pwa_update! = |_| Host.JavaScriptBridge_pwa_update_166280745!
-    force_fs_sync! : () -> {}
-    force_fs_sync! = |_| Host.JavaScriptBridge_force_fs_sync_3218959716!
+    eval! : Str, Bool => U64
+    eval! = Host.javascriptbridge_eval_218087648!
+    get_interface! : Str => U64
+    get_interface! = Host.javascriptbridge_get_interface_1355533281!
+    create_callback! : U64 => U64
+    create_callback! = Host.javascriptbridge_create_callback_422818440!
+    is_js_buffer! : U64 => Bool
+    is_js_buffer! = Host.javascriptbridge_is_js_buffer_821968997!
+    js_buffer_to_packed_byte_array! : U64 => U64
+    js_buffer_to_packed_byte_array! = Host.javascriptbridge_js_buffer_to_packed_byte_array_64409880!
+    create_object! : Str => U64
+    create_object! = Host.javascriptbridge_create_object_3093893586!
+    download_buffer! : U64, Str, Str => {}
+    download_buffer! = Host.javascriptbridge_download_buffer_3352272093!
+    pwa_needs_update! : () => Bool
+    pwa_needs_update! = Host.javascriptbridge_pwa_needs_update_36873697!
+    pwa_update! : () => U64
+    pwa_update! = Host.javascriptbridge_pwa_update_166280745!
+    force_fs_sync! : () => {}
+    force_fs_sync! = Host.javascriptbridge_force_fs_sync_3218959716!
 
     # signal pwa_update_available : ()
 }

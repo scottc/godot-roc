@@ -305,19 +305,54 @@ roc_fn_name = |name| {
     }
 }
 
-## Unique per class+method (hash is unique in practice; name included for readability)
+host_symbol : Str -> Str
+host_symbol = |s| s.with_ascii_lowercased()
+
 host_method_symbol : Str, Str, U64 -> Str
 host_method_symbol = |owner, name, hash|
-    "${roc_fn_name(owner)}_${roc_fn_name(name)}_${hash.to_str()}"
+    host_symbol("${roc_fn_name(owner)}_${roc_fn_name(name)}_${hash.to_str()}")
 
-## Unique per class+getter/setter — fixes godot_roc_set_operator_prop collisions
-host_prop_get_symbol : Str, Str -> Str
-host_prop_get_symbol = |owner, getter_fn|
-    "${roc_fn_name(owner)}_${getter_fn}_prop"
+host_singleton_symbol : Str -> Str
+host_singleton_symbol = |name|
+    host_symbol("get_singleton_${roc_fn_name(name)}")
 
-host_prop_set_symbol : Str, Str -> Str
-host_prop_set_symbol = |owner, setter_fn|
-    "${roc_fn_name(owner)}_${setter_fn}_prop"
+host_util_symbol : Str, U64 -> Str
+host_util_symbol = |name, hash|
+    host_symbol("util_${roc_fn_name(name)}_${hash.to_str()}")
+
+## Linker symbol for Zig export / platform hosted map
+host_linker_symbol : Str -> Str
+host_linker_symbol = |sym| "godot_roc_${sym}"
+
+## One hosted map entry: "godot_roc_foo": Host.foo!,
+hosted_entry : Str -> Str
+hosted_entry = |sym|
+    \\        "${host_linker_symbol(sym)}": Host.${sym}!,
+
+c_to_host_type : Str -> Str
+c_to_host_type = |str| {
+    cleaned =
+        if str.starts_with("enum::") {
+            "I64"
+        } else if str.starts_with("bitfield::") {
+            "I64"
+        } else {
+            str
+        }
+    match cleaned {
+        "int" => "I64"
+        "float" => "F64"
+        "double" => "F64"
+        "bool" => "Bool"
+        "void" => "{}"
+        "String" => "Str"
+        "StringName" => "Str"
+        "NodePath" => "Str"
+        "Error" => "I64"
+        "Variant" => "U64"
+        _ => "U64"
+    }
+}
 
 c_to_roc_type : Str -> Str
 c_to_roc_type = |str| {
@@ -335,6 +370,7 @@ c_to_roc_type = |str| {
         "double" => "F64"
         "bool" => "Bool"
         "void" => "{}"
+        "String" => "Str"
         "Crypto" => "GodotCrypto"
         "Range" => "GodotRange"
         other => builtin_module_name(other)
@@ -349,6 +385,8 @@ c_to_zig_ret = |str| {
         "float" => "f64"
         "double" => "f64"
         "void" => "void"
+        "String" => "void"
+        "StringName" => "void"
         _ => "void"
     }
 }
@@ -361,7 +399,37 @@ c_to_zig_ret_from_try = |maybe|
     }
 
 # =============================================================================
-# Platform root (not a package) — exposes modules; Host is hosted
+# Collect every Host symbol (same set used by Host.roc, hosted{}, Zig)
+# =============================================================================
+
+all_host_symbols : ExtensionApi -> List(Str)
+all_host_symbols = |eapi| {
+
+    sings = eapi.singletons.map(|s| host_singleton_symbol(s.name))
+
+    utils = eapi.utility_functions.map(|uf| host_util_symbol(uf.name, uf.hash))
+
+    builtin_ms =
+        eapi.builtin_classes.fold([], |acc, bic| {
+            match bic.methods {
+                Ok(ms) => List.concat(acc, ms.map(|md| host_method_symbol(bic.name, md.name, md.hash)))
+                _ => acc
+            }
+        })
+
+    class_ms =
+        eapi.classes.fold([], |acc, cls| {
+            match cls.methods {
+                Ok(ms) => List.concat(acc, ms.map(|md| host_method_symbol(cls.name, md.name, md.hash)))
+                _ => acc
+            }
+        })
+
+    List.concat(sings, List.concat(utils, List.concat(builtin_ms, class_ms)))
+}
+
+# =============================================================================
+# Platform root — includes hosted { "godot_roc_*": Host.*!, ... }
 # =============================================================================
 
 gen_platform_main_roc : ExtensionApi -> Str
@@ -386,6 +454,9 @@ gen_platform_main_roc = |eapi| {
 
     expose = Str.join_with(all_names.map(|n| "        ${n}"), ",\n")
 
+    hosted_body =
+        Str.join_with(all_host_symbols(eapi).map(hosted_entry), "\n")
+
     meta_imports =
         \\import Host
         \\import engine/GlobalConstants
@@ -402,7 +473,7 @@ gen_platform_main_roc = |eapi| {
     singleton_imports =
         Str.join_with(singleton_names.map(|n| "import engine/singletons/${n}"), "\n")
 
-    \\# AUTO-GENERATED Godot Roc platform — do not edit
+    \\# AUTO-GENERATED Godot Roc platform
     \\platform "godot-roc"
     \\    requires {} {}
     \\    exposes [
@@ -410,6 +481,9 @@ gen_platform_main_roc = |eapi| {
     \\    ]
     \\    packages {}
     \\    provides {}
+    \\    hosted {
+    \\${hosted_body}
+    \\    }
     \\
     \\${meta_imports}
     \\
@@ -427,32 +501,24 @@ render_header = |eapi|
     \\# builtins=${eapi.builtin_classes.len().to_str()} classes=${eapi.classes.len().to_str()}
 
 # =============================================================================
-# Method / property helpers
+# Method helpers
 # =============================================================================
 
-method_arg_types : MethodDef -> Str
-method_arg_types = |md|
+method_arg_types_host : MethodDef -> Str
+method_arg_types_host = |md|
     match md.arguments {
         Ok(args) if !(args.is_empty()) =>
-            Str.join_with(args.map(|a| c_to_roc_type(a.type)), ", ")
+            Str.join_with(args.map(|a| c_to_host_type(a.type)), ", ")
         _ => "()"
     }
 
-method_arg_names : MethodDef -> Str
-method_arg_names = |md|
-    match md.arguments {
-        Ok(args) if !(args.is_empty()) =>
-            Str.join_with(args.map(|a| a.name), ", ")
-        _ => ""
-    }
-
-method_return_type : MethodDef -> Str
-method_return_type = |md|
+method_return_type_host : MethodDef -> Str
+method_return_type_host = |md|
     match md.return_type {
-        Ok(rt) => c_to_roc_type(rt)
+        Ok(rt) => c_to_host_type(rt)
         _ =>
             match md.return_value {
-                Ok(rv) => c_to_roc_type(rv.type)
+                Ok(rv) => c_to_host_type(rv.type)
                 _ => "{}"
             }
     }
@@ -461,47 +527,18 @@ method_def_live : Str, MethodDef -> Str
 method_def_live = |owner, md| {
     fn = roc_fn_name(md.name)
     sym = host_method_symbol(owner, md.name, md.hash)
-    args_ty = method_arg_types(md)
-    args_ns = method_arg_names(md)
-    ret = method_return_type(md)
-    lambda =
-        if args_ns == "" {
-            "|_| Host.${sym}!"
-        } else {
-            "|${args_ns}| Host.${sym}!(${args_ns})"
-        }
-    \\    ${fn}! : ${args_ty} -> ${ret}
-    \\    ${fn}! = ${lambda}
+    args_ty = method_arg_types_host(md)
+    ret = method_return_type_host(md)
+    \\    ${fn}! : ${args_ty} => ${ret}
+    \\    ${fn}! = Host.${sym}!
 }
 
-property_defs_live : Str, PropertyDef -> Str
-property_defs_live = |owner, p| {
-    ty = c_to_roc_type(p.type)
-    getter_fn =
-        match p.getter {
-            Ok(g) => roc_fn_name(g)
-            _ => "get_${roc_fn_name(p.name)}"
-        }
-    setter_fn =
-        match p.setter {
-            Ok(s) => roc_fn_name(s)
-            _ => "set_${roc_fn_name(p.name)}"
-        }
-    get_sym = host_prop_get_symbol(owner, getter_fn)
-    set_sym = host_prop_set_symbol(owner, setter_fn)
-    getter_block =
-        \\    ${getter_fn}! : () -> ${ty}
-        \\    ${getter_fn}! = |_| Host.${get_sym}!
-    setter_block =
-        match p.setter {
-            Ok(_) =>
-                \\    ${setter_fn}! : ${ty} -> {}
-                \\    ${setter_fn}! = |v| Host.${set_sym}!(v)
-            _ => ""
-        }
-    \\    # property ${p.name} : ${ty}
-    \\${getter_block}
-    \\${setter_block}
+property_def_comment : PropertyDef -> Str
+property_def_comment = |p| {
+    ty = c_to_host_type(p.type)
+    g = match p.getter { Ok(x) => x _ => "(none)" }
+    s = match p.setter { Ok(x) => x _ => "(none)" }
+    \\    # property ${p.name} : ${ty}  getter=${g} setter=${s}
 }
 
 methods_block_live : Str, Try(List(MethodDef), [Missing]) -> Str
@@ -511,10 +548,10 @@ methods_block_live = |owner, maybe|
         _ => ""
     }
 
-properties_block_live : Str, Try(List(PropertyDef), [Missing]) -> Str
-properties_block_live = |owner, maybe|
+properties_block_comments : Try(List(PropertyDef), [Missing]) -> Str
+properties_block_comments = |maybe|
     match maybe {
-        Ok(ps) => Str.join_with(ps.map(|p| property_defs_live(owner, p)), "\n")
+        Ok(ps) => Str.join_with(ps.map(property_def_comment), "\n")
         _ => ""
     }
 
@@ -537,7 +574,7 @@ signal_def_line = |sig| {
     args =
         match sig.arguments {
             Ok(a) if !(a.is_empty()) =>
-                Str.join_with(a.map(|x| "${x.name} : ${c_to_roc_type(x.type)}"), ", ")
+                Str.join_with(a.map(|x| "${x.name} : ${c_to_host_type(x.type)}"), ", ")
             _ => "()"
         }
     \\    # signal ${sig.name} : ${args}
@@ -551,37 +588,42 @@ signals_block = |maybe|
     }
 
 # =============================================================================
-# Host.roc — hosted signatures only (implemented in Zig)
+# Host.roc — signatures only
 # =============================================================================
+
+host_entry : Str, Str, Str -> Str
+host_entry = |sym, args_ty, ret_ty|
+    \\    ${sym}! : ${args_ty} => ${ret_ty}
 
 host_to_roc_source_str : ExtensionApi -> Str
 host_to_roc_source_str = |eapi| {
+
+    sing_decls =
+        Str.join_with(
+            eapi.singletons.map(|s| {
+                sym = host_singleton_symbol(s.name)
+                host_entry(sym, "()", "U64")
+            }),
+            "\n",
+        )
 
     util_decls =
         Str.join_with(
             eapi.utility_functions.map(|uf| {
                 ret =
                     match uf.return_type {
-                        Ok(rt) => c_to_roc_type(rt)
+                        Ok(rt) => c_to_host_type(rt)
                         _ => "{}"
                     }
                 args =
                     match uf.arguments {
                         Ok(a) if !(a.is_empty()) =>
-                            Str.join_with(a.map(|x| c_to_roc_type(x.type)), ", ")
+                            Str.join_with(a.map(|x| c_to_host_type(x.type)), ", ")
                         _ => "()"
                     }
-                sym = "util_${roc_fn_name(uf.name)}_${uf.hash.to_str()}"
-                \\    ${sym}! : ${args} -> ${ret},
+                sym = host_util_symbol(uf.name, uf.hash)
+                host_entry(sym, args, ret)
             }),
-            "\n",
-        )
-
-    sing_decls =
-        Str.join_with(
-            eapi.singletons.map(|s|
-                \\    get_singleton_${roc_fn_name(s.name)}! : () -> U64,
-            ),
             "\n",
         )
 
@@ -593,7 +635,7 @@ host_to_roc_source_str = |eapi| {
                         Str.join_with(
                             ms.map(|md| {
                                 sym = host_method_symbol(bic.name, md.name, md.hash)
-                                \\    ${sym}! : ${method_arg_types(md)} -> ${method_return_type(md)},
+                                host_entry(sym, method_arg_types_host(md), method_return_type_host(md))
                             }),
                             "\n",
                         )
@@ -611,7 +653,7 @@ host_to_roc_source_str = |eapi| {
                         Str.join_with(
                             ms.map(|md| {
                                 sym = host_method_symbol(cls.name, md.name, md.hash)
-                                \\    ${sym}! : ${method_arg_types(md)} -> ${method_return_type(md)},
+                                host_entry(sym, method_arg_types_host(md), method_return_type_host(md))
                             }),
                             "\n",
                         )
@@ -621,48 +663,8 @@ host_to_roc_source_str = |eapi| {
             "\n",
         )
 
-    class_prop_decls =
-        Str.join_with(
-            eapi.classes.map(|cls| {
-                match cls.properties {
-                    Ok(ps) =>
-                        Str.join_with(
-                            ps.map(|p| {
-                                ty = c_to_roc_type(p.type)
-                                getter_fn =
-                                    match p.getter {
-                                        Ok(g) => roc_fn_name(g)
-                                        _ => "get_${roc_fn_name(p.name)}"
-                                    }
-                                setter_fn =
-                                    match p.setter {
-                                        Ok(s) => roc_fn_name(s)
-                                        _ => "set_${roc_fn_name(p.name)}"
-                                    }
-                                get_sym = host_prop_get_symbol(cls.name, getter_fn)
-                                set_sym = host_prop_set_symbol(cls.name, setter_fn)
-                                set_line =
-                                    match p.setter {
-                                        Ok(_) =>
-                                            \\    ${set_sym}! : ${ty} -> {},
-                                        _ => ""
-                                    }
-                                \\    ${get_sym}! : () -> ${ty},
-                                \\${set_line}
-                            }),
-                            "\n",
-                        )
-                    _ => ""
-                }
-            }),
-            "\n",
-        )
-
-    \\# AUTO-GENERATED — hosted functions (Zig: godot_roc_<symbol>)
-    \\# No Roc bodies; platform boundary.
-    \\module []
-    \\
-    \\hosted [
+    \\# AUTO-GENERATED Host surface — signatures only; bodies via platform hosted → Zig
+    \\Host := [].{
     \\    # --- singletons ---
     \\${sing_decls}
     \\
@@ -674,11 +676,7 @@ host_to_roc_source_str = |eapi| {
     \\
     \\    # --- class methods ---
     \\${class_method_decls}
-    \\
-    \\    # --- class property get/set (namespaced by class) ---
-    \\${class_prop_decls}
-    \\]
-    \\
+    \\}
 }
 
 # =============================================================================
@@ -786,22 +784,24 @@ utility_functions_to_roc_source_str = |eapi| {
             eapi.utility_functions.map(|uf| {
                 ret =
                     match uf.return_type {
-                        Ok(rt) => c_to_roc_type(rt)
+                        Ok(rt) => c_to_host_type(rt)
                         _ => "{}"
                     }
                 args =
                     match uf.arguments {
                         Ok(a) if !(a.is_empty()) =>
-                            Str.join_with(a.map(|x| c_to_roc_type(x.type)), ", ")
+                            Str.join_with(a.map(|x| c_to_host_type(x.type)), ", ")
                         _ => "()"
                     }
                 fn = roc_fn_name(uf.name)
-                sym = "util_${fn}_${uf.hash.to_str()}"
-                \\    ${fn}! : ${args} -> ${ret}
+                sym = host_util_symbol(uf.name, uf.hash)
+                \\    ${fn}! : ${args} => ${ret}
                 \\    ${fn}! = Host.${sym}!
             }),
             "\n",
         )
+    \\import ../Host
+    \\
     \\UtilityFunctions := {
     \\}.{
     \\${body}
@@ -809,7 +809,7 @@ utility_functions_to_roc_source_str = |eapi| {
 }
 
 # =============================================================================
-# Builtin / class / singleton modules
+# Builtin / class / singleton
 # =============================================================================
 
 builtin_class_to_roc_source_str : BuiltinClass -> Str
@@ -831,7 +831,7 @@ builtin_class_to_roc_source_str = |bic| {
             |acc, t| {
                 is_prim =
                     match t {
-                        "I32" | "F32" | "F64" | "Bool" | "{}" | "U64" => Bool.True
+                        "I32" | "F32" | "F64" | "Bool" | "{}" | "U64" | "Str" => Bool.True
                         _ => Bool.False
                     }
                 if is_prim {
@@ -871,15 +871,17 @@ builtin_class_to_roc_source_str = |bic| {
             \\    construct_default! = |_| { { ptr: 0 } }
         }
 
-    imports_section =
+    peer_imports =
         if import_lines == "" {
             ""
         } else {
-            "${import_lines}\n\n"
+            "${import_lines}\n"
         }
 
     \\# builtin ${bic.name}
-    \\${imports_section}${type_name} := {
+    \\import ../../Host
+    \\${peer_imports}
+    \\${type_name} := {
     \\${members_str}
     \\}.{
     \\${construct_sig}
@@ -899,13 +901,15 @@ class_to_roc_source_str = |cls| {
             _ => ""
         }
     \\# class ${cls.name}
+    \\import ../../Host
+    \\
     \\${inherits_line}${type_name} := {
     \\    ptr : U64,
     \\}.{
     \\${enums_block(cls.enums)}
     \\
-    \\    # --- properties ---
-    \\${properties_block_live(cls.name, cls.properties)}
+    \\    # --- properties (getters/setters are methods) ---
+    \\${properties_block_comments(cls.properties)}
     \\
     \\    # --- methods ---
     \\${methods_block_live(cls.name, cls.methods)}
@@ -917,22 +921,24 @@ class_to_roc_source_str = |cls| {
 singleton_to_roc_source_str : Singleton -> Str
 singleton_to_roc_source_str = |st| {
     mod_name = singleton_module_name(st.name)
+    sym = host_singleton_symbol(st.name)
+    \\import ../../Host
+    \\
     \\${mod_name} := {
     \\    ptr : U64,
     \\}.{
-    \\    get! : () -> ${mod_name}
-    \\    get! = |_| { { ptr: Host.get_singleton_${roc_fn_name(st.name)}!() } }
+    \\    get! : () => ${mod_name}
+    \\    get! = || { { ptr: Host.${sym}!() } }
     \\}
 }
 
 # =============================================================================
-# Zig ABI — unique symbols (owner_name_hash / owner_getter_prop)
+# Zig ABI — same symbols as hosted map
 # =============================================================================
 
 zig_export_method : Str, MethodDef -> Str
 zig_export_method = |owner, md| {
     sym = host_method_symbol(owner, md.name, md.hash)
-    c_name = "godot_roc_${sym}"
     ret =
         match md.return_type {
             Ok(t) => c_to_zig_ret(t)
@@ -951,52 +957,10 @@ zig_export_method = |owner, md| {
         }
     \\
     \\/// ${owner}.${md.name} hash=${md.hash.to_str()}
-    \\export fn ${c_name}() callconv(.c) ${ret} {
+    \\export fn godot_roc_${sym}() callconv(.c) ${ret} {
     \\    // TODO: getMethodBind("${owner}", "${md.name}", ${md.hash.to_str()})
     \\    ${default_ret}
     \\}
-}
-
-zig_export_property : Str, PropertyDef -> Str
-zig_export_property = |owner, p| {
-    zig_ty = c_to_zig_ret(p.type)
-    getter_fn =
-        match p.getter {
-            Ok(g) => roc_fn_name(g)
-            _ => "get_${roc_fn_name(p.name)}"
-        }
-    setter_fn =
-        match p.setter {
-            Ok(s) => roc_fn_name(s)
-            _ => "set_${roc_fn_name(p.name)}"
-        }
-    get_sym = host_prop_get_symbol(owner, getter_fn)
-    set_sym = host_prop_set_symbol(owner, setter_fn)
-    get_default =
-        match zig_ty {
-            "u8" => "return 0;"
-            "i64" => "return 0;"
-            "f64" => "return 0;"
-            _ => ""
-        }
-    get_fn =
-        \\
-        \\/// ${owner}.${p.name} get
-        \\export fn godot_roc_${get_sym}() callconv(.c) ${zig_ty} {
-        \\    // TODO: ${getter_fn} on ${owner}
-        \\    ${get_default}
-        \\}
-    set_fn =
-        match p.setter {
-            Ok(_) =>
-                \\
-                \\/// ${owner}.${p.name} set
-                \\export fn godot_roc_${set_sym}() callconv(.c) void {
-                \\    // TODO: ${setter_fn} on ${owner}
-                \\}
-            _ => ""
-        }
-    "${get_fn}${set_fn}"
 }
 
 zig_platform_abi_impl_to_str : ExtensionApi -> Str
@@ -1005,7 +969,7 @@ zig_platform_abi_impl_to_str = |eapi| {
     utils =
         Str.join_with(
             eapi.utility_functions.map(|uf| {
-                sym = "util_${roc_fn_name(uf.name)}_${uf.hash.to_str()}"
+                sym = host_util_symbol(uf.name, uf.hash)
                 ret = c_to_zig_ret_from_try(uf.return_type)
                 default_ret =
                     match ret {
@@ -1024,12 +988,13 @@ zig_platform_abi_impl_to_str = |eapi| {
 
     sings =
         Str.join_with(
-            eapi.singletons.map(|s|
+            eapi.singletons.map(|s| {
+                sym = host_singleton_symbol(s.name)
                 \\
-                \\export fn godot_roc_get_singleton_${roc_fn_name(s.name)}() callconv(.c) u64 {
+                \\export fn godot_roc_${sym}() callconv(.c) u64 {
                 \\    return 0;
                 \\}
-            ),
+            }),
             "\n",
         )
 
@@ -1055,24 +1020,11 @@ zig_platform_abi_impl_to_str = |eapi| {
             "\n",
         )
 
-    class_props =
-        Str.join_with(
-            eapi.classes.map(|cls| {
-                match cls.properties {
-                    Ok(ps) => Str.join_with(ps.map(|p| zig_export_property(cls.name, p)), "\n")
-                    _ => ""
-                }
-            }),
-            "\n",
-        )
-
-    \\//! AUTO-GENERATED — unique symbols: godot_roc_<Owner>_<name>_<hash|prop>
+    \\//! AUTO-GENERATED — must match platform hosted { "godot_roc_*": Host.*! }
     \\const std = @import("std");
-    \\
     \\${sings}
     \\${utils}
     \\${builtin_methods}
     \\${class_methods}
-    \\${class_props}
     \\
 }

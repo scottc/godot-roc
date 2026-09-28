@@ -1,11 +1,13 @@
 # class AudioStreamMicrophone
+import ../../Host
+
 # inherits: AudioStream
 AudioStreamMicrophone := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

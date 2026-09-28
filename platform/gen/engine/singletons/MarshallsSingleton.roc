@@ -1,6 +1,8 @@
+import ../../Host
+
 MarshallsSingleton := {
     ptr : U64,
 }.{
-    get! : () -> MarshallsSingleton
-    get! = |_| { { ptr: Host.get_singleton_Marshalls!() } }
+    get! : () => MarshallsSingleton
+    get! = || { { ptr: Host.get_singleton_marshalls!() } }
 }

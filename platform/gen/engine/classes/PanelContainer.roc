@@ -1,11 +1,13 @@
 # class PanelContainer
+import ../../Host
+
 # inherits: Container
 PanelContainer := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

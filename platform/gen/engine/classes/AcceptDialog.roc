@@ -1,72 +1,54 @@
 # class AcceptDialog
+import ../../Host
+
 # inherits: Window
 AcceptDialog := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property ok_button_text : String
-    get_ok_button_text! : () -> String
-    get_ok_button_text! = |_| Host.AcceptDialog_get_ok_button_text_prop!
-    set_ok_button_text! : String -> {}
-    set_ok_button_text! = |v| Host.AcceptDialog_set_ok_button_text_prop!(v)
-    # property dialog_text : String
-    get_text! : () -> String
-    get_text! = |_| Host.AcceptDialog_get_text_prop!
-    set_text! : String -> {}
-    set_text! = |v| Host.AcceptDialog_set_text_prop!(v)
-    # property dialog_hide_on_ok : Bool
-    get_hide_on_ok! : () -> Bool
-    get_hide_on_ok! = |_| Host.AcceptDialog_get_hide_on_ok_prop!
-    set_hide_on_ok! : Bool -> {}
-    set_hide_on_ok! = |v| Host.AcceptDialog_set_hide_on_ok_prop!(v)
-    # property dialog_close_on_escape : Bool
-    get_close_on_escape! : () -> Bool
-    get_close_on_escape! = |_| Host.AcceptDialog_get_close_on_escape_prop!
-    set_close_on_escape! : Bool -> {}
-    set_close_on_escape! = |v| Host.AcceptDialog_set_close_on_escape_prop!(v)
-    # property dialog_autowrap : Bool
-    has_autowrap! : () -> Bool
-    has_autowrap! = |_| Host.AcceptDialog_has_autowrap_prop!
-    set_autowrap! : Bool -> {}
-    set_autowrap! = |v| Host.AcceptDialog_set_autowrap_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property ok_button_text : Str  getter=get_ok_button_text setter=set_ok_button_text
+    # property dialog_text : Str  getter=get_text setter=set_text
+    # property dialog_hide_on_ok : Bool  getter=get_hide_on_ok setter=set_hide_on_ok
+    # property dialog_close_on_escape : Bool  getter=get_close_on_escape setter=set_close_on_escape
+    # property dialog_autowrap : Bool  getter=has_autowrap setter=set_autowrap
 
     # --- methods ---
-    get_ok_button! : () -> Button
-    get_ok_button! = |_| Host.AcceptDialog_get_ok_button_1856205918!
-    get_label! : () -> Label
-    get_label! = |_| Host.AcceptDialog_get_label_566733104!
-    set_hide_on_ok! : Bool -> {}
-    set_hide_on_ok! = |enabled| Host.AcceptDialog_set_hide_on_ok_2586408642!(enabled)
-    get_hide_on_ok! : () -> Bool
-    get_hide_on_ok! = |_| Host.AcceptDialog_get_hide_on_ok_36873697!
-    set_close_on_escape! : Bool -> {}
-    set_close_on_escape! = |enabled| Host.AcceptDialog_set_close_on_escape_2586408642!(enabled)
-    get_close_on_escape! : () -> Bool
-    get_close_on_escape! = |_| Host.AcceptDialog_get_close_on_escape_36873697!
-    add_button! : String, Bool, String -> Button
-    add_button! = |text, right, action| Host.AcceptDialog_add_button_3328440682!(text, right, action)
-    add_cancel_button! : String -> Button
-    add_cancel_button! = |name| Host.AcceptDialog_add_cancel_button_242045556!(name)
-    remove_button! : Button -> {}
-    remove_button! = |button| Host.AcceptDialog_remove_button_2068354942!(button)
-    register_text_enter! : LineEdit -> {}
-    register_text_enter! = |line_edit| Host.AcceptDialog_register_text_enter_3714008017!(line_edit)
-    set_text! : String -> {}
-    set_text! = |text| Host.AcceptDialog_set_text_83702148!(text)
-    get_text! : () -> String
-    get_text! = |_| Host.AcceptDialog_get_text_201670096!
-    set_autowrap! : Bool -> {}
-    set_autowrap! = |autowrap| Host.AcceptDialog_set_autowrap_2586408642!(autowrap)
-    has_autowrap! : () -> Bool
-    has_autowrap! = |_| Host.AcceptDialog_has_autowrap_2240911060!
-    set_ok_button_text! : String -> {}
-    set_ok_button_text! = |text| Host.AcceptDialog_set_ok_button_text_83702148!(text)
-    get_ok_button_text! : () -> String
-    get_ok_button_text! = |_| Host.AcceptDialog_get_ok_button_text_201670096!
+    get_ok_button! : () => U64
+    get_ok_button! = Host.acceptdialog_get_ok_button_1856205918!
+    get_label! : () => U64
+    get_label! = Host.acceptdialog_get_label_566733104!
+    set_hide_on_ok! : Bool => {}
+    set_hide_on_ok! = Host.acceptdialog_set_hide_on_ok_2586408642!
+    get_hide_on_ok! : () => Bool
+    get_hide_on_ok! = Host.acceptdialog_get_hide_on_ok_36873697!
+    set_close_on_escape! : Bool => {}
+    set_close_on_escape! = Host.acceptdialog_set_close_on_escape_2586408642!
+    get_close_on_escape! : () => Bool
+    get_close_on_escape! = Host.acceptdialog_get_close_on_escape_36873697!
+    add_button! : Str, Bool, Str => U64
+    add_button! = Host.acceptdialog_add_button_3328440682!
+    add_cancel_button! : Str => U64
+    add_cancel_button! = Host.acceptdialog_add_cancel_button_242045556!
+    remove_button! : U64 => {}
+    remove_button! = Host.acceptdialog_remove_button_2068354942!
+    register_text_enter! : U64 => {}
+    register_text_enter! = Host.acceptdialog_register_text_enter_3714008017!
+    set_text! : Str => {}
+    set_text! = Host.acceptdialog_set_text_83702148!
+    get_text! : () => Str
+    get_text! = Host.acceptdialog_get_text_201670096!
+    set_autowrap! : Bool => {}
+    set_autowrap! = Host.acceptdialog_set_autowrap_2586408642!
+    has_autowrap! : () => Bool
+    has_autowrap! = Host.acceptdialog_has_autowrap_2240911060!
+    set_ok_button_text! : Str => {}
+    set_ok_button_text! = Host.acceptdialog_set_ok_button_text_83702148!
+    get_ok_button_text! : () => Str
+    get_ok_button_text! = Host.acceptdialog_get_ok_button_text_201670096!
 
     # signal confirmed : ()
     # signal canceled : ()
-    # signal custom_action : action : StringName
+    # signal custom_action : action : Str
 }

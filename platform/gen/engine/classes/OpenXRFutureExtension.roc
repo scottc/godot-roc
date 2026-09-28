@@ -1,20 +1,22 @@
 # class OpenXRFutureExtension
+import ../../Host
+
 # inherits: OpenXRExtensionWrapper
 OpenXRFutureExtension := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    is_active! : () -> Bool
-    is_active! = |_| Host.OpenXRFutureExtension_is_active_36873697!
-    register_future! : I32, Callable -> OpenXRFutureResult
-    register_future! = |future, on_success| Host.OpenXRFutureExtension_register_future_1038012256!(future, on_success)
-    cancel_future! : I32 -> {}
-    cancel_future! = |future| Host.OpenXRFutureExtension_cancel_future_1286410249!(future)
+    is_active! : () => Bool
+    is_active! = Host.openxrfutureextension_is_active_36873697!
+    register_future! : I64, U64 => U64
+    register_future! = Host.openxrfutureextension_register_future_1038012256!
+    cancel_future! : I64 => {}
+    cancel_future! = Host.openxrfutureextension_cancel_future_1286410249!
 
 
 }

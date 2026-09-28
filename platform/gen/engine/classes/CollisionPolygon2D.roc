@@ -1,67 +1,45 @@
 # class CollisionPolygon2D
+import ../../Host
+
 # inherits: Node2D
 CollisionPolygon2D := {
     ptr : U64,
 }.{
     BuildMode : [BUILD_SOLIDS, BUILD_SEGMENTS]
 
-    # --- properties ---
-    # property build_mode : I32
-    get_build_mode! : () -> I32
-    get_build_mode! = |_| Host.CollisionPolygon2D_get_build_mode_prop!
-    set_build_mode! : I32 -> {}
-    set_build_mode! = |v| Host.CollisionPolygon2D_set_build_mode_prop!(v)
-    # property polygon : PackedVector2Array
-    get_polygon! : () -> PackedVector2Array
-    get_polygon! = |_| Host.CollisionPolygon2D_get_polygon_prop!
-    set_polygon! : PackedVector2Array -> {}
-    set_polygon! = |v| Host.CollisionPolygon2D_set_polygon_prop!(v)
-    # property disabled : Bool
-    is_disabled! : () -> Bool
-    is_disabled! = |_| Host.CollisionPolygon2D_is_disabled_prop!
-    set_disabled! : Bool -> {}
-    set_disabled! = |v| Host.CollisionPolygon2D_set_disabled_prop!(v)
-    # property one_way_collision : Bool
-    is_one_way_collision_enabled! : () -> Bool
-    is_one_way_collision_enabled! = |_| Host.CollisionPolygon2D_is_one_way_collision_enabled_prop!
-    set_one_way_collision! : Bool -> {}
-    set_one_way_collision! = |v| Host.CollisionPolygon2D_set_one_way_collision_prop!(v)
-    # property one_way_collision_margin : F32
-    get_one_way_collision_margin! : () -> F32
-    get_one_way_collision_margin! = |_| Host.CollisionPolygon2D_get_one_way_collision_margin_prop!
-    set_one_way_collision_margin! : F32 -> {}
-    set_one_way_collision_margin! = |v| Host.CollisionPolygon2D_set_one_way_collision_margin_prop!(v)
-    # property one_way_collision_direction : Vector2
-    get_one_way_collision_direction! : () -> Vector2
-    get_one_way_collision_direction! = |_| Host.CollisionPolygon2D_get_one_way_collision_direction_prop!
-    set_one_way_collision_direction! : Vector2 -> {}
-    set_one_way_collision_direction! = |v| Host.CollisionPolygon2D_set_one_way_collision_direction_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property build_mode : I64  getter=get_build_mode setter=set_build_mode
+    # property polygon : U64  getter=get_polygon setter=set_polygon
+    # property disabled : Bool  getter=is_disabled setter=set_disabled
+    # property one_way_collision : Bool  getter=is_one_way_collision_enabled setter=set_one_way_collision
+    # property one_way_collision_margin : F64  getter=get_one_way_collision_margin setter=set_one_way_collision_margin
+    # property one_way_collision_direction : U64  getter=get_one_way_collision_direction setter=set_one_way_collision_direction
 
     # --- methods ---
-    set_polygon! : PackedVector2Array -> {}
-    set_polygon! = |polygon| Host.CollisionPolygon2D_set_polygon_1509147220!(polygon)
-    get_polygon! : () -> PackedVector2Array
-    get_polygon! = |_| Host.CollisionPolygon2D_get_polygon_2961356807!
-    set_build_mode! : CollisionPolygon2D_BuildMode -> {}
-    set_build_mode! = |build_mode| Host.CollisionPolygon2D_set_build_mode_2780803135!(build_mode)
-    get_build_mode! : () -> CollisionPolygon2D_BuildMode
-    get_build_mode! = |_| Host.CollisionPolygon2D_get_build_mode_3044948800!
-    set_disabled! : Bool -> {}
-    set_disabled! = |disabled| Host.CollisionPolygon2D_set_disabled_2586408642!(disabled)
-    is_disabled! : () -> Bool
-    is_disabled! = |_| Host.CollisionPolygon2D_is_disabled_36873697!
-    set_one_way_collision! : Bool -> {}
-    set_one_way_collision! = |enabled| Host.CollisionPolygon2D_set_one_way_collision_2586408642!(enabled)
-    is_one_way_collision_enabled! : () -> Bool
-    is_one_way_collision_enabled! = |_| Host.CollisionPolygon2D_is_one_way_collision_enabled_36873697!
-    set_one_way_collision_margin! : F32 -> {}
-    set_one_way_collision_margin! = |margin| Host.CollisionPolygon2D_set_one_way_collision_margin_373806689!(margin)
-    get_one_way_collision_margin! : () -> F32
-    get_one_way_collision_margin! = |_| Host.CollisionPolygon2D_get_one_way_collision_margin_1740695150!
-    set_one_way_collision_direction! : Vector2 -> {}
-    set_one_way_collision_direction! = |direction| Host.CollisionPolygon2D_set_one_way_collision_direction_743155724!(direction)
-    get_one_way_collision_direction! : () -> Vector2
-    get_one_way_collision_direction! = |_| Host.CollisionPolygon2D_get_one_way_collision_direction_3341600327!
+    set_polygon! : U64 => {}
+    set_polygon! = Host.collisionpolygon2d_set_polygon_1509147220!
+    get_polygon! : () => U64
+    get_polygon! = Host.collisionpolygon2d_get_polygon_2961356807!
+    set_build_mode! : U64 => {}
+    set_build_mode! = Host.collisionpolygon2d_set_build_mode_2780803135!
+    get_build_mode! : () => U64
+    get_build_mode! = Host.collisionpolygon2d_get_build_mode_3044948800!
+    set_disabled! : Bool => {}
+    set_disabled! = Host.collisionpolygon2d_set_disabled_2586408642!
+    is_disabled! : () => Bool
+    is_disabled! = Host.collisionpolygon2d_is_disabled_36873697!
+    set_one_way_collision! : Bool => {}
+    set_one_way_collision! = Host.collisionpolygon2d_set_one_way_collision_2586408642!
+    is_one_way_collision_enabled! : () => Bool
+    is_one_way_collision_enabled! = Host.collisionpolygon2d_is_one_way_collision_enabled_36873697!
+    set_one_way_collision_margin! : F64 => {}
+    set_one_way_collision_margin! = Host.collisionpolygon2d_set_one_way_collision_margin_373806689!
+    get_one_way_collision_margin! : () => F64
+    get_one_way_collision_margin! = Host.collisionpolygon2d_get_one_way_collision_margin_1740695150!
+    set_one_way_collision_direction! : U64 => {}
+    set_one_way_collision_direction! = Host.collisionpolygon2d_set_one_way_collision_direction_743155724!
+    get_one_way_collision_direction! : () => U64
+    get_one_way_collision_direction! = Host.collisionpolygon2d_get_one_way_collision_direction_3341600327!
 
 
 }

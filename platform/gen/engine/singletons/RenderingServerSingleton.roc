@@ -1,6 +1,8 @@
+import ../../Host
+
 RenderingServerSingleton := {
     ptr : U64,
 }.{
-    get! : () -> RenderingServerSingleton
-    get! = |_| { { ptr: Host.get_singleton_RenderingServer!() } }
+    get! : () => RenderingServerSingleton
+    get! = || { { ptr: Host.get_singleton_renderingserver!() } }
 }

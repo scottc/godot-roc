@@ -1,40 +1,30 @@
 # class WorldEnvironment
+import ../../Host
+
 # inherits: Node
 WorldEnvironment := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property environment : Environment
-    get_environment! : () -> Environment
-    get_environment! = |_| Host.WorldEnvironment_get_environment_prop!
-    set_environment! : Environment -> {}
-    set_environment! = |v| Host.WorldEnvironment_set_environment_prop!(v)
-    # property camera_attributes : CameraAttributesPractical,CameraAttributesPhysical
-    get_camera_attributes! : () -> CameraAttributesPractical,CameraAttributesPhysical
-    get_camera_attributes! = |_| Host.WorldEnvironment_get_camera_attributes_prop!
-    set_camera_attributes! : CameraAttributesPractical,CameraAttributesPhysical -> {}
-    set_camera_attributes! = |v| Host.WorldEnvironment_set_camera_attributes_prop!(v)
-    # property compositor : Compositor
-    get_compositor! : () -> Compositor
-    get_compositor! = |_| Host.WorldEnvironment_get_compositor_prop!
-    set_compositor! : Compositor -> {}
-    set_compositor! = |v| Host.WorldEnvironment_set_compositor_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property environment : U64  getter=get_environment setter=set_environment
+    # property camera_attributes : U64  getter=get_camera_attributes setter=set_camera_attributes
+    # property compositor : U64  getter=get_compositor setter=set_compositor
 
     # --- methods ---
-    set_environment! : Environment -> {}
-    set_environment! = |env| Host.WorldEnvironment_set_environment_4143518816!(env)
-    get_environment! : () -> Environment
-    get_environment! = |_| Host.WorldEnvironment_get_environment_3082064660!
-    set_camera_attributes! : CameraAttributes -> {}
-    set_camera_attributes! = |camera_attributes| Host.WorldEnvironment_set_camera_attributes_2817810567!(camera_attributes)
-    get_camera_attributes! : () -> CameraAttributes
-    get_camera_attributes! = |_| Host.WorldEnvironment_get_camera_attributes_3921283215!
-    set_compositor! : Compositor -> {}
-    set_compositor! = |compositor| Host.WorldEnvironment_set_compositor_1586754307!(compositor)
-    get_compositor! : () -> Compositor
-    get_compositor! = |_| Host.WorldEnvironment_get_compositor_3647707413!
+    set_environment! : U64 => {}
+    set_environment! = Host.worldenvironment_set_environment_4143518816!
+    get_environment! : () => U64
+    get_environment! = Host.worldenvironment_get_environment_3082064660!
+    set_camera_attributes! : U64 => {}
+    set_camera_attributes! = Host.worldenvironment_set_camera_attributes_2817810567!
+    get_camera_attributes! : () => U64
+    get_camera_attributes! = Host.worldenvironment_get_camera_attributes_3921283215!
+    set_compositor! : U64 => {}
+    set_compositor! = Host.worldenvironment_set_compositor_1586754307!
+    get_compositor! : () => U64
+    get_compositor! = Host.worldenvironment_get_compositor_3647707413!
 
 
 }

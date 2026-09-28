@@ -1,11 +1,13 @@
 # class JavaScriptObject
+import ../../Host
+
 # inherits: RefCounted
 JavaScriptObject := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

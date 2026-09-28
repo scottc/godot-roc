@@ -1,4 +1,6 @@
 # class CharacterBody3D
+import ../../Host
+
 # inherits: PhysicsBody3D
 CharacterBody3D := {
     ptr : U64,
@@ -6,182 +8,122 @@ CharacterBody3D := {
     MotionMode : [MOTION_MODE_GROUNDED, MOTION_MODE_FLOATING]
     PlatformOnLeave : [PLATFORM_ON_LEAVE_ADD_VELOCITY, PLATFORM_ON_LEAVE_ADD_UPWARD_VELOCITY, PLATFORM_ON_LEAVE_DO_NOTHING]
 
-    # --- properties ---
-    # property motion_mode : I32
-    get_motion_mode! : () -> I32
-    get_motion_mode! = |_| Host.CharacterBody3D_get_motion_mode_prop!
-    set_motion_mode! : I32 -> {}
-    set_motion_mode! = |v| Host.CharacterBody3D_set_motion_mode_prop!(v)
-    # property up_direction : Vector3
-    get_up_direction! : () -> Vector3
-    get_up_direction! = |_| Host.CharacterBody3D_get_up_direction_prop!
-    set_up_direction! : Vector3 -> {}
-    set_up_direction! = |v| Host.CharacterBody3D_set_up_direction_prop!(v)
-    # property slide_on_ceiling : Bool
-    is_slide_on_ceiling_enabled! : () -> Bool
-    is_slide_on_ceiling_enabled! = |_| Host.CharacterBody3D_is_slide_on_ceiling_enabled_prop!
-    set_slide_on_ceiling_enabled! : Bool -> {}
-    set_slide_on_ceiling_enabled! = |v| Host.CharacterBody3D_set_slide_on_ceiling_enabled_prop!(v)
-    # property velocity : Vector3
-    get_velocity! : () -> Vector3
-    get_velocity! = |_| Host.CharacterBody3D_get_velocity_prop!
-    set_velocity! : Vector3 -> {}
-    set_velocity! = |v| Host.CharacterBody3D_set_velocity_prop!(v)
-    # property max_slides : I32
-    get_max_slides! : () -> I32
-    get_max_slides! = |_| Host.CharacterBody3D_get_max_slides_prop!
-    set_max_slides! : I32 -> {}
-    set_max_slides! = |v| Host.CharacterBody3D_set_max_slides_prop!(v)
-    # property wall_min_slide_angle : F32
-    get_wall_min_slide_angle! : () -> F32
-    get_wall_min_slide_angle! = |_| Host.CharacterBody3D_get_wall_min_slide_angle_prop!
-    set_wall_min_slide_angle! : F32 -> {}
-    set_wall_min_slide_angle! = |v| Host.CharacterBody3D_set_wall_min_slide_angle_prop!(v)
-    # property floor_stop_on_slope : Bool
-    is_floor_stop_on_slope_enabled! : () -> Bool
-    is_floor_stop_on_slope_enabled! = |_| Host.CharacterBody3D_is_floor_stop_on_slope_enabled_prop!
-    set_floor_stop_on_slope_enabled! : Bool -> {}
-    set_floor_stop_on_slope_enabled! = |v| Host.CharacterBody3D_set_floor_stop_on_slope_enabled_prop!(v)
-    # property floor_constant_speed : Bool
-    is_floor_constant_speed_enabled! : () -> Bool
-    is_floor_constant_speed_enabled! = |_| Host.CharacterBody3D_is_floor_constant_speed_enabled_prop!
-    set_floor_constant_speed_enabled! : Bool -> {}
-    set_floor_constant_speed_enabled! = |v| Host.CharacterBody3D_set_floor_constant_speed_enabled_prop!(v)
-    # property floor_block_on_wall : Bool
-    is_floor_block_on_wall_enabled! : () -> Bool
-    is_floor_block_on_wall_enabled! = |_| Host.CharacterBody3D_is_floor_block_on_wall_enabled_prop!
-    set_floor_block_on_wall_enabled! : Bool -> {}
-    set_floor_block_on_wall_enabled! = |v| Host.CharacterBody3D_set_floor_block_on_wall_enabled_prop!(v)
-    # property floor_max_angle : F32
-    get_floor_max_angle! : () -> F32
-    get_floor_max_angle! = |_| Host.CharacterBody3D_get_floor_max_angle_prop!
-    set_floor_max_angle! : F32 -> {}
-    set_floor_max_angle! = |v| Host.CharacterBody3D_set_floor_max_angle_prop!(v)
-    # property floor_snap_length : F32
-    get_floor_snap_length! : () -> F32
-    get_floor_snap_length! = |_| Host.CharacterBody3D_get_floor_snap_length_prop!
-    set_floor_snap_length! : F32 -> {}
-    set_floor_snap_length! = |v| Host.CharacterBody3D_set_floor_snap_length_prop!(v)
-    # property platform_on_leave : I32
-    get_platform_on_leave! : () -> I32
-    get_platform_on_leave! = |_| Host.CharacterBody3D_get_platform_on_leave_prop!
-    set_platform_on_leave! : I32 -> {}
-    set_platform_on_leave! = |v| Host.CharacterBody3D_set_platform_on_leave_prop!(v)
-    # property platform_floor_layers : I32
-    get_platform_floor_layers! : () -> I32
-    get_platform_floor_layers! = |_| Host.CharacterBody3D_get_platform_floor_layers_prop!
-    set_platform_floor_layers! : I32 -> {}
-    set_platform_floor_layers! = |v| Host.CharacterBody3D_set_platform_floor_layers_prop!(v)
-    # property platform_wall_layers : I32
-    get_platform_wall_layers! : () -> I32
-    get_platform_wall_layers! = |_| Host.CharacterBody3D_get_platform_wall_layers_prop!
-    set_platform_wall_layers! : I32 -> {}
-    set_platform_wall_layers! = |v| Host.CharacterBody3D_set_platform_wall_layers_prop!(v)
-    # property safe_margin : F32
-    get_safe_margin! : () -> F32
-    get_safe_margin! = |_| Host.CharacterBody3D_get_safe_margin_prop!
-    set_safe_margin! : F32 -> {}
-    set_safe_margin! = |v| Host.CharacterBody3D_set_safe_margin_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property motion_mode : I64  getter=get_motion_mode setter=set_motion_mode
+    # property up_direction : U64  getter=get_up_direction setter=set_up_direction
+    # property slide_on_ceiling : Bool  getter=is_slide_on_ceiling_enabled setter=set_slide_on_ceiling_enabled
+    # property velocity : U64  getter=get_velocity setter=set_velocity
+    # property max_slides : I64  getter=get_max_slides setter=set_max_slides
+    # property wall_min_slide_angle : F64  getter=get_wall_min_slide_angle setter=set_wall_min_slide_angle
+    # property floor_stop_on_slope : Bool  getter=is_floor_stop_on_slope_enabled setter=set_floor_stop_on_slope_enabled
+    # property floor_constant_speed : Bool  getter=is_floor_constant_speed_enabled setter=set_floor_constant_speed_enabled
+    # property floor_block_on_wall : Bool  getter=is_floor_block_on_wall_enabled setter=set_floor_block_on_wall_enabled
+    # property floor_max_angle : F64  getter=get_floor_max_angle setter=set_floor_max_angle
+    # property floor_snap_length : F64  getter=get_floor_snap_length setter=set_floor_snap_length
+    # property platform_on_leave : I64  getter=get_platform_on_leave setter=set_platform_on_leave
+    # property platform_floor_layers : I64  getter=get_platform_floor_layers setter=set_platform_floor_layers
+    # property platform_wall_layers : I64  getter=get_platform_wall_layers setter=set_platform_wall_layers
+    # property safe_margin : F64  getter=get_safe_margin setter=set_safe_margin
 
     # --- methods ---
-    move_and_slide! : () -> Bool
-    move_and_slide! = |_| Host.CharacterBody3D_move_and_slide_2240911060!
-    apply_floor_snap! : () -> {}
-    apply_floor_snap! = |_| Host.CharacterBody3D_apply_floor_snap_3218959716!
-    set_velocity! : Vector3 -> {}
-    set_velocity! = |velocity| Host.CharacterBody3D_set_velocity_3460891852!(velocity)
-    get_velocity! : () -> Vector3
-    get_velocity! = |_| Host.CharacterBody3D_get_velocity_3360562783!
-    set_safe_margin! : F32 -> {}
-    set_safe_margin! = |margin| Host.CharacterBody3D_set_safe_margin_373806689!(margin)
-    get_safe_margin! : () -> F32
-    get_safe_margin! = |_| Host.CharacterBody3D_get_safe_margin_1740695150!
-    is_floor_stop_on_slope_enabled! : () -> Bool
-    is_floor_stop_on_slope_enabled! = |_| Host.CharacterBody3D_is_floor_stop_on_slope_enabled_36873697!
-    set_floor_stop_on_slope_enabled! : Bool -> {}
-    set_floor_stop_on_slope_enabled! = |enabled| Host.CharacterBody3D_set_floor_stop_on_slope_enabled_2586408642!(enabled)
-    set_floor_constant_speed_enabled! : Bool -> {}
-    set_floor_constant_speed_enabled! = |enabled| Host.CharacterBody3D_set_floor_constant_speed_enabled_2586408642!(enabled)
-    is_floor_constant_speed_enabled! : () -> Bool
-    is_floor_constant_speed_enabled! = |_| Host.CharacterBody3D_is_floor_constant_speed_enabled_36873697!
-    set_floor_block_on_wall_enabled! : Bool -> {}
-    set_floor_block_on_wall_enabled! = |enabled| Host.CharacterBody3D_set_floor_block_on_wall_enabled_2586408642!(enabled)
-    is_floor_block_on_wall_enabled! : () -> Bool
-    is_floor_block_on_wall_enabled! = |_| Host.CharacterBody3D_is_floor_block_on_wall_enabled_36873697!
-    set_slide_on_ceiling_enabled! : Bool -> {}
-    set_slide_on_ceiling_enabled! = |enabled| Host.CharacterBody3D_set_slide_on_ceiling_enabled_2586408642!(enabled)
-    is_slide_on_ceiling_enabled! : () -> Bool
-    is_slide_on_ceiling_enabled! = |_| Host.CharacterBody3D_is_slide_on_ceiling_enabled_36873697!
-    set_platform_floor_layers! : I32 -> {}
-    set_platform_floor_layers! = |exclude_layer| Host.CharacterBody3D_set_platform_floor_layers_1286410249!(exclude_layer)
-    get_platform_floor_layers! : () -> I32
-    get_platform_floor_layers! = |_| Host.CharacterBody3D_get_platform_floor_layers_3905245786!
-    set_platform_wall_layers! : I32 -> {}
-    set_platform_wall_layers! = |exclude_layer| Host.CharacterBody3D_set_platform_wall_layers_1286410249!(exclude_layer)
-    get_platform_wall_layers! : () -> I32
-    get_platform_wall_layers! = |_| Host.CharacterBody3D_get_platform_wall_layers_3905245786!
-    get_max_slides! : () -> I32
-    get_max_slides! = |_| Host.CharacterBody3D_get_max_slides_3905245786!
-    set_max_slides! : I32 -> {}
-    set_max_slides! = |max_slides| Host.CharacterBody3D_set_max_slides_1286410249!(max_slides)
-    get_floor_max_angle! : () -> F32
-    get_floor_max_angle! = |_| Host.CharacterBody3D_get_floor_max_angle_1740695150!
-    set_floor_max_angle! : F32 -> {}
-    set_floor_max_angle! = |radians| Host.CharacterBody3D_set_floor_max_angle_373806689!(radians)
-    get_floor_snap_length! : () -> F32
-    get_floor_snap_length! = |_| Host.CharacterBody3D_get_floor_snap_length_191475506!
-    set_floor_snap_length! : F32 -> {}
-    set_floor_snap_length! = |floor_snap_length| Host.CharacterBody3D_set_floor_snap_length_373806689!(floor_snap_length)
-    get_wall_min_slide_angle! : () -> F32
-    get_wall_min_slide_angle! = |_| Host.CharacterBody3D_get_wall_min_slide_angle_1740695150!
-    set_wall_min_slide_angle! : F32 -> {}
-    set_wall_min_slide_angle! = |radians| Host.CharacterBody3D_set_wall_min_slide_angle_373806689!(radians)
-    get_up_direction! : () -> Vector3
-    get_up_direction! = |_| Host.CharacterBody3D_get_up_direction_3360562783!
-    set_up_direction! : Vector3 -> {}
-    set_up_direction! = |up_direction| Host.CharacterBody3D_set_up_direction_3460891852!(up_direction)
-    set_motion_mode! : CharacterBody3D_MotionMode -> {}
-    set_motion_mode! = |mode| Host.CharacterBody3D_set_motion_mode_2690739026!(mode)
-    get_motion_mode! : () -> CharacterBody3D_MotionMode
-    get_motion_mode! = |_| Host.CharacterBody3D_get_motion_mode_3529553604!
-    set_platform_on_leave! : CharacterBody3D_PlatformOnLeave -> {}
-    set_platform_on_leave! = |on_leave_apply_velocity| Host.CharacterBody3D_set_platform_on_leave_1459986142!(on_leave_apply_velocity)
-    get_platform_on_leave! : () -> CharacterBody3D_PlatformOnLeave
-    get_platform_on_leave! = |_| Host.CharacterBody3D_get_platform_on_leave_996491171!
-    is_on_floor! : () -> Bool
-    is_on_floor! = |_| Host.CharacterBody3D_is_on_floor_36873697!
-    is_on_floor_only! : () -> Bool
-    is_on_floor_only! = |_| Host.CharacterBody3D_is_on_floor_only_36873697!
-    is_on_ceiling! : () -> Bool
-    is_on_ceiling! = |_| Host.CharacterBody3D_is_on_ceiling_36873697!
-    is_on_ceiling_only! : () -> Bool
-    is_on_ceiling_only! = |_| Host.CharacterBody3D_is_on_ceiling_only_36873697!
-    is_on_wall! : () -> Bool
-    is_on_wall! = |_| Host.CharacterBody3D_is_on_wall_36873697!
-    is_on_wall_only! : () -> Bool
-    is_on_wall_only! = |_| Host.CharacterBody3D_is_on_wall_only_36873697!
-    get_floor_normal! : () -> Vector3
-    get_floor_normal! = |_| Host.CharacterBody3D_get_floor_normal_3360562783!
-    get_wall_normal! : () -> Vector3
-    get_wall_normal! = |_| Host.CharacterBody3D_get_wall_normal_3360562783!
-    get_last_motion! : () -> Vector3
-    get_last_motion! = |_| Host.CharacterBody3D_get_last_motion_3360562783!
-    get_position_delta! : () -> Vector3
-    get_position_delta! = |_| Host.CharacterBody3D_get_position_delta_3360562783!
-    get_real_velocity! : () -> Vector3
-    get_real_velocity! = |_| Host.CharacterBody3D_get_real_velocity_3360562783!
-    get_floor_angle! : Vector3 -> F32
-    get_floor_angle! = |up_direction| Host.CharacterBody3D_get_floor_angle_2906300789!(up_direction)
-    get_platform_velocity! : () -> Vector3
-    get_platform_velocity! = |_| Host.CharacterBody3D_get_platform_velocity_3360562783!
-    get_platform_angular_velocity! : () -> Vector3
-    get_platform_angular_velocity! = |_| Host.CharacterBody3D_get_platform_angular_velocity_3360562783!
-    get_slide_collision_count! : () -> I32
-    get_slide_collision_count! = |_| Host.CharacterBody3D_get_slide_collision_count_3905245786!
-    get_slide_collision! : I32 -> KinematicCollision3D
-    get_slide_collision! = |slide_idx| Host.CharacterBody3D_get_slide_collision_107003663!(slide_idx)
-    get_last_slide_collision! : () -> KinematicCollision3D
-    get_last_slide_collision! = |_| Host.CharacterBody3D_get_last_slide_collision_186875014!
+    move_and_slide! : () => Bool
+    move_and_slide! = Host.characterbody3d_move_and_slide_2240911060!
+    apply_floor_snap! : () => {}
+    apply_floor_snap! = Host.characterbody3d_apply_floor_snap_3218959716!
+    set_velocity! : U64 => {}
+    set_velocity! = Host.characterbody3d_set_velocity_3460891852!
+    get_velocity! : () => U64
+    get_velocity! = Host.characterbody3d_get_velocity_3360562783!
+    set_safe_margin! : F64 => {}
+    set_safe_margin! = Host.characterbody3d_set_safe_margin_373806689!
+    get_safe_margin! : () => F64
+    get_safe_margin! = Host.characterbody3d_get_safe_margin_1740695150!
+    is_floor_stop_on_slope_enabled! : () => Bool
+    is_floor_stop_on_slope_enabled! = Host.characterbody3d_is_floor_stop_on_slope_enabled_36873697!
+    set_floor_stop_on_slope_enabled! : Bool => {}
+    set_floor_stop_on_slope_enabled! = Host.characterbody3d_set_floor_stop_on_slope_enabled_2586408642!
+    set_floor_constant_speed_enabled! : Bool => {}
+    set_floor_constant_speed_enabled! = Host.characterbody3d_set_floor_constant_speed_enabled_2586408642!
+    is_floor_constant_speed_enabled! : () => Bool
+    is_floor_constant_speed_enabled! = Host.characterbody3d_is_floor_constant_speed_enabled_36873697!
+    set_floor_block_on_wall_enabled! : Bool => {}
+    set_floor_block_on_wall_enabled! = Host.characterbody3d_set_floor_block_on_wall_enabled_2586408642!
+    is_floor_block_on_wall_enabled! : () => Bool
+    is_floor_block_on_wall_enabled! = Host.characterbody3d_is_floor_block_on_wall_enabled_36873697!
+    set_slide_on_ceiling_enabled! : Bool => {}
+    set_slide_on_ceiling_enabled! = Host.characterbody3d_set_slide_on_ceiling_enabled_2586408642!
+    is_slide_on_ceiling_enabled! : () => Bool
+    is_slide_on_ceiling_enabled! = Host.characterbody3d_is_slide_on_ceiling_enabled_36873697!
+    set_platform_floor_layers! : I64 => {}
+    set_platform_floor_layers! = Host.characterbody3d_set_platform_floor_layers_1286410249!
+    get_platform_floor_layers! : () => I64
+    get_platform_floor_layers! = Host.characterbody3d_get_platform_floor_layers_3905245786!
+    set_platform_wall_layers! : I64 => {}
+    set_platform_wall_layers! = Host.characterbody3d_set_platform_wall_layers_1286410249!
+    get_platform_wall_layers! : () => I64
+    get_platform_wall_layers! = Host.characterbody3d_get_platform_wall_layers_3905245786!
+    get_max_slides! : () => I64
+    get_max_slides! = Host.characterbody3d_get_max_slides_3905245786!
+    set_max_slides! : I64 => {}
+    set_max_slides! = Host.characterbody3d_set_max_slides_1286410249!
+    get_floor_max_angle! : () => F64
+    get_floor_max_angle! = Host.characterbody3d_get_floor_max_angle_1740695150!
+    set_floor_max_angle! : F64 => {}
+    set_floor_max_angle! = Host.characterbody3d_set_floor_max_angle_373806689!
+    get_floor_snap_length! : () => F64
+    get_floor_snap_length! = Host.characterbody3d_get_floor_snap_length_191475506!
+    set_floor_snap_length! : F64 => {}
+    set_floor_snap_length! = Host.characterbody3d_set_floor_snap_length_373806689!
+    get_wall_min_slide_angle! : () => F64
+    get_wall_min_slide_angle! = Host.characterbody3d_get_wall_min_slide_angle_1740695150!
+    set_wall_min_slide_angle! : F64 => {}
+    set_wall_min_slide_angle! = Host.characterbody3d_set_wall_min_slide_angle_373806689!
+    get_up_direction! : () => U64
+    get_up_direction! = Host.characterbody3d_get_up_direction_3360562783!
+    set_up_direction! : U64 => {}
+    set_up_direction! = Host.characterbody3d_set_up_direction_3460891852!
+    set_motion_mode! : U64 => {}
+    set_motion_mode! = Host.characterbody3d_set_motion_mode_2690739026!
+    get_motion_mode! : () => U64
+    get_motion_mode! = Host.characterbody3d_get_motion_mode_3529553604!
+    set_platform_on_leave! : U64 => {}
+    set_platform_on_leave! = Host.characterbody3d_set_platform_on_leave_1459986142!
+    get_platform_on_leave! : () => U64
+    get_platform_on_leave! = Host.characterbody3d_get_platform_on_leave_996491171!
+    is_on_floor! : () => Bool
+    is_on_floor! = Host.characterbody3d_is_on_floor_36873697!
+    is_on_floor_only! : () => Bool
+    is_on_floor_only! = Host.characterbody3d_is_on_floor_only_36873697!
+    is_on_ceiling! : () => Bool
+    is_on_ceiling! = Host.characterbody3d_is_on_ceiling_36873697!
+    is_on_ceiling_only! : () => Bool
+    is_on_ceiling_only! = Host.characterbody3d_is_on_ceiling_only_36873697!
+    is_on_wall! : () => Bool
+    is_on_wall! = Host.characterbody3d_is_on_wall_36873697!
+    is_on_wall_only! : () => Bool
+    is_on_wall_only! = Host.characterbody3d_is_on_wall_only_36873697!
+    get_floor_normal! : () => U64
+    get_floor_normal! = Host.characterbody3d_get_floor_normal_3360562783!
+    get_wall_normal! : () => U64
+    get_wall_normal! = Host.characterbody3d_get_wall_normal_3360562783!
+    get_last_motion! : () => U64
+    get_last_motion! = Host.characterbody3d_get_last_motion_3360562783!
+    get_position_delta! : () => U64
+    get_position_delta! = Host.characterbody3d_get_position_delta_3360562783!
+    get_real_velocity! : () => U64
+    get_real_velocity! = Host.characterbody3d_get_real_velocity_3360562783!
+    get_floor_angle! : U64 => F64
+    get_floor_angle! = Host.characterbody3d_get_floor_angle_2906300789!
+    get_platform_velocity! : () => U64
+    get_platform_velocity! = Host.characterbody3d_get_platform_velocity_3360562783!
+    get_platform_angular_velocity! : () => U64
+    get_platform_angular_velocity! = Host.characterbody3d_get_platform_angular_velocity_3360562783!
+    get_slide_collision_count! : () => I64
+    get_slide_collision_count! = Host.characterbody3d_get_slide_collision_count_3905245786!
+    get_slide_collision! : I64 => U64
+    get_slide_collision! = Host.characterbody3d_get_slide_collision_107003663!
+    get_last_slide_collision! : () => U64
+    get_last_slide_collision! = Host.characterbody3d_get_last_slide_collision_186875014!
 
 
 }

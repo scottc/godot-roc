@@ -1,11 +1,13 @@
 # class VisualShaderNodeSDFRaymarch
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeSDFRaymarch := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

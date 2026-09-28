@@ -1,11 +1,13 @@
 # class PointMesh
+import ../../Host
+
 # inherits: PrimitiveMesh
 PointMesh := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

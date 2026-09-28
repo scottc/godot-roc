@@ -1,64 +1,42 @@
 # class World3D
+import ../../Host
+
 # inherits: Resource
 World3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property environment : Environment
-    get_environment! : () -> Environment
-    get_environment! = |_| Host.World3D_get_environment_prop!
-    set_environment! : Environment -> {}
-    set_environment! = |v| Host.World3D_set_environment_prop!(v)
-    # property fallback_environment : Environment
-    get_fallback_environment! : () -> Environment
-    get_fallback_environment! = |_| Host.World3D_get_fallback_environment_prop!
-    set_fallback_environment! : Environment -> {}
-    set_fallback_environment! = |v| Host.World3D_set_fallback_environment_prop!(v)
-    # property camera_attributes : CameraAttributesPractical,CameraAttributesPhysical
-    get_camera_attributes! : () -> CameraAttributesPractical,CameraAttributesPhysical
-    get_camera_attributes! = |_| Host.World3D_get_camera_attributes_prop!
-    set_camera_attributes! : CameraAttributesPractical,CameraAttributesPhysical -> {}
-    set_camera_attributes! = |v| Host.World3D_set_camera_attributes_prop!(v)
-    # property space : RID
-    get_space! : () -> RID
-    get_space! = |_| Host.World3D_get_space_prop!
-
-    # property navigation_map : RID
-    get_navigation_map! : () -> RID
-    get_navigation_map! = |_| Host.World3D_get_navigation_map_prop!
-
-    # property scenario : RID
-    get_scenario! : () -> RID
-    get_scenario! = |_| Host.World3D_get_scenario_prop!
-
-    # property direct_space_state : PhysicsDirectSpaceState3D
-    get_direct_space_state! : () -> PhysicsDirectSpaceState3D
-    get_direct_space_state! = |_| Host.World3D_get_direct_space_state_prop!
-
+    # --- properties (getters/setters are methods) ---
+    # property environment : U64  getter=get_environment setter=set_environment
+    # property fallback_environment : U64  getter=get_fallback_environment setter=set_fallback_environment
+    # property camera_attributes : U64  getter=get_camera_attributes setter=set_camera_attributes
+    # property space : U64  getter=get_space setter=(none)
+    # property navigation_map : U64  getter=get_navigation_map setter=(none)
+    # property scenario : U64  getter=get_scenario setter=(none)
+    # property direct_space_state : U64  getter=get_direct_space_state setter=(none)
 
     # --- methods ---
-    get_space! : () -> RID
-    get_space! = |_| Host.World3D_get_space_2944877500!
-    get_navigation_map! : () -> RID
-    get_navigation_map! = |_| Host.World3D_get_navigation_map_2944877500!
-    get_scenario! : () -> RID
-    get_scenario! = |_| Host.World3D_get_scenario_2944877500!
-    set_environment! : Environment -> {}
-    set_environment! = |env| Host.World3D_set_environment_4143518816!(env)
-    get_environment! : () -> Environment
-    get_environment! = |_| Host.World3D_get_environment_3082064660!
-    set_fallback_environment! : Environment -> {}
-    set_fallback_environment! = |env| Host.World3D_set_fallback_environment_4143518816!(env)
-    get_fallback_environment! : () -> Environment
-    get_fallback_environment! = |_| Host.World3D_get_fallback_environment_3082064660!
-    set_camera_attributes! : CameraAttributes -> {}
-    set_camera_attributes! = |attributes| Host.World3D_set_camera_attributes_2817810567!(attributes)
-    get_camera_attributes! : () -> CameraAttributes
-    get_camera_attributes! = |_| Host.World3D_get_camera_attributes_3921283215!
-    get_direct_space_state! : () -> PhysicsDirectSpaceState3D
-    get_direct_space_state! = |_| Host.World3D_get_direct_space_state_2069328350!
+    get_space! : () => U64
+    get_space! = Host.world3d_get_space_2944877500!
+    get_navigation_map! : () => U64
+    get_navigation_map! = Host.world3d_get_navigation_map_2944877500!
+    get_scenario! : () => U64
+    get_scenario! = Host.world3d_get_scenario_2944877500!
+    set_environment! : U64 => {}
+    set_environment! = Host.world3d_set_environment_4143518816!
+    get_environment! : () => U64
+    get_environment! = Host.world3d_get_environment_3082064660!
+    set_fallback_environment! : U64 => {}
+    set_fallback_environment! = Host.world3d_set_fallback_environment_4143518816!
+    get_fallback_environment! : () => U64
+    get_fallback_environment! = Host.world3d_get_fallback_environment_3082064660!
+    set_camera_attributes! : U64 => {}
+    set_camera_attributes! = Host.world3d_set_camera_attributes_2817810567!
+    get_camera_attributes! : () => U64
+    get_camera_attributes! = Host.world3d_get_camera_attributes_3921283215!
+    get_direct_space_state! : () => U64
+    get_direct_space_state! = Host.world3d_get_direct_space_state_2069328350!
 
 
 }

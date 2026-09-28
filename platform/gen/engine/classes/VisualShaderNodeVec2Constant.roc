@@ -1,22 +1,20 @@
 # class VisualShaderNodeVec2Constant
+import ../../Host
+
 # inherits: VisualShaderNodeConstant
 VisualShaderNodeVec2Constant := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property constant : Vector2
-    get_constant! : () -> Vector2
-    get_constant! = |_| Host.VisualShaderNodeVec2Constant_get_constant_prop!
-    set_constant! : Vector2 -> {}
-    set_constant! = |v| Host.VisualShaderNodeVec2Constant_set_constant_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property constant : U64  getter=get_constant setter=set_constant
 
     # --- methods ---
-    set_constant! : Vector2 -> {}
-    set_constant! = |constant| Host.VisualShaderNodeVec2Constant_set_constant_743155724!(constant)
-    get_constant! : () -> Vector2
-    get_constant! = |_| Host.VisualShaderNodeVec2Constant_get_constant_3341600327!
+    set_constant! : U64 => {}
+    set_constant! = Host.visualshadernodevec2constant_set_constant_743155724!
+    get_constant! : () => U64
+    get_constant! = Host.visualshadernodevec2constant_get_constant_3341600327!
 
 
 }

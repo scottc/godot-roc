@@ -1,4 +1,6 @@
 # class OpenXRInterface
+import ../../Host
+
 # inherits: XRInterface
 OpenXRInterface := {
     ptr : U64,
@@ -13,116 +15,88 @@ OpenXRInterface := {
     PerfSettingsNotificationLevel : [PERF_SETTINGS_NOTIF_LEVEL_NORMAL, PERF_SETTINGS_NOTIF_LEVEL_WARNING, PERF_SETTINGS_NOTIF_LEVEL_IMPAIRED]
     HandJointFlags : [HAND_JOINT_NONE, HAND_JOINT_ORIENTATION_VALID, HAND_JOINT_ORIENTATION_TRACKED, HAND_JOINT_POSITION_VALID, HAND_JOINT_POSITION_TRACKED, HAND_JOINT_LINEAR_VELOCITY_VALID, HAND_JOINT_ANGULAR_VELOCITY_VALID]
 
-    # --- properties ---
-    # property display_refresh_rate : F32
-    get_display_refresh_rate! : () -> F32
-    get_display_refresh_rate! = |_| Host.OpenXRInterface_get_display_refresh_rate_prop!
-    set_display_refresh_rate! : F32 -> {}
-    set_display_refresh_rate! = |v| Host.OpenXRInterface_set_display_refresh_rate_prop!(v)
-    # property render_target_size_multiplier : F32
-    get_render_target_size_multiplier! : () -> F32
-    get_render_target_size_multiplier! = |_| Host.OpenXRInterface_get_render_target_size_multiplier_prop!
-    set_render_target_size_multiplier! : F32 -> {}
-    set_render_target_size_multiplier! = |v| Host.OpenXRInterface_set_render_target_size_multiplier_prop!(v)
-    # property foveation_level : I32
-    get_foveation_level! : () -> I32
-    get_foveation_level! = |_| Host.OpenXRInterface_get_foveation_level_prop!
-    set_foveation_level! : I32 -> {}
-    set_foveation_level! = |v| Host.OpenXRInterface_set_foveation_level_prop!(v)
-    # property foveation_dynamic : Bool
-    get_foveation_dynamic! : () -> Bool
-    get_foveation_dynamic! = |_| Host.OpenXRInterface_get_foveation_dynamic_prop!
-    set_foveation_dynamic! : Bool -> {}
-    set_foveation_dynamic! = |v| Host.OpenXRInterface_set_foveation_dynamic_prop!(v)
-    # property foveation_with_subsampled_images : Bool
-    get_foveation_with_subsampled_images! : () -> Bool
-    get_foveation_with_subsampled_images! = |_| Host.OpenXRInterface_get_foveation_with_subsampled_images_prop!
-    set_foveation_with_subsampled_images! : Bool -> {}
-    set_foveation_with_subsampled_images! = |v| Host.OpenXRInterface_set_foveation_with_subsampled_images_prop!(v)
-    # property vrs_min_radius : F32
-    get_vrs_min_radius! : () -> F32
-    get_vrs_min_radius! = |_| Host.OpenXRInterface_get_vrs_min_radius_prop!
-    set_vrs_min_radius! : F32 -> {}
-    set_vrs_min_radius! = |v| Host.OpenXRInterface_set_vrs_min_radius_prop!(v)
-    # property vrs_strength : F32
-    get_vrs_strength! : () -> F32
-    get_vrs_strength! = |_| Host.OpenXRInterface_get_vrs_strength_prop!
-    set_vrs_strength! : F32 -> {}
-    set_vrs_strength! = |v| Host.OpenXRInterface_set_vrs_strength_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property display_refresh_rate : F64  getter=get_display_refresh_rate setter=set_display_refresh_rate
+    # property render_target_size_multiplier : F64  getter=get_render_target_size_multiplier setter=set_render_target_size_multiplier
+    # property foveation_level : I64  getter=get_foveation_level setter=set_foveation_level
+    # property foveation_dynamic : Bool  getter=get_foveation_dynamic setter=set_foveation_dynamic
+    # property foveation_with_subsampled_images : Bool  getter=get_foveation_with_subsampled_images setter=set_foveation_with_subsampled_images
+    # property vrs_min_radius : F64  getter=get_vrs_min_radius setter=set_vrs_min_radius
+    # property vrs_strength : F64  getter=get_vrs_strength setter=set_vrs_strength
 
     # --- methods ---
-    get_session_state! : () -> OpenXRInterface_SessionState
-    get_session_state! = |_| Host.OpenXRInterface_get_session_state_896364779!
-    is_user_presence_supported! : () -> Bool
-    is_user_presence_supported! = |_| Host.OpenXRInterface_is_user_presence_supported_36873697!
-    is_user_present! : () -> Bool
-    is_user_present! = |_| Host.OpenXRInterface_is_user_present_36873697!
-    get_display_refresh_rate! : () -> F32
-    get_display_refresh_rate! = |_| Host.OpenXRInterface_get_display_refresh_rate_1740695150!
-    set_display_refresh_rate! : F32 -> {}
-    set_display_refresh_rate! = |refresh_rate| Host.OpenXRInterface_set_display_refresh_rate_373806689!(refresh_rate)
-    get_render_target_size_multiplier! : () -> F32
-    get_render_target_size_multiplier! = |_| Host.OpenXRInterface_get_render_target_size_multiplier_1740695150!
-    set_render_target_size_multiplier! : F32 -> {}
-    set_render_target_size_multiplier! = |multiplier| Host.OpenXRInterface_set_render_target_size_multiplier_373806689!(multiplier)
-    is_foveation_supported! : () -> Bool
-    is_foveation_supported! = |_| Host.OpenXRInterface_is_foveation_supported_36873697!
-    get_foveation_level! : () -> I32
-    get_foveation_level! = |_| Host.OpenXRInterface_get_foveation_level_3905245786!
-    set_foveation_level! : I32 -> {}
-    set_foveation_level! = |foveation_level| Host.OpenXRInterface_set_foveation_level_1286410249!(foveation_level)
-    get_foveation_dynamic! : () -> Bool
-    get_foveation_dynamic! = |_| Host.OpenXRInterface_get_foveation_dynamic_36873697!
-    set_foveation_dynamic! : Bool -> {}
-    set_foveation_dynamic! = |foveation_dynamic| Host.OpenXRInterface_set_foveation_dynamic_2586408642!(foveation_dynamic)
-    get_foveation_with_subsampled_images! : () -> Bool
-    get_foveation_with_subsampled_images! = |_| Host.OpenXRInterface_get_foveation_with_subsampled_images_36873697!
-    set_foveation_with_subsampled_images! : Bool -> {}
-    set_foveation_with_subsampled_images! = |enabled| Host.OpenXRInterface_set_foveation_with_subsampled_images_2586408642!(enabled)
-    is_action_set_active! : String -> Bool
-    is_action_set_active! = |name| Host.OpenXRInterface_is_action_set_active_3927539163!(name)
-    set_action_set_active! : String, Bool -> {}
-    set_action_set_active! = |name, active| Host.OpenXRInterface_set_action_set_active_2678287736!(name, active)
-    get_action_sets! : () -> Array
-    get_action_sets! = |_| Host.OpenXRInterface_get_action_sets_3995934104!
-    get_available_display_refresh_rates! : () -> Array
-    get_available_display_refresh_rates! = |_| Host.OpenXRInterface_get_available_display_refresh_rates_3995934104!
-    set_motion_range! : OpenXRInterface_Hand, OpenXRInterface_HandMotionRange -> {}
-    set_motion_range! = |hand, motion_range| Host.OpenXRInterface_set_motion_range_855158159!(hand, motion_range)
-    get_motion_range! : OpenXRInterface_Hand -> OpenXRInterface_HandMotionRange
-    get_motion_range! = |hand| Host.OpenXRInterface_get_motion_range_3955838114!(hand)
-    get_hand_tracking_source! : OpenXRInterface_Hand -> OpenXRInterface_HandTrackedSource
-    get_hand_tracking_source! = |hand| Host.OpenXRInterface_get_hand_tracking_source_4092421202!(hand)
-    get_hand_joint_flags! : OpenXRInterface_Hand, OpenXRInterface_HandJoints -> OpenXRInterface_HandJointFlags
-    get_hand_joint_flags! = |hand, joint| Host.OpenXRInterface_get_hand_joint_flags_720567706!(hand, joint)
-    get_hand_joint_rotation! : OpenXRInterface_Hand, OpenXRInterface_HandJoints -> Quaternion
-    get_hand_joint_rotation! = |hand, joint| Host.OpenXRInterface_get_hand_joint_rotation_1974618321!(hand, joint)
-    get_hand_joint_position! : OpenXRInterface_Hand, OpenXRInterface_HandJoints -> Vector3
-    get_hand_joint_position! = |hand, joint| Host.OpenXRInterface_get_hand_joint_position_3529194242!(hand, joint)
-    get_hand_joint_radius! : OpenXRInterface_Hand, OpenXRInterface_HandJoints -> F32
-    get_hand_joint_radius! = |hand, joint| Host.OpenXRInterface_get_hand_joint_radius_901522724!(hand, joint)
-    get_hand_joint_linear_velocity! : OpenXRInterface_Hand, OpenXRInterface_HandJoints -> Vector3
-    get_hand_joint_linear_velocity! = |hand, joint| Host.OpenXRInterface_get_hand_joint_linear_velocity_3529194242!(hand, joint)
-    get_hand_joint_angular_velocity! : OpenXRInterface_Hand, OpenXRInterface_HandJoints -> Vector3
-    get_hand_joint_angular_velocity! = |hand, joint| Host.OpenXRInterface_get_hand_joint_angular_velocity_3529194242!(hand, joint)
-    is_hand_tracking_supported! : () -> Bool
-    is_hand_tracking_supported! = |_| Host.OpenXRInterface_is_hand_tracking_supported_2240911060!
-    is_hand_interaction_supported! : () -> Bool
-    is_hand_interaction_supported! = |_| Host.OpenXRInterface_is_hand_interaction_supported_36873697!
-    is_eye_gaze_interaction_supported! : () -> Bool
-    is_eye_gaze_interaction_supported! = |_| Host.OpenXRInterface_is_eye_gaze_interaction_supported_2240911060!
-    get_vrs_min_radius! : () -> F32
-    get_vrs_min_radius! = |_| Host.OpenXRInterface_get_vrs_min_radius_1740695150!
-    set_vrs_min_radius! : F32 -> {}
-    set_vrs_min_radius! = |radius| Host.OpenXRInterface_set_vrs_min_radius_373806689!(radius)
-    get_vrs_strength! : () -> F32
-    get_vrs_strength! = |_| Host.OpenXRInterface_get_vrs_strength_1740695150!
-    set_vrs_strength! : F32 -> {}
-    set_vrs_strength! = |strength| Host.OpenXRInterface_set_vrs_strength_373806689!(strength)
-    set_cpu_level! : OpenXRInterface_PerfSettingsLevel -> {}
-    set_cpu_level! = |level| Host.OpenXRInterface_set_cpu_level_2940842095!(level)
-    set_gpu_level! : OpenXRInterface_PerfSettingsLevel -> {}
-    set_gpu_level! = |level| Host.OpenXRInterface_set_gpu_level_2940842095!(level)
+    get_session_state! : () => U64
+    get_session_state! = Host.openxrinterface_get_session_state_896364779!
+    is_user_presence_supported! : () => Bool
+    is_user_presence_supported! = Host.openxrinterface_is_user_presence_supported_36873697!
+    is_user_present! : () => Bool
+    is_user_present! = Host.openxrinterface_is_user_present_36873697!
+    get_display_refresh_rate! : () => F64
+    get_display_refresh_rate! = Host.openxrinterface_get_display_refresh_rate_1740695150!
+    set_display_refresh_rate! : F64 => {}
+    set_display_refresh_rate! = Host.openxrinterface_set_display_refresh_rate_373806689!
+    get_render_target_size_multiplier! : () => F64
+    get_render_target_size_multiplier! = Host.openxrinterface_get_render_target_size_multiplier_1740695150!
+    set_render_target_size_multiplier! : F64 => {}
+    set_render_target_size_multiplier! = Host.openxrinterface_set_render_target_size_multiplier_373806689!
+    is_foveation_supported! : () => Bool
+    is_foveation_supported! = Host.openxrinterface_is_foveation_supported_36873697!
+    get_foveation_level! : () => I64
+    get_foveation_level! = Host.openxrinterface_get_foveation_level_3905245786!
+    set_foveation_level! : I64 => {}
+    set_foveation_level! = Host.openxrinterface_set_foveation_level_1286410249!
+    get_foveation_dynamic! : () => Bool
+    get_foveation_dynamic! = Host.openxrinterface_get_foveation_dynamic_36873697!
+    set_foveation_dynamic! : Bool => {}
+    set_foveation_dynamic! = Host.openxrinterface_set_foveation_dynamic_2586408642!
+    get_foveation_with_subsampled_images! : () => Bool
+    get_foveation_with_subsampled_images! = Host.openxrinterface_get_foveation_with_subsampled_images_36873697!
+    set_foveation_with_subsampled_images! : Bool => {}
+    set_foveation_with_subsampled_images! = Host.openxrinterface_set_foveation_with_subsampled_images_2586408642!
+    is_action_set_active! : Str => Bool
+    is_action_set_active! = Host.openxrinterface_is_action_set_active_3927539163!
+    set_action_set_active! : Str, Bool => {}
+    set_action_set_active! = Host.openxrinterface_set_action_set_active_2678287736!
+    get_action_sets! : () => U64
+    get_action_sets! = Host.openxrinterface_get_action_sets_3995934104!
+    get_available_display_refresh_rates! : () => U64
+    get_available_display_refresh_rates! = Host.openxrinterface_get_available_display_refresh_rates_3995934104!
+    set_motion_range! : U64, U64 => {}
+    set_motion_range! = Host.openxrinterface_set_motion_range_855158159!
+    get_motion_range! : U64 => U64
+    get_motion_range! = Host.openxrinterface_get_motion_range_3955838114!
+    get_hand_tracking_source! : U64 => U64
+    get_hand_tracking_source! = Host.openxrinterface_get_hand_tracking_source_4092421202!
+    get_hand_joint_flags! : U64, U64 => U64
+    get_hand_joint_flags! = Host.openxrinterface_get_hand_joint_flags_720567706!
+    get_hand_joint_rotation! : U64, U64 => U64
+    get_hand_joint_rotation! = Host.openxrinterface_get_hand_joint_rotation_1974618321!
+    get_hand_joint_position! : U64, U64 => U64
+    get_hand_joint_position! = Host.openxrinterface_get_hand_joint_position_3529194242!
+    get_hand_joint_radius! : U64, U64 => F64
+    get_hand_joint_radius! = Host.openxrinterface_get_hand_joint_radius_901522724!
+    get_hand_joint_linear_velocity! : U64, U64 => U64
+    get_hand_joint_linear_velocity! = Host.openxrinterface_get_hand_joint_linear_velocity_3529194242!
+    get_hand_joint_angular_velocity! : U64, U64 => U64
+    get_hand_joint_angular_velocity! = Host.openxrinterface_get_hand_joint_angular_velocity_3529194242!
+    is_hand_tracking_supported! : () => Bool
+    is_hand_tracking_supported! = Host.openxrinterface_is_hand_tracking_supported_2240911060!
+    is_hand_interaction_supported! : () => Bool
+    is_hand_interaction_supported! = Host.openxrinterface_is_hand_interaction_supported_36873697!
+    is_eye_gaze_interaction_supported! : () => Bool
+    is_eye_gaze_interaction_supported! = Host.openxrinterface_is_eye_gaze_interaction_supported_2240911060!
+    get_vrs_min_radius! : () => F64
+    get_vrs_min_radius! = Host.openxrinterface_get_vrs_min_radius_1740695150!
+    set_vrs_min_radius! : F64 => {}
+    set_vrs_min_radius! = Host.openxrinterface_set_vrs_min_radius_373806689!
+    get_vrs_strength! : () => F64
+    get_vrs_strength! = Host.openxrinterface_get_vrs_strength_1740695150!
+    set_vrs_strength! : F64 => {}
+    set_vrs_strength! = Host.openxrinterface_set_vrs_strength_373806689!
+    set_cpu_level! : U64 => {}
+    set_cpu_level! = Host.openxrinterface_set_cpu_level_2940842095!
+    set_gpu_level! : U64 => {}
+    set_gpu_level! = Host.openxrinterface_set_gpu_level_2940842095!
 
     # signal session_begun : ()
     # signal session_stopping : ()
@@ -132,8 +106,8 @@ OpenXRInterface := {
     # signal session_loss_pending : ()
     # signal instance_exiting : ()
     # signal pose_recentered : ()
-    # signal refresh_rate_changed : refresh_rate : F32
-    # signal cpu_level_changed : sub_domain : I32, from_level : I32, to_level : I32
-    # signal gpu_level_changed : sub_domain : I32, from_level : I32, to_level : I32
+    # signal refresh_rate_changed : refresh_rate : F64
+    # signal cpu_level_changed : sub_domain : I64, from_level : I64, to_level : I64
+    # signal gpu_level_changed : sub_domain : I64, from_level : I64, to_level : I64
     # signal user_presence_changed : is_user_present : Bool
 }

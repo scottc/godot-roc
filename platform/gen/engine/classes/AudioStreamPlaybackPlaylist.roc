@@ -1,11 +1,13 @@
 # class AudioStreamPlaybackPlaylist
+import ../../Host
+
 # inherits: AudioStreamPlayback
 AudioStreamPlaybackPlaylist := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

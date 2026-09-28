@@ -1,117 +1,71 @@
 # class NoiseTexture2D
+import ../../Host
+
 # inherits: Texture2D
 NoiseTexture2D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property width : I32
-    get_width! : () -> I32
-    get_width! = |_| Host.NoiseTexture2D_get_width_prop!
-    set_width! : I32 -> {}
-    set_width! = |v| Host.NoiseTexture2D_set_width_prop!(v)
-    # property height : I32
-    get_height! : () -> I32
-    get_height! = |_| Host.NoiseTexture2D_get_height_prop!
-    set_height! : I32 -> {}
-    set_height! = |v| Host.NoiseTexture2D_set_height_prop!(v)
-    # property generate_mipmaps : Bool
-    is_generating_mipmaps! : () -> Bool
-    is_generating_mipmaps! = |_| Host.NoiseTexture2D_is_generating_mipmaps_prop!
-    set_generate_mipmaps! : Bool -> {}
-    set_generate_mipmaps! = |v| Host.NoiseTexture2D_set_generate_mipmaps_prop!(v)
-    # property noise : Noise
-    get_noise! : () -> Noise
-    get_noise! = |_| Host.NoiseTexture2D_get_noise_prop!
-    set_noise! : Noise -> {}
-    set_noise! = |v| Host.NoiseTexture2D_set_noise_prop!(v)
-    # property color_ramp : Gradient
-    get_color_ramp! : () -> Gradient
-    get_color_ramp! = |_| Host.NoiseTexture2D_get_color_ramp_prop!
-    set_color_ramp! : Gradient -> {}
-    set_color_ramp! = |v| Host.NoiseTexture2D_set_color_ramp_prop!(v)
-    # property seamless : Bool
-    get_seamless! : () -> Bool
-    get_seamless! = |_| Host.NoiseTexture2D_get_seamless_prop!
-    set_seamless! : Bool -> {}
-    set_seamless! = |v| Host.NoiseTexture2D_set_seamless_prop!(v)
-    # property invert : Bool
-    get_invert! : () -> Bool
-    get_invert! = |_| Host.NoiseTexture2D_get_invert_prop!
-    set_invert! : Bool -> {}
-    set_invert! = |v| Host.NoiseTexture2D_set_invert_prop!(v)
-    # property in_3d_space : Bool
-    is_in_3d_space! : () -> Bool
-    is_in_3d_space! = |_| Host.NoiseTexture2D_is_in_3d_space_prop!
-    set_in_3d_space! : Bool -> {}
-    set_in_3d_space! = |v| Host.NoiseTexture2D_set_in_3d_space_prop!(v)
-    # property as_normal_map : Bool
-    is_normal_map! : () -> Bool
-    is_normal_map! = |_| Host.NoiseTexture2D_is_normal_map_prop!
-    set_as_normal_map! : Bool -> {}
-    set_as_normal_map! = |v| Host.NoiseTexture2D_set_as_normal_map_prop!(v)
-    # property normalize : Bool
-    is_normalized! : () -> Bool
-    is_normalized! = |_| Host.NoiseTexture2D_is_normalized_prop!
-    set_normalize! : Bool -> {}
-    set_normalize! = |v| Host.NoiseTexture2D_set_normalize_prop!(v)
-    # property seamless_blend_skirt : F32
-    get_seamless_blend_skirt! : () -> F32
-    get_seamless_blend_skirt! = |_| Host.NoiseTexture2D_get_seamless_blend_skirt_prop!
-    set_seamless_blend_skirt! : F32 -> {}
-    set_seamless_blend_skirt! = |v| Host.NoiseTexture2D_set_seamless_blend_skirt_prop!(v)
-    # property bump_strength : F32
-    get_bump_strength! : () -> F32
-    get_bump_strength! = |_| Host.NoiseTexture2D_get_bump_strength_prop!
-    set_bump_strength! : F32 -> {}
-    set_bump_strength! = |v| Host.NoiseTexture2D_set_bump_strength_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property width : I64  getter=get_width setter=set_width
+    # property height : I64  getter=get_height setter=set_height
+    # property generate_mipmaps : Bool  getter=is_generating_mipmaps setter=set_generate_mipmaps
+    # property noise : U64  getter=get_noise setter=set_noise
+    # property color_ramp : U64  getter=get_color_ramp setter=set_color_ramp
+    # property seamless : Bool  getter=get_seamless setter=set_seamless
+    # property invert : Bool  getter=get_invert setter=set_invert
+    # property in_3d_space : Bool  getter=is_in_3d_space setter=set_in_3d_space
+    # property as_normal_map : Bool  getter=is_normal_map setter=set_as_normal_map
+    # property normalize : Bool  getter=is_normalized setter=set_normalize
+    # property seamless_blend_skirt : F64  getter=get_seamless_blend_skirt setter=set_seamless_blend_skirt
+    # property bump_strength : F64  getter=get_bump_strength setter=set_bump_strength
 
     # --- methods ---
-    set_width! : I32 -> {}
-    set_width! = |width| Host.NoiseTexture2D_set_width_1286410249!(width)
-    set_height! : I32 -> {}
-    set_height! = |height| Host.NoiseTexture2D_set_height_1286410249!(height)
-    set_generate_mipmaps! : Bool -> {}
-    set_generate_mipmaps! = |invert| Host.NoiseTexture2D_set_generate_mipmaps_2586408642!(invert)
-    is_generating_mipmaps! : () -> Bool
-    is_generating_mipmaps! = |_| Host.NoiseTexture2D_is_generating_mipmaps_36873697!
-    set_noise! : Noise -> {}
-    set_noise! = |noise| Host.NoiseTexture2D_set_noise_4135492439!(noise)
-    get_noise! : () -> Noise
-    get_noise! = |_| Host.NoiseTexture2D_get_noise_185851837!
-    set_color_ramp! : Gradient -> {}
-    set_color_ramp! = |gradient| Host.NoiseTexture2D_set_color_ramp_2756054477!(gradient)
-    get_color_ramp! : () -> Gradient
-    get_color_ramp! = |_| Host.NoiseTexture2D_get_color_ramp_132272999!
-    set_seamless! : Bool -> {}
-    set_seamless! = |seamless| Host.NoiseTexture2D_set_seamless_2586408642!(seamless)
-    get_seamless! : () -> Bool
-    get_seamless! = |_| Host.NoiseTexture2D_get_seamless_2240911060!
-    set_invert! : Bool -> {}
-    set_invert! = |invert| Host.NoiseTexture2D_set_invert_2586408642!(invert)
-    get_invert! : () -> Bool
-    get_invert! = |_| Host.NoiseTexture2D_get_invert_36873697!
-    set_in_3d_space! : Bool -> {}
-    set_in_3d_space! = |enable| Host.NoiseTexture2D_set_in_3d_space_2586408642!(enable)
-    is_in_3d_space! : () -> Bool
-    is_in_3d_space! = |_| Host.NoiseTexture2D_is_in_3d_space_36873697!
-    set_as_normal_map! : Bool -> {}
-    set_as_normal_map! = |as_normal_map| Host.NoiseTexture2D_set_as_normal_map_2586408642!(as_normal_map)
-    is_normal_map! : () -> Bool
-    is_normal_map! = |_| Host.NoiseTexture2D_is_normal_map_2240911060!
-    set_normalize! : Bool -> {}
-    set_normalize! = |normalize| Host.NoiseTexture2D_set_normalize_2586408642!(normalize)
-    is_normalized! : () -> Bool
-    is_normalized! = |_| Host.NoiseTexture2D_is_normalized_36873697!
-    set_seamless_blend_skirt! : F32 -> {}
-    set_seamless_blend_skirt! = |seamless_blend_skirt| Host.NoiseTexture2D_set_seamless_blend_skirt_373806689!(seamless_blend_skirt)
-    get_seamless_blend_skirt! : () -> F32
-    get_seamless_blend_skirt! = |_| Host.NoiseTexture2D_get_seamless_blend_skirt_191475506!
-    set_bump_strength! : F32 -> {}
-    set_bump_strength! = |bump_strength| Host.NoiseTexture2D_set_bump_strength_373806689!(bump_strength)
-    get_bump_strength! : () -> F32
-    get_bump_strength! = |_| Host.NoiseTexture2D_get_bump_strength_191475506!
+    set_width! : I64 => {}
+    set_width! = Host.noisetexture2d_set_width_1286410249!
+    set_height! : I64 => {}
+    set_height! = Host.noisetexture2d_set_height_1286410249!
+    set_generate_mipmaps! : Bool => {}
+    set_generate_mipmaps! = Host.noisetexture2d_set_generate_mipmaps_2586408642!
+    is_generating_mipmaps! : () => Bool
+    is_generating_mipmaps! = Host.noisetexture2d_is_generating_mipmaps_36873697!
+    set_noise! : U64 => {}
+    set_noise! = Host.noisetexture2d_set_noise_4135492439!
+    get_noise! : () => U64
+    get_noise! = Host.noisetexture2d_get_noise_185851837!
+    set_color_ramp! : U64 => {}
+    set_color_ramp! = Host.noisetexture2d_set_color_ramp_2756054477!
+    get_color_ramp! : () => U64
+    get_color_ramp! = Host.noisetexture2d_get_color_ramp_132272999!
+    set_seamless! : Bool => {}
+    set_seamless! = Host.noisetexture2d_set_seamless_2586408642!
+    get_seamless! : () => Bool
+    get_seamless! = Host.noisetexture2d_get_seamless_2240911060!
+    set_invert! : Bool => {}
+    set_invert! = Host.noisetexture2d_set_invert_2586408642!
+    get_invert! : () => Bool
+    get_invert! = Host.noisetexture2d_get_invert_36873697!
+    set_in_3d_space! : Bool => {}
+    set_in_3d_space! = Host.noisetexture2d_set_in_3d_space_2586408642!
+    is_in_3d_space! : () => Bool
+    is_in_3d_space! = Host.noisetexture2d_is_in_3d_space_36873697!
+    set_as_normal_map! : Bool => {}
+    set_as_normal_map! = Host.noisetexture2d_set_as_normal_map_2586408642!
+    is_normal_map! : () => Bool
+    is_normal_map! = Host.noisetexture2d_is_normal_map_2240911060!
+    set_normalize! : Bool => {}
+    set_normalize! = Host.noisetexture2d_set_normalize_2586408642!
+    is_normalized! : () => Bool
+    is_normalized! = Host.noisetexture2d_is_normalized_36873697!
+    set_seamless_blend_skirt! : F64 => {}
+    set_seamless_blend_skirt! = Host.noisetexture2d_set_seamless_blend_skirt_373806689!
+    get_seamless_blend_skirt! : () => F64
+    get_seamless_blend_skirt! = Host.noisetexture2d_get_seamless_blend_skirt_191475506!
+    set_bump_strength! : F64 => {}
+    set_bump_strength! = Host.noisetexture2d_set_bump_strength_373806689!
+    get_bump_strength! : () => F64
+    get_bump_strength! = Host.noisetexture2d_get_bump_strength_191475506!
 
 
 }

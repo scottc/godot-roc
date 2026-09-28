@@ -1,6 +1,8 @@
+import ../../Host
+
 GDScriptLanguageProtocolSingleton := {
     ptr : U64,
 }.{
-    get! : () -> GDScriptLanguageProtocolSingleton
-    get! = |_| { { ptr: Host.get_singleton_GDScriptLanguageProtocol!() } }
+    get! : () => GDScriptLanguageProtocolSingleton
+    get! = || { { ptr: Host.get_singleton_gdscriptlanguageprotocol!() } }
 }

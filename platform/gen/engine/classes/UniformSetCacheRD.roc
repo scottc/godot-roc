@@ -1,16 +1,18 @@
 # class UniformSetCacheRD
+import ../../Host
+
 # inherits: Object
 UniformSetCacheRD := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    get_cache! : RID, I32, typedarray::RDUniform -> RID
-    get_cache! = |shader, set, uniforms| Host.UniformSetCacheRD_get_cache_658571723!(shader, set, uniforms)
+    get_cache! : U64, I64, U64 => U64
+    get_cache! = Host.uniformsetcacherd_get_cache_658571723!
 
 
 }

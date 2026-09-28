@@ -1,24 +1,26 @@
 # class ResourceFormatSaver
+import ../../Host
+
 # inherits: RefCounted
 ResourceFormatSaver := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    _save! : Resource, String, I32 -> Error
-    _save! = |resource, path, flags| Host.ResourceFormatSaver__save_2794699034!(resource, path, flags)
-    _set_uid! : String, I32 -> Error
-    _set_uid! = |path, uid| Host.ResourceFormatSaver__set_uid_993915709!(path, uid)
-    _recognize! : Resource -> Bool
-    _recognize! = |resource| Host.ResourceFormatSaver__recognize_3190994482!(resource)
-    _get_recognized_extensions! : Resource -> PackedStringArray
-    _get_recognized_extensions! = |resource| Host.ResourceFormatSaver__get_recognized_extensions_1567505034!(resource)
-    _recognize_path! : Resource, String -> Bool
-    _recognize_path! = |resource, path| Host.ResourceFormatSaver__recognize_path_710996192!(resource, path)
+    _save! : U64, Str, I64 => U64
+    _save! = Host.resourceformatsaver__save_2794699034!
+    _set_uid! : Str, I64 => U64
+    _set_uid! = Host.resourceformatsaver__set_uid_993915709!
+    _recognize! : U64 => Bool
+    _recognize! = Host.resourceformatsaver__recognize_3190994482!
+    _get_recognized_extensions! : U64 => U64
+    _get_recognized_extensions! = Host.resourceformatsaver__get_recognized_extensions_1567505034!
+    _recognize_path! : U64, Str => Bool
+    _recognize_path! = Host.resourceformatsaver__recognize_path_710996192!
 
 
 }

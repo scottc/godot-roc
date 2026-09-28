@@ -1,22 +1,20 @@
 # class AnimatableBody3D
+import ../../Host
+
 # inherits: StaticBody3D
 AnimatableBody3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property sync_to_physics : Bool
-    is_sync_to_physics_enabled! : () -> Bool
-    is_sync_to_physics_enabled! = |_| Host.AnimatableBody3D_is_sync_to_physics_enabled_prop!
-    set_sync_to_physics! : Bool -> {}
-    set_sync_to_physics! = |v| Host.AnimatableBody3D_set_sync_to_physics_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property sync_to_physics : Bool  getter=is_sync_to_physics_enabled setter=set_sync_to_physics
 
     # --- methods ---
-    set_sync_to_physics! : Bool -> {}
-    set_sync_to_physics! = |enable| Host.AnimatableBody3D_set_sync_to_physics_2586408642!(enable)
-    is_sync_to_physics_enabled! : () -> Bool
-    is_sync_to_physics_enabled! = |_| Host.AnimatableBody3D_is_sync_to_physics_enabled_36873697!
+    set_sync_to_physics! : Bool => {}
+    set_sync_to_physics! = Host.animatablebody3d_set_sync_to_physics_2586408642!
+    is_sync_to_physics_enabled! : () => Bool
+    is_sync_to_physics_enabled! = Host.animatablebody3d_is_sync_to_physics_enabled_36873697!
 
 
 }

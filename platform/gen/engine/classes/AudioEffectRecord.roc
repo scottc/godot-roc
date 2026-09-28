@@ -1,28 +1,26 @@
 # class AudioEffectRecord
+import ../../Host
+
 # inherits: AudioEffect
 AudioEffectRecord := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property format : I32
-    get_format! : () -> I32
-    get_format! = |_| Host.AudioEffectRecord_get_format_prop!
-    set_format! : I32 -> {}
-    set_format! = |v| Host.AudioEffectRecord_set_format_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property format : I64  getter=get_format setter=set_format
 
     # --- methods ---
-    set_recording_active! : Bool -> {}
-    set_recording_active! = |record| Host.AudioEffectRecord_set_recording_active_2586408642!(record)
-    is_recording_active! : () -> Bool
-    is_recording_active! = |_| Host.AudioEffectRecord_is_recording_active_36873697!
-    set_format! : AudioStreamWAV_Format -> {}
-    set_format! = |format| Host.AudioEffectRecord_set_format_60648488!(format)
-    get_format! : () -> AudioStreamWAV_Format
-    get_format! = |_| Host.AudioEffectRecord_get_format_3151724922!
-    get_recording! : () -> AudioStreamWAV
-    get_recording! = |_| Host.AudioEffectRecord_get_recording_2964110865!
+    set_recording_active! : Bool => {}
+    set_recording_active! = Host.audioeffectrecord_set_recording_active_2586408642!
+    is_recording_active! : () => Bool
+    is_recording_active! = Host.audioeffectrecord_is_recording_active_36873697!
+    set_format! : U64 => {}
+    set_format! = Host.audioeffectrecord_set_format_60648488!
+    get_format! : () => U64
+    get_format! = Host.audioeffectrecord_get_format_3151724922!
+    get_recording! : () => U64
+    get_recording! = Host.audioeffectrecord_get_recording_2964110865!
 
 
 }

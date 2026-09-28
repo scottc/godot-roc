@@ -1,22 +1,20 @@
 # class VisualShaderNodeResizableBase
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeResizableBase := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property size : Vector2
-    get_size! : () -> Vector2
-    get_size! = |_| Host.VisualShaderNodeResizableBase_get_size_prop!
-    set_size! : Vector2 -> {}
-    set_size! = |v| Host.VisualShaderNodeResizableBase_set_size_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property size : U64  getter=get_size setter=set_size
 
     # --- methods ---
-    set_size! : Vector2 -> {}
-    set_size! = |size| Host.VisualShaderNodeResizableBase_set_size_743155724!(size)
-    get_size! : () -> Vector2
-    get_size! = |_| Host.VisualShaderNodeResizableBase_get_size_3341600327!
+    set_size! : U64 => {}
+    set_size! = Host.visualshadernoderesizablebase_set_size_743155724!
+    get_size! : () => U64
+    get_size! = Host.visualshadernoderesizablebase_get_size_3341600327!
 
 
 }

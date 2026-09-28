@@ -1,31 +1,25 @@
 # class CSGBox3D
+import ../../Host
+
 # inherits: CSGPrimitive3D
 CSGBox3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property size : Vector3
-    get_size! : () -> Vector3
-    get_size! = |_| Host.CSGBox3D_get_size_prop!
-    set_size! : Vector3 -> {}
-    set_size! = |v| Host.CSGBox3D_set_size_prop!(v)
-    # property material : BaseMaterial3D,ShaderMaterial
-    get_material! : () -> BaseMaterial3D,ShaderMaterial
-    get_material! = |_| Host.CSGBox3D_get_material_prop!
-    set_material! : BaseMaterial3D,ShaderMaterial -> {}
-    set_material! = |v| Host.CSGBox3D_set_material_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property size : U64  getter=get_size setter=set_size
+    # property material : U64  getter=get_material setter=set_material
 
     # --- methods ---
-    set_size! : Vector3 -> {}
-    set_size! = |size| Host.CSGBox3D_set_size_3460891852!(size)
-    get_size! : () -> Vector3
-    get_size! = |_| Host.CSGBox3D_get_size_3360562783!
-    set_material! : Material -> {}
-    set_material! = |material| Host.CSGBox3D_set_material_2757459619!(material)
-    get_material! : () -> Material
-    get_material! = |_| Host.CSGBox3D_get_material_5934680!
+    set_size! : U64 => {}
+    set_size! = Host.csgbox3d_set_size_3460891852!
+    get_size! : () => U64
+    get_size! = Host.csgbox3d_get_size_3360562783!
+    set_material! : U64 => {}
+    set_material! = Host.csgbox3d_set_material_2757459619!
+    get_material! : () => U64
+    get_material! = Host.csgbox3d_get_material_5934680!
 
 
 }

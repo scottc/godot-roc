@@ -1,16 +1,18 @@
 # class OpenXRSpatialCapabilityConfigurationAnchor
+import ../../Host
+
 # inherits: OpenXRSpatialCapabilityConfigurationBaseHeader
 OpenXRSpatialCapabilityConfigurationAnchor := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    get_enabled_components! : () -> PackedInt64Array
-    get_enabled_components! = |_| Host.OpenXRSpatialCapabilityConfigurationAnchor_get_enabled_components_235988956!
+    get_enabled_components! : () => U64
+    get_enabled_components! = Host.openxrspatialcapabilityconfigurationanchor_get_enabled_components_235988956!
 
 
 }

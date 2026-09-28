@@ -1,26 +1,24 @@
 # class ButtonGroup
+import ../../Host
+
 # inherits: Resource
 ButtonGroup := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property allow_unpress : Bool
-    is_allow_unpress! : () -> Bool
-    is_allow_unpress! = |_| Host.ButtonGroup_is_allow_unpress_prop!
-    set_allow_unpress! : Bool -> {}
-    set_allow_unpress! = |v| Host.ButtonGroup_set_allow_unpress_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property allow_unpress : Bool  getter=is_allow_unpress setter=set_allow_unpress
 
     # --- methods ---
-    get_pressed_button! : () -> BaseButton
-    get_pressed_button! = |_| Host.ButtonGroup_get_pressed_button_3886434893!
-    get_buttons! : () -> typedarray::BaseButton
-    get_buttons! = |_| Host.ButtonGroup_get_buttons_2915620761!
-    set_allow_unpress! : Bool -> {}
-    set_allow_unpress! = |enabled| Host.ButtonGroup_set_allow_unpress_2586408642!(enabled)
-    is_allow_unpress! : () -> Bool
-    is_allow_unpress! = |_| Host.ButtonGroup_is_allow_unpress_2240911060!
+    get_pressed_button! : () => U64
+    get_pressed_button! = Host.buttongroup_get_pressed_button_3886434893!
+    get_buttons! : () => U64
+    get_buttons! = Host.buttongroup_get_buttons_2915620761!
+    set_allow_unpress! : Bool => {}
+    set_allow_unpress! = Host.buttongroup_set_allow_unpress_2586408642!
+    is_allow_unpress! : () => Bool
+    is_allow_unpress! = Host.buttongroup_is_allow_unpress_2240911060!
 
-    # signal pressed : button : BaseButton
+    # signal pressed : button : U64
 }

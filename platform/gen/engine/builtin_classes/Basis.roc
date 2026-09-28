@@ -1,4 +1,5 @@
 # builtin Basis
+import ../../Host
 import Vector3 as Vector3
 
 Basis := {
@@ -11,46 +12,46 @@ Basis := {
 
 
     # --- methods ---
-    inverse! : () -> Basis
-    inverse! = |_| Host.Basis_inverse_594669093!
-    transposed! : () -> Basis
-    transposed! = |_| Host.Basis_transposed_594669093!
-    orthonormalized! : () -> Basis
-    orthonormalized! = |_| Host.Basis_orthonormalized_594669093!
-    determinant! : () -> F32
-    determinant! = |_| Host.Basis_determinant_466405837!
-    rotated! : Vector3, F32 -> Basis
-    rotated! = |axis, angle| Host.Basis_rotated_1998708965!(axis, angle)
-    scaled! : Vector3 -> Basis
-    scaled! = |scale| Host.Basis_scaled_3934786792!(scale)
-    scaled_local! : Vector3 -> Basis
-    scaled_local! = |scale| Host.Basis_scaled_local_3934786792!(scale)
-    get_scale! : () -> Vector3
-    get_scale! = |_| Host.Basis_get_scale_1776574132!
-    get_euler! : I32 -> Vector3
-    get_euler! = |order| Host.Basis_get_euler_1394941017!(order)
-    tdotx! : Vector3 -> F32
-    tdotx! = |with| Host.Basis_tdotx_1047977935!(with)
-    tdoty! : Vector3 -> F32
-    tdoty! = |with| Host.Basis_tdoty_1047977935!(with)
-    tdotz! : Vector3 -> F32
-    tdotz! = |with| Host.Basis_tdotz_1047977935!(with)
-    slerp! : Basis, F32 -> Basis
-    slerp! = |to, weight| Host.Basis_slerp_3118673011!(to, weight)
-    is_conformal! : () -> Bool
-    is_conformal! = |_| Host.Basis_is_conformal_3918633141!
-    is_equal_approx! : Basis -> Bool
-    is_equal_approx! = |b| Host.Basis_is_equal_approx_3165333982!(b)
-    is_finite! : () -> Bool
-    is_finite! = |_| Host.Basis_is_finite_3918633141!
-    is_orthonormal! : () -> Bool
-    is_orthonormal! = |_| Host.Basis_is_orthonormal_3918633141!
-    get_rotation_quaternion! : () -> Quaternion
-    get_rotation_quaternion! = |_| Host.Basis_get_rotation_quaternion_4274879941!
-    looking_at! : Vector3, Vector3, Bool -> Basis
-    looking_at! = |target, up, use_model_front| Host.Basis_looking_at_3728732505!(target, up, use_model_front)
-    from_scale! : Vector3 -> Basis
-    from_scale! = |scale| Host.Basis_from_scale_3703240166!(scale)
-    from_euler! : Vector3, I32 -> Basis
-    from_euler! = |euler, order| Host.Basis_from_euler_2802321791!(euler, order)
+    inverse! : () => U64
+    inverse! = Host.basis_inverse_594669093!
+    transposed! : () => U64
+    transposed! = Host.basis_transposed_594669093!
+    orthonormalized! : () => U64
+    orthonormalized! = Host.basis_orthonormalized_594669093!
+    determinant! : () => F64
+    determinant! = Host.basis_determinant_466405837!
+    rotated! : U64, F64 => U64
+    rotated! = Host.basis_rotated_1998708965!
+    scaled! : U64 => U64
+    scaled! = Host.basis_scaled_3934786792!
+    scaled_local! : U64 => U64
+    scaled_local! = Host.basis_scaled_local_3934786792!
+    get_scale! : () => U64
+    get_scale! = Host.basis_get_scale_1776574132!
+    get_euler! : I64 => U64
+    get_euler! = Host.basis_get_euler_1394941017!
+    tdotx! : U64 => F64
+    tdotx! = Host.basis_tdotx_1047977935!
+    tdoty! : U64 => F64
+    tdoty! = Host.basis_tdoty_1047977935!
+    tdotz! : U64 => F64
+    tdotz! = Host.basis_tdotz_1047977935!
+    slerp! : U64, F64 => U64
+    slerp! = Host.basis_slerp_3118673011!
+    is_conformal! : () => Bool
+    is_conformal! = Host.basis_is_conformal_3918633141!
+    is_equal_approx! : U64 => Bool
+    is_equal_approx! = Host.basis_is_equal_approx_3165333982!
+    is_finite! : () => Bool
+    is_finite! = Host.basis_is_finite_3918633141!
+    is_orthonormal! : () => Bool
+    is_orthonormal! = Host.basis_is_orthonormal_3918633141!
+    get_rotation_quaternion! : () => U64
+    get_rotation_quaternion! = Host.basis_get_rotation_quaternion_4274879941!
+    looking_at! : U64, U64, Bool => U64
+    looking_at! = Host.basis_looking_at_3728732505!
+    from_scale! : U64 => U64
+    from_scale! = Host.basis_from_scale_3703240166!
+    from_euler! : U64, I64 => U64
+    from_euler! = Host.basis_from_euler_2802321791!
 }

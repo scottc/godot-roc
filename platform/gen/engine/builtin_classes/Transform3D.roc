@@ -1,4 +1,5 @@
 # builtin Transform3D
+import ../../Host
 import Basis as Basis
 import Vector3 as Vector3
 
@@ -11,30 +12,30 @@ Transform3D := {
 
 
     # --- methods ---
-    inverse! : () -> Transform3D
-    inverse! = |_| Host.Transform3D_inverse_3816817146!
-    affine_inverse! : () -> Transform3D
-    affine_inverse! = |_| Host.Transform3D_affine_inverse_3816817146!
-    orthonormalized! : () -> Transform3D
-    orthonormalized! = |_| Host.Transform3D_orthonormalized_3816817146!
-    rotated! : Vector3, F32 -> Transform3D
-    rotated! = |axis, angle| Host.Transform3D_rotated_1563203923!(axis, angle)
-    rotated_local! : Vector3, F32 -> Transform3D
-    rotated_local! = |axis, angle| Host.Transform3D_rotated_local_1563203923!(axis, angle)
-    scaled! : Vector3 -> Transform3D
-    scaled! = |scale| Host.Transform3D_scaled_1405596198!(scale)
-    scaled_local! : Vector3 -> Transform3D
-    scaled_local! = |scale| Host.Transform3D_scaled_local_1405596198!(scale)
-    translated! : Vector3 -> Transform3D
-    translated! = |offset| Host.Transform3D_translated_1405596198!(offset)
-    translated_local! : Vector3 -> Transform3D
-    translated_local! = |offset| Host.Transform3D_translated_local_1405596198!(offset)
-    looking_at! : Vector3, Vector3, Bool -> Transform3D
-    looking_at! = |target, up, use_model_front| Host.Transform3D_looking_at_90889270!(target, up, use_model_front)
-    interpolate_with! : Transform3D, F32 -> Transform3D
-    interpolate_with! = |xform, weight| Host.Transform3D_interpolate_with_1786453358!(xform, weight)
-    is_equal_approx! : Transform3D -> Bool
-    is_equal_approx! = |xform| Host.Transform3D_is_equal_approx_696001652!(xform)
-    is_finite! : () -> Bool
-    is_finite! = |_| Host.Transform3D_is_finite_3918633141!
+    inverse! : () => U64
+    inverse! = Host.transform3d_inverse_3816817146!
+    affine_inverse! : () => U64
+    affine_inverse! = Host.transform3d_affine_inverse_3816817146!
+    orthonormalized! : () => U64
+    orthonormalized! = Host.transform3d_orthonormalized_3816817146!
+    rotated! : U64, F64 => U64
+    rotated! = Host.transform3d_rotated_1563203923!
+    rotated_local! : U64, F64 => U64
+    rotated_local! = Host.transform3d_rotated_local_1563203923!
+    scaled! : U64 => U64
+    scaled! = Host.transform3d_scaled_1405596198!
+    scaled_local! : U64 => U64
+    scaled_local! = Host.transform3d_scaled_local_1405596198!
+    translated! : U64 => U64
+    translated! = Host.transform3d_translated_1405596198!
+    translated_local! : U64 => U64
+    translated_local! = Host.transform3d_translated_local_1405596198!
+    looking_at! : U64, U64, Bool => U64
+    looking_at! = Host.transform3d_looking_at_90889270!
+    interpolate_with! : U64, F64 => U64
+    interpolate_with! = Host.transform3d_interpolate_with_1786453358!
+    is_equal_approx! : U64 => Bool
+    is_equal_approx! = Host.transform3d_is_equal_approx_696001652!
+    is_finite! : () => Bool
+    is_finite! = Host.transform3d_is_finite_3918633141!
 }

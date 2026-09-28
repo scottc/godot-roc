@@ -1,4 +1,6 @@
 # builtin PackedByteArray
+import ../../Host
+
 PackedByteArray := {
     ptr : U64
 }.{
@@ -7,142 +9,142 @@ PackedByteArray := {
 
 
     # --- methods ---
-    get! : I32 -> I32
-    get! = |index| Host.PackedByteArray_get_4103005248!(index)
-    set! : I32, I32 -> {}
-    set! = |index, value| Host.PackedByteArray_set_3638975848!(index, value)
-    size! : () -> I32
-    size! = |_| Host.PackedByteArray_size_3173160232!
-    is_empty! : () -> Bool
-    is_empty! = |_| Host.PackedByteArray_is_empty_3918633141!
-    push_back! : I32 -> Bool
-    push_back! = |value| Host.PackedByteArray_push_back_694024632!(value)
-    append! : I32 -> Bool
-    append! = |value| Host.PackedByteArray_append_694024632!(value)
-    append_array! : PackedByteArray -> {}
-    append_array! = |array| Host.PackedByteArray_append_array_791097111!(array)
-    remove_at! : I32 -> {}
-    remove_at! = |index| Host.PackedByteArray_remove_at_2823966027!(index)
-    insert! : I32, I32 -> I32
-    insert! = |at_index, value| Host.PackedByteArray_insert_1487112728!(at_index, value)
-    fill! : I32 -> {}
-    fill! = |value| Host.PackedByteArray_fill_2823966027!(value)
-    resize! : I32 -> I32
-    resize! = |new_size| Host.PackedByteArray_resize_848867239!(new_size)
-    clear! : () -> {}
-    clear! = |_| Host.PackedByteArray_clear_3218959716!
-    has! : I32 -> Bool
-    has! = |value| Host.PackedByteArray_has_931488181!(value)
-    reverse! : () -> {}
-    reverse! = |_| Host.PackedByteArray_reverse_3218959716!
-    slice! : I32, I32 -> PackedByteArray
-    slice! = |begin, end| Host.PackedByteArray_slice_2278869132!(begin, end)
-    sort! : () -> {}
-    sort! = |_| Host.PackedByteArray_sort_3218959716!
-    bsearch! : I32, Bool -> I32
-    bsearch! = |value, before| Host.PackedByteArray_bsearch_954237325!(value, before)
-    duplicate! : () -> PackedByteArray
-    duplicate! = |_| Host.PackedByteArray_duplicate_247621236!
-    find! : I32, I32 -> I32
-    find! = |value, from| Host.PackedByteArray_find_2984303840!(value, from)
-    rfind! : I32, I32 -> I32
-    rfind! = |value, from| Host.PackedByteArray_rfind_2984303840!(value, from)
-    count! : I32 -> I32
-    count! = |value| Host.PackedByteArray_count_4103005248!(value)
-    erase! : I32 -> Bool
-    erase! = |value| Host.PackedByteArray_erase_694024632!(value)
-    get_string_from_ascii! : () -> String
-    get_string_from_ascii! = |_| Host.PackedByteArray_get_string_from_ascii_3942272618!
-    get_string_from_utf8! : () -> String
-    get_string_from_utf8! = |_| Host.PackedByteArray_get_string_from_utf8_3942272618!
-    get_string_from_utf16! : () -> String
-    get_string_from_utf16! = |_| Host.PackedByteArray_get_string_from_utf16_3942272618!
-    get_string_from_utf32! : () -> String
-    get_string_from_utf32! = |_| Host.PackedByteArray_get_string_from_utf32_3942272618!
-    get_string_from_wchar! : () -> String
-    get_string_from_wchar! = |_| Host.PackedByteArray_get_string_from_wchar_3942272618!
-    get_string_from_multibyte_char! : String -> String
-    get_string_from_multibyte_char! = |encoding| Host.PackedByteArray_get_string_from_multibyte_char_3134094431!(encoding)
-    hex_encode! : () -> String
-    hex_encode! = |_| Host.PackedByteArray_hex_encode_3942272618!
-    compress! : I32 -> PackedByteArray
-    compress! = |compression_mode| Host.PackedByteArray_compress_1845905913!(compression_mode)
-    decompress! : I32, I32 -> PackedByteArray
-    decompress! = |buffer_size, compression_mode| Host.PackedByteArray_decompress_2278869132!(buffer_size, compression_mode)
-    decompress_dynamic! : I32, I32 -> PackedByteArray
-    decompress_dynamic! = |max_output_size, compression_mode| Host.PackedByteArray_decompress_dynamic_2278869132!(max_output_size, compression_mode)
-    decode_u8! : I32 -> I32
-    decode_u8! = |byte_offset| Host.PackedByteArray_decode_u8_4103005248!(byte_offset)
-    decode_s8! : I32 -> I32
-    decode_s8! = |byte_offset| Host.PackedByteArray_decode_s8_4103005248!(byte_offset)
-    decode_u16! : I32 -> I32
-    decode_u16! = |byte_offset| Host.PackedByteArray_decode_u16_4103005248!(byte_offset)
-    decode_s16! : I32 -> I32
-    decode_s16! = |byte_offset| Host.PackedByteArray_decode_s16_4103005248!(byte_offset)
-    decode_u32! : I32 -> I32
-    decode_u32! = |byte_offset| Host.PackedByteArray_decode_u32_4103005248!(byte_offset)
-    decode_s32! : I32 -> I32
-    decode_s32! = |byte_offset| Host.PackedByteArray_decode_s32_4103005248!(byte_offset)
-    decode_u64! : I32 -> I32
-    decode_u64! = |byte_offset| Host.PackedByteArray_decode_u64_4103005248!(byte_offset)
-    decode_s64! : I32 -> I32
-    decode_s64! = |byte_offset| Host.PackedByteArray_decode_s64_4103005248!(byte_offset)
-    decode_half! : I32 -> F32
-    decode_half! = |byte_offset| Host.PackedByteArray_decode_half_1401583798!(byte_offset)
-    decode_float! : I32 -> F32
-    decode_float! = |byte_offset| Host.PackedByteArray_decode_float_1401583798!(byte_offset)
-    decode_double! : I32 -> F32
-    decode_double! = |byte_offset| Host.PackedByteArray_decode_double_1401583798!(byte_offset)
-    has_encoded_var! : I32, Bool -> Bool
-    has_encoded_var! = |byte_offset, allow_objects| Host.PackedByteArray_has_encoded_var_2914632957!(byte_offset, allow_objects)
-    decode_var! : I32, Bool -> Variant
-    decode_var! = |byte_offset, allow_objects| Host.PackedByteArray_decode_var_1740420038!(byte_offset, allow_objects)
-    decode_var_size! : I32, Bool -> I32
-    decode_var_size! = |byte_offset, allow_objects| Host.PackedByteArray_decode_var_size_954237325!(byte_offset, allow_objects)
-    to_int32_array! : () -> PackedInt32Array
-    to_int32_array! = |_| Host.PackedByteArray_to_int32_array_3158844420!
-    to_int64_array! : () -> PackedInt64Array
-    to_int64_array! = |_| Host.PackedByteArray_to_int64_array_1961294120!
-    to_float32_array! : () -> PackedFloat32Array
-    to_float32_array! = |_| Host.PackedByteArray_to_float32_array_3575107827!
-    to_float64_array! : () -> PackedFloat64Array
-    to_float64_array! = |_| Host.PackedByteArray_to_float64_array_1627308337!
-    to_vector2_array! : () -> PackedVector2Array
-    to_vector2_array! = |_| Host.PackedByteArray_to_vector2_array_1660374357!
-    to_vector3_array! : () -> PackedVector3Array
-    to_vector3_array! = |_| Host.PackedByteArray_to_vector3_array_4171207452!
-    to_vector4_array! : () -> PackedVector4Array
-    to_vector4_array! = |_| Host.PackedByteArray_to_vector4_array_146203628!
-    to_color_array! : () -> PackedColorArray
-    to_color_array! = |_| Host.PackedByteArray_to_color_array_3072026941!
-    bswap16! : I32, I32 -> {}
-    bswap16! = |offset, count| Host.PackedByteArray_bswap16_3638975848!(offset, count)
-    bswap32! : I32, I32 -> {}
-    bswap32! = |offset, count| Host.PackedByteArray_bswap32_3638975848!(offset, count)
-    bswap64! : I32, I32 -> {}
-    bswap64! = |offset, count| Host.PackedByteArray_bswap64_3638975848!(offset, count)
-    encode_u8! : I32, I32 -> {}
-    encode_u8! = |byte_offset, value| Host.PackedByteArray_encode_u8_3638975848!(byte_offset, value)
-    encode_s8! : I32, I32 -> {}
-    encode_s8! = |byte_offset, value| Host.PackedByteArray_encode_s8_3638975848!(byte_offset, value)
-    encode_u16! : I32, I32 -> {}
-    encode_u16! = |byte_offset, value| Host.PackedByteArray_encode_u16_3638975848!(byte_offset, value)
-    encode_s16! : I32, I32 -> {}
-    encode_s16! = |byte_offset, value| Host.PackedByteArray_encode_s16_3638975848!(byte_offset, value)
-    encode_u32! : I32, I32 -> {}
-    encode_u32! = |byte_offset, value| Host.PackedByteArray_encode_u32_3638975848!(byte_offset, value)
-    encode_s32! : I32, I32 -> {}
-    encode_s32! = |byte_offset, value| Host.PackedByteArray_encode_s32_3638975848!(byte_offset, value)
-    encode_u64! : I32, I32 -> {}
-    encode_u64! = |byte_offset, value| Host.PackedByteArray_encode_u64_3638975848!(byte_offset, value)
-    encode_s64! : I32, I32 -> {}
-    encode_s64! = |byte_offset, value| Host.PackedByteArray_encode_s64_3638975848!(byte_offset, value)
-    encode_half! : I32, F32 -> {}
-    encode_half! = |byte_offset, value| Host.PackedByteArray_encode_half_1113000516!(byte_offset, value)
-    encode_float! : I32, F32 -> {}
-    encode_float! = |byte_offset, value| Host.PackedByteArray_encode_float_1113000516!(byte_offset, value)
-    encode_double! : I32, F32 -> {}
-    encode_double! = |byte_offset, value| Host.PackedByteArray_encode_double_1113000516!(byte_offset, value)
-    encode_var! : I32, Variant, Bool -> I32
-    encode_var! = |byte_offset, value, allow_objects| Host.PackedByteArray_encode_var_2604460497!(byte_offset, value, allow_objects)
+    get! : I64 => I64
+    get! = Host.packedbytearray_get_4103005248!
+    set! : I64, I64 => {}
+    set! = Host.packedbytearray_set_3638975848!
+    size! : () => I64
+    size! = Host.packedbytearray_size_3173160232!
+    is_empty! : () => Bool
+    is_empty! = Host.packedbytearray_is_empty_3918633141!
+    push_back! : I64 => Bool
+    push_back! = Host.packedbytearray_push_back_694024632!
+    append! : I64 => Bool
+    append! = Host.packedbytearray_append_694024632!
+    append_array! : U64 => {}
+    append_array! = Host.packedbytearray_append_array_791097111!
+    remove_at! : I64 => {}
+    remove_at! = Host.packedbytearray_remove_at_2823966027!
+    insert! : I64, I64 => I64
+    insert! = Host.packedbytearray_insert_1487112728!
+    fill! : I64 => {}
+    fill! = Host.packedbytearray_fill_2823966027!
+    resize! : I64 => I64
+    resize! = Host.packedbytearray_resize_848867239!
+    clear! : () => {}
+    clear! = Host.packedbytearray_clear_3218959716!
+    has! : I64 => Bool
+    has! = Host.packedbytearray_has_931488181!
+    reverse! : () => {}
+    reverse! = Host.packedbytearray_reverse_3218959716!
+    slice! : I64, I64 => U64
+    slice! = Host.packedbytearray_slice_2278869132!
+    sort! : () => {}
+    sort! = Host.packedbytearray_sort_3218959716!
+    bsearch! : I64, Bool => I64
+    bsearch! = Host.packedbytearray_bsearch_954237325!
+    duplicate! : () => U64
+    duplicate! = Host.packedbytearray_duplicate_247621236!
+    find! : I64, I64 => I64
+    find! = Host.packedbytearray_find_2984303840!
+    rfind! : I64, I64 => I64
+    rfind! = Host.packedbytearray_rfind_2984303840!
+    count! : I64 => I64
+    count! = Host.packedbytearray_count_4103005248!
+    erase! : I64 => Bool
+    erase! = Host.packedbytearray_erase_694024632!
+    get_string_from_ascii! : () => Str
+    get_string_from_ascii! = Host.packedbytearray_get_string_from_ascii_3942272618!
+    get_string_from_utf8! : () => Str
+    get_string_from_utf8! = Host.packedbytearray_get_string_from_utf8_3942272618!
+    get_string_from_utf16! : () => Str
+    get_string_from_utf16! = Host.packedbytearray_get_string_from_utf16_3942272618!
+    get_string_from_utf32! : () => Str
+    get_string_from_utf32! = Host.packedbytearray_get_string_from_utf32_3942272618!
+    get_string_from_wchar! : () => Str
+    get_string_from_wchar! = Host.packedbytearray_get_string_from_wchar_3942272618!
+    get_string_from_multibyte_char! : Str => Str
+    get_string_from_multibyte_char! = Host.packedbytearray_get_string_from_multibyte_char_3134094431!
+    hex_encode! : () => Str
+    hex_encode! = Host.packedbytearray_hex_encode_3942272618!
+    compress! : I64 => U64
+    compress! = Host.packedbytearray_compress_1845905913!
+    decompress! : I64, I64 => U64
+    decompress! = Host.packedbytearray_decompress_2278869132!
+    decompress_dynamic! : I64, I64 => U64
+    decompress_dynamic! = Host.packedbytearray_decompress_dynamic_2278869132!
+    decode_u8! : I64 => I64
+    decode_u8! = Host.packedbytearray_decode_u8_4103005248!
+    decode_s8! : I64 => I64
+    decode_s8! = Host.packedbytearray_decode_s8_4103005248!
+    decode_u16! : I64 => I64
+    decode_u16! = Host.packedbytearray_decode_u16_4103005248!
+    decode_s16! : I64 => I64
+    decode_s16! = Host.packedbytearray_decode_s16_4103005248!
+    decode_u32! : I64 => I64
+    decode_u32! = Host.packedbytearray_decode_u32_4103005248!
+    decode_s32! : I64 => I64
+    decode_s32! = Host.packedbytearray_decode_s32_4103005248!
+    decode_u64! : I64 => I64
+    decode_u64! = Host.packedbytearray_decode_u64_4103005248!
+    decode_s64! : I64 => I64
+    decode_s64! = Host.packedbytearray_decode_s64_4103005248!
+    decode_half! : I64 => F64
+    decode_half! = Host.packedbytearray_decode_half_1401583798!
+    decode_float! : I64 => F64
+    decode_float! = Host.packedbytearray_decode_float_1401583798!
+    decode_double! : I64 => F64
+    decode_double! = Host.packedbytearray_decode_double_1401583798!
+    has_encoded_var! : I64, Bool => Bool
+    has_encoded_var! = Host.packedbytearray_has_encoded_var_2914632957!
+    decode_var! : I64, Bool => U64
+    decode_var! = Host.packedbytearray_decode_var_1740420038!
+    decode_var_size! : I64, Bool => I64
+    decode_var_size! = Host.packedbytearray_decode_var_size_954237325!
+    to_int32_array! : () => U64
+    to_int32_array! = Host.packedbytearray_to_int32_array_3158844420!
+    to_int64_array! : () => U64
+    to_int64_array! = Host.packedbytearray_to_int64_array_1961294120!
+    to_float32_array! : () => U64
+    to_float32_array! = Host.packedbytearray_to_float32_array_3575107827!
+    to_float64_array! : () => U64
+    to_float64_array! = Host.packedbytearray_to_float64_array_1627308337!
+    to_vector2_array! : () => U64
+    to_vector2_array! = Host.packedbytearray_to_vector2_array_1660374357!
+    to_vector3_array! : () => U64
+    to_vector3_array! = Host.packedbytearray_to_vector3_array_4171207452!
+    to_vector4_array! : () => U64
+    to_vector4_array! = Host.packedbytearray_to_vector4_array_146203628!
+    to_color_array! : () => U64
+    to_color_array! = Host.packedbytearray_to_color_array_3072026941!
+    bswap16! : I64, I64 => {}
+    bswap16! = Host.packedbytearray_bswap16_3638975848!
+    bswap32! : I64, I64 => {}
+    bswap32! = Host.packedbytearray_bswap32_3638975848!
+    bswap64! : I64, I64 => {}
+    bswap64! = Host.packedbytearray_bswap64_3638975848!
+    encode_u8! : I64, I64 => {}
+    encode_u8! = Host.packedbytearray_encode_u8_3638975848!
+    encode_s8! : I64, I64 => {}
+    encode_s8! = Host.packedbytearray_encode_s8_3638975848!
+    encode_u16! : I64, I64 => {}
+    encode_u16! = Host.packedbytearray_encode_u16_3638975848!
+    encode_s16! : I64, I64 => {}
+    encode_s16! = Host.packedbytearray_encode_s16_3638975848!
+    encode_u32! : I64, I64 => {}
+    encode_u32! = Host.packedbytearray_encode_u32_3638975848!
+    encode_s32! : I64, I64 => {}
+    encode_s32! = Host.packedbytearray_encode_s32_3638975848!
+    encode_u64! : I64, I64 => {}
+    encode_u64! = Host.packedbytearray_encode_u64_3638975848!
+    encode_s64! : I64, I64 => {}
+    encode_s64! = Host.packedbytearray_encode_s64_3638975848!
+    encode_half! : I64, F64 => {}
+    encode_half! = Host.packedbytearray_encode_half_1113000516!
+    encode_float! : I64, F64 => {}
+    encode_float! = Host.packedbytearray_encode_float_1113000516!
+    encode_double! : I64, F64 => {}
+    encode_double! = Host.packedbytearray_encode_double_1113000516!
+    encode_var! : I64, U64, Bool => I64
+    encode_var! = Host.packedbytearray_encode_var_2604460497!
 }

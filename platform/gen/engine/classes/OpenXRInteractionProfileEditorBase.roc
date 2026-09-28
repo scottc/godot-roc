@@ -1,16 +1,18 @@
 # class OpenXRInteractionProfileEditorBase
+import ../../Host
+
 # inherits: HBoxContainer
 OpenXRInteractionProfileEditorBase := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    setup! : OpenXRActionMap, OpenXRInteractionProfile -> {}
-    setup! = |action_map, interaction_profile| Host.OpenXRInteractionProfileEditorBase_setup_421962938!(action_map, interaction_profile)
+    setup! : U64, U64 => {}
+    setup! = Host.openxrinteractionprofileeditorbase_setup_421962938!
 
 
 }

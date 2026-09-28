@@ -1,22 +1,20 @@
 # class CompressedTexture3D
+import ../../Host
+
 # inherits: Texture3D
 CompressedTexture3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property load_path : String
-    get_load_path! : () -> String
-    get_load_path! = |_| Host.CompressedTexture3D_get_load_path_prop!
-    load! : String -> {}
-    load! = |v| Host.CompressedTexture3D_load_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property load_path : Str  getter=get_load_path setter=load
 
     # --- methods ---
-    load! : String -> Error
-    load! = |path| Host.CompressedTexture3D_load_166001499!(path)
-    get_load_path! : () -> String
-    get_load_path! = |_| Host.CompressedTexture3D_get_load_path_201670096!
+    load! : Str => U64
+    load! = Host.compressedtexture3d_load_166001499!
+    get_load_path! : () => Str
+    get_load_path! = Host.compressedtexture3d_get_load_path_201670096!
 
 
 }

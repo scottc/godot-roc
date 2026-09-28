@@ -1,18 +1,20 @@
 # class OpenXRSpatialComponentPolygon2DList
+import ../../Host
+
 # inherits: OpenXRSpatialComponentData
 OpenXRSpatialComponentPolygon2DList := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    get_transform! : I32 -> Transform3D
-    get_transform! = |index| Host.OpenXRSpatialComponentPolygon2DList_get_transform_1965739696!(index)
-    get_vertices! : RID, I32 -> PackedVector2Array
-    get_vertices! = |snapshot, index| Host.OpenXRSpatialComponentPolygon2DList_get_vertices_110850971!(snapshot, index)
+    get_transform! : I64 => U64
+    get_transform! = Host.openxrspatialcomponentpolygon2dlist_get_transform_1965739696!
+    get_vertices! : U64, I64 => U64
+    get_vertices! = Host.openxrspatialcomponentpolygon2dlist_get_vertices_110850971!
 
 
 }

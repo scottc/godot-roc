@@ -1,46 +1,36 @@
 # class OpenXRActionSet
+import ../../Host
+
 # inherits: Resource
 OpenXRActionSet := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property localized_name : String
-    get_localized_name! : () -> String
-    get_localized_name! = |_| Host.OpenXRActionSet_get_localized_name_prop!
-    set_localized_name! : String -> {}
-    set_localized_name! = |v| Host.OpenXRActionSet_set_localized_name_prop!(v)
-    # property priority : I32
-    get_priority! : () -> I32
-    get_priority! = |_| Host.OpenXRActionSet_get_priority_prop!
-    set_priority! : I32 -> {}
-    set_priority! = |v| Host.OpenXRActionSet_set_priority_prop!(v)
-    # property actions : OpenXRAction
-    get_actions! : () -> OpenXRAction
-    get_actions! = |_| Host.OpenXRActionSet_get_actions_prop!
-    set_actions! : OpenXRAction -> {}
-    set_actions! = |v| Host.OpenXRActionSet_set_actions_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property localized_name : Str  getter=get_localized_name setter=set_localized_name
+    # property priority : I64  getter=get_priority setter=set_priority
+    # property actions : U64  getter=get_actions setter=set_actions
 
     # --- methods ---
-    set_localized_name! : String -> {}
-    set_localized_name! = |localized_name| Host.OpenXRActionSet_set_localized_name_83702148!(localized_name)
-    get_localized_name! : () -> String
-    get_localized_name! = |_| Host.OpenXRActionSet_get_localized_name_201670096!
-    set_priority! : I32 -> {}
-    set_priority! = |priority| Host.OpenXRActionSet_set_priority_1286410249!(priority)
-    get_priority! : () -> I32
-    get_priority! = |_| Host.OpenXRActionSet_get_priority_3905245786!
-    get_action_count! : () -> I32
-    get_action_count! = |_| Host.OpenXRActionSet_get_action_count_3905245786!
-    set_actions! : Array -> {}
-    set_actions! = |actions| Host.OpenXRActionSet_set_actions_381264803!(actions)
-    get_actions! : () -> Array
-    get_actions! = |_| Host.OpenXRActionSet_get_actions_3995934104!
-    add_action! : OpenXRAction -> {}
-    add_action! = |action| Host.OpenXRActionSet_add_action_349361333!(action)
-    remove_action! : OpenXRAction -> {}
-    remove_action! = |action| Host.OpenXRActionSet_remove_action_349361333!(action)
+    set_localized_name! : Str => {}
+    set_localized_name! = Host.openxractionset_set_localized_name_83702148!
+    get_localized_name! : () => Str
+    get_localized_name! = Host.openxractionset_get_localized_name_201670096!
+    set_priority! : I64 => {}
+    set_priority! = Host.openxractionset_set_priority_1286410249!
+    get_priority! : () => I64
+    get_priority! = Host.openxractionset_get_priority_3905245786!
+    get_action_count! : () => I64
+    get_action_count! = Host.openxractionset_get_action_count_3905245786!
+    set_actions! : U64 => {}
+    set_actions! = Host.openxractionset_set_actions_381264803!
+    get_actions! : () => U64
+    get_actions! = Host.openxractionset_get_actions_3995934104!
+    add_action! : U64 => {}
+    add_action! = Host.openxractionset_add_action_349361333!
+    remove_action! : U64 => {}
+    remove_action! = Host.openxractionset_remove_action_349361333!
 
 
 }

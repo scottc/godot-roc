@@ -1,6 +1,8 @@
+import ../../Host
+
 ClassDBSingleton := {
     ptr : U64,
 }.{
-    get! : () -> ClassDBSingleton
-    get! = |_| { { ptr: Host.get_singleton_ClassDB!() } }
+    get! : () => ClassDBSingleton
+    get! = || { { ptr: Host.get_singleton_classdb!() } }
 }

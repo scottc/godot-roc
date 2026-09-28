@@ -1,16 +1,18 @@
 # class ScriptCreateDialog
+import ../../Host
+
 # inherits: ConfirmationDialog
 ScriptCreateDialog := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    config! : String, String, Bool, Bool -> {}
-    config! = |inherits, path, built_in_enabled, load_enabled| Host.ScriptCreateDialog_config_869314288!(inherits, path, built_in_enabled, load_enabled)
+    config! : Str, Str, Bool, Bool => {}
+    config! = Host.scriptcreatedialog_config_869314288!
 
-    # signal script_created : script : Script
+    # signal script_created : script : U64
 }

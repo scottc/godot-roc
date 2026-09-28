@@ -1,22 +1,24 @@
 # class MainLoop
+import ../../Host
+
 # inherits: Object
 MainLoop := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    _initialize! : () -> {}
-    _initialize! = |_| Host.MainLoop__initialize_3218959716!
-    _physics_process! : F32 -> Bool
-    _physics_process! = |delta| Host.MainLoop__physics_process_330693286!(delta)
-    _process! : F32 -> Bool
-    _process! = |delta| Host.MainLoop__process_330693286!(delta)
-    _finalize! : () -> {}
-    _finalize! = |_| Host.MainLoop__finalize_3218959716!
+    _initialize! : () => {}
+    _initialize! = Host.mainloop__initialize_3218959716!
+    _physics_process! : F64 => Bool
+    _physics_process! = Host.mainloop__physics_process_330693286!
+    _process! : F64 => Bool
+    _process! = Host.mainloop__process_330693286!
+    _finalize! : () => {}
+    _finalize! = Host.mainloop__finalize_3218959716!
 
-    # signal on_request_permissions_result : permission : String, granted : Bool
+    # signal on_request_permissions_result : permission : Str, granted : Bool
 }

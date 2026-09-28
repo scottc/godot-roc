@@ -1,11 +1,13 @@
 # class Panel
+import ../../Host
+
 # inherits: Control
 Panel := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

@@ -1,11 +1,13 @@
 # class ResourceImporterSVG
+import ../../Host
+
 # inherits: ResourceImporter
 ResourceImporterSVG := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

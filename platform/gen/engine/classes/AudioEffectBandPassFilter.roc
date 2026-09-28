@@ -1,11 +1,13 @@
 # class AudioEffectBandPassFilter
+import ../../Host
+
 # inherits: AudioEffectFilter
 AudioEffectBandPassFilter := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

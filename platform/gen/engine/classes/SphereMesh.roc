@@ -1,58 +1,40 @@
 # class SphereMesh
+import ../../Host
+
 # inherits: PrimitiveMesh
 SphereMesh := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property radius : F32
-    get_radius! : () -> F32
-    get_radius! = |_| Host.SphereMesh_get_radius_prop!
-    set_radius! : F32 -> {}
-    set_radius! = |v| Host.SphereMesh_set_radius_prop!(v)
-    # property height : F32
-    get_height! : () -> F32
-    get_height! = |_| Host.SphereMesh_get_height_prop!
-    set_height! : F32 -> {}
-    set_height! = |v| Host.SphereMesh_set_height_prop!(v)
-    # property radial_segments : I32
-    get_radial_segments! : () -> I32
-    get_radial_segments! = |_| Host.SphereMesh_get_radial_segments_prop!
-    set_radial_segments! : I32 -> {}
-    set_radial_segments! = |v| Host.SphereMesh_set_radial_segments_prop!(v)
-    # property rings : I32
-    get_rings! : () -> I32
-    get_rings! = |_| Host.SphereMesh_get_rings_prop!
-    set_rings! : I32 -> {}
-    set_rings! = |v| Host.SphereMesh_set_rings_prop!(v)
-    # property is_hemisphere : Bool
-    get_is_hemisphere! : () -> Bool
-    get_is_hemisphere! = |_| Host.SphereMesh_get_is_hemisphere_prop!
-    set_is_hemisphere! : Bool -> {}
-    set_is_hemisphere! = |v| Host.SphereMesh_set_is_hemisphere_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property radius : F64  getter=get_radius setter=set_radius
+    # property height : F64  getter=get_height setter=set_height
+    # property radial_segments : I64  getter=get_radial_segments setter=set_radial_segments
+    # property rings : I64  getter=get_rings setter=set_rings
+    # property is_hemisphere : Bool  getter=get_is_hemisphere setter=set_is_hemisphere
 
     # --- methods ---
-    set_radius! : F32 -> {}
-    set_radius! = |radius| Host.SphereMesh_set_radius_373806689!(radius)
-    get_radius! : () -> F32
-    get_radius! = |_| Host.SphereMesh_get_radius_1740695150!
-    set_height! : F32 -> {}
-    set_height! = |height| Host.SphereMesh_set_height_373806689!(height)
-    get_height! : () -> F32
-    get_height! = |_| Host.SphereMesh_get_height_1740695150!
-    set_radial_segments! : I32 -> {}
-    set_radial_segments! = |radial_segments| Host.SphereMesh_set_radial_segments_1286410249!(radial_segments)
-    get_radial_segments! : () -> I32
-    get_radial_segments! = |_| Host.SphereMesh_get_radial_segments_3905245786!
-    set_rings! : I32 -> {}
-    set_rings! = |rings| Host.SphereMesh_set_rings_1286410249!(rings)
-    get_rings! : () -> I32
-    get_rings! = |_| Host.SphereMesh_get_rings_3905245786!
-    set_is_hemisphere! : Bool -> {}
-    set_is_hemisphere! = |is_hemisphere| Host.SphereMesh_set_is_hemisphere_2586408642!(is_hemisphere)
-    get_is_hemisphere! : () -> Bool
-    get_is_hemisphere! = |_| Host.SphereMesh_get_is_hemisphere_36873697!
+    set_radius! : F64 => {}
+    set_radius! = Host.spheremesh_set_radius_373806689!
+    get_radius! : () => F64
+    get_radius! = Host.spheremesh_get_radius_1740695150!
+    set_height! : F64 => {}
+    set_height! = Host.spheremesh_set_height_373806689!
+    get_height! : () => F64
+    get_height! = Host.spheremesh_get_height_1740695150!
+    set_radial_segments! : I64 => {}
+    set_radial_segments! = Host.spheremesh_set_radial_segments_1286410249!
+    get_radial_segments! : () => I64
+    get_radial_segments! = Host.spheremesh_get_radial_segments_3905245786!
+    set_rings! : I64 => {}
+    set_rings! = Host.spheremesh_set_rings_1286410249!
+    get_rings! : () => I64
+    get_rings! = Host.spheremesh_get_rings_3905245786!
+    set_is_hemisphere! : Bool => {}
+    set_is_hemisphere! = Host.spheremesh_set_is_hemisphere_2586408642!
+    get_is_hemisphere! : () => Bool
+    get_is_hemisphere! = Host.spheremesh_get_is_hemisphere_36873697!
 
 
 }

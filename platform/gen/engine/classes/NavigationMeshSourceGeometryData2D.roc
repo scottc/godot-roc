@@ -1,60 +1,50 @@
 # class NavigationMeshSourceGeometryData2D
+import ../../Host
+
 # inherits: Resource
 NavigationMeshSourceGeometryData2D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property traversable_outlines : Array
-    get_traversable_outlines! : () -> Array
-    get_traversable_outlines! = |_| Host.NavigationMeshSourceGeometryData2D_get_traversable_outlines_prop!
-    set_traversable_outlines! : Array -> {}
-    set_traversable_outlines! = |v| Host.NavigationMeshSourceGeometryData2D_set_traversable_outlines_prop!(v)
-    # property obstruction_outlines : Array
-    get_obstruction_outlines! : () -> Array
-    get_obstruction_outlines! = |_| Host.NavigationMeshSourceGeometryData2D_get_obstruction_outlines_prop!
-    set_obstruction_outlines! : Array -> {}
-    set_obstruction_outlines! = |v| Host.NavigationMeshSourceGeometryData2D_set_obstruction_outlines_prop!(v)
-    # property projected_obstructions : Array
-    get_projected_obstructions! : () -> Array
-    get_projected_obstructions! = |_| Host.NavigationMeshSourceGeometryData2D_get_projected_obstructions_prop!
-    set_projected_obstructions! : Array -> {}
-    set_projected_obstructions! = |v| Host.NavigationMeshSourceGeometryData2D_set_projected_obstructions_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property traversable_outlines : U64  getter=get_traversable_outlines setter=set_traversable_outlines
+    # property obstruction_outlines : U64  getter=get_obstruction_outlines setter=set_obstruction_outlines
+    # property projected_obstructions : U64  getter=get_projected_obstructions setter=set_projected_obstructions
 
     # --- methods ---
-    clear! : () -> {}
-    clear! = |_| Host.NavigationMeshSourceGeometryData2D_clear_3218959716!
-    has_data! : () -> Bool
-    has_data! = |_| Host.NavigationMeshSourceGeometryData2D_has_data_2240911060!
-    set_traversable_outlines! : typedarray::PackedVector2Array -> {}
-    set_traversable_outlines! = |traversable_outlines| Host.NavigationMeshSourceGeometryData2D_set_traversable_outlines_381264803!(traversable_outlines)
-    get_traversable_outlines! : () -> typedarray::PackedVector2Array
-    get_traversable_outlines! = |_| Host.NavigationMeshSourceGeometryData2D_get_traversable_outlines_3995934104!
-    set_obstruction_outlines! : typedarray::PackedVector2Array -> {}
-    set_obstruction_outlines! = |obstruction_outlines| Host.NavigationMeshSourceGeometryData2D_set_obstruction_outlines_381264803!(obstruction_outlines)
-    get_obstruction_outlines! : () -> typedarray::PackedVector2Array
-    get_obstruction_outlines! = |_| Host.NavigationMeshSourceGeometryData2D_get_obstruction_outlines_3995934104!
-    append_traversable_outlines! : typedarray::PackedVector2Array -> {}
-    append_traversable_outlines! = |traversable_outlines| Host.NavigationMeshSourceGeometryData2D_append_traversable_outlines_381264803!(traversable_outlines)
-    append_obstruction_outlines! : typedarray::PackedVector2Array -> {}
-    append_obstruction_outlines! = |obstruction_outlines| Host.NavigationMeshSourceGeometryData2D_append_obstruction_outlines_381264803!(obstruction_outlines)
-    add_traversable_outline! : PackedVector2Array -> {}
-    add_traversable_outline! = |shape_outline| Host.NavigationMeshSourceGeometryData2D_add_traversable_outline_1509147220!(shape_outline)
-    add_obstruction_outline! : PackedVector2Array -> {}
-    add_obstruction_outline! = |shape_outline| Host.NavigationMeshSourceGeometryData2D_add_obstruction_outline_1509147220!(shape_outline)
-    merge! : NavigationMeshSourceGeometryData2D -> {}
-    merge! = |other_geometry| Host.NavigationMeshSourceGeometryData2D_merge_742424872!(other_geometry)
-    add_projected_obstruction! : PackedVector2Array, Bool -> {}
-    add_projected_obstruction! = |vertices, carve| Host.NavigationMeshSourceGeometryData2D_add_projected_obstruction_3882407395!(vertices, carve)
-    clear_projected_obstructions! : () -> {}
-    clear_projected_obstructions! = |_| Host.NavigationMeshSourceGeometryData2D_clear_projected_obstructions_3218959716!
-    set_projected_obstructions! : Array -> {}
-    set_projected_obstructions! = |projected_obstructions| Host.NavigationMeshSourceGeometryData2D_set_projected_obstructions_381264803!(projected_obstructions)
-    get_projected_obstructions! : () -> Array
-    get_projected_obstructions! = |_| Host.NavigationMeshSourceGeometryData2D_get_projected_obstructions_3995934104!
-    get_bounds! : () -> Rect2
-    get_bounds! = |_| Host.NavigationMeshSourceGeometryData2D_get_bounds_3248174!
+    clear! : () => {}
+    clear! = Host.navigationmeshsourcegeometrydata2d_clear_3218959716!
+    has_data! : () => Bool
+    has_data! = Host.navigationmeshsourcegeometrydata2d_has_data_2240911060!
+    set_traversable_outlines! : U64 => {}
+    set_traversable_outlines! = Host.navigationmeshsourcegeometrydata2d_set_traversable_outlines_381264803!
+    get_traversable_outlines! : () => U64
+    get_traversable_outlines! = Host.navigationmeshsourcegeometrydata2d_get_traversable_outlines_3995934104!
+    set_obstruction_outlines! : U64 => {}
+    set_obstruction_outlines! = Host.navigationmeshsourcegeometrydata2d_set_obstruction_outlines_381264803!
+    get_obstruction_outlines! : () => U64
+    get_obstruction_outlines! = Host.navigationmeshsourcegeometrydata2d_get_obstruction_outlines_3995934104!
+    append_traversable_outlines! : U64 => {}
+    append_traversable_outlines! = Host.navigationmeshsourcegeometrydata2d_append_traversable_outlines_381264803!
+    append_obstruction_outlines! : U64 => {}
+    append_obstruction_outlines! = Host.navigationmeshsourcegeometrydata2d_append_obstruction_outlines_381264803!
+    add_traversable_outline! : U64 => {}
+    add_traversable_outline! = Host.navigationmeshsourcegeometrydata2d_add_traversable_outline_1509147220!
+    add_obstruction_outline! : U64 => {}
+    add_obstruction_outline! = Host.navigationmeshsourcegeometrydata2d_add_obstruction_outline_1509147220!
+    merge! : U64 => {}
+    merge! = Host.navigationmeshsourcegeometrydata2d_merge_742424872!
+    add_projected_obstruction! : U64, Bool => {}
+    add_projected_obstruction! = Host.navigationmeshsourcegeometrydata2d_add_projected_obstruction_3882407395!
+    clear_projected_obstructions! : () => {}
+    clear_projected_obstructions! = Host.navigationmeshsourcegeometrydata2d_clear_projected_obstructions_3218959716!
+    set_projected_obstructions! : U64 => {}
+    set_projected_obstructions! = Host.navigationmeshsourcegeometrydata2d_set_projected_obstructions_381264803!
+    get_projected_obstructions! : () => U64
+    get_projected_obstructions! = Host.navigationmeshsourcegeometrydata2d_get_projected_obstructions_3995934104!
+    get_bounds! : () => U64
+    get_bounds! = Host.navigationmeshsourcegeometrydata2d_get_bounds_3248174!
 
 
 }

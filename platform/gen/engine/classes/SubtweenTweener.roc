@@ -1,16 +1,18 @@
 # class SubtweenTweener
+import ../../Host
+
 # inherits: Tweener
 SubtweenTweener := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    set_delay! : F32 -> SubtweenTweener
-    set_delay! = |delay| Host.SubtweenTweener_set_delay_449181780!(delay)
+    set_delay! : F64 => U64
+    set_delay! = Host.subtweentweener_set_delay_449181780!
 
 
 }

@@ -1,22 +1,20 @@
 # class Marker3D
+import ../../Host
+
 # inherits: Node3D
 Marker3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property gizmo_extents : F32
-    get_gizmo_extents! : () -> F32
-    get_gizmo_extents! = |_| Host.Marker3D_get_gizmo_extents_prop!
-    set_gizmo_extents! : F32 -> {}
-    set_gizmo_extents! = |v| Host.Marker3D_set_gizmo_extents_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property gizmo_extents : F64  getter=get_gizmo_extents setter=set_gizmo_extents
 
     # --- methods ---
-    set_gizmo_extents! : F32 -> {}
-    set_gizmo_extents! = |extents| Host.Marker3D_set_gizmo_extents_373806689!(extents)
-    get_gizmo_extents! : () -> F32
-    get_gizmo_extents! = |_| Host.Marker3D_get_gizmo_extents_1740695150!
+    set_gizmo_extents! : F64 => {}
+    set_gizmo_extents! = Host.marker3d_set_gizmo_extents_373806689!
+    get_gizmo_extents! : () => F64
+    get_gizmo_extents! = Host.marker3d_get_gizmo_extents_1740695150!
 
 
 }

@@ -1,22 +1,20 @@
 # class VisualShaderNodeTransformConstant
+import ../../Host
+
 # inherits: VisualShaderNodeConstant
 VisualShaderNodeTransformConstant := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property constant : Transform3D
-    get_constant! : () -> Transform3D
-    get_constant! = |_| Host.VisualShaderNodeTransformConstant_get_constant_prop!
-    set_constant! : Transform3D -> {}
-    set_constant! = |v| Host.VisualShaderNodeTransformConstant_set_constant_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property constant : U64  getter=get_constant setter=set_constant
 
     # --- methods ---
-    set_constant! : Transform3D -> {}
-    set_constant! = |constant| Host.VisualShaderNodeTransformConstant_set_constant_2952846383!(constant)
-    get_constant! : () -> Transform3D
-    get_constant! = |_| Host.VisualShaderNodeTransformConstant_get_constant_3229777777!
+    set_constant! : U64 => {}
+    set_constant! = Host.visualshadernodetransformconstant_set_constant_2952846383!
+    get_constant! : () => U64
+    get_constant! = Host.visualshadernodetransformconstant_get_constant_3229777777!
 
 
 }

@@ -1,11 +1,13 @@
 # class PlaceholderMaterial
+import ../../Host
+
 # inherits: Material
 PlaceholderMaterial := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

@@ -1,11 +1,13 @@
 # class VSeparator
+import ../../Host
+
 # inherits: Separator
 VSeparator := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

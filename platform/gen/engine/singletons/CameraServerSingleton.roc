@@ -1,6 +1,8 @@
+import ../../Host
+
 CameraServerSingleton := {
     ptr : U64,
 }.{
-    get! : () -> CameraServerSingleton
-    get! = |_| { { ptr: Host.get_singleton_CameraServer!() } }
+    get! : () => CameraServerSingleton
+    get! = || { { ptr: Host.get_singleton_cameraserver!() } }
 }

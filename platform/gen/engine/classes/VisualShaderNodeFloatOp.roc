@@ -1,22 +1,20 @@
 # class VisualShaderNodeFloatOp
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeFloatOp := {
     ptr : U64,
 }.{
     Operator : [OP_ADD, OP_SUB, OP_MUL, OP_DIV, OP_MOD, OP_POW, OP_MAX, OP_MIN, OP_ATAN2, OP_STEP, OP_ENUM_SIZE]
 
-    # --- properties ---
-    # property operator : I32
-    get_operator! : () -> I32
-    get_operator! = |_| Host.VisualShaderNodeFloatOp_get_operator_prop!
-    set_operator! : I32 -> {}
-    set_operator! = |v| Host.VisualShaderNodeFloatOp_set_operator_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property operator : I64  getter=get_operator setter=set_operator
 
     # --- methods ---
-    set_operator! : VisualShaderNodeFloatOp_Operator -> {}
-    set_operator! = |op| Host.VisualShaderNodeFloatOp_set_operator_2488468047!(op)
-    get_operator! : () -> VisualShaderNodeFloatOp_Operator
-    get_operator! = |_| Host.VisualShaderNodeFloatOp_get_operator_1867979390!
+    set_operator! : U64 => {}
+    set_operator! = Host.visualshadernodefloatop_set_operator_2488468047!
+    get_operator! : () => U64
+    get_operator! = Host.visualshadernodefloatop_get_operator_1867979390!
 
 
 }

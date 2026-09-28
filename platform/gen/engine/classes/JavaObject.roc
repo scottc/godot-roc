@@ -1,18 +1,20 @@
 # class JavaObject
+import ../../Host
+
 # inherits: RefCounted
 JavaObject := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    get_java_class! : () -> JavaClass
-    get_java_class! = |_| Host.JavaObject_get_java_class_541536347!
-    has_java_method! : StringName -> Bool
-    has_java_method! = |method| Host.JavaObject_has_java_method_2619796661!(method)
+    get_java_class! : () => U64
+    get_java_class! = Host.javaobject_get_java_class_541536347!
+    has_java_method! : Str => Bool
+    has_java_method! = Host.javaobject_has_java_method_2619796661!
 
 
 }

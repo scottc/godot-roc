@@ -1,11 +1,13 @@
 # class EditorExportPlatformLinuxBSD
+import ../../Host
+
 # inherits: EditorExportPlatformPC
 EditorExportPlatformLinuxBSD := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

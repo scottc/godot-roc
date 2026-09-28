@@ -1,4 +1,6 @@
 # builtin PackedFloat32Array
+import ../../Host
+
 PackedFloat32Array := {
     ptr : U64
 }.{
@@ -7,50 +9,50 @@ PackedFloat32Array := {
 
 
     # --- methods ---
-    get! : I32 -> F32
-    get! = |index| Host.PackedFloat32Array_get_1401583798!(index)
-    set! : I32, F32 -> {}
-    set! = |index, value| Host.PackedFloat32Array_set_1113000516!(index, value)
-    size! : () -> I32
-    size! = |_| Host.PackedFloat32Array_size_3173160232!
-    is_empty! : () -> Bool
-    is_empty! = |_| Host.PackedFloat32Array_is_empty_3918633141!
-    push_back! : F32 -> Bool
-    push_back! = |value| Host.PackedFloat32Array_push_back_4094791666!(value)
-    append! : F32 -> Bool
-    append! = |value| Host.PackedFloat32Array_append_4094791666!(value)
-    append_array! : PackedFloat32Array -> {}
-    append_array! = |array| Host.PackedFloat32Array_append_array_2981316639!(array)
-    remove_at! : I32 -> {}
-    remove_at! = |index| Host.PackedFloat32Array_remove_at_2823966027!(index)
-    insert! : I32, F32 -> I32
-    insert! = |at_index, value| Host.PackedFloat32Array_insert_1379903876!(at_index, value)
-    fill! : F32 -> {}
-    fill! = |value| Host.PackedFloat32Array_fill_833936903!(value)
-    resize! : I32 -> I32
-    resize! = |new_size| Host.PackedFloat32Array_resize_848867239!(new_size)
-    clear! : () -> {}
-    clear! = |_| Host.PackedFloat32Array_clear_3218959716!
-    has! : F32 -> Bool
-    has! = |value| Host.PackedFloat32Array_has_1296369134!(value)
-    reverse! : () -> {}
-    reverse! = |_| Host.PackedFloat32Array_reverse_3218959716!
-    slice! : I32, I32 -> PackedFloat32Array
-    slice! = |begin, end| Host.PackedFloat32Array_slice_1418229160!(begin, end)
-    to_byte_array! : () -> PackedByteArray
-    to_byte_array! = |_| Host.PackedFloat32Array_to_byte_array_247621236!
-    sort! : () -> {}
-    sort! = |_| Host.PackedFloat32Array_sort_3218959716!
-    bsearch! : F32, Bool -> I32
-    bsearch! = |value, before| Host.PackedFloat32Array_bsearch_1175118842!(value, before)
-    duplicate! : () -> PackedFloat32Array
-    duplicate! = |_| Host.PackedFloat32Array_duplicate_3575107827!
-    find! : F32, I32 -> I32
-    find! = |value, from| Host.PackedFloat32Array_find_1343150241!(value, from)
-    rfind! : F32, I32 -> I32
-    rfind! = |value, from| Host.PackedFloat32Array_rfind_1343150241!(value, from)
-    count! : F32 -> I32
-    count! = |value| Host.PackedFloat32Array_count_2859915090!(value)
-    erase! : F32 -> Bool
-    erase! = |value| Host.PackedFloat32Array_erase_4094791666!(value)
+    get! : I64 => F64
+    get! = Host.packedfloat32array_get_1401583798!
+    set! : I64, F64 => {}
+    set! = Host.packedfloat32array_set_1113000516!
+    size! : () => I64
+    size! = Host.packedfloat32array_size_3173160232!
+    is_empty! : () => Bool
+    is_empty! = Host.packedfloat32array_is_empty_3918633141!
+    push_back! : F64 => Bool
+    push_back! = Host.packedfloat32array_push_back_4094791666!
+    append! : F64 => Bool
+    append! = Host.packedfloat32array_append_4094791666!
+    append_array! : U64 => {}
+    append_array! = Host.packedfloat32array_append_array_2981316639!
+    remove_at! : I64 => {}
+    remove_at! = Host.packedfloat32array_remove_at_2823966027!
+    insert! : I64, F64 => I64
+    insert! = Host.packedfloat32array_insert_1379903876!
+    fill! : F64 => {}
+    fill! = Host.packedfloat32array_fill_833936903!
+    resize! : I64 => I64
+    resize! = Host.packedfloat32array_resize_848867239!
+    clear! : () => {}
+    clear! = Host.packedfloat32array_clear_3218959716!
+    has! : F64 => Bool
+    has! = Host.packedfloat32array_has_1296369134!
+    reverse! : () => {}
+    reverse! = Host.packedfloat32array_reverse_3218959716!
+    slice! : I64, I64 => U64
+    slice! = Host.packedfloat32array_slice_1418229160!
+    to_byte_array! : () => U64
+    to_byte_array! = Host.packedfloat32array_to_byte_array_247621236!
+    sort! : () => {}
+    sort! = Host.packedfloat32array_sort_3218959716!
+    bsearch! : F64, Bool => I64
+    bsearch! = Host.packedfloat32array_bsearch_1175118842!
+    duplicate! : () => U64
+    duplicate! = Host.packedfloat32array_duplicate_3575107827!
+    find! : F64, I64 => I64
+    find! = Host.packedfloat32array_find_1343150241!
+    rfind! : F64, I64 => I64
+    rfind! = Host.packedfloat32array_rfind_1343150241!
+    count! : F64 => I64
+    count! = Host.packedfloat32array_count_2859915090!
+    erase! : F64 => Bool
+    erase! = Host.packedfloat32array_erase_4094791666!
 }

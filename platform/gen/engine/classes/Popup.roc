@@ -1,11 +1,13 @@
 # class Popup
+import ../../Host
+
 # inherits: Window
 Popup := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

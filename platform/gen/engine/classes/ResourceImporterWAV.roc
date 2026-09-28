@@ -1,11 +1,13 @@
 # class ResourceImporterWAV
+import ../../Host
+
 # inherits: ResourceImporter
 ResourceImporterWAV := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

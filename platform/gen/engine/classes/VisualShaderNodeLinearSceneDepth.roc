@@ -1,11 +1,13 @@
 # class VisualShaderNodeLinearSceneDepth
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeLinearSceneDepth := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

@@ -1,4 +1,6 @@
 # class OpenXRHand
+import ../../Host
+
 # inherits: Node3D
 OpenXRHand := {
     ptr : U64,
@@ -8,54 +10,34 @@ OpenXRHand := {
     SkeletonRig : [SKELETON_RIG_OPENXR, SKELETON_RIG_HUMANOID, SKELETON_RIG_MAX]
     BoneUpdate : [BONE_UPDATE_FULL, BONE_UPDATE_ROTATION_ONLY, BONE_UPDATE_MAX]
 
-    # --- properties ---
-    # property hand : I32
-    get_hand! : () -> I32
-    get_hand! = |_| Host.OpenXRHand_get_hand_prop!
-    set_hand! : I32 -> {}
-    set_hand! = |v| Host.OpenXRHand_set_hand_prop!(v)
-    # property motion_range : I32
-    get_motion_range! : () -> I32
-    get_motion_range! = |_| Host.OpenXRHand_get_motion_range_prop!
-    set_motion_range! : I32 -> {}
-    set_motion_range! = |v| Host.OpenXRHand_set_motion_range_prop!(v)
-    # property hand_skeleton : NodePath
-    get_hand_skeleton! : () -> NodePath
-    get_hand_skeleton! = |_| Host.OpenXRHand_get_hand_skeleton_prop!
-    set_hand_skeleton! : NodePath -> {}
-    set_hand_skeleton! = |v| Host.OpenXRHand_set_hand_skeleton_prop!(v)
-    # property skeleton_rig : I32
-    get_skeleton_rig! : () -> I32
-    get_skeleton_rig! = |_| Host.OpenXRHand_get_skeleton_rig_prop!
-    set_skeleton_rig! : I32 -> {}
-    set_skeleton_rig! = |v| Host.OpenXRHand_set_skeleton_rig_prop!(v)
-    # property bone_update : I32
-    get_bone_update! : () -> I32
-    get_bone_update! = |_| Host.OpenXRHand_get_bone_update_prop!
-    set_bone_update! : I32 -> {}
-    set_bone_update! = |v| Host.OpenXRHand_set_bone_update_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property hand : I64  getter=get_hand setter=set_hand
+    # property motion_range : I64  getter=get_motion_range setter=set_motion_range
+    # property hand_skeleton : Str  getter=get_hand_skeleton setter=set_hand_skeleton
+    # property skeleton_rig : I64  getter=get_skeleton_rig setter=set_skeleton_rig
+    # property bone_update : I64  getter=get_bone_update setter=set_bone_update
 
     # --- methods ---
-    set_hand! : OpenXRHand_Hands -> {}
-    set_hand! = |hand| Host.OpenXRHand_set_hand_1849328560!(hand)
-    get_hand! : () -> OpenXRHand_Hands
-    get_hand! = |_| Host.OpenXRHand_get_hand_2850644561!
-    set_hand_skeleton! : NodePath -> {}
-    set_hand_skeleton! = |hand_skeleton| Host.OpenXRHand_set_hand_skeleton_1348162250!(hand_skeleton)
-    get_hand_skeleton! : () -> NodePath
-    get_hand_skeleton! = |_| Host.OpenXRHand_get_hand_skeleton_4075236667!
-    set_motion_range! : OpenXRHand_MotionRange -> {}
-    set_motion_range! = |motion_range| Host.OpenXRHand_set_motion_range_3326516003!(motion_range)
-    get_motion_range! : () -> OpenXRHand_MotionRange
-    get_motion_range! = |_| Host.OpenXRHand_get_motion_range_2191822314!
-    set_skeleton_rig! : OpenXRHand_SkeletonRig -> {}
-    set_skeleton_rig! = |skeleton_rig| Host.OpenXRHand_set_skeleton_rig_1528072213!(skeleton_rig)
-    get_skeleton_rig! : () -> OpenXRHand_SkeletonRig
-    get_skeleton_rig! = |_| Host.OpenXRHand_get_skeleton_rig_968409338!
-    set_bone_update! : OpenXRHand_BoneUpdate -> {}
-    set_bone_update! = |bone_update| Host.OpenXRHand_set_bone_update_3144625444!(bone_update)
-    get_bone_update! : () -> OpenXRHand_BoneUpdate
-    get_bone_update! = |_| Host.OpenXRHand_get_bone_update_1310695248!
+    set_hand! : U64 => {}
+    set_hand! = Host.openxrhand_set_hand_1849328560!
+    get_hand! : () => U64
+    get_hand! = Host.openxrhand_get_hand_2850644561!
+    set_hand_skeleton! : Str => {}
+    set_hand_skeleton! = Host.openxrhand_set_hand_skeleton_1348162250!
+    get_hand_skeleton! : () => Str
+    get_hand_skeleton! = Host.openxrhand_get_hand_skeleton_4075236667!
+    set_motion_range! : U64 => {}
+    set_motion_range! = Host.openxrhand_set_motion_range_3326516003!
+    get_motion_range! : () => U64
+    get_motion_range! = Host.openxrhand_get_motion_range_2191822314!
+    set_skeleton_rig! : U64 => {}
+    set_skeleton_rig! = Host.openxrhand_set_skeleton_rig_1528072213!
+    get_skeleton_rig! : () => U64
+    get_skeleton_rig! = Host.openxrhand_get_skeleton_rig_968409338!
+    set_bone_update! : U64 => {}
+    set_bone_update! = Host.openxrhand_set_bone_update_3144625444!
+    get_bone_update! : () => U64
+    get_bone_update! = Host.openxrhand_get_bone_update_1310695248!
 
 
 }

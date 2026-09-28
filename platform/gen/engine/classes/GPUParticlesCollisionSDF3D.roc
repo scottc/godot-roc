@@ -1,62 +1,44 @@
 # class GPUParticlesCollisionSDF3D
+import ../../Host
+
 # inherits: GPUParticlesCollision3D
 GPUParticlesCollisionSDF3D := {
     ptr : U64,
 }.{
     Resolution : [RESOLUTION_16, RESOLUTION_32, RESOLUTION_64, RESOLUTION_128, RESOLUTION_256, RESOLUTION_512, RESOLUTION_MAX]
 
-    # --- properties ---
-    # property size : Vector3
-    get_size! : () -> Vector3
-    get_size! = |_| Host.GPUParticlesCollisionSDF3D_get_size_prop!
-    set_size! : Vector3 -> {}
-    set_size! = |v| Host.GPUParticlesCollisionSDF3D_set_size_prop!(v)
-    # property resolution : I32
-    get_resolution! : () -> I32
-    get_resolution! = |_| Host.GPUParticlesCollisionSDF3D_get_resolution_prop!
-    set_resolution! : I32 -> {}
-    set_resolution! = |v| Host.GPUParticlesCollisionSDF3D_set_resolution_prop!(v)
-    # property thickness : F32
-    get_thickness! : () -> F32
-    get_thickness! = |_| Host.GPUParticlesCollisionSDF3D_get_thickness_prop!
-    set_thickness! : F32 -> {}
-    set_thickness! = |v| Host.GPUParticlesCollisionSDF3D_set_thickness_prop!(v)
-    # property bake_mask : I32
-    get_bake_mask! : () -> I32
-    get_bake_mask! = |_| Host.GPUParticlesCollisionSDF3D_get_bake_mask_prop!
-    set_bake_mask! : I32 -> {}
-    set_bake_mask! = |v| Host.GPUParticlesCollisionSDF3D_set_bake_mask_prop!(v)
-    # property texture : Texture3D
-    get_texture! : () -> Texture3D
-    get_texture! = |_| Host.GPUParticlesCollisionSDF3D_get_texture_prop!
-    set_texture! : Texture3D -> {}
-    set_texture! = |v| Host.GPUParticlesCollisionSDF3D_set_texture_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property size : U64  getter=get_size setter=set_size
+    # property resolution : I64  getter=get_resolution setter=set_resolution
+    # property thickness : F64  getter=get_thickness setter=set_thickness
+    # property bake_mask : I64  getter=get_bake_mask setter=set_bake_mask
+    # property texture : U64  getter=get_texture setter=set_texture
 
     # --- methods ---
-    set_size! : Vector3 -> {}
-    set_size! = |size| Host.GPUParticlesCollisionSDF3D_set_size_3460891852!(size)
-    get_size! : () -> Vector3
-    get_size! = |_| Host.GPUParticlesCollisionSDF3D_get_size_3360562783!
-    set_resolution! : GPUParticlesCollisionSDF3D_Resolution -> {}
-    set_resolution! = |resolution| Host.GPUParticlesCollisionSDF3D_set_resolution_1155629297!(resolution)
-    get_resolution! : () -> GPUParticlesCollisionSDF3D_Resolution
-    get_resolution! = |_| Host.GPUParticlesCollisionSDF3D_get_resolution_2919555867!
-    set_texture! : Texture3D -> {}
-    set_texture! = |texture| Host.GPUParticlesCollisionSDF3D_set_texture_1188404210!(texture)
-    get_texture! : () -> Texture3D
-    get_texture! = |_| Host.GPUParticlesCollisionSDF3D_get_texture_373985333!
-    set_thickness! : F32 -> {}
-    set_thickness! = |thickness| Host.GPUParticlesCollisionSDF3D_set_thickness_373806689!(thickness)
-    get_thickness! : () -> F32
-    get_thickness! = |_| Host.GPUParticlesCollisionSDF3D_get_thickness_1740695150!
-    set_bake_mask! : I32 -> {}
-    set_bake_mask! = |mask| Host.GPUParticlesCollisionSDF3D_set_bake_mask_1286410249!(mask)
-    get_bake_mask! : () -> I32
-    get_bake_mask! = |_| Host.GPUParticlesCollisionSDF3D_get_bake_mask_3905245786!
-    set_bake_mask_value! : I32, Bool -> {}
-    set_bake_mask_value! = |layer_number, value| Host.GPUParticlesCollisionSDF3D_set_bake_mask_value_300928843!(layer_number, value)
-    get_bake_mask_value! : I32 -> Bool
-    get_bake_mask_value! = |layer_number| Host.GPUParticlesCollisionSDF3D_get_bake_mask_value_1116898809!(layer_number)
+    set_size! : U64 => {}
+    set_size! = Host.gpuparticlescollisionsdf3d_set_size_3460891852!
+    get_size! : () => U64
+    get_size! = Host.gpuparticlescollisionsdf3d_get_size_3360562783!
+    set_resolution! : U64 => {}
+    set_resolution! = Host.gpuparticlescollisionsdf3d_set_resolution_1155629297!
+    get_resolution! : () => U64
+    get_resolution! = Host.gpuparticlescollisionsdf3d_get_resolution_2919555867!
+    set_texture! : U64 => {}
+    set_texture! = Host.gpuparticlescollisionsdf3d_set_texture_1188404210!
+    get_texture! : () => U64
+    get_texture! = Host.gpuparticlescollisionsdf3d_get_texture_373985333!
+    set_thickness! : F64 => {}
+    set_thickness! = Host.gpuparticlescollisionsdf3d_set_thickness_373806689!
+    get_thickness! : () => F64
+    get_thickness! = Host.gpuparticlescollisionsdf3d_get_thickness_1740695150!
+    set_bake_mask! : I64 => {}
+    set_bake_mask! = Host.gpuparticlescollisionsdf3d_set_bake_mask_1286410249!
+    get_bake_mask! : () => I64
+    get_bake_mask! = Host.gpuparticlescollisionsdf3d_get_bake_mask_3905245786!
+    set_bake_mask_value! : I64, Bool => {}
+    set_bake_mask_value! = Host.gpuparticlescollisionsdf3d_set_bake_mask_value_300928843!
+    get_bake_mask_value! : I64 => Bool
+    get_bake_mask_value! = Host.gpuparticlescollisionsdf3d_get_bake_mask_value_1116898809!
 
 
 }

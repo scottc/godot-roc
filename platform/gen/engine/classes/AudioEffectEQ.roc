@@ -1,20 +1,22 @@
 # class AudioEffectEQ
+import ../../Host
+
 # inherits: AudioEffect
 AudioEffectEQ := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    set_band_gain_db! : I32, F32 -> {}
-    set_band_gain_db! = |band_idx, volume_db| Host.AudioEffectEQ_set_band_gain_db_1602489585!(band_idx, volume_db)
-    get_band_gain_db! : I32 -> F32
-    get_band_gain_db! = |band_idx| Host.AudioEffectEQ_get_band_gain_db_2339986948!(band_idx)
-    get_band_count! : () -> I32
-    get_band_count! = |_| Host.AudioEffectEQ_get_band_count_3905245786!
+    set_band_gain_db! : I64, F64 => {}
+    set_band_gain_db! = Host.audioeffecteq_set_band_gain_db_1602489585!
+    get_band_gain_db! : I64 => F64
+    get_band_gain_db! = Host.audioeffecteq_get_band_gain_db_2339986948!
+    get_band_count! : () => I64
+    get_band_count! = Host.audioeffecteq_get_band_count_3905245786!
 
 
 }

@@ -1,20 +1,22 @@
 # class OpenXRSpatialComponentMesh2DList
+import ../../Host
+
 # inherits: OpenXRSpatialComponentData
 OpenXRSpatialComponentMesh2DList := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    get_transform! : I32 -> Transform3D
-    get_transform! = |index| Host.OpenXRSpatialComponentMesh2DList_get_transform_1965739696!(index)
-    get_vertices! : RID, I32 -> PackedVector2Array
-    get_vertices! = |snapshot, index| Host.OpenXRSpatialComponentMesh2DList_get_vertices_110850971!(snapshot, index)
-    get_indices! : RID, I32 -> PackedInt32Array
-    get_indices! = |snapshot, index| Host.OpenXRSpatialComponentMesh2DList_get_indices_3393655756!(snapshot, index)
+    get_transform! : I64 => U64
+    get_transform! = Host.openxrspatialcomponentmesh2dlist_get_transform_1965739696!
+    get_vertices! : U64, I64 => U64
+    get_vertices! = Host.openxrspatialcomponentmesh2dlist_get_vertices_110850971!
+    get_indices! : U64, I64 => U64
+    get_indices! = Host.openxrspatialcomponentmesh2dlist_get_indices_3393655756!
 
 
 }

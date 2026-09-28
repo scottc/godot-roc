@@ -1,4 +1,6 @@
 # builtin bool
+import ../../Host
+
 GodotBool := {
     ptr : U64
 }.{

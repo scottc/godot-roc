@@ -1,16 +1,18 @@
 # class RenderSceneBuffers
+import ../../Host
+
 # inherits: RefCounted
 RenderSceneBuffers := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    configure! : RenderSceneBuffersConfiguration -> {}
-    configure! = |config| Host.RenderSceneBuffers_configure_3072623270!(config)
+    configure! : U64 => {}
+    configure! = Host.renderscenebuffers_configure_3072623270!
 
 
 }

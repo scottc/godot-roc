@@ -1,20 +1,22 @@
 # class EditorSyntaxHighlighter
+import ../../Host
+
 # inherits: SyntaxHighlighter
 EditorSyntaxHighlighter := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    _get_name! : () -> String
-    _get_name! = |_| Host.EditorSyntaxHighlighter__get_name_201670096!
-    _get_supported_languages! : () -> PackedStringArray
-    _get_supported_languages! = |_| Host.EditorSyntaxHighlighter__get_supported_languages_1139954409!
-    _create! : () -> EditorSyntaxHighlighter
-    _create! = |_| Host.EditorSyntaxHighlighter__create_3789807118!
+    _get_name! : () => Str
+    _get_name! = Host.editorsyntaxhighlighter__get_name_201670096!
+    _get_supported_languages! : () => U64
+    _get_supported_languages! = Host.editorsyntaxhighlighter__get_supported_languages_1139954409!
+    _create! : () => U64
+    _create! = Host.editorsyntaxhighlighter__create_3789807118!
 
 
 }

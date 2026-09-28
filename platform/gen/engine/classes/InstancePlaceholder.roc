@@ -1,20 +1,22 @@
 # class InstancePlaceholder
+import ../../Host
+
 # inherits: Node
 InstancePlaceholder := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    get_stored_values! : Bool -> Dictionary
-    get_stored_values! = |with_order| Host.InstancePlaceholder_get_stored_values_2230153369!(with_order)
-    create_instance! : Bool, PackedScene -> Node
-    create_instance! = |replace, custom_scene| Host.InstancePlaceholder_create_instance_3794612210!(replace, custom_scene)
-    get_instance_path! : () -> String
-    get_instance_path! = |_| Host.InstancePlaceholder_get_instance_path_201670096!
+    get_stored_values! : Bool => U64
+    get_stored_values! = Host.instanceplaceholder_get_stored_values_2230153369!
+    create_instance! : Bool, U64 => U64
+    create_instance! = Host.instanceplaceholder_create_instance_3794612210!
+    get_instance_path! : () => Str
+    get_instance_path! = Host.instanceplaceholder_get_instance_path_201670096!
 
 
 }

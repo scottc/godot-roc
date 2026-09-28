@@ -1,11 +1,13 @@
 # class JointLimitation3D
+import ../../Host
+
 # inherits: Resource
 JointLimitation3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

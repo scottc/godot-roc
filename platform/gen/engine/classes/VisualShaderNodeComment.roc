@@ -1,22 +1,20 @@
 # class VisualShaderNodeComment
+import ../../Host
+
 # inherits: VisualShaderNodeFrame
 VisualShaderNodeComment := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property description : String
-    get_description! : () -> String
-    get_description! = |_| Host.VisualShaderNodeComment_get_description_prop!
-    set_description! : String -> {}
-    set_description! = |v| Host.VisualShaderNodeComment_set_description_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property description : Str  getter=get_description setter=set_description
 
     # --- methods ---
-    set_description! : String -> {}
-    set_description! = |description| Host.VisualShaderNodeComment_set_description_83702148!(description)
-    get_description! : () -> String
-    get_description! = |_| Host.VisualShaderNodeComment_get_description_201670096!
+    set_description! : Str => {}
+    set_description! = Host.visualshadernodecomment_set_description_83702148!
+    get_description! : () => Str
+    get_description! = Host.visualshadernodecomment_get_description_201670096!
 
 
 }

@@ -1,11 +1,13 @@
 # class ShaderGlobalsOverride
+import ../../Host
+
 # inherits: Node
 ShaderGlobalsOverride := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

@@ -1,11 +1,13 @@
 # class VFlowContainer
+import ../../Host
+
 # inherits: FlowContainer
 VFlowContainer := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

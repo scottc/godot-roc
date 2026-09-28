@@ -1,20 +1,22 @@
 # class Semaphore
+import ../../Host
+
 # inherits: RefCounted
 Semaphore := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    wait! : () -> {}
-    wait! = |_| Host.Semaphore_wait_3218959716!
-    try_wait! : () -> Bool
-    try_wait! = |_| Host.Semaphore_try_wait_2240911060!
-    post! : I32 -> {}
-    post! = |count| Host.Semaphore_post_1667783136!(count)
+    wait! : () => {}
+    wait! = Host.semaphore_wait_3218959716!
+    try_wait! : () => Bool
+    try_wait! = Host.semaphore_try_wait_2240911060!
+    post! : I64 => {}
+    post! = Host.semaphore_post_1667783136!
 
 
 }

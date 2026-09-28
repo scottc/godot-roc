@@ -1,11 +1,13 @@
 # class VisualShaderNodeFresnel
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeFresnel := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

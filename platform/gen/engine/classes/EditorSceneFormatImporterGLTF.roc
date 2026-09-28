@@ -1,11 +1,13 @@
 # class EditorSceneFormatImporterGLTF
+import ../../Host
+
 # inherits: EditorSceneFormatImporter
 EditorSceneFormatImporterGLTF := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

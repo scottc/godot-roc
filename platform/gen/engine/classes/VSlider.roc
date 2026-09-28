@@ -1,11 +1,13 @@
 # class VSlider
+import ../../Host
+
 # inherits: Slider
 VSlider := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

@@ -1,22 +1,20 @@
 # class Texture3DRD
+import ../../Host
+
 # inherits: Texture3D
 Texture3DRD := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property texture_rd_rid : RID
-    get_texture_rd_rid! : () -> RID
-    get_texture_rd_rid! = |_| Host.Texture3DRD_get_texture_rd_rid_prop!
-    set_texture_rd_rid! : RID -> {}
-    set_texture_rd_rid! = |v| Host.Texture3DRD_set_texture_rd_rid_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property texture_rd_rid : U64  getter=get_texture_rd_rid setter=set_texture_rd_rid
 
     # --- methods ---
-    set_texture_rd_rid! : RID -> {}
-    set_texture_rd_rid! = |texture_rd_rid| Host.Texture3DRD_set_texture_rd_rid_2722037293!(texture_rd_rid)
-    get_texture_rd_rid! : () -> RID
-    get_texture_rd_rid! = |_| Host.Texture3DRD_get_texture_rd_rid_2944877500!
+    set_texture_rd_rid! : U64 => {}
+    set_texture_rd_rid! = Host.texture3drd_set_texture_rd_rid_2722037293!
+    get_texture_rd_rid! : () => U64
+    get_texture_rd_rid! = Host.texture3drd_get_texture_rd_rid_2944877500!
 
 
 }

@@ -1,22 +1,20 @@
 # class ColorPalette
+import ../../Host
+
 # inherits: Resource
 ColorPalette := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property colors : PackedColorArray
-    get_colors! : () -> PackedColorArray
-    get_colors! = |_| Host.ColorPalette_get_colors_prop!
-    set_colors! : PackedColorArray -> {}
-    set_colors! = |v| Host.ColorPalette_set_colors_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property colors : U64  getter=get_colors setter=set_colors
 
     # --- methods ---
-    set_colors! : PackedColorArray -> {}
-    set_colors! = |colors| Host.ColorPalette_set_colors_3546319833!(colors)
-    get_colors! : () -> PackedColorArray
-    get_colors! = |_| Host.ColorPalette_get_colors_1392750486!
+    set_colors! : U64 => {}
+    set_colors! = Host.colorpalette_set_colors_3546319833!
+    get_colors! : () => U64
+    get_colors! = Host.colorpalette_get_colors_1392750486!
 
 
 }

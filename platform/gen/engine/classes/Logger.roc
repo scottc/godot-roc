@@ -1,18 +1,20 @@
 # class Logger
+import ../../Host
+
 # inherits: RefCounted
 Logger := {
     ptr : U64,
 }.{
     ErrorType : [ERROR_TYPE_ERROR, ERROR_TYPE_WARNING, ERROR_TYPE_SCRIPT, ERROR_TYPE_SHADER]
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    _log_error! : String, String, I32, String, String, Bool, I32, typedarray::ScriptBacktrace -> {}
-    _log_error! = |function, file, line, code, rationale, editor_notify, error_type, script_backtraces| Host.Logger__log_error_27079556!(function, file, line, code, rationale, editor_notify, error_type, script_backtraces)
-    _log_message! : String, Bool -> {}
-    _log_message! = |message, error| Host.Logger__log_message_2678287736!(message, error)
+    _log_error! : Str, Str, I64, Str, Str, Bool, I64, U64 => {}
+    _log_error! = Host.logger__log_error_27079556!
+    _log_message! : Str, Bool => {}
+    _log_message! = Host.logger__log_message_2678287736!
 
 
 }

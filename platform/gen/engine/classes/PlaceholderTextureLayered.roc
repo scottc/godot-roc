@@ -1,29 +1,23 @@
 # class PlaceholderTextureLayered
+import ../../Host
+
 # inherits: TextureLayered
 PlaceholderTextureLayered := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property size : Vector2i
-    get_size! : () -> Vector2i
-    get_size! = |_| Host.PlaceholderTextureLayered_get_size_prop!
-    set_size! : Vector2i -> {}
-    set_size! = |v| Host.PlaceholderTextureLayered_set_size_prop!(v)
-    # property layers : I32
-    get_layers! : () -> I32
-    get_layers! = |_| Host.PlaceholderTextureLayered_get_layers_prop!
-    set_layers! : I32 -> {}
-    set_layers! = |v| Host.PlaceholderTextureLayered_set_layers_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property size : U64  getter=get_size setter=set_size
+    # property layers : I64  getter=get_layers setter=set_layers
 
     # --- methods ---
-    set_size! : Vector2i -> {}
-    set_size! = |size| Host.PlaceholderTextureLayered_set_size_1130785943!(size)
-    get_size! : () -> Vector2i
-    get_size! = |_| Host.PlaceholderTextureLayered_get_size_3690982128!
-    set_layers! : I32 -> {}
-    set_layers! = |layers| Host.PlaceholderTextureLayered_set_layers_1286410249!(layers)
+    set_size! : U64 => {}
+    set_size! = Host.placeholdertexturelayered_set_size_1130785943!
+    get_size! : () => U64
+    get_size! = Host.placeholdertexturelayered_get_size_3690982128!
+    set_layers! : I64 => {}
+    set_layers! = Host.placeholdertexturelayered_set_layers_1286410249!
 
 
 }

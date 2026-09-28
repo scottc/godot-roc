@@ -1,11 +1,13 @@
 # class HSeparator
+import ../../Host
+
 # inherits: Separator
 HSeparator := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

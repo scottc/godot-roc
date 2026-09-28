@@ -1,24 +1,22 @@
 # class EditorFileDialog
+import ../../Host
+
 # inherits: FileDialog
 EditorFileDialog := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property disable_overwrite_warning : Bool
-    is_overwrite_warning_disabled! : () -> Bool
-    is_overwrite_warning_disabled! = |_| Host.EditorFileDialog_is_overwrite_warning_disabled_prop!
-    set_disable_overwrite_warning! : Bool -> {}
-    set_disable_overwrite_warning! = |v| Host.EditorFileDialog_set_disable_overwrite_warning_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property disable_overwrite_warning : Bool  getter=is_overwrite_warning_disabled setter=set_disable_overwrite_warning
 
     # --- methods ---
-    add_side_menu! : Control, String -> {}
-    add_side_menu! = |menu, title| Host.EditorFileDialog_add_side_menu_402368861!(menu, title)
-    set_disable_overwrite_warning! : Bool -> {}
-    set_disable_overwrite_warning! = |disable| Host.EditorFileDialog_set_disable_overwrite_warning_2586408642!(disable)
-    is_overwrite_warning_disabled! : () -> Bool
-    is_overwrite_warning_disabled! = |_| Host.EditorFileDialog_is_overwrite_warning_disabled_36873697!
+    add_side_menu! : U64, Str => {}
+    add_side_menu! = Host.editorfiledialog_add_side_menu_402368861!
+    set_disable_overwrite_warning! : Bool => {}
+    set_disable_overwrite_warning! = Host.editorfiledialog_set_disable_overwrite_warning_2586408642!
+    is_overwrite_warning_disabled! : () => Bool
+    is_overwrite_warning_disabled! = Host.editorfiledialog_is_overwrite_warning_disabled_36873697!
 
 
 }

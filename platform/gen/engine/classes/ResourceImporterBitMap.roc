@@ -1,11 +1,13 @@
 # class ResourceImporterBitMap
+import ../../Host
+
 # inherits: ResourceImporter
 ResourceImporterBitMap := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

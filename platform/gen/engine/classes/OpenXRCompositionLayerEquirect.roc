@@ -1,58 +1,40 @@
 # class OpenXRCompositionLayerEquirect
+import ../../Host
+
 # inherits: OpenXRCompositionLayer
 OpenXRCompositionLayerEquirect := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property radius : F32
-    get_radius! : () -> F32
-    get_radius! = |_| Host.OpenXRCompositionLayerEquirect_get_radius_prop!
-    set_radius! : F32 -> {}
-    set_radius! = |v| Host.OpenXRCompositionLayerEquirect_set_radius_prop!(v)
-    # property central_horizontal_angle : F32
-    get_central_horizontal_angle! : () -> F32
-    get_central_horizontal_angle! = |_| Host.OpenXRCompositionLayerEquirect_get_central_horizontal_angle_prop!
-    set_central_horizontal_angle! : F32 -> {}
-    set_central_horizontal_angle! = |v| Host.OpenXRCompositionLayerEquirect_set_central_horizontal_angle_prop!(v)
-    # property upper_vertical_angle : F32
-    get_upper_vertical_angle! : () -> F32
-    get_upper_vertical_angle! = |_| Host.OpenXRCompositionLayerEquirect_get_upper_vertical_angle_prop!
-    set_upper_vertical_angle! : F32 -> {}
-    set_upper_vertical_angle! = |v| Host.OpenXRCompositionLayerEquirect_set_upper_vertical_angle_prop!(v)
-    # property lower_vertical_angle : F32
-    get_lower_vertical_angle! : () -> F32
-    get_lower_vertical_angle! = |_| Host.OpenXRCompositionLayerEquirect_get_lower_vertical_angle_prop!
-    set_lower_vertical_angle! : F32 -> {}
-    set_lower_vertical_angle! = |v| Host.OpenXRCompositionLayerEquirect_set_lower_vertical_angle_prop!(v)
-    # property fallback_segments : I32
-    get_fallback_segments! : () -> I32
-    get_fallback_segments! = |_| Host.OpenXRCompositionLayerEquirect_get_fallback_segments_prop!
-    set_fallback_segments! : I32 -> {}
-    set_fallback_segments! = |v| Host.OpenXRCompositionLayerEquirect_set_fallback_segments_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property radius : F64  getter=get_radius setter=set_radius
+    # property central_horizontal_angle : F64  getter=get_central_horizontal_angle setter=set_central_horizontal_angle
+    # property upper_vertical_angle : F64  getter=get_upper_vertical_angle setter=set_upper_vertical_angle
+    # property lower_vertical_angle : F64  getter=get_lower_vertical_angle setter=set_lower_vertical_angle
+    # property fallback_segments : I64  getter=get_fallback_segments setter=set_fallback_segments
 
     # --- methods ---
-    set_radius! : F32 -> {}
-    set_radius! = |radius| Host.OpenXRCompositionLayerEquirect_set_radius_373806689!(radius)
-    get_radius! : () -> F32
-    get_radius! = |_| Host.OpenXRCompositionLayerEquirect_get_radius_1740695150!
-    set_central_horizontal_angle! : F32 -> {}
-    set_central_horizontal_angle! = |angle| Host.OpenXRCompositionLayerEquirect_set_central_horizontal_angle_373806689!(angle)
-    get_central_horizontal_angle! : () -> F32
-    get_central_horizontal_angle! = |_| Host.OpenXRCompositionLayerEquirect_get_central_horizontal_angle_1740695150!
-    set_upper_vertical_angle! : F32 -> {}
-    set_upper_vertical_angle! = |angle| Host.OpenXRCompositionLayerEquirect_set_upper_vertical_angle_373806689!(angle)
-    get_upper_vertical_angle! : () -> F32
-    get_upper_vertical_angle! = |_| Host.OpenXRCompositionLayerEquirect_get_upper_vertical_angle_1740695150!
-    set_lower_vertical_angle! : F32 -> {}
-    set_lower_vertical_angle! = |angle| Host.OpenXRCompositionLayerEquirect_set_lower_vertical_angle_373806689!(angle)
-    get_lower_vertical_angle! : () -> F32
-    get_lower_vertical_angle! = |_| Host.OpenXRCompositionLayerEquirect_get_lower_vertical_angle_1740695150!
-    set_fallback_segments! : I32 -> {}
-    set_fallback_segments! = |segments| Host.OpenXRCompositionLayerEquirect_set_fallback_segments_1286410249!(segments)
-    get_fallback_segments! : () -> I32
-    get_fallback_segments! = |_| Host.OpenXRCompositionLayerEquirect_get_fallback_segments_3905245786!
+    set_radius! : F64 => {}
+    set_radius! = Host.openxrcompositionlayerequirect_set_radius_373806689!
+    get_radius! : () => F64
+    get_radius! = Host.openxrcompositionlayerequirect_get_radius_1740695150!
+    set_central_horizontal_angle! : F64 => {}
+    set_central_horizontal_angle! = Host.openxrcompositionlayerequirect_set_central_horizontal_angle_373806689!
+    get_central_horizontal_angle! : () => F64
+    get_central_horizontal_angle! = Host.openxrcompositionlayerequirect_get_central_horizontal_angle_1740695150!
+    set_upper_vertical_angle! : F64 => {}
+    set_upper_vertical_angle! = Host.openxrcompositionlayerequirect_set_upper_vertical_angle_373806689!
+    get_upper_vertical_angle! : () => F64
+    get_upper_vertical_angle! = Host.openxrcompositionlayerequirect_get_upper_vertical_angle_1740695150!
+    set_lower_vertical_angle! : F64 => {}
+    set_lower_vertical_angle! = Host.openxrcompositionlayerequirect_set_lower_vertical_angle_373806689!
+    get_lower_vertical_angle! : () => F64
+    get_lower_vertical_angle! = Host.openxrcompositionlayerequirect_get_lower_vertical_angle_1740695150!
+    set_fallback_segments! : I64 => {}
+    set_fallback_segments! = Host.openxrcompositionlayerequirect_set_fallback_segments_1286410249!
+    get_fallback_segments! : () => I64
+    get_fallback_segments! = Host.openxrcompositionlayerequirect_get_fallback_segments_3905245786!
 
 
 }

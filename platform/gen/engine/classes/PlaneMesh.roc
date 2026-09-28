@@ -1,58 +1,40 @@
 # class PlaneMesh
+import ../../Host
+
 # inherits: PrimitiveMesh
 PlaneMesh := {
     ptr : U64,
 }.{
     Orientation : [FACE_X, FACE_Y, FACE_Z]
 
-    # --- properties ---
-    # property size : Vector2
-    get_size! : () -> Vector2
-    get_size! = |_| Host.PlaneMesh_get_size_prop!
-    set_size! : Vector2 -> {}
-    set_size! = |v| Host.PlaneMesh_set_size_prop!(v)
-    # property subdivide_width : I32
-    get_subdivide_width! : () -> I32
-    get_subdivide_width! = |_| Host.PlaneMesh_get_subdivide_width_prop!
-    set_subdivide_width! : I32 -> {}
-    set_subdivide_width! = |v| Host.PlaneMesh_set_subdivide_width_prop!(v)
-    # property subdivide_depth : I32
-    get_subdivide_depth! : () -> I32
-    get_subdivide_depth! = |_| Host.PlaneMesh_get_subdivide_depth_prop!
-    set_subdivide_depth! : I32 -> {}
-    set_subdivide_depth! = |v| Host.PlaneMesh_set_subdivide_depth_prop!(v)
-    # property center_offset : Vector3
-    get_center_offset! : () -> Vector3
-    get_center_offset! = |_| Host.PlaneMesh_get_center_offset_prop!
-    set_center_offset! : Vector3 -> {}
-    set_center_offset! = |v| Host.PlaneMesh_set_center_offset_prop!(v)
-    # property orientation : I32
-    get_orientation! : () -> I32
-    get_orientation! = |_| Host.PlaneMesh_get_orientation_prop!
-    set_orientation! : I32 -> {}
-    set_orientation! = |v| Host.PlaneMesh_set_orientation_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property size : U64  getter=get_size setter=set_size
+    # property subdivide_width : I64  getter=get_subdivide_width setter=set_subdivide_width
+    # property subdivide_depth : I64  getter=get_subdivide_depth setter=set_subdivide_depth
+    # property center_offset : U64  getter=get_center_offset setter=set_center_offset
+    # property orientation : I64  getter=get_orientation setter=set_orientation
 
     # --- methods ---
-    set_size! : Vector2 -> {}
-    set_size! = |size| Host.PlaneMesh_set_size_743155724!(size)
-    get_size! : () -> Vector2
-    get_size! = |_| Host.PlaneMesh_get_size_3341600327!
-    set_subdivide_width! : I32 -> {}
-    set_subdivide_width! = |subdivide| Host.PlaneMesh_set_subdivide_width_1286410249!(subdivide)
-    get_subdivide_width! : () -> I32
-    get_subdivide_width! = |_| Host.PlaneMesh_get_subdivide_width_3905245786!
-    set_subdivide_depth! : I32 -> {}
-    set_subdivide_depth! = |subdivide| Host.PlaneMesh_set_subdivide_depth_1286410249!(subdivide)
-    get_subdivide_depth! : () -> I32
-    get_subdivide_depth! = |_| Host.PlaneMesh_get_subdivide_depth_3905245786!
-    set_center_offset! : Vector3 -> {}
-    set_center_offset! = |offset| Host.PlaneMesh_set_center_offset_3460891852!(offset)
-    get_center_offset! : () -> Vector3
-    get_center_offset! = |_| Host.PlaneMesh_get_center_offset_3360562783!
-    set_orientation! : PlaneMesh_Orientation -> {}
-    set_orientation! = |orientation| Host.PlaneMesh_set_orientation_2751399687!(orientation)
-    get_orientation! : () -> PlaneMesh_Orientation
-    get_orientation! = |_| Host.PlaneMesh_get_orientation_3227599250!
+    set_size! : U64 => {}
+    set_size! = Host.planemesh_set_size_743155724!
+    get_size! : () => U64
+    get_size! = Host.planemesh_get_size_3341600327!
+    set_subdivide_width! : I64 => {}
+    set_subdivide_width! = Host.planemesh_set_subdivide_width_1286410249!
+    get_subdivide_width! : () => I64
+    get_subdivide_width! = Host.planemesh_get_subdivide_width_3905245786!
+    set_subdivide_depth! : I64 => {}
+    set_subdivide_depth! = Host.planemesh_set_subdivide_depth_1286410249!
+    get_subdivide_depth! : () => I64
+    get_subdivide_depth! = Host.planemesh_get_subdivide_depth_3905245786!
+    set_center_offset! : U64 => {}
+    set_center_offset! = Host.planemesh_set_center_offset_3460891852!
+    get_center_offset! : () => U64
+    get_center_offset! = Host.planemesh_get_center_offset_3360562783!
+    set_orientation! : U64 => {}
+    set_orientation! = Host.planemesh_set_orientation_2751399687!
+    get_orientation! : () => U64
+    get_orientation! = Host.planemesh_get_orientation_3227599250!
 
 
 }

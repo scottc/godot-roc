@@ -1,11 +1,13 @@
 # class EditorExportPlatformPC
+import ../../Host
+
 # inherits: EditorExportPlatform
 EditorExportPlatformPC := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

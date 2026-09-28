@@ -1,11 +1,13 @@
 # class VisualShaderNodeOutput
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeOutput := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

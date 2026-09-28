@@ -1,4 +1,6 @@
 # builtin StringName
+import ../../Host
+
 StringName := {
     ptr : U64
 }.{
@@ -7,224 +9,224 @@ StringName := {
 
 
     # --- methods ---
-    casecmp_to! : String -> I32
-    casecmp_to! = |to| Host.StringName_casecmp_to_2920860731!(to)
-    nocasecmp_to! : String -> I32
-    nocasecmp_to! = |to| Host.StringName_nocasecmp_to_2920860731!(to)
-    naturalcasecmp_to! : String -> I32
-    naturalcasecmp_to! = |to| Host.StringName_naturalcasecmp_to_2920860731!(to)
-    naturalnocasecmp_to! : String -> I32
-    naturalnocasecmp_to! = |to| Host.StringName_naturalnocasecmp_to_2920860731!(to)
-    filecasecmp_to! : String -> I32
-    filecasecmp_to! = |to| Host.StringName_filecasecmp_to_2920860731!(to)
-    filenocasecmp_to! : String -> I32
-    filenocasecmp_to! = |to| Host.StringName_filenocasecmp_to_2920860731!(to)
-    length! : () -> I32
-    length! = |_| Host.StringName_length_3173160232!
-    substr! : I32, I32 -> String
-    substr! = |from, len| Host.StringName_substr_787537301!(from, len)
-    get_slice! : String, I32 -> String
-    get_slice! = |delimiter, slice| Host.StringName_get_slice_3535100402!(delimiter, slice)
-    get_slicec! : I32, I32 -> String
-    get_slicec! = |delimiter, slice| Host.StringName_get_slicec_787537301!(delimiter, slice)
-    get_slice_count! : String -> I32
-    get_slice_count! = |delimiter| Host.StringName_get_slice_count_2920860731!(delimiter)
-    find! : String, I32 -> I32
-    find! = |what, from| Host.StringName_find_1760645412!(what, from)
-    findn! : String, I32 -> I32
-    findn! = |what, from| Host.StringName_findn_1760645412!(what, from)
-    count! : String, I32, I32 -> I32
-    count! = |what, from, to| Host.StringName_count_2343087891!(what, from, to)
-    countn! : String, I32, I32 -> I32
-    countn! = |what, from, to| Host.StringName_countn_2343087891!(what, from, to)
-    rfind! : String, I32 -> I32
-    rfind! = |what, from| Host.StringName_rfind_1760645412!(what, from)
-    rfindn! : String, I32 -> I32
-    rfindn! = |what, from| Host.StringName_rfindn_1760645412!(what, from)
-    match! : String -> Bool
-    match! = |expr| Host.StringName_match_2566493496!(expr)
-    matchn! : String -> Bool
-    matchn! = |expr| Host.StringName_matchn_2566493496!(expr)
-    begins_with! : String -> Bool
-    begins_with! = |text| Host.StringName_begins_with_2566493496!(text)
-    ends_with! : String -> Bool
-    ends_with! = |text| Host.StringName_ends_with_2566493496!(text)
-    is_subsequence_of! : String -> Bool
-    is_subsequence_of! = |text| Host.StringName_is_subsequence_of_2566493496!(text)
-    is_subsequence_ofn! : String -> Bool
-    is_subsequence_ofn! = |text| Host.StringName_is_subsequence_ofn_2566493496!(text)
-    bigrams! : () -> PackedStringArray
-    bigrams! = |_| Host.StringName_bigrams_747180633!
-    similarity! : String -> F32
-    similarity! = |text| Host.StringName_similarity_2697460964!(text)
-    format! : Variant, String -> String
-    format! = |values, placeholder| Host.StringName_format_3212199029!(values, placeholder)
-    replace! : String, String -> String
-    replace! = |what, forwhat| Host.StringName_replace_1340436205!(what, forwhat)
-    replacen! : String, String -> String
-    replacen! = |what, forwhat| Host.StringName_replacen_1340436205!(what, forwhat)
-    replace_char! : I32, I32 -> String
-    replace_char! = |key, with| Host.StringName_replace_char_787537301!(key, with)
-    replace_chars! : String, I32 -> String
-    replace_chars! = |keys, with| Host.StringName_replace_chars_3535100402!(keys, with)
-    remove_char! : I32 -> String
-    remove_char! = |what| Host.StringName_remove_char_2162347432!(what)
-    remove_chars! : String -> String
-    remove_chars! = |chars| Host.StringName_remove_chars_3134094431!(chars)
-    repeat! : I32 -> String
-    repeat! = |count| Host.StringName_repeat_2162347432!(count)
-    reverse! : () -> String
-    reverse! = |_| Host.StringName_reverse_3942272618!
-    insert! : I32, String -> String
-    insert! = |position, what| Host.StringName_insert_248737229!(position, what)
-    erase! : I32, I32 -> String
-    erase! = |position, chars| Host.StringName_erase_787537301!(position, chars)
-    capitalize! : () -> String
-    capitalize! = |_| Host.StringName_capitalize_3942272618!
-    to_camel_case! : () -> String
-    to_camel_case! = |_| Host.StringName_to_camel_case_3942272618!
-    to_pascal_case! : () -> String
-    to_pascal_case! = |_| Host.StringName_to_pascal_case_3942272618!
-    to_snake_case! : () -> String
-    to_snake_case! = |_| Host.StringName_to_snake_case_3942272618!
-    to_kebab_case! : () -> String
-    to_kebab_case! = |_| Host.StringName_to_kebab_case_3942272618!
-    split! : String, Bool, I32 -> PackedStringArray
-    split! = |delimiter, allow_empty, maxsplit| Host.StringName_split_1252735785!(delimiter, allow_empty, maxsplit)
-    rsplit! : String, Bool, I32 -> PackedStringArray
-    rsplit! = |delimiter, allow_empty, maxsplit| Host.StringName_rsplit_1252735785!(delimiter, allow_empty, maxsplit)
-    split_floats! : String, Bool -> PackedFloat64Array
-    split_floats! = |delimiter, allow_empty| Host.StringName_split_floats_2092079095!(delimiter, allow_empty)
-    join! : PackedStringArray -> String
-    join! = |parts| Host.StringName_join_3595973238!(parts)
-    to_upper! : () -> String
-    to_upper! = |_| Host.StringName_to_upper_3942272618!
-    to_lower! : () -> String
-    to_lower! = |_| Host.StringName_to_lower_3942272618!
-    left! : I32 -> String
-    left! = |length| Host.StringName_left_2162347432!(length)
-    right! : I32 -> String
-    right! = |length| Host.StringName_right_2162347432!(length)
-    strip_edges! : Bool, Bool -> String
-    strip_edges! = |left, right| Host.StringName_strip_edges_907855311!(left, right)
-    strip_escapes! : () -> String
-    strip_escapes! = |_| Host.StringName_strip_escapes_3942272618!
-    lstrip! : String -> String
-    lstrip! = |chars| Host.StringName_lstrip_3134094431!(chars)
-    rstrip! : String -> String
-    rstrip! = |chars| Host.StringName_rstrip_3134094431!(chars)
-    get_extension! : () -> String
-    get_extension! = |_| Host.StringName_get_extension_3942272618!
-    get_basename! : () -> String
-    get_basename! = |_| Host.StringName_get_basename_3942272618!
-    path_join! : String -> String
-    path_join! = |path| Host.StringName_path_join_3134094431!(path)
-    unicode_at! : I32 -> I32
-    unicode_at! = |at| Host.StringName_unicode_at_4103005248!(at)
-    indent! : String -> String
-    indent! = |prefix| Host.StringName_indent_3134094431!(prefix)
-    dedent! : () -> String
-    dedent! = |_| Host.StringName_dedent_3942272618!
-    md5_text! : () -> String
-    md5_text! = |_| Host.StringName_md5_text_3942272618!
-    sha1_text! : () -> String
-    sha1_text! = |_| Host.StringName_sha1_text_3942272618!
-    sha256_text! : () -> String
-    sha256_text! = |_| Host.StringName_sha256_text_3942272618!
-    md5_buffer! : () -> PackedByteArray
-    md5_buffer! = |_| Host.StringName_md5_buffer_247621236!
-    sha1_buffer! : () -> PackedByteArray
-    sha1_buffer! = |_| Host.StringName_sha1_buffer_247621236!
-    sha256_buffer! : () -> PackedByteArray
-    sha256_buffer! = |_| Host.StringName_sha256_buffer_247621236!
-    is_empty! : () -> Bool
-    is_empty! = |_| Host.StringName_is_empty_3918633141!
-    contains! : String -> Bool
-    contains! = |what| Host.StringName_contains_2566493496!(what)
-    containsn! : String -> Bool
-    containsn! = |what| Host.StringName_containsn_2566493496!(what)
-    is_absolute_path! : () -> Bool
-    is_absolute_path! = |_| Host.StringName_is_absolute_path_3918633141!
-    is_relative_path! : () -> Bool
-    is_relative_path! = |_| Host.StringName_is_relative_path_3918633141!
-    simplify_path! : () -> String
-    simplify_path! = |_| Host.StringName_simplify_path_3942272618!
-    get_base_dir! : () -> String
-    get_base_dir! = |_| Host.StringName_get_base_dir_3942272618!
-    get_file! : () -> String
-    get_file! = |_| Host.StringName_get_file_3942272618!
-    xml_escape! : Bool -> String
-    xml_escape! = |escape_quotes| Host.StringName_xml_escape_3429816538!(escape_quotes)
-    xml_unescape! : () -> String
-    xml_unescape! = |_| Host.StringName_xml_unescape_3942272618!
-    uri_encode! : () -> String
-    uri_encode! = |_| Host.StringName_uri_encode_3942272618!
-    uri_decode! : () -> String
-    uri_decode! = |_| Host.StringName_uri_decode_3942272618!
-    uri_file_decode! : () -> String
-    uri_file_decode! = |_| Host.StringName_uri_file_decode_3942272618!
-    c_escape! : () -> String
-    c_escape! = |_| Host.StringName_c_escape_3942272618!
-    c_unescape! : () -> String
-    c_unescape! = |_| Host.StringName_c_unescape_3942272618!
-    json_escape! : () -> String
-    json_escape! = |_| Host.StringName_json_escape_3942272618!
-    validate_node_name! : () -> String
-    validate_node_name! = |_| Host.StringName_validate_node_name_3942272618!
-    validate_filename! : () -> String
-    validate_filename! = |_| Host.StringName_validate_filename_3942272618!
-    is_valid_ascii_identifier! : () -> Bool
-    is_valid_ascii_identifier! = |_| Host.StringName_is_valid_ascii_identifier_3918633141!
-    is_valid_unicode_identifier! : () -> Bool
-    is_valid_unicode_identifier! = |_| Host.StringName_is_valid_unicode_identifier_3918633141!
-    is_valid_identifier! : () -> Bool
-    is_valid_identifier! = |_| Host.StringName_is_valid_identifier_3918633141!
-    is_valid_int! : () -> Bool
-    is_valid_int! = |_| Host.StringName_is_valid_int_3918633141!
-    is_valid_float! : () -> Bool
-    is_valid_float! = |_| Host.StringName_is_valid_float_3918633141!
-    is_valid_hex_number! : Bool -> Bool
-    is_valid_hex_number! = |with_prefix| Host.StringName_is_valid_hex_number_593672999!(with_prefix)
-    is_valid_html_color! : () -> Bool
-    is_valid_html_color! = |_| Host.StringName_is_valid_html_color_3918633141!
-    is_valid_ip_address! : () -> Bool
-    is_valid_ip_address! = |_| Host.StringName_is_valid_ip_address_3918633141!
-    is_valid_filename! : () -> Bool
-    is_valid_filename! = |_| Host.StringName_is_valid_filename_3918633141!
-    to_int! : () -> I32
-    to_int! = |_| Host.StringName_to_int_3173160232!
-    to_float! : () -> F32
-    to_float! = |_| Host.StringName_to_float_466405837!
-    hex_to_int! : () -> I32
-    hex_to_int! = |_| Host.StringName_hex_to_int_3173160232!
-    bin_to_int! : () -> I32
-    bin_to_int! = |_| Host.StringName_bin_to_int_3173160232!
-    lpad! : I32, String -> String
-    lpad! = |min_length, character| Host.StringName_lpad_248737229!(min_length, character)
-    rpad! : I32, String -> String
-    rpad! = |min_length, character| Host.StringName_rpad_248737229!(min_length, character)
-    pad_decimals! : I32 -> String
-    pad_decimals! = |digits| Host.StringName_pad_decimals_2162347432!(digits)
-    pad_zeros! : I32 -> String
-    pad_zeros! = |digits| Host.StringName_pad_zeros_2162347432!(digits)
-    trim_prefix! : String -> String
-    trim_prefix! = |prefix| Host.StringName_trim_prefix_3134094431!(prefix)
-    trim_suffix! : String -> String
-    trim_suffix! = |suffix| Host.StringName_trim_suffix_3134094431!(suffix)
-    to_ascii_buffer! : () -> PackedByteArray
-    to_ascii_buffer! = |_| Host.StringName_to_ascii_buffer_247621236!
-    to_utf8_buffer! : () -> PackedByteArray
-    to_utf8_buffer! = |_| Host.StringName_to_utf8_buffer_247621236!
-    to_utf16_buffer! : () -> PackedByteArray
-    to_utf16_buffer! = |_| Host.StringName_to_utf16_buffer_247621236!
-    to_utf32_buffer! : () -> PackedByteArray
-    to_utf32_buffer! = |_| Host.StringName_to_utf32_buffer_247621236!
-    to_wchar_buffer! : () -> PackedByteArray
-    to_wchar_buffer! = |_| Host.StringName_to_wchar_buffer_247621236!
-    to_multibyte_char_buffer! : String -> PackedByteArray
-    to_multibyte_char_buffer! = |encoding| Host.StringName_to_multibyte_char_buffer_3055765187!(encoding)
-    hex_decode! : () -> PackedByteArray
-    hex_decode! = |_| Host.StringName_hex_decode_247621236!
-    hash! : () -> I32
-    hash! = |_| Host.StringName_hash_3173160232!
+    casecmp_to! : Str => I64
+    casecmp_to! = Host.stringname_casecmp_to_2920860731!
+    nocasecmp_to! : Str => I64
+    nocasecmp_to! = Host.stringname_nocasecmp_to_2920860731!
+    naturalcasecmp_to! : Str => I64
+    naturalcasecmp_to! = Host.stringname_naturalcasecmp_to_2920860731!
+    naturalnocasecmp_to! : Str => I64
+    naturalnocasecmp_to! = Host.stringname_naturalnocasecmp_to_2920860731!
+    filecasecmp_to! : Str => I64
+    filecasecmp_to! = Host.stringname_filecasecmp_to_2920860731!
+    filenocasecmp_to! : Str => I64
+    filenocasecmp_to! = Host.stringname_filenocasecmp_to_2920860731!
+    length! : () => I64
+    length! = Host.stringname_length_3173160232!
+    substr! : I64, I64 => Str
+    substr! = Host.stringname_substr_787537301!
+    get_slice! : Str, I64 => Str
+    get_slice! = Host.stringname_get_slice_3535100402!
+    get_slicec! : I64, I64 => Str
+    get_slicec! = Host.stringname_get_slicec_787537301!
+    get_slice_count! : Str => I64
+    get_slice_count! = Host.stringname_get_slice_count_2920860731!
+    find! : Str, I64 => I64
+    find! = Host.stringname_find_1760645412!
+    findn! : Str, I64 => I64
+    findn! = Host.stringname_findn_1760645412!
+    count! : Str, I64, I64 => I64
+    count! = Host.stringname_count_2343087891!
+    countn! : Str, I64, I64 => I64
+    countn! = Host.stringname_countn_2343087891!
+    rfind! : Str, I64 => I64
+    rfind! = Host.stringname_rfind_1760645412!
+    rfindn! : Str, I64 => I64
+    rfindn! = Host.stringname_rfindn_1760645412!
+    match! : Str => Bool
+    match! = Host.stringname_match_2566493496!
+    matchn! : Str => Bool
+    matchn! = Host.stringname_matchn_2566493496!
+    begins_with! : Str => Bool
+    begins_with! = Host.stringname_begins_with_2566493496!
+    ends_with! : Str => Bool
+    ends_with! = Host.stringname_ends_with_2566493496!
+    is_subsequence_of! : Str => Bool
+    is_subsequence_of! = Host.stringname_is_subsequence_of_2566493496!
+    is_subsequence_ofn! : Str => Bool
+    is_subsequence_ofn! = Host.stringname_is_subsequence_ofn_2566493496!
+    bigrams! : () => U64
+    bigrams! = Host.stringname_bigrams_747180633!
+    similarity! : Str => F64
+    similarity! = Host.stringname_similarity_2697460964!
+    format! : U64, Str => Str
+    format! = Host.stringname_format_3212199029!
+    replace! : Str, Str => Str
+    replace! = Host.stringname_replace_1340436205!
+    replacen! : Str, Str => Str
+    replacen! = Host.stringname_replacen_1340436205!
+    replace_char! : I64, I64 => Str
+    replace_char! = Host.stringname_replace_char_787537301!
+    replace_chars! : Str, I64 => Str
+    replace_chars! = Host.stringname_replace_chars_3535100402!
+    remove_char! : I64 => Str
+    remove_char! = Host.stringname_remove_char_2162347432!
+    remove_chars! : Str => Str
+    remove_chars! = Host.stringname_remove_chars_3134094431!
+    repeat! : I64 => Str
+    repeat! = Host.stringname_repeat_2162347432!
+    reverse! : () => Str
+    reverse! = Host.stringname_reverse_3942272618!
+    insert! : I64, Str => Str
+    insert! = Host.stringname_insert_248737229!
+    erase! : I64, I64 => Str
+    erase! = Host.stringname_erase_787537301!
+    capitalize! : () => Str
+    capitalize! = Host.stringname_capitalize_3942272618!
+    to_camel_case! : () => Str
+    to_camel_case! = Host.stringname_to_camel_case_3942272618!
+    to_pascal_case! : () => Str
+    to_pascal_case! = Host.stringname_to_pascal_case_3942272618!
+    to_snake_case! : () => Str
+    to_snake_case! = Host.stringname_to_snake_case_3942272618!
+    to_kebab_case! : () => Str
+    to_kebab_case! = Host.stringname_to_kebab_case_3942272618!
+    split! : Str, Bool, I64 => U64
+    split! = Host.stringname_split_1252735785!
+    rsplit! : Str, Bool, I64 => U64
+    rsplit! = Host.stringname_rsplit_1252735785!
+    split_floats! : Str, Bool => U64
+    split_floats! = Host.stringname_split_floats_2092079095!
+    join! : U64 => Str
+    join! = Host.stringname_join_3595973238!
+    to_upper! : () => Str
+    to_upper! = Host.stringname_to_upper_3942272618!
+    to_lower! : () => Str
+    to_lower! = Host.stringname_to_lower_3942272618!
+    left! : I64 => Str
+    left! = Host.stringname_left_2162347432!
+    right! : I64 => Str
+    right! = Host.stringname_right_2162347432!
+    strip_edges! : Bool, Bool => Str
+    strip_edges! = Host.stringname_strip_edges_907855311!
+    strip_escapes! : () => Str
+    strip_escapes! = Host.stringname_strip_escapes_3942272618!
+    lstrip! : Str => Str
+    lstrip! = Host.stringname_lstrip_3134094431!
+    rstrip! : Str => Str
+    rstrip! = Host.stringname_rstrip_3134094431!
+    get_extension! : () => Str
+    get_extension! = Host.stringname_get_extension_3942272618!
+    get_basename! : () => Str
+    get_basename! = Host.stringname_get_basename_3942272618!
+    path_join! : Str => Str
+    path_join! = Host.stringname_path_join_3134094431!
+    unicode_at! : I64 => I64
+    unicode_at! = Host.stringname_unicode_at_4103005248!
+    indent! : Str => Str
+    indent! = Host.stringname_indent_3134094431!
+    dedent! : () => Str
+    dedent! = Host.stringname_dedent_3942272618!
+    md5_text! : () => Str
+    md5_text! = Host.stringname_md5_text_3942272618!
+    sha1_text! : () => Str
+    sha1_text! = Host.stringname_sha1_text_3942272618!
+    sha256_text! : () => Str
+    sha256_text! = Host.stringname_sha256_text_3942272618!
+    md5_buffer! : () => U64
+    md5_buffer! = Host.stringname_md5_buffer_247621236!
+    sha1_buffer! : () => U64
+    sha1_buffer! = Host.stringname_sha1_buffer_247621236!
+    sha256_buffer! : () => U64
+    sha256_buffer! = Host.stringname_sha256_buffer_247621236!
+    is_empty! : () => Bool
+    is_empty! = Host.stringname_is_empty_3918633141!
+    contains! : Str => Bool
+    contains! = Host.stringname_contains_2566493496!
+    containsn! : Str => Bool
+    containsn! = Host.stringname_containsn_2566493496!
+    is_absolute_path! : () => Bool
+    is_absolute_path! = Host.stringname_is_absolute_path_3918633141!
+    is_relative_path! : () => Bool
+    is_relative_path! = Host.stringname_is_relative_path_3918633141!
+    simplify_path! : () => Str
+    simplify_path! = Host.stringname_simplify_path_3942272618!
+    get_base_dir! : () => Str
+    get_base_dir! = Host.stringname_get_base_dir_3942272618!
+    get_file! : () => Str
+    get_file! = Host.stringname_get_file_3942272618!
+    xml_escape! : Bool => Str
+    xml_escape! = Host.stringname_xml_escape_3429816538!
+    xml_unescape! : () => Str
+    xml_unescape! = Host.stringname_xml_unescape_3942272618!
+    uri_encode! : () => Str
+    uri_encode! = Host.stringname_uri_encode_3942272618!
+    uri_decode! : () => Str
+    uri_decode! = Host.stringname_uri_decode_3942272618!
+    uri_file_decode! : () => Str
+    uri_file_decode! = Host.stringname_uri_file_decode_3942272618!
+    c_escape! : () => Str
+    c_escape! = Host.stringname_c_escape_3942272618!
+    c_unescape! : () => Str
+    c_unescape! = Host.stringname_c_unescape_3942272618!
+    json_escape! : () => Str
+    json_escape! = Host.stringname_json_escape_3942272618!
+    validate_node_name! : () => Str
+    validate_node_name! = Host.stringname_validate_node_name_3942272618!
+    validate_filename! : () => Str
+    validate_filename! = Host.stringname_validate_filename_3942272618!
+    is_valid_ascii_identifier! : () => Bool
+    is_valid_ascii_identifier! = Host.stringname_is_valid_ascii_identifier_3918633141!
+    is_valid_unicode_identifier! : () => Bool
+    is_valid_unicode_identifier! = Host.stringname_is_valid_unicode_identifier_3918633141!
+    is_valid_identifier! : () => Bool
+    is_valid_identifier! = Host.stringname_is_valid_identifier_3918633141!
+    is_valid_int! : () => Bool
+    is_valid_int! = Host.stringname_is_valid_int_3918633141!
+    is_valid_float! : () => Bool
+    is_valid_float! = Host.stringname_is_valid_float_3918633141!
+    is_valid_hex_number! : Bool => Bool
+    is_valid_hex_number! = Host.stringname_is_valid_hex_number_593672999!
+    is_valid_html_color! : () => Bool
+    is_valid_html_color! = Host.stringname_is_valid_html_color_3918633141!
+    is_valid_ip_address! : () => Bool
+    is_valid_ip_address! = Host.stringname_is_valid_ip_address_3918633141!
+    is_valid_filename! : () => Bool
+    is_valid_filename! = Host.stringname_is_valid_filename_3918633141!
+    to_int! : () => I64
+    to_int! = Host.stringname_to_int_3173160232!
+    to_float! : () => F64
+    to_float! = Host.stringname_to_float_466405837!
+    hex_to_int! : () => I64
+    hex_to_int! = Host.stringname_hex_to_int_3173160232!
+    bin_to_int! : () => I64
+    bin_to_int! = Host.stringname_bin_to_int_3173160232!
+    lpad! : I64, Str => Str
+    lpad! = Host.stringname_lpad_248737229!
+    rpad! : I64, Str => Str
+    rpad! = Host.stringname_rpad_248737229!
+    pad_decimals! : I64 => Str
+    pad_decimals! = Host.stringname_pad_decimals_2162347432!
+    pad_zeros! : I64 => Str
+    pad_zeros! = Host.stringname_pad_zeros_2162347432!
+    trim_prefix! : Str => Str
+    trim_prefix! = Host.stringname_trim_prefix_3134094431!
+    trim_suffix! : Str => Str
+    trim_suffix! = Host.stringname_trim_suffix_3134094431!
+    to_ascii_buffer! : () => U64
+    to_ascii_buffer! = Host.stringname_to_ascii_buffer_247621236!
+    to_utf8_buffer! : () => U64
+    to_utf8_buffer! = Host.stringname_to_utf8_buffer_247621236!
+    to_utf16_buffer! : () => U64
+    to_utf16_buffer! = Host.stringname_to_utf16_buffer_247621236!
+    to_utf32_buffer! : () => U64
+    to_utf32_buffer! = Host.stringname_to_utf32_buffer_247621236!
+    to_wchar_buffer! : () => U64
+    to_wchar_buffer! = Host.stringname_to_wchar_buffer_247621236!
+    to_multibyte_char_buffer! : Str => U64
+    to_multibyte_char_buffer! = Host.stringname_to_multibyte_char_buffer_3055765187!
+    hex_decode! : () => U64
+    hex_decode! = Host.stringname_hex_decode_247621236!
+    hash! : () => I64
+    hash! = Host.stringname_hash_3173160232!
 }

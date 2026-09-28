@@ -1,18 +1,20 @@
 # class NavigationServer2DManager
+import ../../Host
+
 # inherits: Object
 NavigationServer2DManager := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    register_server! : String, Callable -> {}
-    register_server! = |name, create_callback| Host.NavigationServer2DManager_register_server_2137474292!(name, create_callback)
-    set_default_server! : String, I32 -> {}
-    set_default_server! = |name, priority| Host.NavigationServer2DManager_set_default_server_2956805083!(name, priority)
+    register_server! : Str, U64 => {}
+    register_server! = Host.navigationserver2dmanager_register_server_2137474292!
+    set_default_server! : Str, I64 => {}
+    set_default_server! = Host.navigationserver2dmanager_set_default_server_2956805083!
 
 
 }

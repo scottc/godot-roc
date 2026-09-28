@@ -1,38 +1,40 @@
 # class ResourceUID
+import ../../Host
+
 # inherits: Object
 ResourceUID := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    id_to_text! : I32 -> String
-    id_to_text! = |id| Host.ResourceUID_id_to_text_844755477!(id)
-    text_to_id! : String -> I32
-    text_to_id! = |text_id| Host.ResourceUID_text_to_id_1321353865!(text_id)
-    create_id! : () -> I32
-    create_id! = |_| Host.ResourceUID_create_id_2455072627!
-    create_id_for_path! : String -> I32
-    create_id_for_path! = |path| Host.ResourceUID_create_id_for_path_1597066294!(path)
-    has_id! : I32 -> Bool
-    has_id! = |id| Host.ResourceUID_has_id_1116898809!(id)
-    add_id! : I32, String -> {}
-    add_id! = |id, path| Host.ResourceUID_add_id_501894301!(id, path)
-    set_id! : I32, String -> {}
-    set_id! = |id, path| Host.ResourceUID_set_id_501894301!(id, path)
-    get_id_path! : I32 -> String
-    get_id_path! = |id| Host.ResourceUID_get_id_path_844755477!(id)
-    remove_id! : I32 -> {}
-    remove_id! = |id| Host.ResourceUID_remove_id_1286410249!(id)
-    uid_to_path! : String -> String
-    uid_to_path! = |uid| Host.ResourceUID_uid_to_path_1703090593!(uid)
-    path_to_uid! : String -> String
-    path_to_uid! = |path| Host.ResourceUID_path_to_uid_1703090593!(path)
-    ensure_path! : String -> String
-    ensure_path! = |path_or_uid| Host.ResourceUID_ensure_path_1703090593!(path_or_uid)
+    id_to_text! : I64 => Str
+    id_to_text! = Host.resourceuid_id_to_text_844755477!
+    text_to_id! : Str => I64
+    text_to_id! = Host.resourceuid_text_to_id_1321353865!
+    create_id! : () => I64
+    create_id! = Host.resourceuid_create_id_2455072627!
+    create_id_for_path! : Str => I64
+    create_id_for_path! = Host.resourceuid_create_id_for_path_1597066294!
+    has_id! : I64 => Bool
+    has_id! = Host.resourceuid_has_id_1116898809!
+    add_id! : I64, Str => {}
+    add_id! = Host.resourceuid_add_id_501894301!
+    set_id! : I64, Str => {}
+    set_id! = Host.resourceuid_set_id_501894301!
+    get_id_path! : I64 => Str
+    get_id_path! = Host.resourceuid_get_id_path_844755477!
+    remove_id! : I64 => {}
+    remove_id! = Host.resourceuid_remove_id_1286410249!
+    uid_to_path! : Str => Str
+    uid_to_path! = Host.resourceuid_uid_to_path_1703090593!
+    path_to_uid! : Str => Str
+    path_to_uid! = Host.resourceuid_path_to_uid_1703090593!
+    ensure_path! : Str => Str
+    ensure_path! = Host.resourceuid_ensure_path_1703090593!
 
 
 }

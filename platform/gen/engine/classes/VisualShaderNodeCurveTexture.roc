@@ -1,22 +1,20 @@
 # class VisualShaderNodeCurveTexture
+import ../../Host
+
 # inherits: VisualShaderNodeResizableBase
 VisualShaderNodeCurveTexture := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property texture : CurveTexture
-    get_texture! : () -> CurveTexture
-    get_texture! = |_| Host.VisualShaderNodeCurveTexture_get_texture_prop!
-    set_texture! : CurveTexture -> {}
-    set_texture! = |v| Host.VisualShaderNodeCurveTexture_set_texture_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property texture : U64  getter=get_texture setter=set_texture
 
     # --- methods ---
-    set_texture! : CurveTexture -> {}
-    set_texture! = |texture| Host.VisualShaderNodeCurveTexture_set_texture_181872837!(texture)
-    get_texture! : () -> CurveTexture
-    get_texture! = |_| Host.VisualShaderNodeCurveTexture_get_texture_2800800579!
+    set_texture! : U64 => {}
+    set_texture! = Host.visualshadernodecurvetexture_set_texture_181872837!
+    get_texture! : () => U64
+    get_texture! = Host.visualshadernodecurvetexture_get_texture_2800800579!
 
 
 }

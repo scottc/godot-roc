@@ -1,20 +1,18 @@
 # class PlaceholderMesh
+import ../../Host
+
 # inherits: Mesh
 PlaceholderMesh := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property aabb : AABB
-    get_aabb! : () -> AABB
-    get_aabb! = |_| Host.PlaceholderMesh_get_aabb_prop!
-    set_aabb! : AABB -> {}
-    set_aabb! = |v| Host.PlaceholderMesh_set_aabb_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property aabb : U64  getter=get_aabb setter=set_aabb
 
     # --- methods ---
-    set_aabb! : AABB -> {}
-    set_aabb! = |aabb| Host.PlaceholderMesh_set_aabb_259215842!(aabb)
+    set_aabb! : U64 => {}
+    set_aabb! = Host.placeholdermesh_set_aabb_259215842!
 
 
 }

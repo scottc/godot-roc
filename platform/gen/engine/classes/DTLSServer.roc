@@ -1,18 +1,20 @@
 # class DTLSServer
+import ../../Host
+
 # inherits: RefCounted
 DTLSServer := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    setup! : TLSOptions -> Error
-    setup! = |server_options| Host.DTLSServer_setup_1262296096!(server_options)
-    take_connection! : PacketPeerUDP -> PacketPeerDTLS
-    take_connection! = |udp_peer| Host.DTLSServer_take_connection_3946580474!(udp_peer)
+    setup! : U64 => U64
+    setup! = Host.dtlsserver_setup_1262296096!
+    take_connection! : U64 => U64
+    take_connection! = Host.dtlsserver_take_connection_3946580474!
 
 
 }

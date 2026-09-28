@@ -1,31 +1,25 @@
 # class GrooveJoint2D
+import ../../Host
+
 # inherits: Joint2D
 GrooveJoint2D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property length : F32
-    get_length! : () -> F32
-    get_length! = |_| Host.GrooveJoint2D_get_length_prop!
-    set_length! : F32 -> {}
-    set_length! = |v| Host.GrooveJoint2D_set_length_prop!(v)
-    # property initial_offset : F32
-    get_initial_offset! : () -> F32
-    get_initial_offset! = |_| Host.GrooveJoint2D_get_initial_offset_prop!
-    set_initial_offset! : F32 -> {}
-    set_initial_offset! = |v| Host.GrooveJoint2D_set_initial_offset_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property length : F64  getter=get_length setter=set_length
+    # property initial_offset : F64  getter=get_initial_offset setter=set_initial_offset
 
     # --- methods ---
-    set_length! : F32 -> {}
-    set_length! = |length| Host.GrooveJoint2D_set_length_373806689!(length)
-    get_length! : () -> F32
-    get_length! = |_| Host.GrooveJoint2D_get_length_1740695150!
-    set_initial_offset! : F32 -> {}
-    set_initial_offset! = |offset| Host.GrooveJoint2D_set_initial_offset_373806689!(offset)
-    get_initial_offset! : () -> F32
-    get_initial_offset! = |_| Host.GrooveJoint2D_get_initial_offset_1740695150!
+    set_length! : F64 => {}
+    set_length! = Host.groovejoint2d_set_length_373806689!
+    get_length! : () => F64
+    get_length! = Host.groovejoint2d_get_length_1740695150!
+    set_initial_offset! : F64 => {}
+    set_initial_offset! = Host.groovejoint2d_set_initial_offset_373806689!
+    get_initial_offset! : () => F64
+    get_initial_offset! = Host.groovejoint2d_get_initial_offset_1740695150!
 
 
 }

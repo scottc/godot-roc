@@ -1,16 +1,18 @@
 # class CallbackTweener
+import ../../Host
+
 # inherits: Tweener
 CallbackTweener := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    set_delay! : F32 -> CallbackTweener
-    set_delay! = |delay| Host.CallbackTweener_set_delay_3008182292!(delay)
+    set_delay! : F64 => U64
+    set_delay! = Host.callbacktweener_set_delay_3008182292!
 
 
 }

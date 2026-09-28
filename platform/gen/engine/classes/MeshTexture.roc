@@ -1,40 +1,30 @@
 # class MeshTexture
+import ../../Host
+
 # inherits: Texture2D
 MeshTexture := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property mesh : Mesh
-    get_mesh! : () -> Mesh
-    get_mesh! = |_| Host.MeshTexture_get_mesh_prop!
-    set_mesh! : Mesh -> {}
-    set_mesh! = |v| Host.MeshTexture_set_mesh_prop!(v)
-    # property base_texture : Texture2D
-    get_base_texture! : () -> Texture2D
-    get_base_texture! = |_| Host.MeshTexture_get_base_texture_prop!
-    set_base_texture! : Texture2D -> {}
-    set_base_texture! = |v| Host.MeshTexture_set_base_texture_prop!(v)
-    # property image_size : Vector2
-    get_image_size! : () -> Vector2
-    get_image_size! = |_| Host.MeshTexture_get_image_size_prop!
-    set_image_size! : Vector2 -> {}
-    set_image_size! = |v| Host.MeshTexture_set_image_size_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property mesh : U64  getter=get_mesh setter=set_mesh
+    # property base_texture : U64  getter=get_base_texture setter=set_base_texture
+    # property image_size : U64  getter=get_image_size setter=set_image_size
 
     # --- methods ---
-    set_mesh! : Mesh -> {}
-    set_mesh! = |mesh| Host.MeshTexture_set_mesh_194775623!(mesh)
-    get_mesh! : () -> Mesh
-    get_mesh! = |_| Host.MeshTexture_get_mesh_1808005922!
-    set_image_size! : Vector2 -> {}
-    set_image_size! = |size| Host.MeshTexture_set_image_size_743155724!(size)
-    get_image_size! : () -> Vector2
-    get_image_size! = |_| Host.MeshTexture_get_image_size_3341600327!
-    set_base_texture! : Texture2D -> {}
-    set_base_texture! = |texture| Host.MeshTexture_set_base_texture_4051416890!(texture)
-    get_base_texture! : () -> Texture2D
-    get_base_texture! = |_| Host.MeshTexture_get_base_texture_3635182373!
+    set_mesh! : U64 => {}
+    set_mesh! = Host.meshtexture_set_mesh_194775623!
+    get_mesh! : () => U64
+    get_mesh! = Host.meshtexture_get_mesh_1808005922!
+    set_image_size! : U64 => {}
+    set_image_size! = Host.meshtexture_set_image_size_743155724!
+    get_image_size! : () => U64
+    get_image_size! = Host.meshtexture_get_image_size_3341600327!
+    set_base_texture! : U64 => {}
+    set_base_texture! = Host.meshtexture_set_base_texture_4051416890!
+    get_base_texture! : () => U64
+    get_base_texture! = Host.meshtexture_get_base_texture_3635182373!
 
 
 }

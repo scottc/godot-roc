@@ -1,16 +1,18 @@
 # class OptimizedTranslation
+import ../../Host
+
 # inherits: Translation
 OptimizedTranslation := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    generate! : Translation -> Bool
-    generate! = |from| Host.OptimizedTranslation_generate_2141509306!(from)
+    generate! : U64 => Bool
+    generate! = Host.optimizedtranslation_generate_2141509306!
 
 
 }

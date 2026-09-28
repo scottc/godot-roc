@@ -1,22 +1,20 @@
 # class GPUParticlesAttractorBox3D
+import ../../Host
+
 # inherits: GPUParticlesAttractor3D
 GPUParticlesAttractorBox3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property size : Vector3
-    get_size! : () -> Vector3
-    get_size! = |_| Host.GPUParticlesAttractorBox3D_get_size_prop!
-    set_size! : Vector3 -> {}
-    set_size! = |v| Host.GPUParticlesAttractorBox3D_set_size_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property size : U64  getter=get_size setter=set_size
 
     # --- methods ---
-    set_size! : Vector3 -> {}
-    set_size! = |size| Host.GPUParticlesAttractorBox3D_set_size_3460891852!(size)
-    get_size! : () -> Vector3
-    get_size! = |_| Host.GPUParticlesAttractorBox3D_get_size_3360562783!
+    set_size! : U64 => {}
+    set_size! = Host.gpuparticlesattractorbox3d_set_size_3460891852!
+    get_size! : () => U64
+    get_size! = Host.gpuparticlesattractorbox3d_get_size_3360562783!
 
 
 }

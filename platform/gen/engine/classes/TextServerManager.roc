@@ -1,31 +1,33 @@
 # class TextServerManager
+import ../../Host
+
 # inherits: Object
 TextServerManager := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    add_interface! : TextServer -> {}
-    add_interface! = |interface| Host.TextServerManager_add_interface_1799689403!(interface)
-    get_interface_count! : () -> I32
-    get_interface_count! = |_| Host.TextServerManager_get_interface_count_3905245786!
-    remove_interface! : TextServer -> {}
-    remove_interface! = |interface| Host.TextServerManager_remove_interface_1799689403!(interface)
-    get_interface! : I32 -> TextServer
-    get_interface! = |idx| Host.TextServerManager_get_interface_1672475555!(idx)
-    get_interfaces! : () -> typedarray::Dictionary
-    get_interfaces! = |_| Host.TextServerManager_get_interfaces_3995934104!
-    find_interface! : String -> TextServer
-    find_interface! = |name| Host.TextServerManager_find_interface_2240905781!(name)
-    set_primary_interface! : TextServer -> {}
-    set_primary_interface! = |index| Host.TextServerManager_set_primary_interface_1799689403!(index)
-    get_primary_interface! : () -> TextServer
-    get_primary_interface! = |_| Host.TextServerManager_get_primary_interface_905850878!
+    add_interface! : U64 => {}
+    add_interface! = Host.textservermanager_add_interface_1799689403!
+    get_interface_count! : () => I64
+    get_interface_count! = Host.textservermanager_get_interface_count_3905245786!
+    remove_interface! : U64 => {}
+    remove_interface! = Host.textservermanager_remove_interface_1799689403!
+    get_interface! : I64 => U64
+    get_interface! = Host.textservermanager_get_interface_1672475555!
+    get_interfaces! : () => U64
+    get_interfaces! = Host.textservermanager_get_interfaces_3995934104!
+    find_interface! : Str => U64
+    find_interface! = Host.textservermanager_find_interface_2240905781!
+    set_primary_interface! : U64 => {}
+    set_primary_interface! = Host.textservermanager_set_primary_interface_1799689403!
+    get_primary_interface! : () => U64
+    get_primary_interface! = Host.textservermanager_get_primary_interface_905850878!
 
-    # signal interface_added : interface_name : StringName
-    # signal interface_removed : interface_name : StringName
+    # signal interface_added : interface_name : Str
+    # signal interface_removed : interface_name : Str
 }

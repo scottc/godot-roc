@@ -1,22 +1,20 @@
 # class VisualShaderNodeParticleMultiplyByAxisAngle
+import ../../Host
+
 # inherits: VisualShaderNode
 VisualShaderNodeParticleMultiplyByAxisAngle := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property degrees_mode : Bool
-    is_degrees_mode! : () -> Bool
-    is_degrees_mode! = |_| Host.VisualShaderNodeParticleMultiplyByAxisAngle_is_degrees_mode_prop!
-    set_degrees_mode! : Bool -> {}
-    set_degrees_mode! = |v| Host.VisualShaderNodeParticleMultiplyByAxisAngle_set_degrees_mode_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property degrees_mode : Bool  getter=is_degrees_mode setter=set_degrees_mode
 
     # --- methods ---
-    set_degrees_mode! : Bool -> {}
-    set_degrees_mode! = |enabled| Host.VisualShaderNodeParticleMultiplyByAxisAngle_set_degrees_mode_2586408642!(enabled)
-    is_degrees_mode! : () -> Bool
-    is_degrees_mode! = |_| Host.VisualShaderNodeParticleMultiplyByAxisAngle_is_degrees_mode_36873697!
+    set_degrees_mode! : Bool => {}
+    set_degrees_mode! = Host.visualshadernodeparticlemultiplybyaxisangle_set_degrees_mode_2586408642!
+    is_degrees_mode! : () => Bool
+    is_degrees_mode! = Host.visualshadernodeparticlemultiplybyaxisangle_is_degrees_mode_36873697!
 
 
 }

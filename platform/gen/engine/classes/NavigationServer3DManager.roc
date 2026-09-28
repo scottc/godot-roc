@@ -1,18 +1,20 @@
 # class NavigationServer3DManager
+import ../../Host
+
 # inherits: Object
 NavigationServer3DManager := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    register_server! : String, Callable -> {}
-    register_server! = |name, create_callback| Host.NavigationServer3DManager_register_server_2137474292!(name, create_callback)
-    set_default_server! : String, I32 -> {}
-    set_default_server! = |name, priority| Host.NavigationServer3DManager_set_default_server_2956805083!(name, priority)
+    register_server! : Str, U64 => {}
+    register_server! = Host.navigationserver3dmanager_register_server_2137474292!
+    set_default_server! : Str, I64 => {}
+    set_default_server! = Host.navigationserver3dmanager_set_default_server_2956805083!
 
 
 }

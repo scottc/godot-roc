@@ -1,16 +1,18 @@
 # class JNISingleton
+import ../../Host
+
 # inherits: Object
 JNISingleton := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    has_java_method! : StringName -> Bool
-    has_java_method! = |method| Host.JNISingleton_has_java_method_2619796661!(method)
+    has_java_method! : Str => Bool
+    has_java_method! = Host.jnisingleton_has_java_method_2619796661!
 
 
 }

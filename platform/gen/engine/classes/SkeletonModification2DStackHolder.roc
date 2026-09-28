@@ -1,18 +1,20 @@
 # class SkeletonModification2DStackHolder
+import ../../Host
+
 # inherits: SkeletonModification2D
 SkeletonModification2DStackHolder := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    set_held_modification_stack! : SkeletonModificationStack2D -> {}
-    set_held_modification_stack! = |held_modification_stack| Host.SkeletonModification2DStackHolder_set_held_modification_stack_3907307132!(held_modification_stack)
-    get_held_modification_stack! : () -> SkeletonModificationStack2D
-    get_held_modification_stack! = |_| Host.SkeletonModification2DStackHolder_get_held_modification_stack_2107508396!
+    set_held_modification_stack! : U64 => {}
+    set_held_modification_stack! = Host.skeletonmodification2dstackholder_set_held_modification_stack_3907307132!
+    get_held_modification_stack! : () => U64
+    get_held_modification_stack! = Host.skeletonmodification2dstackholder_get_held_modification_stack_2107508396!
 
 
 }

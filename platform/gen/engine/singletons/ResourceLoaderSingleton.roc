@@ -1,6 +1,8 @@
+import ../../Host
+
 ResourceLoaderSingleton := {
     ptr : U64,
 }.{
-    get! : () -> ResourceLoaderSingleton
-    get! = |_| { { ptr: Host.get_singleton_ResourceLoader!() } }
+    get! : () => ResourceLoaderSingleton
+    get! = || { { ptr: Host.get_singleton_resourceloader!() } }
 }

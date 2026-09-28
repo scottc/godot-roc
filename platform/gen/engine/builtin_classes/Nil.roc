@@ -1,4 +1,6 @@
 # builtin Nil
+import ../../Host
+
 Nil := {
     ptr : U64
 }.{

@@ -1,11 +1,13 @@
 # class AudioSamplePlayback
+import ../../Host
+
 # inherits: RefCounted
 AudioSamplePlayback := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---

@@ -1,22 +1,24 @@
 # class JavaClassWrapper
+import ../../Host
+
 # inherits: Object
 JavaClassWrapper := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    wrap! : String -> JavaClass
-    wrap! = |name| Host.JavaClassWrapper_wrap_1124367868!(name)
-    get_exception! : () -> JavaObject
-    get_exception! = |_| Host.JavaClassWrapper_get_exception_3277089691!
-    create_sam_callback! : String, Callable -> JavaObject
-    create_sam_callback! = |sam_interface, callable| Host.JavaClassWrapper_create_sam_callback_2479014754!(sam_interface, callable)
-    create_proxy! : Object, PackedStringArray -> JavaObject
-    create_proxy! = |object, interfaces| Host.JavaClassWrapper_create_proxy_2694931752!(object, interfaces)
+    wrap! : Str => U64
+    wrap! = Host.javaclasswrapper_wrap_1124367868!
+    get_exception! : () => U64
+    get_exception! = Host.javaclasswrapper_get_exception_3277089691!
+    create_sam_callback! : Str, U64 => U64
+    create_sam_callback! = Host.javaclasswrapper_create_sam_callback_2479014754!
+    create_proxy! : U64, U64 => U64
+    create_proxy! = Host.javaclasswrapper_create_proxy_2694931752!
 
 
 }

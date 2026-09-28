@@ -1,22 +1,20 @@
 # class RectangleShape2D
+import ../../Host
+
 # inherits: Shape2D
 RectangleShape2D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property size : Vector2
-    get_size! : () -> Vector2
-    get_size! = |_| Host.RectangleShape2D_get_size_prop!
-    set_size! : Vector2 -> {}
-    set_size! = |v| Host.RectangleShape2D_set_size_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property size : U64  getter=get_size setter=set_size
 
     # --- methods ---
-    set_size! : Vector2 -> {}
-    set_size! = |size| Host.RectangleShape2D_set_size_743155724!(size)
-    get_size! : () -> Vector2
-    get_size! = |_| Host.RectangleShape2D_get_size_3341600327!
+    set_size! : U64 => {}
+    set_size! = Host.rectangleshape2d_set_size_743155724!
+    get_size! : () => U64
+    get_size! = Host.rectangleshape2d_get_size_3341600327!
 
 
 }

@@ -1,49 +1,35 @@
 # class AtlasTexture
+import ../../Host
+
 # inherits: Texture2D
 AtlasTexture := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
-    # property atlas : Texture2D
-    get_atlas! : () -> Texture2D
-    get_atlas! = |_| Host.AtlasTexture_get_atlas_prop!
-    set_atlas! : Texture2D -> {}
-    set_atlas! = |v| Host.AtlasTexture_set_atlas_prop!(v)
-    # property region : Rect2
-    get_region! : () -> Rect2
-    get_region! = |_| Host.AtlasTexture_get_region_prop!
-    set_region! : Rect2 -> {}
-    set_region! = |v| Host.AtlasTexture_set_region_prop!(v)
-    # property margin : Rect2
-    get_margin! : () -> Rect2
-    get_margin! = |_| Host.AtlasTexture_get_margin_prop!
-    set_margin! : Rect2 -> {}
-    set_margin! = |v| Host.AtlasTexture_set_margin_prop!(v)
-    # property filter_clip : Bool
-    has_filter_clip! : () -> Bool
-    has_filter_clip! = |_| Host.AtlasTexture_has_filter_clip_prop!
-    set_filter_clip! : Bool -> {}
-    set_filter_clip! = |v| Host.AtlasTexture_set_filter_clip_prop!(v)
+    # --- properties (getters/setters are methods) ---
+    # property atlas : U64  getter=get_atlas setter=set_atlas
+    # property region : U64  getter=get_region setter=set_region
+    # property margin : U64  getter=get_margin setter=set_margin
+    # property filter_clip : Bool  getter=has_filter_clip setter=set_filter_clip
 
     # --- methods ---
-    set_atlas! : Texture2D -> {}
-    set_atlas! = |atlas| Host.AtlasTexture_set_atlas_4051416890!(atlas)
-    get_atlas! : () -> Texture2D
-    get_atlas! = |_| Host.AtlasTexture_get_atlas_3635182373!
-    set_region! : Rect2 -> {}
-    set_region! = |region| Host.AtlasTexture_set_region_2046264180!(region)
-    get_region! : () -> Rect2
-    get_region! = |_| Host.AtlasTexture_get_region_1639390495!
-    set_margin! : Rect2 -> {}
-    set_margin! = |margin| Host.AtlasTexture_set_margin_2046264180!(margin)
-    get_margin! : () -> Rect2
-    get_margin! = |_| Host.AtlasTexture_get_margin_1639390495!
-    set_filter_clip! : Bool -> {}
-    set_filter_clip! = |enable| Host.AtlasTexture_set_filter_clip_2586408642!(enable)
-    has_filter_clip! : () -> Bool
-    has_filter_clip! = |_| Host.AtlasTexture_has_filter_clip_36873697!
+    set_atlas! : U64 => {}
+    set_atlas! = Host.atlastexture_set_atlas_4051416890!
+    get_atlas! : () => U64
+    get_atlas! = Host.atlastexture_get_atlas_3635182373!
+    set_region! : U64 => {}
+    set_region! = Host.atlastexture_set_region_2046264180!
+    get_region! : () => U64
+    get_region! = Host.atlastexture_get_region_1639390495!
+    set_margin! : U64 => {}
+    set_margin! = Host.atlastexture_set_margin_2046264180!
+    get_margin! : () => U64
+    get_margin! = Host.atlastexture_get_margin_1639390495!
+    set_filter_clip! : Bool => {}
+    set_filter_clip! = Host.atlastexture_set_filter_clip_2586408642!
+    has_filter_clip! : () => Bool
+    has_filter_clip! = Host.atlastexture_has_filter_clip_36873697!
 
 
 }

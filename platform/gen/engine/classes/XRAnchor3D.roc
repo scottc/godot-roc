@@ -1,18 +1,20 @@
 # class XRAnchor3D
+import ../../Host
+
 # inherits: XRNode3D
 XRAnchor3D := {
     ptr : U64,
 }.{
 
 
-    # --- properties ---
+    # --- properties (getters/setters are methods) ---
 
 
     # --- methods ---
-    get_size! : () -> Vector3
-    get_size! = |_| Host.XRAnchor3D_get_size_3360562783!
-    get_plane! : () -> Plane
-    get_plane! = |_| Host.XRAnchor3D_get_plane_2753500971!
+    get_size! : () => U64
+    get_size! = Host.xranchor3d_get_size_3360562783!
+    get_plane! : () => U64
+    get_plane! = Host.xranchor3d_get_plane_2753500971!
 
 
 }

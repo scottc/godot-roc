@@ -1,6 +1,8 @@
+import ../../Host
+
 InputSingleton := {
     ptr : U64,
 }.{
-    get! : () -> InputSingleton
-    get! = |_| { { ptr: Host.get_singleton_Input!() } }
+    get! : () => InputSingleton
+    get! = || { { ptr: Host.get_singleton_input!() } }
 }
