@@ -686,16 +686,16 @@ const Vector3 = extern struct {
     z: f32,
 };
 
-fn ptrcall(
-    method: baseline_gde_if.GDExtensionMethodBindPtr,
-    object: baseline_gde_if.GDExtensionObjectPtr,
-    args: ?[*]const baseline_gde_if.GDExtensionConstTypePtr,
-    ret: baseline_gde_if.GDExtensionTypePtr,
-) void {
-    // std.debug.print("[./platform/src/native_host.zig]: ptrcall(method, object, args, ret)\n", .{});
+// fn ptrcall(
+//     method: baseline_gde_if.GDExtensionMethodBindPtr,
+//     object: baseline_gde_if.GDExtensionObjectPtr,
+//     args: ?[*]const baseline_gde_if.GDExtensionConstTypePtr,
+//     ret: baseline_gde_if.GDExtensionTypePtr,
+// ) void {
+//     // std.debug.print("[./platform/src/native_host.zig]: ptrcall(method, object, args, ret)\n", .{});
 
-    g_engine_interface.object_method_bind_ptrcall(method, object, args, ret);
-}
+//     g_engine_interface.object_method_bind_ptrcall(method, object, args, ret);
+// }
 
 export fn godot_roc_set_velocity(v: Vector3) callconv(.c) void {
     ensureMethodBinds();
@@ -704,7 +704,7 @@ export fn godot_roc_set_velocity(v: Vector3) callconv(.c) void {
 
     var gv = v;
     const args = [_]baseline_gde_if.GDExtensionConstTypePtr{@ptrCast(&gv)};
-    ptrcall(g_mb_set_velocity, self.object, &args, null);
+    g_engine_interface.object_method_bind_ptrcall(g_mb_set_velocity, self.object, &args, null);
 }
 
 export fn godot_roc_get_velocity() callconv(.c) Vector3 {
@@ -717,7 +717,7 @@ export fn godot_roc_get_velocity() callconv(.c) Vector3 {
     }
 
     var gv = Vector3{ .x = 0, .y = 0, .z = 0 };
-    ptrcall(g_mb_get_velocity, self.object, null, @ptrCast(&gv));
+    g_engine_interface.object_method_bind_ptrcall(g_mb_get_velocity, self.object, null, @ptrCast(&gv));
 
     return .{
         .x = gv.x,
@@ -752,7 +752,7 @@ fn isActionPressed(action: [:0]const u8) bool {
         @ptrCast(&exact),
     };
     var ret: baseline_gde_if.GDExtensionBool = 0;
-    ptrcall(g_mb_is_action_pressed, g_input, &args, @ptrCast(&ret));
+    g_engine_interface.object_method_bind_ptrcall(g_mb_is_action_pressed, g_input, &args, @ptrCast(&ret));
     return ret != 0;
 }
 
@@ -780,7 +780,7 @@ export fn godot_roc_move_and_slide() callconv(.c) void {
 
     // move_and_slide() -> bool; optional to read
     var hit: baseline_gde_if.GDExtensionBool = 0;
-    ptrcall(g_mb_move_and_slide, self.object, null, @ptrCast(&hit));
+    g_engine_interface.object_method_bind_ptrcall(g_mb_move_and_slide, self.object, null, @ptrCast(&hit));
     //_ = hit;
 }
 
@@ -800,7 +800,7 @@ export fn godot_roc_is_on_floor() callconv(.c) baseline_gde_if.GDExtensionBool {
     if (g_mb_is_on_floor == null) return 0;
 
     var ret: baseline_gde_if.GDExtensionBool = 0;
-    ptrcall(g_mb_is_on_floor, self.object, null, @ptrCast(&ret));
+    g_engine_interface.object_method_bind_ptrcall(g_mb_is_on_floor, self.object, null, @ptrCast(&ret));
     return ret;
 }
 
@@ -821,7 +821,7 @@ export fn godot_roc_get_gravity(out_x: *f64, out_y: *f64, out_z: *f64) callconv(
     }
 
     var g = Vector3{ .x = 0, .y = 0, .z = 0 };
-    ptrcall(g_mb_get_gravity, self.object, null, @ptrCast(&g));
+    g_engine_interface.object_method_bind_ptrcall(g_mb_get_gravity, self.object, null, @ptrCast(&g));
     out_x.* = g.x;
     out_y.* = g.y;
     out_z.* = g.z;
@@ -881,7 +881,7 @@ fn isEditorHint() bool {
     ensureEngine();
     if (g_engine == null or g_mb_is_editor_hint == null) return false;
     var ret: baseline_gde_if.GDExtensionBool = 0;
-    ptrcall(g_mb_is_editor_hint, g_engine, null, @ptrCast(&ret));
+    g_engine_interface.object_method_bind_ptrcall(g_mb_is_editor_hint, g_engine, null, @ptrCast(&ret));
     return ret != 0;
 }
 

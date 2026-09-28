@@ -216,6 +216,7 @@ main! = |_args| {
 
     Stdout.line!("${render_header(decoded)}")?
 
+    t0 = Utc.now!()
     Path.join(roc_out_path, "Host.roc").write_utf8!(host_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "engine/GlobalConstants.roc").write_utf8!(global_constants_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "engine/GlobalEnums.roc").write_utf8!(global_enums_to_roc_source_str(decoded))?
@@ -223,35 +224,46 @@ main! = |_args| {
     Path.join(roc_out_path, "engine/BuiltinClassMemberOffsets.roc").write_utf8!(builtin_class_member_offsets_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "engine/NativeStructures.roc").write_utf8!(native_structures_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "engine/UtilityFunctions.roc").write_utf8!(utility_functions_to_roc_source_str(decoded))?
+    Stdout.line!("# meta+Host: ${(Utc.now!() - t0).to_str()}ns")?
 
+    t1 = Utc.now!()
     for bic in decoded.builtin_classes {
         mod_name = builtin_module_name(bic.name)
         Path.join(roc_out_path, "engine/builtin_classes/${mod_name}.roc")
             .write_utf8!(builtin_class_to_roc_source_str(bic))?
     }
+    Stdout.line!("# builtins: ${(Utc.now!() - t1).to_str()}ns")?
 
+    t2 = Utc.now!()
     for cls in decoded.classes {
         mod_name = class_module_name(cls.name)
         Path.join(roc_out_path, "engine/classes/${mod_name}.roc")
             .write_utf8!(class_to_roc_source_str(cls))?
     }
+    Stdout.line!("# classes: ${(Utc.now!() - t2).to_str()}ns")?
 
+    t3 = Utc.now!()
     for s in decoded.singletons {
         mod_name = singleton_module_name(s.name)
         Path.join(roc_out_path, "engine/singletons/${mod_name}.roc")
             .write_utf8!(singleton_to_roc_source_str(s))?
     }
+    Stdout.line!("# singletons: ${(Utc.now!() - t3).to_str()}ns")?
 
     Path.join(roc_out_path, "main.roc").write_utf8!(gen_package_main_roc(decoded))?
 
+    t4 = Utc.now!()
     Path.join("src", "zig_platform_abi_impl.zig")
         .write_utf8!(zig_platform_abi_impl_to_str(decoded))?
+    Stdout.line!("# zig abi: ${(Utc.now!() - t4).to_str()}ns")?
 
-    Stdout.line!("# done total ${(Utc.now!() - parse_start).to_str()}ns")?
+    Stdout.line!("# total after parse: ${(Utc.now!() - parse_start).to_str()}ns")?
     Ok({})
 }
 
-# --- naming ---------------------------------------------------------------
+# =============================================================================
+# Naming
+# =============================================================================
 
 builtin_module_name : Str -> Str
 builtin_module_name = |name| {
@@ -279,13 +291,56 @@ roc_type_ident : Str -> Str
 roc_type_ident = |s|
     s.replace_each("::", "_").replace_each(".", "_").replace_each(" ", "_").replace_each("/", "_")
 
-## Value names must start lowercase in Roc (uppercase = type)
 to_value_name : Str -> Str
 to_value_name = |s| s.with_ascii_lowercased()
 
+## Sanitize Godot method/property names into Roc/Zig-safe identifiers
+roc_fn_name : Str -> Str
+roc_fn_name = |name| {
+    n =
+        name
+            .replace_each(" ", "_")
+            .replace_each(".", "_")
+            .replace_each(":", "_")
+            .replace_each("/", "_")
+            .replace_each("-", "_")
+            .replace_each("==", "eq")
+            .replace_each("!=", "neq")
+            .replace_each("<=", "lte")
+            .replace_each(">=", "gte")
+            .replace_each("<", "lt")
+            .replace_each(">", "gt")
+            .replace_each("*", "mul")
+            .replace_each("/", "div")
+            .replace_each("+", "add")
+            .replace_each("%", "mod")
+            .replace_each("^", "xor")
+            .replace_each("|", "bitor")
+            .replace_each("&", "bitand")
+            .replace_each("!", "not")
+    # leading underscore stays (virtuals); ensure not empty
+    if n == "" {
+        "op"
+    } else {
+        n
+    }
+}
+
+host_method_symbol : Str, U64 -> Str
+host_method_symbol = |name, hash| "${roc_fn_name(name)}_${hash.to_str()}"
+
 c_to_roc_type : Str -> Str
 c_to_roc_type = |str| {
-    match str {
+    # strip enum:: / bitfield:: prefixes for display types
+    cleaned =
+        if str.starts_with("enum::") {
+            roc_type_ident(str.drop_prefix("enum::"))
+        } else if str.starts_with("bitfield::") {
+            roc_type_ident(str.drop_prefix("bitfield::"))
+        } else {
+            str
+        }
+    match cleaned {
         "int" => "I32"
         "float" => "F32"
         "double" => "F64"
@@ -297,7 +352,29 @@ c_to_roc_type = |str| {
     }
 }
 
-# --- package root ---------------------------------------------------------
+## C return type for Zig stubs (coarse)
+c_to_zig_ret : Str -> Str
+c_to_zig_ret = |str| {
+    match str {
+        "bool" => "u8"
+        "int" => "i64"
+        "float" => "f64"
+        "double" => "f64"
+        "void" => "void"
+        _ => "void" # complex / object: out-param later
+    }
+}
+
+c_to_zig_ret_from_try : Try(Str, [Missing]) -> Str
+c_to_zig_ret_from_try = |maybe|
+    match maybe {
+        Ok(t) => c_to_zig_ret(t)
+        _ => "void"
+    }
+
+# =============================================================================
+# Package root
+# =============================================================================
 
 gen_package_main_roc : ExtensionApi -> Str
 gen_package_main_roc = |eapi| {
@@ -332,10 +409,8 @@ gen_package_main_roc = |eapi| {
 
     builtin_imports =
         Str.join_with(builtin_names.map(|n| "import engine/builtin_classes/${n} as ${n}"), "\n")
-
     class_imports =
         Str.join_with(class_names.map(|n| "import engine/classes/${n} as ${n}"), "\n")
-
     singleton_imports =
         Str.join_with(singleton_names.map(|n| "import engine/singletons/${n} as ${n}"), "\n")
 
@@ -359,31 +434,268 @@ render_header = |eapi|
     \\# ${eapi.header.version_full_name}
     \\# builtins=${eapi.builtin_classes.len().to_str()} classes=${eapi.classes.len().to_str()} singletons=${eapi.singletons.len().to_str()}
 
-# --- Host -----------------------------------------------------------------
+# =============================================================================
+# Shared method / property rendering (Roc)
+# =============================================================================
+
+method_arg_types : MethodDef -> Str
+method_arg_types = |md|
+    match md.arguments {
+        Ok(args) if !(args.is_empty()) =>
+            Str.join_with(args.map(|a| c_to_roc_type(a.type)), ", ")
+        _ => "()"
+    }
+
+method_arg_names : MethodDef -> Str
+method_arg_names = |md|
+    match md.arguments {
+        Ok(args) if !(args.is_empty()) =>
+            Str.join_with(args.map(|a| a.name), ", ")
+        _ => ""
+    }
+
+method_return_type : MethodDef -> Str
+method_return_type = |md|
+    match md.return_type {
+        Ok(rt) => c_to_roc_type(rt)
+        _ =>
+            match md.return_value {
+                Ok(rv) => c_to_roc_type(rv.type)
+                _ => "{}"
+            }
+    }
+
+## Live Roc method binding → Host.<name>_<hash>!
+method_def_live : MethodDef -> Str
+method_def_live = |md| {
+    fn = roc_fn_name(md.name)
+    sym = host_method_symbol(md.name, md.hash)
+    args_ty = method_arg_types(md)
+    args_ns = method_arg_names(md)
+    ret = method_return_type(md)
+    lambda =
+        if args_ns == "" {
+            "|_| Host.${sym}!"
+        } else {
+            "|${args_ns}| Host.${sym}!(${args_ns})"
+        }
+    \\    ${fn}! : ${args_ty} -> ${ret}
+    \\    ${fn}! = ${lambda}
+}
+
+## Property → get_* / set_* using API getter/setter names when present
+property_defs_live : PropertyDef -> Str
+property_defs_live = |p| {
+    ty = c_to_roc_type(p.type)
+    getter_fn =
+        match p.getter {
+            Ok(g) => roc_fn_name(g)
+            _ => "get_${roc_fn_name(p.name)}"
+        }
+    setter_fn =
+        match p.setter {
+            Ok(s) => roc_fn_name(s)
+            _ => "set_${roc_fn_name(p.name)}"
+        }
+    # Host symbols for props use getter/setter name + synthetic tag "prop" (no hash in API)
+    # Prefer real method hashes when methods list has matching names; else name_prop
+    get_sym = "${getter_fn}_prop"
+    set_sym = "${setter_fn}_prop"
+    getter_block =
+        match p.getter {
+            Ok(_) | Err(Missing) =>
+                \\    ${getter_fn}! : () -> ${ty}
+                \\    ${getter_fn}! = |_| Host.${get_sym}!
+            _ => ""
+        }
+    # Always emit getter line when we have a type; setter only if setter present
+    setter_block =
+        match p.setter {
+            Ok(_) =>
+                \\    ${setter_fn}! : ${ty} -> {}
+                \\    ${setter_fn}! = |v| Host.${set_sym}!(v)
+            _ => ""
+        }
+    \\    # property ${p.name} : ${ty}
+    \\${getter_block}
+    \\${setter_block}
+}
+
+methods_block_live : Try(List(MethodDef), [Missing]) -> Str
+methods_block_live = |maybe|
+    match maybe {
+        Ok(ms) => Str.join_with(ms.map(method_def_live), "\n")
+        _ => ""
+    }
+
+properties_block_live : Try(List(PropertyDef), [Missing]) -> Str
+properties_block_live = |maybe|
+    match maybe {
+        Ok(ps) => Str.join_with(ps.map(property_defs_live), "\n")
+        _ => ""
+    }
+
+enum_def_line : EnumDef -> Str
+enum_def_line = |e| {
+    ename = roc_type_ident(e.name)
+    values = Str.join_with(e.values.map(|v| v.name), ", ")
+    \\    ${ename} : [${values}]
+}
+
+enums_block : Try(List(EnumDef), [Missing]) -> Str
+enums_block = |maybe|
+    match maybe {
+        Ok(ens) => Str.join_with(ens.map(enum_def_line), "\n")
+        _ => ""
+    }
+
+signal_def_line : SignalDef -> Str
+signal_def_line = |sig| {
+    args =
+        match sig.arguments {
+            Ok(a) if !(a.is_empty()) =>
+                Str.join_with(a.map(|x| "${x.name} : ${c_to_roc_type(x.type)}"), ", ")
+            _ => "()"
+        }
+    \\    # signal ${sig.name} : ${args}
+}
+
+signals_block : Try(List(SignalDef), [Missing]) -> Str
+signals_block = |maybe|
+    match maybe {
+        Ok(ss) => Str.join_with(ss.map(signal_def_line), "\n")
+        _ => ""
+    }
+
+# =============================================================================
+# Host.roc — declarations for every util, method, property get/set
+# =============================================================================
+
+host_method_decl : Str, MethodDef -> Str
+host_method_decl = |owner, md| {
+    sym = host_method_symbol(md.name, md.hash)
+    args_ty = method_arg_types(md)
+    ret = method_return_type(md)
+    \\    # ${owner}.${md.name}
+    \\    ${sym}! : ${args_ty} -> ${ret}
+}
+
+host_property_decls : Str, PropertyDef -> Str
+host_property_decls = |_owner, p| {
+    ty = c_to_roc_type(p.type)
+    getter_fn =
+        match p.getter {
+            Ok(g) => roc_fn_name(g)
+            _ => "get_${roc_fn_name(p.name)}"
+        }
+    setter_fn =
+        match p.setter {
+            Ok(s) => roc_fn_name(s)
+            _ => "set_${roc_fn_name(p.name)}"
+        }
+    get_line =
+        \\    ${getter_fn}_prop! : () -> ${ty}
+    set_line =
+        match p.setter {
+            Ok(_) =>
+                \\    ${setter_fn}_prop! : ${ty} -> {}
+            _ => ""
+        }
+    \\${get_line}
+    \\${set_line}
+}
 
 host_to_roc_source_str : ExtensionApi -> Str
 host_to_roc_source_str = |eapi| {
-    util_stubs =
+
+    util_decls =
         Str.join_with(
-            eapi.utility_functions.map(|uf|
-                \\    # util_${uf.name}_${uf.hash.to_str()}!
+            eapi.utility_functions.map(|uf| {
+                ret =
+                    match uf.return_type {
+                        Ok(rt) => c_to_roc_type(rt)
+                        _ => "{}"
+                    }
+                args =
+                    match uf.arguments {
+                        Ok(a) if !(a.is_empty()) =>
+                            Str.join_with(a.map(|x| c_to_roc_type(x.type)), ", ")
+                        _ => "()"
+                    }
+                sym = "util_${roc_fn_name(uf.name)}_${uf.hash.to_str()}"
+                \\    ${sym}! : ${args} -> ${ret}
+            }),
+            "\n",
+        )
+
+    sing_decls =
+        Str.join_with(
+            eapi.singletons.map(|s|
+                \\    get_singleton_${roc_fn_name(s.name)}! : () -> U64
             ),
             "\n",
         )
-    sing_stubs =
+
+    builtin_method_decls =
         Str.join_with(
-            eapi.singletons.map(|s| "    # get_singleton_${s.name}!"),
+            eapi.builtin_classes.map(|bic| {
+                match bic.methods {
+                    Ok(ms) =>
+                        Str.join_with(ms.map(|md| host_method_decl(bic.name, md)), "\n")
+                    _ => ""
+                }
+            }),
             "\n",
         )
-    \\# AUTO-GENERATED Host surface
+
+    class_method_decls =
+        Str.join_with(
+            eapi.classes.map(|cls| {
+                match cls.methods {
+                    Ok(ms) =>
+                        Str.join_with(ms.map(|md| host_method_decl(cls.name, md)), "\n")
+                    _ => ""
+                }
+            }),
+            "\n",
+        )
+
+    class_prop_decls =
+        Str.join_with(
+            eapi.classes.map(|cls| {
+                match cls.properties {
+                    Ok(ps) =>
+                        Str.join_with(ps.map(|p| host_property_decls(cls.name, p)), "\n")
+                    _ => ""
+                }
+            }),
+            "\n",
+        )
+
+    \\# AUTO-GENERATED Host surface — wire via roc glue / Zig exports
+    \\# Symbols match src/zig_platform_abi_impl.zig (godot_roc_*).
     \\Host := {
     \\}.{
-    \\${sing_stubs}
-    \\${util_stubs}
+    \\    # --- singletons ---
+    \\${sing_decls}
+    \\
+    \\    # --- utility functions ---
+    \\${util_decls}
+    \\
+    \\    # --- builtin class methods ---
+    \\${builtin_method_decls}
+    \\
+    \\    # --- engine class methods ---
+    \\${class_method_decls}
+    \\
+    \\    # --- engine class property get/set ---
+    \\${class_prop_decls}
     \\}
 }
 
-# --- GlobalConstants: nominal module + lowercase values -------------------
+# =============================================================================
+# Meta modules
+# =============================================================================
 
 global_constants_to_roc_source_str : ExtensionApi -> Str
 global_constants_to_roc_source_str = |eapi| {
@@ -396,14 +708,12 @@ global_constants_to_roc_source_str = |eapi| {
             }),
             "\n",
         )
-    \\# AUTO-GENERATED global_constants
+    \\# AUTO-GENERATED
     \\GlobalConstants := {
     \\}.{
     \\${body}
     \\}
 }
-
-# --- GlobalEnums: nominal module + associated tag unions ------------------
 
 global_enums_to_roc_source_str : ExtensionApi -> Str
 global_enums_to_roc_source_str = |eapi| {
@@ -422,14 +732,12 @@ global_enums_to_roc_source_str = |eapi| {
             }),
             "\n",
         )
-    \\# AUTO-GENERATED global_enums
+    \\# AUTO-GENERATED
     \\GlobalEnums := {
     \\}.{
     \\${body}
     \\}
 }
-
-# --- sizes / offsets / native / utility: nominal + comments only ----------
 
 builtin_class_sizes_to_roc_source_str : ExtensionApi -> Str
 builtin_class_sizes_to_roc_source_str = |eapi| {
@@ -441,12 +749,11 @@ builtin_class_sizes_to_roc_source_str = |eapi| {
                         bcs.sizes.map(|ns| "    # ${ns.name} = ${ns.size.to_str()}"),
                         "\n",
                     )
-                \\    # build_configuration: ${bcs.build_configuration}
+                \\    # ${bcs.build_configuration}
                 \\${lines}
             }),
             "\n",
         )
-    \\# AUTO-GENERATED builtin_class_sizes
     \\BuiltinClassSizes := {
     \\}.{
     \\${body}
@@ -466,17 +773,16 @@ builtin_class_member_offsets_to_roc_source_str = |eapi| {
                                     bc.members.map(|m| "    #   ${m.member} @ ${m.offset.to_str()}"),
                                     "\n",
                                 )
-                            \\    # class ${bc.name}
+                            \\    # ${bc.name}
                             \\${ms}
                         }),
                         "\n",
                     )
-                \\    # build_configuration: ${bco.build_configuration}
+                \\    # ${bco.build_configuration}
                 \\${classes}
             }),
             "\n",
         )
-    \\# AUTO-GENERATED builtin_class_member_offsets
     \\BuiltinClassMemberOffsets := {
     \\}.{
     \\${body}
@@ -490,7 +796,6 @@ native_structures_to_roc_source_str = |eapi| {
             eapi.native_structures.map(|ns| "    # ${ns.name}: ${ns.format}"),
             "\n",
         )
-    \\# AUTO-GENERATED native_structures
     \\NativeStructures := {
     \\}.{
     \\${body}
@@ -509,72 +814,26 @@ utility_functions_to_roc_source_str = |eapi| {
                     }
                 args =
                     match uf.arguments {
-                        Ok(a) if !(a.is_empty()) => Str.join_with(a.map(|x| c_to_roc_type(x.type)), ", ")
-                        _ => "{}"
+                        Ok(a) if !(a.is_empty()) =>
+                            Str.join_with(a.map(|x| c_to_roc_type(x.type)), ", ")
+                        _ => "()"
                     }
-                \\    # ${uf.name}! : ${args} -> ${ret}  # hash ${uf.hash.to_str()}
+                fn = roc_fn_name(uf.name)
+                sym = "util_${fn}_${uf.hash.to_str()}"
+                \\    ${fn}! : ${args} -> ${ret}
+                \\    ${fn}! = Host.${sym}!
             }),
             "\n",
         )
-    \\# AUTO-GENERATED utility_functions
     \\UtilityFunctions := {
     \\}.{
     \\${body}
     \\}
 }
 
-# --- method helpers -------------------------------------------------------
-
-method_arg_types : MethodDef -> Str
-method_arg_types = |md|
-    match md.arguments {
-        Ok(args) if !(args.is_empty()) => Str.join_with(args.map(|a| c_to_roc_type(a.type)), ", ")
-        _ => "()"
-    }
-
-method_return_type : MethodDef -> Str
-method_return_type = |md|
-    match md.return_type {
-        Ok(rt) => c_to_roc_type(rt)
-        _ =>
-            match md.return_value {
-                Ok(rv) => c_to_roc_type(rv.type)
-                _ => "{}"
-            }
-    }
-
-method_def_line : MethodDef -> Str
-method_def_line = |md|
-    \\    # ${md.name}! : ${method_arg_types(md)} -> ${method_return_type(md)}
-    \\    # ${md.name}! = Host.${md.name}_${md.hash.to_str()}!
-
-property_def_line : PropertyDef -> Str
-property_def_line = |p|
-    \\    # property ${p.name} : ${c_to_roc_type(p.type)}
-
-signal_def_line : SignalDef -> Str
-signal_def_line = |sig| {
-    args =
-        match sig.arguments {
-            Ok(a) if !(a.is_empty()) => Str.join_with(a.map(|x| "${x.name} : ${c_to_roc_type(x.type)}"), ", ")
-            _ => "()"
-        }
-    \\    # signal ${sig.name} : ${args}
-}
-
-enum_def_line : EnumDef -> Str
-enum_def_line = |e| {
-    ename = roc_type_ident(e.name)
-    values = Str.join_with(e.values.map(|v| v.name), ", ")
-    \\    ${ename} : [${values}]
-}
-
-methods_block = |maybe| match maybe { Ok(ms) => Str.join_with(ms.map(method_def_line), "\n") _ => "" }
-properties_block = |maybe| match maybe { Ok(ps) => Str.join_with(ps.map(property_def_line), "\n") _ => "" }
-signals_block = |maybe| match maybe { Ok(ss) => Str.join_with(ss.map(signal_def_line), "\n") _ => "" }
-enums_block = |maybe| match maybe { Ok(es) => Str.join_with(es.map(enum_def_line), "\n") _ => "" }
-
-# --- builtins (sibling imports: bare module name, same directory) ---------
+# =============================================================================
+# Builtin classes
+# =============================================================================
 
 builtin_class_to_roc_source_str : BuiltinClass -> Str
 builtin_class_to_roc_source_str = |bic| {
@@ -614,7 +873,6 @@ builtin_class_to_roc_source_str = |bic| {
             },
         )
 
-    # SAME directory as this module → do NOT prefix engine/builtin_classes/
     import_lines =
         Str.join_with(unique.map(|t| "import ${t} as ${t}"), "\n")
 
@@ -689,12 +947,17 @@ builtin_class_to_roc_source_str = |bic| {
     \\${constructors_str}
     \\${constants_str}
     \\${enums_block(bic.enums)}
-    \\${methods_block(bic.methods)}
+    \\
+    \\    # --- methods ---
+    \\${methods_block_live(bic.methods)}
+    \\
     \\${operators_str}
     \\}
 }
 
-# --- classes / singletons -------------------------------------------------
+# =============================================================================
+# Engine classes
+# =============================================================================
 
 class_to_roc_source_str : ClassDef -> Str
 class_to_roc_source_str = |cls| {
@@ -709,8 +972,13 @@ class_to_roc_source_str = |cls| {
     \\    ptr : U64,
     \\}.{
     \\${enums_block(cls.enums)}
-    \\${properties_block(cls.properties)}
-    \\${methods_block(cls.methods)}
+    \\
+    \\    # --- properties (get_* / set_*) ---
+    \\${properties_block_live(cls.properties)}
+    \\
+    \\    # --- methods ---
+    \\${methods_block_live(cls.methods)}
+    \\
     \\${signals_block(cls.signals)}
     \\}
 }
@@ -722,36 +990,188 @@ singleton_to_roc_source_str = |st| {
     \\${mod_name} := {
     \\    ptr : U64,
     \\}.{
+    \\    get! : () -> ${mod_name}
+    \\    get! = |_| { { ptr: Host.get_singleton_${roc_fn_name(st.name)}!() } }
     \\}
 }
 
-# --- Zig ABI stubs --------------------------------------------------------
+# =============================================================================
+# Zig C-ABI: utils, singletons, builtin methods, class methods, properties
+# =============================================================================
+
+zig_export_method : Str, MethodDef -> Str
+zig_export_method = |owner, md| {
+    sym = host_method_symbol(md.name, md.hash)
+    c_name = "godot_roc_${sym}"
+    ret =
+        match md.return_type {
+            Ok(t) => c_to_zig_ret(t)
+            _ =>
+                match md.return_value {
+                    Ok(rv) => c_to_zig_ret(rv.type)
+                    _ => "void"
+                }
+        }
+    default_ret =
+        match ret {
+            "u8" => "return 0;"
+            "i64" => "return 0;"
+            "f64" => "return 0;"
+            _ => ""
+        }
+    \\
+    \\/// ${owner}.${md.name}  hash=${md.hash.to_str()}
+    \\export fn ${c_name}() callconv(.c) ${ret} {
+    \\    // TODO: getMethodBind("${owner}", "${md.name}", ${md.hash.to_str()}); ptrcall(...)
+    \\    ${default_ret}
+    \\}
+}
+
+zig_export_property : Str, PropertyDef -> Str
+zig_export_property = |owner, p| {
+    ty = p.type
+    zig_ty = c_to_zig_ret(ty)
+    getter_fn =
+        match p.getter {
+            Ok(g) => roc_fn_name(g)
+            _ => "get_${roc_fn_name(p.name)}"
+        }
+    setter_fn =
+        match p.setter {
+            Ok(s) => roc_fn_name(s)
+            _ => "set_${roc_fn_name(p.name)}"
+        }
+    get_default =
+        match zig_ty {
+            "u8" => "return 0;"
+            "i64" => "return 0;"
+            "f64" => "return 0;"
+            _ => ""
+        }
+    get_fn =
+        \\
+        \\/// ${owner} property ${p.name} getter
+        \\export fn godot_roc_${getter_fn}_prop() callconv(.c) ${zig_ty} {
+        \\    // TODO: method bind for ${getter_fn} on ${owner}
+        \\    ${get_default}
+        \\}
+    set_fn =
+        match p.setter {
+            Ok(_) =>
+                \\
+                \\/// ${owner} property ${p.name} setter
+                \\export fn godot_roc_${setter_fn}_prop() callconv(.c) void {
+                \\    // TODO: method bind for ${setter_fn} on ${owner}
+                \\}
+            _ => ""
+        }
+    "${get_fn}${set_fn}"
+}
 
 zig_platform_abi_impl_to_str : ExtensionApi -> Str
 zig_platform_abi_impl_to_str = |eapi| {
+
     utils =
         Str.join_with(
-            eapi.utility_functions.map(|uf|
+            eapi.utility_functions.map(|uf| {
+                sym = "util_${roc_fn_name(uf.name)}_${uf.hash.to_str()}"
+                ret = c_to_zig_ret_from_try(uf.return_type)
+                default_ret =
+                    match ret {
+                        "u8" => "return 0;"
+                        "i64" => "return 0;"
+                        "f64" => "return 0;"
+                        _ => ""
+                    }
                 \\
-                \\export fn godot_roc_util_${uf.name}_${uf.hash.to_str()}() callconv(.c) void {
-                \\    // TODO: GDExtension utility ${uf.name}
+                \\export fn godot_roc_${sym}() callconv(.c) ${ret} {
+                \\    // TODO: utility ${uf.name} hash ${uf.hash.to_str()}
+                \\    ${default_ret}
                 \\}
-            ),
+            }),
             "\n",
         )
+
     sings =
         Str.join_with(
             eapi.singletons.map(|s|
                 \\
-                \\export fn godot_roc_get_singleton_${s.name}() callconv(.c) u64 {
-                \\    return 0; // TODO: ${s.name}
+                \\export fn godot_roc_get_singleton_${roc_fn_name(s.name)}() callconv(.c) u64 {
+                \\    return 0; // TODO singleton ${s.name}
                 \\}
             ),
             "\n",
         )
-    \\//! AUTO-GENERATED C-ABI for Roc Host / roc glue
+
+    builtin_methods =
+        Str.join_with(
+            eapi.builtin_classes.map(|bic| {
+                match bic.methods {
+                    Ok(ms) =>
+                        Str.join_with(ms.map(|md| zig_export_method(bic.name, md)), "\n")
+                    _ => ""
+                }
+            }),
+            "\n",
+        )
+
+    class_methods =
+        Str.join_with(
+            eapi.classes.map(|cls| {
+                match cls.methods {
+                    Ok(ms) =>
+                        Str.join_with(ms.map(|md| zig_export_method(cls.name, md)), "\n")
+                    _ => ""
+                }
+            }),
+            "\n",
+        )
+
+    class_props =
+        Str.join_with(
+            eapi.classes.map(|cls| {
+                match cls.properties {
+                    Ok(ps) =>
+                        Str.join_with(ps.map(|p| zig_export_property(cls.name, p)), "\n")
+                    _ => ""
+                }
+            }),
+            "\n",
+        )
+
+    \\//! AUTO-GENERATED by scripts/extension_api.generate.roc
+    \\//! C-ABI for Roc Host (roc glue). Implement TODO bodies with GDExtension ptrcalls.
+    \\//!
+    \\//! Naming:
+    \\//!   Host.<fn>_<hash>!     ↔  export fn godot_roc_<fn>_<hash>
+    \\//!   Host.<get>_prop!      ↔  export fn godot_roc_<get>_prop
+    \\//!   Host.util_<fn>_<hash>! ↔ export fn godot_roc_util_<fn>_<hash>
+    \\
     \\const std = @import("std");
+    \\
+    \\// ---------------------------------------------------------------------------
+    \\// Singletons
+    \\// ---------------------------------------------------------------------------
     \\${sings}
+    \\
+    \\// ---------------------------------------------------------------------------
+    \\// @GlobalScope utilities
+    \\// ---------------------------------------------------------------------------
     \\${utils}
+    \\
+    \\// ---------------------------------------------------------------------------
+    \\// Builtin class methods
+    \\// ---------------------------------------------------------------------------
+    \\${builtin_methods}
+    \\
+    \\// ---------------------------------------------------------------------------
+    \\// Engine class methods
+    \\// ---------------------------------------------------------------------------
+    \\${class_methods}
+    \\
+    \\// ---------------------------------------------------------------------------
+    \\// Engine class properties (get_* / set_*)
+    \\// ---------------------------------------------------------------------------
+    \\${class_props}
     \\
 }
