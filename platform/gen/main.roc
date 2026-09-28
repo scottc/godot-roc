@@ -1,5 +1,4 @@
 # AUTO-GENERATED Godot Roc platform — do not edit
-# Hosted entrypoints live in Host.roc; Zig implements godot_roc_*.
 platform "godot-roc"
     requires {} {}
     exposes [
@@ -1127,8 +1126,7 @@ platform "godot-roc"
         XRServerSingleton
     ]
     packages {}
-    imports {}
-    provides []
+    provides {}
 
 import Host
 import engine/GlobalConstants
