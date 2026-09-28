@@ -1,9 +1,14 @@
-# class StandardMaterial3D → StandardMaterial3D
+# class StandardMaterial3D
 # inherits: BaseMaterial3D
 StandardMaterial3D := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

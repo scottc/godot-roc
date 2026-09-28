@@ -1,38 +1,67 @@
-# class PhysicsPointQueryParameters2D → PhysicsPointQueryParameters2D
+# class PhysicsPointQueryParameters2D
 # inherits: RefCounted
 PhysicsPointQueryParameters2D := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
     # property position : Vector2
+    get_position! : () -> Vector2
+    get_position! = |_| Host.PhysicsPointQueryParameters2D_get_position_prop!
+    set_position! : Vector2 -> {}
+    set_position! = |v| Host.PhysicsPointQueryParameters2D_set_position_prop!(v)
     # property canvas_instance_id : I32
+    get_canvas_instance_id! : () -> I32
+    get_canvas_instance_id! = |_| Host.PhysicsPointQueryParameters2D_get_canvas_instance_id_prop!
+    set_canvas_instance_id! : I32 -> {}
+    set_canvas_instance_id! = |v| Host.PhysicsPointQueryParameters2D_set_canvas_instance_id_prop!(v)
     # property collision_mask : I32
+    get_collision_mask! : () -> I32
+    get_collision_mask! = |_| Host.PhysicsPointQueryParameters2D_get_collision_mask_prop!
+    set_collision_mask! : I32 -> {}
+    set_collision_mask! = |v| Host.PhysicsPointQueryParameters2D_set_collision_mask_prop!(v)
     # property exclude : typedarray::RID
+    get_exclude! : () -> typedarray::RID
+    get_exclude! = |_| Host.PhysicsPointQueryParameters2D_get_exclude_prop!
+    set_exclude! : typedarray::RID -> {}
+    set_exclude! = |v| Host.PhysicsPointQueryParameters2D_set_exclude_prop!(v)
     # property collide_with_bodies : Bool
+    is_collide_with_bodies_enabled! : () -> Bool
+    is_collide_with_bodies_enabled! = |_| Host.PhysicsPointQueryParameters2D_is_collide_with_bodies_enabled_prop!
+    set_collide_with_bodies! : Bool -> {}
+    set_collide_with_bodies! = |v| Host.PhysicsPointQueryParameters2D_set_collide_with_bodies_prop!(v)
     # property collide_with_areas : Bool
-    # set_position! : Vector2 -> {}
-    # set_position! = Host.set_position_743155724!
-    # get_position! : () -> Vector2
-    # get_position! = Host.get_position_3341600327!
-    # set_canvas_instance_id! : I32 -> {}
-    # set_canvas_instance_id! = Host.set_canvas_instance_id_1286410249!
-    # get_canvas_instance_id! : () -> I32
-    # get_canvas_instance_id! = Host.get_canvas_instance_id_3905245786!
-    # set_collision_mask! : I32 -> {}
-    # set_collision_mask! = Host.set_collision_mask_1286410249!
-    # get_collision_mask! : () -> I32
-    # get_collision_mask! = Host.get_collision_mask_3905245786!
-    # set_exclude! : typedarray::RID -> {}
-    # set_exclude! = Host.set_exclude_381264803!
-    # get_exclude! : () -> typedarray::RID
-    # get_exclude! = Host.get_exclude_3995934104!
-    # set_collide_with_bodies! : Bool -> {}
-    # set_collide_with_bodies! = Host.set_collide_with_bodies_2586408642!
-    # is_collide_with_bodies_enabled! : () -> Bool
-    # is_collide_with_bodies_enabled! = Host.is_collide_with_bodies_enabled_36873697!
-    # set_collide_with_areas! : Bool -> {}
-    # set_collide_with_areas! = Host.set_collide_with_areas_2586408642!
-    # is_collide_with_areas_enabled! : () -> Bool
-    # is_collide_with_areas_enabled! = Host.is_collide_with_areas_enabled_36873697!
+    is_collide_with_areas_enabled! : () -> Bool
+    is_collide_with_areas_enabled! = |_| Host.PhysicsPointQueryParameters2D_is_collide_with_areas_enabled_prop!
+    set_collide_with_areas! : Bool -> {}
+    set_collide_with_areas! = |v| Host.PhysicsPointQueryParameters2D_set_collide_with_areas_prop!(v)
+
+    # --- methods ---
+    set_position! : Vector2 -> {}
+    set_position! = |position| Host.PhysicsPointQueryParameters2D_set_position_743155724!(position)
+    get_position! : () -> Vector2
+    get_position! = |_| Host.PhysicsPointQueryParameters2D_get_position_3341600327!
+    set_canvas_instance_id! : I32 -> {}
+    set_canvas_instance_id! = |canvas_instance_id| Host.PhysicsPointQueryParameters2D_set_canvas_instance_id_1286410249!(canvas_instance_id)
+    get_canvas_instance_id! : () -> I32
+    get_canvas_instance_id! = |_| Host.PhysicsPointQueryParameters2D_get_canvas_instance_id_3905245786!
+    set_collision_mask! : I32 -> {}
+    set_collision_mask! = |collision_mask| Host.PhysicsPointQueryParameters2D_set_collision_mask_1286410249!(collision_mask)
+    get_collision_mask! : () -> I32
+    get_collision_mask! = |_| Host.PhysicsPointQueryParameters2D_get_collision_mask_3905245786!
+    set_exclude! : typedarray::RID -> {}
+    set_exclude! = |exclude| Host.PhysicsPointQueryParameters2D_set_exclude_381264803!(exclude)
+    get_exclude! : () -> typedarray::RID
+    get_exclude! = |_| Host.PhysicsPointQueryParameters2D_get_exclude_3995934104!
+    set_collide_with_bodies! : Bool -> {}
+    set_collide_with_bodies! = |enable| Host.PhysicsPointQueryParameters2D_set_collide_with_bodies_2586408642!(enable)
+    is_collide_with_bodies_enabled! : () -> Bool
+    is_collide_with_bodies_enabled! = |_| Host.PhysicsPointQueryParameters2D_is_collide_with_bodies_enabled_36873697!
+    set_collide_with_areas! : Bool -> {}
+    set_collide_with_areas! = |enable| Host.PhysicsPointQueryParameters2D_set_collide_with_areas_2586408642!(enable)
+    is_collide_with_areas_enabled! : () -> Bool
+    is_collide_with_areas_enabled! = |_| Host.PhysicsPointQueryParameters2D_is_collide_with_areas_enabled_36873697!
+
 
 }

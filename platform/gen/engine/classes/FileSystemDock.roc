@@ -1,16 +1,21 @@
-# class FileSystemDock → FileSystemDock
+# class FileSystemDock
 # inherits: EditorDock
 FileSystemDock := {
     ptr : U64,
 }.{
 
 
-    # navigate_to_path! : String -> {}
-    # navigate_to_path! = Host.navigate_to_path_83702148!
-    # add_resource_tooltip_plugin! : EditorResourceTooltipPlugin -> {}
-    # add_resource_tooltip_plugin! = Host.add_resource_tooltip_plugin_2258356838!
-    # remove_resource_tooltip_plugin! : EditorResourceTooltipPlugin -> {}
-    # remove_resource_tooltip_plugin! = Host.remove_resource_tooltip_plugin_2258356838!
+    # --- properties ---
+
+
+    # --- methods ---
+    navigate_to_path! : String -> {}
+    navigate_to_path! = |path| Host.FileSystemDock_navigate_to_path_83702148!(path)
+    add_resource_tooltip_plugin! : EditorResourceTooltipPlugin -> {}
+    add_resource_tooltip_plugin! = |plugin| Host.FileSystemDock_add_resource_tooltip_plugin_2258356838!(plugin)
+    remove_resource_tooltip_plugin! : EditorResourceTooltipPlugin -> {}
+    remove_resource_tooltip_plugin! = |plugin| Host.FileSystemDock_remove_resource_tooltip_plugin_2258356838!(plugin)
+
     # signal inherit : file : String
     # signal instantiate : files : PackedStringArray
     # signal resource_removed : resource : Resource

@@ -1,13 +1,18 @@
-# class UDSServer → UDSServer
+# class UDSServer
 # inherits: SocketServer
 UDSServer := {
     ptr : U64,
 }.{
 
 
-    # listen! : String -> enum::Error
-    # listen! = Host.listen_166001499!
-    # take_connection! : () -> StreamPeerUDS
-    # take_connection! = Host.take_connection_1623851112!
+    # --- properties ---
+
+
+    # --- methods ---
+    listen! : String -> Error
+    listen! = |path| Host.UDSServer_listen_166001499!(path)
+    take_connection! : () -> StreamPeerUDS
+    take_connection! = |_| Host.UDSServer_take_connection_1623851112!
+
 
 }

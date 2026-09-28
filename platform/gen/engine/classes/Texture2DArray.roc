@@ -1,11 +1,16 @@
-# class Texture2DArray → Texture2DArray
+# class Texture2DArray
 # inherits: ImageTextureLayered
 Texture2DArray := {
     ptr : U64,
 }.{
 
 
-    # create_placeholder! : () -> Resource
-    # create_placeholder! = Host.create_placeholder_121922552!
+    # --- properties ---
+
+
+    # --- methods ---
+    create_placeholder! : () -> Resource
+    create_placeholder! = |_| Host.Texture2DArray_create_placeholder_121922552!
+
 
 }

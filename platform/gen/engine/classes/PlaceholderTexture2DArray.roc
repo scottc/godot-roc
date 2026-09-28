@@ -1,9 +1,14 @@
-# class PlaceholderTexture2DArray → PlaceholderTexture2DArray
+# class PlaceholderTexture2DArray
 # inherits: PlaceholderTextureLayered
 PlaceholderTexture2DArray := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

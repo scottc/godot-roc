@@ -1,9 +1,14 @@
-# class CompressedCubemapArray → CompressedCubemapArray
+# class CompressedCubemapArray
 # inherits: CompressedTextureLayered
 CompressedCubemapArray := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

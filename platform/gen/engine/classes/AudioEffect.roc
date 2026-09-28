@@ -1,11 +1,16 @@
-# class AudioEffect → AudioEffect
+# class AudioEffect
 # inherits: Resource
 AudioEffect := {
     ptr : U64,
 }.{
 
 
-    # _instantiate! : () -> AudioEffectInstance
-    # _instantiate! = Host._instantiate_1659796816!
+    # --- properties ---
+
+
+    # --- methods ---
+    _instantiate! : () -> AudioEffectInstance
+    _instantiate! = |_| Host.AudioEffect__instantiate_1659796816!
+
 
 }

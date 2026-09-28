@@ -1,9 +1,14 @@
-# class VisualShaderNodeTexture2DArrayParameter → VisualShaderNodeTexture2DArrayParameter
+# class VisualShaderNodeTexture2DArrayParameter
 # inherits: VisualShaderNodeTextureParameter
 VisualShaderNodeTexture2DArrayParameter := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

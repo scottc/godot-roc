@@ -1,9 +1,14 @@
-# class VisualShaderNodeFresnel → VisualShaderNodeFresnel
+# class VisualShaderNodeFresnel
 # inherits: VisualShaderNode
 VisualShaderNodeFresnel := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

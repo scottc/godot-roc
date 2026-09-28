@@ -1,9 +1,14 @@
-# class PointMesh → PointMesh
+# class PointMesh
 # inherits: PrimitiveMesh
 PointMesh := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

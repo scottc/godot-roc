@@ -1,9 +1,14 @@
-# class VisualShaderNodeVectorLen → VisualShaderNodeVectorLen
+# class VisualShaderNodeVectorLen
 # inherits: VisualShaderNodeVectorBase
 VisualShaderNodeVectorLen := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

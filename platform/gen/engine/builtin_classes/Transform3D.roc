@@ -1,4 +1,4 @@
-# builtin Transform3D → Transform3D
+# builtin Transform3D
 import Basis as Basis
 import Vector3 as Vector3
 
@@ -8,55 +8,33 @@ Transform3D := {
 }.{
     construct_default! : Basis, Vector3 -> Transform3D
     construct_default! = |basis, origin| { { basis, origin } }
-    # construct_1! : Transform3D -> Transform3D
-    # construct_2! : Basis, Vector3 -> Transform3D
-    # construct_3! : Vector3, Vector3, Vector3, Vector3 -> Transform3D
-    # construct_4! : Projection -> Transform3D
-    # identity = construct_default!(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-    # flip_x = construct_default!(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-    # flip_y = construct_default!(1, 0, 0, 0, -1, 0, 0, 0, 1, 0, 0, 0)
-    # flip_z = construct_default!(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
 
-    # inverse! : () -> Transform3D
-    # inverse! = Host.inverse_3816817146!
-    # affine_inverse! : () -> Transform3D
-    # affine_inverse! = Host.affine_inverse_3816817146!
-    # orthonormalized! : () -> Transform3D
-    # orthonormalized! = Host.orthonormalized_3816817146!
-    # rotated! : Vector3, F32 -> Transform3D
-    # rotated! = Host.rotated_1563203923!
-    # rotated_local! : Vector3, F32 -> Transform3D
-    # rotated_local! = Host.rotated_local_1563203923!
-    # scaled! : Vector3 -> Transform3D
-    # scaled! = Host.scaled_1405596198!
-    # scaled_local! : Vector3 -> Transform3D
-    # scaled_local! = Host.scaled_local_1405596198!
-    # translated! : Vector3 -> Transform3D
-    # translated! = Host.translated_1405596198!
-    # translated_local! : Vector3 -> Transform3D
-    # translated_local! = Host.translated_local_1405596198!
-    # looking_at! : Vector3, Vector3, Bool -> Transform3D
-    # looking_at! = Host.looking_at_90889270!
-    # interpolate_with! : Transform3D, F32 -> Transform3D
-    # interpolate_with! = Host.interpolate_with_1786453358!
-    # is_equal_approx! : Transform3D -> Bool
-    # is_equal_approx! = Host.is_equal_approx_696001652!
-    # is_finite! : () -> Bool
-    # is_finite! = Host.is_finite_3918633141!
-    # op ==
-    # op !=
-    # op not
-    # op *
-    # op /
-    # op *
-    # op /
-    # op *
-    # op *
-    # op *
-    # op ==
-    # op !=
-    # op *
-    # op in
-    # op in
-    # op *
+
+    # --- methods ---
+    inverse! : () -> Transform3D
+    inverse! = |_| Host.Transform3D_inverse_3816817146!
+    affine_inverse! : () -> Transform3D
+    affine_inverse! = |_| Host.Transform3D_affine_inverse_3816817146!
+    orthonormalized! : () -> Transform3D
+    orthonormalized! = |_| Host.Transform3D_orthonormalized_3816817146!
+    rotated! : Vector3, F32 -> Transform3D
+    rotated! = |axis, angle| Host.Transform3D_rotated_1563203923!(axis, angle)
+    rotated_local! : Vector3, F32 -> Transform3D
+    rotated_local! = |axis, angle| Host.Transform3D_rotated_local_1563203923!(axis, angle)
+    scaled! : Vector3 -> Transform3D
+    scaled! = |scale| Host.Transform3D_scaled_1405596198!(scale)
+    scaled_local! : Vector3 -> Transform3D
+    scaled_local! = |scale| Host.Transform3D_scaled_local_1405596198!(scale)
+    translated! : Vector3 -> Transform3D
+    translated! = |offset| Host.Transform3D_translated_1405596198!(offset)
+    translated_local! : Vector3 -> Transform3D
+    translated_local! = |offset| Host.Transform3D_translated_local_1405596198!(offset)
+    looking_at! : Vector3, Vector3, Bool -> Transform3D
+    looking_at! = |target, up, use_model_front| Host.Transform3D_looking_at_90889270!(target, up, use_model_front)
+    interpolate_with! : Transform3D, F32 -> Transform3D
+    interpolate_with! = |xform, weight| Host.Transform3D_interpolate_with_1786453358!(xform, weight)
+    is_equal_approx! : Transform3D -> Bool
+    is_equal_approx! = |xform| Host.Transform3D_is_equal_approx_696001652!(xform)
+    is_finite! : () -> Bool
+    is_finite! = |_| Host.Transform3D_is_finite_3918633141!
 }

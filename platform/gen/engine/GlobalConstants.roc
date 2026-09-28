@@ -1,4 +1,3 @@
-# AUTO-GENERATED global_constants
 GlobalConstants := {
 }.{
     uint8_max : I64

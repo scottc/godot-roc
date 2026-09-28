@@ -1,4 +1,3 @@
-# AUTO-GENERATED native_structures
 NativeStructures := {
 }.{
     # AudioFrame: float left;float right

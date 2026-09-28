@@ -1,9 +1,14 @@
-# class VisualShaderNodeProximityFade → VisualShaderNodeProximityFade
+# class VisualShaderNodeProximityFade
 # inherits: VisualShaderNode
 VisualShaderNodeProximityFade := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

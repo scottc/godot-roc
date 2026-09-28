@@ -1,9 +1,14 @@
-# class AnimationNodeAdd3 → AnimationNodeAdd3
+# class AnimationNodeAdd3
 # inherits: AnimationNodeSync
 AnimationNodeAdd3 := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

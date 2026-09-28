@@ -1,9 +1,14 @@
-# class AudioStreamPlaybackOggVorbis → AudioStreamPlaybackOggVorbis
+# class AudioStreamPlaybackOggVorbis
 # inherits: AudioStreamPlaybackResampled
 AudioStreamPlaybackOggVorbis := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

@@ -1,11 +1,16 @@
-# class PackedDataContainerRef → PackedDataContainerRef
+# class PackedDataContainerRef
 # inherits: RefCounted
 PackedDataContainerRef := {
     ptr : U64,
 }.{
 
 
-    # size! : () -> I32
-    # size! = Host.size_3905245786!
+    # --- properties ---
+
+
+    # --- methods ---
+    size! : () -> I32
+    size! = |_| Host.PackedDataContainerRef_size_3905245786!
+
 
 }

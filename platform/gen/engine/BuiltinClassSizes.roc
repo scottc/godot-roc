@@ -1,7 +1,6 @@
-# AUTO-GENERATED builtin_class_sizes
 BuiltinClassSizes := {
 }.{
-    # build_configuration: float_32
+    # float_32
     # Nil = 0
     # bool = 1
     # int = 8
@@ -42,7 +41,7 @@ BuiltinClassSizes := {
     # PackedColorArray = 8
     # PackedVector4Array = 8
     # Variant = 24
-    # build_configuration: float_64
+    # float_64
     # Nil = 0
     # bool = 1
     # int = 8
@@ -83,7 +82,7 @@ BuiltinClassSizes := {
     # PackedColorArray = 16
     # PackedVector4Array = 16
     # Variant = 24
-    # build_configuration: double_32
+    # double_32
     # Nil = 0
     # bool = 1
     # int = 8
@@ -124,7 +123,7 @@ BuiltinClassSizes := {
     # PackedColorArray = 8
     # PackedVector4Array = 8
     # Variant = 40
-    # build_configuration: double_64
+    # double_64
     # Nil = 0
     # bool = 1
     # int = 8

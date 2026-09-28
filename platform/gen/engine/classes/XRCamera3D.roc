@@ -1,9 +1,14 @@
-# class XRCamera3D → XRCamera3D
+# class XRCamera3D
 # inherits: Camera3D
 XRCamera3D := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

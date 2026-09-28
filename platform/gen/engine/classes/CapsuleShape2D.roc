@@ -1,23 +1,40 @@
-# class CapsuleShape2D → CapsuleShape2D
+# class CapsuleShape2D
 # inherits: Shape2D
 CapsuleShape2D := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
     # property radius : F32
+    get_radius! : () -> F32
+    get_radius! = |_| Host.CapsuleShape2D_get_radius_prop!
+    set_radius! : F32 -> {}
+    set_radius! = |v| Host.CapsuleShape2D_set_radius_prop!(v)
     # property height : F32
+    get_height! : () -> F32
+    get_height! = |_| Host.CapsuleShape2D_get_height_prop!
+    set_height! : F32 -> {}
+    set_height! = |v| Host.CapsuleShape2D_set_height_prop!(v)
     # property mid_height : F32
-    # set_radius! : F32 -> {}
-    # set_radius! = Host.set_radius_373806689!
-    # get_radius! : () -> F32
-    # get_radius! = Host.get_radius_1740695150!
-    # set_height! : F32 -> {}
-    # set_height! = Host.set_height_373806689!
-    # get_height! : () -> F32
-    # get_height! = Host.get_height_1740695150!
-    # set_mid_height! : F32 -> {}
-    # set_mid_height! = Host.set_mid_height_373806689!
-    # get_mid_height! : () -> F32
-    # get_mid_height! = Host.get_mid_height_1740695150!
+    get_mid_height! : () -> F32
+    get_mid_height! = |_| Host.CapsuleShape2D_get_mid_height_prop!
+    set_mid_height! : F32 -> {}
+    set_mid_height! = |v| Host.CapsuleShape2D_set_mid_height_prop!(v)
+
+    # --- methods ---
+    set_radius! : F32 -> {}
+    set_radius! = |radius| Host.CapsuleShape2D_set_radius_373806689!(radius)
+    get_radius! : () -> F32
+    get_radius! = |_| Host.CapsuleShape2D_get_radius_1740695150!
+    set_height! : F32 -> {}
+    set_height! = |height| Host.CapsuleShape2D_set_height_373806689!(height)
+    get_height! : () -> F32
+    get_height! = |_| Host.CapsuleShape2D_get_height_1740695150!
+    set_mid_height! : F32 -> {}
+    set_mid_height! = |mid_height| Host.CapsuleShape2D_set_mid_height_373806689!(mid_height)
+    get_mid_height! : () -> F32
+    get_mid_height! = |_| Host.CapsuleShape2D_get_mid_height_1740695150!
+
 
 }

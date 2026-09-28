@@ -1,11 +1,16 @@
-# class GDScript → GDScript
+# class GDScript
 # inherits: Script
 GDScript := {
     ptr : U64,
 }.{
 
 
-    # new! : () -> Variant
-    # new! = Host.new_1545262638!
+    # --- properties ---
+
+
+    # --- methods ---
+    new! : () -> Variant
+    new! = |_| Host.GDScript_new_1545262638!
+
 
 }

@@ -1,9 +1,14 @@
-# class VisualShaderNodeRotationByAxis → VisualShaderNodeRotationByAxis
+# class VisualShaderNodeRotationByAxis
 # inherits: VisualShaderNode
 VisualShaderNodeRotationByAxis := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

@@ -68,6 +68,9 @@ main! = |_args| {
     # Write patched glue...
     Path.write_utf8!("src/roc_platform_abi.zig", s2)?
 
+    # zig test...
+    _gdextension_interface_test_out = Cmd.exec!("zig", ["test", "src/roc_platform_abi.zig"])?
+
     Ok({})
 }
 

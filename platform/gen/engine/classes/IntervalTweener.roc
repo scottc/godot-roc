@@ -1,9 +1,14 @@
-# class IntervalTweener → IntervalTweener
+# class IntervalTweener
 # inherits: Tweener
 IntervalTweener := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

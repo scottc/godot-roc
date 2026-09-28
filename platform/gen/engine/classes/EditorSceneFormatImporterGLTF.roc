@@ -1,9 +1,14 @@
-# class EditorSceneFormatImporterGLTF → EditorSceneFormatImporterGLTF
+# class EditorSceneFormatImporterGLTF
 # inherits: EditorSceneFormatImporter
 EditorSceneFormatImporterGLTF := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

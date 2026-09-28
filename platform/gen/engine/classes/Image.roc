@@ -1,4 +1,4 @@
-# class Image → Image
+# class Image
 # inherits: Resource
 Image := {
     ptr : U64,
@@ -10,158 +10,167 @@ Image := {
     UsedChannels : [USED_CHANNELS_L, USED_CHANNELS_LA, USED_CHANNELS_R, USED_CHANNELS_RG, USED_CHANNELS_RGB, USED_CHANNELS_RGBA]
     CompressSource : [COMPRESS_SOURCE_GENERIC, COMPRESS_SOURCE_SRGB, COMPRESS_SOURCE_NORMAL]
     ASTCFormat : [ASTC_FORMAT_4x4, ASTC_FORMAT_8x8]
+
+    # --- properties ---
     # property data : Dictionary
-    # get_width! : () -> I32
-    # get_width! = Host.get_width_3905245786!
-    # get_height! : () -> I32
-    # get_height! = Host.get_height_3905245786!
-    # get_size! : () -> Vector2i
-    # get_size! = Host.get_size_3690982128!
-    # has_mipmaps! : () -> Bool
-    # has_mipmaps! = Host.has_mipmaps_36873697!
-    # get_format! : () -> enum::Image.Format
-    # get_format! = Host.get_format_3847873762!
-    # get_data! : () -> PackedByteArray
-    # get_data! = Host.get_data_2362200018!
-    # get_data_size! : () -> I32
-    # get_data_size! = Host.get_data_size_3905245786!
-    # convert! : enum::Image.Format -> {}
-    # convert! = Host.convert_2120693146!
-    # get_mipmap_count! : () -> I32
-    # get_mipmap_count! = Host.get_mipmap_count_3905245786!
-    # get_mipmap_offset! : I32 -> I32
-    # get_mipmap_offset! = Host.get_mipmap_offset_923996154!
-    # resize_to_po2! : Bool, enum::Image.Interpolation -> {}
-    # resize_to_po2! = Host.resize_to_po2_4189212329!
-    # resize! : I32, I32, enum::Image.Interpolation -> {}
-    # resize! = Host.resize_994498151!
-    # shrink_x2! : () -> {}
-    # shrink_x2! = Host.shrink_x2_3218959716!
-    # crop! : I32, I32 -> {}
-    # crop! = Host.crop_3937882851!
-    # flip_x! : () -> {}
-    # flip_x! = Host.flip_x_3218959716!
-    # flip_y! : () -> {}
-    # flip_y! = Host.flip_y_3218959716!
-    # generate_mipmaps! : Bool -> enum::Error
-    # generate_mipmaps! = Host.generate_mipmaps_1633102583!
-    # clear_mipmaps! : () -> {}
-    # clear_mipmaps! = Host.clear_mipmaps_3218959716!
-    # create! : I32, I32, Bool, enum::Image.Format -> Image
-    # create! = Host.create_986942177!
-    # create_empty! : I32, I32, Bool, enum::Image.Format -> Image
-    # create_empty! = Host.create_empty_986942177!
-    # create_from_data! : I32, I32, Bool, enum::Image.Format, PackedByteArray -> Image
-    # create_from_data! = Host.create_from_data_299398494!
-    # set_data! : I32, I32, Bool, enum::Image.Format, PackedByteArray -> {}
-    # set_data! = Host.set_data_2740482212!
-    # is_empty! : () -> Bool
-    # is_empty! = Host.is_empty_36873697!
-    # load! : String -> enum::Error
-    # load! = Host.load_166001499!
-    # load_from_file! : String -> Image
-    # load_from_file! = Host.load_from_file_736337515!
-    # save_png! : String -> enum::Error
-    # save_png! = Host.save_png_2113323047!
-    # save_png_to_buffer! : () -> PackedByteArray
-    # save_png_to_buffer! = Host.save_png_to_buffer_2362200018!
-    # save_jpg! : String, F32 -> enum::Error
-    # save_jpg! = Host.save_jpg_2800019068!
-    # save_jpg_to_buffer! : F32 -> PackedByteArray
-    # save_jpg_to_buffer! = Host.save_jpg_to_buffer_592235273!
-    # save_exr! : String, Bool, Bool, F32 -> enum::Error
-    # save_exr! = Host.save_exr_2018602448!
-    # save_exr_to_buffer! : Bool, Bool, F32 -> PackedByteArray
-    # save_exr_to_buffer! = Host.save_exr_to_buffer_1477518536!
-    # save_dds! : String -> enum::Error
-    # save_dds! = Host.save_dds_2113323047!
-    # save_dds_to_buffer! : () -> PackedByteArray
-    # save_dds_to_buffer! = Host.save_dds_to_buffer_2362200018!
-    # save_webp! : String, Bool, F32 -> enum::Error
-    # save_webp! = Host.save_webp_2781156876!
-    # save_webp_to_buffer! : Bool, F32 -> PackedByteArray
-    # save_webp_to_buffer! = Host.save_webp_to_buffer_1214628238!
-    # detect_alpha! : () -> enum::Image.AlphaMode
-    # detect_alpha! = Host.detect_alpha_2030116505!
-    # is_invisible! : () -> Bool
-    # is_invisible! = Host.is_invisible_36873697!
-    # detect_used_channels! : enum::Image.CompressSource -> enum::Image.UsedChannels
-    # detect_used_channels! = Host.detect_used_channels_2703139984!
-    # compress! : enum::Image.CompressMode, enum::Image.CompressSource, enum::Image.ASTCFormat -> enum::Error
-    # compress! = Host.compress_2975424957!
-    # compress_from_channels! : enum::Image.CompressMode, enum::Image.UsedChannels, enum::Image.ASTCFormat -> enum::Error
-    # compress_from_channels! = Host.compress_from_channels_4212890953!
-    # decompress! : () -> enum::Error
-    # decompress! = Host.decompress_166280745!
-    # is_compressed! : () -> Bool
-    # is_compressed! = Host.is_compressed_36873697!
-    # rotate_90! : enum::ClockDirection -> {}
-    # rotate_90! = Host.rotate_90_1901204267!
-    # rotate_180! : () -> {}
-    # rotate_180! = Host.rotate_180_3218959716!
-    # fix_alpha_edges! : () -> {}
-    # fix_alpha_edges! = Host.fix_alpha_edges_3218959716!
-    # premultiply_alpha! : () -> {}
-    # premultiply_alpha! = Host.premultiply_alpha_3218959716!
-    # srgb_to_linear! : () -> {}
-    # srgb_to_linear! = Host.srgb_to_linear_3218959716!
-    # linear_to_srgb! : () -> {}
-    # linear_to_srgb! = Host.linear_to_srgb_3218959716!
-    # normal_map_to_xy! : () -> {}
-    # normal_map_to_xy! = Host.normal_map_to_xy_3218959716!
-    # rgbe_to_srgb! : () -> Image
-    # rgbe_to_srgb! = Host.rgbe_to_srgb_564927088!
-    # bump_map_to_normal_map! : F32 -> {}
-    # bump_map_to_normal_map! = Host.bump_map_to_normal_map_3423495036!
-    # compute_image_metrics! : Image, Bool -> Dictionary
-    # compute_image_metrics! = Host.compute_image_metrics_3080961247!
-    # blit_rect! : Image, Rect2i, Vector2i -> {}
-    # blit_rect! = Host.blit_rect_2903928755!
-    # blit_rect_mask! : Image, Image, Rect2i, Vector2i -> {}
-    # blit_rect_mask! = Host.blit_rect_mask_3383581145!
-    # blend_rect! : Image, Rect2i, Vector2i -> {}
-    # blend_rect! = Host.blend_rect_2903928755!
-    # blend_rect_mask! : Image, Image, Rect2i, Vector2i -> {}
-    # blend_rect_mask! = Host.blend_rect_mask_3383581145!
-    # fill! : Color -> {}
-    # fill! = Host.fill_2920490490!
-    # fill_rect! : Rect2i, Color -> {}
-    # fill_rect! = Host.fill_rect_514693913!
-    # get_used_rect! : () -> Rect2i
-    # get_used_rect! = Host.get_used_rect_410525958!
-    # get_region! : Rect2i -> Image
-    # get_region! = Host.get_region_2601441065!
-    # copy_from! : Image -> {}
-    # copy_from! = Host.copy_from_532598488!
-    # get_pixelv! : Vector2i -> Color
-    # get_pixelv! = Host.get_pixelv_1532707496!
-    # get_pixel! : I32, I32 -> Color
-    # get_pixel! = Host.get_pixel_2165839948!
-    # set_pixelv! : Vector2i, Color -> {}
-    # set_pixelv! = Host.set_pixelv_287851464!
-    # set_pixel! : I32, I32, Color -> {}
-    # set_pixel! = Host.set_pixel_3733378741!
-    # adjust_bcs! : F32, F32, F32 -> {}
-    # adjust_bcs! = Host.adjust_bcs_2385087082!
-    # load_png_from_buffer! : PackedByteArray -> enum::Error
-    # load_png_from_buffer! = Host.load_png_from_buffer_680677267!
-    # load_jpg_from_buffer! : PackedByteArray -> enum::Error
-    # load_jpg_from_buffer! = Host.load_jpg_from_buffer_680677267!
-    # load_webp_from_buffer! : PackedByteArray -> enum::Error
-    # load_webp_from_buffer! = Host.load_webp_from_buffer_680677267!
-    # load_tga_from_buffer! : PackedByteArray -> enum::Error
-    # load_tga_from_buffer! = Host.load_tga_from_buffer_680677267!
-    # load_bmp_from_buffer! : PackedByteArray -> enum::Error
-    # load_bmp_from_buffer! = Host.load_bmp_from_buffer_680677267!
-    # load_ktx_from_buffer! : PackedByteArray -> enum::Error
-    # load_ktx_from_buffer! = Host.load_ktx_from_buffer_680677267!
-    # load_dds_from_buffer! : PackedByteArray -> enum::Error
-    # load_dds_from_buffer! = Host.load_dds_from_buffer_680677267!
-    # load_exr_from_buffer! : PackedByteArray -> enum::Error
-    # load_exr_from_buffer! = Host.load_exr_from_buffer_680677267!
-    # load_svg_from_buffer! : PackedByteArray, F32 -> enum::Error
-    # load_svg_from_buffer! = Host.load_svg_from_buffer_311853421!
-    # load_svg_from_string! : String, F32 -> enum::Error
-    # load_svg_from_string! = Host.load_svg_from_string_3254053600!
+    _get_data! : () -> Dictionary
+    _get_data! = |_| Host.Image__get_data_prop!
+    _set_data! : Dictionary -> {}
+    _set_data! = |v| Host.Image__set_data_prop!(v)
+
+    # --- methods ---
+    get_width! : () -> I32
+    get_width! = |_| Host.Image_get_width_3905245786!
+    get_height! : () -> I32
+    get_height! = |_| Host.Image_get_height_3905245786!
+    get_size! : () -> Vector2i
+    get_size! = |_| Host.Image_get_size_3690982128!
+    has_mipmaps! : () -> Bool
+    has_mipmaps! = |_| Host.Image_has_mipmaps_36873697!
+    get_format! : () -> Image_Format
+    get_format! = |_| Host.Image_get_format_3847873762!
+    get_data! : () -> PackedByteArray
+    get_data! = |_| Host.Image_get_data_2362200018!
+    get_data_size! : () -> I32
+    get_data_size! = |_| Host.Image_get_data_size_3905245786!
+    convert! : Image_Format -> {}
+    convert! = |format| Host.Image_convert_2120693146!(format)
+    get_mipmap_count! : () -> I32
+    get_mipmap_count! = |_| Host.Image_get_mipmap_count_3905245786!
+    get_mipmap_offset! : I32 -> I32
+    get_mipmap_offset! = |mipmap| Host.Image_get_mipmap_offset_923996154!(mipmap)
+    resize_to_po2! : Bool, Image_Interpolation -> {}
+    resize_to_po2! = |square, interpolation| Host.Image_resize_to_po2_4189212329!(square, interpolation)
+    resize! : I32, I32, Image_Interpolation -> {}
+    resize! = |width, height, interpolation| Host.Image_resize_994498151!(width, height, interpolation)
+    shrink_x2! : () -> {}
+    shrink_x2! = |_| Host.Image_shrink_x2_3218959716!
+    crop! : I32, I32 -> {}
+    crop! = |width, height| Host.Image_crop_3937882851!(width, height)
+    flip_x! : () -> {}
+    flip_x! = |_| Host.Image_flip_x_3218959716!
+    flip_y! : () -> {}
+    flip_y! = |_| Host.Image_flip_y_3218959716!
+    generate_mipmaps! : Bool -> Error
+    generate_mipmaps! = |renormalize| Host.Image_generate_mipmaps_1633102583!(renormalize)
+    clear_mipmaps! : () -> {}
+    clear_mipmaps! = |_| Host.Image_clear_mipmaps_3218959716!
+    create! : I32, I32, Bool, Image_Format -> Image
+    create! = |width, height, use_mipmaps, format| Host.Image_create_986942177!(width, height, use_mipmaps, format)
+    create_empty! : I32, I32, Bool, Image_Format -> Image
+    create_empty! = |width, height, use_mipmaps, format| Host.Image_create_empty_986942177!(width, height, use_mipmaps, format)
+    create_from_data! : I32, I32, Bool, Image_Format, PackedByteArray -> Image
+    create_from_data! = |width, height, use_mipmaps, format, data| Host.Image_create_from_data_299398494!(width, height, use_mipmaps, format, data)
+    set_data! : I32, I32, Bool, Image_Format, PackedByteArray -> {}
+    set_data! = |width, height, use_mipmaps, format, data| Host.Image_set_data_2740482212!(width, height, use_mipmaps, format, data)
+    is_empty! : () -> Bool
+    is_empty! = |_| Host.Image_is_empty_36873697!
+    load! : String -> Error
+    load! = |path| Host.Image_load_166001499!(path)
+    load_from_file! : String -> Image
+    load_from_file! = |path| Host.Image_load_from_file_736337515!(path)
+    save_png! : String -> Error
+    save_png! = |path| Host.Image_save_png_2113323047!(path)
+    save_png_to_buffer! : () -> PackedByteArray
+    save_png_to_buffer! = |_| Host.Image_save_png_to_buffer_2362200018!
+    save_jpg! : String, F32 -> Error
+    save_jpg! = |path, quality| Host.Image_save_jpg_2800019068!(path, quality)
+    save_jpg_to_buffer! : F32 -> PackedByteArray
+    save_jpg_to_buffer! = |quality| Host.Image_save_jpg_to_buffer_592235273!(quality)
+    save_exr! : String, Bool, Bool, F32 -> Error
+    save_exr! = |path, grayscale, color_image, max_linear_value| Host.Image_save_exr_2018602448!(path, grayscale, color_image, max_linear_value)
+    save_exr_to_buffer! : Bool, Bool, F32 -> PackedByteArray
+    save_exr_to_buffer! = |grayscale, color_image, max_linear_value| Host.Image_save_exr_to_buffer_1477518536!(grayscale, color_image, max_linear_value)
+    save_dds! : String -> Error
+    save_dds! = |path| Host.Image_save_dds_2113323047!(path)
+    save_dds_to_buffer! : () -> PackedByteArray
+    save_dds_to_buffer! = |_| Host.Image_save_dds_to_buffer_2362200018!
+    save_webp! : String, Bool, F32 -> Error
+    save_webp! = |path, lossy, quality| Host.Image_save_webp_2781156876!(path, lossy, quality)
+    save_webp_to_buffer! : Bool, F32 -> PackedByteArray
+    save_webp_to_buffer! = |lossy, quality| Host.Image_save_webp_to_buffer_1214628238!(lossy, quality)
+    detect_alpha! : () -> Image_AlphaMode
+    detect_alpha! = |_| Host.Image_detect_alpha_2030116505!
+    is_invisible! : () -> Bool
+    is_invisible! = |_| Host.Image_is_invisible_36873697!
+    detect_used_channels! : Image_CompressSource -> Image_UsedChannels
+    detect_used_channels! = |source| Host.Image_detect_used_channels_2703139984!(source)
+    compress! : Image_CompressMode, Image_CompressSource, Image_ASTCFormat -> Error
+    compress! = |mode, source, astc_format| Host.Image_compress_2975424957!(mode, source, astc_format)
+    compress_from_channels! : Image_CompressMode, Image_UsedChannels, Image_ASTCFormat -> Error
+    compress_from_channels! = |mode, channels, astc_format| Host.Image_compress_from_channels_4212890953!(mode, channels, astc_format)
+    decompress! : () -> Error
+    decompress! = |_| Host.Image_decompress_166280745!
+    is_compressed! : () -> Bool
+    is_compressed! = |_| Host.Image_is_compressed_36873697!
+    rotate_90! : ClockDirection -> {}
+    rotate_90! = |direction| Host.Image_rotate_90_1901204267!(direction)
+    rotate_180! : () -> {}
+    rotate_180! = |_| Host.Image_rotate_180_3218959716!
+    fix_alpha_edges! : () -> {}
+    fix_alpha_edges! = |_| Host.Image_fix_alpha_edges_3218959716!
+    premultiply_alpha! : () -> {}
+    premultiply_alpha! = |_| Host.Image_premultiply_alpha_3218959716!
+    srgb_to_linear! : () -> {}
+    srgb_to_linear! = |_| Host.Image_srgb_to_linear_3218959716!
+    linear_to_srgb! : () -> {}
+    linear_to_srgb! = |_| Host.Image_linear_to_srgb_3218959716!
+    normal_map_to_xy! : () -> {}
+    normal_map_to_xy! = |_| Host.Image_normal_map_to_xy_3218959716!
+    rgbe_to_srgb! : () -> Image
+    rgbe_to_srgb! = |_| Host.Image_rgbe_to_srgb_564927088!
+    bump_map_to_normal_map! : F32 -> {}
+    bump_map_to_normal_map! = |bump_scale| Host.Image_bump_map_to_normal_map_3423495036!(bump_scale)
+    compute_image_metrics! : Image, Bool -> Dictionary
+    compute_image_metrics! = |compared_image, use_luma| Host.Image_compute_image_metrics_3080961247!(compared_image, use_luma)
+    blit_rect! : Image, Rect2i, Vector2i -> {}
+    blit_rect! = |src, src_rect, dst| Host.Image_blit_rect_2903928755!(src, src_rect, dst)
+    blit_rect_mask! : Image, Image, Rect2i, Vector2i -> {}
+    blit_rect_mask! = |src, mask, src_rect, dst| Host.Image_blit_rect_mask_3383581145!(src, mask, src_rect, dst)
+    blend_rect! : Image, Rect2i, Vector2i -> {}
+    blend_rect! = |src, src_rect, dst| Host.Image_blend_rect_2903928755!(src, src_rect, dst)
+    blend_rect_mask! : Image, Image, Rect2i, Vector2i -> {}
+    blend_rect_mask! = |src, mask, src_rect, dst| Host.Image_blend_rect_mask_3383581145!(src, mask, src_rect, dst)
+    fill! : Color -> {}
+    fill! = |color| Host.Image_fill_2920490490!(color)
+    fill_rect! : Rect2i, Color -> {}
+    fill_rect! = |rect, color| Host.Image_fill_rect_514693913!(rect, color)
+    get_used_rect! : () -> Rect2i
+    get_used_rect! = |_| Host.Image_get_used_rect_410525958!
+    get_region! : Rect2i -> Image
+    get_region! = |region| Host.Image_get_region_2601441065!(region)
+    copy_from! : Image -> {}
+    copy_from! = |src| Host.Image_copy_from_532598488!(src)
+    get_pixelv! : Vector2i -> Color
+    get_pixelv! = |point| Host.Image_get_pixelv_1532707496!(point)
+    get_pixel! : I32, I32 -> Color
+    get_pixel! = |x, y| Host.Image_get_pixel_2165839948!(x, y)
+    set_pixelv! : Vector2i, Color -> {}
+    set_pixelv! = |point, color| Host.Image_set_pixelv_287851464!(point, color)
+    set_pixel! : I32, I32, Color -> {}
+    set_pixel! = |x, y, color| Host.Image_set_pixel_3733378741!(x, y, color)
+    adjust_bcs! : F32, F32, F32 -> {}
+    adjust_bcs! = |brightness, contrast, saturation| Host.Image_adjust_bcs_2385087082!(brightness, contrast, saturation)
+    load_png_from_buffer! : PackedByteArray -> Error
+    load_png_from_buffer! = |buffer| Host.Image_load_png_from_buffer_680677267!(buffer)
+    load_jpg_from_buffer! : PackedByteArray -> Error
+    load_jpg_from_buffer! = |buffer| Host.Image_load_jpg_from_buffer_680677267!(buffer)
+    load_webp_from_buffer! : PackedByteArray -> Error
+    load_webp_from_buffer! = |buffer| Host.Image_load_webp_from_buffer_680677267!(buffer)
+    load_tga_from_buffer! : PackedByteArray -> Error
+    load_tga_from_buffer! = |buffer| Host.Image_load_tga_from_buffer_680677267!(buffer)
+    load_bmp_from_buffer! : PackedByteArray -> Error
+    load_bmp_from_buffer! = |buffer| Host.Image_load_bmp_from_buffer_680677267!(buffer)
+    load_ktx_from_buffer! : PackedByteArray -> Error
+    load_ktx_from_buffer! = |buffer| Host.Image_load_ktx_from_buffer_680677267!(buffer)
+    load_dds_from_buffer! : PackedByteArray -> Error
+    load_dds_from_buffer! = |buffer| Host.Image_load_dds_from_buffer_680677267!(buffer)
+    load_exr_from_buffer! : PackedByteArray -> Error
+    load_exr_from_buffer! = |buffer| Host.Image_load_exr_from_buffer_680677267!(buffer)
+    load_svg_from_buffer! : PackedByteArray, F32 -> Error
+    load_svg_from_buffer! = |buffer, scale| Host.Image_load_svg_from_buffer_311853421!(buffer, scale)
+    load_svg_from_string! : String, F32 -> Error
+    load_svg_from_string! = |svg_str, scale| Host.Image_load_svg_from_string_3254053600!(svg_str, scale)
+
 
 }

@@ -1,9 +1,14 @@
-# class SkeletonProfileHumanoid → SkeletonProfileHumanoid
+# class SkeletonProfileHumanoid
 # inherits: SkeletonProfile
 SkeletonProfileHumanoid := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

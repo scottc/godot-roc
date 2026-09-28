@@ -1,21 +1,26 @@
-# class PhysicsDirectSpaceState2D → PhysicsDirectSpaceState2D
+# class PhysicsDirectSpaceState2D
 # inherits: Object
 PhysicsDirectSpaceState2D := {
     ptr : U64,
 }.{
 
 
-    # intersect_point! : PhysicsPointQueryParameters2D, I32 -> typedarray::Dictionary
-    # intersect_point! = Host.intersect_point_2118456068!
-    # intersect_ray! : PhysicsRayQueryParameters2D -> Dictionary
-    # intersect_ray! = Host.intersect_ray_1590275562!
-    # intersect_shape! : PhysicsShapeQueryParameters2D, I32 -> typedarray::Dictionary
-    # intersect_shape! = Host.intersect_shape_2488867228!
-    # cast_motion! : PhysicsShapeQueryParameters2D -> PackedFloat32Array
-    # cast_motion! = Host.cast_motion_711275086!
-    # collide_shape! : PhysicsShapeQueryParameters2D, I32 -> typedarray::Vector2
-    # collide_shape! = Host.collide_shape_2488867228!
-    # get_rest_info! : PhysicsShapeQueryParameters2D -> Dictionary
-    # get_rest_info! = Host.get_rest_info_2803666496!
+    # --- properties ---
+
+
+    # --- methods ---
+    intersect_point! : PhysicsPointQueryParameters2D, I32 -> typedarray::Dictionary
+    intersect_point! = |parameters, max_results| Host.PhysicsDirectSpaceState2D_intersect_point_2118456068!(parameters, max_results)
+    intersect_ray! : PhysicsRayQueryParameters2D -> Dictionary
+    intersect_ray! = |parameters| Host.PhysicsDirectSpaceState2D_intersect_ray_1590275562!(parameters)
+    intersect_shape! : PhysicsShapeQueryParameters2D, I32 -> typedarray::Dictionary
+    intersect_shape! = |parameters, max_results| Host.PhysicsDirectSpaceState2D_intersect_shape_2488867228!(parameters, max_results)
+    cast_motion! : PhysicsShapeQueryParameters2D -> PackedFloat32Array
+    cast_motion! = |parameters| Host.PhysicsDirectSpaceState2D_cast_motion_711275086!(parameters)
+    collide_shape! : PhysicsShapeQueryParameters2D, I32 -> typedarray::Vector2
+    collide_shape! = |parameters, max_results| Host.PhysicsDirectSpaceState2D_collide_shape_2488867228!(parameters, max_results)
+    get_rest_info! : PhysicsShapeQueryParameters2D -> Dictionary
+    get_rest_info! = |parameters| Host.PhysicsDirectSpaceState2D_get_rest_info_2803666496!(parameters)
+
 
 }

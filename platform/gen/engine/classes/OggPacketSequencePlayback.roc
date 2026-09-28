@@ -1,9 +1,14 @@
-# class OggPacketSequencePlayback → OggPacketSequencePlayback
+# class OggPacketSequencePlayback
 # inherits: RefCounted
 OggPacketSequencePlayback := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

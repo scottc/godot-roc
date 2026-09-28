@@ -1,9 +1,14 @@
-# class VSeparator → VSeparator
+# class VSeparator
 # inherits: Separator
 VSeparator := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

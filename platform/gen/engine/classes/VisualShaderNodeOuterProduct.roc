@@ -1,9 +1,14 @@
-# class VisualShaderNodeOuterProduct → VisualShaderNodeOuterProduct
+# class VisualShaderNodeOuterProduct
 # inherits: VisualShaderNode
 VisualShaderNodeOuterProduct := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

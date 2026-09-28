@@ -1,9 +1,14 @@
-# class AudioEffectEQ6 → AudioEffectEQ6
+# class AudioEffectEQ6
 # inherits: AudioEffectEQ
 AudioEffectEQ6 := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

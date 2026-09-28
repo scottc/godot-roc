@@ -1,105 +1,11 @@
-# builtin Nil → Nil
+# builtin Nil
 Nil := {
     ptr : U64
 }.{
     construct_default! : {} -> Nil
     construct_default! = |_| { { ptr: 0 } }
-    # construct_1! : Variant -> Nil
 
 
+    # --- methods ---
 
-    # op ==
-    # op !=
-    # op or
-    # op not
-    # op ==
-    # op !=
-    # op and
-    # op or
-    # op xor
-    # op ==
-    # op !=
-    # op and
-    # op or
-    # op xor
-    # op ==
-    # op !=
-    # op and
-    # op or
-    # op xor
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op and
-    # op or
-    # op xor
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op in
-    # op ==
-    # op !=
-    # op in
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
-    # op ==
-    # op !=
 }

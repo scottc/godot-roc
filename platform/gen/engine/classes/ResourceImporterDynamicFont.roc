@@ -1,9 +1,14 @@
-# class ResourceImporterDynamicFont → ResourceImporterDynamicFont
+# class ResourceImporterDynamicFont
 # inherits: ResourceImporter
 ResourceImporterDynamicFont := {
     ptr : U64,
 }.{
 
+
+    # --- properties ---
+
+
+    # --- methods ---
 
 
 

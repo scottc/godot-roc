@@ -1,37 +1,42 @@
-# class TextureLayered → TextureLayered
+# class TextureLayered
 # inherits: Texture
 TextureLayered := {
     ptr : U64,
 }.{
     LayeredType : [LAYERED_TYPE_2D_ARRAY, LAYERED_TYPE_CUBEMAP, LAYERED_TYPE_CUBEMAP_ARRAY]
 
-    # _get_format! : () -> enum::Image.Format
-    # _get_format! = Host._get_format_3847873762!
-    # _get_layered_type! : () -> I32
-    # _get_layered_type! = Host._get_layered_type_3905245786!
-    # _get_width! : () -> I32
-    # _get_width! = Host._get_width_3905245786!
-    # _get_height! : () -> I32
-    # _get_height! = Host._get_height_3905245786!
-    # _get_layers! : () -> I32
-    # _get_layers! = Host._get_layers_3905245786!
-    # _has_mipmaps! : () -> Bool
-    # _has_mipmaps! = Host._has_mipmaps_36873697!
-    # _get_layer_data! : I32 -> Image
-    # _get_layer_data! = Host._get_layer_data_3655284255!
-    # get_format! : () -> enum::Image.Format
-    # get_format! = Host.get_format_3847873762!
-    # get_layered_type! : () -> enum::TextureLayered.LayeredType
-    # get_layered_type! = Host.get_layered_type_518123893!
-    # get_width! : () -> I32
-    # get_width! = Host.get_width_3905245786!
-    # get_height! : () -> I32
-    # get_height! = Host.get_height_3905245786!
-    # get_layers! : () -> I32
-    # get_layers! = Host.get_layers_3905245786!
-    # has_mipmaps! : () -> Bool
-    # has_mipmaps! = Host.has_mipmaps_36873697!
-    # get_layer_data! : I32 -> Image
-    # get_layer_data! = Host.get_layer_data_3655284255!
+    # --- properties ---
+
+
+    # --- methods ---
+    _get_format! : () -> Image_Format
+    _get_format! = |_| Host.TextureLayered__get_format_3847873762!
+    _get_layered_type! : () -> I32
+    _get_layered_type! = |_| Host.TextureLayered__get_layered_type_3905245786!
+    _get_width! : () -> I32
+    _get_width! = |_| Host.TextureLayered__get_width_3905245786!
+    _get_height! : () -> I32
+    _get_height! = |_| Host.TextureLayered__get_height_3905245786!
+    _get_layers! : () -> I32
+    _get_layers! = |_| Host.TextureLayered__get_layers_3905245786!
+    _has_mipmaps! : () -> Bool
+    _has_mipmaps! = |_| Host.TextureLayered__has_mipmaps_36873697!
+    _get_layer_data! : I32 -> Image
+    _get_layer_data! = |layer_index| Host.TextureLayered__get_layer_data_3655284255!(layer_index)
+    get_format! : () -> Image_Format
+    get_format! = |_| Host.TextureLayered_get_format_3847873762!
+    get_layered_type! : () -> TextureLayered_LayeredType
+    get_layered_type! = |_| Host.TextureLayered_get_layered_type_518123893!
+    get_width! : () -> I32
+    get_width! = |_| Host.TextureLayered_get_width_3905245786!
+    get_height! : () -> I32
+    get_height! = |_| Host.TextureLayered_get_height_3905245786!
+    get_layers! : () -> I32
+    get_layers! = |_| Host.TextureLayered_get_layers_3905245786!
+    has_mipmaps! : () -> Bool
+    has_mipmaps! = |_| Host.TextureLayered_has_mipmaps_36873697!
+    get_layer_data! : I32 -> Image
+    get_layer_data! = |layer| Host.TextureLayered_get_layer_data_3655284255!(layer)
+
 
 }
