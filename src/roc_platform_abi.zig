@@ -1072,7 +1072,6 @@ fn rocReleasePolicy(comptime T: type) type {
     if (T == RocStr) return RocStrRelease;
     if (T == HostRegister_classResult) return HostRegister_classResultRelease;
     if (T == NameLengthErrOrOutOfMemoryClassErr) return NameLengthErrOrOutOfMemoryClassErrRelease;
-    if (T == RocErasedCallable) return RocErasedCallableRelease;
     @compileError("generated glue has no recursive release policy for " ++ @typeName(T));
 }
 

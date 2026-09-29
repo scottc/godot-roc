@@ -166,7 +166,7 @@ effective_optimize = |t, o| {
     }
 }
 
-find_host : Str -> Try(HostTarget, [UnknownTarget(Str), ..])
+find_host : Str -> Try(HostTarget, [UnknownTarget(Str), ..others])
 find_host = |name| {
     for t in host_targets {
         if t.name == name {
@@ -250,7 +250,7 @@ zig_argv = |t, optimize| {
     }
 }
 
-native_host_name! : () => Try(Str, [UnsupportedNative, ..])
+native_host_name! : () => Try(Str, [UnsupportedNative, ..others])
 native_host_name! = || {
     plat = Env.platform!()
     match (plat.os, plat.arch) {
@@ -264,7 +264,7 @@ native_host_name! = || {
     }
 }
 
-native_plan : Str -> Try(List(HostTarget), [UnknownTarget(Str), ..])
+native_plan : Str -> Try(List(HostTarget), [UnknownTarget(Str), ..others])
 native_plan = |name| {
     t = find_host(name)?
     match t.baseline {
@@ -295,7 +295,7 @@ rm_if_exists! = |path| {
     {}
 }
 
-mkdir_p! : Str => Try({}, [MkdirFailed(Str), ..])
+mkdir_p! : Str => Try({}, [MkdirFailed(Str), ..others])
 mkdir_p! = |dir| {
     Cmd.exec!("mkdir", os_list(["-p", dir])) ? |_| MkdirFailed(dir)
     Ok({})
@@ -311,7 +311,7 @@ cleanup_all! = || {
     # }
 }
 
-build_one! : HostTarget, Optimize => Try({}, [ZigFailed({ target : Str, detail : Str }), MkdirFailed(Str), ..])
+build_one! : HostTarget, Optimize => Try({}, [ZigFailed({ target : Str, detail : Str }), MkdirFailed(Str), ..others])
 build_one! = |t, optimize| {
     mkdir_p!(out_dir(t))?
 
@@ -324,7 +324,7 @@ build_one! = |t, optimize| {
     Ok({})
 }
 
-build_many! : List(HostTarget), Optimize => Try({}, [ZigFailed({ target : Str, detail : Str }), MkdirFailed(Str), ..])
+build_many! : List(HostTarget), Optimize => Try({}, [ZigFailed({ target : Str, detail : Str }), MkdirFailed(Str), ..others])
 build_many! = |hosts, optimize| {
     for t in hosts {
         log!("compile host ${t.name}")
@@ -333,7 +333,7 @@ build_many! = |hosts, optimize| {
     Ok({})
 }
 
-build_all! : Optimize => Try({}, [ZigFailed({ target : Str, detail : Str }), MkdirFailed(Str), ..])
+build_all! : Optimize => Try({}, [ZigFailed({ target : Str, detail : Str }), MkdirFailed(Str), ..others])
 build_all! = |optimize| {
     log!("clean")
     cleanup_all!()
@@ -342,7 +342,7 @@ build_all! = |optimize| {
     Ok({})
 }
 
-build_native! : Optimize => Try({}, [ZigFailed({ target : Str, detail : Str }), MkdirFailed(Str), UnsupportedNative, UnknownTarget(Str), ..])
+build_native! : Optimize => Try({}, [ZigFailed({ target : Str, detail : Str }), MkdirFailed(Str), UnsupportedNative, UnknownTarget(Str), ..others])
 build_native! = |optimize| {
     log!("clean")
     cleanup_all!()
@@ -358,7 +358,7 @@ build_native! = |optimize| {
 # Entry
 # =============================================================================
 
-main! : List(OsStr) => Try({}, [Exit(I32), ..])
+main! : List(OsStr) => Try({}, [Exit(I32), ..others])
 main! = |args| {
     user_args =
         args

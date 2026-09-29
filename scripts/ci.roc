@@ -313,7 +313,7 @@ main! = |_args| {
 	Ok({})
 }
 
-copy_dir! : Path, Path => Try({}, [DestAlreadyExists(Path), BadEntry(Path), PathErr(_, Path), ..])
+copy_dir! : Path, Path => Try({}, [DestAlreadyExists(Path), BadEntry(Path), PathErr(_, Path), ..others])
 copy_dir! = |source, dest| {
     exists = Path.exists!(dest)?
 
@@ -325,7 +325,7 @@ copy_dir! = |source, dest| {
     }
 }
 
-copy_tree! : Path, Path => Try({}, [BadEntry(Path), PathErr(_, Path), ..])
+copy_tree! : Path, Path => Try({}, [BadEntry(Path), PathErr(_, Path), ..others])
 copy_tree! = |source, dest| {
     entries = Path.list!(source)?
 
