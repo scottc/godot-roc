@@ -264,6 +264,22 @@ export fn godot_roc_print_error(roc_str: abi.RocStr) callconv(.c) void {
     printError("godot_roc_print_error(\"{s}\")\n", .{zig_str});
 }
 
+export fn godot_roc_print_warning(roc_str: abi.RocStr) callconv(.c) void {
+    const roc_host = g_roc_host.?;
+    var owned = roc_str;
+    defer owned.decref(roc_host);
+
+    // need temporary [:0]u8 — dupeZ or stack buffer if short
+    var buf: [64]u8 = undefined;
+    const s = owned.asSlice();
+    if (s.len >= buf.len) return;
+    @memcpy(buf[0..s.len], s);
+    buf[s.len] = 0;
+    const zig_str = buf[0..s.len :0];
+
+    printWarn("godot_roc_print_warning(\"{s}\")\n", .{zig_str});
+}
+
 fn registerClassFromRoc(class_slice: []const u8, parent_slice: []const u8) abi.HostRegister_classResult {
     if (g_godot_roc_class_count >= MAX_CLASSES) {
         const msg = rocStrFromLiteral("MAX_CLASSES=32");

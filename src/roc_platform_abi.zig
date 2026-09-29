@@ -936,6 +936,13 @@ pub const HostPrint_errorArgs = extern struct {
     arg0: RocStr,
 };
 
+/// Arguments for Host.print_warning!
+/// Roc signature: Str => {}
+/// Refcounted fields are owned by the hosted function.
+pub const HostPrint_warningArgs = extern struct {
+    arg0: RocStr,
+};
+
 /// Arguments for Host.register_class!
 /// Roc signature: Str, Str => Try(U32, [NameLengthErr(Str), OutOfMemoryClassErr(Str)])
 /// Refcounted fields are owned by the hosted function.
@@ -1098,6 +1105,13 @@ pub extern fn roc_crashed(bytes: [*]const u8, len: usize) callconv(.c) void;
 /// moved into storage or into the result:
 ///     arg0.decref(roc_host);
 pub extern fn godot_roc_print_error(arg0: RocStr) callconv(.c) void;
+
+/// Hosted symbol for Host.print_warning!
+/// Roc signature: Str => {}
+/// Owned arguments. Release each exactly once before returning, unless it is
+/// moved into storage or into the result:
+///     arg0.decref(roc_host);
+pub extern fn godot_roc_print_warning(arg0: RocStr) callconv(.c) void;
 
 /// Hosted symbol for Host.register_class!
 /// Roc signature: Str, Str => Try(U32, [NameLengthErr(Str), OutOfMemoryClassErr(Str)])

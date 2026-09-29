@@ -18,6 +18,7 @@ platform ""
     }
     hosted {
         "godot_roc_print_error": Host.print_error!,
+        "godot_roc_print_warning": Host.print_warning!,
         "godot_roc_register_class": Host.register_class!,
         "godot_roc_get_velocity": Host.get_velocity!,
         "godot_roc_set_velocity": Host.set_velocity!,
@@ -64,14 +65,14 @@ import GodotRoc
 
 scene_init_for_host! : () => {}
 scene_init_for_host! = || {
-    _ = Engine.print_error!("[platform/main.roc] init_for_host!")
+    _ = Engine.print_warning!("[platform/main.roc] init_for_host!")
     _result = scene_init!()
     {}
 }
 
 ready_for_host! : () => {}
 ready_for_host! = || {
-    _ = Engine.print_error!("[platform/main.roc] ready_for_host!")
+    _ = Engine.print_warning!("[platform/main.roc] ready_for_host!")
     _result = ready!()
     {}
 }

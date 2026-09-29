@@ -15,6 +15,10 @@ Engine := [].{
     print_error! = |str|
         Host.print_error!(str)
 
+    print_warning! : Str => {} # Try({}, [PrintErr(Str), ..])
+    print_warning! = |str|
+        Host.print_warning!(str)
+
     # Input.is_action_pressed
     is_action_pressed! : Str => GodotRoc.Bool # TODO: Str => bool
     is_action_pressed! = |action| {

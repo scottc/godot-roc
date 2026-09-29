@@ -22,13 +22,13 @@ import Npc
 ## Called when godot initializes the Scene Tree, this includes all scenes.
 scene_init! : () => {}
 scene_init! = || {
-    Engine.print_error!("Hello World!")
+    Engine.print_warning!("Hello World!")
 
     player_class_id = Engine.register_class!("MyPlayerCharacter", "CharacterBody3D")
-    Engine.print_error!("Registered MyPlayerCharacter id= ${player_class_id.to_str()}")
+    Engine.print_warning!("Registered MyPlayerCharacter id= ${player_class_id.to_str()}")
 
     npc_class_id = Engine.register_class!("Npc", "CharacterBody3D")
-    Engine.print_error!("Registered Npc id= ${npc_class_id.to_str()}")
+    Engine.print_warning!("Registered Npc id= ${npc_class_id.to_str()}")
 }
 
 ## class_id(u64) | class_name(str) = which type / behaviour. Example: (PlayerType vs NPCType)
@@ -40,7 +40,7 @@ physics_process! = |class_id,  delta| {
         0 => MyPlayerCharacter.physics_process!(delta)
         1 => Npc.physics_process!(delta)
         _ => {
-            _ = Engine.print_error!("Unhandled class! (class_id=${class_id.to_str()})")
+            _ = Engine.print_warning!("Unhandled class! (class_id=${class_id.to_str()})")
         }
     }
     {}
