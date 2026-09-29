@@ -46,6 +46,12 @@ main! = |_args| {
 	_platform_check_out = Cmd.exec!("roc", ["check", "platform/main.roc"])?
 
 	Stdout.line!(
+	    \\ Cmd.exec!("zig", ["test", "src/engine/zig_platform_abi_impl.zig"])?
+	)?
+	_fghfgh_test_out = Cmd.exec!("zig", ["test", "src/engine/zig_platform_abi_impl.zig"])?
+
+	# TODO: replace roc glue, to include the above...
+	Stdout.line!(
 	    \\ Cmd.exec!("roc", ["glue", "vendor/roc/git-1d982dc/ZigGlue.roc", "src/", "platform/main.roc"])?
 	)?
     _glue_out = Cmd.exec!("roc", ["glue", "vendor/roc/git-1d982dc/ZigGlue.roc", "src/", "platform/main.roc"])?
@@ -94,7 +100,11 @@ main! = |_args| {
     Stdout.line!(
 	    \\ Cmd.exec!("zig", ["test", "src/roc_platform_abi.zig"])?
 	)?
-    _gdextension_interface_test_out = Cmd.exec!("zig", ["test", "src/roc_platform_abi.zig"])?
+    _platform_abi_test_out = Cmd.exec!("zig", ["test", "src/roc_platform_abi.zig"])?
+
+    Stdout.line!(
+	    \\ scripts/glue.roc finished.
+	)?
 
     Ok({})
 }
