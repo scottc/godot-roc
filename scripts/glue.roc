@@ -22,20 +22,39 @@ import pf.Env
 #main! : List(OsStr) => Try({}, _)
 main! = |_args| {
 
+
 	# generate roc platfrom bindings for engine...
+	Stdout.line!(
+	    \\ Cmd.exec!("roc", ["run", "scripts/gdextension_interface.generate.roc"])?
+	)?
 	_gdextension_interface_out = Cmd.exec!("roc", ["run", "scripts/gdextension_interface.generate.roc"])?
 
 	# TODO: maybe zig build is a better way to check this?
+	Stdout.line!(
+	    \\ Cmd.exec!("zig", ["test", "src/engine/gdextension_interface.generated.zig"])?
+	)?
 	_gdextension_interface_test_out = Cmd.exec!("zig", ["test", "src/engine/gdextension_interface.generated.zig"])?
 
+	Stdout.line!(
+	    \\ Cmd.exec!("roc", ["run", "scripts/extension_api.generate.roc"])?
+	)?
 	_extension_api_out = Cmd.exec!("roc", ["run", "scripts/extension_api.generate.roc"])?
 
+	Stdout.line!(
+	    \\ Cmd.exec!("roc", ["check", "platform/main.roc"])?
+	)?
 	_platform_check_out = Cmd.exec!("roc", ["check", "platform/main.roc"])?
 
+	Stdout.line!(
+	    \\ Cmd.exec!("roc", ["glue", "vendor/roc/git-1d982dc/ZigGlue.roc", "src/", "platform/main.roc"])?
+	)?
     _glue_out = Cmd.exec!("roc", ["glue", "vendor/roc/git-1d982dc/ZigGlue.roc", "src/", "platform/main.roc"])?
 
     # Patch glue..
 
+   	Stdout.line!(
+	    \\ Path.read_utf8!("src/roc_platform_abi.zig")?
+	)?
     generated_glue = Path.read_utf8!("src/roc_platform_abi.zig")?
 
     s1 = find_and_replace_first(
@@ -66,9 +85,15 @@ main! = |_args| {
     )
 
     # Write patched glue...
+    Stdout.line!(
+	    \\ Path.write_utf8!("src/roc_platform_abi.zig", s2)?
+	)?
     Path.write_utf8!("src/roc_platform_abi.zig", s2)?
 
     # zig test...
+    Stdout.line!(
+	    \\ Cmd.exec!("zig", ["test", "src/roc_platform_abi.zig"])?
+	)?
     _gdextension_interface_test_out = Cmd.exec!("zig", ["test", "src/roc_platform_abi.zig"])?
 
     Ok({})
