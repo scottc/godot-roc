@@ -69,11 +69,10 @@
             # Package & publish tools
             pkgs.zip # for zipping & publishing *templates* (not for platform releases)
 
-            # Export templates, if you want to publish to a target platform.
-            # Or, you can just install them into your home directory, using the UI, via godot.
-            # Warning: 1.3Gb download though, it's ALL templates.
-            # pkgs.godot-export-templates-bin
-          ]; # ++ pkgs.lib.optional (rocPkg != null) rocPkg
+            # TODO: make slim web_dlink_nothreads_*.zip template flake, with just the required web export.
+            pkgs.godot-export-templates-bin # ~1.3GB, all platforms
+            # Note: templates are needed by CI, to verify web export works.
+          ];
 
           shellHook = ''
             echo "#
@@ -101,6 +100,23 @@
 # Tip - To get started run the following command:
 # roc run create-godot-roc-app.roc
 # "
+
+# Godot looks under ~/.local/share/godot/export_templates/<version>/
+# Symlink the nix store templates so export finds web_dlink_nothreads_*.zip
+TEMPLATES_SRC="${pkgs.godot-export-templates-bin}/share/godot/export_templates"
+if [ -d "$TEMPLATES_SRC" ]; then
+  mkdir -p "$HOME/.local/share/godot/export_templates"
+  # link each version dir (e.g. 4.7.2.stable) if missing
+  for d in "$TEMPLATES_SRC"/*; do
+    [ -d "$d" ] || continue
+    name=$(basename "$d")
+    target="$HOME/.local/share/godot/export_templates/$name"
+    if [ ! -e "$target" ]; then
+      ln -sfn "$d" "$target"
+    fi
+  done
+  echo "export templates: $TEMPLATES_SRC"
+fi
           '';
 
           # Optional shell hook: godot's export templates.

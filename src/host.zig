@@ -364,7 +364,7 @@ export fn godot_roc_register_class(
     const class_slice = class_owned.asSlice();
     const parent_slice = parent_owned.asSlice();
 
-    printError("[./platform/src/native_host.zig] roc_register_class({s}, {s})\n", .{ class_slice, parent_slice });
+    printWarn("[./platform/src/native_host.zig] roc_register_class({s}, {s})\n", .{ class_slice, parent_slice });
 
     return registerClassFromRoc(
         class_slice,
@@ -377,26 +377,56 @@ export fn godot_roc_register_class(
 // Internal functions that are not exposed
 //
 
-fn printError(comptime fmt: []const u8, args: anytype) void {
+fn printWarn(comptime fmt: []const u8, args: anytype) void {
     var buf: [512]u8 = undefined;
     const msg = bufPrintC(&buf, "[godot-roc] " ++ fmt, args) catch {
-        const fallback = "[godot-roc] (print truncated)\n";
-        g_engine_interface.print_error(fallback, "print", "host.zig", @src().line, 0);
+        g_engine_interface.print_warning(
+            "[godot-roc] (print truncated)",
+            "printWarn",
+            "host.zig",
+            @src().line,
+            0,
+        );
         return;
     };
 
     if (comptime is_native_target) {
-        // msg is [:0]const u8 — print as slice, not as C string discovery
-        std.debug.print("print \"{s}\" in {s} @ {s}:{d} & editor_notify={d}\n", .{
-            msg[0..msg.len], // or just `msg` as []const u8
-            "print",
+        std.debug.print("{s}\n", .{msg});
+    }
+
+    g_engine_interface.print_warning(
+        msg.ptr,
+        "printWarn",
+        "host.zig",
+        @src().line,
+        0,
+    );
+}
+
+fn printError(comptime fmt: []const u8, args: anytype) void {
+    var buf: [512]u8 = undefined;
+    const msg = bufPrintC(&buf, "[godot-roc] " ++ fmt, args) catch {
+        g_engine_interface.print_error(
+            "[godot-roc] (print truncated)",
+            "printError",
             "host.zig",
             @src().line,
             0,
-        });
+        );
+        return;
+    };
+
+    if (comptime is_native_target) {
+        std.debug.print("{s}\n", .{msg});
     }
 
-    g_engine_interface.print_error(msg.ptr, "print", "host.zig", @src().line, 0);
+    g_engine_interface.print_error(
+        msg.ptr,
+        "printError",
+        "host.zig",
+        @src().line,
+        0,
+    );
 }
 
 fn initialize(userdata: ?*anyopaque, level: baseline_gde_if.GDExtensionInitializationLevel) callconv(.c) void {
@@ -404,21 +434,21 @@ fn initialize(userdata: ?*anyopaque, level: baseline_gde_if.GDExtensionInitializ
     // no print/libc yet — success = “no crash + extension loads”
 
     if (level == baseline_gde_if.GDExtensionInitializationLevel.initialization_core) {
-        printError("initialize(level=core)\n", .{});
+        printWarn("initialize(level=core)\n", .{});
 
         // TODO: call new godot_roc_core_init hook.
         return;
     }
 
     if (level == baseline_gde_if.GDExtensionInitializationLevel.initialization_servers) {
-        printError("initialize(level=servers)\n", .{});
+        printWarn("initialize(level=servers)\n", .{});
 
         // TODO: call new godot_roc_servers_init hook.
         return;
     }
 
     if (level == baseline_gde_if.GDExtensionInitializationLevel.initialization_scene) {
-        printError("initialize(level=scene)\n", .{});
+        printWarn("initialize(level=scene)\n", .{});
 
         // if you get crash like this...
         // apparently moving ensureRocHost() to scene initialize resolves it...
@@ -442,7 +472,7 @@ fn initialize(userdata: ?*anyopaque, level: baseline_gde_if.GDExtensionInitializ
     }
 
     if (level == baseline_gde_if.GDExtensionInitializationLevel.initialization_editor) {
-        printError("initialize(level=editor)\n", .{});
+        printWarn("initialize(level=editor)\n", .{});
         // TODO: call new godot_roc_editor_init hook.
         return;
     }
@@ -453,32 +483,32 @@ fn deinitialize(userdata: ?*anyopaque, level: baseline_gde_if.GDExtensionInitial
 
     // TODO: make & call roc extern "godot_roc_scene_deinit()".
     if (level == baseline_gde_if.GDExtensionInitializationLevel.initialization_core) {
-        printError("deinitialize(level=core)\n", .{});
+        printWarn("deinitialize(level=core)\n", .{});
         // TODO: call new godot_roc_core_deinit hook.
         return;
     }
 
     if (level == baseline_gde_if.GDExtensionInitializationLevel.initialization_servers) {
-        printError("deinitialize(level=servers)\n", .{});
+        printWarn("deinitialize(level=servers)\n", .{});
         // TODO: call new godot_roc_servers_deinit hook.
         return;
     }
 
     if (level == baseline_gde_if.GDExtensionInitializationLevel.initialization_scene) {
-        printError("deinitialize(level=scene)\n", .{});
+        printWarn("deinitialize(level=scene)\n", .{});
         // TODO: call new godot_roc_scene_deinit hook.
         return;
     }
 
     if (level == baseline_gde_if.GDExtensionInitializationLevel.initialization_editor) {
-        printError("deinitialize(level=editor)\n", .{});
+        printWarn("deinitialize(level=editor)\n", .{});
         // TODO: call new godot_roc_editor_deinit hook.
         return;
     }
 }
 
 fn ensureRocHost() void {
-    printError("roc_initialize()\n", .{});
+    printWarn("roc_initialize()\n", .{});
 
     if (g_roc_host != null) return;
 
@@ -498,9 +528,9 @@ fn ensureRocHost() void {
     g_roc_host_storage = abi.makeRocHost(&env.roc_env);
     g_roc_host = &g_roc_host_storage;
 
-    printError("ensureRocHost: ready (wasm={})\n", .{comptime is_wasm_target});
+    printWarn("ensureRocHost: ready (wasm={})\n", .{comptime is_wasm_target});
 
-    printError("roc_initialized()\n", .{});
+    printWarn("roc_initialized()\n", .{});
 }
 
 //
@@ -588,7 +618,7 @@ fn createInstance(
 ) callconv(.c) baseline_gde_if.GDExtensionObjectPtr {
     _ = notify_postinitialize;
 
-    printError("createInstance(class_userdata: ?*anyopaque, notify_postinitialize: baseline_gde_if.GDExtensionBool) baseline_gde_if.GDExtensionObjectPtr\n", .{});
+    printWarn("createInstance(class_userdata: ?*anyopaque, notify_postinitialize: baseline_gde_if.GDExtensionBool) baseline_gde_if.GDExtensionObjectPtr\n", .{});
 
     const info: *const GodotRocClassInfo = @ptrCast(@alignCast(class_userdata orelse return null));
 
@@ -625,7 +655,7 @@ fn recreateInstance(
     class_userdata: ?*anyopaque,
     object: baseline_gde_if.GDExtensionObjectPtr,
 ) callconv(.c) baseline_gde_if.GDExtensionClassInstancePtr {
-    printError("recreateInstance(class_userdata: ?*anyopaque, notify_postinitialize: baseline_gde_if.GDExtensionBool) baseline_gde_if.GDExtensionObjectPtr\n", .{});
+    printWarn("recreateInstance(class_userdata: ?*anyopaque, notify_postinitialize: baseline_gde_if.GDExtensionBool) baseline_gde_if.GDExtensionObjectPtr\n", .{});
 
     const info: *const GodotRocClassInfo = @ptrCast(@alignCast(class_userdata orelse return null));
 
@@ -645,7 +675,7 @@ fn recreateInstance(
 fn freeInstance(class_userdata: ?*anyopaque, instance: baseline_gde_if.GDExtensionClassInstancePtr) callconv(.c) void {
     _ = class_userdata;
     //_ = instance;
-    printError("freeInstance(class_userdata: ?*anyopaque, instance: baseline_gde_if.GDExtensionClassInstancePtr) void\n", .{});
+    printWarn("freeInstance(class_userdata: ?*anyopaque, instance: baseline_gde_if.GDExtensionClassInstancePtr) void\n", .{});
 
     const self: *GodotRocObjectInstance = @ptrCast(@alignCast(instance));
 
@@ -657,7 +687,7 @@ fn freeInstance(class_userdata: ?*anyopaque, instance: baseline_gde_if.GDExtensi
 }
 
 fn registerClass(info: *GodotRocClassInfo) void {
-    printError("registerClass(info: *ClassInfo) void\n", .{});
+    printWarn("registerClass(info: *ClassInfo) void\n", .{});
 
     // unregister first (idempotent) // this maybe needed...
     // unregisterClass(info.class_name);
@@ -678,13 +708,13 @@ fn registerClass(info: *GodotRocClassInfo) void {
 
     g_engine_interface.classdb_register_extension_class5(g_engine_library, @ptrCast(&class_sn), @ptrCast(&parent_sn), &creation);
 
-    printError("registered {s} : {s} (id={d})\n", .{ info.nameZ(), info.parentZ(), info.class_id });
+    printWarn("registered {s} : {s} (id={d})\n", .{ info.nameZ(), info.parentZ(), info.class_id });
 }
 
 fn unregisterClass(class_name: [:0]const u8) void {
     var sn = makeStringName(class_name);
     g_engine_interface.classdb_unregister_extension_class(g_engine_library, @ptrCast(&sn));
-    printError("unregistered {s}\n", .{class_name});
+    printWarn("unregistered {s}\n", .{class_name});
 }
 
 var g_mb_move_and_slide: baseline_gde_if.GDExtensionMethodBindPtr = null;
