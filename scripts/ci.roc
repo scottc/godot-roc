@@ -243,6 +243,7 @@ main! = |_args| {
             "wasm-ld",
             "--fatal-warnings", # this is to ensure emcc doesn't silently suppress warnings.
             "--experimental-pic", # this is to supress the "shared libraries … not yet stable"
+            "--enable-simd",  # [wasm-validator error in function godot_roc_scene_init] unexpected false: SIMD operations require SIMD [--enable-simd], on
             "--no-entry",
             "--export-dynamic",
             "--import-memory",
