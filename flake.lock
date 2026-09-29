@@ -72,11 +72,11 @@
     },
     "nixpkgs-darwin": {
       "locked": {
-        "lastModified": 1783945712,
-        "narHash": "sha256-ePHSbY7/7fNdOA2CE8J4T9Jt7xRrX87N2mlKd8EsYdM=",
+        "lastModified": 1787940818,
+        "narHash": "sha256-vFzVv78WlyEbTyV5BbrnicnV159wC0YPOcBe3QagyBI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "293d01ba488ddb4c3560ba7c8de1fbec7047f78c",
+        "rev": "f6107e546a5012172d93e79f1f7950da02ad798f",
         "type": "github"
       },
       "original": {
@@ -88,11 +88,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1784007870,
-        "narHash": "sha256-djcLt/JJphyNt4eDY9XTly+/WbCK5lqWq9lSgCmJkkQ=",
+        "lastModified": 1787736819,
+        "narHash": "sha256-cV5xEJJK3BvhU8rEd4mC9UsmDi5qscv/kzGPhBRC5WA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "18b9261cb3294b6d2a06d03f96872827b8fe2698",
+        "rev": "9fbb54b33e91ee4ca368e35a78e0613c720600b3",
         "type": "github"
       },
       "original": {
@@ -142,15 +142,15 @@
         "nixpkgs-darwin": "nixpkgs-darwin"
       },
       "locked": {
-        "lastModified": 1790660634,
-        "narHash": "sha256-LDy4nnq6i/zm9vmXBvubMUymxn+zvkvB6+/O3gb5iAY=",
-        "owner": "thebrandonlucas",
+        "lastModified": 1790579037,
+        "narHash": "sha256-WyP9IzYzzrO2HE3cIt2OQ2zUKllwjxqgzL8VTWzDZQg=",
+        "owner": "roc-lang",
         "repo": "roc-overlay",
-        "rev": "8de1d1b5c1d1b8ea9ed73a5024bdd5e992778970",
+        "rev": "2ef187164e6856a73a53424dd453acb9b4e484c9",
         "type": "github"
       },
       "original": {
-        "owner": "thebrandonlucas",
+        "owner": "roc-lang",
         "repo": "roc-overlay",
         "type": "github"
       }

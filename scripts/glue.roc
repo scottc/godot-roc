@@ -7,7 +7,7 @@
 
 ## Continous Intergration
 app [main!] {
-    roc: "nightly-2026-09-18-1d982dc",
+    roc: "nightly-2026-09-27-a3ce7f1",
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.22.2/9zUBxb1LtXYVc4eR4hAtd1WQDwBYDhM6HQdZz1UFCm2m.tar.zst"
 }
 
@@ -52,9 +52,9 @@ main! = |_args| {
 
 	# TODO: replace roc glue, to include the above; the externs & exports need to match...
 	Stdout.line!(
-	    \\ Cmd.exec!("roc", ["glue", "vendor/roc/git-1d982dc/ZigGlue.roc", "src/", "platform/main.roc"])?
+	    \\ Cmd.exec!("roc", ["glue", "vendor/roc/git-a3ce7f1/ZigGlue.roc", "src/", "platform/main.roc"])?
 	)?
-    _glue_out = Cmd.exec!("roc", ["glue", "vendor/roc/git-1d982dc/ZigGlue.roc", "src/", "platform/main.roc"])?
+    _glue_out = Cmd.exec!("roc", ["glue", "vendor/roc/git-a3ce7f1/ZigGlue.roc", "src/", "platform/main.roc"])?
 
     # Patch glue..
 

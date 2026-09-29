@@ -9,7 +9,7 @@ platform ""
         Engine,
         GodotRoc
     ]
-    packages { roc: "nightly-2026-09-18-1d982dc" }
+    packages { roc: "nightly-2026-09-27-a3ce7f1" }
     provides {
         "godot_roc_scene_init": scene_init_for_host!,
         "godot_roc_ready": ready_for_host!,

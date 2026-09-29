@@ -15,8 +15,8 @@
     # this can be useful
     # if you want to explicitly stick to a version.
     # We use the short hash here, to be consistant with other useages.
-    # Searchable string: nightly-2026-09-18-1d982dc
-    # roc.url = "github:roc-lang/roc/1d982dc?dir=src";
+    # Searchable string: nightly-2026-09-27-a3ce7f1
+    # roc.url = "github:roc-lang/roc/a3ce7f1?dir=src";
     # #roc.url = "path:./flakes/roc-nix"; # TODO:
     # roc.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -25,7 +25,7 @@
     # thebrandonlucas/roc-overlay, references the offical released binaries.
     # the differing behaviour can cause panics, makes development more tricky.
     # TODO: vendor the overlay?
-    roc-nightly.url = "github:thebrandonlucas/roc-overlay";
+    roc-nightly.url = "github:roc-lang/roc-overlay";
 
     redot.url = "path:./flakes/redot-nix";
     redot.inputs.nixpkgs.follows = "nixpkgs";
@@ -39,7 +39,7 @@
       let
         pkgs = import nixpkgs { inherit system; };
         # rocPkg = roc.packages.${system}.roc or null;
-        rocNightlyPkg = roc-nightly.packages.${system}.nightly-2026-09-18-1d982dc;
+        rocNightlyPkg = roc-nightly.packages.${system}.nightly-2026-09-27-a3ce7f1;
         redotPkg = redot.packages.${system}.redot;
         rexPkg = rex.packages.${system}.rex;
 

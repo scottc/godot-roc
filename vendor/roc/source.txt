@@ -1,1 +1,1 @@
-https://raw.githubusercontent.com/roc-lang/roc/1d982dc/src/glue/src/ZigGlue.roc
+https://raw.githubusercontent.com/roc-lang/roc/a3ce7f1/src/glue/src/ZigGlue.roc
