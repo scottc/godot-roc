@@ -73,24 +73,9 @@ jobs:
           version: ${{ env.EM_VERSION }}
           actions-cache-folder: 'emsdk-cache'  # optional explicit cache dir
 
-      - name: Verify Emscripten1
+      - name: Verify Emscripten
         run: |
           emcc -v
-          which wasm-ld
-          wasm-ld --version
-
-      - name: Put emsdk on PATH
-        run: |
-          echo "$EMSDK/upstream/bin" >> "$GITHUB_PATH"
-          echo "$EMSDK/upstream/emscripten" >> "$GITHUB_PATH"
-          # if the action exports EMSDK differently, print env and adjust:
-          env | grep -i em || true
-
-      - name: Verify Emscripten2
-        run: |
-          emcc -v
-          which wasm-ld
-          wasm-ld --version
 
       # ──────────────────────────────────────────────
       # WABT (wasm-validate, wasm-objdump, wasm2wat, …)

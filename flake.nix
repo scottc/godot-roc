@@ -63,7 +63,7 @@
 
             # Web wasm32-emscripten, support & tools.
             pkgs.emscripten # godot 4.5 docs expects emscripten 3.1.62+ when building web templates.
-            pkgs.lld # provides wasm-ld, a lower level alternative to emscripten's emcc wasm-ld driver.
+            # pkgs.lld # provides wasm-ld, a lower level alternative to emscripten's emcc wasm-ld driver. Use zig wasm-ld, zig comes with it already.
             pkgs.wabt # for wasm-objdump, cli helper utility
 
             # Package & publish tools
@@ -95,7 +95,7 @@
 # =Optional=
 # emcc:         $(emcc -v 2>&1 | head -n1)
 # wasm-objdump: $(wasm-objdump --version)
-# wasm-ld:      $(wasm-ld --version)
+# wasm-ld:      $(zig wasm-ld --version)
 # zip:          $(zip --version 2>&1 | head -n2 | tail -n1)
 #
 # Tip - To get started run the following command:

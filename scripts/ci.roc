@@ -238,8 +238,9 @@ main! = |_args| {
 
 
    	Stdout.line!("Linking with wasm-ld")?
-    _wasm_ld_out = Cmd.exec!("wasm-ld",
+    _wasm_ld_out = Cmd.exec!("zig",
         [
+            "wasm-ld",
             "--fatal-warnings", # this is to ensure emcc doesn't silently suppress warnings.
             "--experimental-pic", # this is to supress the "shared libraries … not yet stable"
             "--no-entry",
