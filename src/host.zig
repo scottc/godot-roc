@@ -150,13 +150,14 @@ export fn godot_roc_init(
     // Let's just throw any random hardcoded version in here for now... we'll get a nice ui pop up error.
     if (g_engine_runtime_version.major != 4 and g_engine_runtime_version.major != 1 and g_engine_runtime_version.major != 0) {
         var ver_buf: [256]u8 = undefined;
-        const ver_msg = std.fmt.bufPrintZ(
+        const ver_slice = cStrToSlice(g_engine_runtime_version.string, 128);
+        const ver_msg = bufPrintC(
             &ver_buf,
             "This version of godot-roc was compiled specifically for godot 4.7.2, but got: {s}. Mismatched (newer) APIs may crash; or have missing features (older).",
-            .{g_engine_runtime_version.string},
+            .{ver_slice},
         ) catch "This version of godot-roc was compiled specifically for godot 4.7.2, but got: (version string truncated). Mismatched (newer) APIs may crash; or have missing features (older).";
 
-        g_engine_interface.print_error(ver_msg, "godot_roc_init", "host.zig", @src().line, 1);
+        g_engine_interface.print_error(ver_msg.ptr, "godot_roc_init", "host.zig", @src().line, 1);
         // Just a warning for now.
         // TODO: enforce later.
         // return 0; // return with failure (zero = failure exit code).
@@ -167,13 +168,14 @@ export fn godot_roc_init(
 
     if (g_engine_runtime_version2.major != 4 and g_engine_runtime_version2.major != 1 and g_engine_runtime_version2.major != 0) {
         var ver_buf: [256]u8 = undefined;
-        const ver_msg = std.fmt.bufPrintZ(
+        const ver_slice = cStrToSlice(g_engine_runtime_version.string, 128);
+        const ver_msg = bufPrintC(
             &ver_buf,
             "This version of godot-roc was compiled specifically for godot 4.7.2, but got: {s}. Mismatched (newer) APIs may crash; or have missing features (older).",
-            .{g_engine_runtime_version2.string},
+            .{ver_slice},
         ) catch "This version of godot-roc was compiled specifically for godot 4.7.2, but got: (version string truncated). Mismatched (newer) APIs may crash; or have missing features (older).";
 
-        g_engine_interface.print_error(ver_msg, "godot_roc_init", "host.zig", @src().line, 1);
+        g_engine_interface.print_error(ver_msg.ptr, "godot_roc_init", "host.zig", @src().line, 1);
         // Just a warning for now.
         // TODO: enforce later.
         // return 0; // return with failure (zero = failure exit code).
@@ -193,6 +195,25 @@ export fn godot_roc_init(
     };
 
     return 1; // non-zero is success exit code.
+}
+
+/// Bound scan — pure Zig, no std.fmt, no libc.
+fn cStrToSlice(p: [*:0]const u8, max: usize) []const u8 {
+    var i: usize = 0;
+    while (i < max and p[i] != 0) : (i += 1) {}
+    return p[0..i];
+}
+
+/// Format into `buf`, then NUL-terminate. Returns `[:0]const u8` or error.
+fn bufPrintC(
+    buf: []u8,
+    comptime fmt: []const u8,
+    args: anytype,
+) ![:0]const u8 {
+    if (buf.len == 0) return error.NoSpaceLeft;
+    const written = try std.fmt.bufPrint(buf[0 .. buf.len - 1], fmt, args);
+    buf[written.len] = 0;
+    return buf[0..written.len :0];
 }
 
 //
@@ -358,18 +379,24 @@ export fn godot_roc_register_class(
 
 fn printError(comptime fmt: []const u8, args: anytype) void {
     var buf: [512]u8 = undefined;
-    const msg = std.fmt.bufPrintZ(&buf, "[godot-roc] " ++ fmt, args) catch {
-        // fallback if format overflowed
+    const msg = bufPrintC(&buf, "[godot-roc] " ++ fmt, args) catch {
         const fallback = "[godot-roc] (print truncated)\n";
         g_engine_interface.print_error(fallback, "print", "host.zig", @src().line, 0);
         return;
     };
 
     if (comptime is_native_target) {
-        std.debug.print("print \"{s}\" in {s} @ {s}:{d} & editor_notify={d}", .{ msg, "print", "host.zig", @src().line, 0 });
+        // msg is [:0]const u8 — print as slice, not as C string discovery
+        std.debug.print("print \"{s}\" in {s} @ {s}:{d} & editor_notify={d}\n", .{
+            msg[0..msg.len], // or just `msg` as []const u8
+            "print",
+            "host.zig",
+            @src().line,
+            0,
+        });
     }
 
-    g_engine_interface.print_error(msg, "print", "host.zig", @src().line, 0);
+    g_engine_interface.print_error(msg.ptr, "print", "host.zig", @src().line, 0);
 }
 
 fn initialize(userdata: ?*anyopaque, level: baseline_gde_if.GDExtensionInitializationLevel) callconv(.c) void {

@@ -43,7 +43,7 @@ host_targets : List(HostTarget)
 host_targets = [
     {
         name: "wasm32",
-        zig_triple: "wasm32-emscripten",
+        zig_triple: "wasm32-freestanding", # wasm32-emscripten
         kind: WasmObj,
         lib_file: "libhost.o.wasm",
         mcpu: NoCpu,
