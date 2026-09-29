@@ -195,127 +195,120 @@ main! = |_args| {
 	# emcc
 	# Ideally, roc could emit a "wasm32-emscripten SIDE_MODULE=2"
 	# and then we can drop emcc & emscripten entirely.
-	# This depends on https://github.com/roc-lang/roc/pull/11474
-	# merged 2026-09-24 git: ac12f2e9a55bf332f4e15f46eecc5f97c44f3446
-	# just waiting on new nightly build to be released.
-	pr11474 = False
-	if (pr11474) {
-    	# compile roc - to web
-    	Stdout.line!("Compiling web roc app...")?
-    	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).display()} --target=wasm32 --output=${Path.join(Path.join(ci_workspace, project), "temp.a.wasm").display()}")? # To inform the user
-    	roc_web_start = Utc.now!()
-    	_roc_web_out = Cmd.exec!("/home/anon/Projects/roc/zig-out/bin/roc", [
-    	    "build",
-    		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
-    		"--target=wasm32",
-    		"--output=${Path.join(Path.join(ci_workspace, project), "temp.a").display()}"
-    	])?
-    	Stdout.line!("Roc web app compiled ${(Utc.now!() - roc_web_start).to_str()}ns")?
 
-        # TODO: extract and validate "wasm-validate" temp.a -> whatever file...
-       	Stdout.line!("Extracting for validation ...")?
-        _ar_x_out = Cmd.exec!(
-            "ar",
-            [
-                "x",
-                Path.join(Path.join(ci_workspace, project), "temp.a").to_os_str(),
-                "--output", Path.join(ci_workspace, project).to_os_str()
-            ]
-        )?
-       	Stdout.line!("Extracted...")?
+   	# compile roc - to web
+   	Stdout.line!("Compiling web roc app...")?
+   	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).display()} --target=wasm32 --output=${Path.join(Path.join(ci_workspace, project), "temp.a.wasm").display()}")? # To inform the user
+   	roc_web_start = Utc.now!()
+   	_roc_web_out = Cmd.exec!("/home/anon/Projects/roc/zig-out/bin/roc", [
+   	    "build",
+  		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
+  		"--target=wasm32",
+  		"--output=${Path.join(Path.join(ci_workspace, project), "temp.a").display()}"
+   	])?
+   	Stdout.line!("Roc web app compiled ${(Utc.now!() - roc_web_start).to_str()}ns")?
 
-        # Seems to produce:
-        # libhost.o.wasm
-        # roc_app_llvm_wasm32_speed.o
-
-       	Stdout.line!("List files ...")?
-        _ls_al_out = Cmd.exec!("ls", ["-al", Path.join(ci_workspace, project).to_os_str()])?
-       	Stdout.line!("files listed ...")?
-
-       	Stdout.line!("Validating host... wasm-validate libhost.o.wasm")?
-        _validate_host_out = Cmd.exec!("wasm-validate", [Path.join(Path.join(ci_workspace, project), "libhost.o.wasm").to_os_str()])?
-       	Stdout.line!("Validated host.")?
-
-       	Stdout.line!("Validating app... wasm-validate roc_app_llvm_wasm32_speed.o")?
-        _validate_roc_out = Cmd.exec!("wasm-validate", [Path.join(Path.join(ci_workspace, project), "roc_app_llvm_wasm32_speed.o").to_os_str()])?
-       	Stdout.line!("Validated app.")?
-
-
-       	Stdout.line!("Linking with wasm-ld")?
-        _wasm_ld_out = Cmd.exec!("wasm-ld",
-            [
-                "--fatal-warnings", # this is to ensure emcc doesn't silently suppress warnings.
-                "--experimental-pic", # this is to supress the "shared libraries … not yet stable"
-                "--no-entry",
-                "--export-dynamic",
-                "--import-memory",
-                "--import-table",
-                "-shared",
-                "-o", Path.join(Path.join(ci_workspace, project), "test.wasm").to_os_str(),
-                Path.join(Path.join(ci_workspace, project), "libhost.o.wasm").to_os_str(),
-                Path.join(Path.join(ci_workspace, project), "roc_app_llvm_wasm32_speed.o").to_os_str()
-            ]
-        )?
-       	Stdout.line!("wasm-ld Linked!")?
-
-        # TODO: can we keep the wasm-ld, fatal warnings, but exclude "wasm-ld: error: creating shared libraries, with -shared, is not yet stable"?
-
-
-    	Stdout.line!("Compiling Final Web GDExtension (wasm32-emscripten SIDE_MODULE=2)")?
-    	Stdout.line!("[emcc command here...]")? # To inform the user
-    	_emcc_out = Cmd.exec!("emcc", [
+    # TODO: extract and validate "wasm-validate" temp.a -> whatever file...
+   	Stdout.line!("Extracting for validation ...")?
+    _ar_x_out = Cmd.exec!(
+        "ar",
+        [
+            "x",
             Path.join(Path.join(ci_workspace, project), "temp.a").to_os_str(),
-           	"-o", Path.join(Path.join(ci_workspace, project), "my_game.wasm").to_os_str(),
-           	"-sERROR_ON_UNDEFINED_SYMBOLS=1", # make missing symbols cause error.
-            "-sSIDE_MODULE=2", # 1 = "old" export everything, 2=???? "newer"
-           	# "-sEXPORTED_FUNCTIONS=[\"_godot_roc_init\"]", # or an array, but godot only needs an entrypoint?
-           	"-sEXPORTED_FUNCTIONS=_godot_roc_init",
-           	"-O0",
-           	"-msimd128",
-            # for investigating & troubleshooting
-            "-g2",
-            "--profiling",
-            "--emit-symbol-map",
-            # then you can run
-            # "wasm-objdump -x my_game.wasm", and it will now show the symbol names.
-            # wasm-validate
-            # wasm2wat
-            # etc.
-            #
-            # experiments...
-            #"--no-entry",
-            #"-Wl,--export-all",
-            #"-sALLOW_MEMORY_GROWTH=0",
-            #"-fno-lto",
-    	])?
+            "--output", Path.join(ci_workspace, project).to_os_str()
+        ]
+    )?
+   	Stdout.line!("Extracted...")?
 
-    	Stdout.line!("Validating app... wasm-validate --enable-extended-const my_game.wasm")?
-        _emcc_valid_out = Cmd.exec!("wasm-validate", ["--enable-extended-const", Path.join(Path.join(ci_workspace, project), "my_game.wasm").to_os_str()])?
+    # Seems to produce:
+    # libhost.o.wasm
+    # roc_app_llvm_wasm32_speed.o
 
-        dp = Path.join(Path.join(ci_workspace, project), "export").display()
-    	Stdout.line!(
-            \\ To test the exported web app: Run web server...
-            \\
-            \\Run:
-            \\SERVE_PATH=\'${dp}\' roc run scripts/serve.roc
-            \\
-            \\And then open in browser:
-            \\localhost:8000/index.html
-        )?
+   	Stdout.line!("List files ...")?
+    _ls_al_out = Cmd.exec!("ls", ["-al", Path.join(ci_workspace, project).to_os_str()])?
+   	Stdout.line!("files listed ...")?
 
-    	# godot publish
-    	# Ensure these settings are enabled for the web export.
-    	# Godot > Project > Export > Web > Options > Extensions Support = On (Checked)
-    	# Godot > Project > Export > Web > Options > Thread Support = Off (Unchecked)
-    	Stdout.line!("Godot publish to web...")?
-    	_godot_outasdasd = Cmd.exec!("godot", [
-            Path.join(Path.join(ci_workspace, project), "project.godot").to_os_str(),
-           	"--headless",
-           	"--export-release", "Web", "./export/index.html" # relative to project.godot file.
-    	])?
+   	Stdout.line!("Validating host... wasm-validate libhost.o.wasm")?
+    _validate_host_out = Cmd.exec!("wasm-validate", [Path.join(Path.join(ci_workspace, project), "libhost.o.wasm").to_os_str()])?
+   	Stdout.line!("Validated host.")?
+
+   	Stdout.line!("Validating app... wasm-validate roc_app_llvm_wasm32_speed.o")?
+    _validate_roc_out = Cmd.exec!("wasm-validate", [Path.join(Path.join(ci_workspace, project), "roc_app_llvm_wasm32_speed.o").to_os_str()])?
+   	Stdout.line!("Validated app.")?
 
 
-	}
+   	Stdout.line!("Linking with wasm-ld")?
+    _wasm_ld_out = Cmd.exec!("wasm-ld",
+        [
+            "--fatal-warnings", # this is to ensure emcc doesn't silently suppress warnings.
+            "--experimental-pic", # this is to supress the "shared libraries … not yet stable"
+            "--no-entry",
+            "--export-dynamic",
+            "--import-memory",
+            "--import-table",
+            "-shared",
+            "-o", Path.join(Path.join(ci_workspace, project), "test.wasm").to_os_str(),
+            Path.join(Path.join(ci_workspace, project), "libhost.o.wasm").to_os_str(),
+            Path.join(Path.join(ci_workspace, project), "roc_app_llvm_wasm32_speed.o").to_os_str()
+        ]
+    )?
+   	Stdout.line!("wasm-ld Linked!")?
+
+    # TODO: can we keep the wasm-ld, fatal warnings, but exclude "wasm-ld: error: creating shared libraries, with -shared, is not yet stable"?
+
+
+   	Stdout.line!("Compiling Final Web GDExtension (wasm32-emscripten SIDE_MODULE=2)")?
+   	Stdout.line!("[emcc command here...]")? # To inform the user
+   	_emcc_out = Cmd.exec!("emcc", [
+        Path.join(Path.join(ci_workspace, project), "temp.a").to_os_str(),
+       	"-o", Path.join(Path.join(ci_workspace, project), "my_game.wasm").to_os_str(),
+       	"-sERROR_ON_UNDEFINED_SYMBOLS=1", # make missing symbols cause error.
+        "-sSIDE_MODULE=2", # 1 = "old" export everything, 2=???? "newer"
+       	# "-sEXPORTED_FUNCTIONS=[\"_godot_roc_init\"]", # or an array, but godot only needs an entrypoint?
+       	"-sEXPORTED_FUNCTIONS=_godot_roc_init",
+       	"-O0",
+       	"-msimd128",
+        # for investigating & troubleshooting
+        "-g2",
+        "--profiling",
+        "--emit-symbol-map",
+        # then you can run
+        # "wasm-objdump -x my_game.wasm", and it will now show the symbol names.
+        # wasm-validate
+        # wasm2wat
+        # etc.
+        #
+        # experiments...
+        #"--no-entry",
+        #"-Wl,--export-all",
+        #"-sALLOW_MEMORY_GROWTH=0",
+        #"-fno-lto",
+   	])?
+
+   	Stdout.line!("Validating app... wasm-validate --enable-extended-const my_game.wasm")?
+    _emcc_valid_out = Cmd.exec!("wasm-validate", ["--enable-extended-const", Path.join(Path.join(ci_workspace, project), "my_game.wasm").to_os_str()])?
+
+    dp = Path.join(Path.join(ci_workspace, project), "export").display()
+   	Stdout.line!(
+        \\ To test the exported web app: Run web server...
+        \\
+        \\Run:
+        \\SERVE_PATH=\'${dp}\' roc run scripts/serve.roc
+        \\
+        \\And then open in browser:
+        \\localhost:8000/index.html
+    )?
+
+   	# godot publish
+   	# Ensure these settings are enabled for the web export.
+   	# Godot > Project > Export > Web > Options > Extensions Support = On (Checked)
+   	# Godot > Project > Export > Web > Options > Thread Support = Off (Unchecked)
+   	Stdout.line!("Godot publish to web...")?
+   	_godot_outasdasd = Cmd.exec!("godot", [
+        Path.join(Path.join(ci_workspace, project), "project.godot").to_os_str(),
+       	"--headless",
+       	"--export-release", "Web", "./export/index.html" # relative to project.godot file.
+   	])?
 
 	Ok({})
 }
