@@ -46,9 +46,9 @@ main! = |_args| {
 	_platform_check_out = Cmd.exec!("roc", ["check", "platform/main.roc"])?
 
 	Stdout.line!(
-	    \\ Cmd.exec!("zig", ["test", "src/engine/zig_platform_abi_impl.zig"])?
+	    \\ Cmd.exec!("zig", ["test", "src/zig_platform_abi_impl.zig"])?
 	)?
-	_fghfgh_test_out = Cmd.exec!("zig", ["test", "src/engine/zig_platform_abi_impl.zig"])?
+	_fghfgh_test_out = Cmd.exec!("zig", ["test", "src/zig_platform_abi_impl.zig"])?
 
 	# TODO: replace roc glue, to include the above...
 	Stdout.line!(
