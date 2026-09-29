@@ -47,18 +47,6 @@ jobs:
           use-cache: true
 
       # ──────────────────────────────────────────────
-      # 2. Emscripten (emcc + friends)
-      # ──────────────────────────────────────────────
-      # - name: Setup Emscripten
-      #   uses: emscripten-core/setup-emsdk@v16
-      #   with:
-      #     version: ${{ env.EM_VERSION }}
-      #     actions-cache-folder: 'emsdk-cache'  # optional explicit cache dir
-
-      # - name: Verify Emscripten
-      #   run: emcc -v
-
-      # ──────────────────────────────────────────────
       # 3. Roc
       # ──────────────────────────────────────────────
       - name: Setup Roc
@@ -75,6 +63,28 @@ jobs:
           restore-keys: |
             roc-cache-${{ runner.os }}-${{ runner.arch }}-${{ env.ROC_VERSION }}-${{ env.ROC_NIGHTLY_TAG }}-
             roc-cache-${{ runner.os }}-${{ runner.arch }}-
+
+      # ──────────────────────────────────────────────
+      # 2. Emscripten (emcc + friends)
+      # ──────────────────────────────────────────────
+      - name: Setup Emscripten
+        uses: emscripten-core/setup-emsdk@v16
+        with:
+          version: ${{ env.EM_VERSION }}
+          actions-cache-folder: 'emsdk-cache'  # optional explicit cache dir
+
+      - name: Verify Emscripten
+        run: emcc -v
+
+      # ──────────────────────────────────────────────
+      # WABT (wasm-validate, wasm-objdump, wasm2wat, …)
+      # ──────────────────────────────────────────────
+      - name: Install WABT
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wabt
+          wasm-validate --version
+
       # ──────────────────────────────────────────────
       # 4. Godot (for Web export)
       # ──────────────────────────────────────────────
