@@ -200,7 +200,7 @@ main! = |_args| {
    	Stdout.line!("Compiling web roc app...")?
    	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).display()} --target=wasm32 --output=${Path.join(Path.join(ci_workspace, project), "temp.a.wasm").display()}")? # To inform the user
    	roc_web_start = Utc.now!()
-   	_roc_web_out = Cmd.exec!("/home/anon/Projects/roc/zig-out/bin/roc", [
+   	_roc_web_out = Cmd.exec!("roc", [
    	    "build",
   		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
   		"--target=wasm32",
