@@ -50,7 +50,7 @@ main! = |_args| {
 	)?
 	_fghfgh_test_out = Cmd.exec!("zig", ["test", "src/zig_platform_abi_impl.zig"])?
 
-	# TODO: replace roc glue, to include the above...
+	# TODO: replace roc glue, to include the above; the externs & exports need to match...
 	Stdout.line!(
 	    \\ Cmd.exec!("roc", ["glue", "vendor/roc/git-1d982dc/ZigGlue.roc", "src/", "platform/main.roc"])?
 	)?

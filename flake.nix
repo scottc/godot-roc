@@ -16,9 +16,16 @@
     # if you want to explicitly stick to a version.
     # We use the short hash here, to be consistant with other useages.
     # Searchable string: nightly-2026-09-18-1d982dc
-    roc.url = "github:roc-lang/roc/1d982dc?dir=src";
-    #roc.url = "path:./flakes/roc-nix"; # TODO:
-    roc.inputs.nixpkgs.follows = "nixpkgs";
+    # roc.url = "github:roc-lang/roc/1d982dc?dir=src";
+    # #roc.url = "path:./flakes/roc-nix"; # TODO:
+    # roc.inputs.nixpkgs.follows = "nixpkgs";
+
+    # The flake above uses debug flags etc.
+    # It's not the same as the offical release binaries.
+    # thebrandonlucas/roc-overlay, references the offical released binaries.
+    # the differing behaviour can cause panics, makes development more tricky.
+    # TODO: vendor the overlay?
+    roc-nightly.url = "github:thebrandonlucas/roc-overlay";
 
     redot.url = "path:./flakes/redot-nix";
     redot.inputs.nixpkgs.follows = "nixpkgs";
@@ -27,11 +34,12 @@
     rex.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, flake-utils, roc, redot, rex, ... }:
+  outputs = { self, nixpkgs, flake-utils, roc-nightly, redot, rex, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        rocPkg = roc.packages.${system}.roc or null;
+        # rocPkg = roc.packages.${system}.roc or null;
+        rocNightlyPkg = roc-nightly.packages.${system}.nightly-2026-09-18-1d982dc;
         redotPkg = redot.packages.${system}.redot;
         rexPkg = rex.packages.${system}.rex;
 
@@ -43,7 +51,8 @@
           packages = [
             # compilers
             pkgs.zig
-            rocPkg
+            # rocPkg
+            rocNightlyPkg
 
             # engines
             pkgs.godot # latest 4.7.1
@@ -73,7 +82,7 @@
 # These are some of tools that are avaliable:
 #
 # =Compilers=
-# roc:          $(roc version) nightly-2026-09-18-1d982dc
+# roc:          $(roc version)
 # zig:          $(zig version)
 #
 # =Engines=
