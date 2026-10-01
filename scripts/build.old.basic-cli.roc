@@ -1,22 +1,26 @@
-#!/usr/bin/env roc
-
-#
-# Usage:
-#   roc run scripts/build.roc
-#   roc run scripts/build.roc -- native
-#   roc run scripts/build.roc -- clean
-#   roc run scripts/build.roc -- -Doptimize=ReleaseFast
-#
-
 ## Declarative multi-target host builder (zig under the hood).
-## Ported to roc-build platform.
+##
+##   roc scripts/build.roc
+##   roc scripts/build.roc -- native
+##   roc scripts/build.roc -- clean
+##   roc scripts/build.roc -- -Doptimize=ReleaseFast
+##
 app [main!] {
-    pf: platform "https://github.com/scottc/roc-build/releases/download/0.0.1-pre-alpha-test1/8jZuyEFpCc7ep6yu2iXBT4cAYoxZdjTk5kxShUCMXqgx.tar.zst",
+    cli: platform "https://github.com/roc-lang/basic-cli/releases/download/0.23.0/GNN5tt2gKdX4dhawg4915C4YB193woHFdcCkz31fhGxv.tar.zst",
     roc: "nightly-2026-09-27-a3ce7f1",
 }
 
-import pf.Build
-import pf.Log
+import cli.Cmd
+import cli.Env
+import cli.OsStr
+import cli.Stderr
+import cli.Stdout
+
+# Note: This is slower then build.zig,
+# due to the lack of roc concurrency primatives.
+#
+# A workaround, is to implement a build platform,
+# that can schedule the tasks required.
 
 # =============================================================================
 # Domain
@@ -39,7 +43,7 @@ host_targets : List(HostTarget)
 host_targets = [
     {
         name: "wasm32",
-        zig_triple: "wasm32-freestanding",
+        zig_triple: "wasm32-freestanding", # wasm32-emscripten
         kind: WasmObj,
         lib_file: "libhost.o.wasm",
         mcpu: NoCpu,
@@ -127,8 +131,15 @@ host_targets = [
     },
 ]
 
+# legacy_cleanup_paths : List(Str)
+# legacy_cleanup_paths = [
+#     "platform/libhost.o.wasm",
+#     "platform/libhost.a",
+#     "platform/host.lib",
+# ]
+
 # =============================================================================
-# Pure helpers
+# Pure
 # =============================================================================
 
 out_path : HostTarget -> Str
@@ -155,7 +166,7 @@ effective_optimize = |t, o| {
     }
 }
 
-find_host : Str -> Try(HostTarget, [UnknownTarget(Str)])
+find_host : Str -> Try(HostTarget, [UnknownTarget(Str), ..others])
 find_host = |name| {
     for t in host_targets {
         if t.name == name {
@@ -239,11 +250,21 @@ zig_argv = |t, optimize| {
     }
 }
 
-# Fixed mapping (roc-build has no Env.platform!). Adjust for local mac/win as needed.
-native_host_name : Str
-native_host_name = "x64musl"
+native_host_name! : () => Try(Str, [UnsupportedNative, ..others])
+native_host_name! = || {
+    plat = Env.platform!()
+    match (plat.os, plat.arch) {
+        (MACOS, X64) => Ok("x64mac")
+        (MACOS, AARCH64) => Ok("arm64mac")
+        (LINUX, X64) => Ok("x64musl")
+        (LINUX, AARCH64) => Ok("arm64musl")
+        (WINDOWS, X64) => Ok("x64win")
+        (WINDOWS, AARCH64) => Ok("arm64win")
+        _ => Err(UnsupportedNative)
+    }
+}
 
-native_plan : Str -> Try(List(HostTarget), [UnknownTarget(Str)])
+native_plan : Str -> Try(List(HostTarget), [UnknownTarget(Str), ..others])
 native_plan = |name| {
     t = find_host(name)?
     match t.baseline {
@@ -255,181 +276,132 @@ native_plan = |name| {
     }
 }
 
+os_list : List(Str) -> List(OsStr)
+os_list = |strs| List.map(strs, OsStr.from_str)
+
 # =============================================================================
-# Build graph construction
+# Effects
 # =============================================================================
 
-build_one_cmd : HostTarget, Optimize, U64, List(U64) -> _
-build_one_cmd = |t, optimize, id, depends_on| {
+log! : Str => {}
+log! = |msg| {
+    _ = Stdout.line!(msg)
+    {}
+}
+
+rm_if_exists! : Str => {}
+rm_if_exists! = |path| {
+    _ = Cmd.exec!("rm", os_list(["-f", path]))
+    {}
+}
+
+mkdir_p! : Str => Try({}, [MkdirFailed(Str), ..others])
+mkdir_p! = |dir| {
+    Cmd.exec!("mkdir", os_list(["-p", dir])) ? |_| MkdirFailed(dir)
+    Ok({})
+}
+
+cleanup_all! : () => {}
+cleanup_all! = || {
+    for path in List.map(host_targets, out_path) {
+        rm_if_exists!(path)
+    }
+    # for path in legacy_cleanup_paths {
+    #     rm_if_exists!(path)
+    # }
+}
+
+build_one! : HostTarget, Optimize => Try({}, [ZigFailed({ target : Str, detail : Str }), MkdirFailed(Str), ..others])
+build_one! = |t, optimize| {
+    mkdir_p!(out_dir(t))?
+
     argv = zig_argv(t, optimize)
-    emit = out_path(t)
+    log!("→ zig ${Str.join_with(argv, " ")}")
 
-    Build.cmd({
-        id: id,
-        depends_on: depends_on,
-        inputs: [
-            "src/host.zig",
-        ],
-        outputs: [emit],
-        program: "zig",
-        args: argv,
-        description: "compile host ${t.name} → ${emit}",
-        cwd: "",
-        env: [],
-    })
+    Cmd.exec!("zig", os_list(argv)) ? |err|
+        ZigFailed({ target: t.name, detail: Str.inspect(err) })
+
+    Ok({})
 }
 
-# Ensure output directories exist (one mkdir per unique dir)
-mkdir_cmds_for : List(HostTarget), U64 -> (List(_), List(U64))
-mkdir_cmds_for = |host_list, start_id| {
-    var $dirs = []
-    for t in host_list {
-        d = out_dir(t)
-        if List.contains($dirs, d) {
-            {}
-        } else {
-            $dirs = List.append($dirs, d)
-        }
+build_many! : List(HostTarget), Optimize => Try({}, [ZigFailed({ target : Str, detail : Str }), MkdirFailed(Str), ..others])
+build_many! = |hosts, optimize| {
+    for t in hosts {
+        log!("compile host ${t.name}")
+        build_one!(t, optimize)?
     }
-
-    var $cmds = []
-    var $ids = []
-    var $id = start_id
-    for dir in $dirs {
-        cmd = Build.cmd({
-            id: $id,
-            depends_on: [],
-            inputs: [],
-            outputs: [dir],
-            program: "mkdir",
-            args: ["-p", dir],
-            description: "mkdir -p ${dir}",
-            cwd: "",
-            env: [],
-        })
-        $cmds = List.append($cmds, cmd)
-        $ids = List.append($ids, $id)
-        $id = $id + 1
-    }
-    ($cmds, $ids)
+    Ok({})
 }
 
-# Clean: remove all known output artifacts
-clean_cmds : U64 -> (List(_), List(U64))
-clean_cmds = |start_id| {
-    paths = List.map(host_targets, out_path)
+build_all! : Optimize => Try({}, [ZigFailed({ target : Str, detail : Str }), MkdirFailed(Str), ..others])
+build_all! = |optimize| {
+    log!("clean")
+    cleanup_all!()
+    build_many!(host_targets, optimize)?
+    log!("install: all targets done")
+    Ok({})
+}
 
-    var $cmds = []
-    var $ids = []
-    var $id = start_id
-    for path in paths {
-        cmd = Build.cmd({
-            id: $id,
-            depends_on: [],
-            inputs: [],
-            outputs: [],
-            program: "rm",
-            args: ["-f", path],
-            description: "rm -f ${path}",
-            cwd: "",
-            env: [],
-        })
-        $cmds = List.append($cmds, cmd)
-        $ids = List.append($ids, $id)
-        $id = $id + 1
-    }
-    ($cmds, $ids)
+build_native! : Optimize => Try({}, [ZigFailed({ target : Str, detail : Str }), MkdirFailed(Str), UnsupportedNative, UnknownTarget(Str), ..others])
+build_native! = |optimize| {
+    log!("clean")
+    cleanup_all!()
+
+    name = native_host_name!()?
+    plan = native_plan(name)?
+    build_many!(plan, optimize)?
+    log!("native: done")
+    Ok({})
 }
 
 # =============================================================================
 # Entry
 # =============================================================================
 
-main! : List(Str) => Try({}, [Exit(I32)])
+main! : List(OsStr) => Try({}, [Exit(I32), ..others])
 main! = |args| {
     user_args =
-        if List.is_empty(args) {
-            []
-        } else {
-            List.drop_first(args, 1)
-        }
+        args
+        |> List.drop_first(1)
+        |> List.map(OsStr.display)
 
     optimize = parse_optimize(user_args)
+
     want_clean = List.contains(user_args, "clean")
     want_native = List.contains(user_args, "native")
 
-    Log.info!("Host builder (roc-build)")
-    Log.info!("optimize = ${Str.inspect(optimize)}")
-
-    if want_clean {
-        Log.info!("clean mode")
-        (clean, _) = clean_cmds(1)
-        graph = Build.graph(clean)
-        match Build.run!(graph) {
-            Ok({}) => {
-                Log.info!("clean: done")
-                Ok({})
-            }
-            Err(BuildFailed(msg)) => {
-                Log.error!(msg)
-                Err(Exit(1))
-            }
+    result =
+        if want_clean {
+            cleanup_all!()
+            log!("clean: done")
+            Ok({})
+        } else if want_native {
+            build_native!(optimize)
+        } else {
+            build_all!(optimize)
         }
-    } else {
-        hosts_result =
-            if want_native {
-                native_plan(native_host_name)
-            } else {
-                Ok(host_targets)
-            }
 
-        match hosts_result {
-            Err(UnknownTarget(name)) => {
-                Log.error!("Unknown target: ${name}")
-                Err(Exit(1))
-            }
-            Ok(selected) => {
-                mode_label =
-                    if want_native {
-                        "native"
-                    } else {
-                        "all"
-                    }
-                count_str = List.len(selected).to_str()
-                Log.info!("Building ${mode_label} (${count_str} target(s))")
-
-                # 1. Clean first
-                (clean, clean_ids) = clean_cmds(1)
-
-                # 2. mkdir for each needed directory
-                mkdir_start = 1 + List.len(clean)
-                (mkdirs, mkdir_ids) = mkdir_cmds_for(selected, mkdir_start)
-
-                # 3. One zig build command per target
-                build_start = mkdir_start + List.len(mkdirs)
-                var $build_cmds = []
-                var $id = build_start
-                for t in selected {
-                    deps = List.concat(clean_ids, mkdir_ids)
-                    cmd = build_one_cmd(t, optimize, $id, deps)
-                    $build_cmds = List.append($build_cmds, cmd)
-                    $id = $id + 1
-                }
-
-                all_cmds = List.concat(List.concat(clean, mkdirs), $build_cmds)
-                graph = Build.graph(all_cmds)
-
-                match Build.run!(graph) {
-                    Ok({}) => {
-                        Log.info!("${mode_label}: done")
-                        Ok({})
-                    }
-                    Err(BuildFailed(msg)) => {
-                        Log.error!(msg)
-                        Err(Exit(1))
-                    }
-                }
-            }
+    match result {
+        Ok({}) => Ok({})
+        Err(UnsupportedNative) => {
+            _ = Stderr.line!("Unsupported native platform")
+            Err(Exit(1))
+        }
+        Err(UnknownTarget(name)) => {
+            _ = Stderr.line!("Unknown target: ${name}")
+            Err(Exit(1))
+        }
+        Err(ZigFailed({ target, detail })) => {
+            _ = Stderr.line!("zig failed for ${target}: ${detail}")
+            Err(Exit(1))
+        }
+        Err(MkdirFailed(dir)) => {
+            _ = Stderr.line!("mkdir failed: ${dir}")
+            Err(Exit(1))
+        }
+        Err(other) => {
+            _ = Stderr.line!("build failed: ${Str.inspect(other)}")
+            Err(Exit(1))
         }
     }
 }

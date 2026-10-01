@@ -2,374 +2,393 @@
 
 #
 # Usage:
-# roc run ci.roc [args]
+#   roc run ci.roc
 #
 
-## Continous Intergration
+## Continuous Integration (ported to roc-build platform)
 app [main!] {
+    pf: platform "https://github.com/scottc/roc-build/releases/download/0.0.1-pre-alpha-test1/8jZuyEFpCc7ep6yu2iXBT4cAYoxZdjTk5kxShUCMXqgx.tar.zst",
     roc: "nightly-2026-09-27-a3ce7f1",
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.23.0/GNN5tt2gKdX4dhawg4915C4YB193woHFdcCkz31fhGxv.tar.zst"
 }
 
-import pf.OsStr
-import pf.Path
-import pf.Stdout
-import pf.Stdin
-import pf.Utc
-import pf.Cmd
-import pf.Env
+import pf.Build
+import pf.Log
 
-main! : List(OsStr) => Try({}, _)
+main! : List(Str) => Try({}, [Exit(I32)])
 main! = |_args| {
-    ci_start = Utc.now!()
-    Stdout.line!(
-        \\#
-        \\# https://github.com/scottc/godot-roc
-        \\#
-        \\# ci.roc
-        \\#
-        \\# Continous Intergration
-        \\#
-        \\# The purpose of this script is to ensure quality & integrity of the codebase.
-        \\#
-        \\# As such we do the following static analysis & tests:
-        \\# - Type check
-        \\# - Unit tests
-        \\# - Lints & code rules
-        \\# - A complete build from start to final product.
-        \\#
-        \\# For all targets & engines...
-        \\#
-    )?
+    Log.info!("Continuous Integration — quality & integrity checks")
+    Log.info!("Type check / unit tests / lints are TODO placeholders")
+    Log.info!("Running complete build for all targets & engines...")
 
-    #
-    # Type checks
-    #
-
-    #
-    # Unit tests
-    #
-
-    #
-    # Lints & code rules
-    #
-
-    #
-    # Complete build
-    #
-
+    # ------------------------------------------------------------------
+    # Constants (same intent as original)
+    # ------------------------------------------------------------------
     ci_out = "ci-out"
-
-    ci_workspace : Path
-    ci_workspace = Path.join(ci_out, ci_start.to_str()) # Include "unique number" to avoid conflicts, so we can avoid deleting.
-
-    # the "templates/ci" path
-    # we need to ensure the platform in the same commit is referenced.
-    # we're mostly interested in testing the host.zig,
-    # but we still need to ensure a complete build for our users.
-    # pf: platform "../../platform/main.roc",
-    # And then the platform needs to reference the host files...
-    # must be in a subdirectory of /platform/...
-    project : Str
+    # Fixed workspace (no timestamp) so the graph has stable paths.
+    # Original used Utc.now!() to avoid collisions; wipe or use unique
+    # CI job dirs externally if needed.
+    ci_workspace = "ci-out/workspace"
     project = "my_game"
-
-    project_template : Str
     project_template = "ci"
-
-    project_roc_entrypoint : Str
     project_roc_entrypoint = "main.roc"
-
-    # project_godot_entrypoint : Str
-    # project_godot_entrypoint = "project.godot"
-
-    project_name : Str
     project_name = "My Game"
-
-    # project_engine : [Godot, Redot, Draconic] # todo "Godot451"
-    # project_engine = Godot
-
-    project_target_linux_binary : Str
     project_target_linux_binary = "my_game.so"
+    project_dir = "${ci_workspace}/${project}"
+    project_main = "${project_dir}/${project_roc_entrypoint}"
+    project_linux_out = "${project_dir}/${project_target_linux_binary}"
+    project_temp_a = "${project_dir}/temp.a"
+    project_wasm = "${project_dir}/my_game.wasm"
+    project_godot = "${project_dir}/project.godot"
 
-    # project_target_windows_binary : Str
-    # project_target_windows_binary = "my_game.dll"
+    # ------------------------------------------------------------------
+    # 1. Create workspace dirs
+    # ------------------------------------------------------------------
+    mkdir_ci_id = 1
+    mkdir_ci = Build.cmd({
+        id: mkdir_ci_id,
+        depends_on: [],
+        inputs: [],
+        outputs: [ci_out],
+        program: "mkdir",
+        args: ["-p", ci_out],
+        description: "Create ci-out",
+        cwd: "",
+        env: [],
+    })
 
-    # project_target_macos_binary : Str
-    # project_target_macos_binary = "my_game.dylib"
+    mkdir_ws_id = 2
+    mkdir_ws = Build.cmd({
+        id: mkdir_ws_id,
+        depends_on: [mkdir_ci_id],
+        inputs: [],
+        outputs: [ci_workspace],
+        program: "mkdir",
+        args: ["-p", ci_workspace],
+        description: "Create CI workspace",
+        cwd: "",
+        env: [],
+    })
 
-    # project_target_web_binary : Str
-    # project_target_web_binary = "libgodot_roc.web.wasm32.nothreads.wasm"
+    # ------------------------------------------------------------------
+    # 2. Copy template → project
+    # ------------------------------------------------------------------
+    copy_template_id = 3
+    copy_template = Build.cmd({
+        id: copy_template_id,
+        depends_on: [mkdir_ws_id],
+        inputs: [
+            # "templates/ci/..."  — expand if you want fine-grained caching
+        ],
+        outputs: [project_dir],
+        program: "cp",
+        args: ["-a", "templates/${project_template}", project_dir],
+        description: "Create godot-roc app \"${project_name}\" in \"${project_dir}\"",
+        cwd: "",
+        env: [],
+    })
 
-    Stdout.line!("# Creating godot-roc app \"${project_name}\" in \"${Path.join(ci_workspace, project).display()}\"...")?
+    # ------------------------------------------------------------------
+    # 3. Glue generation
+    # ------------------------------------------------------------------
+    glue_id = 4
+    glue = Build.cmd({
+        id: glue_id,
+        depends_on: [copy_template_id],
+        inputs: [
+            "scripts/glue.roc",
+            # + any sources glue reads
+        ],
+        outputs: [
+            # list generated files when known
+        ],
+        program: "roc",
+        args: ["run", "scripts/glue.roc"],
+        description: "Generating glue.. roc run scripts/glue.roc",
+        cwd: "",
+        env: [],
+    })
 
-    # Path.delete_dir!(target_destination)?
-    match Path.create_dir!(ci_out) {
-        _ => {
-            {} # suppress AlreadyExists error.
-            # TODO: keep other errors...
-        }
-    }
+    # ------------------------------------------------------------------
+    # 4. Build all host (zig) targets via scripts/build.roc
+    # ------------------------------------------------------------------
+    roc_zig_id = 5
+    roc_zig = Build.cmd({
+        id: roc_zig_id,
+        depends_on: [glue_id],
+        inputs: [
+            "scripts/build.roc",
+            # host sources, platform files, etc.
+        ],
+        outputs: [
+            # platform/targets/*/libhost.* etc.
+        ],
+        program: "roc",
+        args: [
+            "scripts/build.roc",
+            "-Doptimize=Debug",
+            # Debug = fastest build (CI preference)
+            # ReleaseFast = fastest runtime (releases)
+        ],
+        description: "Roc build all host (zig) targets",
+        cwd: "",
+        env: [],
+    })
 
-    Path.create_dir!(ci_workspace)?
-	_cp_template_out = copy_dir!("templates/${project_template}", Path.join(ci_workspace, project))?
-	Stdout.line!("Created godot-roc app: ${Path.join(ci_workspace, project).display()} ${(Utc.now!() - ci_start).to_str()}ns")?
+    # ------------------------------------------------------------------
+    # 5. Compile desktop roc app (x64musl)
+    # ------------------------------------------------------------------
+    roc_linux_id = 6
+    roc_linux = Build.cmd({
+        id: roc_linux_id,
+        depends_on: [roc_zig_id, copy_template_id],
+        inputs: [
+            project_main,
+            # + platform / host artifacts from roc_zig
+        ],
+        outputs: [project_linux_out],
+        program: "roc",
+        args: [
+            "build",
+            project_main,
+            "--target=x64musl",
+            "--no-cache",
+            "--output=${project_linux_out}",
+        ],
+        description: "Compiling desktop roc app (x64musl)",
+        cwd: "",
+        env: [],
+    })
 
+    # ------------------------------------------------------------------
+    # 6. Compile web roc app (wasm32) → temp.a
+    # ------------------------------------------------------------------
+    roc_web_id = 7
+    roc_web = Build.cmd({
+        id: roc_web_id,
+        depends_on: [roc_zig_id, copy_template_id],
+        inputs: [project_main],
+        outputs: [project_temp_a],
+        program: "roc",
+        args: [
+            "build",
+            project_main,
+            "--target=wasm32",
+            "--output=${project_temp_a}",
+        ],
+        description: "Compiling web roc app (wasm32)",
+        cwd: "",
+        env: [],
+    })
 
-	# TODO: generate: godot api -> roc types -> zig..
-
-	Stdout.line!("Generating glue.. roc run scripts/glue.roc")?
-	_roc_glue_out = Cmd.exec!("roc", ["run", "scripts/glue.roc" ])?
-	Stdout.line!("Glue generated!")?
-
-	# Precompile?
-
-	# # TODO: release a versioned platform, and the app can reference the precompiled release.
-	# Stdout.line!("Zig build all host targets...")?
-	# Stdout.line!("zig build")? # To inform the user
-	# zig_desktop_start = Utc.now!()
-	# _zig_desktop_out = Cmd.exec!("zig", [
-	#     "build",
-	# 	"-Doptimize=Debug"
-	# 	# Debug = fastest build time (default)
-	# 	# ReleaseFast = fastest runtime speed.
-	# 	# For CI, we want build speed.
-	# 	# For releases, we want run speed.
-	# ])?
-	# Stdout.line!("All host targets built ${(Utc.now!() - zig_desktop_start).to_str()}ns")?
-
-	Stdout.line!("Roc build all host (zig) targets...")?
-	Stdout.line!("roc run scripts/build.roc")? # To inform the user
-	roc_zig_start = Utc.now!()
-	_roc_zig_out = Cmd.exec!("roc", [
-	    "scripts/build.roc",
-		"-Doptimize=Debug"
-		# Debug = fastest build time (default)
-		# ReleaseFast = fastest runtime speed.
-		# For CI, we want build speed.
-		# For releases, we want run speed.
-	])?
-	Stdout.line!("All host targets built ${(Utc.now!() - roc_zig_start).to_str()}ns")?
-
-	# TODO: roc build all targets that godot supports...
-	# Valid roc targets are:
-    # x64musl, arm64musl    - Linux (static, portable)
-    # x64glibc, arm64glibc  - Linux (dynamic, faster)
-    # x64mac, arm64mac      - macOS
-    # x64win, arm64win      - Windows (MSVC)
-    # x64mingw, arm64mingw  - Windows (MinGW)
-    # wasm32                - WebAssembly
-
-	# compile roc - to native
-	Stdout.line!("Compiling desktop roc app...")?
-	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).display()} --target=x64musl --no-cache --output=${Path.join(Path.join(ci_workspace, project), project_target_linux_binary).display()}")? # To inform the user
-	roc_linux_start = Utc.now!()
-	_roc_linux_out = Cmd.exec!("roc", [
-	    "build",
-		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
-		"--target=x64musl",
-		"--no-cache",
-		"--output=${Path.join(Path.join(ci_workspace, project), project_target_linux_binary).display()}"]
-	)?
-	Stdout.line!("Desktop roc app compiled ${(Utc.now!() - roc_linux_start).to_str()}ns")?
-
-	# roc_windows_start = Utc.now!()
-	# _roc_windows_out = Cmd.exec!("roc", [
-	#     "build",
-	# 	Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
-	# 	"--target=x64mingw", # MinGW is avaliable on linux, msvc is not, so we can cross-compile.
-	# 	"--no-cache",
-	# 	"--output=${Path.join(Path.join(ci_workspace, project), project_target_windows_binary).display()}"]
-	# )?
-	# Stdout.line!("Desktop roc app compiled ${(Utc.now!() - roc_windows_start).to_str()}ns")?
-
-	# roc_mac_start = Utc.now!()
-	# _roc_mac_out = Cmd.exec!("roc", [
-	#     "build",
-	# 	Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
-	# 	"--target=x64mac",
-	# 	"--no-cache",
-	# 	"--output=${Path.join(Path.join(ci_workspace, project), project_target_macos_binary).display()}"]
-	# )?
-	# Stdout.line!("Desktop roc app compiled ${(Utc.now!() - roc_mac_start).to_str()}ns")?
-
-	# emcc
-	# Ideally, roc could emit a "wasm32-emscripten SIDE_MODULE=2"
-	# and then we can drop emcc & emscripten entirely.
-
-   	# compile roc - to web
-   	Stdout.line!("Compiling web roc app...")?
-   	Stdout.line!("roc build ${Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).display()} --target=wasm32 --output=${Path.join(Path.join(ci_workspace, project), "temp.a.wasm").display()}")? # To inform the user
-   	roc_web_start = Utc.now!()
-   	_roc_web_out = Cmd.exec!("roc", [
-   	    "build",
-  		Path.join(Path.join(ci_workspace, project), project_roc_entrypoint).to_os_str(),
-  		"--target=wasm32",
-  		"--output=${Path.join(Path.join(ci_workspace, project), "temp.a").display()}"
-   	])?
-   	Stdout.line!("Roc web app compiled ${(Utc.now!() - roc_web_start).to_str()}ns")?
-
-    # TODO: extract and validate "wasm-validate" temp.a -> whatever file...
-   	Stdout.line!("Extracting for validation ...")?
-    _ar_x_out = Cmd.exec!(
-        "ar",
-        [
+    # ------------------------------------------------------------------
+    # 7. Extract archive for validation
+    # ------------------------------------------------------------------
+    ar_x_id = 8
+    ar_x = Build.cmd({
+        id: ar_x_id,
+        depends_on: [roc_web_id],
+        inputs: [project_temp_a],
+        outputs: [
+            "${project_dir}/libhost.o.wasm",
+            "${project_dir}/roc_app_llvm_wasm32_speed.o",
+        ],
+        program: "ar",
+        args: [
             "x",
-            Path.join(Path.join(ci_workspace, project), "temp.a").to_os_str(),
-            "--output", Path.join(ci_workspace, project).to_os_str()
-        ]
-    )?
-   	Stdout.line!("Extracted...")?
+            project_temp_a,
+            "--output",
+            project_dir,
+        ],
+        description: "Extracting for validation (ar x)",
+        cwd: "",
+        env: [],
+    })
 
-    # Seems to produce:
-    # libhost.o.wasm
-    # roc_app_llvm_wasm32_speed.o
+    # ------------------------------------------------------------------
+    # 8. List files (debug / visibility)
+    # ------------------------------------------------------------------
+    ls_id = 9
+    ls = Build.cmd({
+        id: ls_id,
+        depends_on: [ar_x_id],
+        inputs: [project_dir],
+        outputs: [],
+        program: "ls",
+        args: ["-al", project_dir],
+        description: "List extracted files",
+        cwd: "",
+        env: [],
+    })
 
-   	Stdout.line!("List files ...")?
-    _ls_al_out = Cmd.exec!("ls", ["-al", Path.join(ci_workspace, project).to_os_str()])?
-   	Stdout.line!("files listed ...")?
+    # ------------------------------------------------------------------
+    # 9. Validate host wasm
+    # ------------------------------------------------------------------
+    validate_host_id = 10
+    validate_host = Build.cmd({
+        id: validate_host_id,
+        depends_on: [ar_x_id],
+        inputs: ["${project_dir}/libhost.o.wasm"],
+        outputs: [],
+        program: "wasm-validate",
+        args: ["${project_dir}/libhost.o.wasm"],
+        description: "Validating host... wasm-validate libhost.o.wasm",
+        cwd: "",
+        env: [],
+    })
 
-   	Stdout.line!("Validating host... wasm-validate libhost.o.wasm")?
-    _validate_host_out = Cmd.exec!("wasm-validate", [Path.join(Path.join(ci_workspace, project), "libhost.o.wasm").to_os_str()])?
-   	Stdout.line!("Validated host.")?
+    # ------------------------------------------------------------------
+    # 10. Validate app object
+    # ------------------------------------------------------------------
+    validate_app_id = 11
+    validate_app = Build.cmd({
+        id: validate_app_id,
+        depends_on: [ar_x_id],
+        inputs: ["${project_dir}/roc_app_llvm_wasm32_speed.o"],
+        outputs: [],
+        program: "wasm-validate",
+        args: ["${project_dir}/roc_app_llvm_wasm32_speed.o"],
+        description: "Validating app... wasm-validate roc_app_llvm_wasm32_speed.o",
+        cwd: "",
+        env: [],
+    })
 
-   	Stdout.line!("Validating app... wasm-validate roc_app_llvm_wasm32_speed.o")?
-    _validate_roc_out = Cmd.exec!("wasm-validate", [Path.join(Path.join(ci_workspace, project), "roc_app_llvm_wasm32_speed.o").to_os_str()])?
-   	Stdout.line!("Validated app.")?
-
-
-   	Stdout.line!("Linking with wasm-ld")?
-    _wasm_ld_out = Cmd.exec!("zig",
-        [
+    # ------------------------------------------------------------------
+    # 11. Link with wasm-ld (via zig)
+    # ------------------------------------------------------------------
+    wasm_ld_id = 12
+    wasm_ld = Build.cmd({
+        id: wasm_ld_id,
+        depends_on: [validate_host_id, validate_app_id],
+        inputs: [
+            "${project_dir}/libhost.o.wasm",
+            "${project_dir}/roc_app_llvm_wasm32_speed.o",
+        ],
+        outputs: ["${project_dir}/test.wasm"],
+        program: "zig",
+        args: [
             "wasm-ld",
-            "--fatal-warnings", # this is to ensure emcc doesn't silently suppress warnings.
-            "--experimental-pic", # this is to supress the "shared libraries … not yet stable"
+            "--fatal-warnings",
+            "--experimental-pic",
             "--no-entry",
             "--export-dynamic",
             "--import-memory",
             "--import-table",
             "-shared",
-            "-o", Path.join(Path.join(ci_workspace, project), "test.wasm").to_os_str(),
-            Path.join(Path.join(ci_workspace, project), "libhost.o.wasm").to_os_str(),
-            Path.join(Path.join(ci_workspace, project), "roc_app_llvm_wasm32_speed.o").to_os_str()
-        ]
-    )?
-   	Stdout.line!("wasm-ld Linked!")?
+            "-o",
+            "${project_dir}/test.wasm",
+            "${project_dir}/libhost.o.wasm",
+            "${project_dir}/roc_app_llvm_wasm32_speed.o",
+        ],
+        description: "Linking with wasm-ld",
+        cwd: "",
+        env: [],
+    })
 
-    # TODO: can we keep the wasm-ld, fatal warnings, but exclude "wasm-ld: error: creating shared libraries, with -shared, is not yet stable"?
+    # ------------------------------------------------------------------
+    # 12. Final web GDExtension (emcc SIDE_MODULE=2)
+    # ------------------------------------------------------------------
+    emcc_id = 13
+    emcc = Build.cmd({
+        id: emcc_id,
+        depends_on: [roc_web_id], # uses temp.a; wasm-ld is parallel validation path
+        inputs: [project_temp_a],
+        outputs: [project_wasm],
+        program: "emcc",
+        args: [
+            project_temp_a,
+            "-o",
+            project_wasm,
+            "-sERROR_ON_UNDEFINED_SYMBOLS=1",
+            "-sSIDE_MODULE=2",
+            "-sEXPORTED_FUNCTIONS=_godot_roc_init",
+            "-O0",
+            "-msimd128",
+        ],
+        description: "Compiling Final Web GDExtension (wasm32-emscripten SIDE_MODULE=2)",
+        cwd: "",
+        env: [],
+    })
 
+    # ------------------------------------------------------------------
+    # 13. Validate final wasm
+    # ------------------------------------------------------------------
+    validate_final_id = 14
+    validate_final = Build.cmd({
+        id: validate_final_id,
+        depends_on: [emcc_id],
+        inputs: [project_wasm],
+        outputs: [],
+        program: "wasm-validate",
+        args: ["--enable-extended-const", project_wasm],
+        description: "Validating app... wasm-validate --enable-extended-const my_game.wasm",
+        cwd: "",
+        env: [],
+    })
 
-   	Stdout.line!("Compiling Final Web GDExtension (wasm32-emscripten SIDE_MODULE=2)")?
-   	Stdout.line!("[emcc command here...]")? # To inform the user
-   	_emcc_out = Cmd.exec!("emcc", [
-        Path.join(Path.join(ci_workspace, project), "temp.a").to_os_str(),
-       	"-o", Path.join(Path.join(ci_workspace, project), "my_game.wasm").to_os_str(),
-       	"-sERROR_ON_UNDEFINED_SYMBOLS=1", # make missing symbols cause error.
-        "-sSIDE_MODULE=2", # 1 = "old" export everything, 2=???? "newer"
-       	# "-sEXPORTED_FUNCTIONS=[\"_godot_roc_init\"]", # or an array, but godot only needs an entrypoint?
-       	"-sEXPORTED_FUNCTIONS=_godot_roc_init",
-       	"-O0",
-       	"-msimd128",
-        # for investigating & troubleshooting
-        # "-g2",
-        # "--profiling",
-        # "--emit-symbol-map",
+    # ------------------------------------------------------------------
+    # 14. Godot export (web)
+    # ------------------------------------------------------------------
+    # Ensure in Godot export preset:
+    #   Extensions Support = On
+    #   Thread Support = Off
+    godot_id = 15
+    godot = Build.cmd({
+        id: godot_id,
+        depends_on: [validate_final_id, roc_linux_id],
+        inputs: [
+            project_godot,
+            project_wasm,
+            # + any other assets required by the export
+        ],
+        outputs: [
+            "${project_dir}/export/index.html",
+            # + other export artifacts
+        ],
+        program: "godot",
+        args: [
+            project_godot,
+            "--headless",
+            "--export-release",
+            "Web",
+            "./export/index.html", # relative to project.godot
+        ],
+        description: "Godot publish to web",
+        cwd: "",
+        env: [],
+    })
 
-        # then you can run
-        # "wasm-objdump -x my_game.wasm", and it will now show the symbol names.
-        # wasm-validate
-        # wasm2wat
-        # etc.
-        #
-        # experiments...
-        #"--no-entry",
-        #"-Wl,--export-all",
-        #"-sALLOW_MEMORY_GROWTH=0",
-        #"-fno-lto",
-   	])?
+    # ------------------------------------------------------------------
+    # Graph + run
+    # ------------------------------------------------------------------
+    graph = Build.graph([
+        mkdir_ci,
+        mkdir_ws,
+        copy_template,
+        glue,
+        roc_zig,
+        roc_linux,
+        roc_web,
+        ar_x,
+        ls,
+        validate_host,
+        validate_app,
+        wasm_ld,
+        emcc,
+        validate_final,
+        godot,
+    ])
 
-   	Stdout.line!("Validating app... wasm-validate --enable-extended-const my_game.wasm")?
-    _emcc_valid_out = Cmd.exec!("wasm-validate", ["--enable-extended-const", Path.join(Path.join(ci_workspace, project), "my_game.wasm").to_os_str()])?
-
-    dp = Path.join(Path.join(ci_workspace, project), "export").display()
-   	Stdout.line!(
-        \\ To test the exported web app: Run web server...
-        \\
-        \\Run:
-        \\SERVE_PATH=\'${dp}\' roc run scripts/serve.roc
-        \\
-        \\And then open in browser:
-        \\localhost:8000/index.html
-    )?
-
-   	# godot publish
-   	# Ensure these settings are enabled for the web export.
-   	# Godot > Project > Export > Web > Options > Extensions Support = On (Checked)
-   	# Godot > Project > Export > Web > Options > Thread Support = Off (Unchecked)
-   	Stdout.line!("Godot publish to web...")?
-   	_godot_outasdasd = Cmd.exec!("godot", [
-        Path.join(Path.join(ci_workspace, project), "project.godot").to_os_str(),
-       	"--headless",
-       	"--export-release", "Web", "./export/index.html" # relative to project.godot file.
-   	])?
-
-	Ok({})
-}
-
-copy_dir! : Path, Path => Try({}, [DestAlreadyExists(Path), BadEntry(Path), PathErr(_, Path), ..others])
-copy_dir! = |source, dest| {
-    exists = Path.exists!(dest)?
-
-    if exists {
-        Err(DestAlreadyExists(dest))
-    } else {
-        Path.create_all!(dest)?
-        copy_tree!(source, dest)
-    }
-}
-
-copy_tree! : Path, Path => Try({}, [BadEntry(Path), PathErr(_, Path), ..others])
-copy_tree! = |source, dest| {
-    entries = Path.list!(source)?
-
-    # map_try! stops at the first Err
-    _ = List.map_try!(entries, |entry| {
-        name =
-            match Path.filename(entry) {
-                Ok(n) => n
-                Err(_) => Err(BadEntry(entry))?
-            }
-
-        dest_entry = Path.join(dest, Path.display(name))
-
-        match Path.type!(entry)? {
-            IsDir => {
-                Path.create_dir!(dest_entry)?
-                copy_tree!(entry, dest_entry)
-            }
-            IsFile => {
-                bytes = Path.read_bytes!(entry)?
-                Path.write_bytes!(dest_entry, bytes)
-            }
-            IsSymLink | IsOther =>
-                # Skip special entries; change to Err(...) if you prefer to fail
-                Ok({})
+    match Build.run!(graph) {
+        Ok({}) => {
+            Log.info!("all tasks finished")
+            Log.info!("To test the exported web app:")
+            Log.info!("  SERVE_PATH='${project_dir}/export' roc run scripts/serve.roc")
+            Log.info!("  then open http://localhost:8000/index.html")
+            Ok({})
         }
-    })?
-
-    Ok({})
-}
-
-run_in_dir! : Path, Cmd => Try({}, _)
-run_in_dir! = |dir, cmd| {
-    old_cwd = Env.cwd!()?
-
-    Env.set_cwd!(dir)?
-
-    # Run the command (pick the exec style you need)
-    result = cmd.exec_cmd!()
-
-    # Always try to restore, even if the command failed
-    _ = Env.set_cwd!(old_cwd)
-
-    result
+        Err(BuildFailed(msg)) => {
+            Log.error!(msg)
+            Err(Exit(1))
+        }
+    }
 }
