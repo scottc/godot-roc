@@ -2,149 +2,175 @@
 
 #
 # Usage:
-# roc run bundle.roc [args]
+#   roc run bundle.roc
 #
 
-## Continous Intergration
+## Bundle (ported to roc-build platform)
 app [main!] {
+    pf: platform "https://github.com/scottc/roc-build/releases/download/0.0.1-pre-alpha-test1/8jZuyEFpCc7ep6yu2iXBT4cAYoxZdjTk5kxShUCMXqgx.tar.zst",
     roc: "nightly-2026-09-27-a3ce7f1",
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.23.0/GNN5tt2gKdX4dhawg4915C4YB193woHFdcCkz31fhGxv.tar.zst"
 }
 
-import pf.OsStr
-import pf.Path
-import pf.Stdout
-import pf.Stdin
-import pf.Utc
-import pf.Cmd
-import pf.Env
+import pf.Build
+import pf.Log
 
-main! : List(OsStr) => Try({}, _)
+main! : List(Str) => Try({}, [Exit(I32)])
 main! = |_args| {
-    bundle_start = Utc.now!()
-    Stdout.line!(
-        \\#
-        \\# https://github.com/scottc/godot-roc
-        \\#
-        \\# bundle.roc
-        \\#
-        \\# Bundle
-        \\#
-        \\# The purpose of this script is to package the platform,
-        \\# so it's easy to share & easy to consume.
-        \\#
-        \\# As such we do the following static analysis & tests:
-        \\# - Type check
-        \\# - Unit tests
-        \\# - Lints & code rules
-        \\# - A complete build from start to final product.
-        \\#
-        \\# For all targets & engines...
-        \\#
-    )?
+    Log.info!("#")
+    Log.info!("# https://github.com/scottc/godot-roc")
+    Log.info!("#")
+    Log.info!("# bundle.roc")
+    Log.info!("#")
+    Log.info!("# Bundle")
+    Log.info!("#")
+    Log.info!("# The purpose of this script is to package the platform,")
+    Log.info!("# so it's easy to share & easy to consume.")
+    Log.info!("#")
+    Log.info!("# As such we do the following static analysis & tests:")
+    Log.info!("# - Type check")
+    Log.info!("# - Unit tests")
+    Log.info!("# - Lints & code rules")
+    Log.info!("# - A complete build from start to final product.")
+    Log.info!("#")
+    Log.info!("# For all targets & engines...")
+    Log.info!("#")
 
+    # ------------------------------------------------------------------
+    # Constants
+    # ------------------------------------------------------------------
+    # Fixed workspace (no timestamp) so the graph has stable paths.
+    # Original used Utc.now!() to avoid collisions; wipe or use unique
+    # CI job dirs externally if needed.
     bundle_out = "bundle-out"
+    bundle_workspace = "bundle-out/workspace"
+    platform_src = "platform"
+    platform_dest = "${bundle_workspace}/platform"
+    templates_zip = "${bundle_workspace}/templates.zip"
 
-    bundle_workspace : Path
-    bundle_workspace = Path.join(bundle_out, bundle_start.to_str()) # Include "unique number" to avoid conflicts, so we can avoid deleting.
+    # ------------------------------------------------------------------
+    # 1. Create output / workspace dirs
+    # ------------------------------------------------------------------
+    mkdir_out_id = 1
+    mkdir_out = Build.cmd({
+        id: mkdir_out_id,
+        depends_on: [],
+        inputs: [],
+        outputs: [bundle_out],
+        program: "mkdir",
+        args: ["-p", bundle_out],
+        description: "Create bundle-out",
+        cwd: "",
+        env: [],
+    })
 
-    match Path.create_dir!(bundle_workspace) {
-        _ => {
-            {} # suppress AlreadyExists error.
-            # TODO: keep other errors...
-        }
-    }
+    mkdir_ws_id = 2
+    mkdir_ws = Build.cmd({
+        id: mkdir_ws_id,
+        depends_on: [mkdir_out_id],
+        inputs: [],
+        outputs: [bundle_workspace],
+        program: "mkdir",
+        args: ["-p", bundle_workspace],
+        description: "Create bundle workspace",
+        cwd: "",
+        env: [],
+    })
 
-    copy_dir!("platform/", Path.join(bundle_workspace, "platform/"))?
-    copy_dir!("targets/", Path.join(bundle_workspace, "platform/targets/"))?
+    # ------------------------------------------------------------------
+    # 2. Copy platform/ → workspace/platform/
+    # ------------------------------------------------------------------
+    copy_platform_id = 3
+    copy_platform = Build.cmd({
+        id: copy_platform_id,
+        depends_on: [mkdir_ws_id],
+        inputs: [
+            # "platform/..." — expand for finer-grained caching if desired
+        ],
+        outputs: [platform_dest],
+        program: "cp",
+        args: ["-a", platform_src, platform_dest],
+        description: "Copy platform/ → ${platform_dest}",
+        cwd: "",
+        env: [],
+    })
 
-_bundle_out = run_in_dir!(
-    bundle_workspace,
-    Cmd.new("roc")
-        .args([
+    # Note: targets/ copy is commented out in the source.
+    # Targets are expected to already live under platform/targets/ (or be
+    # produced by a prior step).
+
+    # ------------------------------------------------------------------
+    # 3. Roc bundle (inside workspace)
+    # ------------------------------------------------------------------
+    roc_bundle_id = 4
+    roc_bundle = Build.cmd({
+        id: roc_bundle_id,
+        depends_on: [copy_platform_id],
+        inputs: [
+            "${platform_dest}/main.roc",
+            "${platform_dest}/targets/wasm32/libhost.o.wasm",
+            "${platform_dest}/targets/x64musl/libhost.a",
+            # + any other files the bundle command reads
+        ],
+        outputs: [
+            # list produced .tar.zst / platform artifacts when known
+        ],
+        program: "roc",
+        args: [
             "bundle",
-      		"platform/main.roc",
-      		"platform/targets/wasm32/libhost.o",
-      		"platform/targets/x64musl/libhost.a",
-        ])
-)?
+            "platform/main.roc",
+            "platform/targets/wasm32/libhost.o.wasm",
+            "platform/targets/x64musl/libhost.a",
+        ],
+        description: "roc bundle platform/main.roc + host objects",
+        cwd: bundle_workspace,
+        env: [],
+    })
 
-_templates_out = run_in_dir!(
-    bundle_workspace,
-    Cmd.new("zip")
-        .args([
+    # ------------------------------------------------------------------
+    # 4. Zip templates
+    # ------------------------------------------------------------------
+    zip_templates_id = 5
+    zip_templates = Build.cmd({
+        id: zip_templates_id,
+        depends_on: [roc_bundle_id],
+        inputs: [
+            # "templates/..."
+        ],
+        outputs: [templates_zip],
+        program: "zip",
+        args: [
             "-r",
-      		"templates.zip",
-            "."
-            "-i"
-      		"templates/",
-        ])
-)?
+            "templates.zip",
+            ".",
+            "-i",
+            "templates/",
+        ],
+        description: "zip -r templates.zip . -i templates/",
+        cwd: bundle_workspace,
+        env: [],
+    })
 
-    Stdout.line!(
-    \\# Bundle & template is ready:
-    \\# ${bundle_workspace.display()}
-    )?
+    # ------------------------------------------------------------------
+    # Graph + run
+    # ------------------------------------------------------------------
+    graph = Build.graph([
+        mkdir_out,
+        mkdir_ws,
+        copy_platform,
+        roc_bundle,
+        zip_templates,
+    ])
 
-    Ok({})
-}
-
-
-copy_dir! : Path, Path => Try({}, [DestAlreadyExists(Path), BadEntry(Path), PathErr(_, Path), ..])
-copy_dir! = |source, dest| {
-    exists = Path.exists!(dest)?
-
-    if exists {
-        Err(DestAlreadyExists(dest))
-    } else {
-        Path.create_all!(dest)?
-        copy_tree!(source, dest)
-    }
-}
-
-copy_tree! : Path, Path => Try({}, [BadEntry(Path), PathErr(_, Path), ..])
-copy_tree! = |source, dest| {
-    entries = Path.list!(source)?
-
-    # map_try! stops at the first Err
-    _ = List.map_try!(entries, |entry| {
-        name =
-            match Path.filename(entry) {
-                Ok(n) => n
-                Err(_) => Err(BadEntry(entry))?
-            }
-
-        dest_entry = Path.join(dest, Path.display(name))
-
-        match Path.type!(entry)? {
-            IsDir => {
-                Path.create_dir!(dest_entry)?
-                copy_tree!(entry, dest_entry)
-            }
-            IsFile => {
-                bytes = Path.read_bytes!(entry)?
-                Path.write_bytes!(dest_entry, bytes)
-            }
-            IsSymLink | IsOther =>
-                # Skip special entries; change to Err(...) if you prefer to fail
-                Ok({})
+    match Build.run!(graph) {
+        Ok({}) => {
+            Log.info!("all tasks finished")
+            Log.info!("# Bundle & template is ready:")
+            Log.info!("# ${bundle_workspace}")
+            Ok({})
         }
-    })?
-
-    Ok({})
-}
-
-run_in_dir! : Path, Cmd => Try({}, _)
-run_in_dir! = |dir, cmd| {
-    old_cwd = Env.cwd!()?
-
-    Env.set_cwd!(dir)?
-
-    # Run the command (pick the exec style you need)
-    result = cmd.exec_cmd!()
-
-    # Always try to restore, even if the command failed
-    _ = Env.set_cwd!(old_cwd)
-
-    result
+        Err(BuildFailed(msg)) => {
+            Log.error!(msg)
+            Err(Exit(1))
+        }
+    }
 }
