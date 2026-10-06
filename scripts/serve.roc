@@ -47,7 +47,7 @@ init! = || {
 			.with_file_roots([file_root])
 			.with_native_routes({
 				files: [
-					Server.static_mount({ at: "/static_mount", files: file_root }),
+					Server.static_mount({ at: "/", files: file_root }),
 				],
 				liveness: [],
 				readiness: [],

@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://cys3u2rbf68b"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_w1mum"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rjpi5"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4mdq2"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4r7ov"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rjpi5"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_w1mum"]
+
+[node name="Node3D" type="Node3D" unique_id=1119192590]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1050855863]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -10.094821, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=2122301377]
+mesh = SubResource("CylinderMesh_w1mum")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=94498690]
+shape = SubResource("CylinderShape3D_rjpi5")
+
+[node name="MyPlayerCharacter" type="MyPlayerCharacter" parent="." unique_id=520571226]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0605396, 2.7134006)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MyPlayerCharacter" unique_id=1065281232]
+shape = SubResource("CapsuleShape3D_4mdq2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MyPlayerCharacter" unique_id=1187245022]
+mesh = SubResource("CapsuleMesh_4r7ov")
+
+[node name="Npc" type="Npc" parent="." unique_id=545724061]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0279771, -1.895685)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Npc" unique_id=1722108398]
+shape = SubResource("CapsuleShape3D_rjpi5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Npc" unique_id=2037609522]
+mesh = SubResource("CapsuleMesh_w1mum")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=848606489]
+transform = Transform3D(1, 0, 0, 0, 0.8689297, 0.49493554, 0, -0.49493554, 0.8689297, 0, 4.1295815, 8.098228)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=456917050]
+transform = Transform3D(0.7960687, 0, -0.60520625, 0.34922346, 0.81672144, 0.45935726, 0.49428493, -0.57703215, 0.6501664, 0, 4.216833, 0)
