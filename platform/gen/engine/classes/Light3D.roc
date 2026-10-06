@@ -1,5 +1,6 @@
 # class Light3D
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: VisualInstance3D
 Light3D := {
@@ -12,7 +13,7 @@ Light3D := {
     # property light_intensity_lumens : F64  getter=get_param setter=set_param
     # property light_intensity_lux : F64  getter=get_param setter=set_param
     # property light_temperature : F64  getter=get_temperature setter=set_temperature
-    # property light_color : U64  getter=get_color setter=set_color
+    # property light_color : Color  getter=get_color setter=set_color
     # property light_energy : F64  getter=get_param setter=set_param
     # property light_indirect_energy : F64  getter=get_param setter=set_param
     # property light_volumetric_fog_energy : F64  getter=get_param setter=set_param
@@ -74,9 +75,9 @@ Light3D := {
     set_distance_fade_length! = Host.light3d_set_distance_fade_length_373806689!
     get_distance_fade_length! : () => F64
     get_distance_fade_length! = Host.light3d_get_distance_fade_length_1740695150!
-    set_color! : U64 => {}
+    set_color! : Color => {}
     set_color! = Host.light3d_set_color_2920490490!
-    get_color! : () => U64
+    get_color! : () => Color
     get_color! = Host.light3d_get_color_3444240500!
     set_shadow_reverse_cull_face! : Bool => {}
     set_shadow_reverse_cull_face! = Host.light3d_set_shadow_reverse_cull_face_2586408642!
@@ -98,7 +99,7 @@ Light3D := {
     set_temperature! = Host.light3d_set_temperature_373806689!
     get_temperature! : () => F64
     get_temperature! = Host.light3d_get_temperature_1740695150!
-    get_correlated_color! : () => U64
+    get_correlated_color! : () => Color
     get_correlated_color! = Host.light3d_get_correlated_color_3444240500!
 
 

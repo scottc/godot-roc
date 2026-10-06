@@ -1,5 +1,6 @@
 # class PathFollow3D
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
 
 # inherits: Node3D
 PathFollow3D := {
@@ -55,7 +56,7 @@ PathFollow3D := {
     set_tilt_enabled! = Host.pathfollow3d_set_tilt_enabled_2586408642!
     is_tilt_enabled! : () => Bool
     is_tilt_enabled! = Host.pathfollow3d_is_tilt_enabled_36873697!
-    correct_posture! : U64, U64 => U64
+    correct_posture! : Transform3D, U64 => Transform3D
     correct_posture! = Host.pathfollow3d_correct_posture_2686588690!
 
 

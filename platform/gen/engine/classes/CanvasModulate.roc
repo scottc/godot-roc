@@ -1,5 +1,6 @@
 # class CanvasModulate
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: Node2D
 CanvasModulate := {
@@ -8,12 +9,12 @@ CanvasModulate := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property color : U64  getter=get_color setter=set_color
+    # property color : Color  getter=get_color setter=set_color
 
     # --- methods ---
-    set_color! : U64 => {}
+    set_color! : Color => {}
     set_color! = Host.canvasmodulate_set_color_2920490490!
-    get_color! : () => U64
+    get_color! : () => Color
     get_color! = Host.canvasmodulate_get_color_3444240500!
 
 

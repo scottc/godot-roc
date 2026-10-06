@@ -1,5 +1,6 @@
 # class ImageTexture
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
 
 # inherits: Texture2D
 ImageTexture := {
@@ -17,7 +18,7 @@ ImageTexture := {
     set_image! = Host.imagetexture_set_image_532598488!
     update! : U64 => {}
     update! = Host.imagetexture_update_532598488!
-    set_size_override! : U64 => {}
+    set_size_override! : Vector2i => {}
     set_size_override! = Host.imagetexture_set_size_override_1130785943!
 
 

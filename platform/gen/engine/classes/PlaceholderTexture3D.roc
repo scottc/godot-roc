@@ -1,5 +1,6 @@
 # class PlaceholderTexture3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3i
 
 # inherits: Texture3D
 PlaceholderTexture3D := {
@@ -8,12 +9,12 @@ PlaceholderTexture3D := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property size : U64  getter=get_size setter=set_size
+    # property size : Vector3i  getter=get_size setter=set_size
 
     # --- methods ---
-    set_size! : U64 => {}
+    set_size! : Vector3i => {}
     set_size! = Host.placeholdertexture3d_set_size_560364750!
-    get_size! : () => U64
+    get_size! : () => Vector3i
     get_size! = Host.placeholdertexture3d_get_size_2785653706!
 
 

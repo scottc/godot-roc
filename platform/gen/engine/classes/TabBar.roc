@@ -1,5 +1,7 @@
 # class TabBar
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Rect2
 
 # inherits: Control
 TabBar := {
@@ -83,7 +85,7 @@ TabBar := {
     remove_tab! = Host.tabbar_remove_tab_1286410249!
     add_tab! : Str, U64 => {}
     add_tab! = Host.tabbar_add_tab_1465444425!
-    get_tab_idx_at_point! : U64 => I64
+    get_tab_idx_at_point! : Vector2 => I64
     get_tab_idx_at_point! = Host.tabbar_get_tab_idx_at_point_3820158470!
     set_tab_alignment! : U64 => {}
     set_tab_alignment! = Host.tabbar_set_tab_alignment_2413632353!
@@ -99,7 +101,7 @@ TabBar := {
     get_offset_buttons_visible! = Host.tabbar_get_offset_buttons_visible_36873697!
     ensure_tab_visible! : I64 => {}
     ensure_tab_visible! = Host.tabbar_ensure_tab_visible_1286410249!
-    get_tab_rect! : I64 => U64
+    get_tab_rect! : I64 => Rect2
     get_tab_rect! = Host.tabbar_get_tab_rect_3327874267!
     move_tab! : I64, I64 => {}
     move_tab! = Host.tabbar_move_tab_3937882851!

@@ -1,5 +1,7 @@
 # class IterateIK3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Quaternion
 
 # inherits: ChainIK3D
 IterateIK3D := {
@@ -39,9 +41,9 @@ IterateIK3D := {
     set_joint_rotation_axis! = Host.iterateik3d_set_joint_rotation_axis_1391134969!
     get_joint_rotation_axis! : I64, I64 => U64
     get_joint_rotation_axis! = Host.iterateik3d_get_joint_rotation_axis_3312594080!
-    set_joint_rotation_axis_vector! : I64, I64, U64 => {}
+    set_joint_rotation_axis_vector! : I64, I64, Vector3 => {}
     set_joint_rotation_axis_vector! = Host.iterateik3d_set_joint_rotation_axis_vector_2866752138!
-    get_joint_rotation_axis_vector! : I64, I64 => U64
+    get_joint_rotation_axis_vector! : I64, I64 => Vector3
     get_joint_rotation_axis_vector! = Host.iterateik3d_get_joint_rotation_axis_vector_1592972041!
     set_joint_limitation! : I64, I64, U64 => {}
     set_joint_limitation! = Host.iterateik3d_set_joint_limitation_1194636955!
@@ -51,13 +53,13 @@ IterateIK3D := {
     set_joint_limitation_right_axis! = Host.iterateik3d_set_joint_limitation_right_axis_3838967147!
     get_joint_limitation_right_axis! : I64, I64 => U64
     get_joint_limitation_right_axis! = Host.iterateik3d_get_joint_limitation_right_axis_623936134!
-    set_joint_limitation_right_axis_vector! : I64, I64, U64 => {}
+    set_joint_limitation_right_axis_vector! : I64, I64, Vector3 => {}
     set_joint_limitation_right_axis_vector! = Host.iterateik3d_set_joint_limitation_right_axis_vector_2866752138!
-    get_joint_limitation_right_axis_vector! : I64, I64 => U64
+    get_joint_limitation_right_axis_vector! : I64, I64 => Vector3
     get_joint_limitation_right_axis_vector! = Host.iterateik3d_get_joint_limitation_right_axis_vector_1592972041!
-    set_joint_limitation_rotation_offset! : I64, I64, U64 => {}
+    set_joint_limitation_rotation_offset! : I64, I64, Quaternion => {}
     set_joint_limitation_rotation_offset! = Host.iterateik3d_set_joint_limitation_rotation_offset_4188936002!
-    get_joint_limitation_rotation_offset! : I64, I64 => U64
+    get_joint_limitation_rotation_offset! : I64, I64 => Quaternion
     get_joint_limitation_rotation_offset! = Host.iterateik3d_get_joint_limitation_rotation_offset_2722473700!
 
 

@@ -1,5 +1,7 @@
 # class Decal
 import ../../Host
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Color
 
 # inherits: VisualInstance3D
 Decal := {
@@ -8,13 +10,13 @@ Decal := {
     DecalTexture : [TEXTURE_ALBEDO, TEXTURE_NORMAL, TEXTURE_ORM, TEXTURE_EMISSION, TEXTURE_MAX]
 
     # --- properties (getters/setters are methods) ---
-    # property size : U64  getter=get_size setter=set_size
+    # property size : Vector3  getter=get_size setter=set_size
     # property texture_albedo : U64  getter=get_texture setter=set_texture
     # property texture_normal : U64  getter=get_texture setter=set_texture
     # property texture_orm : U64  getter=get_texture setter=set_texture
     # property texture_emission : U64  getter=get_texture setter=set_texture
     # property emission_energy : F64  getter=get_emission_energy setter=set_emission_energy
-    # property modulate : U64  getter=get_modulate setter=set_modulate
+    # property modulate : Color  getter=get_modulate setter=set_modulate
     # property albedo_mix : F64  getter=get_albedo_mix setter=set_albedo_mix
     # property normal_fade : F64  getter=get_normal_fade setter=set_normal_fade
     # property upper_fade : F64  getter=get_upper_fade setter=set_upper_fade
@@ -25,9 +27,9 @@ Decal := {
     # property cull_mask : I64  getter=get_cull_mask setter=set_cull_mask
 
     # --- methods ---
-    set_size! : U64 => {}
+    set_size! : Vector3 => {}
     set_size! = Host.decal_set_size_3460891852!
-    get_size! : () => U64
+    get_size! : () => Vector3
     get_size! = Host.decal_get_size_3360562783!
     set_texture! : U64, U64 => {}
     set_texture! = Host.decal_set_texture_2086764391!
@@ -41,9 +43,9 @@ Decal := {
     set_albedo_mix! = Host.decal_set_albedo_mix_373806689!
     get_albedo_mix! : () => F64
     get_albedo_mix! = Host.decal_get_albedo_mix_1740695150!
-    set_modulate! : U64 => {}
+    set_modulate! : Color => {}
     set_modulate! = Host.decal_set_modulate_2920490490!
-    get_modulate! : () => U64
+    get_modulate! : () => Color
     get_modulate! = Host.decal_get_modulate_3444240500!
     set_upper_fade! : F64 => {}
     set_upper_fade! = Host.decal_set_upper_fade_373806689!

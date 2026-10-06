@@ -1,5 +1,7 @@
 # class PhysicsShapeQueryParameters2D
 import ../../Host
+import ../../engine/builtin_classes/Transform2D
+import ../../engine/builtin_classes/Vector2
 
 # inherits: RefCounted
 PhysicsShapeQueryParameters2D := {
@@ -11,10 +13,10 @@ PhysicsShapeQueryParameters2D := {
     # property collision_mask : I64  getter=get_collision_mask setter=set_collision_mask
     # property exclude : U64  getter=get_exclude setter=set_exclude
     # property margin : F64  getter=get_margin setter=set_margin
-    # property motion : U64  getter=get_motion setter=set_motion
+    # property motion : Vector2  getter=get_motion setter=set_motion
     # property shape : U64  getter=get_shape setter=set_shape
     # property shape_rid : U64  getter=get_shape_rid setter=set_shape_rid
-    # property transform : U64  getter=get_transform setter=set_transform
+    # property transform : Transform2D  getter=get_transform setter=set_transform
     # property collide_with_bodies : Bool  getter=is_collide_with_bodies_enabled setter=set_collide_with_bodies
     # property collide_with_areas : Bool  getter=is_collide_with_areas_enabled setter=set_collide_with_areas
 
@@ -27,13 +29,13 @@ PhysicsShapeQueryParameters2D := {
     set_shape_rid! = Host.physicsshapequeryparameters2d_set_shape_rid_2722037293!
     get_shape_rid! : () => U64
     get_shape_rid! = Host.physicsshapequeryparameters2d_get_shape_rid_2944877500!
-    set_transform! : U64 => {}
+    set_transform! : Transform2D => {}
     set_transform! = Host.physicsshapequeryparameters2d_set_transform_2761652528!
-    get_transform! : () => U64
+    get_transform! : () => Transform2D
     get_transform! = Host.physicsshapequeryparameters2d_get_transform_3814499831!
-    set_motion! : U64 => {}
+    set_motion! : Vector2 => {}
     set_motion! = Host.physicsshapequeryparameters2d_set_motion_743155724!
-    get_motion! : () => U64
+    get_motion! : () => Vector2
     get_motion! = Host.physicsshapequeryparameters2d_get_motion_3341600327!
     set_margin! : F64 => {}
     set_margin! = Host.physicsshapequeryparameters2d_set_margin_373806689!

@@ -1,5 +1,6 @@
 # class RDPipelineColorBlendState
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: RefCounted
 RDPipelineColorBlendState := {
@@ -10,7 +11,7 @@ RDPipelineColorBlendState := {
     # --- properties (getters/setters are methods) ---
     # property enable_logic_op : Bool  getter=get_enable_logic_op setter=set_enable_logic_op
     # property logic_op : I64  getter=get_logic_op setter=set_logic_op
-    # property blend_constant : U64  getter=get_blend_constant setter=set_blend_constant
+    # property blend_constant : Color  getter=get_blend_constant setter=set_blend_constant
     # property attachments : U64  getter=get_attachments setter=set_attachments
 
     # --- methods ---
@@ -22,9 +23,9 @@ RDPipelineColorBlendState := {
     set_logic_op! = Host.rdpipelinecolorblendstate_set_logic_op_3610841058!
     get_logic_op! : () => U64
     get_logic_op! = Host.rdpipelinecolorblendstate_get_logic_op_988254690!
-    set_blend_constant! : U64 => {}
+    set_blend_constant! : Color => {}
     set_blend_constant! = Host.rdpipelinecolorblendstate_set_blend_constant_2920490490!
-    get_blend_constant! : () => U64
+    get_blend_constant! : () => Color
     get_blend_constant! = Host.rdpipelinecolorblendstate_get_blend_constant_3444240500!
     set_attachments! : U64 => {}
     set_attachments! = Host.rdpipelinecolorblendstate_set_attachments_381264803!

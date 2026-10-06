@@ -1,5 +1,7 @@
 # class Noise
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Vector3
 
 # inherits: Resource
 Noise := {
@@ -15,11 +17,11 @@ Noise := {
     get_noise_1d! = Host.noise_get_noise_1d_3919130443!
     get_noise_2d! : F64, F64 => F64
     get_noise_2d! = Host.noise_get_noise_2d_2753205203!
-    get_noise_2dv! : U64 => F64
+    get_noise_2dv! : Vector2 => F64
     get_noise_2dv! = Host.noise_get_noise_2dv_2276447920!
     get_noise_3d! : F64, F64, F64 => F64
     get_noise_3d! = Host.noise_get_noise_3d_973811851!
-    get_noise_3dv! : U64 => F64
+    get_noise_3dv! : Vector3 => F64
     get_noise_3dv! = Host.noise_get_noise_3dv_1109078154!
     get_image! : I64, I64, Bool, Bool, Bool => U64
     get_image! = Host.noise_get_image_3180683109!

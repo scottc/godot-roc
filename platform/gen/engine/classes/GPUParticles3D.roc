@@ -1,5 +1,9 @@
 # class GPUParticles3D
 import ../../Host
+import ../../engine/builtin_classes/AABB
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Color
 
 # inherits: GeometryInstance3D
 GPUParticles3D := {
@@ -27,7 +31,7 @@ GPUParticles3D := {
     # property interpolate : Bool  getter=get_interpolate setter=set_interpolate
     # property fract_delta : Bool  getter=get_fractional_delta setter=set_fractional_delta
     # property collision_base_size : F64  getter=get_collision_base_size setter=set_collision_base_size
-    # property visibility_aabb : U64  getter=get_visibility_aabb setter=set_visibility_aabb
+    # property visibility_aabb : AABB  getter=get_visibility_aabb setter=set_visibility_aabb
     # property local_coords : Bool  getter=get_use_local_coordinates setter=set_use_local_coordinates
     # property draw_order : I64  getter=get_draw_order setter=set_draw_order
     # property transform_align : I64  getter=get_transform_align setter=set_transform_align
@@ -58,7 +62,7 @@ GPUParticles3D := {
     set_explosiveness_ratio! = Host.gpuparticles3d_set_explosiveness_ratio_373806689!
     set_randomness_ratio! : F64 => {}
     set_randomness_ratio! = Host.gpuparticles3d_set_randomness_ratio_373806689!
-    set_visibility_aabb! : U64 => {}
+    set_visibility_aabb! : AABB => {}
     set_visibility_aabb! = Host.gpuparticles3d_set_visibility_aabb_259215842!
     set_use_local_coordinates! : Bool => {}
     set_use_local_coordinates! = Host.gpuparticles3d_set_use_local_coordinates_2586408642!
@@ -90,7 +94,7 @@ GPUParticles3D := {
     get_explosiveness_ratio! = Host.gpuparticles3d_get_explosiveness_ratio_1740695150!
     get_randomness_ratio! : () => F64
     get_randomness_ratio! = Host.gpuparticles3d_get_randomness_ratio_1740695150!
-    get_visibility_aabb! : () => U64
+    get_visibility_aabb! : () => AABB
     get_visibility_aabb! = Host.gpuparticles3d_get_visibility_aabb_1068685055!
     get_use_local_coordinates! : () => Bool
     get_use_local_coordinates! = Host.gpuparticles3d_get_use_local_coordinates_36873697!
@@ -134,13 +138,13 @@ GPUParticles3D := {
     get_skin! = Host.gpuparticles3d_get_skin_2074563878!
     restart! : Bool => {}
     restart! = Host.gpuparticles3d_restart_107499316!
-    capture_aabb! : () => U64
+    capture_aabb! : () => AABB
     capture_aabb! = Host.gpuparticles3d_capture_aabb_1068685055!
     set_sub_emitter! : Str => {}
     set_sub_emitter! = Host.gpuparticles3d_set_sub_emitter_1348162250!
     get_sub_emitter! : () => Str
     get_sub_emitter! = Host.gpuparticles3d_get_sub_emitter_4075236667!
-    emit_particle! : U64, U64, U64, U64, I64 => {}
+    emit_particle! : Transform3D, Vector3, Color, Color, I64 => {}
     emit_particle! = Host.gpuparticles3d_emit_particle_992173727!
     set_trail_enabled! : Bool => {}
     set_trail_enabled! = Host.gpuparticles3d_set_trail_enabled_2586408642!

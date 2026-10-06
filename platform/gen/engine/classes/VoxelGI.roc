@@ -1,5 +1,6 @@
 # class VoxelGI
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: VisualInstance3D
 VoxelGI := {
@@ -9,7 +10,7 @@ VoxelGI := {
 
     # --- properties (getters/setters are methods) ---
     # property subdiv : I64  getter=get_subdiv setter=set_subdiv
-    # property size : U64  getter=get_size setter=set_size
+    # property size : Vector3  getter=get_size setter=set_size
     # property camera_attributes : U64  getter=get_camera_attributes setter=set_camera_attributes
     # property data : U64  getter=get_probe_data setter=set_probe_data
 
@@ -22,9 +23,9 @@ VoxelGI := {
     set_subdiv! = Host.voxelgi_set_subdiv_2240898472!
     get_subdiv! : () => U64
     get_subdiv! = Host.voxelgi_get_subdiv_4261647950!
-    set_size! : U64 => {}
+    set_size! : Vector3 => {}
     set_size! = Host.voxelgi_set_size_3460891852!
-    get_size! : () => U64
+    get_size! : () => Vector3
     get_size! = Host.voxelgi_get_size_3360562783!
     set_camera_attributes! : U64 => {}
     set_camera_attributes! = Host.voxelgi_set_camera_attributes_2817810567!

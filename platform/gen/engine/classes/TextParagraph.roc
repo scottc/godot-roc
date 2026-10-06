@@ -1,5 +1,9 @@
 # class TextParagraph
 import ../../Host
+import ../../engine/builtin_classes/Rect2
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Color
 
 # inherits: RefCounted
 TextParagraph := {
@@ -51,15 +55,15 @@ TextParagraph := {
     get_preserve_control! = Host.textparagraph_get_preserve_control_36873697!
     set_bidi_override! : U64 => {}
     set_bidi_override! = Host.textparagraph_set_bidi_override_381264803!
-    set_dropcap! : Str, U64, I64, U64, Str => Bool
+    set_dropcap! : Str, U64, I64, Rect2, Str => Bool
     set_dropcap! = Host.textparagraph_set_dropcap_2498990330!
     clear_dropcap! : () => {}
     clear_dropcap! = Host.textparagraph_clear_dropcap_3218959716!
     add_string! : Str, U64, I64, Str, U64 => Bool
     add_string! = Host.textparagraph_add_string_621426851!
-    add_object! : U64, U64, U64, I64, F64 => Bool
+    add_object! : U64, Vector2, U64, I64, F64 => Bool
     add_object! = Host.textparagraph_add_object_1316529304!
-    resize_object! : U64, U64, U64, F64 => Bool
+    resize_object! : U64, Vector2, U64, F64 => Bool
     resize_object! = Host.textparagraph_resize_object_2095776372!
     has_object! : U64 => Bool
     has_object! = Host.textparagraph_has_object_77467830!
@@ -89,9 +93,9 @@ TextParagraph := {
     set_width! = Host.textparagraph_set_width_373806689!
     get_width! : () => F64
     get_width! = Host.textparagraph_get_width_1740695150!
-    get_non_wrapped_size! : () => U64
+    get_non_wrapped_size! : () => Vector2
     get_non_wrapped_size! = Host.textparagraph_get_non_wrapped_size_3341600327!
-    get_size! : () => U64
+    get_size! : () => Vector2
     get_size! = Host.textparagraph_get_size_3341600327!
     get_rid! : () => U64
     get_rid! = Host.textparagraph_get_rid_2944877500!
@@ -99,7 +103,7 @@ TextParagraph := {
     get_line_rid! = Host.textparagraph_get_line_rid_495598643!
     get_dropcap_rid! : () => U64
     get_dropcap_rid! = Host.textparagraph_get_dropcap_rid_2944877500!
-    get_range! : () => U64
+    get_range! : () => Vector2i
     get_range! = Host.textparagraph_get_range_3690982128!
     get_line_count! : () => I64
     get_line_count! = Host.textparagraph_get_line_count_3905245786!
@@ -113,11 +117,11 @@ TextParagraph := {
     get_line_spacing! = Host.textparagraph_get_line_spacing_1740695150!
     get_line_objects! : I64 => U64
     get_line_objects! = Host.textparagraph_get_line_objects_663333327!
-    get_line_object_rect! : I64, U64 => U64
+    get_line_object_rect! : I64, U64 => Rect2
     get_line_object_rect! = Host.textparagraph_get_line_object_rect_204315017!
-    get_line_size! : I64 => U64
+    get_line_size! : I64 => Vector2
     get_line_size! = Host.textparagraph_get_line_size_2299179447!
-    get_line_range! : I64 => U64
+    get_line_range! : I64 => Vector2i
     get_line_range! = Host.textparagraph_get_line_range_880721226!
     get_line_ascent! : I64 => F64
     get_line_ascent! = Host.textparagraph_get_line_ascent_2339986948!
@@ -129,23 +133,23 @@ TextParagraph := {
     get_line_underline_position! = Host.textparagraph_get_line_underline_position_2339986948!
     get_line_underline_thickness! : I64 => F64
     get_line_underline_thickness! = Host.textparagraph_get_line_underline_thickness_2339986948!
-    get_dropcap_size! : () => U64
+    get_dropcap_size! : () => Vector2
     get_dropcap_size! = Host.textparagraph_get_dropcap_size_3341600327!
     get_dropcap_lines! : () => I64
     get_dropcap_lines! = Host.textparagraph_get_dropcap_lines_3905245786!
-    draw! : U64, U64, U64, U64, F64 => {}
+    draw! : U64, Vector2, Color, Color, F64 => {}
     draw! = Host.textparagraph_draw_1492808103!
-    draw_outline! : U64, U64, I64, U64, U64, F64 => {}
+    draw_outline! : U64, Vector2, I64, Color, Color, F64 => {}
     draw_outline! = Host.textparagraph_draw_outline_3820500590!
-    draw_line! : U64, U64, I64, U64, F64 => {}
+    draw_line! : U64, Vector2, I64, Color, F64 => {}
     draw_line! = Host.textparagraph_draw_line_828033758!
-    draw_line_outline! : U64, U64, I64, I64, U64, F64 => {}
+    draw_line_outline! : U64, Vector2, I64, I64, Color, F64 => {}
     draw_line_outline! = Host.textparagraph_draw_line_outline_2822696703!
-    draw_dropcap! : U64, U64, U64, F64 => {}
+    draw_dropcap! : U64, Vector2, Color, F64 => {}
     draw_dropcap! = Host.textparagraph_draw_dropcap_3625105422!
-    draw_dropcap_outline! : U64, U64, I64, U64, F64 => {}
+    draw_dropcap_outline! : U64, Vector2, I64, Color, F64 => {}
     draw_dropcap_outline! = Host.textparagraph_draw_dropcap_outline_2592177763!
-    hit_test! : U64 => I64
+    hit_test! : Vector2 => I64
     hit_test! = Host.textparagraph_hit_test_3820158470!
 
 

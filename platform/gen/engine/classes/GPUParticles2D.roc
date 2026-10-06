@@ -1,5 +1,9 @@
 # class GPUParticles2D
 import ../../Host
+import ../../engine/builtin_classes/Rect2
+import ../../engine/builtin_classes/Transform2D
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Color
 
 # inherits: Node2D
 GPUParticles2D := {
@@ -27,7 +31,7 @@ GPUParticles2D := {
     # property interpolate : Bool  getter=get_interpolate setter=set_interpolate
     # property fract_delta : Bool  getter=get_fractional_delta setter=set_fractional_delta
     # property collision_base_size : F64  getter=get_collision_base_size setter=set_collision_base_size
-    # property visibility_rect : U64  getter=get_visibility_rect setter=set_visibility_rect
+    # property visibility_rect : Rect2  getter=get_visibility_rect setter=set_visibility_rect
     # property local_coords : Bool  getter=get_use_local_coordinates setter=set_use_local_coordinates
     # property draw_order : I64  getter=get_draw_order setter=set_draw_order
     # property trail_enabled : Bool  getter=is_trail_enabled setter=set_trail_enabled
@@ -51,7 +55,7 @@ GPUParticles2D := {
     set_explosiveness_ratio! = Host.gpuparticles2d_set_explosiveness_ratio_373806689!
     set_randomness_ratio! : F64 => {}
     set_randomness_ratio! = Host.gpuparticles2d_set_randomness_ratio_373806689!
-    set_visibility_rect! : U64 => {}
+    set_visibility_rect! : Rect2 => {}
     set_visibility_rect! = Host.gpuparticles2d_set_visibility_rect_2046264180!
     set_use_local_coordinates! : Bool => {}
     set_use_local_coordinates! = Host.gpuparticles2d_set_use_local_coordinates_2586408642!
@@ -85,7 +89,7 @@ GPUParticles2D := {
     get_explosiveness_ratio! = Host.gpuparticles2d_get_explosiveness_ratio_1740695150!
     get_randomness_ratio! : () => F64
     get_randomness_ratio! = Host.gpuparticles2d_get_randomness_ratio_1740695150!
-    get_visibility_rect! : () => U64
+    get_visibility_rect! : () => Rect2
     get_visibility_rect! = Host.gpuparticles2d_get_visibility_rect_1639390495!
     get_use_local_coordinates! : () => Bool
     get_use_local_coordinates! = Host.gpuparticles2d_get_use_local_coordinates_36873697!
@@ -111,7 +115,7 @@ GPUParticles2D := {
     set_texture! = Host.gpuparticles2d_set_texture_4051416890!
     get_texture! : () => U64
     get_texture! = Host.gpuparticles2d_get_texture_3635182373!
-    capture_rect! : () => U64
+    capture_rect! : () => Rect2
     capture_rect! = Host.gpuparticles2d_capture_rect_1639390495!
     restart! : Bool => {}
     restart! = Host.gpuparticles2d_restart_107499316!
@@ -119,7 +123,7 @@ GPUParticles2D := {
     set_sub_emitter! = Host.gpuparticles2d_set_sub_emitter_1348162250!
     get_sub_emitter! : () => Str
     get_sub_emitter! = Host.gpuparticles2d_get_sub_emitter_4075236667!
-    emit_particle! : U64, U64, U64, U64, I64 => {}
+    emit_particle! : Transform2D, Vector2, Color, Color, I64 => {}
     emit_particle! = Host.gpuparticles2d_emit_particle_2179202058!
     set_trail_enabled! : Bool => {}
     set_trail_enabled! = Host.gpuparticles2d_set_trail_enabled_2586408642!

@@ -1,5 +1,8 @@
 # class TileData
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Object
 TileData := {
@@ -11,8 +14,8 @@ TileData := {
     # property flip_h : Bool  getter=get_flip_h setter=set_flip_h
     # property flip_v : Bool  getter=get_flip_v setter=set_flip_v
     # property transpose : Bool  getter=get_transpose setter=set_transpose
-    # property texture_origin : U64  getter=get_texture_origin setter=set_texture_origin
-    # property modulate : U64  getter=get_modulate setter=set_modulate
+    # property texture_origin : Vector2i  getter=get_texture_origin setter=set_texture_origin
+    # property modulate : Color  getter=get_modulate setter=set_modulate
     # property material : U64  getter=get_material setter=set_material
     # property z_index : I64  getter=get_z_index setter=set_z_index
     # property y_sort_origin : I64  getter=get_y_sort_origin setter=set_y_sort_origin
@@ -37,13 +40,13 @@ TileData := {
     set_material! = Host.tiledata_set_material_2757459619!
     get_material! : () => U64
     get_material! = Host.tiledata_get_material_5934680!
-    set_texture_origin! : U64 => {}
+    set_texture_origin! : Vector2i => {}
     set_texture_origin! = Host.tiledata_set_texture_origin_1130785943!
-    get_texture_origin! : () => U64
+    get_texture_origin! : () => Vector2i
     get_texture_origin! = Host.tiledata_get_texture_origin_3690982128!
-    set_modulate! : U64 => {}
+    set_modulate! : Color => {}
     set_modulate! = Host.tiledata_set_modulate_2920490490!
-    get_modulate! : () => U64
+    get_modulate! : () => Color
     get_modulate! = Host.tiledata_get_modulate_3444240500!
     set_z_index! : I64 => {}
     set_z_index! = Host.tiledata_set_z_index_1286410249!
@@ -69,9 +72,9 @@ TileData := {
     set_occluder! = Host.tiledata_set_occluder_914399637!
     get_occluder! : I64, Bool, Bool, Bool => U64
     get_occluder! = Host.tiledata_get_occluder_2377324099!
-    set_constant_linear_velocity! : I64, U64 => {}
+    set_constant_linear_velocity! : I64, Vector2 => {}
     set_constant_linear_velocity! = Host.tiledata_set_constant_linear_velocity_163021252!
-    get_constant_linear_velocity! : I64 => U64
+    get_constant_linear_velocity! : I64 => Vector2
     get_constant_linear_velocity! = Host.tiledata_get_constant_linear_velocity_2299179447!
     set_constant_angular_velocity! : I64, F64 => {}
     set_constant_angular_velocity! = Host.tiledata_set_constant_angular_velocity_1602489585!

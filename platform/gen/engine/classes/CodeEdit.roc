@@ -1,5 +1,7 @@
 # class CodeEdit
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Color
 
 # inherits: TextEdit
 CodeEdit := {
@@ -201,9 +203,9 @@ CodeEdit := {
     get_delimiter_start_key! = Host.codeedit_get_delimiter_start_key_844755477!
     get_delimiter_end_key! : I64 => Str
     get_delimiter_end_key! = Host.codeedit_get_delimiter_end_key_844755477!
-    get_delimiter_start_position! : I64, I64 => U64
+    get_delimiter_start_position! : I64, I64 => Vector2
     get_delimiter_start_position! = Host.codeedit_get_delimiter_start_position_3016396712!
-    get_delimiter_end_position! : I64, I64 => U64
+    get_delimiter_end_position! : I64, I64 => Vector2
     get_delimiter_end_position! = Host.codeedit_get_delimiter_end_position_3016396712!
     set_code_hint! : Str => {}
     set_code_hint! = Host.codeedit_set_code_hint_83702148!
@@ -213,7 +215,7 @@ CodeEdit := {
     get_text_for_code_completion! = Host.codeedit_get_text_for_code_completion_201670096!
     request_code_completion! : Bool => {}
     request_code_completion! = Host.codeedit_request_code_completion_107499316!
-    add_code_completion_option! : U64, Str, Str, U64, U64, U64, I64 => {}
+    add_code_completion_option! : U64, Str, Str, Color, U64, U64, I64 => {}
     add_code_completion_option! = Host.codeedit_add_code_completion_option_3944379502!
     update_code_completion_options! : Bool => {}
     update_code_completion_options! = Host.codeedit_update_code_completion_options_2586408642!

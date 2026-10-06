@@ -1,5 +1,7 @@
 # class SkeletonIK3D
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Vector3
 
 # inherits: SkeletonModifier3D
 SkeletonIK3D := {
@@ -10,10 +12,10 @@ SkeletonIK3D := {
     # --- properties (getters/setters are methods) ---
     # property root_bone : Str  getter=get_root_bone setter=set_root_bone
     # property tip_bone : Str  getter=get_tip_bone setter=set_tip_bone
-    # property target : U64  getter=get_target_transform setter=set_target_transform
+    # property target : Transform3D  getter=get_target_transform setter=set_target_transform
     # property override_tip_basis : Bool  getter=is_override_tip_basis setter=set_override_tip_basis
     # property use_magnet : Bool  getter=is_using_magnet setter=set_use_magnet
-    # property magnet : U64  getter=get_magnet_position setter=set_magnet_position
+    # property magnet : Vector3  getter=get_magnet_position setter=set_magnet_position
     # property target_node : Str  getter=get_target_node setter=set_target_node
     # property min_distance : F64  getter=get_min_distance setter=set_min_distance
     # property max_iterations : I64  getter=get_max_iterations setter=set_max_iterations
@@ -28,9 +30,9 @@ SkeletonIK3D := {
     set_tip_bone! = Host.skeletonik3d_set_tip_bone_3304788590!
     get_tip_bone! : () => Str
     get_tip_bone! = Host.skeletonik3d_get_tip_bone_2002593661!
-    set_target_transform! : U64 => {}
+    set_target_transform! : Transform3D => {}
     set_target_transform! = Host.skeletonik3d_set_target_transform_2952846383!
-    get_target_transform! : () => U64
+    get_target_transform! : () => Transform3D
     get_target_transform! = Host.skeletonik3d_get_target_transform_3229777777!
     set_target_node! : Str => {}
     set_target_node! = Host.skeletonik3d_set_target_node_1348162250!
@@ -44,9 +46,9 @@ SkeletonIK3D := {
     set_use_magnet! = Host.skeletonik3d_set_use_magnet_2586408642!
     is_using_magnet! : () => Bool
     is_using_magnet! = Host.skeletonik3d_is_using_magnet_36873697!
-    set_magnet_position! : U64 => {}
+    set_magnet_position! : Vector3 => {}
     set_magnet_position! = Host.skeletonik3d_set_magnet_position_3460891852!
-    get_magnet_position! : () => U64
+    get_magnet_position! : () => Vector3
     get_magnet_position! = Host.skeletonik3d_get_magnet_position_3360562783!
     get_parent_skeleton! : () => U64
     get_parent_skeleton! = Host.skeletonik3d_get_parent_skeleton_1488626673!

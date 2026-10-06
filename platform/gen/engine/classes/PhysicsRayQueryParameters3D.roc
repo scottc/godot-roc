@@ -1,5 +1,6 @@
 # class PhysicsRayQueryParameters3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: RefCounted
 PhysicsRayQueryParameters3D := {
@@ -8,8 +9,8 @@ PhysicsRayQueryParameters3D := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property from : U64  getter=get_from setter=set_from
-    # property to : U64  getter=get_to setter=set_to
+    # property from : Vector3  getter=get_from setter=set_from
+    # property to : Vector3  getter=get_to setter=set_to
     # property collision_mask : I64  getter=get_collision_mask setter=set_collision_mask
     # property exclude : U64  getter=get_exclude setter=set_exclude
     # property collide_with_bodies : Bool  getter=is_collide_with_bodies_enabled setter=set_collide_with_bodies
@@ -18,15 +19,15 @@ PhysicsRayQueryParameters3D := {
     # property hit_back_faces : Bool  getter=is_hit_back_faces_enabled setter=set_hit_back_faces
 
     # --- methods ---
-    create! : U64, U64, I64, U64 => U64
+    create! : Vector3, Vector3, I64, U64 => U64
     create! = Host.physicsrayqueryparameters3d_create_3110599579!
-    set_from! : U64 => {}
+    set_from! : Vector3 => {}
     set_from! = Host.physicsrayqueryparameters3d_set_from_3460891852!
-    get_from! : () => U64
+    get_from! : () => Vector3
     get_from! = Host.physicsrayqueryparameters3d_get_from_3360562783!
-    set_to! : U64 => {}
+    set_to! : Vector3 => {}
     set_to! = Host.physicsrayqueryparameters3d_set_to_3460891852!
-    get_to! : () => U64
+    get_to! : () => Vector3
     get_to! = Host.physicsrayqueryparameters3d_get_to_3360562783!
     set_collision_mask! : I64 => {}
     set_collision_mask! = Host.physicsrayqueryparameters3d_set_collision_mask_1286410249!

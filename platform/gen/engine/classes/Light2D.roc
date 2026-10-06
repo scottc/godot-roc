@@ -1,5 +1,6 @@
 # class Light2D
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: Node2D
 Light2D := {
@@ -11,7 +12,7 @@ Light2D := {
     # --- properties (getters/setters are methods) ---
     # property enabled : Bool  getter=is_enabled setter=set_enabled
     # property editor_only : Bool  getter=is_editor_only setter=set_editor_only
-    # property color : U64  getter=get_color setter=set_color
+    # property color : Color  getter=get_color setter=set_color
     # property energy : F64  getter=get_energy setter=set_energy
     # property blend_mode : I64  getter=get_blend_mode setter=set_blend_mode
     # property range_z_min : I64  getter=get_z_range_min setter=set_z_range_min
@@ -20,7 +21,7 @@ Light2D := {
     # property range_layer_max : I64  getter=get_layer_range_max setter=set_layer_range_max
     # property range_item_cull_mask : I64  getter=get_item_cull_mask setter=set_item_cull_mask
     # property shadow_enabled : Bool  getter=is_shadow_enabled setter=set_shadow_enabled
-    # property shadow_color : U64  getter=get_shadow_color setter=set_shadow_color
+    # property shadow_color : Color  getter=get_shadow_color setter=set_shadow_color
     # property shadow_filter : I64  getter=get_shadow_filter setter=set_shadow_filter
     # property shadow_filter_smooth : F64  getter=get_shadow_smooth setter=set_shadow_smooth
     # property shadow_item_cull_mask : I64  getter=get_item_shadow_cull_mask setter=set_item_shadow_cull_mask
@@ -34,9 +35,9 @@ Light2D := {
     set_editor_only! = Host.light2d_set_editor_only_2586408642!
     is_editor_only! : () => Bool
     is_editor_only! = Host.light2d_is_editor_only_36873697!
-    set_color! : U64 => {}
+    set_color! : Color => {}
     set_color! = Host.light2d_set_color_2920490490!
-    get_color! : () => U64
+    get_color! : () => Color
     get_color! = Host.light2d_get_color_3444240500!
     set_energy! : F64 => {}
     set_energy! = Host.light2d_set_energy_373806689!
@@ -78,9 +79,9 @@ Light2D := {
     set_shadow_filter! = Host.light2d_set_shadow_filter_3209356555!
     get_shadow_filter! : () => U64
     get_shadow_filter! = Host.light2d_get_shadow_filter_1973619177!
-    set_shadow_color! : U64 => {}
+    set_shadow_color! : Color => {}
     set_shadow_color! = Host.light2d_set_shadow_color_2920490490!
-    get_shadow_color! : () => U64
+    get_shadow_color! : () => Color
     get_shadow_color! = Host.light2d_get_shadow_color_3444240500!
     set_blend_mode! : U64 => {}
     set_blend_mode! = Host.light2d_set_blend_mode_2916638796!

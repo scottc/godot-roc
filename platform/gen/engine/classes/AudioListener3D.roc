@@ -1,5 +1,6 @@
 # class AudioListener3D
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
 
 # inherits: Node3D
 AudioListener3D := {
@@ -17,7 +18,7 @@ AudioListener3D := {
     clear_current! = Host.audiolistener3d_clear_current_3218959716!
     is_current! : () => Bool
     is_current! = Host.audiolistener3d_is_current_36873697!
-    get_listener_transform! : () => U64
+    get_listener_transform! : () => Transform3D
     get_listener_transform! = Host.audiolistener3d_get_listener_transform_3229777777!
     set_doppler_tracking! : U64 => {}
     set_doppler_tracking! = Host.audiolistener3d_set_doppler_tracking_2365921740!

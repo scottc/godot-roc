@@ -1,5 +1,6 @@
 # class DPITexture
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
 
 # inherits: Texture2D
 DPITexture := {
@@ -41,7 +42,7 @@ DPITexture := {
     set_color_map! = Host.dpitexture_set_color_map_4155329257!
     get_color_map! : () => U64
     get_color_map! = Host.dpitexture_get_color_map_3102165223!
-    set_size_override! : U64 => {}
+    set_size_override! : Vector2i => {}
     set_size_override! = Host.dpitexture_set_size_override_1130785943!
     get_scaled_rid! : () => U64
     get_scaled_rid! = Host.dpitexture_get_scaled_rid_2944877500!

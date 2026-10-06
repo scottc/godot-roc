@@ -1,5 +1,6 @@
 # class ShapeCast2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Node2D
 ShapeCast2D := {
@@ -11,7 +12,7 @@ ShapeCast2D := {
     # property enabled : Bool  getter=is_enabled setter=set_enabled
     # property shape : U64  getter=get_shape setter=set_shape
     # property exclude_parent : Bool  getter=get_exclude_parent_body setter=set_exclude_parent_body
-    # property target_position : U64  getter=get_target_position setter=set_target_position
+    # property target_position : Vector2  getter=get_target_position setter=set_target_position
     # property margin : F64  getter=get_margin setter=set_margin
     # property max_results : I64  getter=get_max_results setter=set_max_results
     # property collision_mask : I64  getter=get_collision_mask setter=set_collision_mask
@@ -28,9 +29,9 @@ ShapeCast2D := {
     set_shape! = Host.shapecast2d_set_shape_771364740!
     get_shape! : () => U64
     get_shape! = Host.shapecast2d_get_shape_522005891!
-    set_target_position! : U64 => {}
+    set_target_position! : Vector2 => {}
     set_target_position! = Host.shapecast2d_set_target_position_743155724!
-    get_target_position! : () => U64
+    get_target_position! : () => Vector2
     get_target_position! = Host.shapecast2d_get_target_position_3341600327!
     set_margin! : F64 => {}
     set_margin! = Host.shapecast2d_set_margin_373806689!
@@ -52,9 +53,9 @@ ShapeCast2D := {
     get_collider_rid! = Host.shapecast2d_get_collider_rid_495598643!
     get_collider_shape! : I64 => I64
     get_collider_shape! = Host.shapecast2d_get_collider_shape_923996154!
-    get_collision_point! : I64 => U64
+    get_collision_point! : I64 => Vector2
     get_collision_point! = Host.shapecast2d_get_collision_point_2299179447!
-    get_collision_normal! : I64 => U64
+    get_collision_normal! : I64 => Vector2
     get_collision_normal! = Host.shapecast2d_get_collision_normal_2299179447!
     get_closest_collision_safe_fraction! : () => F64
     get_closest_collision_safe_fraction! = Host.shapecast2d_get_closest_collision_safe_fraction_1740695150!

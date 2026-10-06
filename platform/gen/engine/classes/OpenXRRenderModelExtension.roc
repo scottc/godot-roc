@@ -1,5 +1,6 @@
 # class OpenXRRenderModelExtension
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
 
 # inherits: OpenXRExtensionWrapper
 OpenXRRenderModelExtension := {
@@ -27,7 +28,7 @@ OpenXRRenderModelExtension := {
     render_model_get_top_level_path! = Host.openxrrendermodelextension_render_model_get_top_level_path_642473191!
     render_model_get_confidence! : U64 => U64
     render_model_get_confidence! = Host.openxrrendermodelextension_render_model_get_confidence_2350330949!
-    render_model_get_root_transform! : U64 => U64
+    render_model_get_root_transform! : U64 => Transform3D
     render_model_get_root_transform! = Host.openxrrendermodelextension_render_model_get_root_transform_1128465797!
     render_model_get_animatable_node_count! : U64 => I64
     render_model_get_animatable_node_count! = Host.openxrrendermodelextension_render_model_get_animatable_node_count_2198884583!
@@ -35,7 +36,7 @@ OpenXRRenderModelExtension := {
     render_model_get_animatable_node_name! = Host.openxrrendermodelextension_render_model_get_animatable_node_name_1464764419!
     render_model_is_animatable_node_visible! : U64, I64 => Bool
     render_model_is_animatable_node_visible! = Host.openxrrendermodelextension_render_model_is_animatable_node_visible_3120086654!
-    render_model_get_animatable_node_transform! : U64, I64 => U64
+    render_model_get_animatable_node_transform! : U64, I64 => Transform3D
     render_model_get_animatable_node_transform! = Host.openxrrendermodelextension_render_model_get_animatable_node_transform_1050775521!
 
     # signal render_model_added : render_model : U64

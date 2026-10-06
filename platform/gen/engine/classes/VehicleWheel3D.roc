@@ -1,5 +1,6 @@
 # class VehicleWheel3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: Node3D
 VehicleWheel3D := {
@@ -68,9 +69,9 @@ VehicleWheel3D := {
     is_in_contact! = Host.vehiclewheel3d_is_in_contact_36873697!
     get_contact_body! : () => U64
     get_contact_body! = Host.vehiclewheel3d_get_contact_body_151077316!
-    get_contact_point! : () => U64
+    get_contact_point! : () => Vector3
     get_contact_point! = Host.vehiclewheel3d_get_contact_point_3360562783!
-    get_contact_normal! : () => U64
+    get_contact_normal! : () => Vector3
     get_contact_normal! = Host.vehiclewheel3d_get_contact_normal_3360562783!
     set_roll_influence! : F64 => {}
     set_roll_influence! = Host.vehiclewheel3d_set_roll_influence_373806689!

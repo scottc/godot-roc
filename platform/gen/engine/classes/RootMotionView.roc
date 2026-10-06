@@ -1,5 +1,6 @@
 # class RootMotionView
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: VisualInstance3D
 RootMotionView := {
@@ -9,7 +10,7 @@ RootMotionView := {
 
     # --- properties (getters/setters are methods) ---
     # property animation_path : Str  getter=get_animation_path setter=set_animation_path
-    # property color : U64  getter=get_color setter=set_color
+    # property color : Color  getter=get_color setter=set_color
     # property cell_size : F64  getter=get_cell_size setter=set_cell_size
     # property radius : F64  getter=get_radius setter=set_radius
     # property zero_y : Bool  getter=get_zero_y setter=set_zero_y
@@ -19,9 +20,9 @@ RootMotionView := {
     set_animation_path! = Host.rootmotionview_set_animation_path_1348162250!
     get_animation_path! : () => Str
     get_animation_path! = Host.rootmotionview_get_animation_path_4075236667!
-    set_color! : U64 => {}
+    set_color! : Color => {}
     set_color! = Host.rootmotionview_set_color_2920490490!
-    get_color! : () => U64
+    get_color! : () => Color
     get_color! = Host.rootmotionview_get_color_3444240500!
     set_cell_size! : F64 => {}
     set_cell_size! = Host.rootmotionview_set_cell_size_373806689!

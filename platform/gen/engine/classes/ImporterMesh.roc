@@ -1,5 +1,6 @@
 # class ImporterMesh
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
 
 # inherits: Resource
 ImporterMesh := {
@@ -57,9 +58,9 @@ ImporterMesh := {
     from_mesh! = Host.importermesh_from_mesh_283226343!
     clear! : () => {}
     clear! = Host.importermesh_clear_3218959716!
-    set_lightmap_size_hint! : U64 => {}
+    set_lightmap_size_hint! : Vector2i => {}
     set_lightmap_size_hint! = Host.importermesh_set_lightmap_size_hint_1130785943!
-    get_lightmap_size_hint! : () => U64
+    get_lightmap_size_hint! : () => Vector2i
     get_lightmap_size_hint! = Host.importermesh_get_lightmap_size_hint_3690982128!
 
 

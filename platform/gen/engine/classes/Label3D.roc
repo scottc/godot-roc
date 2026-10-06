@@ -1,5 +1,7 @@
 # class Label3D
 import ../../Host
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Vector2
 
 # inherits: GeometryInstance3D
 Label3D := {
@@ -10,7 +12,7 @@ Label3D := {
 
     # --- properties (getters/setters are methods) ---
     # property pixel_size : F64  getter=get_pixel_size setter=set_pixel_size
-    # property offset : U64  getter=get_offset setter=set_offset
+    # property offset : Vector2  getter=get_offset setter=set_offset
     # property billboard : I64  getter=get_billboard_mode setter=set_billboard_mode
     # property shaded : Bool  getter=get_draw_flag setter=set_draw_flag
     # property double_sided : Bool  getter=get_draw_flag setter=set_draw_flag
@@ -24,8 +26,8 @@ Label3D := {
     # property texture_filter : I64  getter=get_texture_filter setter=set_texture_filter
     # property render_priority : I64  getter=get_render_priority setter=set_render_priority
     # property outline_render_priority : I64  getter=get_outline_render_priority setter=set_outline_render_priority
-    # property modulate : U64  getter=get_modulate setter=set_modulate
-    # property outline_modulate : U64  getter=get_outline_modulate setter=set_outline_modulate
+    # property modulate : Color  getter=get_modulate setter=set_modulate
+    # property outline_modulate : Color  getter=get_outline_modulate setter=set_outline_modulate
     # property text : Str  getter=get_text setter=set_text
     # property font : U64  getter=get_font setter=set_font
     # property font_size : I64  getter=get_font_size setter=set_font_size
@@ -52,13 +54,13 @@ Label3D := {
     set_vertical_alignment! = Host.label3d_set_vertical_alignment_1796458609!
     get_vertical_alignment! : () => U64
     get_vertical_alignment! = Host.label3d_get_vertical_alignment_3274884059!
-    set_modulate! : U64 => {}
+    set_modulate! : Color => {}
     set_modulate! = Host.label3d_set_modulate_2920490490!
-    get_modulate! : () => U64
+    get_modulate! : () => Color
     get_modulate! = Host.label3d_get_modulate_3444240500!
-    set_outline_modulate! : U64 => {}
+    set_outline_modulate! : Color => {}
     set_outline_modulate! = Host.label3d_set_outline_modulate_2920490490!
-    get_outline_modulate! : () => U64
+    get_outline_modulate! : () => Color
     get_outline_modulate! = Host.label3d_get_outline_modulate_3444240500!
     set_text! : Str => {}
     set_text! = Host.label3d_set_text_83702148!
@@ -128,9 +130,9 @@ Label3D := {
     set_pixel_size! = Host.label3d_set_pixel_size_373806689!
     get_pixel_size! : () => F64
     get_pixel_size! = Host.label3d_get_pixel_size_1740695150!
-    set_offset! : U64 => {}
+    set_offset! : Vector2 => {}
     set_offset! = Host.label3d_set_offset_743155724!
-    get_offset! : () => U64
+    get_offset! : () => Vector2
     get_offset! = Host.label3d_get_offset_3341600327!
     set_draw_flag! : U64, Bool => {}
     set_draw_flag! = Host.label3d_set_draw_flag_1285833066!

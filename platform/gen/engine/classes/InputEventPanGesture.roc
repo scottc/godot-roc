@@ -1,5 +1,6 @@
 # class InputEventPanGesture
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: InputEventGesture
 InputEventPanGesture := {
@@ -8,12 +9,12 @@ InputEventPanGesture := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property delta : U64  getter=get_delta setter=set_delta
+    # property delta : Vector2  getter=get_delta setter=set_delta
 
     # --- methods ---
-    set_delta! : U64 => {}
+    set_delta! : Vector2 => {}
     set_delta! = Host.inputeventpangesture_set_delta_743155724!
-    get_delta! : () => U64
+    get_delta! : () => Vector2
     get_delta! = Host.inputeventpangesture_get_delta_3341600327!
 
 

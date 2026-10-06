@@ -1,5 +1,7 @@
 # class NavigationMesh
 import ../../Host
+import ../../engine/builtin_classes/AABB
+import ../../engine/builtin_classes/Vector3
 
 # inherits: Resource
 NavigationMesh := {
@@ -34,8 +36,8 @@ NavigationMesh := {
     # property filter_low_hanging_obstacles : Bool  getter=get_filter_low_hanging_obstacles setter=set_filter_low_hanging_obstacles
     # property filter_ledge_spans : Bool  getter=get_filter_ledge_spans setter=set_filter_ledge_spans
     # property filter_walkable_low_height_spans : Bool  getter=get_filter_walkable_low_height_spans setter=set_filter_walkable_low_height_spans
-    # property filter_baking_aabb : U64  getter=get_filter_baking_aabb setter=set_filter_baking_aabb
-    # property filter_baking_aabb_offset : U64  getter=get_filter_baking_aabb_offset setter=set_filter_baking_aabb_offset
+    # property filter_baking_aabb : AABB  getter=get_filter_baking_aabb setter=set_filter_baking_aabb
+    # property filter_baking_aabb_offset : Vector3  getter=get_filter_baking_aabb_offset setter=set_filter_baking_aabb_offset
 
     # --- methods ---
     set_sample_partition_type! : U64 => {}
@@ -130,13 +132,13 @@ NavigationMesh := {
     set_filter_walkable_low_height_spans! = Host.navigationmesh_set_filter_walkable_low_height_spans_2586408642!
     get_filter_walkable_low_height_spans! : () => Bool
     get_filter_walkable_low_height_spans! = Host.navigationmesh_get_filter_walkable_low_height_spans_36873697!
-    set_filter_baking_aabb! : U64 => {}
+    set_filter_baking_aabb! : AABB => {}
     set_filter_baking_aabb! = Host.navigationmesh_set_filter_baking_aabb_259215842!
-    get_filter_baking_aabb! : () => U64
+    get_filter_baking_aabb! : () => AABB
     get_filter_baking_aabb! = Host.navigationmesh_get_filter_baking_aabb_1068685055!
-    set_filter_baking_aabb_offset! : U64 => {}
+    set_filter_baking_aabb_offset! : Vector3 => {}
     set_filter_baking_aabb_offset! = Host.navigationmesh_set_filter_baking_aabb_offset_3460891852!
-    get_filter_baking_aabb_offset! : () => U64
+    get_filter_baking_aabb_offset! : () => Vector3
     get_filter_baking_aabb_offset! = Host.navigationmesh_get_filter_baking_aabb_offset_3360562783!
     set_vertices! : U64 => {}
     set_vertices! = Host.navigationmesh_set_vertices_334873810!

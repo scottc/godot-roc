@@ -1,5 +1,7 @@
 # class XRHandTracker
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Vector3
 
 # inherits: XRPositionalTracker
 XRHandTracker := {
@@ -26,21 +28,21 @@ XRHandTracker := {
     set_hand_joint_flags! = Host.xrhandtracker_set_hand_joint_flags_3028437365!
     get_hand_joint_flags! : U64 => U64
     get_hand_joint_flags! = Host.xrhandtracker_get_hand_joint_flags_1730972401!
-    set_hand_joint_transform! : U64, U64 => {}
+    set_hand_joint_transform! : U64, Transform3D => {}
     set_hand_joint_transform! = Host.xrhandtracker_set_hand_joint_transform_2529959613!
-    get_hand_joint_transform! : U64 => U64
+    get_hand_joint_transform! : U64 => Transform3D
     get_hand_joint_transform! = Host.xrhandtracker_get_hand_joint_transform_1090840196!
     set_hand_joint_radius! : U64, F64 => {}
     set_hand_joint_radius! = Host.xrhandtracker_set_hand_joint_radius_2723659615!
     get_hand_joint_radius! : U64 => F64
     get_hand_joint_radius! = Host.xrhandtracker_get_hand_joint_radius_3400025734!
-    set_hand_joint_linear_velocity! : U64, U64 => {}
+    set_hand_joint_linear_velocity! : U64, Vector3 => {}
     set_hand_joint_linear_velocity! = Host.xrhandtracker_set_hand_joint_linear_velocity_1978646737!
-    get_hand_joint_linear_velocity! : U64 => U64
+    get_hand_joint_linear_velocity! : U64 => Vector3
     get_hand_joint_linear_velocity! = Host.xrhandtracker_get_hand_joint_linear_velocity_547240792!
-    set_hand_joint_angular_velocity! : U64, U64 => {}
+    set_hand_joint_angular_velocity! : U64, Vector3 => {}
     set_hand_joint_angular_velocity! = Host.xrhandtracker_set_hand_joint_angular_velocity_1978646737!
-    get_hand_joint_angular_velocity! : U64 => U64
+    get_hand_joint_angular_velocity! : U64 => Vector3
     get_hand_joint_angular_velocity! = Host.xrhandtracker_get_hand_joint_angular_velocity_547240792!
 
 

@@ -1,5 +1,7 @@
 # class SkeletonProfile
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Resource
 SkeletonProfile := {
@@ -56,13 +58,13 @@ SkeletonProfile := {
     get_bone_tail! = Host.skeletonprofile_get_bone_tail_659327637!
     set_bone_tail! : I64, Str => {}
     set_bone_tail! = Host.skeletonprofile_set_bone_tail_3780747571!
-    get_reference_pose! : I64 => U64
+    get_reference_pose! : I64 => Transform3D
     get_reference_pose! = Host.skeletonprofile_get_reference_pose_1965739696!
-    set_reference_pose! : I64, U64 => {}
+    set_reference_pose! : I64, Transform3D => {}
     set_reference_pose! = Host.skeletonprofile_set_reference_pose_3616898986!
-    get_handle_offset! : I64 => U64
+    get_handle_offset! : I64 => Vector2
     get_handle_offset! = Host.skeletonprofile_get_handle_offset_2299179447!
-    set_handle_offset! : I64, U64 => {}
+    set_handle_offset! : I64, Vector2 => {}
     set_handle_offset! = Host.skeletonprofile_set_handle_offset_163021252!
     get_group! : I64 => Str
     get_group! = Host.skeletonprofile_get_group_659327637!

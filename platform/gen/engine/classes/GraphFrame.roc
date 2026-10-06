@@ -1,5 +1,6 @@
 # class GraphFrame
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: GraphElement
 GraphFrame := {
@@ -13,7 +14,7 @@ GraphFrame := {
     # property autoshrink_margin : I64  getter=get_autoshrink_margin setter=set_autoshrink_margin
     # property drag_margin : I64  getter=get_drag_margin setter=set_drag_margin
     # property tint_color_enabled : Bool  getter=is_tint_color_enabled setter=set_tint_color_enabled
-    # property tint_color : U64  getter=get_tint_color setter=set_tint_color
+    # property tint_color : Color  getter=get_tint_color setter=set_tint_color
 
     # --- methods ---
     set_title! : Str => {}
@@ -38,9 +39,9 @@ GraphFrame := {
     set_tint_color_enabled! = Host.graphframe_set_tint_color_enabled_2586408642!
     is_tint_color_enabled! : () => Bool
     is_tint_color_enabled! = Host.graphframe_is_tint_color_enabled_36873697!
-    set_tint_color! : U64 => {}
+    set_tint_color! : Color => {}
     set_tint_color! = Host.graphframe_set_tint_color_2920490490!
-    get_tint_color! : () => U64
+    get_tint_color! : () => Color
     get_tint_color! = Host.graphframe_get_tint_color_3444240500!
 
     # signal autoshrink_changed : ()

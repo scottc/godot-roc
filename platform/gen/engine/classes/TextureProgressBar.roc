@@ -1,5 +1,7 @@
 # class TextureProgressBar
 import ../../Host
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Range
 TextureProgressBar := {
@@ -11,7 +13,7 @@ TextureProgressBar := {
     # property fill_mode : I64  getter=get_fill_mode setter=set_fill_mode
     # property radial_initial_angle : F64  getter=get_radial_initial_angle setter=set_radial_initial_angle
     # property radial_fill_degrees : F64  getter=get_fill_degrees setter=set_fill_degrees
-    # property radial_center_offset : U64  getter=get_radial_center_offset setter=set_radial_center_offset
+    # property radial_center_offset : Vector2  getter=get_radial_center_offset setter=set_radial_center_offset
     # property nine_patch_stretch : Bool  getter=get_nine_patch_stretch setter=set_nine_patch_stretch
     # property stretch_margin_left : I64  getter=get_stretch_margin setter=set_stretch_margin
     # property stretch_margin_top : I64  getter=get_stretch_margin setter=set_stretch_margin
@@ -20,10 +22,10 @@ TextureProgressBar := {
     # property texture_under : U64  getter=get_under_texture setter=set_under_texture
     # property texture_over : U64  getter=get_over_texture setter=set_over_texture
     # property texture_progress : U64  getter=get_progress_texture setter=set_progress_texture
-    # property texture_progress_offset : U64  getter=get_texture_progress_offset setter=set_texture_progress_offset
-    # property tint_under : U64  getter=get_tint_under setter=set_tint_under
-    # property tint_over : U64  getter=get_tint_over setter=set_tint_over
-    # property tint_progress : U64  getter=get_tint_progress setter=set_tint_progress
+    # property texture_progress_offset : Vector2  getter=get_texture_progress_offset setter=set_texture_progress_offset
+    # property tint_under : Color  getter=get_tint_under setter=set_tint_under
+    # property tint_over : Color  getter=get_tint_over setter=set_tint_over
+    # property tint_progress : Color  getter=get_tint_progress setter=set_tint_progress
 
     # --- methods ---
     set_under_texture! : U64 => {}
@@ -42,29 +44,29 @@ TextureProgressBar := {
     set_fill_mode! = Host.textureprogressbar_set_fill_mode_1286410249!
     get_fill_mode! : () => I64
     get_fill_mode! = Host.textureprogressbar_get_fill_mode_2455072627!
-    set_tint_under! : U64 => {}
+    set_tint_under! : Color => {}
     set_tint_under! = Host.textureprogressbar_set_tint_under_2920490490!
-    get_tint_under! : () => U64
+    get_tint_under! : () => Color
     get_tint_under! = Host.textureprogressbar_get_tint_under_3444240500!
-    set_tint_progress! : U64 => {}
+    set_tint_progress! : Color => {}
     set_tint_progress! = Host.textureprogressbar_set_tint_progress_2920490490!
-    get_tint_progress! : () => U64
+    get_tint_progress! : () => Color
     get_tint_progress! = Host.textureprogressbar_get_tint_progress_3444240500!
-    set_tint_over! : U64 => {}
+    set_tint_over! : Color => {}
     set_tint_over! = Host.textureprogressbar_set_tint_over_2920490490!
-    get_tint_over! : () => U64
+    get_tint_over! : () => Color
     get_tint_over! = Host.textureprogressbar_get_tint_over_3444240500!
-    set_texture_progress_offset! : U64 => {}
+    set_texture_progress_offset! : Vector2 => {}
     set_texture_progress_offset! = Host.textureprogressbar_set_texture_progress_offset_743155724!
-    get_texture_progress_offset! : () => U64
+    get_texture_progress_offset! : () => Vector2
     get_texture_progress_offset! = Host.textureprogressbar_get_texture_progress_offset_3341600327!
     set_radial_initial_angle! : F64 => {}
     set_radial_initial_angle! = Host.textureprogressbar_set_radial_initial_angle_373806689!
     get_radial_initial_angle! : () => F64
     get_radial_initial_angle! = Host.textureprogressbar_get_radial_initial_angle_191475506!
-    set_radial_center_offset! : U64 => {}
+    set_radial_center_offset! : Vector2 => {}
     set_radial_center_offset! = Host.textureprogressbar_set_radial_center_offset_743155724!
-    get_radial_center_offset! : () => U64
+    get_radial_center_offset! : () => Vector2
     get_radial_center_offset! = Host.textureprogressbar_get_radial_center_offset_1497962370!
     set_fill_degrees! : F64 => {}
     set_fill_degrees! = Host.textureprogressbar_set_fill_degrees_373806689!

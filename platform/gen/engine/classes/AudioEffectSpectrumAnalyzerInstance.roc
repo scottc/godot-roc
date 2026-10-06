@@ -1,5 +1,6 @@
 # class AudioEffectSpectrumAnalyzerInstance
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: AudioEffectInstance
 AudioEffectSpectrumAnalyzerInstance := {
@@ -11,7 +12,7 @@ AudioEffectSpectrumAnalyzerInstance := {
 
 
     # --- methods ---
-    get_magnitude_for_frequency_range! : F64, F64, U64 => U64
+    get_magnitude_for_frequency_range! : F64, F64, U64 => Vector2
     get_magnitude_for_frequency_range! = Host.audioeffectspectrumanalyzerinstance_get_magnitude_for_frequency_range_797993915!
 
 

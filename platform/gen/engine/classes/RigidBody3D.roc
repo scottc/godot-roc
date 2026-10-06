@@ -1,5 +1,7 @@
 # class RigidBody3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Basis
 
 # inherits: PhysicsBody3D
 RigidBody3D := {
@@ -14,8 +16,8 @@ RigidBody3D := {
     # property physics_material_override : U64  getter=get_physics_material_override setter=set_physics_material_override
     # property gravity_scale : F64  getter=get_gravity_scale setter=set_gravity_scale
     # property center_of_mass_mode : I64  getter=get_center_of_mass_mode setter=set_center_of_mass_mode
-    # property center_of_mass : U64  getter=get_center_of_mass setter=set_center_of_mass
-    # property inertia : U64  getter=get_inertia setter=set_inertia
+    # property center_of_mass : Vector3  getter=get_center_of_mass setter=set_center_of_mass
+    # property inertia : Vector3  getter=get_inertia setter=set_inertia
     # property sleeping : Bool  getter=is_sleeping setter=set_sleeping
     # property can_sleep : Bool  getter=is_able_to_sleep setter=set_can_sleep
     # property lock_rotation : Bool  getter=is_lock_rotation_enabled setter=set_lock_rotation_enabled
@@ -25,14 +27,14 @@ RigidBody3D := {
     # property continuous_cd : Bool  getter=is_using_continuous_collision_detection setter=set_use_continuous_collision_detection
     # property contact_monitor : Bool  getter=is_contact_monitor_enabled setter=set_contact_monitor
     # property max_contacts_reported : I64  getter=get_max_contacts_reported setter=set_max_contacts_reported
-    # property linear_velocity : U64  getter=get_linear_velocity setter=set_linear_velocity
+    # property linear_velocity : Vector3  getter=get_linear_velocity setter=set_linear_velocity
     # property linear_damp_mode : I64  getter=get_linear_damp_mode setter=set_linear_damp_mode
     # property linear_damp : F64  getter=get_linear_damp setter=set_linear_damp
-    # property angular_velocity : U64  getter=get_angular_velocity setter=set_angular_velocity
+    # property angular_velocity : Vector3  getter=get_angular_velocity setter=set_angular_velocity
     # property angular_damp_mode : I64  getter=get_angular_damp_mode setter=set_angular_damp_mode
     # property angular_damp : F64  getter=get_angular_damp setter=set_angular_damp
-    # property constant_force : U64  getter=get_constant_force setter=set_constant_force
-    # property constant_torque : U64  getter=get_constant_torque setter=set_constant_torque
+    # property constant_force : Vector3  getter=get_constant_force setter=set_constant_force
+    # property constant_torque : Vector3  getter=get_constant_torque setter=set_constant_torque
 
     # --- methods ---
     _integrate_forces! : U64 => {}
@@ -41,31 +43,31 @@ RigidBody3D := {
     set_mass! = Host.rigidbody3d_set_mass_373806689!
     get_mass! : () => F64
     get_mass! = Host.rigidbody3d_get_mass_1740695150!
-    set_inertia! : U64 => {}
+    set_inertia! : Vector3 => {}
     set_inertia! = Host.rigidbody3d_set_inertia_3460891852!
-    get_inertia! : () => U64
+    get_inertia! : () => Vector3
     get_inertia! = Host.rigidbody3d_get_inertia_3360562783!
     set_center_of_mass_mode! : U64 => {}
     set_center_of_mass_mode! = Host.rigidbody3d_set_center_of_mass_mode_3625866032!
     get_center_of_mass_mode! : () => U64
     get_center_of_mass_mode! = Host.rigidbody3d_get_center_of_mass_mode_237405040!
-    set_center_of_mass! : U64 => {}
+    set_center_of_mass! : Vector3 => {}
     set_center_of_mass! = Host.rigidbody3d_set_center_of_mass_3460891852!
-    get_center_of_mass! : () => U64
+    get_center_of_mass! : () => Vector3
     get_center_of_mass! = Host.rigidbody3d_get_center_of_mass_3360562783!
     set_physics_material_override! : U64 => {}
     set_physics_material_override! = Host.rigidbody3d_set_physics_material_override_1784508650!
     get_physics_material_override! : () => U64
     get_physics_material_override! = Host.rigidbody3d_get_physics_material_override_2521850424!
-    set_linear_velocity! : U64 => {}
+    set_linear_velocity! : Vector3 => {}
     set_linear_velocity! = Host.rigidbody3d_set_linear_velocity_3460891852!
-    get_linear_velocity! : () => U64
+    get_linear_velocity! : () => Vector3
     get_linear_velocity! = Host.rigidbody3d_get_linear_velocity_3360562783!
-    set_angular_velocity! : U64 => {}
+    set_angular_velocity! : Vector3 => {}
     set_angular_velocity! = Host.rigidbody3d_set_angular_velocity_3460891852!
-    get_angular_velocity! : () => U64
+    get_angular_velocity! : () => Vector3
     get_angular_velocity! = Host.rigidbody3d_get_angular_velocity_3360562783!
-    get_inverse_inertia_tensor! : () => U64
+    get_inverse_inertia_tensor! : () => Basis
     get_inverse_inertia_tensor! = Host.rigidbody3d_get_inverse_inertia_tensor_2716978435!
     set_gravity_scale! : F64 => {}
     set_gravity_scale! = Host.rigidbody3d_set_gravity_scale_373806689!
@@ -105,33 +107,33 @@ RigidBody3D := {
     set_use_continuous_collision_detection! = Host.rigidbody3d_set_use_continuous_collision_detection_2586408642!
     is_using_continuous_collision_detection! : () => Bool
     is_using_continuous_collision_detection! = Host.rigidbody3d_is_using_continuous_collision_detection_36873697!
-    set_axis_velocity! : U64 => {}
+    set_axis_velocity! : Vector3 => {}
     set_axis_velocity! = Host.rigidbody3d_set_axis_velocity_3460891852!
-    apply_central_impulse! : U64 => {}
+    apply_central_impulse! : Vector3 => {}
     apply_central_impulse! = Host.rigidbody3d_apply_central_impulse_3460891852!
-    apply_impulse! : U64, U64 => {}
+    apply_impulse! : Vector3, Vector3 => {}
     apply_impulse! = Host.rigidbody3d_apply_impulse_2754756483!
-    apply_torque_impulse! : U64 => {}
+    apply_torque_impulse! : Vector3 => {}
     apply_torque_impulse! = Host.rigidbody3d_apply_torque_impulse_3460891852!
-    apply_central_force! : U64 => {}
+    apply_central_force! : Vector3 => {}
     apply_central_force! = Host.rigidbody3d_apply_central_force_3460891852!
-    apply_force! : U64, U64 => {}
+    apply_force! : Vector3, Vector3 => {}
     apply_force! = Host.rigidbody3d_apply_force_2754756483!
-    apply_torque! : U64 => {}
+    apply_torque! : Vector3 => {}
     apply_torque! = Host.rigidbody3d_apply_torque_3460891852!
-    add_constant_central_force! : U64 => {}
+    add_constant_central_force! : Vector3 => {}
     add_constant_central_force! = Host.rigidbody3d_add_constant_central_force_3460891852!
-    add_constant_force! : U64, U64 => {}
+    add_constant_force! : Vector3, Vector3 => {}
     add_constant_force! = Host.rigidbody3d_add_constant_force_2754756483!
-    add_constant_torque! : U64 => {}
+    add_constant_torque! : Vector3 => {}
     add_constant_torque! = Host.rigidbody3d_add_constant_torque_3460891852!
-    set_constant_force! : U64 => {}
+    set_constant_force! : Vector3 => {}
     set_constant_force! = Host.rigidbody3d_set_constant_force_3460891852!
-    get_constant_force! : () => U64
+    get_constant_force! : () => Vector3
     get_constant_force! = Host.rigidbody3d_get_constant_force_3360562783!
-    set_constant_torque! : U64 => {}
+    set_constant_torque! : Vector3 => {}
     set_constant_torque! = Host.rigidbody3d_set_constant_torque_3460891852!
-    get_constant_torque! : () => U64
+    get_constant_torque! : () => Vector3
     get_constant_torque! = Host.rigidbody3d_get_constant_torque_3360562783!
     set_sleeping! : Bool => {}
     set_sleeping! = Host.rigidbody3d_set_sleeping_2586408642!

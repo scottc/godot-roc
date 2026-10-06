@@ -1,5 +1,6 @@
 # class LightmapGIData
 import ../../Host
+import ../../engine/builtin_classes/Rect2
 
 # inherits: Resource
 LightmapGIData := {
@@ -29,7 +30,7 @@ LightmapGIData := {
     set_uses_spherical_harmonics! = Host.lightmapgidata_set_uses_spherical_harmonics_2586408642!
     is_using_spherical_harmonics! : () => Bool
     is_using_spherical_harmonics! = Host.lightmapgidata_is_using_spherical_harmonics_36873697!
-    add_user! : Str, U64, I64, I64 => {}
+    add_user! : Str, Rect2, I64, I64 => {}
     add_user! = Host.lightmapgidata_add_user_4272570515!
     get_user_count! : () => I64
     get_user_count! = Host.lightmapgidata_get_user_count_3905245786!

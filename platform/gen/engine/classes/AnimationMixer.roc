@@ -1,5 +1,7 @@
 # class AnimationMixer
 import ../../Host
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Quaternion
 
 # inherits: Node
 AnimationMixer := {
@@ -78,17 +80,17 @@ AnimationMixer := {
     set_root_motion_local! = Host.animationmixer_set_root_motion_local_2586408642!
     is_root_motion_local! : () => Bool
     is_root_motion_local! = Host.animationmixer_is_root_motion_local_36873697!
-    get_root_motion_position! : () => U64
+    get_root_motion_position! : () => Vector3
     get_root_motion_position! = Host.animationmixer_get_root_motion_position_3360562783!
-    get_root_motion_rotation! : () => U64
+    get_root_motion_rotation! : () => Quaternion
     get_root_motion_rotation! = Host.animationmixer_get_root_motion_rotation_1222331677!
-    get_root_motion_scale! : () => U64
+    get_root_motion_scale! : () => Vector3
     get_root_motion_scale! = Host.animationmixer_get_root_motion_scale_3360562783!
-    get_root_motion_position_accumulator! : () => U64
+    get_root_motion_position_accumulator! : () => Vector3
     get_root_motion_position_accumulator! = Host.animationmixer_get_root_motion_position_accumulator_3360562783!
-    get_root_motion_rotation_accumulator! : () => U64
+    get_root_motion_rotation_accumulator! : () => Quaternion
     get_root_motion_rotation_accumulator! = Host.animationmixer_get_root_motion_rotation_accumulator_1222331677!
-    get_root_motion_scale_accumulator! : () => U64
+    get_root_motion_scale_accumulator! : () => Vector3
     get_root_motion_scale_accumulator! = Host.animationmixer_get_root_motion_scale_accumulator_3360562783!
     clear_caches! : () => {}
     clear_caches! = Host.animationmixer_clear_caches_3218959716!

@@ -1,5 +1,6 @@
 # class AnimationNodeBlendSpace2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: AnimationRootNode
 AnimationNodeBlendSpace2D := {
@@ -11,9 +12,9 @@ AnimationNodeBlendSpace2D := {
     # --- properties (getters/setters are methods) ---
     # property auto_triangles : Bool  getter=get_auto_triangles setter=set_auto_triangles
     # property triangles : U64  getter=_get_triangles setter=_set_triangles
-    # property min_space : U64  getter=get_min_space setter=set_min_space
-    # property max_space : U64  getter=get_max_space setter=set_max_space
-    # property snap : U64  getter=get_snap setter=set_snap
+    # property min_space : Vector2  getter=get_min_space setter=set_min_space
+    # property max_space : Vector2  getter=get_max_space setter=set_max_space
+    # property snap : Vector2  getter=get_snap setter=set_snap
     # property x_label : Str  getter=get_x_label setter=set_x_label
     # property y_label : Str  getter=get_y_label setter=set_y_label
     # property blend_mode : I64  getter=get_blend_mode setter=set_blend_mode
@@ -22,11 +23,11 @@ AnimationNodeBlendSpace2D := {
     # property cyclic_length : F64  getter=get_cyclic_length setter=set_cyclic_length
 
     # --- methods ---
-    add_blend_point! : U64, U64, I64, Str => {}
+    add_blend_point! : U64, Vector2, I64, Str => {}
     add_blend_point! = Host.animationnodeblendspace2d_add_blend_point_768750458!
-    set_blend_point_position! : I64, U64 => {}
+    set_blend_point_position! : I64, Vector2 => {}
     set_blend_point_position! = Host.animationnodeblendspace2d_set_blend_point_position_163021252!
-    get_blend_point_position! : I64 => U64
+    get_blend_point_position! : I64 => Vector2
     get_blend_point_position! = Host.animationnodeblendspace2d_get_blend_point_position_2299179447!
     set_blend_point_node! : I64, U64 => {}
     set_blend_point_node! = Host.animationnodeblendspace2d_set_blend_point_node_4240341528!
@@ -52,17 +53,17 @@ AnimationNodeBlendSpace2D := {
     remove_triangle! = Host.animationnodeblendspace2d_remove_triangle_1286410249!
     get_triangle_count! : () => I64
     get_triangle_count! = Host.animationnodeblendspace2d_get_triangle_count_3905245786!
-    set_min_space! : U64 => {}
+    set_min_space! : Vector2 => {}
     set_min_space! = Host.animationnodeblendspace2d_set_min_space_743155724!
-    get_min_space! : () => U64
+    get_min_space! : () => Vector2
     get_min_space! = Host.animationnodeblendspace2d_get_min_space_3341600327!
-    set_max_space! : U64 => {}
+    set_max_space! : Vector2 => {}
     set_max_space! = Host.animationnodeblendspace2d_set_max_space_743155724!
-    get_max_space! : () => U64
+    get_max_space! : () => Vector2
     get_max_space! = Host.animationnodeblendspace2d_get_max_space_3341600327!
-    set_snap! : U64 => {}
+    set_snap! : Vector2 => {}
     set_snap! = Host.animationnodeblendspace2d_set_snap_743155724!
-    get_snap! : () => U64
+    get_snap! : () => Vector2
     get_snap! = Host.animationnodeblendspace2d_get_snap_3341600327!
     set_x_label! : Str => {}
     set_x_label! = Host.animationnodeblendspace2d_set_x_label_83702148!

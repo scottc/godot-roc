@@ -1,5 +1,6 @@
 # class RenderSceneBuffersRD
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
 
 # inherits: RenderSceneBuffers
 RenderSceneBuffersRD := {
@@ -13,7 +14,7 @@ RenderSceneBuffersRD := {
     # --- methods ---
     has_texture! : Str, Str => Bool
     has_texture! = Host.renderscenebuffersrd_has_texture_471820014!
-    create_texture! : Str, Str, U64, I64, U64, U64, I64, I64, Bool, Bool => U64
+    create_texture! : Str, Str, U64, I64, U64, Vector2i, I64, I64, Bool, Bool => U64
     create_texture! = Host.renderscenebuffersrd_create_texture_2950875024!
     create_texture_from_format! : Str, Str, U64, U64, Bool => U64
     create_texture_from_format! = Host.renderscenebuffersrd_create_texture_from_format_3344669382!
@@ -27,7 +28,7 @@ RenderSceneBuffersRD := {
     get_texture_slice! = Host.renderscenebuffersrd_get_texture_slice_588440706!
     get_texture_slice_view! : Str, Str, I64, I64, I64, I64, U64 => U64
     get_texture_slice_view! = Host.renderscenebuffersrd_get_texture_slice_view_682451778!
-    get_texture_slice_size! : Str, Str, I64 => U64
+    get_texture_slice_size! : Str, Str, I64 => Vector2i
     get_texture_slice_size! = Host.renderscenebuffersrd_get_texture_slice_size_2617625368!
     clear_context! : Str => {}
     clear_context! = Host.renderscenebuffersrd_clear_context_3304788590!
@@ -47,9 +48,9 @@ RenderSceneBuffersRD := {
     get_render_target! = Host.renderscenebuffersrd_get_render_target_2944877500!
     get_view_count! : () => I64
     get_view_count! = Host.renderscenebuffersrd_get_view_count_3905245786!
-    get_internal_size! : () => U64
+    get_internal_size! : () => Vector2i
     get_internal_size! = Host.renderscenebuffersrd_get_internal_size_3690982128!
-    get_target_size! : () => U64
+    get_target_size! : () => Vector2i
     get_target_size! = Host.renderscenebuffersrd_get_target_size_3690982128!
     get_scaling_3d_mode! : () => U64
     get_scaling_3d_mode! = Host.renderscenebuffersrd_get_scaling_3d_mode_976778074!

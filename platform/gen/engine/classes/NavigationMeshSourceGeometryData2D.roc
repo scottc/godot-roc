@@ -1,5 +1,6 @@
 # class NavigationMeshSourceGeometryData2D
 import ../../Host
+import ../../engine/builtin_classes/Rect2
 
 # inherits: Resource
 NavigationMeshSourceGeometryData2D := {
@@ -43,7 +44,7 @@ NavigationMeshSourceGeometryData2D := {
     set_projected_obstructions! = Host.navigationmeshsourcegeometrydata2d_set_projected_obstructions_381264803!
     get_projected_obstructions! : () => U64
     get_projected_obstructions! = Host.navigationmeshsourcegeometrydata2d_get_projected_obstructions_3995934104!
-    get_bounds! : () => U64
+    get_bounds! : () => Rect2
     get_bounds! = Host.navigationmeshsourcegeometrydata2d_get_bounds_3248174!
 
 

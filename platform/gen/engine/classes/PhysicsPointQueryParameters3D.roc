@@ -1,5 +1,6 @@
 # class PhysicsPointQueryParameters3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: RefCounted
 PhysicsPointQueryParameters3D := {
@@ -8,16 +9,16 @@ PhysicsPointQueryParameters3D := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property position : U64  getter=get_position setter=set_position
+    # property position : Vector3  getter=get_position setter=set_position
     # property collision_mask : I64  getter=get_collision_mask setter=set_collision_mask
     # property exclude : U64  getter=get_exclude setter=set_exclude
     # property collide_with_bodies : Bool  getter=is_collide_with_bodies_enabled setter=set_collide_with_bodies
     # property collide_with_areas : Bool  getter=is_collide_with_areas_enabled setter=set_collide_with_areas
 
     # --- methods ---
-    set_position! : U64 => {}
+    set_position! : Vector3 => {}
     set_position! = Host.physicspointqueryparameters3d_set_position_3460891852!
-    get_position! : () => U64
+    get_position! : () => Vector3
     get_position! = Host.physicspointqueryparameters3d_get_position_3360562783!
     set_collision_mask! : I64 => {}
     set_collision_mask! = Host.physicspointqueryparameters3d_set_collision_mask_1286410249!

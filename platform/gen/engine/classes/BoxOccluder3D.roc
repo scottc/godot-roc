@@ -1,5 +1,6 @@
 # class BoxOccluder3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: Occluder3D
 BoxOccluder3D := {
@@ -8,12 +9,12 @@ BoxOccluder3D := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property size : U64  getter=get_size setter=set_size
+    # property size : Vector3  getter=get_size setter=set_size
 
     # --- methods ---
-    set_size! : U64 => {}
+    set_size! : Vector3 => {}
     set_size! = Host.boxoccluder3d_set_size_3460891852!
-    get_size! : () => U64
+    get_size! : () => Vector3
     get_size! = Host.boxoccluder3d_get_size_3360562783!
 
 

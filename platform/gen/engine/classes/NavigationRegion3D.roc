@@ -1,5 +1,6 @@
 # class NavigationRegion3D
 import ../../Host
+import ../../engine/builtin_classes/AABB
 
 # inherits: Node3D
 NavigationRegion3D := {
@@ -56,7 +57,7 @@ NavigationRegion3D := {
     bake_navigation_mesh! = Host.navigationregion3d_bake_navigation_mesh_3216645846!
     is_baking! : () => Bool
     is_baking! = Host.navigationregion3d_is_baking_36873697!
-    get_bounds! : () => U64
+    get_bounds! : () => AABB
     get_bounds! = Host.navigationregion3d_get_bounds_1068685055!
 
     # signal navigation_mesh_changed : ()

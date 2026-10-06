@@ -1,5 +1,6 @@
 # class OpenXRMarkerTracker
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: OpenXRSpatialEntityTracker
 OpenXRMarkerTracker := {
@@ -13,9 +14,9 @@ OpenXRMarkerTracker := {
     # property marker_id : I64  getter=get_marker_id setter=set_marker_id
 
     # --- methods ---
-    set_bounds_size! : U64 => {}
+    set_bounds_size! : Vector2 => {}
     set_bounds_size! = Host.openxrmarkertracker_set_bounds_size_743155724!
-    get_bounds_size! : () => U64
+    get_bounds_size! : () => Vector2
     get_bounds_size! = Host.openxrmarkertracker_get_bounds_size_3341600327!
     set_marker_type! : U64 => {}
     set_marker_type! = Host.openxrmarkertracker_set_marker_type_2156241362!

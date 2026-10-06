@@ -1,5 +1,6 @@
 # builtin PackedStringArray
 import ../../Host
+import PackedByteArray
 
 PackedStringArray := {
     ptr : U64

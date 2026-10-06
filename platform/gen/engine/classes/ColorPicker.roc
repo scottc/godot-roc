@@ -1,5 +1,6 @@
 # class ColorPicker
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: VBoxContainer
 ColorPicker := {
@@ -9,7 +10,7 @@ ColorPicker := {
     PickerShapeType : [SHAPE_HSV_RECTANGLE, SHAPE_HSV_WHEEL, SHAPE_VHS_CIRCLE, SHAPE_OKHSL_CIRCLE, SHAPE_NONE, SHAPE_OK_HS_RECTANGLE, SHAPE_OK_HL_RECTANGLE]
 
     # --- properties (getters/setters are methods) ---
-    # property color : U64  getter=get_pick_color setter=set_pick_color
+    # property color : Color  getter=get_pick_color setter=set_pick_color
     # property edit_alpha : Bool  getter=is_editing_alpha setter=set_edit_alpha
     # property edit_intensity : Bool  getter=is_editing_intensity setter=set_edit_intensity
     # property color_mode : I64  getter=get_color_mode setter=set_color_mode
@@ -23,9 +24,9 @@ ColorPicker := {
     # property presets_visible : Bool  getter=are_presets_visible setter=set_presets_visible
 
     # --- methods ---
-    set_pick_color! : U64 => {}
+    set_pick_color! : Color => {}
     set_pick_color! = Host.colorpicker_set_pick_color_2920490490!
-    get_pick_color! : () => U64
+    get_pick_color! : () => Color
     get_pick_color! = Host.colorpicker_get_pick_color_3444240500!
     set_deferred_mode! : Bool => {}
     set_deferred_mode! = Host.colorpicker_set_deferred_mode_2586408642!
@@ -67,15 +68,15 @@ ColorPicker := {
     set_hex_visible! = Host.colorpicker_set_hex_visible_2586408642!
     is_hex_visible! : () => Bool
     is_hex_visible! = Host.colorpicker_is_hex_visible_36873697!
-    add_preset! : U64 => {}
+    add_preset! : Color => {}
     add_preset! = Host.colorpicker_add_preset_2920490490!
-    erase_preset! : U64 => {}
+    erase_preset! : Color => {}
     erase_preset! = Host.colorpicker_erase_preset_2920490490!
     get_presets! : () => U64
     get_presets! = Host.colorpicker_get_presets_1392750486!
-    add_recent_preset! : U64 => {}
+    add_recent_preset! : Color => {}
     add_recent_preset! = Host.colorpicker_add_recent_preset_2920490490!
-    erase_recent_preset! : U64 => {}
+    erase_recent_preset! : Color => {}
     erase_recent_preset! = Host.colorpicker_erase_recent_preset_2920490490!
     get_recent_presets! : () => U64
     get_recent_presets! = Host.colorpicker_get_recent_presets_1392750486!
@@ -84,7 +85,7 @@ ColorPicker := {
     get_picker_shape! : () => U64
     get_picker_shape! = Host.colorpicker_get_picker_shape_1143229889!
 
-    # signal color_changed : color : U64
-    # signal preset_added : color : U64
-    # signal preset_removed : color : U64
+    # signal color_changed : color : Color
+    # signal preset_added : color : Color
+    # signal preset_removed : color : Color
 }

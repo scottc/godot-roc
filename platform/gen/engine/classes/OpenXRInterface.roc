@@ -1,5 +1,7 @@
 # class OpenXRInterface
 import ../../Host
+import ../../engine/builtin_classes/Quaternion
+import ../../engine/builtin_classes/Vector3
 
 # inherits: XRInterface
 OpenXRInterface := {
@@ -69,15 +71,15 @@ OpenXRInterface := {
     get_hand_tracking_source! = Host.openxrinterface_get_hand_tracking_source_4092421202!
     get_hand_joint_flags! : U64, U64 => U64
     get_hand_joint_flags! = Host.openxrinterface_get_hand_joint_flags_720567706!
-    get_hand_joint_rotation! : U64, U64 => U64
+    get_hand_joint_rotation! : U64, U64 => Quaternion
     get_hand_joint_rotation! = Host.openxrinterface_get_hand_joint_rotation_1974618321!
-    get_hand_joint_position! : U64, U64 => U64
+    get_hand_joint_position! : U64, U64 => Vector3
     get_hand_joint_position! = Host.openxrinterface_get_hand_joint_position_3529194242!
     get_hand_joint_radius! : U64, U64 => F64
     get_hand_joint_radius! = Host.openxrinterface_get_hand_joint_radius_901522724!
-    get_hand_joint_linear_velocity! : U64, U64 => U64
+    get_hand_joint_linear_velocity! : U64, U64 => Vector3
     get_hand_joint_linear_velocity! = Host.openxrinterface_get_hand_joint_linear_velocity_3529194242!
-    get_hand_joint_angular_velocity! : U64, U64 => U64
+    get_hand_joint_angular_velocity! : U64, U64 => Vector3
     get_hand_joint_angular_velocity! = Host.openxrinterface_get_hand_joint_angular_velocity_3529194242!
     is_hand_tracking_supported! : () => Bool
     is_hand_tracking_supported! = Host.openxrinterface_is_hand_tracking_supported_2240911060!

@@ -22,6 +22,17 @@ pub const std_options: std.Options = .{
 
 const abi = @import("roc_platform_abi.zig");
 
+const api = @import("zig_platform_abi_impl.zig");
+// Cache: method bind ptr per (class, hash)
+// getMethodBind(class_name, method_name, hash) -> GDExtensionMethodBindPtr
+
+// ptrcall for instance methods:
+//   call_instance(bind, instance, args_ptr, ret_ptr)
+
+// For builtins (Vector3 methods): variant/builtin ptrcall path
+
+// ...
+
 // godot-roc "godot 4.5.1 compatible" - ABI & APIs.
 //const gde_if = @import("engine/gdextension_interface.manual.zig");
 
@@ -37,16 +48,6 @@ const baseline_gde_if = @import("engine/gdextension_interface.generated.zig");
 //const eapi = @import("engine/extension_api.manual.zig");
 // TODO: generated bindings bindings...
 // TODO: full first-class multi-engine support.
-
-// hashes... These need to be accurate, and specific per engine & version.
-const CHARACTERBODY3D_IS_ON_FLOOR_HASH = 36873697;
-const PHYSICSBODY3D_GET_GRAVITY_HASH = 3360562783;
-const MOVE_AND_SLIDE_HASH = 2240911060; // extension_api.json -> classes -> CharacterBody3D -> methods -> move_and_slide -> hash
-const SET_VELOCITY_HASH = 3460891852; // extension_api.json -> classes -> CharacterBody3D -> methods -> set_velocity -> hash
-const GET_VELOCITY_HASH = 3360562783; // extension_api.json -> classes -> CharacterBody3D -> methods -> set_velocity -> hash
-const INPUT_IS_ACTION_PRESSED_HASH = 1558498928; // extension_api.json → Input.is_action_pressed
-const IS_EDITOR_HINT_HASH = 36873697;
-const _ready_HASH = 3218959716;
 
 //
 // Imports from roc.
@@ -748,16 +749,10 @@ fn ensureMethodBinds() void {
     //std.debug.print("[./platform/src/native_host.zig]: ensureMethodBinds()\n", .{});
     if (g_mb_move_and_slide != null) return;
 
-    g_mb_move_and_slide = getMethodBind("CharacterBody3D", "move_and_slide", MOVE_AND_SLIDE_HASH);
-    g_mb_set_velocity = getMethodBind("CharacterBody3D", "set_velocity", SET_VELOCITY_HASH);
-    g_mb_get_velocity = getMethodBind("CharacterBody3D", "get_velocity", GET_VELOCITY_HASH);
+    g_mb_move_and_slide = getMethodBind("CharacterBody3D", "move_and_slide", api.hashes.CharacterBody3D_move_and_slide);
+    g_mb_set_velocity = getMethodBind("CharacterBody3D", "set_velocity", api.hashes.CharacterBody3D_set_velocity);
+    g_mb_get_velocity = getMethodBind("CharacterBody3D", "get_velocity", api.hashes.CharacterBody3D_get_velocity);
 }
-
-const Vector3 = extern struct {
-    x: f32,
-    y: f32,
-    z: f32,
-};
 
 // fn ptrcall(
 //     method: baseline_gde_if.GDExtensionMethodBindPtr,
@@ -770,7 +765,7 @@ const Vector3 = extern struct {
 //     g_engine_interface.object_method_bind_ptrcall(method, object, args, ret);
 // }
 
-export fn godot_roc_set_velocity(v: Vector3) callconv(.c) void {
+export fn godot_roc_set_velocity(v: api.Vector3) callconv(.c) void {
     ensureMethodBinds();
     const self = requireCurrent() orelse return;
     if (g_mb_set_velocity == null) return;
@@ -780,7 +775,7 @@ export fn godot_roc_set_velocity(v: Vector3) callconv(.c) void {
     g_engine_interface.object_method_bind_ptrcall(g_mb_set_velocity, self.object, &args, null);
 }
 
-export fn godot_roc_get_velocity() callconv(.c) Vector3 {
+export fn godot_roc_get_velocity() callconv(.c) api.Vector3 {
     ensureMethodBinds();
     const self = requireCurrent() orelse {
         return .{ .x = 0, .y = 0, .z = 0 };
@@ -789,7 +784,7 @@ export fn godot_roc_get_velocity() callconv(.c) Vector3 {
         return .{ .x = 0, .y = 0, .z = 0 };
     }
 
-    var gv = Vector3{ .x = 0, .y = 0, .z = 0 };
+    var gv = api.Vector3{ .x = 0, .y = 0, .z = 0 };
     g_engine_interface.object_method_bind_ptrcall(g_mb_get_velocity, self.object, null, @ptrCast(&gv));
 
     return .{
@@ -809,7 +804,7 @@ fn ensureInput() void {
 
     g_input = g_engine_interface.global_get_singleton(@ptrCast(&input_name));
 
-    g_mb_is_action_pressed = getMethodBind("Input", "is_action_pressed", INPUT_IS_ACTION_PRESSED_HASH);
+    g_mb_is_action_pressed = getMethodBind("Input", "is_action_pressed", api.hashes.Input_is_action_pressed);
 }
 
 fn isActionPressed(action: [:0]const u8) bool {
@@ -863,8 +858,8 @@ var g_mb_get_gravity: baseline_gde_if.GDExtensionMethodBindPtr = null;
 fn ensureFloorBinds() void {
     if (g_mb_is_on_floor != null) return;
 
-    g_mb_is_on_floor = getMethodBind("CharacterBody3D", "is_on_floor", CHARACTERBODY3D_IS_ON_FLOOR_HASH);
-    g_mb_get_gravity = getMethodBind("CharacterBody3D", "get_gravity", PHYSICSBODY3D_GET_GRAVITY_HASH);
+    g_mb_is_on_floor = getMethodBind("CharacterBody3D", "is_on_floor", api.hashes.CharacterBody3D_is_on_floor);
+    g_mb_get_gravity = getMethodBind("CharacterBody3D", "get_gravity", api.hashes.PhysicsBody3D_get_gravity);
 }
 
 export fn godot_roc_is_on_floor() callconv(.c) baseline_gde_if.GDExtensionBool {
@@ -878,26 +873,18 @@ export fn godot_roc_is_on_floor() callconv(.c) baseline_gde_if.GDExtensionBool {
 }
 
 /// Writes gravity into out_x/y/z (units/sec²).
-export fn godot_roc_get_gravity(out_x: *f64, out_y: *f64, out_z: *f64) callconv(.c) void {
+export fn godot_roc_get_gravity() callconv(.c) api.Vector3 {
     ensureFloorBinds();
     const self = requireCurrent() orelse {
-        out_x.* = 0;
-        out_y.* = -9.8;
-        out_z.* = 0;
-        return;
+        return .{ .x = 0, .y = -9.8, .z = 0 };
     };
     if (g_mb_get_gravity == null) {
-        out_x.* = 0;
-        out_y.* = -9.8;
-        out_z.* = 0;
-        return;
+        return .{ .x = 0, .y = -9.8, .z = 0 };
     }
 
-    var g = Vector3{ .x = 0, .y = 0, .z = 0 };
+    var g = std.mem.zeroes(api.Vector3);
     g_engine_interface.object_method_bind_ptrcall(g_mb_get_gravity, self.object, null, @ptrCast(&g));
-    out_x.* = g.x;
-    out_y.* = g.y;
-    out_z.* = g.z;
+    return g;
 }
 
 fn onReady(
@@ -947,7 +934,7 @@ fn ensureEngine() void {
 
     var name = makeStringName("Engine");
     g_engine = g_engine_interface.global_get_singleton(@ptrCast(&name));
-    g_mb_is_editor_hint = getMethodBind("Engine", "is_editor_hint", IS_EDITOR_HINT_HASH);
+    g_mb_is_editor_hint = getMethodBind("Engine", "is_editor_hint", api.hashes.Engine_is_editor_hint);
 }
 
 fn isEditorHint() bool {
@@ -993,7 +980,7 @@ fn getVirtual(
     // std.debug.print("roc_godot: getVirtual(class_userdata: ?*anyopaque = {any}, name: baseline_gde_if.GDExtensionConstStringNamePtr = {any}, hash: u32 = {any})\n", .{ class_userdata, name, hash });
 
     // if (stringNameEq(name, "_ready")) { // helper function, so we can find the _ready hash.
-    if (hash == _ready_HASH) {
+    if (hash == api.hashes.Node__ready) {
         // std.debug.print("Is _ready = {any}, {any}, hash = {any})\n", .{ class_userdata, name, hash });
         return onReady;
     }

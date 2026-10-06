@@ -1,5 +1,6 @@
 # class AudioStreamGeneratorPlayback
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: AudioStreamPlaybackResampled
 AudioStreamGeneratorPlayback := {
@@ -11,7 +12,7 @@ AudioStreamGeneratorPlayback := {
 
 
     # --- methods ---
-    push_frame! : U64 => Bool
+    push_frame! : Vector2 => Bool
     push_frame! = Host.audiostreamgeneratorplayback_push_frame_3975407249!
     can_push_buffer! : I64 => Bool
     can_push_buffer! = Host.audiostreamgeneratorplayback_can_push_buffer_1116898809!

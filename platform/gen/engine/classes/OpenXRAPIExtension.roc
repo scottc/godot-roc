@@ -1,5 +1,8 @@
 # class OpenXRAPIExtension
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Rect2i
 
 # inherits: RefCounted
 OpenXRAPIExtension := {
@@ -19,7 +22,7 @@ OpenXRAPIExtension := {
     get_system_id! = Host.openxrapiextension_get_system_id_2455072627!
     get_session! : () => I64
     get_session! = Host.openxrapiextension_get_session_2455072627!
-    transform_from_pose! : U64 => U64
+    transform_from_pose! : U64 => Transform3D
     transform_from_pose! = Host.openxrapiextension_transform_from_pose_2963875352!
     xr_result! : I64, Str, U64 => Bool
     xr_result! = Host.openxrapiextension_xr_result_3886436197!
@@ -87,7 +90,7 @@ OpenXRAPIExtension := {
     set_velocity_texture! = Host.openxrapiextension_set_velocity_texture_2722037293!
     set_velocity_depth_texture! : U64 => {}
     set_velocity_depth_texture! = Host.openxrapiextension_set_velocity_depth_texture_2722037293!
-    set_velocity_target_size! : U64 => {}
+    set_velocity_target_size! : Vector2i => {}
     set_velocity_target_size! = Host.openxrapiextension_set_velocity_target_size_1130785943!
     get_supported_swapchain_formats! : () => U64
     get_supported_swapchain_formats! = Host.openxrapiextension_get_supported_swapchain_formats_3851388692!
@@ -105,7 +108,7 @@ OpenXRAPIExtension := {
     openxr_swapchain_release! = Host.openxrapiextension_openxr_swapchain_release_1286410249!
     get_projection_layer! : () => I64
     get_projection_layer! = Host.openxrapiextension_get_projection_layer_2455072627!
-    set_render_region! : U64 => {}
+    set_render_region! : Rect2i => {}
     set_render_region! = Host.openxrapiextension_set_render_region_1763793166!
     set_emulate_environment_blend_mode_alpha_blend! : Bool => {}
     set_emulate_environment_blend_mode_alpha_blend! = Host.openxrapiextension_set_emulate_environment_blend_mode_alpha_blend_2586408642!

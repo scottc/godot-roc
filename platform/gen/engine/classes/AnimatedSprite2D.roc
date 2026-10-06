@@ -1,5 +1,6 @@
 # class AnimatedSprite2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Node2D
 AnimatedSprite2D := {
@@ -15,7 +16,7 @@ AnimatedSprite2D := {
     # property frame_progress : F64  getter=get_frame_progress setter=set_frame_progress
     # property speed_scale : F64  getter=get_speed_scale setter=set_speed_scale
     # property centered : Bool  getter=is_centered setter=set_centered
-    # property offset : U64  getter=get_offset setter=set_offset
+    # property offset : Vector2  getter=get_offset setter=set_offset
     # property flip_h : Bool  getter=is_flipped_h setter=set_flip_h
     # property flip_v : Bool  getter=is_flipped_v setter=set_flip_v
 
@@ -46,9 +47,9 @@ AnimatedSprite2D := {
     set_centered! = Host.animatedsprite2d_set_centered_2586408642!
     is_centered! : () => Bool
     is_centered! = Host.animatedsprite2d_is_centered_36873697!
-    set_offset! : U64 => {}
+    set_offset! : Vector2 => {}
     set_offset! = Host.animatedsprite2d_set_offset_743155724!
-    get_offset! : () => U64
+    get_offset! : () => Vector2
     get_offset! = Host.animatedsprite2d_get_offset_3341600327!
     set_flip_h! : Bool => {}
     set_flip_h! = Host.animatedsprite2d_set_flip_h_2586408642!

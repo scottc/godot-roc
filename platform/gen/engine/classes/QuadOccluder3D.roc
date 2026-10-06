@@ -1,5 +1,6 @@
 # class QuadOccluder3D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Occluder3D
 QuadOccluder3D := {
@@ -8,12 +9,12 @@ QuadOccluder3D := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property size : U64  getter=get_size setter=set_size
+    # property size : Vector2  getter=get_size setter=set_size
 
     # --- methods ---
-    set_size! : U64 => {}
+    set_size! : Vector2 => {}
     set_size! = Host.quadoccluder3d_set_size_743155724!
-    get_size! : () => U64
+    get_size! : () => Vector2
     get_size! = Host.quadoccluder3d_get_size_3341600327!
 
 

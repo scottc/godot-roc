@@ -1,5 +1,6 @@
 # class VisualShader
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Shader
 VisualShader := {
@@ -10,18 +11,18 @@ VisualShader := {
     VaryingType : [VARYING_TYPE_FLOAT, VARYING_TYPE_INT, VARYING_TYPE_UINT, VARYING_TYPE_VECTOR_2D, VARYING_TYPE_VECTOR_3D, VARYING_TYPE_VECTOR_4D, VARYING_TYPE_BOOLEAN, VARYING_TYPE_TRANSFORM, VARYING_TYPE_MAX]
 
     # --- properties (getters/setters are methods) ---
-    # property graph_offset : U64  getter=get_graph_offset setter=set_graph_offset
+    # property graph_offset : Vector2  getter=get_graph_offset setter=set_graph_offset
 
     # --- methods ---
     set_mode! : U64 => {}
     set_mode! = Host.visualshader_set_mode_3978014962!
-    add_node! : U64, U64, U64, I64 => {}
+    add_node! : U64, U64, Vector2, I64 => {}
     add_node! = Host.visualshader_add_node_1560769431!
     get_node! : U64, I64 => U64
     get_node! = Host.visualshader_get_node_3784670312!
-    set_node_position! : U64, I64, U64 => {}
+    set_node_position! : U64, I64, Vector2 => {}
     set_node_position! = Host.visualshader_set_node_position_2726660721!
-    get_node_position! : U64, I64 => U64
+    get_node_position! : U64, I64 => Vector2
     get_node_position! = Host.visualshader_get_node_position_2175036082!
     get_node_list! : U64 => U64
     get_node_list! = Host.visualshader_get_node_list_2370592410!
@@ -53,9 +54,9 @@ VisualShader := {
     remove_varying! = Host.visualshader_remove_varying_83702148!
     has_varying! : Str => Bool
     has_varying! = Host.visualshader_has_varying_3927539163!
-    set_graph_offset! : U64 => {}
+    set_graph_offset! : Vector2 => {}
     set_graph_offset! = Host.visualshader_set_graph_offset_743155724!
-    get_graph_offset! : () => U64
+    get_graph_offset! : () => Vector2
     get_graph_offset! = Host.visualshader_get_graph_offset_3341600327!
 
 

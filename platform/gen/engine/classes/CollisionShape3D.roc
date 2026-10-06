@@ -1,5 +1,6 @@
 # class CollisionShape3D
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: Node3D
 CollisionShape3D := {
@@ -10,7 +11,7 @@ CollisionShape3D := {
     # --- properties (getters/setters are methods) ---
     # property shape : U64  getter=get_shape setter=set_shape
     # property disabled : Bool  getter=is_disabled setter=set_disabled
-    # property debug_color : U64  getter=get_debug_color setter=set_debug_color
+    # property debug_color : Color  getter=get_debug_color setter=set_debug_color
     # property debug_fill : Bool  getter=get_enable_debug_fill setter=set_enable_debug_fill
 
     # --- methods ---
@@ -26,9 +27,9 @@ CollisionShape3D := {
     is_disabled! = Host.collisionshape3d_is_disabled_36873697!
     make_convex_from_siblings! : () => {}
     make_convex_from_siblings! = Host.collisionshape3d_make_convex_from_siblings_3218959716!
-    set_debug_color! : U64 => {}
+    set_debug_color! : Color => {}
     set_debug_color! = Host.collisionshape3d_set_debug_color_2920490490!
-    get_debug_color! : () => U64
+    get_debug_color! : () => Color
     get_debug_color! = Host.collisionshape3d_get_debug_color_3444240500!
     set_enable_debug_fill! : Bool => {}
     set_enable_debug_fill! = Host.collisionshape3d_set_enable_debug_fill_2586408642!

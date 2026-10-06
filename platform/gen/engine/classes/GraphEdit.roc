@@ -1,5 +1,7 @@
 # class GraphEdit
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Rect2
 
 # inherits: Control
 GraphEdit := {
@@ -9,7 +11,7 @@ GraphEdit := {
     GridPattern : [GRID_PATTERN_LINES, GRID_PATTERN_DOTS]
 
     # --- properties (getters/setters are methods) ---
-    # property scroll_offset : U64  getter=get_scroll_offset setter=set_scroll_offset
+    # property scroll_offset : Vector2  getter=get_scroll_offset setter=set_scroll_offset
     # property show_grid : Bool  getter=is_showing_grid setter=set_show_grid
     # property grid_pattern : I64  getter=get_grid_pattern setter=set_grid_pattern
     # property snapping_enabled : Bool  getter=is_snapping_enabled setter=set_snapping_enabled
@@ -26,7 +28,7 @@ GraphEdit := {
     # property zoom_max : F64  getter=get_zoom_max setter=set_zoom_max
     # property zoom_step : F64  getter=get_zoom_step setter=set_zoom_step
     # property minimap_enabled : Bool  getter=is_minimap_enabled setter=set_minimap_enabled
-    # property minimap_size : U64  getter=get_minimap_size setter=set_minimap_size
+    # property minimap_size : Vector2  getter=get_minimap_size setter=set_minimap_size
     # property minimap_opacity : F64  getter=get_minimap_opacity setter=set_minimap_opacity
     # property show_menu : Bool  getter=is_showing_menu setter=set_show_menu
     # property show_zoom_label : Bool  getter=is_showing_zoom_label setter=set_show_zoom_label
@@ -36,11 +38,11 @@ GraphEdit := {
     # property show_arrange_button : Bool  getter=is_showing_arrange_button setter=set_show_arrange_button
 
     # --- methods ---
-    _is_in_input_hotzone! : U64, I64, U64 => Bool
+    _is_in_input_hotzone! : U64, I64, Vector2 => Bool
     _is_in_input_hotzone! = Host.graphedit__is_in_input_hotzone_1779768129!
-    _is_in_output_hotzone! : U64, I64, U64 => Bool
+    _is_in_output_hotzone! : U64, I64, Vector2 => Bool
     _is_in_output_hotzone! = Host.graphedit__is_in_output_hotzone_1779768129!
-    _get_connection_line! : U64, U64 => U64
+    _get_connection_line! : Vector2, Vector2 => U64
     _get_connection_line! = Host.graphedit__get_connection_line_3932192302!
     _is_node_hover_valid! : Str, I64, Str, I64 => Bool
     _is_node_hover_valid! = Host.graphedit__is_node_hover_valid_4216241294!
@@ -58,19 +60,19 @@ GraphEdit := {
     get_connection_list! = Host.graphedit_get_connection_list_3995934104!
     get_connection_count! : Str, I64 => I64
     get_connection_count! = Host.graphedit_get_connection_count_861718734!
-    get_closest_connection_at_point! : U64, F64 => U64
+    get_closest_connection_at_point! : Vector2, F64 => U64
     get_closest_connection_at_point! = Host.graphedit_get_closest_connection_at_point_453879819!
     get_connection_list_from_node! : Str => U64
     get_connection_list_from_node! = Host.graphedit_get_connection_list_from_node_3147814860!
-    get_connections_intersecting_with_rect! : U64 => U64
+    get_connections_intersecting_with_rect! : Rect2 => U64
     get_connections_intersecting_with_rect! = Host.graphedit_get_connections_intersecting_with_rect_2709748719!
     clear_connections! : () => {}
     clear_connections! = Host.graphedit_clear_connections_3218959716!
     force_connection_drag_end! : () => {}
     force_connection_drag_end! = Host.graphedit_force_connection_drag_end_3218959716!
-    get_scroll_offset! : () => U64
+    get_scroll_offset! : () => Vector2
     get_scroll_offset! = Host.graphedit_get_scroll_offset_3341600327!
-    set_scroll_offset! : U64 => {}
+    set_scroll_offset! : Vector2 => {}
     set_scroll_offset! = Host.graphedit_set_scroll_offset_743155724!
     add_valid_right_disconnect_type! : I64 => {}
     add_valid_right_disconnect_type! = Host.graphedit_add_valid_right_disconnect_type_1286410249!
@@ -86,7 +88,7 @@ GraphEdit := {
     remove_valid_connection_type! = Host.graphedit_remove_valid_connection_type_3937882851!
     is_valid_connection_type! : I64, I64 => Bool
     is_valid_connection_type! = Host.graphedit_is_valid_connection_type_2522259332!
-    get_connection_line! : U64, U64 => U64
+    get_connection_line! : Vector2, Vector2 => U64
     get_connection_line! = Host.graphedit_get_connection_line_3932192302!
     attach_graph_element_to_frame! : Str, Str => {}
     attach_graph_element_to_frame! = Host.graphedit_attach_graph_element_to_frame_3740211285!
@@ -144,9 +146,9 @@ GraphEdit := {
     set_connection_lines_antialiased! = Host.graphedit_set_connection_lines_antialiased_2586408642!
     is_connection_lines_antialiased! : () => Bool
     is_connection_lines_antialiased! = Host.graphedit_is_connection_lines_antialiased_36873697!
-    set_minimap_size! : U64 => {}
+    set_minimap_size! : Vector2 => {}
     set_minimap_size! = Host.graphedit_set_minimap_size_743155724!
-    get_minimap_size! : () => U64
+    get_minimap_size! : () => Vector2
     get_minimap_size! = Host.graphedit_get_minimap_size_3341600327!
     set_minimap_opacity! : F64 => {}
     set_minimap_opacity! = Host.graphedit_set_minimap_opacity_373806689!
@@ -197,8 +199,8 @@ GraphEdit := {
 
     # signal connection_request : from_node : Str, from_port : I64, to_node : Str, to_port : I64
     # signal disconnection_request : from_node : Str, from_port : I64, to_node : Str, to_port : I64
-    # signal connection_to_empty : from_node : Str, from_port : I64, release_position : U64
-    # signal connection_from_empty : to_node : Str, to_port : I64, release_position : U64
+    # signal connection_to_empty : from_node : Str, from_port : I64, release_position : Vector2
+    # signal connection_from_empty : to_node : Str, to_port : I64, release_position : Vector2
     # signal connection_drag_started : from_node : Str, from_port : I64, is_output : Bool
     # signal connection_drag_ended : ()
     # signal copy_nodes_request : ()
@@ -208,10 +210,10 @@ GraphEdit := {
     # signal delete_nodes_request : nodes : U64
     # signal node_selected : node : U64
     # signal node_deselected : node : U64
-    # signal frame_rect_changed : frame : U64, new_rect : U64
-    # signal popup_request : at_position : U64
+    # signal frame_rect_changed : frame : U64, new_rect : Rect2
+    # signal popup_request : at_position : Vector2
     # signal begin_node_move : ()
     # signal end_node_move : ()
     # signal graph_elements_linked_to_frame_request : elements : U64, frame : Str
-    # signal scroll_offset_changed : offset : U64
+    # signal scroll_offset_changed : offset : Vector2
 }

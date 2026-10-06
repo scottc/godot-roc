@@ -1,5 +1,8 @@
 # class Control
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Rect2
+import ../../engine/builtin_classes/Color
 
 # inherits: CanvasItem
 Control := {
@@ -19,8 +22,8 @@ Control := {
     TextDirection : [TEXT_DIRECTION_INHERITED, TEXT_DIRECTION_AUTO, TEXT_DIRECTION_LTR, TEXT_DIRECTION_RTL]
 
     # --- properties (getters/setters are methods) ---
-    # property custom_minimum_size : U64  getter=get_custom_minimum_size setter=set_custom_minimum_size
-    # property custom_maximum_size : U64  getter=get_custom_maximum_size setter=set_custom_maximum_size
+    # property custom_minimum_size : Vector2  getter=get_custom_minimum_size setter=set_custom_minimum_size
+    # property custom_maximum_size : Vector2  getter=get_custom_maximum_size setter=set_custom_maximum_size
     # property propagate_maximum_size : Bool  getter=is_propagating_maximum_size setter=set_propagate_maximum_size
     # property clip_contents : Bool  getter=is_clipping_contents setter=set_clip_contents
     # property layout_mode : I64  getter=_get_layout_mode setter=_set_layout_mode
@@ -35,24 +38,24 @@ Control := {
     # property offset_bottom : F64  getter=get_offset setter=set_offset
     # property grow_horizontal : I64  getter=get_h_grow_direction setter=set_h_grow_direction
     # property grow_vertical : I64  getter=get_v_grow_direction setter=set_v_grow_direction
-    # property size : U64  getter=get_size setter=_set_size
-    # property position : U64  getter=get_position setter=_set_position
-    # property global_position : U64  getter=get_global_position setter=_set_global_position
+    # property size : Vector2  getter=get_size setter=_set_size
+    # property position : Vector2  getter=get_position setter=_set_position
+    # property global_position : Vector2  getter=get_global_position setter=_set_global_position
     # property rotation : F64  getter=get_rotation setter=set_rotation
     # property rotation_degrees : F64  getter=get_rotation_degrees setter=set_rotation_degrees
-    # property scale : U64  getter=get_scale setter=set_scale
-    # property pivot_offset : U64  getter=get_pivot_offset setter=set_pivot_offset
-    # property pivot_offset_ratio : U64  getter=get_pivot_offset_ratio setter=set_pivot_offset_ratio
+    # property scale : Vector2  getter=get_scale setter=set_scale
+    # property pivot_offset : Vector2  getter=get_pivot_offset setter=set_pivot_offset
+    # property pivot_offset_ratio : Vector2  getter=get_pivot_offset_ratio setter=set_pivot_offset_ratio
     # property size_flags_horizontal : I64  getter=get_h_size_flags setter=set_h_size_flags
     # property size_flags_vertical : I64  getter=get_v_size_flags setter=set_v_size_flags
     # property size_flags_stretch_ratio : F64  getter=get_stretch_ratio setter=set_stretch_ratio
     # property offset_transform_enabled : Bool  getter=is_offset_transform_enabled setter=set_offset_transform_enabled
-    # property offset_transform_position : U64  getter=get_offset_transform_position setter=set_offset_transform_position
-    # property offset_transform_position_ratio : U64  getter=get_offset_transform_position_ratio setter=set_offset_transform_position_ratio
-    # property offset_transform_scale : U64  getter=get_offset_transform_scale setter=set_offset_transform_scale
+    # property offset_transform_position : Vector2  getter=get_offset_transform_position setter=set_offset_transform_position
+    # property offset_transform_position_ratio : Vector2  getter=get_offset_transform_position_ratio setter=set_offset_transform_position_ratio
+    # property offset_transform_scale : Vector2  getter=get_offset_transform_scale setter=set_offset_transform_scale
     # property offset_transform_rotation : F64  getter=get_offset_transform_rotation setter=set_offset_transform_rotation
-    # property offset_transform_pivot : U64  getter=get_offset_transform_pivot setter=set_offset_transform_pivot
-    # property offset_transform_pivot_ratio : U64  getter=get_offset_transform_pivot_ratio setter=set_offset_transform_pivot_ratio
+    # property offset_transform_pivot : Vector2  getter=get_offset_transform_pivot setter=set_offset_transform_pivot
+    # property offset_transform_pivot_ratio : Vector2  getter=get_offset_transform_pivot_ratio setter=set_offset_transform_pivot_ratio
     # property offset_transform_visual_only : Bool  getter=is_offset_transform_visual_only setter=set_offset_transform_visual_only
     # property localize_numeral_system : Bool  getter=is_localizing_numeral_system setter=set_localize_numeral_system
     # property layout_direction : I64  getter=get_layout_direction setter=set_layout_direction
@@ -84,27 +87,27 @@ Control := {
     # property theme_type_variation : Str  getter=get_theme_type_variation setter=set_theme_type_variation
 
     # --- methods ---
-    _has_point! : U64 => Bool
+    _has_point! : Vector2 => Bool
     _has_point! = Host.control__has_point_556197845!
     _structured_text_parser! : U64, Str => U64
     _structured_text_parser! = Host.control__structured_text_parser_1292548940!
-    _get_maximum_size! : () => U64
+    _get_maximum_size! : () => Vector2
     _get_maximum_size! = Host.control__get_maximum_size_3341600327!
-    _get_minimum_size! : () => U64
+    _get_minimum_size! : () => Vector2
     _get_minimum_size! = Host.control__get_minimum_size_3341600327!
-    _get_tooltip! : U64 => Str
+    _get_tooltip! : Vector2 => Str
     _get_tooltip! = Host.control__get_tooltip_3674420000!
-    _get_tooltip_auto_translate_mode_at! : U64 => U64
+    _get_tooltip_auto_translate_mode_at! : Vector2 => U64
     _get_tooltip_auto_translate_mode_at! = Host.control__get_tooltip_auto_translate_mode_at_3257223865!
-    _get_drag_data! : U64 => U64
+    _get_drag_data! : Vector2 => U64
     _get_drag_data! = Host.control__get_drag_data_2233896889!
-    _can_drop_data! : U64, U64 => Bool
+    _can_drop_data! : Vector2, U64 => Bool
     _can_drop_data! = Host.control__can_drop_data_2603004011!
-    _drop_data! : U64, U64 => {}
+    _drop_data! : Vector2, U64 => {}
     _drop_data! = Host.control__drop_data_3699746064!
     _make_custom_tooltip! : Str => U64
     _make_custom_tooltip! = Host.control__make_custom_tooltip_1976279298!
-    _get_cursor_shape! : U64 => I64
+    _get_cursor_shape! : Vector2 => I64
     _get_cursor_shape! = Host.control__get_cursor_shape_3820158470!
     _accessibility_get_contextual_info! : () => Str
     _accessibility_get_contextual_info! = Host.control__accessibility_get_contextual_info_201670096!
@@ -114,19 +117,19 @@ Control := {
     _gui_input! = Host.control__gui_input_3754044979!
     accept_event! : () => {}
     accept_event! = Host.control_accept_event_3218959716!
-    get_maximum_size! : () => U64
+    get_maximum_size! : () => Vector2
     get_maximum_size! = Host.control_get_maximum_size_3341600327!
-    get_combined_maximum_size! : () => U64
+    get_combined_maximum_size! : () => Vector2
     get_combined_maximum_size! = Host.control_get_combined_maximum_size_3341600327!
-    get_minimum_size! : () => U64
+    get_minimum_size! : () => Vector2
     get_minimum_size! = Host.control_get_minimum_size_3341600327!
-    get_combined_minimum_size! : () => U64
+    get_combined_minimum_size! : () => Vector2
     get_combined_minimum_size! = Host.control_get_combined_minimum_size_3341600327!
     set_propagate_maximum_size! : Bool => {}
     set_propagate_maximum_size! = Host.control_set_propagate_maximum_size_2586408642!
     is_propagating_maximum_size! : () => Bool
     is_propagating_maximum_size! = Host.control_is_propagating_maximum_size_2240911060!
-    get_bound_minimum_size! : () => U64
+    get_bound_minimum_size! : () => Vector2
     get_bound_minimum_size! = Host.control_get_bound_minimum_size_3341600327!
     set_anchors_preset! : U64, Bool => {}
     set_anchors_preset! = Host.control_set_anchors_preset_509135270!
@@ -144,65 +147,65 @@ Control := {
     get_offset! = Host.control_get_offset_2869120046!
     set_anchor_and_offset! : U64, F64, F64, Bool => {}
     set_anchor_and_offset! = Host.control_set_anchor_and_offset_4031722181!
-    set_begin! : U64 => {}
+    set_begin! : Vector2 => {}
     set_begin! = Host.control_set_begin_743155724!
-    set_end! : U64 => {}
+    set_end! : Vector2 => {}
     set_end! = Host.control_set_end_743155724!
-    set_position! : U64, Bool => {}
+    set_position! : Vector2, Bool => {}
     set_position! = Host.control_set_position_2436320129!
-    set_size! : U64, Bool => {}
+    set_size! : Vector2, Bool => {}
     set_size! = Host.control_set_size_2436320129!
     reset_size! : () => {}
     reset_size! = Host.control_reset_size_3218959716!
-    set_custom_maximum_size! : U64 => {}
+    set_custom_maximum_size! : Vector2 => {}
     set_custom_maximum_size! = Host.control_set_custom_maximum_size_743155724!
-    set_custom_minimum_size! : U64 => {}
+    set_custom_minimum_size! : Vector2 => {}
     set_custom_minimum_size! = Host.control_set_custom_minimum_size_743155724!
-    set_global_position! : U64, Bool => {}
+    set_global_position! : Vector2, Bool => {}
     set_global_position! = Host.control_set_global_position_2436320129!
     set_rotation! : F64 => {}
     set_rotation! = Host.control_set_rotation_373806689!
     set_rotation_degrees! : F64 => {}
     set_rotation_degrees! = Host.control_set_rotation_degrees_373806689!
-    set_scale! : U64 => {}
+    set_scale! : Vector2 => {}
     set_scale! = Host.control_set_scale_743155724!
-    set_pivot_offset! : U64 => {}
+    set_pivot_offset! : Vector2 => {}
     set_pivot_offset! = Host.control_set_pivot_offset_743155724!
-    set_pivot_offset_ratio! : U64 => {}
+    set_pivot_offset_ratio! : Vector2 => {}
     set_pivot_offset_ratio! = Host.control_set_pivot_offset_ratio_743155724!
-    get_begin! : () => U64
+    get_begin! : () => Vector2
     get_begin! = Host.control_get_begin_3341600327!
-    get_end! : () => U64
+    get_end! : () => Vector2
     get_end! = Host.control_get_end_3341600327!
-    get_position! : () => U64
+    get_position! : () => Vector2
     get_position! = Host.control_get_position_3341600327!
-    get_size! : () => U64
+    get_size! : () => Vector2
     get_size! = Host.control_get_size_3341600327!
     get_rotation! : () => F64
     get_rotation! = Host.control_get_rotation_1740695150!
     get_rotation_degrees! : () => F64
     get_rotation_degrees! = Host.control_get_rotation_degrees_1740695150!
-    get_scale! : () => U64
+    get_scale! : () => Vector2
     get_scale! = Host.control_get_scale_3341600327!
-    get_pivot_offset! : () => U64
+    get_pivot_offset! : () => Vector2
     get_pivot_offset! = Host.control_get_pivot_offset_3341600327!
-    get_pivot_offset_ratio! : () => U64
+    get_pivot_offset_ratio! : () => Vector2
     get_pivot_offset_ratio! = Host.control_get_pivot_offset_ratio_3341600327!
-    get_combined_pivot_offset! : () => U64
+    get_combined_pivot_offset! : () => Vector2
     get_combined_pivot_offset! = Host.control_get_combined_pivot_offset_3341600327!
-    get_custom_maximum_size! : () => U64
+    get_custom_maximum_size! : () => Vector2
     get_custom_maximum_size! = Host.control_get_custom_maximum_size_3341600327!
-    get_custom_minimum_size! : () => U64
+    get_custom_minimum_size! : () => Vector2
     get_custom_minimum_size! = Host.control_get_custom_minimum_size_3341600327!
-    get_parent_area_size! : () => U64
+    get_parent_area_size! : () => Vector2
     get_parent_area_size! = Host.control_get_parent_area_size_3341600327!
-    get_global_position! : () => U64
+    get_global_position! : () => Vector2
     get_global_position! = Host.control_get_global_position_3341600327!
-    get_screen_position! : () => U64
+    get_screen_position! : () => Vector2
     get_screen_position! = Host.control_get_screen_position_3341600327!
-    get_rect! : () => U64
+    get_rect! : () => Rect2
     get_rect! = Host.control_get_rect_1639390495!
-    get_global_rect! : () => U64
+    get_global_rect! : () => Rect2
     get_global_rect! = Host.control_get_global_rect_1639390495!
     set_focus_mode! : U64 => {}
     set_focus_mode! = Host.control_set_focus_mode_3232914922!
@@ -242,29 +245,29 @@ Control := {
     set_offset_transform_enabled! = Host.control_set_offset_transform_enabled_2586408642!
     is_offset_transform_enabled! : () => Bool
     is_offset_transform_enabled! = Host.control_is_offset_transform_enabled_36873697!
-    set_offset_transform_position! : U64 => {}
+    set_offset_transform_position! : Vector2 => {}
     set_offset_transform_position! = Host.control_set_offset_transform_position_743155724!
-    get_offset_transform_position! : () => U64
+    get_offset_transform_position! : () => Vector2
     get_offset_transform_position! = Host.control_get_offset_transform_position_3341600327!
-    set_offset_transform_position_ratio! : U64 => {}
+    set_offset_transform_position_ratio! : Vector2 => {}
     set_offset_transform_position_ratio! = Host.control_set_offset_transform_position_ratio_743155724!
-    get_offset_transform_position_ratio! : () => U64
+    get_offset_transform_position_ratio! : () => Vector2
     get_offset_transform_position_ratio! = Host.control_get_offset_transform_position_ratio_3341600327!
-    set_offset_transform_scale! : U64 => {}
+    set_offset_transform_scale! : Vector2 => {}
     set_offset_transform_scale! = Host.control_set_offset_transform_scale_743155724!
-    get_offset_transform_scale! : () => U64
+    get_offset_transform_scale! : () => Vector2
     get_offset_transform_scale! = Host.control_get_offset_transform_scale_3341600327!
     set_offset_transform_rotation! : F64 => {}
     set_offset_transform_rotation! = Host.control_set_offset_transform_rotation_373806689!
     get_offset_transform_rotation! : () => F64
     get_offset_transform_rotation! = Host.control_get_offset_transform_rotation_1740695150!
-    set_offset_transform_pivot! : U64 => {}
+    set_offset_transform_pivot! : Vector2 => {}
     set_offset_transform_pivot! = Host.control_set_offset_transform_pivot_743155724!
-    get_offset_transform_pivot! : () => U64
+    get_offset_transform_pivot! : () => Vector2
     get_offset_transform_pivot! = Host.control_get_offset_transform_pivot_3341600327!
-    set_offset_transform_pivot_ratio! : U64 => {}
+    set_offset_transform_pivot_ratio! : Vector2 => {}
     set_offset_transform_pivot_ratio! = Host.control_set_offset_transform_pivot_ratio_743155724!
-    get_offset_transform_pivot_ratio! : () => U64
+    get_offset_transform_pivot_ratio! : () => Vector2
     get_offset_transform_pivot_ratio! = Host.control_get_offset_transform_pivot_ratio_3341600327!
     set_offset_transform_visual_only! : Bool => {}
     set_offset_transform_visual_only! = Host.control_set_offset_transform_visual_only_2586408642!
@@ -290,7 +293,7 @@ Control := {
     add_theme_font_override! = Host.control_add_theme_font_override_3518018674!
     add_theme_font_size_override! : Str, I64 => {}
     add_theme_font_size_override! = Host.control_add_theme_font_size_override_2415702435!
-    add_theme_color_override! : Str, U64 => {}
+    add_theme_color_override! : Str, Color => {}
     add_theme_color_override! = Host.control_add_theme_color_override_4260178595!
     add_theme_constant_override! : Str, I64 => {}
     add_theme_constant_override! = Host.control_add_theme_constant_override_2415702435!
@@ -314,7 +317,7 @@ Control := {
     get_theme_font! = Host.control_get_theme_font_2826986490!
     get_theme_font_size! : Str, Str => I64
     get_theme_font_size! = Host.control_get_theme_font_size_1327056374!
-    get_theme_color! : Str, Str => U64
+    get_theme_color! : Str, Str => Color
     get_theme_color! = Host.control_get_theme_color_2798751242!
     get_theme_constant! : Str, Str => I64
     get_theme_constant! = Host.control_get_theme_constant_1327056374!
@@ -366,7 +369,7 @@ Control := {
     set_tooltip_text! = Host.control_set_tooltip_text_83702148!
     get_tooltip_text! : () => Str
     get_tooltip_text! = Host.control_get_tooltip_text_201670096!
-    get_tooltip! : U64 => Str
+    get_tooltip! : Vector2 => Str
     get_tooltip! = Host.control_get_tooltip_2895288280!
     set_translation_context! : Str => {}
     set_translation_context! = Host.control_set_translation_context_3304788590!
@@ -376,7 +379,7 @@ Control := {
     set_default_cursor_shape! = Host.control_set_default_cursor_shape_217062046!
     get_default_cursor_shape! : () => U64
     get_default_cursor_shape! = Host.control_get_default_cursor_shape_2359535750!
-    get_cursor_shape! : U64 => U64
+    get_cursor_shape! : Vector2 => U64
     get_cursor_shape! = Host.control_get_cursor_shape_1395773853!
     set_focus_neighbor! : U64, Str => {}
     set_focus_neighbor! = Host.control_set_focus_neighbor_2024461774!
@@ -450,7 +453,7 @@ Control := {
     set_drag_preview! = Host.control_set_drag_preview_1496901182!
     is_drag_successful! : () => Bool
     is_drag_successful! = Host.control_is_drag_successful_36873697!
-    warp_mouse! : U64 => {}
+    warp_mouse! : Vector2 => {}
     warp_mouse! = Host.control_warp_mouse_743155724!
     set_shortcut_context! : U64 => {}
     set_shortcut_context! = Host.control_set_shortcut_context_1078189570!

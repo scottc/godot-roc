@@ -1,5 +1,6 @@
 # class FastNoiseLite
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: Noise
 FastNoiseLite := {
@@ -16,7 +17,7 @@ FastNoiseLite := {
     # property noise_type : I64  getter=get_noise_type setter=set_noise_type
     # property seed : I64  getter=get_seed setter=set_seed
     # property frequency : F64  getter=get_frequency setter=set_frequency
-    # property offset : U64  getter=get_offset setter=set_offset
+    # property offset : Vector3  getter=get_offset setter=set_offset
     # property fractal_type : I64  getter=get_fractal_type setter=set_fractal_type
     # property fractal_octaves : I64  getter=get_fractal_octaves setter=set_fractal_octaves
     # property fractal_lacunarity : F64  getter=get_fractal_lacunarity setter=set_fractal_lacunarity
@@ -48,9 +49,9 @@ FastNoiseLite := {
     set_frequency! = Host.fastnoiselite_set_frequency_373806689!
     get_frequency! : () => F64
     get_frequency! = Host.fastnoiselite_get_frequency_1740695150!
-    set_offset! : U64 => {}
+    set_offset! : Vector3 => {}
     set_offset! = Host.fastnoiselite_set_offset_3460891852!
-    get_offset! : () => U64
+    get_offset! : () => Vector3
     get_offset! = Host.fastnoiselite_get_offset_3360562783!
     set_fractal_type! : U64 => {}
     set_fractal_type! = Host.fastnoiselite_set_fractal_type_4132731174!

@@ -1,5 +1,7 @@
 # class NavigationAgent2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Color
 
 # inherits: Node
 NavigationAgent2D := {
@@ -8,7 +10,7 @@ NavigationAgent2D := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property target_position : U64  getter=get_target_position setter=set_target_position
+    # property target_position : Vector2  getter=get_target_position setter=set_target_position
     # property path_desired_distance : F64  getter=get_path_desired_distance setter=set_path_desired_distance
     # property target_desired_distance : F64  getter=get_target_desired_distance setter=set_target_desired_distance
     # property path_max_distance : F64  getter=get_path_max_distance setter=set_path_max_distance
@@ -23,7 +25,7 @@ NavigationAgent2D := {
     # property path_search_max_polygons : I64  getter=get_path_search_max_polygons setter=set_path_search_max_polygons
     # property path_search_max_distance : F64  getter=get_path_search_max_distance setter=set_path_search_max_distance
     # property avoidance_enabled : Bool  getter=get_avoidance_enabled setter=set_avoidance_enabled
-    # property velocity : U64  getter=get_velocity setter=set_velocity
+    # property velocity : Vector2  getter=get_velocity setter=set_velocity
     # property radius : F64  getter=get_radius setter=set_radius
     # property neighbor_distance : F64  getter=get_neighbor_distance setter=set_neighbor_distance
     # property max_neighbors : I64  getter=get_max_neighbors setter=set_max_neighbors
@@ -35,7 +37,7 @@ NavigationAgent2D := {
     # property avoidance_priority : F64  getter=get_avoidance_priority setter=set_avoidance_priority
     # property debug_enabled : Bool  getter=get_debug_enabled setter=set_debug_enabled
     # property debug_use_custom : Bool  getter=get_debug_use_custom setter=set_debug_use_custom
-    # property debug_path_custom_color : U64  getter=get_debug_path_custom_color setter=set_debug_path_custom_color
+    # property debug_path_custom_color : Color  getter=get_debug_path_custom_color setter=set_debug_path_custom_color
     # property debug_path_custom_point_size : F64  getter=get_debug_path_custom_point_size setter=set_debug_path_custom_point_size
     # property debug_path_custom_line_width : F64  getter=get_debug_path_custom_line_width setter=set_debug_path_custom_line_width
 
@@ -106,9 +108,9 @@ NavigationAgent2D := {
     set_navigation_map! = Host.navigationagent2d_set_navigation_map_2722037293!
     get_navigation_map! : () => U64
     get_navigation_map! = Host.navigationagent2d_get_navigation_map_2944877500!
-    set_target_position! : U64 => {}
+    set_target_position! : Vector2 => {}
     set_target_position! = Host.navigationagent2d_set_target_position_743155724!
-    get_target_position! : () => U64
+    get_target_position! : () => Vector2
     get_target_position! = Host.navigationagent2d_get_target_position_3341600327!
     set_simplify_path! : Bool => {}
     set_simplify_path! = Host.navigationagent2d_set_simplify_path_2586408642!
@@ -136,13 +138,13 @@ NavigationAgent2D := {
     get_path_search_max_distance! = Host.navigationagent2d_get_path_search_max_distance_1740695150!
     get_path_length! : () => F64
     get_path_length! = Host.navigationagent2d_get_path_length_1740695150!
-    get_next_path_position! : () => U64
+    get_next_path_position! : () => Vector2
     get_next_path_position! = Host.navigationagent2d_get_next_path_position_1497962370!
-    set_velocity_forced! : U64 => {}
+    set_velocity_forced! : Vector2 => {}
     set_velocity_forced! = Host.navigationagent2d_set_velocity_forced_743155724!
-    set_velocity! : U64 => {}
+    set_velocity! : Vector2 => {}
     set_velocity! = Host.navigationagent2d_set_velocity_743155724!
-    get_velocity! : () => U64
+    get_velocity! : () => Vector2
     get_velocity! = Host.navigationagent2d_get_velocity_1497962370!
     distance_to_target! : () => F64
     distance_to_target! = Host.navigationagent2d_distance_to_target_1740695150!
@@ -158,7 +160,7 @@ NavigationAgent2D := {
     is_target_reachable! = Host.navigationagent2d_is_target_reachable_2240911060!
     is_navigation_finished! : () => Bool
     is_navigation_finished! = Host.navigationagent2d_is_navigation_finished_2240911060!
-    get_final_position! : () => U64
+    get_final_position! : () => Vector2
     get_final_position! = Host.navigationagent2d_get_final_position_1497962370!
     set_avoidance_layers! : I64 => {}
     set_avoidance_layers! = Host.navigationagent2d_set_avoidance_layers_1286410249!
@@ -188,9 +190,9 @@ NavigationAgent2D := {
     set_debug_use_custom! = Host.navigationagent2d_set_debug_use_custom_2586408642!
     get_debug_use_custom! : () => Bool
     get_debug_use_custom! = Host.navigationagent2d_get_debug_use_custom_36873697!
-    set_debug_path_custom_color! : U64 => {}
+    set_debug_path_custom_color! : Color => {}
     set_debug_path_custom_color! = Host.navigationagent2d_set_debug_path_custom_color_2920490490!
-    get_debug_path_custom_color! : () => U64
+    get_debug_path_custom_color! : () => Color
     get_debug_path_custom_color! = Host.navigationagent2d_get_debug_path_custom_color_3444240500!
     set_debug_path_custom_point_size! : F64 => {}
     set_debug_path_custom_point_size! = Host.navigationagent2d_set_debug_path_custom_point_size_373806689!
@@ -206,5 +208,5 @@ NavigationAgent2D := {
     # signal waypoint_reached : details : U64
     # signal link_reached : details : U64
     # signal navigation_finished : ()
-    # signal velocity_computed : safe_velocity : U64
+    # signal velocity_computed : safe_velocity : Vector2
 }

@@ -1,5 +1,6 @@
 # class GLTFLight
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: Resource
 GLTFLight := {
@@ -8,7 +9,7 @@ GLTFLight := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property color : U64  getter=get_color setter=set_color
+    # property color : Color  getter=get_color setter=set_color
     # property intensity : F64  getter=get_intensity setter=set_intensity
     # property light_type : Str  getter=get_light_type setter=set_light_type
     # property range : F64  getter=get_range setter=set_range
@@ -24,9 +25,9 @@ GLTFLight := {
     from_dictionary! = Host.gltflight_from_dictionary_4057087208!
     to_dictionary! : () => U64
     to_dictionary! = Host.gltflight_to_dictionary_3102165223!
-    get_color! : () => U64
+    get_color! : () => Color
     get_color! = Host.gltflight_get_color_3200896285!
-    set_color! : U64 => {}
+    set_color! : Color => {}
     set_color! = Host.gltflight_set_color_2920490490!
     get_intensity! : () => F64
     get_intensity! = Host.gltflight_get_intensity_191475506!

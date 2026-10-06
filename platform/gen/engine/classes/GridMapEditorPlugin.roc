@@ -1,5 +1,7 @@
 # class GridMapEditorPlugin
 import ../../Host
+import ../../engine/builtin_classes/Vector3i
+import ../../engine/builtin_classes/AABB
 
 # inherits: EditorPlugin
 GridMapEditorPlugin := {
@@ -13,11 +15,11 @@ GridMapEditorPlugin := {
     # --- methods ---
     get_current_grid_map! : () => U64
     get_current_grid_map! = Host.gridmapeditorplugin_get_current_grid_map_1184264483!
-    set_selection! : U64, U64 => {}
+    set_selection! : Vector3i, Vector3i => {}
     set_selection! = Host.gridmapeditorplugin_set_selection_3659408297!
     clear_selection! : () => {}
     clear_selection! = Host.gridmapeditorplugin_clear_selection_3218959716!
-    get_selection! : () => U64
+    get_selection! : () => AABB
     get_selection! = Host.gridmapeditorplugin_get_selection_1068685055!
     has_selection! : () => Bool
     has_selection! = Host.gridmapeditorplugin_has_selection_36873697!

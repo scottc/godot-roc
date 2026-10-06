@@ -1,5 +1,9 @@
 # class OpenXRCompositionLayer
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Node3D
 OpenXRCompositionLayer := {
@@ -15,7 +19,7 @@ OpenXRCompositionLayer := {
     # property layer_viewport : U64  getter=get_layer_viewport setter=set_layer_viewport
     # property use_android_surface : Bool  getter=get_use_android_surface setter=set_use_android_surface
     # property protected_content : Bool  getter=is_protected_content setter=set_protected_content
-    # property android_surface_size : U64  getter=get_android_surface_size setter=set_android_surface_size
+    # property android_surface_size : Vector2i  getter=get_android_surface_size setter=set_android_surface_size
     # property sort_order : I64  getter=get_sort_order setter=set_sort_order
     # property alpha_blend : Bool  getter=get_alpha_blend setter=set_alpha_blend
     # property enable_hole_punch : Bool  getter=get_enable_hole_punch setter=set_enable_hole_punch
@@ -30,7 +34,7 @@ OpenXRCompositionLayer := {
     # property swapchain_state_blue_swizzle : I64  getter=get_blue_swizzle setter=set_blue_swizzle
     # property swapchain_state_alpha_swizzle : I64  getter=get_alpha_swizzle setter=set_alpha_swizzle
     # property swapchain_state_max_anisotropy : F64  getter=get_max_anisotropy setter=set_max_anisotropy
-    # property swapchain_state_border_color : U64  getter=get_border_color setter=set_border_color
+    # property swapchain_state_border_color : Color  getter=get_border_color setter=set_border_color
 
     # --- methods ---
     set_layer_viewport! : U64 => {}
@@ -41,9 +45,9 @@ OpenXRCompositionLayer := {
     set_use_android_surface! = Host.openxrcompositionlayer_set_use_android_surface_2586408642!
     get_use_android_surface! : () => Bool
     get_use_android_surface! = Host.openxrcompositionlayer_get_use_android_surface_36873697!
-    set_android_surface_size! : U64 => {}
+    set_android_surface_size! : Vector2i => {}
     set_android_surface_size! = Host.openxrcompositionlayer_set_android_surface_size_1130785943!
-    get_android_surface_size! : () => U64
+    get_android_surface_size! : () => Vector2i
     get_android_surface_size! = Host.openxrcompositionlayer_get_android_surface_size_3690982128!
     set_enable_hole_punch! : Bool => {}
     set_enable_hole_punch! = Host.openxrcompositionlayer_set_enable_hole_punch_2586408642!
@@ -105,15 +109,15 @@ OpenXRCompositionLayer := {
     set_max_anisotropy! = Host.openxrcompositionlayer_set_max_anisotropy_373806689!
     get_max_anisotropy! : () => F64
     get_max_anisotropy! = Host.openxrcompositionlayer_get_max_anisotropy_1740695150!
-    set_border_color! : U64 => {}
+    set_border_color! : Color => {}
     set_border_color! = Host.openxrcompositionlayer_set_border_color_2920490490!
-    get_border_color! : () => U64
+    get_border_color! : () => Color
     get_border_color! = Host.openxrcompositionlayer_get_border_color_3444240500!
     set_eye_visibility! : U64 => {}
     set_eye_visibility! = Host.openxrcompositionlayer_set_eye_visibility_156391336!
     get_eye_visibility! : () => U64
     get_eye_visibility! = Host.openxrcompositionlayer_get_eye_visibility_467669000!
-    intersects_ray! : U64, U64 => U64
+    intersects_ray! : Vector3, Vector3 => Vector2
     intersects_ray! = Host.openxrcompositionlayer_intersects_ray_1091262597!
 
 

@@ -1,5 +1,8 @@
 # class CPUParticles3D
 import ../../Host
+import ../../engine/builtin_classes/AABB
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Color
 
 # inherits: GeometryInstance3D
 CPUParticles3D := {
@@ -24,17 +27,17 @@ CPUParticles3D := {
     # property lifetime_randomness : F64  getter=get_lifetime_randomness setter=set_lifetime_randomness
     # property fixed_fps : I64  getter=get_fixed_fps setter=set_fixed_fps
     # property fract_delta : Bool  getter=get_fractional_delta setter=set_fractional_delta
-    # property visibility_aabb : U64  getter=get_visibility_aabb setter=set_visibility_aabb
+    # property visibility_aabb : AABB  getter=get_visibility_aabb setter=set_visibility_aabb
     # property local_coords : Bool  getter=get_use_local_coordinates setter=set_use_local_coordinates
     # property draw_order : I64  getter=get_draw_order setter=set_draw_order
     # property mesh : U64  getter=get_mesh setter=set_mesh
     # property emission_shape : I64  getter=get_emission_shape setter=set_emission_shape
     # property emission_sphere_radius : F64  getter=get_emission_sphere_radius setter=set_emission_sphere_radius
-    # property emission_box_extents : U64  getter=get_emission_box_extents setter=set_emission_box_extents
+    # property emission_box_extents : Vector3  getter=get_emission_box_extents setter=set_emission_box_extents
     # property emission_points : U64  getter=get_emission_points setter=set_emission_points
     # property emission_normals : U64  getter=get_emission_normals setter=set_emission_normals
     # property emission_colors : U64  getter=get_emission_colors setter=set_emission_colors
-    # property emission_ring_axis : U64  getter=get_emission_ring_axis setter=set_emission_ring_axis
+    # property emission_ring_axis : Vector3  getter=get_emission_ring_axis setter=set_emission_ring_axis
     # property emission_ring_height : F64  getter=get_emission_ring_height setter=set_emission_ring_height
     # property emission_ring_radius : F64  getter=get_emission_ring_radius setter=set_emission_ring_radius
     # property emission_ring_inner_radius : F64  getter=get_emission_ring_inner_radius setter=set_emission_ring_inner_radius
@@ -42,10 +45,10 @@ CPUParticles3D := {
     # property particle_flag_align_y : Bool  getter=get_particle_flag setter=set_particle_flag
     # property particle_flag_rotate_y : Bool  getter=get_particle_flag setter=set_particle_flag
     # property particle_flag_disable_z : Bool  getter=get_particle_flag setter=set_particle_flag
-    # property direction : U64  getter=get_direction setter=set_direction
+    # property direction : Vector3  getter=get_direction setter=set_direction
     # property spread : F64  getter=get_spread setter=set_spread
     # property flatness : F64  getter=get_flatness setter=set_flatness
-    # property gravity : U64  getter=get_gravity setter=set_gravity
+    # property gravity : Vector3  getter=get_gravity setter=set_gravity
     # property initial_velocity_min : F64  getter=get_param_min setter=set_param_min
     # property initial_velocity_max : F64  getter=get_param_max setter=set_param_max
     # property angular_velocity_min : F64  getter=get_param_min setter=set_param_min
@@ -76,7 +79,7 @@ CPUParticles3D := {
     # property scale_curve_x : U64  getter=get_scale_curve_x setter=set_scale_curve_x
     # property scale_curve_y : U64  getter=get_scale_curve_y setter=set_scale_curve_y
     # property scale_curve_z : U64  getter=get_scale_curve_z setter=set_scale_curve_z
-    # property color : U64  getter=get_color setter=set_color
+    # property color : Color  getter=get_color setter=set_color
     # property color_ramp : U64  getter=get_color_ramp setter=set_color_ramp
     # property color_initial_ramp : U64  getter=get_color_initial_ramp setter=set_color_initial_ramp
     # property hue_variation_min : F64  getter=get_param_min setter=set_param_min
@@ -104,7 +107,7 @@ CPUParticles3D := {
     set_explosiveness_ratio! = Host.cpuparticles3d_set_explosiveness_ratio_373806689!
     set_randomness_ratio! : F64 => {}
     set_randomness_ratio! = Host.cpuparticles3d_set_randomness_ratio_373806689!
-    set_visibility_aabb! : U64 => {}
+    set_visibility_aabb! : AABB => {}
     set_visibility_aabb! = Host.cpuparticles3d_set_visibility_aabb_259215842!
     set_lifetime_randomness! : F64 => {}
     set_lifetime_randomness! = Host.cpuparticles3d_set_lifetime_randomness_373806689!
@@ -130,7 +133,7 @@ CPUParticles3D := {
     get_explosiveness_ratio! = Host.cpuparticles3d_get_explosiveness_ratio_1740695150!
     get_randomness_ratio! : () => F64
     get_randomness_ratio! = Host.cpuparticles3d_get_randomness_ratio_1740695150!
-    get_visibility_aabb! : () => U64
+    get_visibility_aabb! : () => AABB
     get_visibility_aabb! = Host.cpuparticles3d_get_visibility_aabb_1068685055!
     get_lifetime_randomness! : () => F64
     get_lifetime_randomness! = Host.cpuparticles3d_get_lifetime_randomness_1740695150!
@@ -162,11 +165,11 @@ CPUParticles3D := {
     restart! = Host.cpuparticles3d_restart_107499316!
     request_particles_process! : F64, F64 => {}
     request_particles_process! = Host.cpuparticles3d_request_particles_process_66938510!
-    capture_aabb! : () => U64
+    capture_aabb! : () => AABB
     capture_aabb! = Host.cpuparticles3d_capture_aabb_1068685055!
-    set_direction! : U64 => {}
+    set_direction! : Vector3 => {}
     set_direction! = Host.cpuparticles3d_set_direction_3460891852!
-    get_direction! : () => U64
+    get_direction! : () => Vector3
     get_direction! = Host.cpuparticles3d_get_direction_3360562783!
     set_spread! : F64 => {}
     set_spread! = Host.cpuparticles3d_set_spread_373806689!
@@ -188,9 +191,9 @@ CPUParticles3D := {
     set_param_curve! = Host.cpuparticles3d_set_param_curve_4044142537!
     get_param_curve! : U64 => U64
     get_param_curve! = Host.cpuparticles3d_get_param_curve_4132790277!
-    set_color! : U64 => {}
+    set_color! : Color => {}
     set_color! = Host.cpuparticles3d_set_color_2920490490!
-    get_color! : () => U64
+    get_color! : () => Color
     get_color! = Host.cpuparticles3d_get_color_3444240500!
     set_color_ramp! : U64 => {}
     set_color_ramp! = Host.cpuparticles3d_set_color_ramp_2756054477!
@@ -212,9 +215,9 @@ CPUParticles3D := {
     set_emission_sphere_radius! = Host.cpuparticles3d_set_emission_sphere_radius_373806689!
     get_emission_sphere_radius! : () => F64
     get_emission_sphere_radius! = Host.cpuparticles3d_get_emission_sphere_radius_1740695150!
-    set_emission_box_extents! : U64 => {}
+    set_emission_box_extents! : Vector3 => {}
     set_emission_box_extents! = Host.cpuparticles3d_set_emission_box_extents_3460891852!
-    get_emission_box_extents! : () => U64
+    get_emission_box_extents! : () => Vector3
     get_emission_box_extents! = Host.cpuparticles3d_get_emission_box_extents_3360562783!
     set_emission_points! : U64 => {}
     set_emission_points! = Host.cpuparticles3d_set_emission_points_334873810!
@@ -228,9 +231,9 @@ CPUParticles3D := {
     set_emission_colors! = Host.cpuparticles3d_set_emission_colors_3546319833!
     get_emission_colors! : () => U64
     get_emission_colors! = Host.cpuparticles3d_get_emission_colors_1392750486!
-    set_emission_ring_axis! : U64 => {}
+    set_emission_ring_axis! : Vector3 => {}
     set_emission_ring_axis! = Host.cpuparticles3d_set_emission_ring_axis_3460891852!
-    get_emission_ring_axis! : () => U64
+    get_emission_ring_axis! : () => Vector3
     get_emission_ring_axis! = Host.cpuparticles3d_get_emission_ring_axis_3360562783!
     set_emission_ring_height! : F64 => {}
     set_emission_ring_height! = Host.cpuparticles3d_set_emission_ring_height_373806689!
@@ -248,9 +251,9 @@ CPUParticles3D := {
     set_emission_ring_cone_angle! = Host.cpuparticles3d_set_emission_ring_cone_angle_373806689!
     get_emission_ring_cone_angle! : () => F64
     get_emission_ring_cone_angle! = Host.cpuparticles3d_get_emission_ring_cone_angle_1740695150!
-    get_gravity! : () => U64
+    get_gravity! : () => Vector3
     get_gravity! = Host.cpuparticles3d_get_gravity_3360562783!
-    set_gravity! : U64 => {}
+    set_gravity! : Vector3 => {}
     set_gravity! = Host.cpuparticles3d_set_gravity_3460891852!
     get_split_scale! : () => Bool
     get_split_scale! = Host.cpuparticles3d_get_split_scale_2240911060!

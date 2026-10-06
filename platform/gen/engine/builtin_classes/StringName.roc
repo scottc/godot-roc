@@ -1,5 +1,8 @@
 # builtin StringName
 import ../../Host
+import PackedStringArray
+import PackedFloat64Array
+import PackedByteArray
 
 StringName := {
     ptr : U64

@@ -1,5 +1,9 @@
 # class Camera3D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Projection
 
 # inherits: Node3D
 Camera3D := {
@@ -22,28 +26,28 @@ Camera3D := {
     # property current : Bool  getter=is_current setter=set_current
     # property fov : F64  getter=get_fov setter=set_fov
     # property size : F64  getter=get_size setter=set_size
-    # property frustum_offset : U64  getter=get_frustum_offset setter=set_frustum_offset
+    # property frustum_offset : Vector2  getter=get_frustum_offset setter=set_frustum_offset
     # property near : F64  getter=get_near setter=set_near
     # property far : F64  getter=get_far setter=set_far
 
     # --- methods ---
-    project_ray_normal! : U64 => U64
+    project_ray_normal! : Vector2 => Vector3
     project_ray_normal! = Host.camera3d_project_ray_normal_1718073306!
-    project_local_ray_normal! : U64 => U64
+    project_local_ray_normal! : Vector2 => Vector3
     project_local_ray_normal! = Host.camera3d_project_local_ray_normal_1718073306!
-    project_ray_origin! : U64 => U64
+    project_ray_origin! : Vector2 => Vector3
     project_ray_origin! = Host.camera3d_project_ray_origin_1718073306!
-    unproject_position! : U64 => U64
+    unproject_position! : Vector3 => Vector2
     unproject_position! = Host.camera3d_unproject_position_3758901831!
-    is_position_behind! : U64 => Bool
+    is_position_behind! : Vector3 => Bool
     is_position_behind! = Host.camera3d_is_position_behind_3108956480!
-    project_position! : U64, F64 => U64
+    project_position! : Vector2, F64 => Vector3
     project_position! = Host.camera3d_project_position_2171975744!
     set_perspective! : F64, F64, F64 => {}
     set_perspective! = Host.camera3d_set_perspective_2385087082!
     set_orthogonal! : F64, F64, F64 => {}
     set_orthogonal! = Host.camera3d_set_orthogonal_2385087082!
-    set_frustum! : F64, U64, F64, F64 => {}
+    set_frustum! : F64, Vector2, F64, F64 => {}
     set_frustum! = Host.camera3d_set_frustum_354890663!
     make_current! : () => {}
     make_current! = Host.camera3d_make_current_3218959716!
@@ -53,13 +57,13 @@ Camera3D := {
     set_current! = Host.camera3d_set_current_2586408642!
     is_current! : () => Bool
     is_current! = Host.camera3d_is_current_36873697!
-    get_camera_transform! : () => U64
+    get_camera_transform! : () => Transform3D
     get_camera_transform! = Host.camera3d_get_camera_transform_3229777777!
-    get_camera_projection! : () => U64
+    get_camera_projection! : () => Projection
     get_camera_projection! = Host.camera3d_get_camera_projection_2910717950!
     get_fov! : () => F64
     get_fov! = Host.camera3d_get_fov_1740695150!
-    get_frustum_offset! : () => U64
+    get_frustum_offset! : () => Vector2
     get_frustum_offset! = Host.camera3d_get_frustum_offset_3341600327!
     get_size! : () => F64
     get_size! = Host.camera3d_get_size_1740695150!
@@ -69,7 +73,7 @@ Camera3D := {
     get_near! = Host.camera3d_get_near_1740695150!
     set_fov! : F64 => {}
     set_fov! = Host.camera3d_set_fov_373806689!
-    set_frustum_offset! : U64 => {}
+    set_frustum_offset! : Vector2 => {}
     set_frustum_offset! = Host.camera3d_set_frustum_offset_743155724!
     set_size! : F64 => {}
     set_size! = Host.camera3d_set_size_373806689!
@@ -115,7 +119,7 @@ Camera3D := {
     get_doppler_tracking! = Host.camera3d_get_doppler_tracking_1584483649!
     get_frustum! : () => U64
     get_frustum! = Host.camera3d_get_frustum_3995934104!
-    is_position_in_frustum! : U64 => Bool
+    is_position_in_frustum! : Vector3 => Bool
     is_position_in_frustum! = Host.camera3d_is_position_in_frustum_3108956480!
     get_camera_rid! : () => U64
     get_camera_rid! = Host.camera3d_get_camera_rid_2944877500!

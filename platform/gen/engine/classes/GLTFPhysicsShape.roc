@@ -1,5 +1,6 @@
 # class GLTFPhysicsShape
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: Resource
 GLTFPhysicsShape := {
@@ -9,7 +10,7 @@ GLTFPhysicsShape := {
 
     # --- properties (getters/setters are methods) ---
     # property shape_type : Str  getter=get_shape_type setter=set_shape_type
-    # property size : U64  getter=get_size setter=set_size
+    # property size : Vector3  getter=get_size setter=set_size
     # property radius : F64  getter=get_radius setter=set_radius
     # property height : F64  getter=get_height setter=set_height
     # property is_trigger : Bool  getter=get_is_trigger setter=set_is_trigger
@@ -33,9 +34,9 @@ GLTFPhysicsShape := {
     get_shape_type! = Host.gltfphysicsshape_get_shape_type_201670096!
     set_shape_type! : Str => {}
     set_shape_type! = Host.gltfphysicsshape_set_shape_type_83702148!
-    get_size! : () => U64
+    get_size! : () => Vector3
     get_size! = Host.gltfphysicsshape_get_size_3360562783!
-    set_size! : U64 => {}
+    set_size! : Vector3 => {}
     set_size! = Host.gltfphysicsshape_set_size_3460891852!
     get_radius! : () => F64
     get_radius! = Host.gltfphysicsshape_get_radius_1740695150!

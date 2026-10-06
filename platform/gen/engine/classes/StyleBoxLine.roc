@@ -1,5 +1,6 @@
 # class StyleBoxLine
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: StyleBox
 StyleBoxLine := {
@@ -8,16 +9,16 @@ StyleBoxLine := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property color : U64  getter=get_color setter=set_color
+    # property color : Color  getter=get_color setter=set_color
     # property grow_begin : F64  getter=get_grow_begin setter=set_grow_begin
     # property grow_end : F64  getter=get_grow_end setter=set_grow_end
     # property thickness : I64  getter=get_thickness setter=set_thickness
     # property vertical : Bool  getter=is_vertical setter=set_vertical
 
     # --- methods ---
-    set_color! : U64 => {}
+    set_color! : Color => {}
     set_color! = Host.styleboxline_set_color_2920490490!
-    get_color! : () => U64
+    get_color! : () => Color
     get_color! = Host.styleboxline_get_color_3444240500!
     set_thickness! : I64 => {}
     set_thickness! = Host.styleboxline_set_thickness_1286410249!

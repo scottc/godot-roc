@@ -1,5 +1,6 @@
 # class NinePatchRect
 import ../../Host
+import ../../engine/builtin_classes/Rect2
 
 # inherits: Control
 NinePatchRect := {
@@ -10,7 +11,7 @@ NinePatchRect := {
     # --- properties (getters/setters are methods) ---
     # property texture : U64  getter=get_texture setter=set_texture
     # property draw_center : Bool  getter=is_draw_center_enabled setter=set_draw_center
-    # property region_rect : U64  getter=get_region_rect setter=set_region_rect
+    # property region_rect : Rect2  getter=get_region_rect setter=set_region_rect
     # property patch_margin_left : I64  getter=get_patch_margin setter=set_patch_margin
     # property patch_margin_top : I64  getter=get_patch_margin setter=set_patch_margin
     # property patch_margin_right : I64  getter=get_patch_margin setter=set_patch_margin
@@ -27,9 +28,9 @@ NinePatchRect := {
     set_patch_margin! = Host.ninepatchrect_set_patch_margin_437707142!
     get_patch_margin! : U64 => I64
     get_patch_margin! = Host.ninepatchrect_get_patch_margin_1983885014!
-    set_region_rect! : U64 => {}
+    set_region_rect! : Rect2 => {}
     set_region_rect! = Host.ninepatchrect_set_region_rect_2046264180!
-    get_region_rect! : () => U64
+    get_region_rect! : () => Rect2
     get_region_rect! = Host.ninepatchrect_get_region_rect_1639390495!
     set_draw_center! : Bool => {}
     set_draw_center! = Host.ninepatchrect_set_draw_center_2586408642!

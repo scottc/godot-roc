@@ -1,5 +1,8 @@
 # class Image
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Rect2i
+import ../../engine/builtin_classes/Color
 
 # inherits: Resource
 Image := {
@@ -21,7 +24,7 @@ Image := {
     get_width! = Host.image_get_width_3905245786!
     get_height! : () => I64
     get_height! = Host.image_get_height_3905245786!
-    get_size! : () => U64
+    get_size! : () => Vector2i
     get_size! = Host.image_get_size_3690982128!
     has_mipmaps! : () => Bool
     has_mipmaps! = Host.image_has_mipmaps_36873697!
@@ -121,31 +124,31 @@ Image := {
     bump_map_to_normal_map! = Host.image_bump_map_to_normal_map_3423495036!
     compute_image_metrics! : U64, Bool => U64
     compute_image_metrics! = Host.image_compute_image_metrics_3080961247!
-    blit_rect! : U64, U64, U64 => {}
+    blit_rect! : U64, Rect2i, Vector2i => {}
     blit_rect! = Host.image_blit_rect_2903928755!
-    blit_rect_mask! : U64, U64, U64, U64 => {}
+    blit_rect_mask! : U64, U64, Rect2i, Vector2i => {}
     blit_rect_mask! = Host.image_blit_rect_mask_3383581145!
-    blend_rect! : U64, U64, U64 => {}
+    blend_rect! : U64, Rect2i, Vector2i => {}
     blend_rect! = Host.image_blend_rect_2903928755!
-    blend_rect_mask! : U64, U64, U64, U64 => {}
+    blend_rect_mask! : U64, U64, Rect2i, Vector2i => {}
     blend_rect_mask! = Host.image_blend_rect_mask_3383581145!
-    fill! : U64 => {}
+    fill! : Color => {}
     fill! = Host.image_fill_2920490490!
-    fill_rect! : U64, U64 => {}
+    fill_rect! : Rect2i, Color => {}
     fill_rect! = Host.image_fill_rect_514693913!
-    get_used_rect! : () => U64
+    get_used_rect! : () => Rect2i
     get_used_rect! = Host.image_get_used_rect_410525958!
-    get_region! : U64 => U64
+    get_region! : Rect2i => U64
     get_region! = Host.image_get_region_2601441065!
     copy_from! : U64 => {}
     copy_from! = Host.image_copy_from_532598488!
-    get_pixelv! : U64 => U64
+    get_pixelv! : Vector2i => Color
     get_pixelv! = Host.image_get_pixelv_1532707496!
-    get_pixel! : I64, I64 => U64
+    get_pixel! : I64, I64 => Color
     get_pixel! = Host.image_get_pixel_2165839948!
-    set_pixelv! : U64, U64 => {}
+    set_pixelv! : Vector2i, Color => {}
     set_pixelv! = Host.image_set_pixelv_287851464!
-    set_pixel! : I64, I64, U64 => {}
+    set_pixel! : I64, I64, Color => {}
     set_pixel! = Host.image_set_pixel_3733378741!
     adjust_bcs! : F64, F64, F64 => {}
     adjust_bcs! = Host.image_adjust_bcs_2385087082!

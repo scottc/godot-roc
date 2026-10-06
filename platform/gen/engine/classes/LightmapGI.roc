@@ -1,5 +1,6 @@
 # class LightmapGI
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: VisualInstance3D
 LightmapGI := {
@@ -28,7 +29,7 @@ LightmapGI := {
     # property max_texture_size : I64  getter=get_max_texture_size setter=set_max_texture_size
     # property environment_mode : I64  getter=get_environment_mode setter=set_environment_mode
     # property environment_custom_sky : U64  getter=get_environment_custom_sky setter=set_environment_custom_sky
-    # property environment_custom_color : U64  getter=get_environment_custom_color setter=set_environment_custom_color
+    # property environment_custom_color : Color  getter=get_environment_custom_color setter=set_environment_custom_color
     # property environment_custom_energy : F64  getter=get_environment_custom_energy setter=set_environment_custom_energy
     # property camera_attributes : U64  getter=get_camera_attributes setter=set_camera_attributes
     # property generate_probes_subdiv : I64  getter=get_generate_probes setter=set_generate_probes
@@ -67,9 +68,9 @@ LightmapGI := {
     set_environment_custom_sky! = Host.lightmapgi_set_environment_custom_sky_3336722921!
     get_environment_custom_sky! : () => U64
     get_environment_custom_sky! = Host.lightmapgi_get_environment_custom_sky_1177136966!
-    set_environment_custom_color! : U64 => {}
+    set_environment_custom_color! : Color => {}
     set_environment_custom_color! = Host.lightmapgi_set_environment_custom_color_2920490490!
-    get_environment_custom_color! : () => U64
+    get_environment_custom_color! : () => Color
     get_environment_custom_color! = Host.lightmapgi_get_environment_custom_color_3444240500!
     set_environment_custom_energy! : F64 => {}
     set_environment_custom_energy! = Host.lightmapgi_set_environment_custom_energy_373806689!

@@ -1,5 +1,7 @@
 # class BaseMaterial3D
 import ../../Host
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Vector3
 
 # inherits: Material
 BaseMaterial3D := {
@@ -46,7 +48,7 @@ BaseMaterial3D := {
     # property disable_specular_occlusion : Bool  getter=get_flag setter=set_flag
     # property vertex_color_use_as_albedo : Bool  getter=get_flag setter=set_flag
     # property vertex_color_is_srgb : Bool  getter=get_flag setter=set_flag
-    # property albedo_color : U64  getter=get_albedo setter=set_albedo
+    # property albedo_color : Color  getter=get_albedo setter=set_albedo
     # property albedo_texture : U64  getter=get_texture setter=set_texture
     # property albedo_texture_force_srgb : Bool  getter=get_flag setter=set_flag
     # property albedo_texture_msdf : Bool  getter=get_flag setter=set_flag
@@ -59,7 +61,7 @@ BaseMaterial3D := {
     # property roughness_texture : U64  getter=get_texture setter=set_texture
     # property roughness_texture_channel : I64  getter=get_roughness_texture_channel setter=set_roughness_texture_channel
     # property emission_enabled : Bool  getter=get_feature setter=set_feature
-    # property emission : U64  getter=get_emission setter=set_emission
+    # property emission : Color  getter=get_emission setter=set_emission
     # property emission_energy_multiplier : F64  getter=get_emission_energy_multiplier setter=set_emission_energy_multiplier
     # property emission_intensity : F64  getter=get_emission_intensity setter=set_emission_intensity
     # property emission_operator : I64  getter=get_emission_operator setter=set_emission_operator
@@ -100,12 +102,12 @@ BaseMaterial3D := {
     # property subsurf_scatter_skin_mode : Bool  getter=get_flag setter=set_flag
     # property subsurf_scatter_texture : U64  getter=get_texture setter=set_texture
     # property subsurf_scatter_transmittance_enabled : Bool  getter=get_feature setter=set_feature
-    # property subsurf_scatter_transmittance_color : U64  getter=get_transmittance_color setter=set_transmittance_color
+    # property subsurf_scatter_transmittance_color : Color  getter=get_transmittance_color setter=set_transmittance_color
     # property subsurf_scatter_transmittance_texture : U64  getter=get_texture setter=set_texture
     # property subsurf_scatter_transmittance_depth : F64  getter=get_transmittance_depth setter=set_transmittance_depth
     # property subsurf_scatter_transmittance_boost : F64  getter=get_transmittance_boost setter=set_transmittance_boost
     # property backlight_enabled : Bool  getter=get_feature setter=set_feature
-    # property backlight : U64  getter=get_backlight setter=set_backlight
+    # property backlight : Color  getter=get_backlight setter=set_backlight
     # property backlight_texture : U64  getter=get_texture setter=set_texture
     # property refraction_enabled : Bool  getter=get_feature setter=set_feature
     # property refraction_scale : F64  getter=get_refraction setter=set_refraction
@@ -117,13 +119,13 @@ BaseMaterial3D := {
     # property detail_uv_layer : I64  getter=get_detail_uv setter=set_detail_uv
     # property detail_albedo : U64  getter=get_texture setter=set_texture
     # property detail_normal : U64  getter=get_texture setter=set_texture
-    # property uv1_scale : U64  getter=get_uv1_scale setter=set_uv1_scale
-    # property uv1_offset : U64  getter=get_uv1_offset setter=set_uv1_offset
+    # property uv1_scale : Vector3  getter=get_uv1_scale setter=set_uv1_scale
+    # property uv1_offset : Vector3  getter=get_uv1_offset setter=set_uv1_offset
     # property uv1_triplanar : Bool  getter=get_flag setter=set_flag
     # property uv1_triplanar_sharpness : F64  getter=get_uv1_triplanar_blend_sharpness setter=set_uv1_triplanar_blend_sharpness
     # property uv1_world_triplanar : Bool  getter=get_flag setter=set_flag
-    # property uv2_scale : U64  getter=get_uv2_scale setter=set_uv2_scale
-    # property uv2_offset : U64  getter=get_uv2_offset setter=set_uv2_offset
+    # property uv2_scale : Vector3  getter=get_uv2_scale setter=set_uv2_scale
+    # property uv2_offset : Vector3  getter=get_uv2_offset setter=set_uv2_offset
     # property uv2_triplanar : Bool  getter=get_flag setter=set_flag
     # property uv2_triplanar_sharpness : F64  getter=get_uv2_triplanar_blend_sharpness setter=set_uv2_triplanar_blend_sharpness
     # property uv2_world_triplanar : Bool  getter=get_flag setter=set_flag
@@ -157,13 +159,13 @@ BaseMaterial3D := {
     # property stencil_flags : I64  getter=get_stencil_flags setter=set_stencil_flags
     # property stencil_compare : I64  getter=get_stencil_compare setter=set_stencil_compare
     # property stencil_reference : I64  getter=get_stencil_reference setter=set_stencil_reference
-    # property stencil_color : U64  getter=get_stencil_effect_color setter=set_stencil_effect_color
+    # property stencil_color : Color  getter=get_stencil_effect_color setter=set_stencil_effect_color
     # property stencil_outline_thickness : F64  getter=get_stencil_effect_outline_thickness setter=set_stencil_effect_outline_thickness
 
     # --- methods ---
-    set_albedo! : U64 => {}
+    set_albedo! : Color => {}
     set_albedo! = Host.basematerial3d_set_albedo_2920490490!
-    get_albedo! : () => U64
+    get_albedo! : () => Color
     get_albedo! = Host.basematerial3d_get_albedo_3444240500!
     set_transparency! : U64 => {}
     set_transparency! = Host.basematerial3d_set_transparency_3435651667!
@@ -193,9 +195,9 @@ BaseMaterial3D := {
     set_roughness! = Host.basematerial3d_set_roughness_373806689!
     get_roughness! : () => F64
     get_roughness! = Host.basematerial3d_get_roughness_1740695150!
-    set_emission! : U64 => {}
+    set_emission! : Color => {}
     set_emission! = Host.basematerial3d_set_emission_2920490490!
-    get_emission! : () => U64
+    get_emission! : () => Color
     get_emission! = Host.basematerial3d_get_emission_3444240500!
     set_emission_energy_multiplier! : F64 => {}
     set_emission_energy_multiplier! = Host.basematerial3d_set_emission_energy_multiplier_373806689!
@@ -237,9 +239,9 @@ BaseMaterial3D := {
     set_subsurface_scattering_strength! = Host.basematerial3d_set_subsurface_scattering_strength_373806689!
     get_subsurface_scattering_strength! : () => F64
     get_subsurface_scattering_strength! = Host.basematerial3d_get_subsurface_scattering_strength_1740695150!
-    set_transmittance_color! : U64 => {}
+    set_transmittance_color! : Color => {}
     set_transmittance_color! = Host.basematerial3d_set_transmittance_color_2920490490!
-    get_transmittance_color! : () => U64
+    get_transmittance_color! : () => Color
     get_transmittance_color! = Host.basematerial3d_get_transmittance_color_3444240500!
     set_transmittance_depth! : F64 => {}
     set_transmittance_depth! = Host.basematerial3d_set_transmittance_depth_373806689!
@@ -249,9 +251,9 @@ BaseMaterial3D := {
     set_transmittance_boost! = Host.basematerial3d_set_transmittance_boost_373806689!
     get_transmittance_boost! : () => F64
     get_transmittance_boost! = Host.basematerial3d_get_transmittance_boost_1740695150!
-    set_backlight! : U64 => {}
+    set_backlight! : Color => {}
     set_backlight! = Host.basematerial3d_set_backlight_2920490490!
-    get_backlight! : () => U64
+    get_backlight! : () => Color
     get_backlight! = Host.basematerial3d_get_backlight_3444240500!
     set_refraction! : F64 => {}
     set_refraction! = Host.basematerial3d_set_refraction_373806689!
@@ -309,25 +311,25 @@ BaseMaterial3D := {
     set_detail_blend_mode! = Host.basematerial3d_set_detail_blend_mode_2830186259!
     get_detail_blend_mode! : () => U64
     get_detail_blend_mode! = Host.basematerial3d_get_detail_blend_mode_4022690962!
-    set_uv1_scale! : U64 => {}
+    set_uv1_scale! : Vector3 => {}
     set_uv1_scale! = Host.basematerial3d_set_uv1_scale_3460891852!
-    get_uv1_scale! : () => U64
+    get_uv1_scale! : () => Vector3
     get_uv1_scale! = Host.basematerial3d_get_uv1_scale_3360562783!
-    set_uv1_offset! : U64 => {}
+    set_uv1_offset! : Vector3 => {}
     set_uv1_offset! = Host.basematerial3d_set_uv1_offset_3460891852!
-    get_uv1_offset! : () => U64
+    get_uv1_offset! : () => Vector3
     get_uv1_offset! = Host.basematerial3d_get_uv1_offset_3360562783!
     set_uv1_triplanar_blend_sharpness! : F64 => {}
     set_uv1_triplanar_blend_sharpness! = Host.basematerial3d_set_uv1_triplanar_blend_sharpness_373806689!
     get_uv1_triplanar_blend_sharpness! : () => F64
     get_uv1_triplanar_blend_sharpness! = Host.basematerial3d_get_uv1_triplanar_blend_sharpness_1740695150!
-    set_uv2_scale! : U64 => {}
+    set_uv2_scale! : Vector3 => {}
     set_uv2_scale! = Host.basematerial3d_set_uv2_scale_3460891852!
-    get_uv2_scale! : () => U64
+    get_uv2_scale! : () => Vector3
     get_uv2_scale! = Host.basematerial3d_get_uv2_scale_3360562783!
-    set_uv2_offset! : U64 => {}
+    set_uv2_offset! : Vector3 => {}
     set_uv2_offset! = Host.basematerial3d_set_uv2_offset_3460891852!
-    get_uv2_offset! : () => U64
+    get_uv2_offset! : () => Vector3
     get_uv2_offset! = Host.basematerial3d_get_uv2_offset_3360562783!
     set_uv2_triplanar_blend_sharpness! : F64 => {}
     set_uv2_triplanar_blend_sharpness! = Host.basematerial3d_set_uv2_triplanar_blend_sharpness_373806689!
@@ -461,9 +463,9 @@ BaseMaterial3D := {
     set_stencil_reference! = Host.basematerial3d_set_stencil_reference_1286410249!
     get_stencil_reference! : () => I64
     get_stencil_reference! = Host.basematerial3d_get_stencil_reference_3905245786!
-    set_stencil_effect_color! : U64 => {}
+    set_stencil_effect_color! : Color => {}
     set_stencil_effect_color! = Host.basematerial3d_set_stencil_effect_color_2920490490!
-    get_stencil_effect_color! : () => U64
+    get_stencil_effect_color! : () => Color
     get_stencil_effect_color! = Host.basematerial3d_get_stencil_effect_color_3444240500!
     set_stencil_effect_outline_thickness! : F64 => {}
     set_stencil_effect_outline_thickness! = Host.basematerial3d_set_stencil_effect_outline_thickness_373806689!

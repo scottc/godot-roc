@@ -1,5 +1,8 @@
 # class XRInterface
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Projection
 
 # inherits: RefCounted
 XRInterface := {
@@ -36,7 +39,7 @@ XRInterface := {
     get_system_info! = Host.xrinterface_get_system_info_2382534195!
     get_tracking_status! : () => U64
     get_tracking_status! = Host.xrinterface_get_tracking_status_167423259!
-    get_render_target_size! : () => U64
+    get_render_target_size! : () => Vector2
     get_render_target_size! = Host.xrinterface_get_render_target_size_1497962370!
     get_view_count! : () => I64
     get_view_count! = Host.xrinterface_get_view_count_2455072627!
@@ -64,9 +67,9 @@ XRInterface := {
     start_passthrough! = Host.xrinterface_start_passthrough_2240911060!
     stop_passthrough! : () => {}
     stop_passthrough! = Host.xrinterface_stop_passthrough_3218959716!
-    get_transform_for_view! : I64, U64 => U64
+    get_transform_for_view! : I64, Transform3D => Transform3D
     get_transform_for_view! = Host.xrinterface_get_transform_for_view_518934792!
-    get_projection_for_view! : I64, F64, F64, F64 => U64
+    get_projection_for_view! : I64, F64, F64, F64 => Projection
     get_projection_for_view! = Host.xrinterface_get_projection_for_view_3766090294!
     get_supported_environment_blend_modes! : () => U64
     get_supported_environment_blend_modes! = Host.xrinterface_get_supported_environment_blend_modes_2915620761!

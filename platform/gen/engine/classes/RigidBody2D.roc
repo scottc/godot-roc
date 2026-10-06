@@ -1,5 +1,6 @@
 # class RigidBody2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: PhysicsBody2D
 RigidBody2D := {
@@ -15,7 +16,7 @@ RigidBody2D := {
     # property physics_material_override : U64  getter=get_physics_material_override setter=set_physics_material_override
     # property gravity_scale : F64  getter=get_gravity_scale setter=set_gravity_scale
     # property center_of_mass_mode : I64  getter=get_center_of_mass_mode setter=set_center_of_mass_mode
-    # property center_of_mass : U64  getter=get_center_of_mass setter=set_center_of_mass
+    # property center_of_mass : Vector2  getter=get_center_of_mass setter=set_center_of_mass
     # property inertia : F64  getter=get_inertia setter=set_inertia
     # property sleeping : Bool  getter=is_sleeping setter=set_sleeping
     # property can_sleep : Bool  getter=is_able_to_sleep setter=set_can_sleep
@@ -26,13 +27,13 @@ RigidBody2D := {
     # property continuous_cd : I64  getter=get_continuous_collision_detection_mode setter=set_continuous_collision_detection_mode
     # property contact_monitor : Bool  getter=is_contact_monitor_enabled setter=set_contact_monitor
     # property max_contacts_reported : I64  getter=get_max_contacts_reported setter=set_max_contacts_reported
-    # property linear_velocity : U64  getter=get_linear_velocity setter=set_linear_velocity
+    # property linear_velocity : Vector2  getter=get_linear_velocity setter=set_linear_velocity
     # property linear_damp_mode : I64  getter=get_linear_damp_mode setter=set_linear_damp_mode
     # property linear_damp : F64  getter=get_linear_damp setter=set_linear_damp
     # property angular_velocity : F64  getter=get_angular_velocity setter=set_angular_velocity
     # property angular_damp_mode : I64  getter=get_angular_damp_mode setter=set_angular_damp_mode
     # property angular_damp : F64  getter=get_angular_damp setter=set_angular_damp
-    # property constant_force : U64  getter=get_constant_force setter=set_constant_force
+    # property constant_force : Vector2  getter=get_constant_force setter=set_constant_force
     # property constant_torque : F64  getter=get_constant_torque setter=set_constant_torque
 
     # --- methods ---
@@ -50,9 +51,9 @@ RigidBody2D := {
     set_center_of_mass_mode! = Host.rigidbody2d_set_center_of_mass_mode_1757235706!
     get_center_of_mass_mode! : () => U64
     get_center_of_mass_mode! = Host.rigidbody2d_get_center_of_mass_mode_3277132817!
-    set_center_of_mass! : U64 => {}
+    set_center_of_mass! : Vector2 => {}
     set_center_of_mass! = Host.rigidbody2d_set_center_of_mass_743155724!
-    get_center_of_mass! : () => U64
+    get_center_of_mass! : () => Vector2
     get_center_of_mass! = Host.rigidbody2d_get_center_of_mass_3341600327!
     set_physics_material_override! : U64 => {}
     set_physics_material_override! = Host.rigidbody2d_set_physics_material_override_1784508650!
@@ -78,9 +79,9 @@ RigidBody2D := {
     set_angular_damp! = Host.rigidbody2d_set_angular_damp_373806689!
     get_angular_damp! : () => F64
     get_angular_damp! = Host.rigidbody2d_get_angular_damp_1740695150!
-    set_linear_velocity! : U64 => {}
+    set_linear_velocity! : Vector2 => {}
     set_linear_velocity! = Host.rigidbody2d_set_linear_velocity_743155724!
-    get_linear_velocity! : () => U64
+    get_linear_velocity! : () => Vector2
     get_linear_velocity! = Host.rigidbody2d_get_linear_velocity_3341600327!
     set_angular_velocity! : F64 => {}
     set_angular_velocity! = Host.rigidbody2d_set_angular_velocity_373806689!
@@ -104,29 +105,29 @@ RigidBody2D := {
     set_continuous_collision_detection_mode! = Host.rigidbody2d_set_continuous_collision_detection_mode_1000241384!
     get_continuous_collision_detection_mode! : () => U64
     get_continuous_collision_detection_mode! = Host.rigidbody2d_get_continuous_collision_detection_mode_815214376!
-    set_axis_velocity! : U64 => {}
+    set_axis_velocity! : Vector2 => {}
     set_axis_velocity! = Host.rigidbody2d_set_axis_velocity_743155724!
-    apply_central_impulse! : U64 => {}
+    apply_central_impulse! : Vector2 => {}
     apply_central_impulse! = Host.rigidbody2d_apply_central_impulse_3862383994!
-    apply_impulse! : U64, U64 => {}
+    apply_impulse! : Vector2, Vector2 => {}
     apply_impulse! = Host.rigidbody2d_apply_impulse_4288681949!
     apply_torque_impulse! : F64 => {}
     apply_torque_impulse! = Host.rigidbody2d_apply_torque_impulse_373806689!
-    apply_central_force! : U64 => {}
+    apply_central_force! : Vector2 => {}
     apply_central_force! = Host.rigidbody2d_apply_central_force_743155724!
-    apply_force! : U64, U64 => {}
+    apply_force! : Vector2, Vector2 => {}
     apply_force! = Host.rigidbody2d_apply_force_4288681949!
     apply_torque! : F64 => {}
     apply_torque! = Host.rigidbody2d_apply_torque_373806689!
-    add_constant_central_force! : U64 => {}
+    add_constant_central_force! : Vector2 => {}
     add_constant_central_force! = Host.rigidbody2d_add_constant_central_force_743155724!
-    add_constant_force! : U64, U64 => {}
+    add_constant_force! : Vector2, Vector2 => {}
     add_constant_force! = Host.rigidbody2d_add_constant_force_4288681949!
     add_constant_torque! : F64 => {}
     add_constant_torque! = Host.rigidbody2d_add_constant_torque_373806689!
-    set_constant_force! : U64 => {}
+    set_constant_force! : Vector2 => {}
     set_constant_force! = Host.rigidbody2d_set_constant_force_743155724!
-    get_constant_force! : () => U64
+    get_constant_force! : () => Vector2
     get_constant_force! = Host.rigidbody2d_get_constant_force_3341600327!
     set_constant_torque! : F64 => {}
     set_constant_torque! = Host.rigidbody2d_set_constant_torque_373806689!

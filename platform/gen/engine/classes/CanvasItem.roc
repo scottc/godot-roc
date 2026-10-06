@@ -1,5 +1,9 @@
 # class CanvasItem
 import ../../Host
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Rect2
+import ../../engine/builtin_classes/Transform2D
 
 # inherits: Node
 CanvasItem := {
@@ -12,8 +16,8 @@ CanvasItem := {
 
     # --- properties (getters/setters are methods) ---
     # property visible : Bool  getter=is_visible setter=set_visible
-    # property modulate : U64  getter=get_modulate setter=set_modulate
-    # property self_modulate : U64  getter=get_self_modulate setter=set_self_modulate
+    # property modulate : Color  getter=get_modulate setter=set_modulate
+    # property self_modulate : Color  getter=get_self_modulate setter=set_self_modulate
     # property show_behind_parent : Bool  getter=is_draw_behind_parent_enabled setter=set_draw_behind_parent
     # property top_level : Bool  getter=is_set_as_top_level setter=set_as_top_level
     # property clip_children : I64  getter=get_clip_children_mode setter=set_clip_children_mode
@@ -55,13 +59,13 @@ CanvasItem := {
     set_light_mask! = Host.canvasitem_set_light_mask_1286410249!
     get_light_mask! : () => I64
     get_light_mask! = Host.canvasitem_get_light_mask_3905245786!
-    set_modulate! : U64 => {}
+    set_modulate! : Color => {}
     set_modulate! = Host.canvasitem_set_modulate_2920490490!
-    get_modulate! : () => U64
+    get_modulate! : () => Color
     get_modulate! = Host.canvasitem_get_modulate_3444240500!
-    set_self_modulate! : U64 => {}
+    set_self_modulate! : Color => {}
     set_self_modulate! = Host.canvasitem_set_self_modulate_2920490490!
-    get_self_modulate! : () => U64
+    get_self_modulate! : () => Color
     get_self_modulate! = Host.canvasitem_get_self_modulate_3444240500!
     set_z_index! : I64 => {}
     set_z_index! = Host.canvasitem_set_z_index_1286410249!
@@ -79,87 +83,87 @@ CanvasItem := {
     set_draw_behind_parent! = Host.canvasitem_set_draw_behind_parent_2586408642!
     is_draw_behind_parent_enabled! : () => Bool
     is_draw_behind_parent_enabled! = Host.canvasitem_is_draw_behind_parent_enabled_36873697!
-    draw_line! : U64, U64, U64, F64, Bool => {}
+    draw_line! : Vector2, Vector2, Color, F64, Bool => {}
     draw_line! = Host.canvasitem_draw_line_1562330099!
-    draw_dashed_line! : U64, U64, U64, F64, F64, Bool, Bool => {}
+    draw_dashed_line! : Vector2, Vector2, Color, F64, F64, Bool, Bool => {}
     draw_dashed_line! = Host.canvasitem_draw_dashed_line_3653831622!
-    draw_polyline! : U64, U64, F64, Bool => {}
+    draw_polyline! : U64, Color, F64, Bool => {}
     draw_polyline! = Host.canvasitem_draw_polyline_3797364428!
     draw_polyline_colors! : U64, U64, F64, Bool => {}
     draw_polyline_colors! = Host.canvasitem_draw_polyline_colors_2311979562!
-    draw_ellipse_arc! : U64, F64, F64, F64, F64, I64, U64, F64, Bool => {}
+    draw_ellipse_arc! : Vector2, F64, F64, F64, F64, I64, Color, F64, Bool => {}
     draw_ellipse_arc! = Host.canvasitem_draw_ellipse_arc_936174114!
-    draw_arc! : U64, F64, F64, F64, I64, U64, F64, Bool => {}
+    draw_arc! : Vector2, F64, F64, F64, I64, Color, F64, Bool => {}
     draw_arc! = Host.canvasitem_draw_arc_4140652635!
-    draw_multiline! : U64, U64, F64, Bool => {}
+    draw_multiline! : U64, Color, F64, Bool => {}
     draw_multiline! = Host.canvasitem_draw_multiline_3797364428!
     draw_multiline_colors! : U64, U64, F64, Bool => {}
     draw_multiline_colors! = Host.canvasitem_draw_multiline_colors_2311979562!
-    draw_rect! : U64, U64, Bool, F64, Bool => {}
+    draw_rect! : Rect2, Color, Bool, F64, Bool => {}
     draw_rect! = Host.canvasitem_draw_rect_2773573813!
-    draw_circle! : U64, F64, U64, Bool, F64, Bool => {}
+    draw_circle! : Vector2, F64, Color, Bool, F64, Bool => {}
     draw_circle! = Host.canvasitem_draw_circle_3153026596!
-    draw_ellipse! : U64, F64, F64, U64, Bool, F64, Bool => {}
+    draw_ellipse! : Vector2, F64, F64, Color, Bool, F64, Bool => {}
     draw_ellipse! = Host.canvasitem_draw_ellipse_3790774806!
-    draw_texture! : U64, U64, U64 => {}
+    draw_texture! : U64, Vector2, Color => {}
     draw_texture! = Host.canvasitem_draw_texture_520200117!
-    draw_texture_rect! : U64, U64, Bool, U64, Bool => {}
+    draw_texture_rect! : U64, Rect2, Bool, Color, Bool => {}
     draw_texture_rect! = Host.canvasitem_draw_texture_rect_3832805018!
-    draw_texture_rect_region! : U64, U64, U64, U64, Bool, Bool => {}
+    draw_texture_rect_region! : U64, Rect2, Rect2, Color, Bool, Bool => {}
     draw_texture_rect_region! = Host.canvasitem_draw_texture_rect_region_3883821411!
-    draw_msdf_texture_rect_region! : U64, U64, U64, U64, F64, F64, F64 => {}
+    draw_msdf_texture_rect_region! : U64, Rect2, Rect2, Color, F64, F64, F64 => {}
     draw_msdf_texture_rect_region! = Host.canvasitem_draw_msdf_texture_rect_region_4219163252!
-    draw_lcd_texture_rect_region! : U64, U64, U64, U64 => {}
+    draw_lcd_texture_rect_region! : U64, Rect2, Rect2, Color => {}
     draw_lcd_texture_rect_region! = Host.canvasitem_draw_lcd_texture_rect_region_3212350954!
-    draw_style_box! : U64, U64 => {}
+    draw_style_box! : U64, Rect2 => {}
     draw_style_box! = Host.canvasitem_draw_style_box_388176283!
     draw_primitive! : U64, U64, U64, U64 => {}
     draw_primitive! = Host.canvasitem_draw_primitive_3288481815!
     draw_polygon! : U64, U64, U64, U64 => {}
     draw_polygon! = Host.canvasitem_draw_polygon_974537912!
-    draw_colored_polygon! : U64, U64, U64, U64 => {}
+    draw_colored_polygon! : U64, Color, U64, U64 => {}
     draw_colored_polygon! = Host.canvasitem_draw_colored_polygon_15245644!
-    draw_string! : U64, U64, Str, U64, F64, I64, U64, U64, U64, U64, F64 => {}
+    draw_string! : U64, Vector2, Str, U64, F64, I64, Color, U64, U64, U64, F64 => {}
     draw_string! = Host.canvasitem_draw_string_719605945!
-    draw_multiline_string! : U64, U64, Str, U64, F64, I64, I64, U64, U64, U64, U64, U64, F64 => {}
+    draw_multiline_string! : U64, Vector2, Str, U64, F64, I64, I64, Color, U64, U64, U64, U64, F64 => {}
     draw_multiline_string! = Host.canvasitem_draw_multiline_string_2341488182!
-    draw_string_outline! : U64, U64, Str, U64, F64, I64, I64, U64, U64, U64, U64, F64 => {}
+    draw_string_outline! : U64, Vector2, Str, U64, F64, I64, I64, Color, U64, U64, U64, F64 => {}
     draw_string_outline! = Host.canvasitem_draw_string_outline_707403449!
-    draw_multiline_string_outline! : U64, U64, Str, U64, F64, I64, I64, I64, U64, U64, U64, U64, U64, F64 => {}
+    draw_multiline_string_outline! : U64, Vector2, Str, U64, F64, I64, I64, I64, Color, U64, U64, U64, U64, F64 => {}
     draw_multiline_string_outline! = Host.canvasitem_draw_multiline_string_outline_3050414441!
-    draw_char! : U64, U64, Str, I64, U64, F64 => {}
+    draw_char! : U64, Vector2, Str, I64, Color, F64 => {}
     draw_char! = Host.canvasitem_draw_char_1336210142!
-    draw_char_outline! : U64, U64, Str, I64, I64, U64, F64 => {}
+    draw_char_outline! : U64, Vector2, Str, I64, I64, Color, F64 => {}
     draw_char_outline! = Host.canvasitem_draw_char_outline_1846384149!
-    draw_mesh! : U64, U64, U64, U64 => {}
+    draw_mesh! : U64, U64, Transform2D, Color => {}
     draw_mesh! = Host.canvasitem_draw_mesh_153818295!
     draw_multimesh! : U64, U64 => {}
     draw_multimesh! = Host.canvasitem_draw_multimesh_937992368!
-    draw_set_transform! : U64, F64, U64 => {}
+    draw_set_transform! : Vector2, F64, Vector2 => {}
     draw_set_transform! = Host.canvasitem_draw_set_transform_288975085!
-    draw_set_transform_matrix! : U64 => {}
+    draw_set_transform_matrix! : Transform2D => {}
     draw_set_transform_matrix! = Host.canvasitem_draw_set_transform_matrix_2761652528!
     draw_animation_slice! : F64, F64, F64, F64 => {}
     draw_animation_slice! = Host.canvasitem_draw_animation_slice_3112831842!
     draw_end_animation! : () => {}
     draw_end_animation! = Host.canvasitem_draw_end_animation_3218959716!
-    get_transform! : () => U64
+    get_transform! : () => Transform2D
     get_transform! = Host.canvasitem_get_transform_3814499831!
-    get_global_transform! : () => U64
+    get_global_transform! : () => Transform2D
     get_global_transform! = Host.canvasitem_get_global_transform_3814499831!
-    get_global_transform_with_canvas! : () => U64
+    get_global_transform_with_canvas! : () => Transform2D
     get_global_transform_with_canvas! = Host.canvasitem_get_global_transform_with_canvas_3814499831!
-    get_viewport_transform! : () => U64
+    get_viewport_transform! : () => Transform2D
     get_viewport_transform! = Host.canvasitem_get_viewport_transform_3814499831!
-    get_viewport_rect! : () => U64
+    get_viewport_rect! : () => Rect2
     get_viewport_rect! = Host.canvasitem_get_viewport_rect_1639390495!
-    get_canvas_transform! : () => U64
+    get_canvas_transform! : () => Transform2D
     get_canvas_transform! = Host.canvasitem_get_canvas_transform_3814499831!
-    get_screen_transform! : () => U64
+    get_screen_transform! : () => Transform2D
     get_screen_transform! = Host.canvasitem_get_screen_transform_3814499831!
-    get_local_mouse_position! : () => U64
+    get_local_mouse_position! : () => Vector2
     get_local_mouse_position! = Host.canvasitem_get_local_mouse_position_3341600327!
-    get_global_mouse_position! : () => U64
+    get_global_mouse_position! : () => Vector2
     get_global_mouse_position! = Host.canvasitem_get_global_mouse_position_3341600327!
     get_canvas! : () => U64
     get_canvas! = Host.canvasitem_get_canvas_2944877500!
@@ -189,7 +193,7 @@ CanvasItem := {
     is_transform_notification_enabled! = Host.canvasitem_is_transform_notification_enabled_36873697!
     force_update_transform! : () => {}
     force_update_transform! = Host.canvasitem_force_update_transform_3218959716!
-    make_canvas_position_local! : U64 => U64
+    make_canvas_position_local! : Vector2 => Vector2
     make_canvas_position_local! = Host.canvasitem_make_canvas_position_local_2656412154!
     make_input_local! : U64 => U64
     make_input_local! = Host.canvasitem_make_input_local_811130057!

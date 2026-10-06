@@ -1,5 +1,8 @@
 # class Viewport
 import ../../Host
+import ../../engine/builtin_classes/Transform2D
+import ../../engine/builtin_classes/Rect2
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Node
 Viewport := {
@@ -66,8 +69,8 @@ Viewport := {
     # property positional_shadow_atlas_quad_1 : I64  getter=get_positional_shadow_atlas_quadrant_subdiv setter=set_positional_shadow_atlas_quadrant_subdiv
     # property positional_shadow_atlas_quad_2 : I64  getter=get_positional_shadow_atlas_quadrant_subdiv setter=set_positional_shadow_atlas_quadrant_subdiv
     # property positional_shadow_atlas_quad_3 : I64  getter=get_positional_shadow_atlas_quadrant_subdiv setter=set_positional_shadow_atlas_quadrant_subdiv
-    # property canvas_transform : U64  getter=get_canvas_transform setter=set_canvas_transform
-    # property global_canvas_transform : U64  getter=get_global_canvas_transform setter=set_global_canvas_transform
+    # property canvas_transform : Transform2D  getter=get_canvas_transform setter=set_canvas_transform
+    # property global_canvas_transform : Transform2D  getter=get_global_canvas_transform setter=set_global_canvas_transform
     # property canvas_cull_mask : I64  getter=get_canvas_cull_mask setter=set_canvas_cull_mask
     # property oversampling : Bool  getter=is_using_oversampling setter=set_use_oversampling
     # property oversampling_override : F64  getter=get_oversampling_override setter=set_oversampling_override
@@ -79,21 +82,21 @@ Viewport := {
     get_world_2d! = Host.viewport_get_world_2d_2339128592!
     find_world_2d! : () => U64
     find_world_2d! = Host.viewport_find_world_2d_2339128592!
-    set_canvas_transform! : U64 => {}
+    set_canvas_transform! : Transform2D => {}
     set_canvas_transform! = Host.viewport_set_canvas_transform_2761652528!
-    get_canvas_transform! : () => U64
+    get_canvas_transform! : () => Transform2D
     get_canvas_transform! = Host.viewport_get_canvas_transform_3814499831!
-    set_global_canvas_transform! : U64 => {}
+    set_global_canvas_transform! : Transform2D => {}
     set_global_canvas_transform! = Host.viewport_set_global_canvas_transform_2761652528!
-    get_global_canvas_transform! : () => U64
+    get_global_canvas_transform! : () => Transform2D
     get_global_canvas_transform! = Host.viewport_get_global_canvas_transform_3814499831!
-    get_stretch_transform! : () => U64
+    get_stretch_transform! : () => Transform2D
     get_stretch_transform! = Host.viewport_get_stretch_transform_3814499831!
-    get_final_transform! : () => U64
+    get_final_transform! : () => Transform2D
     get_final_transform! = Host.viewport_get_final_transform_3814499831!
-    get_screen_transform! : () => U64
+    get_screen_transform! : () => Transform2D
     get_screen_transform! = Host.viewport_get_screen_transform_3814499831!
-    get_visible_rect! : () => U64
+    get_visible_rect! : () => Rect2
     get_visible_rect! = Host.viewport_get_visible_rect_1639390495!
     set_transparent_background! : Bool => {}
     set_transparent_background! = Host.viewport_set_transparent_background_2586408642!
@@ -169,9 +172,9 @@ Viewport := {
     notify_mouse_entered! = Host.viewport_notify_mouse_entered_3218959716!
     notify_mouse_exited! : () => {}
     notify_mouse_exited! = Host.viewport_notify_mouse_exited_3218959716!
-    get_mouse_position! : () => U64
+    get_mouse_position! : () => Vector2
     get_mouse_position! = Host.viewport_get_mouse_position_3341600327!
-    warp_mouse! : U64 => {}
+    warp_mouse! : Vector2 => {}
     warp_mouse! = Host.viewport_warp_mouse_743155724!
     update_mouse_cursor_state! : () => {}
     update_mouse_cursor_state! = Host.viewport_update_mouse_cursor_state_3218959716!

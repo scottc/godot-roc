@@ -1,5 +1,7 @@
 # builtin PackedColorArray
 import ../../Host
+import Color
+import PackedByteArray
 
 PackedColorArray := {
     ptr : U64
@@ -9,31 +11,31 @@ PackedColorArray := {
 
 
     # --- methods ---
-    get! : I64 => U64
+    get! : I64 => Color
     get! = Host.packedcolorarray_get_2972831132!
-    set! : I64, U64 => {}
+    set! : I64, Color => {}
     set! = Host.packedcolorarray_set_1444096570!
     size! : () => I64
     size! = Host.packedcolorarray_size_3173160232!
     is_empty! : () => Bool
     is_empty! = Host.packedcolorarray_is_empty_3918633141!
-    push_back! : U64 => Bool
+    push_back! : Color => Bool
     push_back! = Host.packedcolorarray_push_back_1007858200!
-    append! : U64 => Bool
+    append! : Color => Bool
     append! = Host.packedcolorarray_append_1007858200!
     append_array! : U64 => {}
     append_array! = Host.packedcolorarray_append_array_798822497!
     remove_at! : I64 => {}
     remove_at! = Host.packedcolorarray_remove_at_2823966027!
-    insert! : I64, U64 => I64
+    insert! : I64, Color => I64
     insert! = Host.packedcolorarray_insert_785289703!
-    fill! : U64 => {}
+    fill! : Color => {}
     fill! = Host.packedcolorarray_fill_3730314301!
     resize! : I64 => I64
     resize! = Host.packedcolorarray_resize_848867239!
     clear! : () => {}
     clear! = Host.packedcolorarray_clear_3218959716!
-    has! : U64 => Bool
+    has! : Color => Bool
     has! = Host.packedcolorarray_has_3167426256!
     reverse! : () => {}
     reverse! = Host.packedcolorarray_reverse_3218959716!
@@ -43,16 +45,16 @@ PackedColorArray := {
     to_byte_array! = Host.packedcolorarray_to_byte_array_247621236!
     sort! : () => {}
     sort! = Host.packedcolorarray_sort_3218959716!
-    bsearch! : U64, Bool => I64
+    bsearch! : Color, Bool => I64
     bsearch! = Host.packedcolorarray_bsearch_2639732838!
     duplicate! : () => U64
     duplicate! = Host.packedcolorarray_duplicate_3072026941!
-    find! : U64, I64 => I64
+    find! : Color, I64 => I64
     find! = Host.packedcolorarray_find_3156095363!
-    rfind! : U64, I64 => I64
+    rfind! : Color, I64 => I64
     rfind! = Host.packedcolorarray_rfind_3156095363!
-    count! : U64 => I64
+    count! : Color => I64
     count! = Host.packedcolorarray_count_1682108616!
-    erase! : U64 => Bool
+    erase! : Color => Bool
     erase! = Host.packedcolorarray_erase_1007858200!
 }

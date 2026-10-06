@@ -1,5 +1,6 @@
 # class LookAtModifier3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: SkeletonModifier3D
 LookAtModifier3D := {
@@ -19,7 +20,7 @@ LookAtModifier3D := {
     # property origin_bone_name : Str  getter=get_origin_bone_name setter=set_origin_bone_name
     # property origin_bone : I64  getter=get_origin_bone setter=set_origin_bone
     # property origin_external_node : Str  getter=get_origin_external_node setter=set_origin_external_node
-    # property origin_offset : U64  getter=get_origin_offset setter=set_origin_offset
+    # property origin_offset : Vector3  getter=get_origin_offset setter=set_origin_offset
     # property origin_safe_margin : F64  getter=get_origin_safe_margin setter=set_origin_safe_margin
     # property duration : F64  getter=get_duration setter=set_duration
     # property transition_type : I64  getter=get_transition_type setter=set_transition_type
@@ -88,9 +89,9 @@ LookAtModifier3D := {
     set_origin_external_node! = Host.lookatmodifier3d_set_origin_external_node_1348162250!
     get_origin_external_node! : () => Str
     get_origin_external_node! = Host.lookatmodifier3d_get_origin_external_node_4075236667!
-    set_origin_offset! : U64 => {}
+    set_origin_offset! : Vector3 => {}
     set_origin_offset! = Host.lookatmodifier3d_set_origin_offset_3460891852!
-    get_origin_offset! : () => U64
+    get_origin_offset! : () => Vector3
     get_origin_offset! = Host.lookatmodifier3d_get_origin_offset_3360562783!
     set_duration! : F64 => {}
     set_duration! = Host.lookatmodifier3d_set_duration_373806689!

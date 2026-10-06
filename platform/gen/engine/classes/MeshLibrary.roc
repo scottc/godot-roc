@@ -1,5 +1,6 @@
 # class MeshLibrary
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
 
 # inherits: Resource
 MeshLibrary := {
@@ -17,13 +18,13 @@ MeshLibrary := {
     set_item_name! = Host.meshlibrary_set_item_name_501894301!
     set_item_mesh! : I64, U64 => {}
     set_item_mesh! = Host.meshlibrary_set_item_mesh_969122797!
-    set_item_mesh_transform! : I64, U64 => {}
+    set_item_mesh_transform! : I64, Transform3D => {}
     set_item_mesh_transform! = Host.meshlibrary_set_item_mesh_transform_3616898986!
     set_item_mesh_cast_shadow! : I64, U64 => {}
     set_item_mesh_cast_shadow! = Host.meshlibrary_set_item_mesh_cast_shadow_3923400443!
     set_item_navigation_mesh! : I64, U64 => {}
     set_item_navigation_mesh! = Host.meshlibrary_set_item_navigation_mesh_3483353960!
-    set_item_navigation_mesh_transform! : I64, U64 => {}
+    set_item_navigation_mesh_transform! : I64, Transform3D => {}
     set_item_navigation_mesh_transform! = Host.meshlibrary_set_item_navigation_mesh_transform_3616898986!
     set_item_navigation_layers! : I64, I64 => {}
     set_item_navigation_layers! = Host.meshlibrary_set_item_navigation_layers_3937882851!
@@ -35,13 +36,13 @@ MeshLibrary := {
     get_item_name! = Host.meshlibrary_get_item_name_844755477!
     get_item_mesh! : I64 => U64
     get_item_mesh! = Host.meshlibrary_get_item_mesh_1576363275!
-    get_item_mesh_transform! : I64 => U64
+    get_item_mesh_transform! : I64 => Transform3D
     get_item_mesh_transform! = Host.meshlibrary_get_item_mesh_transform_1965739696!
     get_item_mesh_cast_shadow! : I64 => U64
     get_item_mesh_cast_shadow! = Host.meshlibrary_get_item_mesh_cast_shadow_1841766007!
     get_item_navigation_mesh! : I64 => U64
     get_item_navigation_mesh! = Host.meshlibrary_get_item_navigation_mesh_2729647406!
-    get_item_navigation_mesh_transform! : I64 => U64
+    get_item_navigation_mesh_transform! : I64 => Transform3D
     get_item_navigation_mesh_transform! = Host.meshlibrary_get_item_navigation_mesh_transform_1965739696!
     get_item_navigation_layers! : I64 => I64
     get_item_navigation_layers! = Host.meshlibrary_get_item_navigation_layers_923996154!

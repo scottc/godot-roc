@@ -1,5 +1,8 @@
 # class Skeleton3D
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Quaternion
 
 # inherits: Node3D
 Skeleton3D := {
@@ -46,11 +49,11 @@ Skeleton3D := {
     get_bone_children! = Host.skeleton3d_get_bone_children_1706082319!
     get_parentless_bones! : () => U64
     get_parentless_bones! = Host.skeleton3d_get_parentless_bones_1930428628!
-    get_bone_rest! : I64 => U64
+    get_bone_rest! : I64 => Transform3D
     get_bone_rest! = Host.skeleton3d_get_bone_rest_1965739696!
-    set_bone_rest! : I64, U64 => {}
+    set_bone_rest! : I64, Transform3D => {}
     set_bone_rest! = Host.skeleton3d_set_bone_rest_3616898986!
-    get_bone_global_rest! : I64 => U64
+    get_bone_global_rest! : I64 => Transform3D
     get_bone_global_rest! = Host.skeleton3d_get_bone_global_rest_1965739696!
     create_skin_from_rest_transforms! : () => U64
     create_skin_from_rest_transforms! = Host.skeleton3d_create_skin_from_rest_transforms_1032037385!
@@ -60,21 +63,21 @@ Skeleton3D := {
     localize_rests! = Host.skeleton3d_localize_rests_3218959716!
     clear_bones! : () => {}
     clear_bones! = Host.skeleton3d_clear_bones_3218959716!
-    get_bone_pose! : I64 => U64
+    get_bone_pose! : I64 => Transform3D
     get_bone_pose! = Host.skeleton3d_get_bone_pose_1965739696!
-    set_bone_pose! : I64, U64 => {}
+    set_bone_pose! : I64, Transform3D => {}
     set_bone_pose! = Host.skeleton3d_set_bone_pose_3616898986!
-    set_bone_pose_position! : I64, U64 => {}
+    set_bone_pose_position! : I64, Vector3 => {}
     set_bone_pose_position! = Host.skeleton3d_set_bone_pose_position_1530502735!
-    set_bone_pose_rotation! : I64, U64 => {}
+    set_bone_pose_rotation! : I64, Quaternion => {}
     set_bone_pose_rotation! = Host.skeleton3d_set_bone_pose_rotation_2823819782!
-    set_bone_pose_scale! : I64, U64 => {}
+    set_bone_pose_scale! : I64, Vector3 => {}
     set_bone_pose_scale! = Host.skeleton3d_set_bone_pose_scale_1530502735!
-    get_bone_pose_position! : I64 => U64
+    get_bone_pose_position! : I64 => Vector3
     get_bone_pose_position! = Host.skeleton3d_get_bone_pose_position_711720468!
-    get_bone_pose_rotation! : I64 => U64
+    get_bone_pose_rotation! : I64 => Quaternion
     get_bone_pose_rotation! = Host.skeleton3d_get_bone_pose_rotation_476865136!
-    get_bone_pose_scale! : I64 => U64
+    get_bone_pose_scale! : I64 => Vector3
     get_bone_pose_scale! = Host.skeleton3d_get_bone_pose_scale_711720468!
     reset_bone_pose! : I64 => {}
     reset_bone_pose! = Host.skeleton3d_reset_bone_pose_1286410249!
@@ -84,9 +87,9 @@ Skeleton3D := {
     is_bone_enabled! = Host.skeleton3d_is_bone_enabled_1116898809!
     set_bone_enabled! : I64, Bool => {}
     set_bone_enabled! = Host.skeleton3d_set_bone_enabled_972357352!
-    get_bone_global_pose! : I64 => U64
+    get_bone_global_pose! : I64 => Transform3D
     get_bone_global_pose! = Host.skeleton3d_get_bone_global_pose_1965739696!
-    set_bone_global_pose! : I64, U64 => {}
+    set_bone_global_pose! : I64, Transform3D => {}
     set_bone_global_pose! = Host.skeleton3d_set_bone_global_pose_3616898986!
     force_update_all_bone_transforms! : () => {}
     force_update_all_bone_transforms! = Host.skeleton3d_force_update_all_bone_transforms_3218959716!
@@ -108,11 +111,11 @@ Skeleton3D := {
     advance! = Host.skeleton3d_advance_373806689!
     clear_bones_global_pose_override! : () => {}
     clear_bones_global_pose_override! = Host.skeleton3d_clear_bones_global_pose_override_3218959716!
-    set_bone_global_pose_override! : I64, U64, F64, Bool => {}
+    set_bone_global_pose_override! : I64, Transform3D, F64, Bool => {}
     set_bone_global_pose_override! = Host.skeleton3d_set_bone_global_pose_override_3483398371!
-    get_bone_global_pose_override! : I64 => U64
+    get_bone_global_pose_override! : I64 => Transform3D
     get_bone_global_pose_override! = Host.skeleton3d_get_bone_global_pose_override_1965739696!
-    get_bone_global_pose_no_override! : I64 => U64
+    get_bone_global_pose_no_override! : I64 => Transform3D
     get_bone_global_pose_no_override! = Host.skeleton3d_get_bone_global_pose_no_override_1965739696!
     set_animate_physical_bones! : Bool => {}
     set_animate_physical_bones! = Host.skeleton3d_set_animate_physical_bones_2586408642!

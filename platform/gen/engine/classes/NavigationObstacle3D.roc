@@ -1,5 +1,6 @@
 # class NavigationObstacle3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: Node3D
 NavigationObstacle3D := {
@@ -14,7 +15,7 @@ NavigationObstacle3D := {
     # property affect_navigation_mesh : Bool  getter=get_affect_navigation_mesh setter=set_affect_navigation_mesh
     # property carve_navigation_mesh : Bool  getter=get_carve_navigation_mesh setter=set_carve_navigation_mesh
     # property avoidance_enabled : Bool  getter=get_avoidance_enabled setter=set_avoidance_enabled
-    # property velocity : U64  getter=get_velocity setter=set_velocity
+    # property velocity : Vector3  getter=get_velocity setter=set_velocity
     # property avoidance_layers : I64  getter=get_avoidance_layers setter=set_avoidance_layers
     # property use_3d_avoidance : Bool  getter=get_use_3d_avoidance setter=set_use_3d_avoidance
 
@@ -37,9 +38,9 @@ NavigationObstacle3D := {
     set_height! = Host.navigationobstacle3d_set_height_373806689!
     get_height! : () => F64
     get_height! = Host.navigationobstacle3d_get_height_1740695150!
-    set_velocity! : U64 => {}
+    set_velocity! : Vector3 => {}
     set_velocity! = Host.navigationobstacle3d_set_velocity_3460891852!
-    get_velocity! : () => U64
+    get_velocity! : () => Vector3
     get_velocity! = Host.navigationobstacle3d_get_velocity_3360562783!
     set_vertices! : U64 => {}
     set_vertices! = Host.navigationobstacle3d_set_vertices_334873810!

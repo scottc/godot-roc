@@ -1,5 +1,6 @@
 # class OpenXRSpatialComponentMesh2DList
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
 
 # inherits: OpenXRSpatialComponentData
 OpenXRSpatialComponentMesh2DList := {
@@ -11,7 +12,7 @@ OpenXRSpatialComponentMesh2DList := {
 
 
     # --- methods ---
-    get_transform! : I64 => U64
+    get_transform! : I64 => Transform3D
     get_transform! = Host.openxrspatialcomponentmesh2dlist_get_transform_1965739696!
     get_vertices! : U64, I64 => U64
     get_vertices! = Host.openxrspatialcomponentmesh2dlist_get_vertices_110850971!

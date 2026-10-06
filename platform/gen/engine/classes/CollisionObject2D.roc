@@ -1,5 +1,7 @@
 # class CollisionObject2D
 import ../../Host
+import ../../engine/builtin_classes/Transform2D
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Node2D
 CollisionObject2D := {
@@ -61,9 +63,9 @@ CollisionObject2D := {
     remove_shape_owner! = Host.collisionobject2d_remove_shape_owner_1286410249!
     get_shape_owners! : () => U64
     get_shape_owners! = Host.collisionobject2d_get_shape_owners_969006518!
-    shape_owner_set_transform! : I64, U64 => {}
+    shape_owner_set_transform! : I64, Transform2D => {}
     shape_owner_set_transform! = Host.collisionobject2d_shape_owner_set_transform_30160968!
-    shape_owner_get_transform! : I64 => U64
+    shape_owner_get_transform! : I64 => Transform2D
     shape_owner_get_transform! = Host.collisionobject2d_shape_owner_get_transform_3836996910!
     shape_owner_get_owner! : I64 => U64
     shape_owner_get_owner! = Host.collisionobject2d_shape_owner_get_owner_3332903315!
@@ -79,9 +81,9 @@ CollisionObject2D := {
     shape_owner_set_one_way_collision_margin! = Host.collisionobject2d_shape_owner_set_one_way_collision_margin_1602489585!
     get_shape_owner_one_way_collision_margin! : I64 => F64
     get_shape_owner_one_way_collision_margin! = Host.collisionobject2d_get_shape_owner_one_way_collision_margin_2339986948!
-    get_shape_owner_one_way_collision_direction! : I64 => U64
+    get_shape_owner_one_way_collision_direction! : I64 => Vector2
     get_shape_owner_one_way_collision_direction! = Host.collisionobject2d_get_shape_owner_one_way_collision_direction_2299179447!
-    shape_owner_set_one_way_collision_direction! : I64, U64 => {}
+    shape_owner_set_one_way_collision_direction! : I64, Vector2 => {}
     shape_owner_set_one_way_collision_direction! = Host.collisionobject2d_shape_owner_set_one_way_collision_direction_163021252!
     shape_owner_add_shape! : I64, U64 => {}
     shape_owner_add_shape! = Host.collisionobject2d_shape_owner_add_shape_2077425081!

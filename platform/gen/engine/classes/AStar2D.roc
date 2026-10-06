@@ -1,5 +1,6 @@
 # class AStar2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: RefCounted
 AStar2D := {
@@ -19,11 +20,11 @@ AStar2D := {
     _compute_cost! = Host.astar2d__compute_cost_3085491603!
     get_available_point_id! : () => I64
     get_available_point_id! = Host.astar2d_get_available_point_id_3905245786!
-    add_point! : I64, U64, F64 => {}
+    add_point! : I64, Vector2, F64 => {}
     add_point! = Host.astar2d_add_point_4074201818!
-    get_point_position! : I64 => U64
+    get_point_position! : I64 => Vector2
     get_point_position! = Host.astar2d_get_point_position_2299179447!
-    set_point_position! : I64, U64 => {}
+    set_point_position! : I64, Vector2 => {}
     set_point_position! = Host.astar2d_set_point_position_163021252!
     get_point_weight_scale! : I64 => F64
     get_point_weight_scale! = Host.astar2d_get_point_weight_scale_2339986948!
@@ -59,9 +60,9 @@ AStar2D := {
     reserve_space! = Host.astar2d_reserve_space_1286410249!
     clear! : () => {}
     clear! = Host.astar2d_clear_3218959716!
-    get_closest_point! : U64, Bool => I64
+    get_closest_point! : Vector2, Bool => I64
     get_closest_point! = Host.astar2d_get_closest_point_2300324924!
-    get_closest_position_in_segment! : U64 => U64
+    get_closest_position_in_segment! : Vector2 => Vector2
     get_closest_position_in_segment! = Host.astar2d_get_closest_position_in_segment_2656412154!
     get_point_path! : I64, I64, Bool => U64
     get_point_path! = Host.astar2d_get_point_path_3427490392!

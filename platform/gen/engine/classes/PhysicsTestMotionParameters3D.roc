@@ -1,5 +1,7 @@
 # class PhysicsTestMotionParameters3D
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Vector3
 
 # inherits: RefCounted
 PhysicsTestMotionParameters3D := {
@@ -8,8 +10,8 @@ PhysicsTestMotionParameters3D := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property from : U64  getter=get_from setter=set_from
-    # property motion : U64  getter=get_motion setter=set_motion
+    # property from : Transform3D  getter=get_from setter=set_from
+    # property motion : Vector3  getter=get_motion setter=set_motion
     # property margin : F64  getter=get_margin setter=set_margin
     # property max_collisions : I64  getter=get_max_collisions setter=set_max_collisions
     # property collide_separation_ray : Bool  getter=is_collide_separation_ray_enabled setter=set_collide_separation_ray_enabled
@@ -18,13 +20,13 @@ PhysicsTestMotionParameters3D := {
     # property recovery_as_collision : Bool  getter=is_recovery_as_collision_enabled setter=set_recovery_as_collision_enabled
 
     # --- methods ---
-    get_from! : () => U64
+    get_from! : () => Transform3D
     get_from! = Host.physicstestmotionparameters3d_get_from_3229777777!
-    set_from! : U64 => {}
+    set_from! : Transform3D => {}
     set_from! = Host.physicstestmotionparameters3d_set_from_2952846383!
-    get_motion! : () => U64
+    get_motion! : () => Vector3
     get_motion! = Host.physicstestmotionparameters3d_get_motion_3360562783!
-    set_motion! : U64 => {}
+    set_motion! : Vector3 => {}
     set_motion! = Host.physicstestmotionparameters3d_set_motion_3460891852!
     get_margin! : () => F64
     get_margin! = Host.physicstestmotionparameters3d_get_margin_1740695150!

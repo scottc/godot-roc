@@ -1,5 +1,7 @@
 # class NavigationPolygon
 import ../../Host
+import ../../engine/builtin_classes/Rect2
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Resource
 NavigationPolygon := {
@@ -21,8 +23,8 @@ NavigationPolygon := {
     # property cell_size : F64  getter=get_cell_size setter=set_cell_size
     # property border_size : F64  getter=get_border_size setter=set_border_size
     # property agent_radius : F64  getter=get_agent_radius setter=set_agent_radius
-    # property baking_rect : U64  getter=get_baking_rect setter=set_baking_rect
-    # property baking_rect_offset : U64  getter=get_baking_rect_offset setter=set_baking_rect_offset
+    # property baking_rect : Rect2  getter=get_baking_rect setter=set_baking_rect
+    # property baking_rect_offset : Vector2  getter=get_baking_rect_offset setter=set_baking_rect_offset
 
     # --- methods ---
     set_vertices! : U64 => {}
@@ -91,13 +93,13 @@ NavigationPolygon := {
     set_agent_radius! = Host.navigationpolygon_set_agent_radius_373806689!
     get_agent_radius! : () => F64
     get_agent_radius! = Host.navigationpolygon_get_agent_radius_1740695150!
-    set_baking_rect! : U64 => {}
+    set_baking_rect! : Rect2 => {}
     set_baking_rect! = Host.navigationpolygon_set_baking_rect_2046264180!
-    get_baking_rect! : () => U64
+    get_baking_rect! : () => Rect2
     get_baking_rect! = Host.navigationpolygon_get_baking_rect_1639390495!
-    set_baking_rect_offset! : U64 => {}
+    set_baking_rect_offset! : Vector2 => {}
     set_baking_rect_offset! = Host.navigationpolygon_set_baking_rect_offset_743155724!
-    get_baking_rect_offset! : () => U64
+    get_baking_rect_offset! : () => Vector2
     get_baking_rect_offset! = Host.navigationpolygon_get_baking_rect_offset_3341600327!
     clear! : () => {}
     clear! = Host.navigationpolygon_clear_3218959716!

@@ -1,5 +1,9 @@
 # class GridMap
 import ../../Host
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Vector3i
+import ../../engine/builtin_classes/Basis
+import ../../engine/builtin_classes/AABB
 
 # inherits: Node3D
 GridMap := {
@@ -10,7 +14,7 @@ GridMap := {
     # --- properties (getters/setters are methods) ---
     # property mesh_library : U64  getter=get_mesh_library setter=set_mesh_library
     # property physics_material : U64  getter=get_physics_material setter=set_physics_material
-    # property cell_size : U64  getter=get_cell_size setter=set_cell_size
+    # property cell_size : Vector3  getter=get_cell_size setter=set_cell_size
     # property cell_octant_size : I64  getter=get_octant_size setter=set_octant_size
     # property cell_center_x : Bool  getter=get_center_x setter=set_center_x
     # property cell_center_y : Bool  getter=get_center_y setter=set_center_y
@@ -63,9 +67,9 @@ GridMap := {
     set_mesh_library! = Host.gridmap_set_mesh_library_1488083439!
     get_mesh_library! : () => U64
     get_mesh_library! = Host.gridmap_get_mesh_library_3350993772!
-    set_cell_size! : U64 => {}
+    set_cell_size! : Vector3 => {}
     set_cell_size! = Host.gridmap_set_cell_size_3460891852!
-    get_cell_size! : () => U64
+    get_cell_size! : () => Vector3
     get_cell_size! = Host.gridmap_get_cell_size_3360562783!
     set_cell_scale! : F64 => {}
     set_cell_scale! = Host.gridmap_set_cell_scale_373806689!
@@ -75,21 +79,21 @@ GridMap := {
     set_octant_size! = Host.gridmap_set_octant_size_1286410249!
     get_octant_size! : () => I64
     get_octant_size! = Host.gridmap_get_octant_size_3905245786!
-    set_cell_item! : U64, I64, I64 => {}
+    set_cell_item! : Vector3i, I64, I64 => {}
     set_cell_item! = Host.gridmap_set_cell_item_3449088946!
-    get_cell_item! : U64 => I64
+    get_cell_item! : Vector3i => I64
     get_cell_item! = Host.gridmap_get_cell_item_3724960147!
-    get_cell_item_orientation! : U64 => I64
+    get_cell_item_orientation! : Vector3i => I64
     get_cell_item_orientation! = Host.gridmap_get_cell_item_orientation_3724960147!
-    get_cell_item_basis! : U64 => U64
+    get_cell_item_basis! : Vector3i => Basis
     get_cell_item_basis! = Host.gridmap_get_cell_item_basis_3493604918!
-    get_basis_with_orthogonal_index! : I64 => U64
+    get_basis_with_orthogonal_index! : I64 => Basis
     get_basis_with_orthogonal_index! = Host.gridmap_get_basis_with_orthogonal_index_2816196998!
-    get_orthogonal_index_from_basis! : U64 => I64
+    get_orthogonal_index_from_basis! : Basis => I64
     get_orthogonal_index_from_basis! = Host.gridmap_get_orthogonal_index_from_basis_4210359952!
-    local_to_map! : U64 => U64
+    local_to_map! : Vector3 => Vector3i
     local_to_map! = Host.gridmap_local_to_map_1257687843!
-    map_to_local! : U64 => U64
+    map_to_local! : Vector3i => Vector3
     map_to_local! = Host.gridmap_map_to_local_1088329196!
     resource_changed! : U64 => {}
     resource_changed! = Host.gridmap_resource_changed_968641751!
@@ -115,15 +119,15 @@ GridMap := {
     get_used_octants! = Host.gridmap_get_used_octants_3995934104!
     get_used_octants_by_item! : I64 => U64
     get_used_octants_by_item! = Host.gridmap_get_used_octants_by_item_663333327!
-    get_used_cells_in_octant! : U64 => U64
+    get_used_cells_in_octant! : Vector3i => U64
     get_used_cells_in_octant! = Host.gridmap_get_used_cells_in_octant_2658725580!
-    get_used_cells_in_octant_by_item! : U64, I64 => U64
+    get_used_cells_in_octant_by_item! : Vector3i, I64 => U64
     get_used_cells_in_octant_by_item! = Host.gridmap_get_used_cells_in_octant_by_item_2384667821!
-    get_octants_in_bounds! : U64 => U64
+    get_octants_in_bounds! : AABB => U64
     get_octants_in_bounds! = Host.gridmap_get_octants_in_bounds_2489849902!
-    get_used_octants_in_bounds! : U64 => U64
+    get_used_octants_in_bounds! : AABB => U64
     get_used_octants_in_bounds! = Host.gridmap_get_used_octants_in_bounds_2489849902!
-    get_octant_coords_from_cell_coords! : U64 => U64
+    get_octant_coords_from_cell_coords! : Vector3i => Vector3i
     get_octant_coords_from_cell_coords! = Host.gridmap_get_octant_coords_from_cell_coords_2075501597!
     get_meshes! : () => U64
     get_meshes! = Host.gridmap_get_meshes_3995934104!
@@ -136,6 +140,6 @@ GridMap := {
     make_baked_meshes! : Bool, F64 => {}
     make_baked_meshes! = Host.gridmap_make_baked_meshes_3609286057!
 
-    # signal cell_size_changed : cell_size : U64
+    # signal cell_size_changed : cell_size : Vector3
     # signal changed : ()
 }

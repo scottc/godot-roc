@@ -1,5 +1,6 @@
 # class StatusIndicator
 import ../../Host
+import ../../engine/builtin_classes/Rect2
 
 # inherits: Node
 StatusIndicator := {
@@ -30,8 +31,8 @@ StatusIndicator := {
     set_menu! = Host.statusindicator_set_menu_1348162250!
     get_menu! : () => Str
     get_menu! = Host.statusindicator_get_menu_4075236667!
-    get_rect! : () => U64
+    get_rect! : () => Rect2
     get_rect! = Host.statusindicator_get_rect_1639390495!
 
-    # signal pressed : mouse_button : I64, mouse_position : U64
+    # signal pressed : mouse_button : I64, mouse_position : Vector2i
 }

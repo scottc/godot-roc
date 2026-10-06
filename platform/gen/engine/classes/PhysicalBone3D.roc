@@ -1,5 +1,7 @@
 # class PhysicalBone3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Transform3D
 
 # inherits: PhysicsBody3D
 PhysicalBone3D := {
@@ -10,9 +12,9 @@ PhysicalBone3D := {
 
     # --- properties (getters/setters are methods) ---
     # property joint_type : I64  getter=get_joint_type setter=set_joint_type
-    # property joint_offset : U64  getter=get_joint_offset setter=set_joint_offset
-    # property joint_rotation : U64  getter=get_joint_rotation setter=set_joint_rotation
-    # property body_offset : U64  getter=get_body_offset setter=set_body_offset
+    # property joint_offset : Transform3D  getter=get_joint_offset setter=set_joint_offset
+    # property joint_rotation : Vector3  getter=get_joint_rotation setter=set_joint_rotation
+    # property body_offset : Transform3D  getter=get_body_offset setter=set_body_offset
     # property mass : F64  getter=get_mass setter=set_mass
     # property friction : F64  getter=get_friction setter=set_friction
     # property bounce : F64  getter=get_bounce setter=set_bounce
@@ -22,32 +24,32 @@ PhysicalBone3D := {
     # property linear_damp : F64  getter=get_linear_damp setter=set_linear_damp
     # property angular_damp_mode : I64  getter=get_angular_damp_mode setter=set_angular_damp_mode
     # property angular_damp : F64  getter=get_angular_damp setter=set_angular_damp
-    # property linear_velocity : U64  getter=get_linear_velocity setter=set_linear_velocity
-    # property angular_velocity : U64  getter=get_angular_velocity setter=set_angular_velocity
+    # property linear_velocity : Vector3  getter=get_linear_velocity setter=set_linear_velocity
+    # property angular_velocity : Vector3  getter=get_angular_velocity setter=set_angular_velocity
     # property can_sleep : Bool  getter=is_able_to_sleep setter=set_can_sleep
 
     # --- methods ---
     _integrate_forces! : U64 => {}
     _integrate_forces! = Host.physicalbone3d__integrate_forces_420958145!
-    apply_central_impulse! : U64 => {}
+    apply_central_impulse! : Vector3 => {}
     apply_central_impulse! = Host.physicalbone3d_apply_central_impulse_3460891852!
-    apply_impulse! : U64, U64 => {}
+    apply_impulse! : Vector3, Vector3 => {}
     apply_impulse! = Host.physicalbone3d_apply_impulse_2754756483!
     set_joint_type! : U64 => {}
     set_joint_type! = Host.physicalbone3d_set_joint_type_2289552604!
     get_joint_type! : () => U64
     get_joint_type! = Host.physicalbone3d_get_joint_type_931347320!
-    set_joint_offset! : U64 => {}
+    set_joint_offset! : Transform3D => {}
     set_joint_offset! = Host.physicalbone3d_set_joint_offset_2952846383!
-    get_joint_offset! : () => U64
+    get_joint_offset! : () => Transform3D
     get_joint_offset! = Host.physicalbone3d_get_joint_offset_3229777777!
-    set_joint_rotation! : U64 => {}
+    set_joint_rotation! : Vector3 => {}
     set_joint_rotation! = Host.physicalbone3d_set_joint_rotation_3460891852!
-    get_joint_rotation! : () => U64
+    get_joint_rotation! : () => Vector3
     get_joint_rotation! = Host.physicalbone3d_get_joint_rotation_3360562783!
-    set_body_offset! : U64 => {}
+    set_body_offset! : Transform3D => {}
     set_body_offset! = Host.physicalbone3d_set_body_offset_2952846383!
-    get_body_offset! : () => U64
+    get_body_offset! : () => Transform3D
     get_body_offset! = Host.physicalbone3d_get_body_offset_3229777777!
     get_simulate_physics! : () => Bool
     get_simulate_physics! = Host.physicalbone3d_get_simulate_physics_2240911060!
@@ -87,13 +89,13 @@ PhysicalBone3D := {
     set_angular_damp! = Host.physicalbone3d_set_angular_damp_373806689!
     get_angular_damp! : () => F64
     get_angular_damp! = Host.physicalbone3d_get_angular_damp_1740695150!
-    set_linear_velocity! : U64 => {}
+    set_linear_velocity! : Vector3 => {}
     set_linear_velocity! = Host.physicalbone3d_set_linear_velocity_3460891852!
-    get_linear_velocity! : () => U64
+    get_linear_velocity! : () => Vector3
     get_linear_velocity! = Host.physicalbone3d_get_linear_velocity_3360562783!
-    set_angular_velocity! : U64 => {}
+    set_angular_velocity! : Vector3 => {}
     set_angular_velocity! = Host.physicalbone3d_set_angular_velocity_3460891852!
-    get_angular_velocity! : () => U64
+    get_angular_velocity! : () => Vector3
     get_angular_velocity! = Host.physicalbone3d_get_angular_velocity_3360562783!
     set_use_custom_integrator! : Bool => {}
     set_use_custom_integrator! = Host.physicalbone3d_set_use_custom_integrator_2586408642!

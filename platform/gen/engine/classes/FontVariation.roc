@@ -1,5 +1,6 @@
 # class FontVariation
 import ../../Host
+import ../../engine/builtin_classes/Transform2D
 
 # inherits: Font
 FontVariation := {
@@ -12,7 +13,7 @@ FontVariation := {
     # property variation_opentype : U64  getter=get_variation_opentype setter=set_variation_opentype
     # property variation_face_index : I64  getter=get_variation_face_index setter=set_variation_face_index
     # property variation_embolden : F64  getter=get_variation_embolden setter=set_variation_embolden
-    # property variation_transform : U64  getter=get_variation_transform setter=set_variation_transform
+    # property variation_transform : Transform2D  getter=get_variation_transform setter=set_variation_transform
     # property opentype_features : U64  getter=get_opentype_features setter=set_opentype_features
     # property spacing_glyph : I64  getter=get_spacing setter=set_spacing
     # property spacing_space : I64  getter=get_spacing setter=set_spacing
@@ -39,9 +40,9 @@ FontVariation := {
     set_variation_face_index! = Host.fontvariation_set_variation_face_index_1286410249!
     get_variation_face_index! : () => I64
     get_variation_face_index! = Host.fontvariation_get_variation_face_index_3905245786!
-    set_variation_transform! : U64 => {}
+    set_variation_transform! : Transform2D => {}
     set_variation_transform! = Host.fontvariation_set_variation_transform_2761652528!
-    get_variation_transform! : () => U64
+    get_variation_transform! : () => Transform2D
     get_variation_transform! = Host.fontvariation_get_variation_transform_3814499831!
     set_opentype_features! : U64 => {}
     set_opentype_features! = Host.fontvariation_set_opentype_features_4155329257!

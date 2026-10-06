@@ -1,5 +1,6 @@
 # class Area3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: CollisionObject3D
 Area3D := {
@@ -14,8 +15,8 @@ Area3D := {
     # property gravity_space_override : I64  getter=get_gravity_space_override_mode setter=set_gravity_space_override_mode
     # property gravity_point : Bool  getter=is_gravity_a_point setter=set_gravity_is_point
     # property gravity_point_unit_distance : F64  getter=get_gravity_point_unit_distance setter=set_gravity_point_unit_distance
-    # property gravity_point_center : U64  getter=get_gravity_point_center setter=set_gravity_point_center
-    # property gravity_direction : U64  getter=get_gravity_direction setter=set_gravity_direction
+    # property gravity_point_center : Vector3  getter=get_gravity_point_center setter=set_gravity_point_center
+    # property gravity_direction : Vector3  getter=get_gravity_direction setter=set_gravity_direction
     # property gravity : F64  getter=get_gravity setter=set_gravity
     # property linear_damp_space_override : I64  getter=get_linear_damp_space_override_mode setter=set_linear_damp_space_override_mode
     # property linear_damp : F64  getter=get_linear_damp setter=set_linear_damp
@@ -44,13 +45,13 @@ Area3D := {
     set_gravity_point_unit_distance! = Host.area3d_set_gravity_point_unit_distance_373806689!
     get_gravity_point_unit_distance! : () => F64
     get_gravity_point_unit_distance! = Host.area3d_get_gravity_point_unit_distance_1740695150!
-    set_gravity_point_center! : U64 => {}
+    set_gravity_point_center! : Vector3 => {}
     set_gravity_point_center! = Host.area3d_set_gravity_point_center_3460891852!
-    get_gravity_point_center! : () => U64
+    get_gravity_point_center! : () => Vector3
     get_gravity_point_center! = Host.area3d_get_gravity_point_center_3360562783!
-    set_gravity_direction! : U64 => {}
+    set_gravity_direction! : Vector3 => {}
     set_gravity_direction! = Host.area3d_set_gravity_direction_3460891852!
-    get_gravity_direction! : () => U64
+    get_gravity_direction! : () => Vector3
     get_gravity_direction! = Host.area3d_get_gravity_direction_3360562783!
     set_gravity! : F64 => {}
     set_gravity! = Host.area3d_set_gravity_373806689!

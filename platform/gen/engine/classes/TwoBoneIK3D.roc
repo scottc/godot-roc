@@ -1,5 +1,6 @@
 # class TwoBoneIK3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: IKModifier3D
 TwoBoneIK3D := {
@@ -39,9 +40,9 @@ TwoBoneIK3D := {
     set_pole_direction! = Host.twoboneik3d_set_pole_direction_258741388!
     get_pole_direction! : I64 => U64
     get_pole_direction! = Host.twoboneik3d_get_pole_direction_377522128!
-    set_pole_direction_vector! : I64, U64 => {}
+    set_pole_direction_vector! : I64, Vector3 => {}
     set_pole_direction_vector! = Host.twoboneik3d_set_pole_direction_vector_1530502735!
-    get_pole_direction_vector! : I64 => U64
+    get_pole_direction_vector! : I64 => Vector3
     get_pole_direction_vector! = Host.twoboneik3d_get_pole_direction_vector_711720468!
     set_end_bone_name! : I64, Str => {}
     set_end_bone_name! = Host.twoboneik3d_set_end_bone_name_501894301!

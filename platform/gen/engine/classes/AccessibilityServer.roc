@@ -1,5 +1,8 @@
 # class AccessibilityServer
 import ../../Host
+import ../../engine/builtin_classes/Rect2
+import ../../engine/builtin_classes/Transform2D
+import ../../engine/builtin_classes/Color
 
 # inherits: Object
 AccessibilityServer := {
@@ -33,7 +36,7 @@ AccessibilityServer := {
     element_set_meta! = Host.accessibilityserver_element_set_meta_3175752987!
     element_get_meta! : U64 => U64
     element_get_meta! = Host.accessibilityserver_element_get_meta_4171304767!
-    set_window_rect! : I64, U64, U64 => {}
+    set_window_rect! : I64, Rect2, Rect2 => {}
     set_window_rect! = Host.accessibilityserver_set_window_rect_2386961724!
     set_window_focused! : I64, Bool => {}
     set_window_focused! = Host.accessibilityserver_set_window_focused_300928843!
@@ -57,9 +60,9 @@ AccessibilityServer := {
     update_set_value! = Host.accessibilityserver_update_set_value_2726140452!
     update_set_tooltip! : U64, Str => {}
     update_set_tooltip! = Host.accessibilityserver_update_set_tooltip_2726140452!
-    update_set_bounds! : U64, U64 => {}
+    update_set_bounds! : U64, Rect2 => {}
     update_set_bounds! = Host.accessibilityserver_update_set_bounds_1378122625!
-    update_set_transform! : U64, U64 => {}
+    update_set_transform! : U64, Transform2D => {}
     update_set_transform! = Host.accessibilityserver_update_set_transform_1246044741!
     update_add_child! : U64, U64 => {}
     update_add_child! = Host.accessibilityserver_update_add_child_395945892!
@@ -135,7 +138,7 @@ AccessibilityServer := {
     update_set_scroll_y! = Host.accessibilityserver_update_set_scroll_y_1794382983!
     update_set_scroll_y_range! : U64, F64, F64 => {}
     update_set_scroll_y_range! = Host.accessibilityserver_update_set_scroll_y_range_2513314492!
-    update_set_text_decorations! : U64, Bool, Bool, Bool, U64 => {}
+    update_set_text_decorations! : U64, Bool, Bool, Bool, Color => {}
     update_set_text_decorations! = Host.accessibilityserver_update_set_text_decorations_457503484!
     update_set_text_align! : U64, U64 => {}
     update_set_text_align! = Host.accessibilityserver_update_set_text_align_3725995085!
@@ -161,11 +164,11 @@ AccessibilityServer := {
     update_set_role_description! = Host.accessibilityserver_update_set_role_description_2726140452!
     update_set_state_description! : U64, Str => {}
     update_set_state_description! = Host.accessibilityserver_update_set_state_description_2726140452!
-    update_set_color_value! : U64, U64 => {}
+    update_set_color_value! : U64, Color => {}
     update_set_color_value! = Host.accessibilityserver_update_set_color_value_2948539648!
-    update_set_background_color! : U64, U64 => {}
+    update_set_background_color! : U64, Color => {}
     update_set_background_color! = Host.accessibilityserver_update_set_background_color_2948539648!
-    update_set_foreground_color! : U64, U64 => {}
+    update_set_foreground_color! : U64, Color => {}
     update_set_foreground_color! = Host.accessibilityserver_update_set_foreground_color_2948539648!
 
 

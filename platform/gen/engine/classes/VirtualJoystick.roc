@@ -1,5 +1,6 @@
 # class VirtualJoystick
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Control
 VirtualJoystick := {
@@ -14,7 +15,7 @@ VirtualJoystick := {
     # property tip_size : F64  getter=get_tip_size setter=set_tip_size
     # property deadzone_ratio : F64  getter=get_deadzone_ratio setter=set_deadzone_ratio
     # property clampzone_ratio : F64  getter=get_clampzone_ratio setter=set_clampzone_ratio
-    # property initial_offset_ratio : U64  getter=get_initial_offset_ratio setter=set_initial_offset_ratio
+    # property initial_offset_ratio : Vector2  getter=get_initial_offset_ratio setter=set_initial_offset_ratio
     # property action_left : Str  getter=get_action_left setter=set_action_left
     # property action_right : Str  getter=get_action_right setter=set_action_right
     # property action_up : Str  getter=get_action_up setter=set_action_up
@@ -42,9 +43,9 @@ VirtualJoystick := {
     set_clampzone_ratio! = Host.virtualjoystick_set_clampzone_ratio_373806689!
     get_clampzone_ratio! : () => F64
     get_clampzone_ratio! = Host.virtualjoystick_get_clampzone_ratio_1740695150!
-    set_initial_offset_ratio! : U64 => {}
+    set_initial_offset_ratio! : Vector2 => {}
     set_initial_offset_ratio! = Host.virtualjoystick_set_initial_offset_ratio_743155724!
-    get_initial_offset_ratio! : () => U64
+    get_initial_offset_ratio! : () => Vector2
     get_initial_offset_ratio! = Host.virtualjoystick_get_initial_offset_ratio_3341600327!
     set_action_left! : Str => {}
     set_action_left! = Host.virtualjoystick_set_action_left_3304788590!
@@ -69,7 +70,7 @@ VirtualJoystick := {
 
     # signal pressed : ()
     # signal tapped : ()
-    # signal released : input_vector : U64
-    # signal flicked : input_vector : U64
+    # signal released : input_vector : Vector2
+    # signal flicked : input_vector : Vector2
     # signal flick_canceled : ()
 }

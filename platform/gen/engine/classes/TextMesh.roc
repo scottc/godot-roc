@@ -1,5 +1,6 @@
 # class TextMesh
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: PrimitiveMesh
 TextMesh := {
@@ -21,7 +22,7 @@ TextMesh := {
     # property curve_step : F64  getter=get_curve_step setter=set_curve_step
     # property depth : F64  getter=get_depth setter=set_depth
     # property width : F64  getter=get_width setter=set_width
-    # property offset : U64  getter=get_offset setter=set_offset
+    # property offset : Vector2  getter=get_offset setter=set_offset
     # property text_direction : I64  getter=get_text_direction setter=set_text_direction
     # property language : Str  getter=get_language setter=set_language
     # property structured_text_bidi_override : I64  getter=get_structured_text_bidi_override setter=set_structured_text_bidi_override
@@ -72,9 +73,9 @@ TextMesh := {
     set_pixel_size! = Host.textmesh_set_pixel_size_373806689!
     get_pixel_size! : () => F64
     get_pixel_size! = Host.textmesh_get_pixel_size_1740695150!
-    set_offset! : U64 => {}
+    set_offset! : Vector2 => {}
     set_offset! = Host.textmesh_set_offset_743155724!
-    get_offset! : () => U64
+    get_offset! : () => Vector2
     get_offset! = Host.textmesh_get_offset_3341600327!
     set_curve_step! : F64 => {}
     set_curve_step! = Host.textmesh_set_curve_step_373806689!

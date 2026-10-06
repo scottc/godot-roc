@@ -1,5 +1,9 @@
 # class MeshDataTool
 import ../../Host
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Plane
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Color
 
 # inherits: RefCounted
 MeshDataTool := {
@@ -25,29 +29,29 @@ MeshDataTool := {
     get_edge_count! = Host.meshdatatool_get_edge_count_3905245786!
     get_face_count! : () => I64
     get_face_count! = Host.meshdatatool_get_face_count_3905245786!
-    set_vertex! : I64, U64 => {}
+    set_vertex! : I64, Vector3 => {}
     set_vertex! = Host.meshdatatool_set_vertex_1530502735!
-    get_vertex! : I64 => U64
+    get_vertex! : I64 => Vector3
     get_vertex! = Host.meshdatatool_get_vertex_711720468!
-    set_vertex_normal! : I64, U64 => {}
+    set_vertex_normal! : I64, Vector3 => {}
     set_vertex_normal! = Host.meshdatatool_set_vertex_normal_1530502735!
-    get_vertex_normal! : I64 => U64
+    get_vertex_normal! : I64 => Vector3
     get_vertex_normal! = Host.meshdatatool_get_vertex_normal_711720468!
-    set_vertex_tangent! : I64, U64 => {}
+    set_vertex_tangent! : I64, Plane => {}
     set_vertex_tangent! = Host.meshdatatool_set_vertex_tangent_1104099133!
-    get_vertex_tangent! : I64 => U64
+    get_vertex_tangent! : I64 => Plane
     get_vertex_tangent! = Host.meshdatatool_get_vertex_tangent_1372055458!
-    set_vertex_uv! : I64, U64 => {}
+    set_vertex_uv! : I64, Vector2 => {}
     set_vertex_uv! = Host.meshdatatool_set_vertex_uv_163021252!
-    get_vertex_uv! : I64 => U64
+    get_vertex_uv! : I64 => Vector2
     get_vertex_uv! = Host.meshdatatool_get_vertex_uv_2299179447!
-    set_vertex_uv2! : I64, U64 => {}
+    set_vertex_uv2! : I64, Vector2 => {}
     set_vertex_uv2! = Host.meshdatatool_set_vertex_uv2_163021252!
-    get_vertex_uv2! : I64 => U64
+    get_vertex_uv2! : I64 => Vector2
     get_vertex_uv2! = Host.meshdatatool_get_vertex_uv2_2299179447!
-    set_vertex_color! : I64, U64 => {}
+    set_vertex_color! : I64, Color => {}
     set_vertex_color! = Host.meshdatatool_set_vertex_color_2878471219!
-    get_vertex_color! : I64 => U64
+    get_vertex_color! : I64 => Color
     get_vertex_color! = Host.meshdatatool_get_vertex_color_3457211756!
     set_vertex_bones! : I64, U64 => {}
     set_vertex_bones! = Host.meshdatatool_set_vertex_bones_3500328261!
@@ -81,7 +85,7 @@ MeshDataTool := {
     set_face_meta! = Host.meshdatatool_set_face_meta_2152698145!
     get_face_meta! : I64 => U64
     get_face_meta! = Host.meshdatatool_get_face_meta_4227898402!
-    get_face_normal! : I64 => U64
+    get_face_normal! : I64 => Vector3
     get_face_normal! = Host.meshdatatool_get_face_normal_711720468!
     set_material! : U64 => {}
     set_material! = Host.meshdatatool_set_material_2757459619!

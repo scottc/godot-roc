@@ -1,5 +1,8 @@
 # class GLTFNode
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Quaternion
 
 # inherits: Resource
 GLTFNode := {
@@ -11,14 +14,14 @@ GLTFNode := {
     # property original_name : Str  getter=get_original_name setter=set_original_name
     # property parent : I64  getter=get_parent setter=set_parent
     # property height : I64  getter=get_height setter=set_height
-    # property xform : U64  getter=get_xform setter=set_xform
+    # property xform : Transform3D  getter=get_xform setter=set_xform
     # property mesh : I64  getter=get_mesh setter=set_mesh
     # property camera : I64  getter=get_camera setter=set_camera
     # property skin : I64  getter=get_skin setter=set_skin
     # property skeleton : I64  getter=get_skeleton setter=set_skeleton
-    # property position : U64  getter=get_position setter=set_position
-    # property rotation : U64  getter=get_rotation setter=set_rotation
-    # property scale : U64  getter=get_scale setter=set_scale
+    # property position : Vector3  getter=get_position setter=set_position
+    # property rotation : Quaternion  getter=get_rotation setter=set_rotation
+    # property scale : Vector3  getter=get_scale setter=set_scale
     # property children : U64  getter=get_children setter=set_children
     # property light : I64  getter=get_light setter=set_light
     # property visible : Bool  getter=get_visible setter=set_visible
@@ -36,9 +39,9 @@ GLTFNode := {
     get_height! = Host.gltfnode_get_height_2455072627!
     set_height! : I64 => {}
     set_height! = Host.gltfnode_set_height_1286410249!
-    get_xform! : () => U64
+    get_xform! : () => Transform3D
     get_xform! = Host.gltfnode_get_xform_4183770049!
-    set_xform! : U64 => {}
+    set_xform! : Transform3D => {}
     set_xform! = Host.gltfnode_set_xform_2952846383!
     get_mesh! : () => I64
     get_mesh! = Host.gltfnode_get_mesh_2455072627!
@@ -56,17 +59,17 @@ GLTFNode := {
     get_skeleton! = Host.gltfnode_get_skeleton_2455072627!
     set_skeleton! : I64 => {}
     set_skeleton! = Host.gltfnode_set_skeleton_1286410249!
-    get_position! : () => U64
+    get_position! : () => Vector3
     get_position! = Host.gltfnode_get_position_3783033775!
-    set_position! : U64 => {}
+    set_position! : Vector3 => {}
     set_position! = Host.gltfnode_set_position_3460891852!
-    get_rotation! : () => U64
+    get_rotation! : () => Quaternion
     get_rotation! = Host.gltfnode_get_rotation_2916281908!
-    set_rotation! : U64 => {}
+    set_rotation! : Quaternion => {}
     set_rotation! = Host.gltfnode_set_rotation_1727505552!
-    get_scale! : () => U64
+    get_scale! : () => Vector3
     get_scale! = Host.gltfnode_get_scale_3783033775!
-    set_scale! : U64 => {}
+    set_scale! : Vector3 => {}
     set_scale! = Host.gltfnode_set_scale_3460891852!
     get_children! : () => U64
     get_children! = Host.gltfnode_get_children_969006518!

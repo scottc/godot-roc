@@ -1,5 +1,6 @@
 # class RenderSceneBuffersConfiguration
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
 
 # inherits: RefCounted
 RenderSceneBuffersConfiguration := {
@@ -9,8 +10,8 @@ RenderSceneBuffersConfiguration := {
 
     # --- properties (getters/setters are methods) ---
     # property render_target : U64  getter=get_render_target setter=set_render_target
-    # property internal_size : U64  getter=get_internal_size setter=set_internal_size
-    # property target_size : U64  getter=get_target_size setter=set_target_size
+    # property internal_size : Vector2i  getter=get_internal_size setter=set_internal_size
+    # property target_size : Vector2i  getter=get_target_size setter=set_target_size
     # property view_count : I64  getter=get_view_count setter=set_view_count
     # property scaling_3d_mode : I64  getter=get_scaling_3d_mode setter=set_scaling_3d_mode
     # property msaa_3d : I64  getter=get_msaa_3d setter=set_msaa_3d
@@ -24,13 +25,13 @@ RenderSceneBuffersConfiguration := {
     get_render_target! = Host.renderscenebuffersconfiguration_get_render_target_2944877500!
     set_render_target! : U64 => {}
     set_render_target! = Host.renderscenebuffersconfiguration_set_render_target_2722037293!
-    get_internal_size! : () => U64
+    get_internal_size! : () => Vector2i
     get_internal_size! = Host.renderscenebuffersconfiguration_get_internal_size_3690982128!
-    set_internal_size! : U64 => {}
+    set_internal_size! : Vector2i => {}
     set_internal_size! = Host.renderscenebuffersconfiguration_set_internal_size_1130785943!
-    get_target_size! : () => U64
+    get_target_size! : () => Vector2i
     get_target_size! = Host.renderscenebuffersconfiguration_get_target_size_3690982128!
-    set_target_size! : U64 => {}
+    set_target_size! : Vector2i => {}
     set_target_size! = Host.renderscenebuffersconfiguration_set_target_size_1130785943!
     get_view_count! : () => I64
     get_view_count! = Host.renderscenebuffersconfiguration_get_view_count_3905245786!

@@ -1,5 +1,10 @@
 # class RichTextLabel
 import ../../Host
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Rect2
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Rect2i
 
 # inherits: Control
 RichTextLabel := {
@@ -50,11 +55,11 @@ RichTextLabel := {
     add_text! = Host.richtextlabel_add_text_83702148!
     set_text! : Str => {}
     set_text! = Host.richtextlabel_set_text_83702148!
-    add_hr! : I64, I64, U64, U64, Bool, Bool => {}
+    add_hr! : I64, I64, Color, U64, Bool, Bool => {}
     add_hr! = Host.richtextlabel_add_hr_16816895!
-    add_image! : U64, F64, F64, U64, U64, U64, U64, Bool, Str, U64, U64, Str => {}
+    add_image! : U64, F64, F64, Color, U64, Rect2, U64, Bool, Str, U64, U64, Str => {}
     add_image! = Host.richtextlabel_add_image_1980227702!
-    update_image! : U64, U64, U64, F64, F64, U64, U64, U64, Bool, Str, U64, U64 => {}
+    update_image! : U64, U64, U64, F64, F64, Color, U64, Rect2, Bool, Str, U64, U64 => {}
     update_image! = Host.richtextlabel_update_image_202998225!
     newline! : () => {}
     newline! = Host.richtextlabel_newline_3218959716!
@@ -76,11 +81,11 @@ RichTextLabel := {
     push_italics! = Host.richtextlabel_push_italics_3218959716!
     push_mono! : () => {}
     push_mono! = Host.richtextlabel_push_mono_3218959716!
-    push_color! : U64 => {}
+    push_color! : Color => {}
     push_color! = Host.richtextlabel_push_color_2920490490!
     push_outline_size! : I64 => {}
     push_outline_size! = Host.richtextlabel_push_outline_size_1286410249!
-    push_outline_color! : U64 => {}
+    push_outline_color! : Color => {}
     push_outline_color! = Host.richtextlabel_push_outline_color_2920490490!
     push_paragraph! : U64, U64, Str, U64, U64, U64 => {}
     push_paragraph! = Host.richtextlabel_push_paragraph_3089306873!
@@ -94,31 +99,31 @@ RichTextLabel := {
     push_hint! = Host.richtextlabel_push_hint_83702148!
     push_language! : Str => {}
     push_language! = Host.richtextlabel_push_language_83702148!
-    push_underline! : U64 => {}
+    push_underline! : Color => {}
     push_underline! = Host.richtextlabel_push_underline_1458098034!
-    push_strikethrough! : U64 => {}
+    push_strikethrough! : Color => {}
     push_strikethrough! = Host.richtextlabel_push_strikethrough_1458098034!
     push_table! : I64, U64, I64, Str => {}
     push_table! = Host.richtextlabel_push_table_3426862026!
-    push_dropcap! : Str, U64, I64, U64, U64, I64, U64 => {}
+    push_dropcap! : Str, U64, I64, Rect2, Color, I64, Color => {}
     push_dropcap! = Host.richtextlabel_push_dropcap_4061635501!
     set_table_column_expand! : I64, Bool, I64, Bool => {}
     set_table_column_expand! = Host.richtextlabel_set_table_column_expand_117236061!
     set_table_column_name! : I64, Str => {}
     set_table_column_name! = Host.richtextlabel_set_table_column_name_501894301!
-    set_cell_row_background_color! : U64, U64 => {}
+    set_cell_row_background_color! : Color, Color => {}
     set_cell_row_background_color! = Host.richtextlabel_set_cell_row_background_color_3465483165!
-    set_cell_border_color! : U64 => {}
+    set_cell_border_color! : Color => {}
     set_cell_border_color! = Host.richtextlabel_set_cell_border_color_2920490490!
-    set_cell_size_override! : U64, U64 => {}
+    set_cell_size_override! : Vector2, Vector2 => {}
     set_cell_size_override! = Host.richtextlabel_set_cell_size_override_3108078480!
-    set_cell_padding! : U64 => {}
+    set_cell_padding! : Rect2 => {}
     set_cell_padding! = Host.richtextlabel_set_cell_padding_2046264180!
     push_cell! : () => {}
     push_cell! = Host.richtextlabel_push_cell_3218959716!
-    push_fgcolor! : U64 => {}
+    push_fgcolor! : Color => {}
     push_fgcolor! = Host.richtextlabel_push_fgcolor_2920490490!
-    push_bgcolor! : U64 => {}
+    push_bgcolor! : Color => {}
     push_bgcolor! = Host.richtextlabel_push_bgcolor_2920490490!
     push_customfx! : U64, U64 => {}
     push_customfx! = Host.richtextlabel_push_customfx_2337942958!
@@ -282,7 +287,7 @@ RichTextLabel := {
     is_using_bbcode! = Host.richtextlabel_is_using_bbcode_36873697!
     get_line_count! : () => I64
     get_line_count! = Host.richtextlabel_get_line_count_3905245786!
-    get_line_range! : I64 => U64
+    get_line_range! : I64 => Vector2i
     get_line_range! = Host.richtextlabel_get_line_range_3665014314!
     get_visible_line_count! : () => I64
     get_visible_line_count! = Host.richtextlabel_get_visible_line_count_3905245786!
@@ -298,7 +303,7 @@ RichTextLabel := {
     get_line_height! = Host.richtextlabel_get_line_height_923996154!
     get_line_width! : I64 => I64
     get_line_width! = Host.richtextlabel_get_line_width_923996154!
-    get_visible_content_rect! : () => U64
+    get_visible_content_rect! : () => Rect2i
     get_visible_content_rect! = Host.richtextlabel_get_visible_content_rect_410525958!
     get_line_offset! : I64 => F64
     get_line_offset! = Host.richtextlabel_get_line_offset_4025615559!

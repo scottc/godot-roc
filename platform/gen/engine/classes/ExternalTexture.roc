@@ -1,5 +1,6 @@
 # class ExternalTexture
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Texture2D
 ExternalTexture := {
@@ -8,10 +9,10 @@ ExternalTexture := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property size : U64  getter=get_size setter=set_size
+    # property size : Vector2  getter=get_size setter=set_size
 
     # --- methods ---
-    set_size! : U64 => {}
+    set_size! : Vector2 => {}
     set_size! = Host.externaltexture_set_size_743155724!
     get_external_texture_id! : () => I64
     get_external_texture_id! = Host.externaltexture_get_external_texture_id_3905245786!

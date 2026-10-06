@@ -1,5 +1,6 @@
 # class Curve
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Resource
 Curve := {
@@ -20,13 +21,13 @@ Curve := {
     get_point_count! = Host.curve_get_point_count_3905245786!
     set_point_count! : I64 => {}
     set_point_count! = Host.curve_set_point_count_1286410249!
-    add_point! : U64, F64, F64, U64, U64 => I64
+    add_point! : Vector2, F64, F64, U64, U64 => I64
     add_point! = Host.curve_add_point_434072736!
     remove_point! : I64 => {}
     remove_point! = Host.curve_remove_point_1286410249!
     clear_points! : () => {}
     clear_points! = Host.curve_clear_points_3218959716!
-    get_point_position! : I64 => U64
+    get_point_position! : I64 => Vector2
     get_point_position! = Host.curve_get_point_position_2299179447!
     set_point_value! : I64, F64 => {}
     set_point_value! = Host.curve_set_point_value_1602489585!

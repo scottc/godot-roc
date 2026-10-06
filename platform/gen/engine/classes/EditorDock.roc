@@ -1,5 +1,6 @@
 # class EditorDock
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: MarginContainer
 EditorDock := {
@@ -17,7 +18,7 @@ EditorDock := {
     # property icon_name : Str  getter=get_icon_name setter=set_icon_name
     # property dock_icon : U64  getter=get_dock_icon setter=set_dock_icon
     # property force_show_icon : Bool  getter=get_force_show_icon setter=set_force_show_icon
-    # property title_color : U64  getter=get_title_color setter=set_title_color
+    # property title_color : Color  getter=get_title_color setter=set_title_color
     # property dock_shortcut : U64  getter=get_dock_shortcut setter=set_dock_shortcut
     # property default_slot : I64  getter=get_default_slot setter=set_default_slot
     # property available_layouts : I64  getter=get_available_layouts setter=set_available_layouts
@@ -67,9 +68,9 @@ EditorDock := {
     set_force_show_icon! = Host.editordock_set_force_show_icon_2586408642!
     get_force_show_icon! : () => Bool
     get_force_show_icon! = Host.editordock_get_force_show_icon_36873697!
-    set_title_color! : U64 => {}
+    set_title_color! : Color => {}
     set_title_color! = Host.editordock_set_title_color_2920490490!
-    get_title_color! : () => U64
+    get_title_color! : () => Color
     get_title_color! = Host.editordock_get_title_color_3444240500!
     set_dock_shortcut! : U64 => {}
     set_dock_shortcut! = Host.editordock_set_dock_shortcut_857163497!

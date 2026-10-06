@@ -1,5 +1,7 @@
 # class EditorInterface
 import ../../Host
+import ../../engine/builtin_classes/Rect2i
+import ../../engine/builtin_classes/Vector2i
 
 # inherits: Object
 EditorInterface := {
@@ -68,13 +70,13 @@ EditorInterface := {
     get_node_3d_rotate_snap! = Host.editorinterface_get_node_3d_rotate_snap_1740695150!
     get_node_3d_scale_snap! : () => F64
     get_node_3d_scale_snap! = Host.editorinterface_get_node_3d_scale_snap_1740695150!
-    popup_dialog! : U64, U64 => {}
+    popup_dialog! : U64, Rect2i => {}
     popup_dialog! = Host.editorinterface_popup_dialog_2015770942!
-    popup_dialog_centered! : U64, U64 => {}
+    popup_dialog_centered! : U64, Vector2i => {}
     popup_dialog_centered! = Host.editorinterface_popup_dialog_centered_346557367!
     popup_dialog_centered_ratio! : U64, F64 => {}
     popup_dialog_centered_ratio! = Host.editorinterface_popup_dialog_centered_ratio_2093669136!
-    popup_dialog_centered_clamped! : U64, U64, F64 => {}
+    popup_dialog_centered_clamped! : U64, Vector2i, F64 => {}
     popup_dialog_centered_clamped! = Host.editorinterface_popup_dialog_centered_clamped_3763385571!
     get_current_feature_profile! : () => Str
     get_current_feature_profile! = Host.editorinterface_get_current_feature_profile_201670096!

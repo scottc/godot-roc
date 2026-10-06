@@ -1,5 +1,6 @@
 # class ReferenceRect
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: Control
 ReferenceRect := {
@@ -8,14 +9,14 @@ ReferenceRect := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property border_color : U64  getter=get_border_color setter=set_border_color
+    # property border_color : Color  getter=get_border_color setter=set_border_color
     # property border_width : F64  getter=get_border_width setter=set_border_width
     # property editor_only : Bool  getter=get_editor_only setter=set_editor_only
 
     # --- methods ---
-    get_border_color! : () => U64
+    get_border_color! : () => Color
     get_border_color! = Host.referencerect_get_border_color_3444240500!
-    set_border_color! : U64 => {}
+    set_border_color! : Color => {}
     set_border_color! = Host.referencerect_set_border_color_2920490490!
     get_border_width! : () => F64
     get_border_width! = Host.referencerect_get_border_width_1740695150!

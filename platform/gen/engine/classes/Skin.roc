@@ -1,5 +1,6 @@
 # class Skin
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
 
 # inherits: Resource
 Skin := {
@@ -15,13 +16,13 @@ Skin := {
     set_bind_count! = Host.skin_set_bind_count_1286410249!
     get_bind_count! : () => I64
     get_bind_count! = Host.skin_get_bind_count_3905245786!
-    add_bind! : I64, U64 => {}
+    add_bind! : I64, Transform3D => {}
     add_bind! = Host.skin_add_bind_3616898986!
-    add_named_bind! : Str, U64 => {}
+    add_named_bind! : Str, Transform3D => {}
     add_named_bind! = Host.skin_add_named_bind_3154712474!
-    set_bind_pose! : I64, U64 => {}
+    set_bind_pose! : I64, Transform3D => {}
     set_bind_pose! = Host.skin_set_bind_pose_3616898986!
-    get_bind_pose! : I64 => U64
+    get_bind_pose! : I64 => Transform3D
     get_bind_pose! = Host.skin_get_bind_pose_1965739696!
     set_bind_name! : I64, Str => {}
     set_bind_name! = Host.skin_set_bind_name_3780747571!

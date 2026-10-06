@@ -1,5 +1,9 @@
 # class CharFXTransform
 import ../../Host
+import ../../engine/builtin_classes/Transform2D
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Color
 
 # inherits: RefCounted
 CharFXTransform := {
@@ -8,13 +12,13 @@ CharFXTransform := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property transform : U64  getter=get_transform setter=set_transform
-    # property range : U64  getter=get_range setter=set_range
+    # property transform : Transform2D  getter=get_transform setter=set_transform
+    # property range : Vector2i  getter=get_range setter=set_range
     # property elapsed_time : F64  getter=get_elapsed_time setter=set_elapsed_time
     # property visible : Bool  getter=is_visible setter=set_visibility
     # property outline : Bool  getter=is_outline setter=set_outline
-    # property offset : U64  getter=get_offset setter=set_offset
-    # property color : U64  getter=get_color setter=set_color
+    # property offset : Vector2  getter=get_offset setter=set_offset
+    # property color : Color  getter=get_color setter=set_color
     # property env : U64  getter=get_environment setter=set_environment
     # property glyph_index : I64  getter=get_glyph_index setter=set_glyph_index
     # property glyph_count : I64  getter=get_glyph_count setter=set_glyph_count
@@ -23,13 +27,13 @@ CharFXTransform := {
     # property font : U64  getter=get_font setter=set_font
 
     # --- methods ---
-    get_transform! : () => U64
+    get_transform! : () => Transform2D
     get_transform! = Host.charfxtransform_get_transform_3761352769!
-    set_transform! : U64 => {}
+    set_transform! : Transform2D => {}
     set_transform! = Host.charfxtransform_set_transform_2761652528!
-    get_range! : () => U64
+    get_range! : () => Vector2i
     get_range! = Host.charfxtransform_get_range_2741790807!
-    set_range! : U64 => {}
+    set_range! : Vector2i => {}
     set_range! = Host.charfxtransform_set_range_1130785943!
     get_elapsed_time! : () => F64
     get_elapsed_time! = Host.charfxtransform_get_elapsed_time_191475506!
@@ -43,13 +47,13 @@ CharFXTransform := {
     is_outline! = Host.charfxtransform_is_outline_2240911060!
     set_outline! : Bool => {}
     set_outline! = Host.charfxtransform_set_outline_2586408642!
-    get_offset! : () => U64
+    get_offset! : () => Vector2
     get_offset! = Host.charfxtransform_get_offset_1497962370!
-    set_offset! : U64 => {}
+    set_offset! : Vector2 => {}
     set_offset! = Host.charfxtransform_set_offset_743155724!
-    get_color! : () => U64
+    get_color! : () => Color
     get_color! = Host.charfxtransform_get_color_3200896285!
-    set_color! : U64 => {}
+    set_color! : Color => {}
     set_color! = Host.charfxtransform_set_color_2920490490!
     get_environment! : () => U64
     get_environment! = Host.charfxtransform_get_environment_2382534195!

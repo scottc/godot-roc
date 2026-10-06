@@ -1,5 +1,7 @@
 # class NativeMenu
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Vector2i
 
 # inherits: Object
 NativeMenu := {
@@ -30,9 +32,9 @@ NativeMenu := {
     has_menu! = Host.nativemenu_has_menu_4155700596!
     free_menu! : U64 => {}
     free_menu! = Host.nativemenu_free_menu_2722037293!
-    get_size! : U64 => U64
+    get_size! : U64 => Vector2
     get_size! = Host.nativemenu_get_size_2440833711!
-    popup! : U64, U64 => {}
+    popup! : U64, Vector2i => {}
     popup! = Host.nativemenu_popup_2450610377!
     set_interface_direction! : U64, Bool => {}
     set_interface_direction! = Host.nativemenu_set_interface_direction_1265174801!

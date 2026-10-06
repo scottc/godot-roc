@@ -1,5 +1,7 @@
 # class CollisionObject3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Transform3D
 
 # inherits: Node3D
 CollisionObject3D := {
@@ -16,7 +18,7 @@ CollisionObject3D := {
     # property input_capture_on_drag : Bool  getter=get_capture_input_on_drag setter=set_capture_input_on_drag
 
     # --- methods ---
-    _input_event! : U64, U64, U64, U64, I64 => {}
+    _input_event! : U64, U64, Vector3, Vector3, I64 => {}
     _input_event! = Host.collisionobject3d__input_event_2310605070!
     _mouse_enter! : () => {}
     _mouse_enter! = Host.collisionobject3d__mouse_enter_3218959716!
@@ -62,9 +64,9 @@ CollisionObject3D := {
     remove_shape_owner! = Host.collisionobject3d_remove_shape_owner_1286410249!
     get_shape_owners! : () => U64
     get_shape_owners! = Host.collisionobject3d_get_shape_owners_969006518!
-    shape_owner_set_transform! : I64, U64 => {}
+    shape_owner_set_transform! : I64, Transform3D => {}
     shape_owner_set_transform! = Host.collisionobject3d_shape_owner_set_transform_3616898986!
-    shape_owner_get_transform! : I64 => U64
+    shape_owner_get_transform! : I64 => Transform3D
     shape_owner_get_transform! = Host.collisionobject3d_shape_owner_get_transform_1965739696!
     shape_owner_get_owner! : I64 => U64
     shape_owner_get_owner! = Host.collisionobject3d_shape_owner_get_owner_3332903315!
@@ -87,7 +89,7 @@ CollisionObject3D := {
     shape_find_owner! : I64 => I64
     shape_find_owner! = Host.collisionobject3d_shape_find_owner_923996154!
 
-    # signal input_event : camera : U64, event : U64, event_position : U64, normal : U64, shape_idx : I64
+    # signal input_event : camera : U64, event : U64, event_position : Vector3, normal : Vector3, shape_idx : I64
     # signal mouse_entered : ()
     # signal mouse_exited : ()
 }

@@ -1,5 +1,6 @@
 # class SkeletonModification2DJiggle
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: SkeletonModification2D
 SkeletonModification2DJiggle := {
@@ -14,7 +15,7 @@ SkeletonModification2DJiggle := {
     # property mass : F64  getter=get_mass setter=set_mass
     # property damping : F64  getter=get_damping setter=set_damping
     # property use_gravity : Bool  getter=get_use_gravity setter=set_use_gravity
-    # property gravity : U64  getter=get_gravity setter=set_gravity
+    # property gravity : Vector2  getter=get_gravity setter=set_gravity
 
     # --- methods ---
     set_target_node! : Str => {}
@@ -41,9 +42,9 @@ SkeletonModification2DJiggle := {
     set_use_gravity! = Host.skeletonmodification2djiggle_set_use_gravity_2586408642!
     get_use_gravity! : () => Bool
     get_use_gravity! = Host.skeletonmodification2djiggle_get_use_gravity_36873697!
-    set_gravity! : U64 => {}
+    set_gravity! : Vector2 => {}
     set_gravity! = Host.skeletonmodification2djiggle_set_gravity_743155724!
-    get_gravity! : () => U64
+    get_gravity! : () => Vector2
     get_gravity! = Host.skeletonmodification2djiggle_get_gravity_3341600327!
     set_use_colliders! : Bool => {}
     set_use_colliders! = Host.skeletonmodification2djiggle_set_use_colliders_2586408642!
@@ -83,9 +84,9 @@ SkeletonModification2DJiggle := {
     set_jiggle_joint_use_gravity! = Host.skeletonmodification2djiggle_set_jiggle_joint_use_gravity_300928843!
     get_jiggle_joint_use_gravity! : I64 => Bool
     get_jiggle_joint_use_gravity! = Host.skeletonmodification2djiggle_get_jiggle_joint_use_gravity_1116898809!
-    set_jiggle_joint_gravity! : I64, U64 => {}
+    set_jiggle_joint_gravity! : I64, Vector2 => {}
     set_jiggle_joint_gravity! = Host.skeletonmodification2djiggle_set_jiggle_joint_gravity_163021252!
-    get_jiggle_joint_gravity! : I64 => U64
+    get_jiggle_joint_gravity! : I64 => Vector2
     get_jiggle_joint_gravity! = Host.skeletonmodification2djiggle_get_jiggle_joint_gravity_2299179447!
 
 

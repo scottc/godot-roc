@@ -1,5 +1,7 @@
 # class InputEvent
 import ../../Host
+import ../../engine/builtin_classes/Transform2D
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Resource
 InputEvent := {
@@ -39,7 +41,7 @@ InputEvent := {
     is_action_type! = Host.inputevent_is_action_type_36873697!
     accumulate! : U64 => Bool
     accumulate! = Host.inputevent_accumulate_1062211774!
-    xformed_by! : U64, U64 => U64
+    xformed_by! : Transform2D, Vector2 => U64
     xformed_by! = Host.inputevent_xformed_by_1282766827!
 
 

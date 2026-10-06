@@ -1,5 +1,8 @@
 # class GraphNode
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Vector2
 
 # inherits: GraphElement
 GraphNode := {
@@ -13,7 +16,7 @@ GraphNode := {
     # property slots_focus_mode : I64  getter=get_slots_focus_mode setter=set_slots_focus_mode
 
     # --- methods ---
-    _draw_port! : I64, U64, Bool, U64 => {}
+    _draw_port! : I64, Vector2i, Bool, Color => {}
     _draw_port! = Host.graphnode__draw_port_93366828!
     set_title! : Str => {}
     set_title! = Host.graphnode_set_title_83702148!
@@ -21,7 +24,7 @@ GraphNode := {
     get_title! = Host.graphnode_get_title_201670096!
     get_titlebar_hbox! : () => U64
     get_titlebar_hbox! = Host.graphnode_get_titlebar_hbox_3590609951!
-    set_slot! : I64, Bool, I64, U64, Bool, I64, U64, U64, U64, Bool => {}
+    set_slot! : I64, Bool, I64, Color, Bool, I64, Color, U64, U64, Bool => {}
     set_slot! = Host.graphnode_set_slot_2873310869!
     clear_slot! : I64 => {}
     clear_slot! = Host.graphnode_clear_slot_1286410249!
@@ -35,9 +38,9 @@ GraphNode := {
     set_slot_type_left! = Host.graphnode_set_slot_type_left_3937882851!
     get_slot_type_left! : I64 => I64
     get_slot_type_left! = Host.graphnode_get_slot_type_left_923996154!
-    set_slot_color_left! : I64, U64 => {}
+    set_slot_color_left! : I64, Color => {}
     set_slot_color_left! = Host.graphnode_set_slot_color_left_2878471219!
-    get_slot_color_left! : I64 => U64
+    get_slot_color_left! : I64 => Color
     get_slot_color_left! = Host.graphnode_get_slot_color_left_3457211756!
     set_slot_custom_icon_left! : I64, U64 => {}
     set_slot_custom_icon_left! = Host.graphnode_set_slot_custom_icon_left_666127730!
@@ -55,9 +58,9 @@ GraphNode := {
     set_slot_type_right! = Host.graphnode_set_slot_type_right_3937882851!
     get_slot_type_right! : I64 => I64
     get_slot_type_right! = Host.graphnode_get_slot_type_right_923996154!
-    set_slot_color_right! : I64, U64 => {}
+    set_slot_color_right! : I64, Color => {}
     set_slot_color_right! = Host.graphnode_set_slot_color_right_2878471219!
-    get_slot_color_right! : I64 => U64
+    get_slot_color_right! : I64 => Color
     get_slot_color_right! = Host.graphnode_get_slot_color_right_3457211756!
     set_slot_custom_icon_right! : I64, U64 => {}
     set_slot_custom_icon_right! = Host.graphnode_set_slot_custom_icon_right_666127730!
@@ -81,21 +84,21 @@ GraphNode := {
     get_slots_focus_mode! = Host.graphnode_get_slots_focus_mode_2132829277!
     get_input_port_count! : () => I64
     get_input_port_count! = Host.graphnode_get_input_port_count_2455072627!
-    get_input_port_position! : I64 => U64
+    get_input_port_position! : I64 => Vector2
     get_input_port_position! = Host.graphnode_get_input_port_position_3114997196!
     get_input_port_type! : I64 => I64
     get_input_port_type! = Host.graphnode_get_input_port_type_3744713108!
-    get_input_port_color! : I64 => U64
+    get_input_port_color! : I64 => Color
     get_input_port_color! = Host.graphnode_get_input_port_color_2624840992!
     get_input_port_slot! : I64 => I64
     get_input_port_slot! = Host.graphnode_get_input_port_slot_3744713108!
     get_output_port_count! : () => I64
     get_output_port_count! = Host.graphnode_get_output_port_count_2455072627!
-    get_output_port_position! : I64 => U64
+    get_output_port_position! : I64 => Vector2
     get_output_port_position! = Host.graphnode_get_output_port_position_3114997196!
     get_output_port_type! : I64 => I64
     get_output_port_type! = Host.graphnode_get_output_port_type_3744713108!
-    get_output_port_color! : I64 => U64
+    get_output_port_color! : I64 => Color
     get_output_port_color! = Host.graphnode_get_output_port_color_2624840992!
     get_output_port_slot! : I64 => I64
     get_output_port_slot! = Host.graphnode_get_output_port_slot_3744713108!

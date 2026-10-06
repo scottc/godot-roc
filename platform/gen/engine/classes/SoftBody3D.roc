@@ -1,5 +1,6 @@
 # class SoftBody3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: MeshInstance3D
 SoftBody3D := {
@@ -82,15 +83,15 @@ SoftBody3D := {
     set_drag_coefficient! = Host.softbody3d_set_drag_coefficient_373806689!
     get_drag_coefficient! : () => F64
     get_drag_coefficient! = Host.softbody3d_get_drag_coefficient_191475506!
-    get_point_transform! : I64 => U64
+    get_point_transform! : I64 => Vector3
     get_point_transform! = Host.softbody3d_get_point_transform_871989493!
-    apply_impulse! : I64, U64 => {}
+    apply_impulse! : I64, Vector3 => {}
     apply_impulse! = Host.softbody3d_apply_impulse_1530502735!
-    apply_force! : I64, U64 => {}
+    apply_force! : I64, Vector3 => {}
     apply_force! = Host.softbody3d_apply_force_1530502735!
-    apply_central_impulse! : U64 => {}
+    apply_central_impulse! : Vector3 => {}
     apply_central_impulse! = Host.softbody3d_apply_central_impulse_3460891852!
-    apply_central_force! : U64 => {}
+    apply_central_force! : Vector3 => {}
     apply_central_force! = Host.softbody3d_apply_central_force_3460891852!
     set_point_pinned! : I64, Bool, Str, I64 => {}
     set_point_pinned! = Host.softbody3d_set_point_pinned_528784402!

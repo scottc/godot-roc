@@ -1,5 +1,7 @@
 # class ArrayMesh
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/AABB
 
 # inherits: Mesh
 ArrayMesh := {
@@ -9,7 +11,7 @@ ArrayMesh := {
 
     # --- properties (getters/setters are methods) ---
     # property blend_shape_mode : I64  getter=get_blend_shape_mode setter=set_blend_shape_mode
-    # property custom_aabb : U64  getter=get_custom_aabb setter=set_custom_aabb
+    # property custom_aabb : AABB  getter=get_custom_aabb setter=set_custom_aabb
     # property shadow_mesh : U64  getter=get_shadow_mesh setter=set_shadow_mesh
 
     # --- methods ---
@@ -55,11 +57,11 @@ ArrayMesh := {
     surface_get_name! = Host.arraymesh_surface_get_name_844755477!
     regen_normal_maps! : () => {}
     regen_normal_maps! = Host.arraymesh_regen_normal_maps_3218959716!
-    lightmap_unwrap! : U64, F64 => U64
+    lightmap_unwrap! : Transform3D, F64 => U64
     lightmap_unwrap! = Host.arraymesh_lightmap_unwrap_1476641071!
-    set_custom_aabb! : U64 => {}
+    set_custom_aabb! : AABB => {}
     set_custom_aabb! = Host.arraymesh_set_custom_aabb_259215842!
-    get_custom_aabb! : () => U64
+    get_custom_aabb! : () => AABB
     get_custom_aabb! = Host.arraymesh_get_custom_aabb_1068685055!
     set_shadow_mesh! : U64 => {}
     set_shadow_mesh! = Host.arraymesh_set_shadow_mesh_3377897901!

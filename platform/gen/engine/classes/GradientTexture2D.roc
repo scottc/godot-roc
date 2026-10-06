@@ -1,5 +1,6 @@
 # class GradientTexture2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Texture2D
 GradientTexture2D := {
@@ -14,8 +15,8 @@ GradientTexture2D := {
     # property height : I64  getter=get_height setter=set_height
     # property use_hdr : Bool  getter=is_using_hdr setter=set_use_hdr
     # property fill : I64  getter=get_fill setter=set_fill
-    # property fill_from : U64  getter=get_fill_from setter=set_fill_from
-    # property fill_to : U64  getter=get_fill_to setter=set_fill_to
+    # property fill_from : Vector2  getter=get_fill_from setter=set_fill_from
+    # property fill_to : Vector2  getter=get_fill_to setter=set_fill_to
     # property repeat : I64  getter=get_repeat setter=set_repeat
 
     # --- methods ---
@@ -35,13 +36,13 @@ GradientTexture2D := {
     set_fill! = Host.gradienttexture2d_set_fill_3623927636!
     get_fill! : () => U64
     get_fill! = Host.gradienttexture2d_get_fill_1876227217!
-    set_fill_from! : U64 => {}
+    set_fill_from! : Vector2 => {}
     set_fill_from! = Host.gradienttexture2d_set_fill_from_743155724!
-    get_fill_from! : () => U64
+    get_fill_from! : () => Vector2
     get_fill_from! = Host.gradienttexture2d_get_fill_from_3341600327!
-    set_fill_to! : U64 => {}
+    set_fill_to! : Vector2 => {}
     set_fill_to! = Host.gradienttexture2d_set_fill_to_743155724!
-    get_fill_to! : () => U64
+    get_fill_to! : () => Vector2
     get_fill_to! = Host.gradienttexture2d_get_fill_to_3341600327!
     set_repeat! : U64 => {}
     set_repeat! = Host.gradienttexture2d_set_repeat_1357597002!

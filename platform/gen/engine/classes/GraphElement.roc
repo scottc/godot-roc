@@ -1,5 +1,6 @@
 # class GraphElement
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Container
 GraphElement := {
@@ -8,7 +9,7 @@ GraphElement := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property position_offset : U64  getter=get_position_offset setter=set_position_offset
+    # property position_offset : Vector2  getter=get_position_offset setter=set_position_offset
     # property resizable : Bool  getter=is_resizable setter=set_resizable
     # property draggable : Bool  getter=is_draggable setter=set_draggable
     # property selectable : Bool  getter=is_selectable setter=set_selectable
@@ -36,17 +37,17 @@ GraphElement := {
     set_scaling_menus! = Host.graphelement_set_scaling_menus_2586408642!
     is_scaling_menus! : () => Bool
     is_scaling_menus! = Host.graphelement_is_scaling_menus_36873697!
-    set_position_offset! : U64 => {}
+    set_position_offset! : Vector2 => {}
     set_position_offset! = Host.graphelement_set_position_offset_743155724!
-    get_position_offset! : () => U64
+    get_position_offset! : () => Vector2
     get_position_offset! = Host.graphelement_get_position_offset_3341600327!
 
     # signal node_selected : ()
     # signal node_deselected : ()
     # signal raise_request : ()
     # signal delete_request : ()
-    # signal resize_request : new_size : U64
-    # signal resize_end : new_size : U64
-    # signal dragged : from : U64, to : U64
+    # signal resize_request : new_size : Vector2
+    # signal resize_end : new_size : Vector2
+    # signal dragged : from : Vector2, to : Vector2
     # signal position_offset_changed : ()
 }

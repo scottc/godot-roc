@@ -36,18 +36,18 @@ main! = |_args| {
     # ------------------------------------------------------------------
     # 1. Update nixos maintained flakes
     # ------------------------------------------------------------------
-    nix_flake_id = 1
-    nix_flake = Build.cmd({
-        id: nix_flake_id,
-        depends_on: [],
-        inputs: [],
-        outputs: [],
-        program: "nix",
-        args: ["flake", "update"],
-        description: "Update nixos maintained flakes",
-        cwd: "",
-        env: [],
-    })
+    # nix_flake_id = 1
+    # nix_flake = Build.cmd({
+    #     id: nix_flake_id,
+    #     depends_on: [],
+    #     inputs: [],
+    #     outputs: [],
+    #     program: "nix",
+    #     args: ["flake", "update"],
+    #     description: "Update nixos maintained flakes",
+    #     cwd: "",
+    #     env: [],
+    # })
     # Also see: flakes/[package]-nix/flake.nix, for maintained flakes.
 
     # ------------------------------------------------------------------
@@ -60,7 +60,7 @@ main! = |_args| {
     godot_iface_id = 2
     godot_iface = Build.cmd({
         id: godot_iface_id,
-        depends_on: [nix_flake_id],
+        depends_on: [], # nix_flake_id
         inputs: [],
         outputs: [],
         program: "godot",
@@ -73,7 +73,7 @@ main! = |_args| {
     godot_iface_json_id = 3
     godot_iface_json = Build.cmd({
         id: godot_iface_json_id,
-        depends_on: [nix_flake_id],
+        depends_on: [], # nix_flake_id
         inputs: [],
         outputs: [],
         program: "godot",
@@ -86,7 +86,7 @@ main! = |_args| {
     godot_api_id = 4
     godot_api = Build.cmd({
         id: godot_api_id,
-        depends_on: [nix_flake_id],
+        depends_on: [], # nix_flake_id
         inputs: [],
         outputs: [],
         program: "godot",
@@ -102,7 +102,7 @@ main! = |_args| {
     godot451_iface_id = 5
     godot451_iface = Build.cmd({
         id: godot451_iface_id,
-        depends_on: [nix_flake_id],
+        depends_on: [], # nix_flake_id
         inputs: [],
         outputs: [],
         program: "godot4.5",
@@ -116,7 +116,7 @@ main! = |_args| {
     # godot451_iface_json_id = 6
     # godot451_iface_json = Build.cmd({
     #     id: godot451_iface_json_id,
-    #     depends_on: [nix_flake_id],
+    #     depends_on: [], # nix_flake_id
     #     inputs: [],
     #     outputs: [],
     #     program: "godot4.5",
@@ -129,7 +129,7 @@ main! = |_args| {
     godot451_api_id = 7
     godot451_api = Build.cmd({
         id: godot451_api_id,
-        depends_on: [nix_flake_id],
+        depends_on: [], # nix_flake_id
         inputs: [],
         outputs: [],
         program: "godot4.5",
@@ -145,7 +145,7 @@ main! = |_args| {
     redot_iface_id = 8
     redot_iface = Build.cmd({
         id: redot_iface_id,
-        depends_on: [nix_flake_id],
+        depends_on: [], # nix_flake_id
         inputs: [],
         outputs: [],
         program: "redot",
@@ -159,7 +159,7 @@ main! = |_args| {
     # redot_iface_json_id = 9
     # redot_iface_json = Build.cmd({
     #     id: redot_iface_json_id,
-    #     depends_on: [nix_flake_id],
+    #     depends_on: [], # nix_flake_id
     #     inputs: [],
     #     outputs: [],
     #     program: "redot",
@@ -172,7 +172,7 @@ main! = |_args| {
     redot_api_id = 10
     redot_api = Build.cmd({
         id: redot_api_id,
-        depends_on: [nix_flake_id],
+        depends_on: [], # nix_flake_id
         inputs: [],
         outputs: [],
         program: "redot",
@@ -188,7 +188,7 @@ main! = |_args| {
     rex_iface_id = 11
     rex_iface = Build.cmd({
         id: rex_iface_id,
-        depends_on: [nix_flake_id],
+        depends_on: [], # nix_flake_id
         inputs: [],
         outputs: [],
         program: "rex",
@@ -202,7 +202,7 @@ main! = |_args| {
     # rex_iface_json_id = 12
     # rex_iface_json = Build.cmd({
     #     id: rex_iface_json_id,
-    #     depends_on: [nix_flake_id],
+    #     depends_on: [], # nix_flake_id
     #     inputs: [],
     #     outputs: [],
     #     program: "rex",
@@ -215,7 +215,7 @@ main! = |_args| {
     rex_api_id = 13
     rex_api = Build.cmd({
         id: rex_api_id,
-        depends_on: [nix_flake_id],
+        depends_on: [], # nix_flake_id
         inputs: [],
         outputs: [],
         program: "rex",
@@ -256,7 +256,7 @@ main! = |_args| {
     # Graph + run
     # ------------------------------------------------------------------
     graph = Build.graph([
-        nix_flake,
+        #nix_flake,
         godot_iface,
         godot_iface_json,
         godot_api,

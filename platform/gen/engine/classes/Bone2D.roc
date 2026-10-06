@@ -1,5 +1,6 @@
 # class Bone2D
 import ../../Host
+import ../../engine/builtin_classes/Transform2D
 
 # inherits: Node2D
 Bone2D := {
@@ -8,16 +9,16 @@ Bone2D := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property rest : U64  getter=get_rest setter=set_rest
+    # property rest : Transform2D  getter=get_rest setter=set_rest
 
     # --- methods ---
-    set_rest! : U64 => {}
+    set_rest! : Transform2D => {}
     set_rest! = Host.bone2d_set_rest_2761652528!
-    get_rest! : () => U64
+    get_rest! : () => Transform2D
     get_rest! = Host.bone2d_get_rest_3814499831!
     apply_rest! : () => {}
     apply_rest! = Host.bone2d_apply_rest_3218959716!
-    get_skeleton_rest! : () => U64
+    get_skeleton_rest! : () => Transform2D
     get_skeleton_rest! = Host.bone2d_get_skeleton_rest_3814499831!
     get_index_in_skeleton! : () => I64
     get_index_in_skeleton! = Host.bone2d_get_index_in_skeleton_3905245786!

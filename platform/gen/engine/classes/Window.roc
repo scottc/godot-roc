@@ -1,5 +1,9 @@
 # class Window
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Rect2i
+import ../../engine/builtin_classes/Color
 
 # inherits: Viewport
 Window := {
@@ -17,10 +21,10 @@ Window := {
     # property mode : I64  getter=get_mode setter=set_mode
     # property title : Str  getter=get_title setter=set_title
     # property initial_position : I64  getter=get_initial_position setter=set_initial_position
-    # property position : U64  getter=get_position setter=set_position
-    # property size : U64  getter=get_size setter=set_size
+    # property position : Vector2i  getter=get_position setter=set_position
+    # property size : Vector2i  getter=get_size setter=set_size
     # property current_screen : I64  getter=get_current_screen setter=set_current_screen
-    # property nonclient_area : U64  getter=get_nonclient_area setter=set_nonclient_area
+    # property nonclient_area : Rect2i  getter=get_nonclient_area setter=set_nonclient_area
     # property mouse_passthrough_polygon : U64  getter=get_mouse_passthrough_polygon setter=set_mouse_passthrough_polygon
     # property visible : Bool  getter=is_visible setter=set_visible
     # property wrap_controls : Bool  getter=is_wrapping_controls setter=set_wrap_controls
@@ -41,10 +45,10 @@ Window := {
     # property minimize_disabled : Bool  getter=get_flag setter=set_flag
     # property maximize_disabled : Bool  getter=get_flag setter=set_flag
     # property force_native : Bool  getter=get_force_native setter=set_force_native
-    # property min_size : U64  getter=get_min_size setter=set_min_size
-    # property max_size : U64  getter=get_max_size setter=set_max_size
+    # property min_size : Vector2i  getter=get_min_size setter=set_min_size
+    # property max_size : Vector2i  getter=get_max_size setter=set_max_size
     # property keep_title_visible : Bool  getter=get_keep_title_visible setter=set_keep_title_visible
-    # property content_scale_size : U64  getter=get_content_scale_size setter=set_content_scale_size
+    # property content_scale_size : Vector2i  getter=get_content_scale_size setter=set_content_scale_size
     # property content_scale_mode : I64  getter=get_content_scale_mode setter=set_content_scale_mode
     # property content_scale_aspect : I64  getter=get_content_scale_aspect setter=set_content_scale_aspect
     # property content_scale_stretch : I64  getter=get_content_scale_stretch setter=set_content_scale_stretch
@@ -57,7 +61,7 @@ Window := {
     # property theme_type_variation : Str  getter=get_theme_type_variation setter=set_theme_type_variation
 
     # --- methods ---
-    _get_contents_minimum_size! : () => U64
+    _get_contents_minimum_size! : () => Vector2
     _get_contents_minimum_size! = Host.window__get_contents_minimum_size_3341600327!
     set_title! : Str => {}
     set_title! = Host.window_set_title_83702148!
@@ -71,29 +75,29 @@ Window := {
     set_current_screen! = Host.window_set_current_screen_1286410249!
     get_current_screen! : () => I64
     get_current_screen! = Host.window_get_current_screen_3905245786!
-    set_position! : U64 => {}
+    set_position! : Vector2i => {}
     set_position! = Host.window_set_position_1130785943!
-    get_position! : () => U64
+    get_position! : () => Vector2i
     get_position! = Host.window_get_position_3690982128!
     move_to_center! : () => {}
     move_to_center! = Host.window_move_to_center_3218959716!
-    set_size! : U64 => {}
+    set_size! : Vector2i => {}
     set_size! = Host.window_set_size_1130785943!
-    get_size! : () => U64
+    get_size! : () => Vector2i
     get_size! = Host.window_get_size_3690982128!
     reset_size! : () => {}
     reset_size! = Host.window_reset_size_3218959716!
-    get_position_with_decorations! : () => U64
+    get_position_with_decorations! : () => Vector2i
     get_position_with_decorations! = Host.window_get_position_with_decorations_3690982128!
-    get_size_with_decorations! : () => U64
+    get_size_with_decorations! : () => Vector2i
     get_size_with_decorations! = Host.window_get_size_with_decorations_3690982128!
-    set_max_size! : U64 => {}
+    set_max_size! : Vector2i => {}
     set_max_size! = Host.window_set_max_size_1130785943!
-    get_max_size! : () => U64
+    get_max_size! : () => Vector2i
     get_max_size! = Host.window_get_max_size_3690982128!
-    set_min_size! : U64 => {}
+    set_min_size! : Vector2i => {}
     set_min_size! = Host.window_set_min_size_1130785943!
-    get_min_size! : () => U64
+    get_min_size! : () => Vector2i
     get_min_size! = Host.window_get_min_size_3690982128!
     set_mode! : U64 => {}
     set_mode! = Host.window_set_mode_3095236531!
@@ -153,19 +157,19 @@ Window := {
     start_resize! = Host.window_start_resize_122288853!
     set_ime_active! : Bool => {}
     set_ime_active! = Host.window_set_ime_active_2586408642!
-    set_ime_position! : U64 => {}
+    set_ime_position! : Vector2i => {}
     set_ime_position! = Host.window_set_ime_position_1130785943!
     is_embedded! : () => Bool
     is_embedded! = Host.window_is_embedded_36873697!
-    get_contents_minimum_size! : () => U64
+    get_contents_minimum_size! : () => Vector2
     get_contents_minimum_size! = Host.window_get_contents_minimum_size_3341600327!
     set_force_native! : Bool => {}
     set_force_native! = Host.window_set_force_native_2586408642!
     get_force_native! : () => Bool
     get_force_native! = Host.window_get_force_native_36873697!
-    set_content_scale_size! : U64 => {}
+    set_content_scale_size! : Vector2i => {}
     set_content_scale_size! = Host.window_set_content_scale_size_1130785943!
-    get_content_scale_size! : () => U64
+    get_content_scale_size! : () => Vector2i
     get_content_scale_size! = Host.window_get_content_scale_size_3690982128!
     set_content_scale_mode! : U64 => {}
     set_content_scale_mode! = Host.window_set_content_scale_mode_2937716473!
@@ -179,9 +183,9 @@ Window := {
     set_content_scale_stretch! = Host.window_set_content_scale_stretch_349355940!
     get_content_scale_stretch! : () => U64
     get_content_scale_stretch! = Host.window_get_content_scale_stretch_536857316!
-    set_nonclient_area! : U64 => {}
+    set_nonclient_area! : Rect2i => {}
     set_nonclient_area! = Host.window_set_nonclient_area_1763793166!
-    get_nonclient_area! : () => U64
+    get_nonclient_area! : () => Rect2i
     get_nonclient_area! = Host.window_get_nonclient_area_410525958!
     set_keep_title_visible! : Bool => {}
     set_keep_title_visible! = Host.window_set_keep_title_visible_2586408642!
@@ -221,7 +225,7 @@ Window := {
     add_theme_font_override! = Host.window_add_theme_font_override_3518018674!
     add_theme_font_size_override! : Str, I64 => {}
     add_theme_font_size_override! = Host.window_add_theme_font_size_override_2415702435!
-    add_theme_color_override! : Str, U64 => {}
+    add_theme_color_override! : Str, Color => {}
     add_theme_color_override! = Host.window_add_theme_color_override_4260178595!
     add_theme_constant_override! : Str, I64 => {}
     add_theme_constant_override! = Host.window_add_theme_constant_override_2415702435!
@@ -245,7 +249,7 @@ Window := {
     get_theme_font! = Host.window_get_theme_font_2826986490!
     get_theme_font_size! : Str, Str => I64
     get_theme_font_size! = Host.window_get_theme_font_size_1327056374!
-    get_theme_color! : Str, Str => U64
+    get_theme_color! : Str, Str => Color
     get_theme_color! = Host.window_get_theme_color_2798751242!
     get_theme_constant! : Str, Str => I64
     get_theme_constant! = Host.window_get_theme_constant_1327056374!
@@ -305,25 +309,25 @@ Window := {
     set_use_font_oversampling! = Host.window_set_use_font_oversampling_2586408642!
     is_using_font_oversampling! : () => Bool
     is_using_font_oversampling! = Host.window_is_using_font_oversampling_36873697!
-    popup! : U64 => {}
+    popup! : Rect2i => {}
     popup! = Host.window_popup_1680304321!
-    popup_on_parent! : U64 => {}
+    popup_on_parent! : Rect2i => {}
     popup_on_parent! = Host.window_popup_on_parent_1763793166!
-    popup_centered! : U64 => {}
+    popup_centered! : Vector2i => {}
     popup_centered! = Host.window_popup_centered_3447975422!
     popup_centered_ratio! : F64 => {}
     popup_centered_ratio! = Host.window_popup_centered_ratio_1014814997!
-    popup_centered_clamped! : U64, F64 => {}
+    popup_centered_clamped! : Vector2i, F64 => {}
     popup_centered_clamped! = Host.window_popup_centered_clamped_2613752477!
-    popup_exclusive! : U64, U64 => {}
+    popup_exclusive! : U64, Rect2i => {}
     popup_exclusive! = Host.window_popup_exclusive_2134721627!
-    popup_exclusive_on_parent! : U64, U64 => {}
+    popup_exclusive_on_parent! : U64, Rect2i => {}
     popup_exclusive_on_parent! = Host.window_popup_exclusive_on_parent_2344671043!
-    popup_exclusive_centered! : U64, U64 => {}
+    popup_exclusive_centered! : U64, Vector2i => {}
     popup_exclusive_centered! = Host.window_popup_exclusive_centered_3357594017!
     popup_exclusive_centered_ratio! : U64, F64 => {}
     popup_exclusive_centered_ratio! = Host.window_popup_exclusive_centered_ratio_2284776287!
-    popup_exclusive_centered_clamped! : U64, U64, F64 => {}
+    popup_exclusive_centered_clamped! : U64, Vector2i, F64 => {}
     popup_exclusive_centered_clamped! = Host.window_popup_exclusive_centered_clamped_2612708785!
 
     # signal window_input : event : U64

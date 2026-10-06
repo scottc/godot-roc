@@ -1,5 +1,7 @@
 # class StyleBoxFlat
 import ../../Host
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Vector2
 
 # inherits: StyleBox
 StyleBoxFlat := {
@@ -8,14 +10,14 @@ StyleBoxFlat := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property bg_color : U64  getter=get_bg_color setter=set_bg_color
+    # property bg_color : Color  getter=get_bg_color setter=set_bg_color
     # property draw_center : Bool  getter=is_draw_center_enabled setter=set_draw_center
-    # property skew : U64  getter=get_skew setter=set_skew
+    # property skew : Vector2  getter=get_skew setter=set_skew
     # property border_width_left : I64  getter=get_border_width setter=set_border_width
     # property border_width_top : I64  getter=get_border_width setter=set_border_width
     # property border_width_right : I64  getter=get_border_width setter=set_border_width
     # property border_width_bottom : I64  getter=get_border_width setter=set_border_width
-    # property border_color : U64  getter=get_border_color setter=set_border_color
+    # property border_color : Color  getter=get_border_color setter=set_border_color
     # property border_blend : Bool  getter=get_border_blend setter=set_border_blend
     # property corner_radius_top_left : I64  getter=get_corner_radius setter=set_corner_radius
     # property corner_radius_top_right : I64  getter=get_corner_radius setter=set_corner_radius
@@ -26,20 +28,20 @@ StyleBoxFlat := {
     # property expand_margin_top : F64  getter=get_expand_margin setter=set_expand_margin
     # property expand_margin_right : F64  getter=get_expand_margin setter=set_expand_margin
     # property expand_margin_bottom : F64  getter=get_expand_margin setter=set_expand_margin
-    # property shadow_color : U64  getter=get_shadow_color setter=set_shadow_color
+    # property shadow_color : Color  getter=get_shadow_color setter=set_shadow_color
     # property shadow_size : I64  getter=get_shadow_size setter=set_shadow_size
-    # property shadow_offset : U64  getter=get_shadow_offset setter=set_shadow_offset
+    # property shadow_offset : Vector2  getter=get_shadow_offset setter=set_shadow_offset
     # property anti_aliasing : Bool  getter=is_anti_aliased setter=set_anti_aliased
     # property anti_aliasing_size : F64  getter=get_aa_size setter=set_aa_size
 
     # --- methods ---
-    set_bg_color! : U64 => {}
+    set_bg_color! : Color => {}
     set_bg_color! = Host.styleboxflat_set_bg_color_2920490490!
-    get_bg_color! : () => U64
+    get_bg_color! : () => Color
     get_bg_color! = Host.styleboxflat_get_bg_color_3444240500!
-    set_border_color! : U64 => {}
+    set_border_color! : Color => {}
     set_border_color! = Host.styleboxflat_set_border_color_2920490490!
-    get_border_color! : () => U64
+    get_border_color! : () => Color
     get_border_color! = Host.styleboxflat_get_border_color_3444240500!
     set_border_width_all! : I64 => {}
     set_border_width_all! = Host.styleboxflat_set_border_width_all_1286410249!
@@ -69,21 +71,21 @@ StyleBoxFlat := {
     set_draw_center! = Host.styleboxflat_set_draw_center_2586408642!
     is_draw_center_enabled! : () => Bool
     is_draw_center_enabled! = Host.styleboxflat_is_draw_center_enabled_36873697!
-    set_skew! : U64 => {}
+    set_skew! : Vector2 => {}
     set_skew! = Host.styleboxflat_set_skew_743155724!
-    get_skew! : () => U64
+    get_skew! : () => Vector2
     get_skew! = Host.styleboxflat_get_skew_3341600327!
-    set_shadow_color! : U64 => {}
+    set_shadow_color! : Color => {}
     set_shadow_color! = Host.styleboxflat_set_shadow_color_2920490490!
-    get_shadow_color! : () => U64
+    get_shadow_color! : () => Color
     get_shadow_color! = Host.styleboxflat_get_shadow_color_3444240500!
     set_shadow_size! : I64 => {}
     set_shadow_size! = Host.styleboxflat_set_shadow_size_1286410249!
     get_shadow_size! : () => I64
     get_shadow_size! = Host.styleboxflat_get_shadow_size_3905245786!
-    set_shadow_offset! : U64 => {}
+    set_shadow_offset! : Vector2 => {}
     set_shadow_offset! = Host.styleboxflat_set_shadow_offset_743155724!
-    get_shadow_offset! : () => U64
+    get_shadow_offset! : () => Vector2
     get_shadow_offset! = Host.styleboxflat_get_shadow_offset_3341600327!
     set_anti_aliased! : Bool => {}
     set_anti_aliased! = Host.styleboxflat_set_anti_aliased_2586408642!

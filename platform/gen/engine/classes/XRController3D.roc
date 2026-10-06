@@ -1,5 +1,6 @@
 # class XRController3D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: XRNode3D
 XRController3D := {
@@ -17,7 +18,7 @@ XRController3D := {
     get_input! = Host.xrcontroller3d_get_input_2760726917!
     get_float! : Str => F64
     get_float! = Host.xrcontroller3d_get_float_2349060816!
-    get_vector2! : Str => U64
+    get_vector2! : Str => Vector2
     get_vector2! = Host.xrcontroller3d_get_vector2_3100822709!
     get_tracker_hand! : () => U64
     get_tracker_hand! = Host.xrcontroller3d_get_tracker_hand_4181770860!
@@ -25,6 +26,6 @@ XRController3D := {
     # signal button_pressed : action_name : Str
     # signal button_released : action_name : Str
     # signal input_float_changed : action_name : Str, value : F64
-    # signal input_vector2_changed : action_name : Str, value : U64
+    # signal input_vector2_changed : action_name : Str, value : Vector2
     # signal profile_changed : role : Str
 }

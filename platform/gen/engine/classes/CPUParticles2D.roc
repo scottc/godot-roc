@@ -1,5 +1,7 @@
 # class CPUParticles2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Color
 
 # inherits: Node2D
 CPUParticles2D := {
@@ -29,16 +31,16 @@ CPUParticles2D := {
     # property draw_order : I64  getter=get_draw_order setter=set_draw_order
     # property emission_shape : I64  getter=get_emission_shape setter=set_emission_shape
     # property emission_sphere_radius : F64  getter=get_emission_sphere_radius setter=set_emission_sphere_radius
-    # property emission_rect_extents : U64  getter=get_emission_rect_extents setter=set_emission_rect_extents
+    # property emission_rect_extents : Vector2  getter=get_emission_rect_extents setter=set_emission_rect_extents
     # property emission_points : U64  getter=get_emission_points setter=set_emission_points
     # property emission_normals : U64  getter=get_emission_normals setter=set_emission_normals
     # property emission_colors : U64  getter=get_emission_colors setter=set_emission_colors
     # property emission_ring_inner_radius : F64  getter=get_emission_ring_inner_radius setter=set_emission_ring_inner_radius
     # property emission_ring_radius : F64  getter=get_emission_ring_radius setter=set_emission_ring_radius
     # property particle_flag_align_y : Bool  getter=get_particle_flag setter=set_particle_flag
-    # property direction : U64  getter=get_direction setter=set_direction
+    # property direction : Vector2  getter=get_direction setter=set_direction
     # property spread : F64  getter=get_spread setter=set_spread
-    # property gravity : U64  getter=get_gravity setter=set_gravity
+    # property gravity : Vector2  getter=get_gravity setter=set_gravity
     # property initial_velocity_min : F64  getter=get_param_min setter=set_param_min
     # property initial_velocity_max : F64  getter=get_param_max setter=set_param_max
     # property angular_velocity_min : F64  getter=get_param_min setter=set_param_min
@@ -68,7 +70,7 @@ CPUParticles2D := {
     # property split_scale : Bool  getter=get_split_scale setter=set_split_scale
     # property scale_curve_x : U64  getter=get_scale_curve_x setter=set_scale_curve_x
     # property scale_curve_y : U64  getter=get_scale_curve_y setter=set_scale_curve_y
-    # property color : U64  getter=get_color setter=set_color
+    # property color : Color  getter=get_color setter=set_color
     # property color_ramp : U64  getter=get_color_ramp setter=set_color_ramp
     # property color_initial_ramp : U64  getter=get_color_initial_ramp setter=set_color_initial_ramp
     # property hue_variation_min : F64  getter=get_param_min setter=set_param_min
@@ -150,9 +152,9 @@ CPUParticles2D := {
     get_texture! = Host.cpuparticles2d_get_texture_3635182373!
     restart! : Bool => {}
     restart! = Host.cpuparticles2d_restart_107499316!
-    set_direction! : U64 => {}
+    set_direction! : Vector2 => {}
     set_direction! = Host.cpuparticles2d_set_direction_743155724!
-    get_direction! : () => U64
+    get_direction! : () => Vector2
     get_direction! = Host.cpuparticles2d_get_direction_3341600327!
     set_spread! : F64 => {}
     set_spread! = Host.cpuparticles2d_set_spread_373806689!
@@ -170,9 +172,9 @@ CPUParticles2D := {
     set_param_curve! = Host.cpuparticles2d_set_param_curve_2959350143!
     get_param_curve! : U64 => U64
     get_param_curve! = Host.cpuparticles2d_get_param_curve_2603158474!
-    set_color! : U64 => {}
+    set_color! : Color => {}
     set_color! = Host.cpuparticles2d_set_color_2920490490!
-    get_color! : () => U64
+    get_color! : () => Color
     get_color! = Host.cpuparticles2d_get_color_3444240500!
     set_color_ramp! : U64 => {}
     set_color_ramp! = Host.cpuparticles2d_set_color_ramp_2756054477!
@@ -194,9 +196,9 @@ CPUParticles2D := {
     set_emission_sphere_radius! = Host.cpuparticles2d_set_emission_sphere_radius_373806689!
     get_emission_sphere_radius! : () => F64
     get_emission_sphere_radius! = Host.cpuparticles2d_get_emission_sphere_radius_1740695150!
-    set_emission_rect_extents! : U64 => {}
+    set_emission_rect_extents! : Vector2 => {}
     set_emission_rect_extents! = Host.cpuparticles2d_set_emission_rect_extents_743155724!
-    get_emission_rect_extents! : () => U64
+    get_emission_rect_extents! : () => Vector2
     get_emission_rect_extents! = Host.cpuparticles2d_get_emission_rect_extents_3341600327!
     set_emission_points! : U64 => {}
     set_emission_points! = Host.cpuparticles2d_set_emission_points_1509147220!
@@ -218,9 +220,9 @@ CPUParticles2D := {
     set_emission_ring_radius! = Host.cpuparticles2d_set_emission_ring_radius_373806689!
     get_emission_ring_radius! : () => F64
     get_emission_ring_radius! = Host.cpuparticles2d_get_emission_ring_radius_1740695150!
-    get_gravity! : () => U64
+    get_gravity! : () => Vector2
     get_gravity! = Host.cpuparticles2d_get_gravity_3341600327!
-    set_gravity! : U64 => {}
+    set_gravity! : Vector2 => {}
     set_gravity! = Host.cpuparticles2d_set_gravity_743155724!
     get_split_scale! : () => Bool
     get_split_scale! = Host.cpuparticles2d_get_split_scale_2240911060!

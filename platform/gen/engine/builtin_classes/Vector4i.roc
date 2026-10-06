@@ -7,8 +7,8 @@ Vector4i := {
     z : I32,
     w : I32
 }.{
-    construct_default! : I32, I32, I32, I32 -> Vector4i
-    construct_default! = |x, y, z, w| { { x, y, z, w } }
+    construct_default! : {} -> Vector4i
+    construct_default! = |_| { crash "construct_default! not wired for Vector4i" }
     Axis : [AXIS_X, AXIS_Y, AXIS_Z, AXIS_W]
 
     # --- methods ---
@@ -20,28 +20,28 @@ Vector4i := {
     length! = Host.vector4i_length_466405837!
     length_squared! : () => I64
     length_squared! = Host.vector4i_length_squared_3173160232!
-    sign! : () => U64
+    sign! : () => Vector4i
     sign! = Host.vector4i_sign_4134919947!
-    abs! : () => U64
+    abs! : () => Vector4i
     abs! = Host.vector4i_abs_4134919947!
-    clamp! : U64, U64 => U64
+    clamp! : Vector4i, Vector4i => Vector4i
     clamp! = Host.vector4i_clamp_3046490913!
-    clampi! : I64, I64 => U64
+    clampi! : I64, I64 => Vector4i
     clampi! = Host.vector4i_clampi_2994578256!
-    snapped! : U64 => U64
+    snapped! : Vector4i => Vector4i
     snapped! = Host.vector4i_snapped_1181693102!
-    snappedi! : I64 => U64
+    snappedi! : I64 => Vector4i
     snappedi! = Host.vector4i_snappedi_1476494415!
-    min! : U64 => U64
+    min! : Vector4i => Vector4i
     min! = Host.vector4i_min_1181693102!
-    mini! : I64 => U64
+    mini! : I64 => Vector4i
     mini! = Host.vector4i_mini_1476494415!
-    max! : U64 => U64
+    max! : Vector4i => Vector4i
     max! = Host.vector4i_max_1181693102!
-    maxi! : I64 => U64
+    maxi! : I64 => Vector4i
     maxi! = Host.vector4i_maxi_1476494415!
-    distance_to! : U64 => F64
+    distance_to! : Vector4i => F64
     distance_to! = Host.vector4i_distance_to_3446086573!
-    distance_squared_to! : U64 => I64
+    distance_squared_to! : Vector4i => I64
     distance_squared_to! = Host.vector4i_distance_squared_to_346708794!
 }

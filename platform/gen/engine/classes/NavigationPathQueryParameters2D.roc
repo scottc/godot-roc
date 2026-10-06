@@ -1,5 +1,6 @@
 # class NavigationPathQueryParameters2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: RefCounted
 NavigationPathQueryParameters2D := {
@@ -11,8 +12,8 @@ NavigationPathQueryParameters2D := {
 
     # --- properties (getters/setters are methods) ---
     # property map : U64  getter=get_map setter=set_map
-    # property start_position : U64  getter=get_start_position setter=set_start_position
-    # property target_position : U64  getter=get_target_position setter=set_target_position
+    # property start_position : Vector2  getter=get_start_position setter=set_start_position
+    # property target_position : Vector2  getter=get_target_position setter=set_target_position
     # property navigation_layers : I64  getter=get_navigation_layers setter=set_navigation_layers
     # property pathfinding_algorithm : I64  getter=get_pathfinding_algorithm setter=set_pathfinding_algorithm
     # property path_postprocessing : I64  getter=get_path_postprocessing setter=set_path_postprocessing
@@ -39,13 +40,13 @@ NavigationPathQueryParameters2D := {
     set_map! = Host.navigationpathqueryparameters2d_set_map_2722037293!
     get_map! : () => U64
     get_map! = Host.navigationpathqueryparameters2d_get_map_2944877500!
-    set_start_position! : U64 => {}
+    set_start_position! : Vector2 => {}
     set_start_position! = Host.navigationpathqueryparameters2d_set_start_position_743155724!
-    get_start_position! : () => U64
+    get_start_position! : () => Vector2
     get_start_position! = Host.navigationpathqueryparameters2d_get_start_position_3341600327!
-    set_target_position! : U64 => {}
+    set_target_position! : Vector2 => {}
     set_target_position! = Host.navigationpathqueryparameters2d_set_target_position_743155724!
-    get_target_position! : () => U64
+    get_target_position! : () => Vector2
     get_target_position! = Host.navigationpathqueryparameters2d_get_target_position_3341600327!
     set_navigation_layers! : I64 => {}
     set_navigation_layers! = Host.navigationpathqueryparameters2d_set_navigation_layers_1286410249!

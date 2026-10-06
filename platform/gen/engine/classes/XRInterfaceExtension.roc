@@ -1,5 +1,9 @@
 # class XRInterfaceExtension
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Rect2
+import ../../engine/builtin_classes/Rect2i
 
 # inherits: XRInterface
 XRInterfaceExtension := {
@@ -31,13 +35,13 @@ XRInterfaceExtension := {
     _set_play_area_mode! = Host.xrinterfaceextension__set_play_area_mode_2693703033!
     _get_play_area! : () => U64
     _get_play_area! = Host.xrinterfaceextension__get_play_area_497664490!
-    _get_render_target_size! : () => U64
+    _get_render_target_size! : () => Vector2
     _get_render_target_size! = Host.xrinterfaceextension__get_render_target_size_1497962370!
     _get_view_count! : () => I64
     _get_view_count! = Host.xrinterfaceextension__get_view_count_2455072627!
-    _get_camera_transform! : () => U64
+    _get_camera_transform! : () => Transform3D
     _get_camera_transform! = Host.xrinterfaceextension__get_camera_transform_4183770049!
-    _get_transform_for_view! : I64, U64 => U64
+    _get_transform_for_view! : I64, Transform3D => Transform3D
     _get_transform_for_view! = Host.xrinterfaceextension__get_transform_for_view_518934792!
     _get_projection_for_view! : I64, F64, F64, F64 => U64
     _get_projection_for_view! = Host.xrinterfaceextension__get_projection_for_view_4067457445!
@@ -51,7 +55,7 @@ XRInterfaceExtension := {
     _pre_render! = Host.xrinterfaceextension__pre_render_3218959716!
     _pre_draw_viewport! : U64 => Bool
     _pre_draw_viewport! = Host.xrinterfaceextension__pre_draw_viewport_3521089500!
-    _post_draw_viewport! : U64, U64 => {}
+    _post_draw_viewport! : U64, Rect2 => {}
     _post_draw_viewport! = Host.xrinterfaceextension__post_draw_viewport_1378122625!
     _end_frame! : () => {}
     _end_frame! = Host.xrinterfaceextension__end_frame_3218959716!
@@ -81,7 +85,7 @@ XRInterfaceExtension := {
     get_depth_texture! = Host.xrinterfaceextension_get_depth_texture_529393457!
     get_velocity_texture! : () => U64
     get_velocity_texture! = Host.xrinterfaceextension_get_velocity_texture_529393457!
-    add_blit! : U64, U64, U64, Bool, I64, Bool, U64, F64, F64, F64, F64 => {}
+    add_blit! : U64, Rect2, Rect2i, Bool, I64, Bool, Vector2, F64, F64, F64, F64 => {}
     add_blit! = Host.xrinterfaceextension_add_blit_258596971!
     get_render_target_texture! : U64 => U64
     get_render_target_texture! = Host.xrinterfaceextension_get_render_target_texture_41030802!

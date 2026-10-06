@@ -1,5 +1,9 @@
 # class MultiMesh
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Transform2D
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/AABB
 
 # inherits: Resource
 MultiMesh := {
@@ -12,7 +16,7 @@ MultiMesh := {
     # property transform_format : I64  getter=get_transform_format setter=set_transform_format
     # property use_colors : Bool  getter=is_using_colors setter=set_use_colors
     # property use_custom_data : Bool  getter=is_using_custom_data setter=set_use_custom_data
-    # property custom_aabb : U64  getter=get_custom_aabb setter=set_custom_aabb
+    # property custom_aabb : AABB  getter=get_custom_aabb setter=set_custom_aabb
     # property instance_count : I64  getter=get_instance_count setter=set_instance_count
     # property visible_instance_count : I64  getter=get_visible_instance_count setter=set_visible_instance_count
     # property mesh : U64  getter=get_mesh setter=set_mesh
@@ -52,31 +56,31 @@ MultiMesh := {
     set_physics_interpolation_quality! = Host.multimesh_set_physics_interpolation_quality_1819488408!
     get_physics_interpolation_quality! : () => U64
     get_physics_interpolation_quality! = Host.multimesh_get_physics_interpolation_quality_1465701882!
-    set_instance_transform! : I64, U64 => {}
+    set_instance_transform! : I64, Transform3D => {}
     set_instance_transform! = Host.multimesh_set_instance_transform_3616898986!
-    set_instance_transform_2d! : I64, U64 => {}
+    set_instance_transform_2d! : I64, Transform2D => {}
     set_instance_transform_2d! = Host.multimesh_set_instance_transform_2d_30160968!
-    get_instance_transform! : I64 => U64
+    get_instance_transform! : I64 => Transform3D
     get_instance_transform! = Host.multimesh_get_instance_transform_1965739696!
-    get_instance_transform_2d! : I64 => U64
+    get_instance_transform_2d! : I64 => Transform2D
     get_instance_transform_2d! = Host.multimesh_get_instance_transform_2d_3836996910!
-    set_instance_color! : I64, U64 => {}
+    set_instance_color! : I64, Color => {}
     set_instance_color! = Host.multimesh_set_instance_color_2878471219!
-    get_instance_color! : I64 => U64
+    get_instance_color! : I64 => Color
     get_instance_color! = Host.multimesh_get_instance_color_3457211756!
-    set_instance_custom_data! : I64, U64 => {}
+    set_instance_custom_data! : I64, Color => {}
     set_instance_custom_data! = Host.multimesh_set_instance_custom_data_2878471219!
-    get_instance_custom_data! : I64 => U64
+    get_instance_custom_data! : I64 => Color
     get_instance_custom_data! = Host.multimesh_get_instance_custom_data_3457211756!
     reset_instance_physics_interpolation! : I64 => {}
     reset_instance_physics_interpolation! = Host.multimesh_reset_instance_physics_interpolation_1286410249!
     reset_instances_physics_interpolation! : () => {}
     reset_instances_physics_interpolation! = Host.multimesh_reset_instances_physics_interpolation_3218959716!
-    set_custom_aabb! : U64 => {}
+    set_custom_aabb! : AABB => {}
     set_custom_aabb! = Host.multimesh_set_custom_aabb_259215842!
-    get_custom_aabb! : () => U64
+    get_custom_aabb! : () => AABB
     get_custom_aabb! = Host.multimesh_get_custom_aabb_1068685055!
-    get_aabb! : () => U64
+    get_aabb! : () => AABB
     get_aabb! = Host.multimesh_get_aabb_1068685055!
     get_buffer! : () => U64
     get_buffer! = Host.multimesh_get_buffer_675695659!

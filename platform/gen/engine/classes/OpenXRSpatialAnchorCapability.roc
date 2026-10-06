@@ -1,5 +1,6 @@
 # class OpenXRSpatialAnchorCapability
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
 
 # inherits: OpenXRExtensionWrapper
 OpenXRSpatialAnchorCapability := {
@@ -25,7 +26,7 @@ OpenXRSpatialAnchorCapability := {
     get_persistence_context_handle! = Host.openxrspatialanchorcapability_get_persistence_context_handle_2198884583!
     free_persistence_context! : U64 => {}
     free_persistence_context! = Host.openxrspatialanchorcapability_free_persistence_context_2722037293!
-    create_new_anchor! : U64, U64, U64 => U64
+    create_new_anchor! : Transform3D, U64, U64 => U64
     create_new_anchor! = Host.openxrspatialanchorcapability_create_new_anchor_4088043487!
     remove_anchor! : U64 => {}
     remove_anchor! = Host.openxrspatialanchorcapability_remove_anchor_3579451518!

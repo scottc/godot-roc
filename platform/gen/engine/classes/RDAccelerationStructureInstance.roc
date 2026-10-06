@@ -1,5 +1,6 @@
 # class RDAccelerationStructureInstance
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
 
 # inherits: RefCounted
 RDAccelerationStructureInstance := {
@@ -8,7 +9,7 @@ RDAccelerationStructureInstance := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property transform : U64  getter=get_transform setter=set_transform
+    # property transform : Transform3D  getter=get_transform setter=set_transform
     # property id : I64  getter=get_id setter=set_id
     # property mask : I64  getter=get_mask setter=set_mask
     # property hit_sbt_range : I64  getter=get_hit_sbt_range setter=set_hit_sbt_range
@@ -16,9 +17,9 @@ RDAccelerationStructureInstance := {
     # property blas : U64  getter=get_blas setter=set_blas
 
     # --- methods ---
-    set_transform! : U64 => {}
+    set_transform! : Transform3D => {}
     set_transform! = Host.rdaccelerationstructureinstance_set_transform_2952846383!
-    get_transform! : () => U64
+    get_transform! : () => Transform3D
     get_transform! = Host.rdaccelerationstructureinstance_get_transform_3229777777!
     set_id! : I64 => {}
     set_id! = Host.rdaccelerationstructureinstance_set_id_1286410249!

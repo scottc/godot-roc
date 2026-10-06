@@ -1,5 +1,6 @@
 # class TabContainer
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Container
 TabContainer := {
@@ -92,7 +93,7 @@ TabContainer := {
     set_tab_button_icon! = Host.tabcontainer_set_tab_button_icon_666127730!
     get_tab_button_icon! : I64 => U64
     get_tab_button_icon! = Host.tabcontainer_get_tab_button_icon_3536238170!
-    get_tab_idx_at_point! : U64 => I64
+    get_tab_idx_at_point! : Vector2 => I64
     get_tab_idx_at_point! = Host.tabcontainer_get_tab_idx_at_point_3820158470!
     get_tab_idx_from_control! : U64 => I64
     get_tab_idx_from_control! = Host.tabcontainer_get_tab_idx_from_control_2787397975!

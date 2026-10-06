@@ -1,7 +1,19 @@
 # AUTO-GENERATED Godot Roc platform
 platform "godot-roc"
-    requires {} {}
+    requires {} {
+        # Supplied:
+        scene_init! : () => {},
+        ready! : () => {},
+        process! : GodotRoc.ClassId, F64 => {},
+        physics_process! : GodotRoc.ClassId, F64 => {},
+        # Generated:
+    }
     exposes [
+        # Supplied:
+        Engine,
+        GodotRoc,
+        # Host,
+        # Generated:
         Host,
         GlobalConstants,
         GlobalEnums,
@@ -1125,8 +1137,16 @@ platform "godot-roc"
         PhysicsServer3DSingleton,
         XRServerSingleton
     ]
-    packages {}
-    provides {}
+    packages { roc: "nightly-2026-09-27-a3ce7f1" }
+    provides {
+        # Provided:
+        "godot_roc_scene_init": scene_init_for_host!,
+        "godot_roc_ready": ready_for_host!,
+        "godot_roc_process": process_for_host!,
+        "godot_roc_physics_process": physics_process_for_host!,
+        # Generated:
+        # ...
+    }
     hosted {
         "godot_roc_get_singleton_performance": Host.get_singleton_performance!,
         "godot_roc_get_singleton_engine": Host.get_singleton_engine!,
@@ -19105,7 +19125,20 @@ platform "godot-roc"
         "godot_roc_zipreader_file_exists_35364943": Host.zipreader_file_exists_35364943!,
         "godot_roc_zipreader_get_compression_level_3694577386": Host.zipreader_get_compression_level_3694577386!,
     }
-
+    targets: {
+        inputs_dir: "targets/",
+        x64musl: { inputs: [ "libhost.a", app ], output: Shared },
+        wasm32: {
+            inputs: [ "libhost.o.wasm", app ],
+            output: Archive,
+            exports: [ "godot_roc_init" ],
+        },
+        x64win: { inputs: ["host.lib", app], output: Shared },
+        arm64win: { inputs: ["host.lib", app], output: Shared },
+        x64mingw: { inputs: ["host.lib", app], output: Shared },
+        arm64mingw: { inputs: ["host.lib", app], output: Shared },
+    }
+# Generated Imports:
 import Host
 import engine/GlobalConstants
 import engine/GlobalEnums
@@ -20231,3 +20264,32 @@ import engine/singletons/NavigationServer3DSingleton
 import engine/singletons/PhysicsServer2DSingleton
 import engine/singletons/PhysicsServer3DSingleton
 import engine/singletons/XRServerSingleton
+
+# Provided Imports:
+import Engine
+import Host
+import GodotRoc
+
+scene_init_for_host! : () => {}
+scene_init_for_host! = || {
+    _ = scene_init!()
+    {}
+}
+
+ready_for_host! : () => {}
+ready_for_host! = || {
+    _ = ready!()
+    {}
+}
+
+process_for_host! : GodotRoc.ClassId, F64 => {}
+process_for_host! = |class_id, delta| {
+    _ = process!(class_id, delta)
+    {}
+}
+
+physics_process_for_host! : GodotRoc.ClassId, F64 => {}
+physics_process_for_host! = |class_id, delta| {
+    _ = physics_process!(class_id, delta)
+    {}
+}

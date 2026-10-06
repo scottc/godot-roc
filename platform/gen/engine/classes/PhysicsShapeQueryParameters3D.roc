@@ -1,5 +1,7 @@
 # class PhysicsShapeQueryParameters3D
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Vector3
 
 # inherits: RefCounted
 PhysicsShapeQueryParameters3D := {
@@ -11,10 +13,10 @@ PhysicsShapeQueryParameters3D := {
     # property collision_mask : I64  getter=get_collision_mask setter=set_collision_mask
     # property exclude : U64  getter=get_exclude setter=set_exclude
     # property margin : F64  getter=get_margin setter=set_margin
-    # property motion : U64  getter=get_motion setter=set_motion
+    # property motion : Vector3  getter=get_motion setter=set_motion
     # property shape : U64  getter=get_shape setter=set_shape
     # property shape_rid : U64  getter=get_shape_rid setter=set_shape_rid
-    # property transform : U64  getter=get_transform setter=set_transform
+    # property transform : Transform3D  getter=get_transform setter=set_transform
     # property collide_with_bodies : Bool  getter=is_collide_with_bodies_enabled setter=set_collide_with_bodies
     # property collide_with_areas : Bool  getter=is_collide_with_areas_enabled setter=set_collide_with_areas
 
@@ -27,13 +29,13 @@ PhysicsShapeQueryParameters3D := {
     set_shape_rid! = Host.physicsshapequeryparameters3d_set_shape_rid_2722037293!
     get_shape_rid! : () => U64
     get_shape_rid! = Host.physicsshapequeryparameters3d_get_shape_rid_2944877500!
-    set_transform! : U64 => {}
+    set_transform! : Transform3D => {}
     set_transform! = Host.physicsshapequeryparameters3d_set_transform_2952846383!
-    get_transform! : () => U64
+    get_transform! : () => Transform3D
     get_transform! = Host.physicsshapequeryparameters3d_get_transform_3229777777!
-    set_motion! : U64 => {}
+    set_motion! : Vector3 => {}
     set_motion! = Host.physicsshapequeryparameters3d_set_motion_3460891852!
-    get_motion! : () => U64
+    get_motion! : () => Vector3
     get_motion! = Host.physicsshapequeryparameters3d_get_motion_3360562783!
     set_margin! : F64 => {}
     set_margin! = Host.physicsshapequeryparameters3d_set_margin_373806689!

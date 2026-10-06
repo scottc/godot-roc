@@ -1,5 +1,6 @@
 # class Theme
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: Resource
 Theme := {
@@ -69,9 +70,9 @@ Theme := {
     get_font_size_list! = Host.theme_get_font_size_list_4291131558!
     get_font_size_type_list! : () => U64
     get_font_size_type_list! = Host.theme_get_font_size_type_list_1139954409!
-    set_color! : Str, Str, U64 => {}
+    set_color! : Str, Str, Color => {}
     set_color! = Host.theme_set_color_4111215154!
-    get_color! : Str, Str => U64
+    get_color! : Str, Str => Color
     get_color! = Host.theme_get_color_2015923404!
     has_color! : Str, Str => Bool
     has_color! = Host.theme_has_color_471820014!

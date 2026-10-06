@@ -1,5 +1,6 @@
 # class PopupMenu
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: Popup
 PopupMenu := {
@@ -74,7 +75,7 @@ PopupMenu := {
     set_item_icon! = Host.popupmenu_set_item_icon_666127730!
     set_item_icon_max_width! : I64, I64 => {}
     set_item_icon_max_width! = Host.popupmenu_set_item_icon_max_width_3937882851!
-    set_item_icon_modulate! : I64, U64 => {}
+    set_item_icon_modulate! : I64, Color => {}
     set_item_icon_modulate! = Host.popupmenu_set_item_icon_modulate_2878471219!
     set_item_checked! : I64, Bool => {}
     set_item_checked! = Host.popupmenu_set_item_checked_300928843!
@@ -126,7 +127,7 @@ PopupMenu := {
     get_item_icon! = Host.popupmenu_get_item_icon_3536238170!
     get_item_icon_max_width! : I64 => I64
     get_item_icon_max_width! = Host.popupmenu_get_item_icon_max_width_923996154!
-    get_item_icon_modulate! : I64 => U64
+    get_item_icon_modulate! : I64 => Color
     get_item_icon_modulate! = Host.popupmenu_get_item_icon_modulate_3457211756!
     is_item_checked! : I64 => Bool
     is_item_checked! = Host.popupmenu_is_item_checked_1116898809!

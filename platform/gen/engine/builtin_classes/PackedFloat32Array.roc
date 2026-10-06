@@ -1,5 +1,6 @@
 # builtin PackedFloat32Array
 import ../../Host
+import PackedByteArray
 
 PackedFloat32Array := {
     ptr : U64

@@ -1,5 +1,6 @@
 # builtin Signal
 import ../../Host
+import Object
 
 Signal := {
     ptr : U64

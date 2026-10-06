@@ -1,5 +1,6 @@
 # class NavigationRegion2D
 import ../../Host
+import ../../engine/builtin_classes/Rect2
 
 # inherits: Node2D
 NavigationRegion2D := {
@@ -56,7 +57,7 @@ NavigationRegion2D := {
     bake_navigation_polygon! = Host.navigationregion2d_bake_navigation_polygon_3216645846!
     is_baking! : () => Bool
     is_baking! = Host.navigationregion2d_is_baking_36873697!
-    get_bounds! : () => U64
+    get_bounds! : () => Rect2
     get_bounds! = Host.navigationregion2d_get_bounds_1639390495!
 
     # signal navigation_polygon_changed : ()

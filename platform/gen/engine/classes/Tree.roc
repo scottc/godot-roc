@@ -1,5 +1,7 @@
 # class Tree
 import ../../Host
+import ../../engine/builtin_classes/Rect2
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Control
 Tree := {
@@ -82,17 +84,17 @@ Tree := {
     get_edited_column! = Host.tree_get_edited_column_3905245786!
     edit_selected! : Bool => Bool
     edit_selected! = Host.tree_edit_selected_2595650253!
-    get_custom_popup_rect! : () => U64
+    get_custom_popup_rect! : () => Rect2
     get_custom_popup_rect! = Host.tree_get_custom_popup_rect_1639390495!
-    get_item_area_rect! : U64, I64, I64 => U64
+    get_item_area_rect! : U64, I64, I64 => Rect2
     get_item_area_rect! = Host.tree_get_item_area_rect_47968679!
-    get_item_at_position! : U64 => U64
+    get_item_at_position! : Vector2 => U64
     get_item_at_position! = Host.tree_get_item_at_position_4193340126!
-    get_column_at_position! : U64 => I64
+    get_column_at_position! : Vector2 => I64
     get_column_at_position! = Host.tree_get_column_at_position_3820158470!
-    get_drop_section_at_position! : U64 => I64
+    get_drop_section_at_position! : Vector2 => I64
     get_drop_section_at_position! = Host.tree_get_drop_section_at_position_3820158470!
-    get_button_id_at_position! : U64 => I64
+    get_button_id_at_position! : Vector2 => I64
     get_button_id_at_position! = Host.tree_get_button_id_at_position_3820158470!
     ensure_cursor_is_visible! : () => {}
     ensure_cursor_is_visible! = Host.tree_ensure_cursor_is_visible_3218959716!
@@ -120,7 +122,7 @@ Tree := {
     set_column_title_language! = Host.tree_set_column_title_language_501894301!
     get_column_title_language! : I64 => Str
     get_column_title_language! = Host.tree_get_column_title_language_844755477!
-    get_scroll! : () => U64
+    get_scroll! : () => Vector2
     get_scroll! = Host.tree_get_scroll_3341600327!
     scroll_to_item! : U64, Bool => {}
     scroll_to_item! = Host.tree_scroll_to_item_1314737213!
@@ -176,8 +178,8 @@ Tree := {
     # signal item_selected : ()
     # signal cell_selected : ()
     # signal multi_selected : item : U64, column : I64, selected : Bool
-    # signal item_mouse_selected : mouse_position : U64, mouse_button_index : I64
-    # signal empty_clicked : click_position : U64, mouse_button_index : I64
+    # signal item_mouse_selected : mouse_position : Vector2, mouse_button_index : I64
+    # signal empty_clicked : click_position : Vector2, mouse_button_index : I64
     # signal item_edited : ()
     # signal custom_item_clicked : mouse_button_index : I64
     # signal item_icon_double_clicked : ()

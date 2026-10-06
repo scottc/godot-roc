@@ -1,5 +1,6 @@
 # class GeometryInstance3D
 import ../../Host
+import ../../engine/builtin_classes/AABB
 
 # inherits: VisualInstance3D
 GeometryInstance3D := {
@@ -16,7 +17,7 @@ GeometryInstance3D := {
     # property transparency : F64  getter=get_transparency setter=set_transparency
     # property cast_shadow : I64  getter=get_cast_shadows_setting setter=set_cast_shadows_setting
     # property extra_cull_margin : F64  getter=get_extra_cull_margin setter=set_extra_cull_margin
-    # property custom_aabb : U64  getter=get_custom_aabb setter=set_custom_aabb
+    # property custom_aabb : AABB  getter=get_custom_aabb setter=set_custom_aabb
     # property lod_bias : F64  getter=get_lod_bias setter=set_lod_bias
     # property ignore_occlusion_culling : Bool  getter=is_ignoring_occlusion_culling setter=set_ignore_occlusion_culling
     # property gi_mode : I64  getter=get_gi_mode setter=set_gi_mode
@@ -93,9 +94,9 @@ GeometryInstance3D := {
     set_ignore_occlusion_culling! = Host.geometryinstance3d_set_ignore_occlusion_culling_2586408642!
     is_ignoring_occlusion_culling! : () => Bool
     is_ignoring_occlusion_culling! = Host.geometryinstance3d_is_ignoring_occlusion_culling_2240911060!
-    set_custom_aabb! : U64 => {}
+    set_custom_aabb! : AABB => {}
     set_custom_aabb! = Host.geometryinstance3d_set_custom_aabb_259215842!
-    get_custom_aabb! : () => U64
+    get_custom_aabb! : () => AABB
     get_custom_aabb! = Host.geometryinstance3d_get_custom_aabb_1068685055!
 
 

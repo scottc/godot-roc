@@ -1,5 +1,7 @@
 # class ReflectionProbe
 import ../../Host
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Vector3
 
 # inherits: VisualInstance3D
 ReflectionProbe := {
@@ -13,8 +15,8 @@ ReflectionProbe := {
     # property intensity : F64  getter=get_intensity setter=set_intensity
     # property blend_distance : F64  getter=get_blend_distance setter=set_blend_distance
     # property max_distance : F64  getter=get_max_distance setter=set_max_distance
-    # property size : U64  getter=get_size setter=set_size
-    # property origin_offset : U64  getter=get_origin_offset setter=set_origin_offset
+    # property size : Vector3  getter=get_size setter=set_size
+    # property origin_offset : Vector3  getter=get_origin_offset setter=set_origin_offset
     # property box_projection : Bool  getter=is_box_projection_enabled setter=set_enable_box_projection
     # property interior : Bool  getter=is_set_as_interior setter=set_as_interior
     # property enable_shadows : Bool  getter=are_shadows_enabled setter=set_enable_shadows
@@ -22,7 +24,7 @@ ReflectionProbe := {
     # property reflection_mask : I64  getter=get_reflection_mask setter=set_reflection_mask
     # property mesh_lod_threshold : F64  getter=get_mesh_lod_threshold setter=set_mesh_lod_threshold
     # property ambient_mode : I64  getter=get_ambient_mode setter=set_ambient_mode
-    # property ambient_color : U64  getter=get_ambient_color setter=set_ambient_color
+    # property ambient_color : Color  getter=get_ambient_color setter=set_ambient_color
     # property ambient_color_energy : F64  getter=get_ambient_color_energy setter=set_ambient_color_energy
 
     # --- methods ---
@@ -38,9 +40,9 @@ ReflectionProbe := {
     set_ambient_mode! = Host.reflectionprobe_set_ambient_mode_1748981278!
     get_ambient_mode! : () => U64
     get_ambient_mode! = Host.reflectionprobe_get_ambient_mode_1014607621!
-    set_ambient_color! : U64 => {}
+    set_ambient_color! : Color => {}
     set_ambient_color! = Host.reflectionprobe_set_ambient_color_2920490490!
-    get_ambient_color! : () => U64
+    get_ambient_color! : () => Color
     get_ambient_color! = Host.reflectionprobe_get_ambient_color_3444240500!
     set_ambient_color_energy! : F64 => {}
     set_ambient_color_energy! = Host.reflectionprobe_set_ambient_color_energy_373806689!
@@ -54,13 +56,13 @@ ReflectionProbe := {
     set_mesh_lod_threshold! = Host.reflectionprobe_set_mesh_lod_threshold_373806689!
     get_mesh_lod_threshold! : () => F64
     get_mesh_lod_threshold! = Host.reflectionprobe_get_mesh_lod_threshold_1740695150!
-    set_size! : U64 => {}
+    set_size! : Vector3 => {}
     set_size! = Host.reflectionprobe_set_size_3460891852!
-    get_size! : () => U64
+    get_size! : () => Vector3
     get_size! = Host.reflectionprobe_get_size_3360562783!
-    set_origin_offset! : U64 => {}
+    set_origin_offset! : Vector3 => {}
     set_origin_offset! = Host.reflectionprobe_set_origin_offset_3460891852!
-    get_origin_offset! : () => U64
+    get_origin_offset! : () => Vector3
     get_origin_offset! = Host.reflectionprobe_get_origin_offset_3360562783!
     set_as_interior! : Bool => {}
     set_as_interior! = Host.reflectionprobe_set_as_interior_2586408642!

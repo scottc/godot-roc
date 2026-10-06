@@ -1,5 +1,7 @@
 # class XRPositionalTracker
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Vector3
 
 # inherits: XRTracker
 XRPositionalTracker := {
@@ -26,7 +28,7 @@ XRPositionalTracker := {
     get_pose! = Host.xrpositionaltracker_get_pose_4099720006!
     invalidate_pose! : Str => {}
     invalidate_pose! = Host.xrpositionaltracker_invalidate_pose_3304788590!
-    set_pose! : Str, U64, U64, U64, U64 => {}
+    set_pose! : Str, Transform3D, Vector3, Vector3, U64 => {}
     set_pose! = Host.xrpositionaltracker_set_pose_3451230163!
     get_input! : Str => U64
     get_input! = Host.xrpositionaltracker_get_input_2760726917!
@@ -38,6 +40,6 @@ XRPositionalTracker := {
     # signal button_pressed : action_name : Str
     # signal button_released : action_name : Str
     # signal input_float_changed : action_name : Str, value : F64
-    # signal input_vector2_changed : action_name : Str, vector : U64
+    # signal input_vector2_changed : action_name : Str, vector : Vector2
     # signal profile_changed : role : Str
 }

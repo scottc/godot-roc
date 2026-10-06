@@ -1,5 +1,6 @@
 # class GPUParticlesCollisionHeightField3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: GPUParticlesCollision3D
 GPUParticlesCollisionHeightField3D := {
@@ -9,16 +10,16 @@ GPUParticlesCollisionHeightField3D := {
     UpdateMode : [UPDATE_MODE_WHEN_MOVED, UPDATE_MODE_ALWAYS]
 
     # --- properties (getters/setters are methods) ---
-    # property size : U64  getter=get_size setter=set_size
+    # property size : Vector3  getter=get_size setter=set_size
     # property resolution : I64  getter=get_resolution setter=set_resolution
     # property update_mode : I64  getter=get_update_mode setter=set_update_mode
     # property follow_camera_enabled : Bool  getter=is_follow_camera_enabled setter=set_follow_camera_enabled
     # property heightfield_mask : I64  getter=get_heightfield_mask setter=set_heightfield_mask
 
     # --- methods ---
-    set_size! : U64 => {}
+    set_size! : Vector3 => {}
     set_size! = Host.gpuparticlescollisionheightfield3d_set_size_3460891852!
-    get_size! : () => U64
+    get_size! : () => Vector3
     get_size! = Host.gpuparticlescollisionheightfield3d_get_size_3360562783!
     set_resolution! : U64 => {}
     set_resolution! = Host.gpuparticlescollisionheightfield3d_set_resolution_1009996517!

@@ -1,5 +1,9 @@
 # class RenderingDevice
 import ../../Host
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Rect2
 
 # inherits: Object
 RenderingDevice := {
@@ -73,9 +77,9 @@ RenderingDevice := {
     texture_set_discardable! = Host.renderingdevice_texture_set_discardable_1265174801!
     texture_is_discardable! : U64 => Bool
     texture_is_discardable! = Host.renderingdevice_texture_is_discardable_3521089500!
-    texture_copy! : U64, U64, U64, U64, U64, I64, I64, I64, I64 => U64
+    texture_copy! : U64, U64, Vector3, Vector3, Vector3, I64, I64, I64, I64 => U64
     texture_copy! = Host.renderingdevice_texture_copy_2859522160!
-    texture_clear! : U64, U64, I64, I64, I64, I64 => U64
+    texture_clear! : U64, Color, I64, I64, I64, I64 => U64
     texture_clear! = Host.renderingdevice_texture_clear_3477703247!
     texture_resolve_multisample! : U64, U64 => U64
     texture_resolve_multisample! = Host.renderingdevice_texture_resolve_multisample_3181288260!
@@ -95,7 +99,7 @@ RenderingDevice := {
     framebuffer_create! = Host.renderingdevice_framebuffer_create_3284231055!
     framebuffer_create_multipass! : U64, U64, I64, I64 => U64
     framebuffer_create_multipass! = Host.renderingdevice_framebuffer_create_multipass_1750306695!
-    framebuffer_create_empty! : U64, U64, I64 => U64
+    framebuffer_create_empty! : Vector2i, U64, I64 => U64
     framebuffer_create_empty! = Host.renderingdevice_framebuffer_create_empty_3058360618!
     framebuffer_get_format! : U64 => I64
     framebuffer_get_format! = Host.renderingdevice_framebuffer_get_format_3917799429!
@@ -185,13 +189,13 @@ RenderingDevice := {
     screen_get_height! = Host.renderingdevice_screen_get_height_1591665591!
     screen_get_framebuffer_format! : I64 => I64
     screen_get_framebuffer_format! = Host.renderingdevice_screen_get_framebuffer_format_1591665591!
-    draw_list_begin_for_screen! : I64, U64 => I64
+    draw_list_begin_for_screen! : I64, Color => I64
     draw_list_begin_for_screen! = Host.renderingdevice_draw_list_begin_for_screen_3988079995!
-    draw_list_begin! : U64, U64, U64, F64, I64, U64, I64 => I64
+    draw_list_begin! : U64, U64, U64, F64, I64, Rect2, I64 => I64
     draw_list_begin! = Host.renderingdevice_draw_list_begin_1317926357!
-    draw_list_begin_split! : U64, I64, U64, U64, U64, U64, U64, F64, I64, U64, U64 => U64
+    draw_list_begin_split! : U64, I64, U64, U64, U64, U64, U64, F64, I64, Rect2, U64 => U64
     draw_list_begin_split! = Host.renderingdevice_draw_list_begin_split_2406300660!
-    draw_list_set_blend_constants! : I64, U64 => {}
+    draw_list_set_blend_constants! : I64, Color => {}
     draw_list_set_blend_constants! = Host.renderingdevice_draw_list_set_blend_constants_2878471219!
     draw_list_bind_render_pipeline! : I64, U64 => {}
     draw_list_bind_render_pipeline! = Host.renderingdevice_draw_list_bind_render_pipeline_4040184819!
@@ -209,7 +213,7 @@ RenderingDevice := {
     draw_list_draw! = Host.renderingdevice_draw_list_draw_4230067973!
     draw_list_draw_indirect! : I64, Bool, U64, I64, I64, I64 => {}
     draw_list_draw_indirect! = Host.renderingdevice_draw_list_draw_indirect_1092133571!
-    draw_list_enable_scissor! : I64, U64 => {}
+    draw_list_enable_scissor! : I64, Rect2 => {}
     draw_list_enable_scissor! = Host.renderingdevice_draw_list_enable_scissor_244650101!
     draw_list_disable_scissor! : I64 => {}
     draw_list_disable_scissor! = Host.renderingdevice_draw_list_disable_scissor_1286410249!
@@ -279,9 +283,9 @@ RenderingDevice := {
     create_local_device! = Host.renderingdevice_create_local_device_2846302423!
     set_resource_name! : U64, Str => {}
     set_resource_name! = Host.renderingdevice_set_resource_name_2726140452!
-    draw_command_begin_label! : Str, U64 => {}
+    draw_command_begin_label! : Str, Color => {}
     draw_command_begin_label! = Host.renderingdevice_draw_command_begin_label_1636512886!
-    draw_command_insert_label! : Str, U64 => {}
+    draw_command_insert_label! : Str, Color => {}
     draw_command_insert_label! = Host.renderingdevice_draw_command_insert_label_1636512886!
     draw_command_end_label! : () => {}
     draw_command_end_label! = Host.renderingdevice_draw_command_end_label_3218959716!

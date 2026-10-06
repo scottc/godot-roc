@@ -1,5 +1,6 @@
 # class VisualInstance3D
 import ../../Host
+import ../../engine/builtin_classes/AABB
 
 # inherits: Node3D
 VisualInstance3D := {
@@ -13,7 +14,7 @@ VisualInstance3D := {
     # property sorting_use_aabb_center : Bool  getter=is_sorting_use_aabb_center setter=set_sorting_use_aabb_center
 
     # --- methods ---
-    _get_aabb! : () => U64
+    _get_aabb! : () => AABB
     _get_aabb! = Host.visualinstance3d__get_aabb_1068685055!
     set_base! : U64 => {}
     set_base! = Host.visualinstance3d_set_base_2722037293!
@@ -37,7 +38,7 @@ VisualInstance3D := {
     set_sorting_use_aabb_center! = Host.visualinstance3d_set_sorting_use_aabb_center_2586408642!
     is_sorting_use_aabb_center! : () => Bool
     is_sorting_use_aabb_center! = Host.visualinstance3d_is_sorting_use_aabb_center_36873697!
-    get_aabb! : () => U64
+    get_aabb! : () => AABB
     get_aabb! = Host.visualinstance3d_get_aabb_1068685055!
 
 

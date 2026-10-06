@@ -5,20 +5,10 @@ Color := {
     r : F32,
     g : F32,
     b : F32,
-    a : F32,
-    r8 : I32,
-    g8 : I32,
-    b8 : I32,
-    a8 : I32,
-    h : F32,
-    s : F32,
-    v : F32,
-    ok_hsl_h : F32,
-    ok_hsl_s : F32,
-    ok_hsl_l : F32
+    a : F32
 }.{
-    construct_default! : F32, F32, F32, F32, I32, I32, I32, I32, F32, F32, F32, F32, F32, F32 -> Color
-    construct_default! = |r, g, b, a, r8, g8, b8, a8, h, s, v, ok_hsl_h, ok_hsl_s, ok_hsl_l| { { r, g, b, a, r8, g8, b8, a8, h, s, v, ok_hsl_h, ok_hsl_s, ok_hsl_l } }
+    construct_default! : {} -> Color
+    construct_default! = |_| { crash "construct_default! not wired for Color" }
 
 
     # --- methods ---
@@ -36,42 +26,42 @@ Color := {
     to_rgba64! = Host.color_to_rgba64_3173160232!
     to_html! : Bool => Str
     to_html! = Host.color_to_html_3429816538!
-    clamp! : U64, U64 => U64
+    clamp! : Color, Color => Color
     clamp! = Host.color_clamp_105651410!
-    inverted! : () => U64
+    inverted! : () => Color
     inverted! = Host.color_inverted_3334027602!
-    lerp! : U64, F64 => U64
+    lerp! : Color, F64 => Color
     lerp! = Host.color_lerp_402949615!
-    lightened! : F64 => U64
+    lightened! : F64 => Color
     lightened! = Host.color_lightened_1466039168!
-    darkened! : F64 => U64
+    darkened! : F64 => Color
     darkened! = Host.color_darkened_1466039168!
-    blend! : U64 => U64
+    blend! : Color => Color
     blend! = Host.color_blend_3803690977!
     get_luminance! : () => F64
     get_luminance! = Host.color_get_luminance_466405837!
-    srgb_to_linear! : () => U64
+    srgb_to_linear! : () => Color
     srgb_to_linear! = Host.color_srgb_to_linear_3334027602!
-    linear_to_srgb! : () => U64
+    linear_to_srgb! : () => Color
     linear_to_srgb! = Host.color_linear_to_srgb_3334027602!
-    is_equal_approx! : U64 => Bool
+    is_equal_approx! : Color => Bool
     is_equal_approx! = Host.color_is_equal_approx_3167426256!
-    hex! : I64 => U64
+    hex! : I64 => Color
     hex! = Host.color_hex_351421375!
-    hex64! : I64 => U64
+    hex64! : I64 => Color
     hex64! = Host.color_hex64_351421375!
-    html! : Str => U64
+    html! : Str => Color
     html! = Host.color_html_2500054655!
     html_is_valid! : Str => Bool
     html_is_valid! = Host.color_html_is_valid_2942997125!
-    from_string! : Str, U64 => U64
+    from_string! : Str, Color => Color
     from_string! = Host.color_from_string_3755044230!
-    from_hsv! : F64, F64, F64, F64 => U64
+    from_hsv! : F64, F64, F64, F64 => Color
     from_hsv! = Host.color_from_hsv_1573799446!
-    from_ok_hsl! : F64, F64, F64, F64 => U64
+    from_ok_hsl! : F64, F64, F64, F64 => Color
     from_ok_hsl! = Host.color_from_ok_hsl_1573799446!
-    from_rgbe9995! : I64 => U64
+    from_rgbe9995! : I64 => Color
     from_rgbe9995! = Host.color_from_rgbe9995_351421375!
-    from_rgba8! : I64, I64, I64, I64 => U64
+    from_rgba8! : I64, I64, I64, I64 => Color
     from_rgba8! = Host.color_from_rgba8_3072934735!
 }

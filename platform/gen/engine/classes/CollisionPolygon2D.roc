@@ -1,5 +1,6 @@
 # class CollisionPolygon2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Node2D
 CollisionPolygon2D := {
@@ -13,7 +14,7 @@ CollisionPolygon2D := {
     # property disabled : Bool  getter=is_disabled setter=set_disabled
     # property one_way_collision : Bool  getter=is_one_way_collision_enabled setter=set_one_way_collision
     # property one_way_collision_margin : F64  getter=get_one_way_collision_margin setter=set_one_way_collision_margin
-    # property one_way_collision_direction : U64  getter=get_one_way_collision_direction setter=set_one_way_collision_direction
+    # property one_way_collision_direction : Vector2  getter=get_one_way_collision_direction setter=set_one_way_collision_direction
 
     # --- methods ---
     set_polygon! : U64 => {}
@@ -36,9 +37,9 @@ CollisionPolygon2D := {
     set_one_way_collision_margin! = Host.collisionpolygon2d_set_one_way_collision_margin_373806689!
     get_one_way_collision_margin! : () => F64
     get_one_way_collision_margin! = Host.collisionpolygon2d_get_one_way_collision_margin_1740695150!
-    set_one_way_collision_direction! : U64 => {}
+    set_one_way_collision_direction! : Vector2 => {}
     set_one_way_collision_direction! = Host.collisionpolygon2d_set_one_way_collision_direction_743155724!
-    get_one_way_collision_direction! : () => U64
+    get_one_way_collision_direction! : () => Vector2
     get_one_way_collision_direction! = Host.collisionpolygon2d_get_one_way_collision_direction_3341600327!
 
 

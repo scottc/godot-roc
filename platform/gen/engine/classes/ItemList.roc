@@ -1,5 +1,9 @@
 # class ItemList
 import ../../Host
+import ../../engine/builtin_classes/Rect2
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Control
 ItemList := {
@@ -27,7 +31,7 @@ ItemList := {
     # property fixed_column_width : I64  getter=get_fixed_column_width setter=set_fixed_column_width
     # property icon_mode : I64  getter=get_icon_mode setter=set_icon_mode
     # property icon_scale : F64  getter=get_icon_scale setter=set_icon_scale
-    # property fixed_icon_size : U64  getter=get_fixed_icon_size setter=set_fixed_icon_size
+    # property fixed_icon_size : Vector2i  getter=get_fixed_icon_size setter=set_fixed_icon_size
 
     # --- methods ---
     add_item! : Str, U64, Bool => I64
@@ -58,13 +62,13 @@ ItemList := {
     set_item_icon_transposed! = Host.itemlist_set_item_icon_transposed_300928843!
     is_item_icon_transposed! : I64 => Bool
     is_item_icon_transposed! = Host.itemlist_is_item_icon_transposed_1116898809!
-    set_item_icon_region! : I64, U64 => {}
+    set_item_icon_region! : I64, Rect2 => {}
     set_item_icon_region! = Host.itemlist_set_item_icon_region_1356297692!
-    get_item_icon_region! : I64 => U64
+    get_item_icon_region! : I64 => Rect2
     get_item_icon_region! = Host.itemlist_get_item_icon_region_3327874267!
-    set_item_icon_modulate! : I64, U64 => {}
+    set_item_icon_modulate! : I64, Color => {}
     set_item_icon_modulate! = Host.itemlist_set_item_icon_modulate_2878471219!
-    get_item_icon_modulate! : I64 => U64
+    get_item_icon_modulate! : I64 => Color
     get_item_icon_modulate! = Host.itemlist_get_item_icon_modulate_3457211756!
     set_item_selectable! : I64, Bool => {}
     set_item_selectable! = Host.itemlist_set_item_selectable_300928843!
@@ -78,15 +82,15 @@ ItemList := {
     set_item_metadata! = Host.itemlist_set_item_metadata_2152698145!
     get_item_metadata! : I64 => U64
     get_item_metadata! = Host.itemlist_get_item_metadata_4227898402!
-    set_item_custom_bg_color! : I64, U64 => {}
+    set_item_custom_bg_color! : I64, Color => {}
     set_item_custom_bg_color! = Host.itemlist_set_item_custom_bg_color_2878471219!
-    get_item_custom_bg_color! : I64 => U64
+    get_item_custom_bg_color! : I64 => Color
     get_item_custom_bg_color! = Host.itemlist_get_item_custom_bg_color_3457211756!
-    set_item_custom_fg_color! : I64, U64 => {}
+    set_item_custom_fg_color! : I64, Color => {}
     set_item_custom_fg_color! = Host.itemlist_set_item_custom_fg_color_2878471219!
-    get_item_custom_fg_color! : I64 => U64
+    get_item_custom_fg_color! : I64 => Color
     get_item_custom_fg_color! = Host.itemlist_get_item_custom_fg_color_3457211756!
-    get_item_rect! : I64, Bool => U64
+    get_item_rect! : I64, Bool => Rect2
     get_item_rect! = Host.itemlist_get_item_rect_159227807!
     set_item_tooltip_enabled! : I64, Bool => {}
     set_item_tooltip_enabled! = Host.itemlist_set_item_tooltip_enabled_300928843!
@@ -142,9 +146,9 @@ ItemList := {
     set_icon_mode! = Host.itemlist_set_icon_mode_2025053633!
     get_icon_mode! : () => U64
     get_icon_mode! = Host.itemlist_get_icon_mode_3353929232!
-    set_fixed_icon_size! : U64 => {}
+    set_fixed_icon_size! : Vector2i => {}
     set_fixed_icon_size! = Host.itemlist_set_fixed_icon_size_1130785943!
-    get_fixed_icon_size! : () => U64
+    get_fixed_icon_size! : () => Vector2i
     get_fixed_icon_size! = Host.itemlist_get_fixed_icon_size_3690982128!
     set_icon_scale! : F64 => {}
     set_icon_scale! = Host.itemlist_set_icon_scale_373806689!
@@ -172,7 +176,7 @@ ItemList := {
     has_auto_height! = Host.itemlist_has_auto_height_36873697!
     is_anything_selected! : () => Bool
     is_anything_selected! = Host.itemlist_is_anything_selected_2240911060!
-    get_item_at_position! : U64, Bool => I64
+    get_item_at_position! : Vector2, Bool => I64
     get_item_at_position! = Host.itemlist_get_item_at_position_2300324924!
     ensure_current_is_visible! : () => {}
     ensure_current_is_visible! = Host.itemlist_ensure_current_is_visible_3218959716!
@@ -202,8 +206,8 @@ ItemList := {
     force_update_list_size! = Host.itemlist_force_update_list_size_3218959716!
 
     # signal item_selected : index : I64
-    # signal empty_clicked : at_position : U64, mouse_button_index : I64
-    # signal item_clicked : index : I64, at_position : U64, mouse_button_index : I64
+    # signal empty_clicked : at_position : Vector2, mouse_button_index : I64
+    # signal item_clicked : index : I64, at_position : Vector2, mouse_button_index : I64
     # signal multi_selected : index : I64, selected : Bool
     # signal item_activated : index : I64
 }

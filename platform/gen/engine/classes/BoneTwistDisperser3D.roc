@@ -1,5 +1,6 @@
 # class BoneTwistDisperser3D
 import ../../Host
+import ../../engine/builtin_classes/Quaternion
 
 # inherits: SkeletonModifier3D
 BoneTwistDisperser3D := {
@@ -54,9 +55,9 @@ BoneTwistDisperser3D := {
     set_twist_from_rest! = Host.bonetwistdisperser3d_set_twist_from_rest_300928843!
     is_twist_from_rest! : I64 => Bool
     is_twist_from_rest! = Host.bonetwistdisperser3d_is_twist_from_rest_1116898809!
-    set_twist_from! : I64, U64 => {}
+    set_twist_from! : I64, Quaternion => {}
     set_twist_from! = Host.bonetwistdisperser3d_set_twist_from_2823819782!
-    get_twist_from! : I64 => U64
+    get_twist_from! : I64 => Quaternion
     get_twist_from! = Host.bonetwistdisperser3d_get_twist_from_476865136!
     set_disperse_mode! : I64, U64 => {}
     set_disperse_mode! = Host.bonetwistdisperser3d_set_disperse_mode_2954194337!

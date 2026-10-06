@@ -1,5 +1,8 @@
 # class TileMapLayer
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Rect2i
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Node2D
 TileMapLayer := {
@@ -23,43 +26,43 @@ TileMapLayer := {
     # property navigation_visibility_mode : I64  getter=get_navigation_visibility_mode setter=set_navigation_visibility_mode
 
     # --- methods ---
-    _use_tile_data_runtime_update! : U64 => Bool
+    _use_tile_data_runtime_update! : Vector2i => Bool
     _use_tile_data_runtime_update! = Host.tilemaplayer__use_tile_data_runtime_update_3715736492!
-    _tile_data_runtime_update! : U64, U64 => {}
+    _tile_data_runtime_update! : Vector2i, U64 => {}
     _tile_data_runtime_update! = Host.tilemaplayer__tile_data_runtime_update_1627322126!
     _update_cells! : U64, Bool => {}
     _update_cells! = Host.tilemaplayer__update_cells_3156113851!
-    set_cell! : U64, I64, U64, I64 => {}
+    set_cell! : Vector2i, I64, Vector2i, I64 => {}
     set_cell! = Host.tilemaplayer_set_cell_2428518503!
-    erase_cell! : U64 => {}
+    erase_cell! : Vector2i => {}
     erase_cell! = Host.tilemaplayer_erase_cell_1130785943!
     fix_invalid_tiles! : () => {}
     fix_invalid_tiles! = Host.tilemaplayer_fix_invalid_tiles_3218959716!
     clear! : () => {}
     clear! = Host.tilemaplayer_clear_3218959716!
-    get_cell_source_id! : U64 => I64
+    get_cell_source_id! : Vector2i => I64
     get_cell_source_id! = Host.tilemaplayer_get_cell_source_id_2485466453!
-    get_cell_atlas_coords! : U64 => U64
+    get_cell_atlas_coords! : Vector2i => Vector2i
     get_cell_atlas_coords! = Host.tilemaplayer_get_cell_atlas_coords_3050897911!
-    get_cell_alternative_tile! : U64 => I64
+    get_cell_alternative_tile! : Vector2i => I64
     get_cell_alternative_tile! = Host.tilemaplayer_get_cell_alternative_tile_2485466453!
-    get_cell_tile_data! : U64 => U64
+    get_cell_tile_data! : Vector2i => U64
     get_cell_tile_data! = Host.tilemaplayer_get_cell_tile_data_205084707!
-    is_cell_flipped_h! : U64 => Bool
+    is_cell_flipped_h! : Vector2i => Bool
     is_cell_flipped_h! = Host.tilemaplayer_is_cell_flipped_h_3900751641!
-    is_cell_flipped_v! : U64 => Bool
+    is_cell_flipped_v! : Vector2i => Bool
     is_cell_flipped_v! = Host.tilemaplayer_is_cell_flipped_v_3900751641!
-    is_cell_transposed! : U64 => Bool
+    is_cell_transposed! : Vector2i => Bool
     is_cell_transposed! = Host.tilemaplayer_is_cell_transposed_3900751641!
     get_used_cells! : () => U64
     get_used_cells! = Host.tilemaplayer_get_used_cells_3995934104!
-    get_used_cells_by_id! : I64, U64, I64 => U64
+    get_used_cells_by_id! : I64, Vector2i, I64 => U64
     get_used_cells_by_id! = Host.tilemaplayer_get_used_cells_by_id_4175304538!
-    get_used_rect! : () => U64
+    get_used_rect! : () => Rect2i
     get_used_rect! = Host.tilemaplayer_get_used_rect_410525958!
     get_pattern! : U64 => U64
     get_pattern! = Host.tilemaplayer_get_pattern_3820813253!
-    set_pattern! : U64, U64 => {}
+    set_pattern! : Vector2i, U64 => {}
     set_pattern! = Host.tilemaplayer_set_pattern_1491151770!
     set_cells_terrain_connect! : U64, I64, I64, Bool => {}
     set_cells_terrain_connect! = Host.tilemaplayer_set_cells_terrain_connect_748968311!
@@ -67,21 +70,21 @@ TileMapLayer := {
     set_cells_terrain_path! = Host.tilemaplayer_set_cells_terrain_path_748968311!
     has_body_rid! : U64 => Bool
     has_body_rid! = Host.tilemaplayer_has_body_rid_4155700596!
-    get_coords_for_body_rid! : U64 => U64
+    get_coords_for_body_rid! : U64 => Vector2i
     get_coords_for_body_rid! = Host.tilemaplayer_get_coords_for_body_rid_733700038!
     update_internals! : () => {}
     update_internals! = Host.tilemaplayer_update_internals_3218959716!
     notify_runtime_tile_data_update! : () => {}
     notify_runtime_tile_data_update! = Host.tilemaplayer_notify_runtime_tile_data_update_3218959716!
-    map_pattern! : U64, U64, U64 => U64
+    map_pattern! : Vector2i, Vector2i, U64 => Vector2i
     map_pattern! = Host.tilemaplayer_map_pattern_1864516957!
-    get_surrounding_cells! : U64 => U64
+    get_surrounding_cells! : Vector2i => U64
     get_surrounding_cells! = Host.tilemaplayer_get_surrounding_cells_2673526557!
-    get_neighbor_cell! : U64, U64 => U64
+    get_neighbor_cell! : Vector2i, U64 => Vector2i
     get_neighbor_cell! = Host.tilemaplayer_get_neighbor_cell_986575103!
-    map_to_local! : U64 => U64
+    map_to_local! : Vector2i => Vector2
     map_to_local! = Host.tilemaplayer_map_to_local_108438297!
-    local_to_map! : U64 => U64
+    local_to_map! : Vector2 => Vector2i
     local_to_map! = Host.tilemaplayer_local_to_map_837806996!
     set_tile_map_data_from_array! : U64 => {}
     set_tile_map_data_from_array! = Host.tilemaplayer_set_tile_map_data_from_array_2971499966!

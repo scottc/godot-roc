@@ -1,5 +1,6 @@
 # class CharacterBody2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: PhysicsBody2D
 CharacterBody2D := {
@@ -10,8 +11,8 @@ CharacterBody2D := {
 
     # --- properties (getters/setters are methods) ---
     # property motion_mode : I64  getter=get_motion_mode setter=set_motion_mode
-    # property up_direction : U64  getter=get_up_direction setter=set_up_direction
-    # property velocity : U64  getter=get_velocity setter=set_velocity
+    # property up_direction : Vector2  getter=get_up_direction setter=set_up_direction
+    # property velocity : Vector2  getter=get_velocity setter=set_velocity
     # property slide_on_ceiling : Bool  getter=is_slide_on_ceiling_enabled setter=set_slide_on_ceiling_enabled
     # property max_slides : I64  getter=get_max_slides setter=set_max_slides
     # property wall_min_slide_angle : F64  getter=get_wall_min_slide_angle setter=set_wall_min_slide_angle
@@ -30,9 +31,9 @@ CharacterBody2D := {
     move_and_slide! = Host.characterbody2d_move_and_slide_2240911060!
     apply_floor_snap! : () => {}
     apply_floor_snap! = Host.characterbody2d_apply_floor_snap_3218959716!
-    set_velocity! : U64 => {}
+    set_velocity! : Vector2 => {}
     set_velocity! = Host.characterbody2d_set_velocity_743155724!
-    get_velocity! : () => U64
+    get_velocity! : () => Vector2
     get_velocity! = Host.characterbody2d_get_velocity_3341600327!
     set_safe_margin! : F64 => {}
     set_safe_margin! = Host.characterbody2d_set_safe_margin_373806689!
@@ -78,9 +79,9 @@ CharacterBody2D := {
     get_wall_min_slide_angle! = Host.characterbody2d_get_wall_min_slide_angle_1740695150!
     set_wall_min_slide_angle! : F64 => {}
     set_wall_min_slide_angle! = Host.characterbody2d_set_wall_min_slide_angle_373806689!
-    get_up_direction! : () => U64
+    get_up_direction! : () => Vector2
     get_up_direction! = Host.characterbody2d_get_up_direction_3341600327!
-    set_up_direction! : U64 => {}
+    set_up_direction! : Vector2 => {}
     set_up_direction! = Host.characterbody2d_set_up_direction_743155724!
     set_motion_mode! : U64 => {}
     set_motion_mode! = Host.characterbody2d_set_motion_mode_1224392233!
@@ -102,19 +103,19 @@ CharacterBody2D := {
     is_on_wall! = Host.characterbody2d_is_on_wall_36873697!
     is_on_wall_only! : () => Bool
     is_on_wall_only! = Host.characterbody2d_is_on_wall_only_36873697!
-    get_floor_normal! : () => U64
+    get_floor_normal! : () => Vector2
     get_floor_normal! = Host.characterbody2d_get_floor_normal_3341600327!
-    get_wall_normal! : () => U64
+    get_wall_normal! : () => Vector2
     get_wall_normal! = Host.characterbody2d_get_wall_normal_3341600327!
-    get_last_motion! : () => U64
+    get_last_motion! : () => Vector2
     get_last_motion! = Host.characterbody2d_get_last_motion_3341600327!
-    get_position_delta! : () => U64
+    get_position_delta! : () => Vector2
     get_position_delta! = Host.characterbody2d_get_position_delta_3341600327!
-    get_real_velocity! : () => U64
+    get_real_velocity! : () => Vector2
     get_real_velocity! = Host.characterbody2d_get_real_velocity_3341600327!
-    get_floor_angle! : U64 => F64
+    get_floor_angle! : Vector2 => F64
     get_floor_angle! = Host.characterbody2d_get_floor_angle_2841063350!
-    get_platform_velocity! : () => U64
+    get_platform_velocity! : () => Vector2
     get_platform_velocity! = Host.characterbody2d_get_platform_velocity_3341600327!
     get_slide_collision_count! : () => I64
     get_slide_collision_count! = Host.characterbody2d_get_slide_collision_count_3905245786!

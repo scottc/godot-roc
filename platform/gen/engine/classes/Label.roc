@@ -1,5 +1,6 @@
 # class Label
 import ../../Host
+import ../../engine/builtin_classes/Rect2
 
 # inherits: Control
 Label := {
@@ -128,7 +129,7 @@ Label := {
     set_structured_text_bidi_override_options! = Host.label_set_structured_text_bidi_override_options_381264803!
     get_structured_text_bidi_override_options! : () => U64
     get_structured_text_bidi_override_options! = Host.label_get_structured_text_bidi_override_options_3995934104!
-    get_character_bounds! : I64 => U64
+    get_character_bounds! : I64 => Rect2
     get_character_bounds! = Host.label_get_character_bounds_3327874267!
 
 

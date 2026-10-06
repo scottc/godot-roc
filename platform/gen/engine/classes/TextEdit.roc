@@ -1,5 +1,9 @@
 # class TextEdit
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Rect2i
+import ../../engine/builtin_classes/Color
 
 # inherits: Control
 TextEdit := {
@@ -191,7 +195,7 @@ TextEdit := {
     get_last_unhidden_line! = Host.textedit_get_last_unhidden_line_3905245786!
     get_next_visible_line_offset_from! : I64, I64 => I64
     get_next_visible_line_offset_from! = Host.textedit_get_next_visible_line_offset_from_3175239445!
-    get_next_visible_line_index_offset_from! : I64, I64, I64 => U64
+    get_next_visible_line_index_offset_from! : I64, I64, I64 => Vector2i
     get_next_visible_line_index_offset_from! = Host.textedit_get_next_visible_line_index_offset_from_3386475622!
     backspace! : I64 => {}
     backspace! = Host.textedit_backspace_1025054187!
@@ -231,21 +235,21 @@ TextEdit := {
     set_search_text! = Host.textedit_set_search_text_83702148!
     set_search_flags! : I64 => {}
     set_search_flags! = Host.textedit_set_search_flags_1286410249!
-    search! : Str, I64, I64, I64 => U64
+    search! : Str, I64, I64, I64 => Vector2i
     search! = Host.textedit_search_1203739136!
     set_tooltip_request_func! : U64 => {}
     set_tooltip_request_func! = Host.textedit_set_tooltip_request_func_1611583062!
-    get_local_mouse_pos! : () => U64
+    get_local_mouse_pos! : () => Vector2
     get_local_mouse_pos! = Host.textedit_get_local_mouse_pos_3341600327!
-    get_word_at_pos! : U64 => Str
+    get_word_at_pos! : Vector2 => Str
     get_word_at_pos! = Host.textedit_get_word_at_pos_3674420000!
-    get_line_column_at_pos! : U64, Bool, Bool => U64
+    get_line_column_at_pos! : Vector2i, Bool, Bool => Vector2i
     get_line_column_at_pos! = Host.textedit_get_line_column_at_pos_3472935744!
-    get_pos_at_line_column! : I64, I64 => U64
+    get_pos_at_line_column! : I64, I64 => Vector2i
     get_pos_at_line_column! = Host.textedit_get_pos_at_line_column_410388347!
-    get_rect_at_line_column! : I64, I64 => U64
+    get_rect_at_line_column! : I64, I64 => Rect2i
     get_rect_at_line_column! = Host.textedit_get_rect_at_line_column_3256618057!
-    get_minimap_line_at_pos! : U64 => I64
+    get_minimap_line_at_pos! : Vector2i => I64
     get_minimap_line_at_pos! = Host.textedit_get_minimap_line_at_pos_2485466453!
     is_dragging_cursor! : () => Bool
     is_dragging_cursor! = Host.textedit_is_dragging_cursor_36873697!
@@ -305,7 +309,7 @@ TextEdit := {
     multicaret_edit_ignore_caret! = Host.textedit_multicaret_edit_ignore_caret_1116898809!
     is_caret_visible! : I64 => Bool
     is_caret_visible! = Host.textedit_is_caret_visible_1051549951!
-    get_caret_draw_pos! : I64 => U64
+    get_caret_draw_pos! : I64 => Vector2
     get_caret_draw_pos! = Host.textedit_get_caret_draw_pos_478253731!
     set_caret_line! : I64, Bool, Bool, I64, I64 => {}
     set_caret_line! = Host.textedit_set_caret_line_1302582944!
@@ -523,17 +527,17 @@ TextEdit := {
     set_line_gutter_icon! = Host.textedit_set_line_gutter_icon_176101966!
     get_line_gutter_icon! : I64, I64 => U64
     get_line_gutter_icon! = Host.textedit_get_line_gutter_icon_2584904275!
-    set_line_gutter_item_color! : I64, I64, U64 => {}
+    set_line_gutter_item_color! : I64, I64, Color => {}
     set_line_gutter_item_color! = Host.textedit_set_line_gutter_item_color_3733378741!
-    get_line_gutter_item_color! : I64, I64 => U64
+    get_line_gutter_item_color! : I64, I64 => Color
     get_line_gutter_item_color! = Host.textedit_get_line_gutter_item_color_2165839948!
     set_line_gutter_clickable! : I64, I64, Bool => {}
     set_line_gutter_clickable! = Host.textedit_set_line_gutter_clickable_1383440665!
     is_line_gutter_clickable! : I64, I64 => Bool
     is_line_gutter_clickable! = Host.textedit_is_line_gutter_clickable_2522259332!
-    set_line_background_color! : I64, U64 => {}
+    set_line_background_color! : I64, Color => {}
     set_line_background_color! = Host.textedit_set_line_background_color_2878471219!
-    get_line_background_color! : I64 => U64
+    get_line_background_color! : I64 => Color
     get_line_background_color! = Host.textedit_get_line_background_color_3457211756!
     set_syntax_highlighter! : U64 => {}
     set_syntax_highlighter! = Host.textedit_set_syntax_highlighter_2765644541!

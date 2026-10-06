@@ -1,5 +1,7 @@
 # class Environment
 import ../../Host
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Color
 
 # inherits: Resource
 Environment := {
@@ -15,16 +17,16 @@ Environment := {
 
     # --- properties (getters/setters are methods) ---
     # property background_mode : I64  getter=get_background setter=set_background
-    # property background_color : U64  getter=get_bg_color setter=set_bg_color
+    # property background_color : Color  getter=get_bg_color setter=set_bg_color
     # property background_energy_multiplier : F64  getter=get_bg_energy_multiplier setter=set_bg_energy_multiplier
     # property background_intensity : F64  getter=get_bg_intensity setter=set_bg_intensity
     # property background_canvas_max_layer : I64  getter=get_canvas_max_layer setter=set_canvas_max_layer
     # property background_camera_feed_id : I64  getter=get_camera_feed_id setter=set_camera_feed_id
     # property sky : U64  getter=get_sky setter=set_sky
     # property sky_custom_fov : F64  getter=get_sky_custom_fov setter=set_sky_custom_fov
-    # property sky_rotation : U64  getter=get_sky_rotation setter=set_sky_rotation
+    # property sky_rotation : Vector3  getter=get_sky_rotation setter=set_sky_rotation
     # property ambient_light_source : I64  getter=get_ambient_source setter=set_ambient_source
-    # property ambient_light_color : U64  getter=get_ambient_light_color setter=set_ambient_light_color
+    # property ambient_light_color : Color  getter=get_ambient_light_color setter=set_ambient_light_color
     # property ambient_light_sky_contribution : F64  getter=get_ambient_light_sky_contribution setter=set_ambient_light_sky_contribution
     # property ambient_light_energy : F64  getter=get_ambient_light_energy setter=set_ambient_light_energy
     # property reflected_light_source : I64  getter=get_reflection_source setter=set_reflection_source
@@ -78,7 +80,7 @@ Environment := {
     # property glow_map : U64  getter=get_glow_map setter=set_glow_map
     # property fog_enabled : Bool  getter=is_fog_enabled setter=set_fog_enabled
     # property fog_mode : I64  getter=get_fog_mode setter=set_fog_mode
-    # property fog_light_color : U64  getter=get_fog_light_color setter=set_fog_light_color
+    # property fog_light_color : Color  getter=get_fog_light_color setter=set_fog_light_color
     # property fog_light_energy : F64  getter=get_fog_light_energy setter=set_fog_light_energy
     # property fog_sun_scatter : F64  getter=get_fog_sun_scatter setter=set_fog_sun_scatter
     # property fog_density : F64  getter=get_fog_density setter=set_fog_density
@@ -91,8 +93,8 @@ Environment := {
     # property fog_depth_end : F64  getter=get_fog_depth_end setter=set_fog_depth_end
     # property volumetric_fog_enabled : Bool  getter=is_volumetric_fog_enabled setter=set_volumetric_fog_enabled
     # property volumetric_fog_density : F64  getter=get_volumetric_fog_density setter=set_volumetric_fog_density
-    # property volumetric_fog_albedo : U64  getter=get_volumetric_fog_albedo setter=set_volumetric_fog_albedo
-    # property volumetric_fog_emission : U64  getter=get_volumetric_fog_emission setter=set_volumetric_fog_emission
+    # property volumetric_fog_albedo : Color  getter=get_volumetric_fog_albedo setter=set_volumetric_fog_albedo
+    # property volumetric_fog_emission : Color  getter=get_volumetric_fog_emission setter=set_volumetric_fog_emission
     # property volumetric_fog_emission_energy : F64  getter=get_volumetric_fog_emission_energy setter=set_volumetric_fog_emission_energy
     # property volumetric_fog_gi_inject : F64  getter=get_volumetric_fog_gi_inject setter=set_volumetric_fog_gi_inject
     # property volumetric_fog_anisotropy : F64  getter=get_volumetric_fog_anisotropy setter=set_volumetric_fog_anisotropy
@@ -121,13 +123,13 @@ Environment := {
     set_sky_custom_fov! = Host.environment_set_sky_custom_fov_373806689!
     get_sky_custom_fov! : () => F64
     get_sky_custom_fov! = Host.environment_get_sky_custom_fov_1740695150!
-    set_sky_rotation! : U64 => {}
+    set_sky_rotation! : Vector3 => {}
     set_sky_rotation! = Host.environment_set_sky_rotation_3460891852!
-    get_sky_rotation! : () => U64
+    get_sky_rotation! : () => Vector3
     get_sky_rotation! = Host.environment_get_sky_rotation_3360562783!
-    set_bg_color! : U64 => {}
+    set_bg_color! : Color => {}
     set_bg_color! = Host.environment_set_bg_color_2920490490!
-    get_bg_color! : () => U64
+    get_bg_color! : () => Color
     get_bg_color! = Host.environment_get_bg_color_3444240500!
     set_bg_energy_multiplier! : F64 => {}
     set_bg_energy_multiplier! = Host.environment_set_bg_energy_multiplier_373806689!
@@ -145,9 +147,9 @@ Environment := {
     set_camera_feed_id! = Host.environment_set_camera_feed_id_1286410249!
     get_camera_feed_id! : () => I64
     get_camera_feed_id! = Host.environment_get_camera_feed_id_3905245786!
-    set_ambient_light_color! : U64 => {}
+    set_ambient_light_color! : Color => {}
     set_ambient_light_color! = Host.environment_set_ambient_light_color_2920490490!
-    get_ambient_light_color! : () => U64
+    get_ambient_light_color! : () => Color
     get_ambient_light_color! = Host.environment_get_ambient_light_color_3444240500!
     set_ambient_source! : U64 => {}
     set_ambient_source! = Host.environment_set_ambient_source_2607780160!
@@ -369,9 +371,9 @@ Environment := {
     set_fog_mode! = Host.environment_set_fog_mode_3059806579!
     get_fog_mode! : () => U64
     get_fog_mode! = Host.environment_get_fog_mode_2456062483!
-    set_fog_light_color! : U64 => {}
+    set_fog_light_color! : Color => {}
     set_fog_light_color! = Host.environment_set_fog_light_color_2920490490!
-    get_fog_light_color! : () => U64
+    get_fog_light_color! : () => Color
     get_fog_light_color! = Host.environment_get_fog_light_color_3444240500!
     set_fog_light_energy! : F64 => {}
     set_fog_light_energy! = Host.environment_set_fog_light_energy_373806689!
@@ -417,13 +419,13 @@ Environment := {
     set_volumetric_fog_enabled! = Host.environment_set_volumetric_fog_enabled_2586408642!
     is_volumetric_fog_enabled! : () => Bool
     is_volumetric_fog_enabled! = Host.environment_is_volumetric_fog_enabled_36873697!
-    set_volumetric_fog_emission! : U64 => {}
+    set_volumetric_fog_emission! : Color => {}
     set_volumetric_fog_emission! = Host.environment_set_volumetric_fog_emission_2920490490!
-    get_volumetric_fog_emission! : () => U64
+    get_volumetric_fog_emission! : () => Color
     get_volumetric_fog_emission! = Host.environment_get_volumetric_fog_emission_3444240500!
-    set_volumetric_fog_albedo! : U64 => {}
+    set_volumetric_fog_albedo! : Color => {}
     set_volumetric_fog_albedo! = Host.environment_set_volumetric_fog_albedo_2920490490!
-    get_volumetric_fog_albedo! : () => U64
+    get_volumetric_fog_albedo! : () => Color
     get_volumetric_fog_albedo! = Host.environment_get_volumetric_fog_albedo_3444240500!
     set_volumetric_fog_density! : F64 => {}
     set_volumetric_fog_density! = Host.environment_set_volumetric_fog_density_373806689!

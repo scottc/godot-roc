@@ -1,5 +1,6 @@
 # class MobileVRInterface
 import ../../Host
+import ../../engine/builtin_classes/Rect2
 
 # inherits: XRInterface
 MobileVRInterface := {
@@ -12,7 +13,7 @@ MobileVRInterface := {
     # property iod : F64  getter=get_iod setter=set_iod
     # property display_width : F64  getter=get_display_width setter=set_display_width
     # property display_to_lens : F64  getter=get_display_to_lens setter=set_display_to_lens
-    # property offset_rect : U64  getter=get_offset_rect setter=set_offset_rect
+    # property offset_rect : Rect2  getter=get_offset_rect setter=set_offset_rect
     # property oversample : F64  getter=get_oversample setter=set_oversample
     # property k1 : F64  getter=get_k1 setter=set_k1
     # property k2 : F64  getter=get_k2 setter=set_k2
@@ -36,9 +37,9 @@ MobileVRInterface := {
     set_display_to_lens! = Host.mobilevrinterface_set_display_to_lens_373806689!
     get_display_to_lens! : () => F64
     get_display_to_lens! = Host.mobilevrinterface_get_display_to_lens_1740695150!
-    set_offset_rect! : U64 => {}
+    set_offset_rect! : Rect2 => {}
     set_offset_rect! = Host.mobilevrinterface_set_offset_rect_2046264180!
-    get_offset_rect! : () => U64
+    get_offset_rect! : () => Rect2
     get_offset_rect! = Host.mobilevrinterface_get_offset_rect_1639390495!
     set_oversample! : F64 => {}
     set_oversample! = Host.mobilevrinterface_set_oversample_373806689!

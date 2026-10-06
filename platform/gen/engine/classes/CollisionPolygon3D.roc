@@ -1,5 +1,6 @@
 # class CollisionPolygon3D
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: Node3D
 CollisionPolygon3D := {
@@ -12,7 +13,7 @@ CollisionPolygon3D := {
     # property disabled : Bool  getter=is_disabled setter=set_disabled
     # property polygon : U64  getter=get_polygon setter=set_polygon
     # property margin : F64  getter=get_margin setter=set_margin
-    # property debug_color : U64  getter=get_debug_color setter=set_debug_color
+    # property debug_color : Color  getter=get_debug_color setter=set_debug_color
     # property debug_fill : Bool  getter=get_enable_debug_fill setter=set_enable_debug_fill
 
     # --- methods ---
@@ -28,9 +29,9 @@ CollisionPolygon3D := {
     set_disabled! = Host.collisionpolygon3d_set_disabled_2586408642!
     is_disabled! : () => Bool
     is_disabled! = Host.collisionpolygon3d_is_disabled_36873697!
-    set_debug_color! : U64 => {}
+    set_debug_color! : Color => {}
     set_debug_color! = Host.collisionpolygon3d_set_debug_color_2920490490!
-    get_debug_color! : () => U64
+    get_debug_color! : () => Color
     get_debug_color! = Host.collisionpolygon3d_get_debug_color_3444240500!
     set_enable_debug_fill! : Bool => {}
     set_enable_debug_fill! = Host.collisionpolygon3d_set_enable_debug_fill_2586408642!

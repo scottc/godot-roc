@@ -1,5 +1,6 @@
 # class AnimationNodeStateMachine
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: AnimationRootNode
 AnimationNodeStateMachine := {
@@ -13,7 +14,7 @@ AnimationNodeStateMachine := {
     # property reset_ends : Bool  getter=are_ends_reset setter=set_reset_ends
 
     # --- methods ---
-    add_node! : Str, U64, U64 => {}
+    add_node! : Str, U64, Vector2 => {}
     add_node! = Host.animationnodestatemachine_add_node_1980270704!
     replace_node! : Str, U64 => {}
     replace_node! = Host.animationnodestatemachine_replace_node_2559412862!
@@ -29,9 +30,9 @@ AnimationNodeStateMachine := {
     get_node_name! = Host.animationnodestatemachine_get_node_name_739213945!
     get_node_list! : () => U64
     get_node_list! = Host.animationnodestatemachine_get_node_list_3995934104!
-    set_node_position! : Str, U64 => {}
+    set_node_position! : Str, Vector2 => {}
     set_node_position! = Host.animationnodestatemachine_set_node_position_1999414630!
-    get_node_position! : Str => U64
+    get_node_position! : Str => Vector2
     get_node_position! = Host.animationnodestatemachine_get_node_position_3100822709!
     has_transition! : Str, Str => Bool
     has_transition! = Host.animationnodestatemachine_has_transition_471820014!
@@ -49,9 +50,9 @@ AnimationNodeStateMachine := {
     remove_transition_by_index! = Host.animationnodestatemachine_remove_transition_by_index_1286410249!
     remove_transition! : Str, Str => {}
     remove_transition! = Host.animationnodestatemachine_remove_transition_3740211285!
-    set_graph_offset! : U64 => {}
+    set_graph_offset! : Vector2 => {}
     set_graph_offset! = Host.animationnodestatemachine_set_graph_offset_743155724!
-    get_graph_offset! : () => U64
+    get_graph_offset! : () => Vector2
     get_graph_offset! = Host.animationnodestatemachine_get_graph_offset_3341600327!
     set_state_machine_type! : U64 => {}
     set_state_machine_type! = Host.animationnodestatemachine_set_state_machine_type_2584759088!

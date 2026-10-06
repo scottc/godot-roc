@@ -1,5 +1,6 @@
 # class PrimitiveMesh
 import ../../Host
+import ../../engine/builtin_classes/AABB
 
 # inherits: Mesh
 PrimitiveMesh := {
@@ -9,7 +10,7 @@ PrimitiveMesh := {
 
     # --- properties (getters/setters are methods) ---
     # property material : U64  getter=get_material setter=set_material
-    # property custom_aabb : U64  getter=get_custom_aabb setter=set_custom_aabb
+    # property custom_aabb : AABB  getter=get_custom_aabb setter=set_custom_aabb
     # property flip_faces : Bool  getter=get_flip_faces setter=set_flip_faces
     # property add_uv2 : Bool  getter=get_add_uv2 setter=set_add_uv2
     # property uv2_padding : F64  getter=get_uv2_padding setter=set_uv2_padding
@@ -23,9 +24,9 @@ PrimitiveMesh := {
     get_material! = Host.primitivemesh_get_material_5934680!
     get_mesh_arrays! : () => U64
     get_mesh_arrays! = Host.primitivemesh_get_mesh_arrays_3995934104!
-    set_custom_aabb! : U64 => {}
+    set_custom_aabb! : AABB => {}
     set_custom_aabb! = Host.primitivemesh_set_custom_aabb_259215842!
-    get_custom_aabb! : () => U64
+    get_custom_aabb! : () => AABB
     get_custom_aabb! = Host.primitivemesh_get_custom_aabb_1068685055!
     set_flip_faces! : Bool => {}
     set_flip_faces! = Host.primitivemesh_set_flip_faces_2586408642!

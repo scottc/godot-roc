@@ -1,5 +1,9 @@
 # class Animation
 import ../../Host
+import ../../engine/builtin_classes/Vector3
+import ../../engine/builtin_classes/Quaternion
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Color
 
 # inherits: Resource
 Animation := {
@@ -49,19 +53,19 @@ Animation := {
     track_set_enabled! = Host.animation_track_set_enabled_300928843!
     track_is_enabled! : I64 => Bool
     track_is_enabled! = Host.animation_track_is_enabled_1116898809!
-    position_track_insert_key! : I64, F64, U64 => I64
+    position_track_insert_key! : I64, F64, Vector3 => I64
     position_track_insert_key! = Host.animation_position_track_insert_key_2540608232!
-    rotation_track_insert_key! : I64, F64, U64 => I64
+    rotation_track_insert_key! : I64, F64, Quaternion => I64
     rotation_track_insert_key! = Host.animation_rotation_track_insert_key_4165004800!
-    scale_track_insert_key! : I64, F64, U64 => I64
+    scale_track_insert_key! : I64, F64, Vector3 => I64
     scale_track_insert_key! = Host.animation_scale_track_insert_key_2540608232!
     blend_shape_track_insert_key! : I64, F64, F64 => I64
     blend_shape_track_insert_key! = Host.animation_blend_shape_track_insert_key_1534913637!
-    position_track_interpolate! : I64, F64, Bool => U64
+    position_track_interpolate! : I64, F64, Bool => Vector3
     position_track_interpolate! = Host.animation_position_track_interpolate_3530011197!
-    rotation_track_interpolate! : I64, F64, Bool => U64
+    rotation_track_interpolate! : I64, F64, Bool => Quaternion
     rotation_track_interpolate! = Host.animation_rotation_track_interpolate_2915876792!
-    scale_track_interpolate! : I64, F64, Bool => U64
+    scale_track_interpolate! : I64, F64, Bool => Vector3
     scale_track_interpolate! = Host.animation_scale_track_interpolate_3530011197!
     blend_shape_track_interpolate! : I64, F64, Bool => F64
     blend_shape_track_interpolate! = Host.animation_blend_shape_track_interpolate_2482365182!
@@ -107,19 +111,19 @@ Animation := {
     method_track_get_name! = Host.animation_method_track_get_name_351665558!
     method_track_get_params! : I64, I64 => U64
     method_track_get_params! = Host.animation_method_track_get_params_2345056839!
-    bezier_track_insert_key! : I64, F64, F64, U64, U64 => I64
+    bezier_track_insert_key! : I64, F64, F64, Vector2, Vector2 => I64
     bezier_track_insert_key! = Host.animation_bezier_track_insert_key_3656773645!
     bezier_track_set_key_value! : I64, I64, F64 => {}
     bezier_track_set_key_value! = Host.animation_bezier_track_set_key_value_3506521499!
-    bezier_track_set_key_in_handle! : I64, I64, U64, F64 => {}
+    bezier_track_set_key_in_handle! : I64, I64, Vector2, F64 => {}
     bezier_track_set_key_in_handle! = Host.animation_bezier_track_set_key_in_handle_1719223284!
-    bezier_track_set_key_out_handle! : I64, I64, U64, F64 => {}
+    bezier_track_set_key_out_handle! : I64, I64, Vector2, F64 => {}
     bezier_track_set_key_out_handle! = Host.animation_bezier_track_set_key_out_handle_1719223284!
     bezier_track_get_key_value! : I64, I64 => F64
     bezier_track_get_key_value! = Host.animation_bezier_track_get_key_value_3085491603!
-    bezier_track_get_key_in_handle! : I64, I64 => U64
+    bezier_track_get_key_in_handle! : I64, I64 => Vector2
     bezier_track_get_key_in_handle! = Host.animation_bezier_track_get_key_in_handle_3016396712!
-    bezier_track_get_key_out_handle! : I64, I64 => U64
+    bezier_track_get_key_out_handle! : I64, I64 => Vector2
     bezier_track_get_key_out_handle! = Host.animation_bezier_track_get_key_out_handle_3016396712!
     bezier_track_interpolate! : I64, F64 => F64
     bezier_track_interpolate! = Host.animation_bezier_track_interpolate_1900462983!
@@ -163,9 +167,9 @@ Animation := {
     get_marker_time! = Host.animation_get_marker_time_2349060816!
     get_marker_names! : () => U64
     get_marker_names! = Host.animation_get_marker_names_1139954409!
-    get_marker_color! : Str => U64
+    get_marker_color! : Str => Color
     get_marker_color! = Host.animation_get_marker_color_3742943038!
-    set_marker_color! : Str, U64 => {}
+    set_marker_color! : Str, Color => {}
     set_marker_color! = Host.animation_set_marker_color_4260178595!
     set_length! : F64 => {}
     set_length! = Host.animation_set_length_373806689!

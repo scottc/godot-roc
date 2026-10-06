@@ -1,5 +1,6 @@
 # class Camera2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Node2D
 Camera2D := {
@@ -9,11 +10,11 @@ Camera2D := {
     Camera2DProcessCallback : [CAMERA2D_PROCESS_PHYSICS, CAMERA2D_PROCESS_IDLE]
 
     # --- properties (getters/setters are methods) ---
-    # property offset : U64  getter=get_offset setter=set_offset
+    # property offset : Vector2  getter=get_offset setter=set_offset
     # property anchor_mode : I64  getter=get_anchor_mode setter=set_anchor_mode
     # property ignore_rotation : Bool  getter=is_ignoring_rotation setter=set_ignore_rotation
     # property enabled : Bool  getter=is_enabled setter=set_enabled
-    # property zoom : U64  getter=get_zoom setter=set_zoom
+    # property zoom : Vector2  getter=get_zoom setter=set_zoom
     # property custom_viewport : U64  getter=get_custom_viewport setter=set_custom_viewport
     # property process_callback : I64  getter=get_process_callback setter=set_process_callback
     # property limit_enabled : Bool  getter=is_limit_enabled setter=set_limit_enabled
@@ -39,9 +40,9 @@ Camera2D := {
     # property editor_draw_drag_margin : Bool  getter=is_margin_drawing_enabled setter=set_margin_drawing_enabled
 
     # --- methods ---
-    set_offset! : U64 => {}
+    set_offset! : Vector2 => {}
     set_offset! = Host.camera2d_set_offset_743155724!
-    get_offset! : () => U64
+    get_offset! : () => Vector2
     get_offset! = Host.camera2d_get_offset_3341600327!
     set_anchor_mode! : U64 => {}
     set_anchor_mode! = Host.camera2d_set_anchor_mode_2050398218!
@@ -95,15 +96,15 @@ Camera2D := {
     set_drag_margin! = Host.camera2d_set_drag_margin_4290182280!
     get_drag_margin! : U64 => F64
     get_drag_margin! = Host.camera2d_get_drag_margin_2869120046!
-    get_target_position! : () => U64
+    get_target_position! : () => Vector2
     get_target_position! = Host.camera2d_get_target_position_3341600327!
-    get_screen_center_position! : () => U64
+    get_screen_center_position! : () => Vector2
     get_screen_center_position! = Host.camera2d_get_screen_center_position_3341600327!
     get_screen_rotation! : () => F64
     get_screen_rotation! = Host.camera2d_get_screen_rotation_1740695150!
-    set_zoom! : U64 => {}
+    set_zoom! : Vector2 => {}
     set_zoom! = Host.camera2d_set_zoom_743155724!
-    get_zoom! : () => U64
+    get_zoom! : () => Vector2
     get_zoom! = Host.camera2d_get_zoom_3341600327!
     set_custom_viewport! : U64 => {}
     set_custom_viewport! = Host.camera2d_set_custom_viewport_1078189570!

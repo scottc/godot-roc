@@ -1,5 +1,8 @@
 # class VoxelGIData
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/AABB
+import ../../engine/builtin_classes/Vector3
 
 # inherits: Resource
 VoxelGIData := {
@@ -17,13 +20,13 @@ VoxelGIData := {
     # property interior : Bool  getter=is_interior setter=set_interior
 
     # --- methods ---
-    allocate! : U64, U64, U64, U64, U64, U64, U64 => {}
+    allocate! : Transform3D, AABB, Vector3, U64, U64, U64, U64 => {}
     allocate! = Host.voxelgidata_allocate_4041601946!
-    get_bounds! : () => U64
+    get_bounds! : () => AABB
     get_bounds! = Host.voxelgidata_get_bounds_1068685055!
-    get_octree_size! : () => U64
+    get_octree_size! : () => Vector3
     get_octree_size! = Host.voxelgidata_get_octree_size_3360562783!
-    get_to_cell_xform! : () => U64
+    get_to_cell_xform! : () => Transform3D
     get_to_cell_xform! = Host.voxelgidata_get_to_cell_xform_3229777777!
     get_octree_cells! : () => U64
     get_octree_cells! = Host.voxelgidata_get_octree_cells_2362200018!

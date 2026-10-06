@@ -1,5 +1,6 @@
 # class XRBodyTracker
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
 
 # inherits: XRPositionalTracker
 XRBodyTracker := {
@@ -26,9 +27,9 @@ XRBodyTracker := {
     set_joint_flags! = Host.xrbodytracker_set_joint_flags_592144999!
     get_joint_flags! : U64 => U64
     get_joint_flags! = Host.xrbodytracker_get_joint_flags_1030162609!
-    set_joint_transform! : U64, U64 => {}
+    set_joint_transform! : U64, Transform3D => {}
     set_joint_transform! = Host.xrbodytracker_set_joint_transform_2635424328!
-    get_joint_transform! : U64 => U64
+    get_joint_transform! : U64 => Transform3D
     get_joint_transform! = Host.xrbodytracker_get_joint_transform_3474811534!
 
 

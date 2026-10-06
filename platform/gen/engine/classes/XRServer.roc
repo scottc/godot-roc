@@ -1,5 +1,6 @@
 # class XRServer
 import ../../Host
+import ../../engine/builtin_classes/Transform3D
 
 # inherits: Object
 XRServer := {
@@ -10,7 +11,7 @@ XRServer := {
 
     # --- properties (getters/setters are methods) ---
     # property world_scale : F64  getter=get_world_scale setter=set_world_scale
-    # property world_origin : U64  getter=get_world_origin setter=set_world_origin
+    # property world_origin : Vector3  getter=get_world_origin setter=set_world_origin
     # property camera_locked_to_origin : Bool  getter=is_camera_locked_to_origin setter=set_camera_locked_to_origin
     # property primary_interface : U64  getter=get_primary_interface setter=set_primary_interface
 
@@ -19,17 +20,17 @@ XRServer := {
     get_world_scale! = Host.xrserver_get_world_scale_1740695150!
     set_world_scale! : F64 => {}
     set_world_scale! = Host.xrserver_set_world_scale_373806689!
-    get_world_origin! : () => U64
+    get_world_origin! : () => Transform3D
     get_world_origin! = Host.xrserver_get_world_origin_3229777777!
-    set_world_origin! : U64 => {}
+    set_world_origin! : Transform3D => {}
     set_world_origin! = Host.xrserver_set_world_origin_2952846383!
-    get_reference_frame! : () => U64
+    get_reference_frame! : () => Transform3D
     get_reference_frame! = Host.xrserver_get_reference_frame_3229777777!
     clear_reference_frame! : () => {}
     clear_reference_frame! = Host.xrserver_clear_reference_frame_3218959716!
     center_on_hmd! : U64, Bool => {}
     center_on_hmd! = Host.xrserver_center_on_hmd_1450904707!
-    get_hmd_transform! : () => U64
+    get_hmd_transform! : () => Transform3D
     get_hmd_transform! = Host.xrserver_get_hmd_transform_4183770049!
     set_camera_locked_to_origin! : Bool => {}
     set_camera_locked_to_origin! = Host.xrserver_set_camera_locked_to_origin_2586408642!

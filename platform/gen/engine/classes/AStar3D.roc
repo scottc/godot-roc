@@ -1,5 +1,6 @@
 # class AStar3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: RefCounted
 AStar3D := {
@@ -19,11 +20,11 @@ AStar3D := {
     _compute_cost! = Host.astar3d__compute_cost_3085491603!
     get_available_point_id! : () => I64
     get_available_point_id! = Host.astar3d_get_available_point_id_3905245786!
-    add_point! : I64, U64, F64 => {}
+    add_point! : I64, Vector3, F64 => {}
     add_point! = Host.astar3d_add_point_1038703438!
-    get_point_position! : I64 => U64
+    get_point_position! : I64 => Vector3
     get_point_position! = Host.astar3d_get_point_position_711720468!
-    set_point_position! : I64, U64 => {}
+    set_point_position! : I64, Vector3 => {}
     set_point_position! = Host.astar3d_set_point_position_1530502735!
     get_point_weight_scale! : I64 => F64
     get_point_weight_scale! = Host.astar3d_get_point_weight_scale_2339986948!
@@ -59,9 +60,9 @@ AStar3D := {
     reserve_space! = Host.astar3d_reserve_space_1286410249!
     clear! : () => {}
     clear! = Host.astar3d_clear_3218959716!
-    get_closest_point! : U64, Bool => I64
+    get_closest_point! : Vector3, Bool => I64
     get_closest_point! = Host.astar3d_get_closest_point_3241074317!
-    get_closest_position_in_segment! : U64 => U64
+    get_closest_position_in_segment! : Vector3 => Vector3
     get_closest_position_in_segment! = Host.astar3d_get_closest_position_in_segment_192990374!
     get_point_path! : I64, I64, Bool => U64
     get_point_path! = Host.astar3d_get_point_path_1562654675!

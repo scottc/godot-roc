@@ -1,5 +1,7 @@
 # class TileSet
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
+import ../../engine/builtin_classes/Color
 
 # inherits: Resource
 TileSet := {
@@ -15,7 +17,7 @@ TileSet := {
     # property tile_shape : I64  getter=get_tile_shape setter=set_tile_shape
     # property tile_layout : I64  getter=get_tile_layout setter=set_tile_layout
     # property tile_offset_axis : I64  getter=get_tile_offset_axis setter=set_tile_offset_axis
-    # property tile_size : U64  getter=get_tile_size setter=set_tile_size
+    # property tile_size : Vector2i  getter=get_tile_size setter=set_tile_size
     # property uv_clipping : Bool  getter=is_uv_clipping setter=set_uv_clipping
 
     # --- methods ---
@@ -47,9 +49,9 @@ TileSet := {
     set_tile_offset_axis! = Host.tileset_set_tile_offset_axis_3300198521!
     get_tile_offset_axis! : () => U64
     get_tile_offset_axis! = Host.tileset_get_tile_offset_axis_762494114!
-    set_tile_size! : U64 => {}
+    set_tile_size! : Vector2i => {}
     set_tile_size! = Host.tileset_set_tile_size_1130785943!
-    get_tile_size! : () => U64
+    get_tile_size! : () => Vector2i
     get_tile_size! = Host.tileset_get_tile_size_3690982128!
     set_uv_clipping! : Bool => {}
     set_uv_clipping! = Host.tileset_set_uv_clipping_2586408642!
@@ -121,9 +123,9 @@ TileSet := {
     set_terrain_name! = Host.tileset_set_terrain_name_2285447957!
     get_terrain_name! : I64, I64 => Str
     get_terrain_name! = Host.tileset_get_terrain_name_1391810591!
-    set_terrain_color! : I64, I64, U64 => {}
+    set_terrain_color! : I64, I64, Color => {}
     set_terrain_color! = Host.tileset_set_terrain_color_3733378741!
-    get_terrain_color! : I64, I64 => U64
+    get_terrain_color! : I64, I64 => Color
     get_terrain_color! = Host.tileset_get_terrain_color_2165839948!
     get_navigation_layers_count! : () => I64
     get_navigation_layers_count! = Host.tileset_get_navigation_layers_count_3905245786!
@@ -169,23 +171,23 @@ TileSet := {
     has_source_level_tile_proxy! = Host.tileset_has_source_level_tile_proxy_3067735520!
     remove_source_level_tile_proxy! : I64 => {}
     remove_source_level_tile_proxy! = Host.tileset_remove_source_level_tile_proxy_1286410249!
-    set_coords_level_tile_proxy! : I64, U64, I64, U64 => {}
+    set_coords_level_tile_proxy! : I64, Vector2i, I64, Vector2i => {}
     set_coords_level_tile_proxy! = Host.tileset_set_coords_level_tile_proxy_1769939278!
-    get_coords_level_tile_proxy! : I64, U64 => U64
+    get_coords_level_tile_proxy! : I64, Vector2i => U64
     get_coords_level_tile_proxy! = Host.tileset_get_coords_level_tile_proxy_2856536371!
-    has_coords_level_tile_proxy! : I64, U64 => Bool
+    has_coords_level_tile_proxy! : I64, Vector2i => Bool
     has_coords_level_tile_proxy! = Host.tileset_has_coords_level_tile_proxy_3957903770!
-    remove_coords_level_tile_proxy! : I64, U64 => {}
+    remove_coords_level_tile_proxy! : I64, Vector2i => {}
     remove_coords_level_tile_proxy! = Host.tileset_remove_coords_level_tile_proxy_2311374912!
-    set_alternative_level_tile_proxy! : I64, U64, I64, I64, U64, I64 => {}
+    set_alternative_level_tile_proxy! : I64, Vector2i, I64, I64, Vector2i, I64 => {}
     set_alternative_level_tile_proxy! = Host.tileset_set_alternative_level_tile_proxy_3862385460!
-    get_alternative_level_tile_proxy! : I64, U64, I64 => U64
+    get_alternative_level_tile_proxy! : I64, Vector2i, I64 => U64
     get_alternative_level_tile_proxy! = Host.tileset_get_alternative_level_tile_proxy_2303761075!
-    has_alternative_level_tile_proxy! : I64, U64, I64 => Bool
+    has_alternative_level_tile_proxy! : I64, Vector2i, I64 => Bool
     has_alternative_level_tile_proxy! = Host.tileset_has_alternative_level_tile_proxy_180086755!
-    remove_alternative_level_tile_proxy! : I64, U64, I64 => {}
+    remove_alternative_level_tile_proxy! : I64, Vector2i, I64 => {}
     remove_alternative_level_tile_proxy! = Host.tileset_remove_alternative_level_tile_proxy_2328951467!
-    map_tile_proxy! : I64, U64, I64 => U64
+    map_tile_proxy! : I64, Vector2i, I64 => U64
     map_tile_proxy! = Host.tileset_map_tile_proxy_4267935328!
     cleanup_invalid_tile_proxies! : () => {}
     cleanup_invalid_tile_proxies! = Host.tileset_cleanup_invalid_tile_proxies_3218959716!

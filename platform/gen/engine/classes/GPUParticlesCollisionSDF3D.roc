@@ -1,5 +1,6 @@
 # class GPUParticlesCollisionSDF3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: GPUParticlesCollision3D
 GPUParticlesCollisionSDF3D := {
@@ -8,16 +9,16 @@ GPUParticlesCollisionSDF3D := {
     Resolution : [RESOLUTION_16, RESOLUTION_32, RESOLUTION_64, RESOLUTION_128, RESOLUTION_256, RESOLUTION_512, RESOLUTION_MAX]
 
     # --- properties (getters/setters are methods) ---
-    # property size : U64  getter=get_size setter=set_size
+    # property size : Vector3  getter=get_size setter=set_size
     # property resolution : I64  getter=get_resolution setter=set_resolution
     # property thickness : F64  getter=get_thickness setter=set_thickness
     # property bake_mask : I64  getter=get_bake_mask setter=set_bake_mask
     # property texture : U64  getter=get_texture setter=set_texture
 
     # --- methods ---
-    set_size! : U64 => {}
+    set_size! : Vector3 => {}
     set_size! = Host.gpuparticlescollisionsdf3d_set_size_3460891852!
-    get_size! : () => U64
+    get_size! : () => Vector3
     get_size! = Host.gpuparticlescollisionsdf3d_get_size_3360562783!
     set_resolution! : U64 => {}
     set_resolution! = Host.gpuparticlescollisionsdf3d_set_resolution_1155629297!

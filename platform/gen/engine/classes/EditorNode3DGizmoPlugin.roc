@@ -1,5 +1,8 @@
 # class EditorNode3DGizmoPlugin
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Color
 
 # inherits: Resource
 EditorNode3DGizmoPlugin := {
@@ -35,23 +38,23 @@ EditorNode3DGizmoPlugin := {
     _get_handle_value! = Host.editornode3dgizmoplugin__get_handle_value_2887724832!
     _begin_handle_action! : U64, I64, Bool => {}
     _begin_handle_action! = Host.editornode3dgizmoplugin__begin_handle_action_3363704593!
-    _set_handle! : U64, I64, Bool, U64, U64 => {}
+    _set_handle! : U64, I64, Bool, U64, Vector2 => {}
     _set_handle! = Host.editornode3dgizmoplugin__set_handle_1249646868!
     _commit_handle! : U64, I64, Bool, U64, Bool => {}
     _commit_handle! = Host.editornode3dgizmoplugin__commit_handle_1939863962!
-    _subgizmos_intersect_ray! : U64, U64, U64 => I64
+    _subgizmos_intersect_ray! : U64, U64, Vector2 => I64
     _subgizmos_intersect_ray! = Host.editornode3dgizmoplugin__subgizmos_intersect_ray_1781916302!
     _subgizmos_intersect_frustum! : U64, U64, U64 => U64
     _subgizmos_intersect_frustum! = Host.editornode3dgizmoplugin__subgizmos_intersect_frustum_3514748524!
-    _get_subgizmo_transform! : U64, I64 => U64
+    _get_subgizmo_transform! : U64, I64 => Transform3D
     _get_subgizmo_transform! = Host.editornode3dgizmoplugin__get_subgizmo_transform_3700343508!
-    _set_subgizmo_transform! : U64, I64, U64 => {}
+    _set_subgizmo_transform! : U64, I64, Transform3D => {}
     _set_subgizmo_transform! = Host.editornode3dgizmoplugin__set_subgizmo_transform_2435388792!
     _commit_subgizmos! : U64, U64, U64, Bool => {}
     _commit_subgizmos! = Host.editornode3dgizmoplugin__commit_subgizmos_2282018236!
-    create_material! : Str, U64, Bool, Bool, Bool => {}
+    create_material! : Str, Color, Bool, Bool, Bool => {}
     create_material! = Host.editornode3dgizmoplugin_create_material_3486012546!
-    create_icon_material! : Str, U64, Bool, U64 => {}
+    create_icon_material! : Str, U64, Bool, Color => {}
     create_icon_material! = Host.editornode3dgizmoplugin_create_icon_material_3804976916!
     create_handle_material! : Str, Bool, U64 => {}
     create_handle_material! = Host.editornode3dgizmoplugin_create_handle_material_2486475223!

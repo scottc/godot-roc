@@ -1,5 +1,6 @@
 # class CameraFeed
 import ../../Host
+import ../../engine/builtin_classes/Transform2D
 
 # inherits: RefCounted
 CameraFeed := {
@@ -10,7 +11,7 @@ CameraFeed := {
 
     # --- properties (getters/setters are methods) ---
     # property feed_is_active : Bool  getter=is_active setter=set_active
-    # property feed_transform : U64  getter=get_transform setter=set_transform
+    # property feed_transform : Transform2D  getter=get_transform setter=set_transform
     # property formats : U64  getter=get_formats setter=(none)
 
     # --- methods ---
@@ -36,9 +37,9 @@ CameraFeed := {
     get_position! = Host.camerafeed_get_position_2711679033!
     set_position! : U64 => {}
     set_position! = Host.camerafeed_set_position_611162623!
-    get_transform! : () => U64
+    get_transform! : () => Transform2D
     get_transform! = Host.camerafeed_get_transform_3814499831!
-    set_transform! : U64 => {}
+    set_transform! : Transform2D => {}
     set_transform! = Host.camerafeed_set_transform_2761652528!
     set_rgb_image! : U64 => {}
     set_rgb_image! = Host.camerafeed_set_rgb_image_532598488!

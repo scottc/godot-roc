@@ -1,5 +1,6 @@
 # class Gradient
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: Resource
 Gradient := {
@@ -15,7 +16,7 @@ Gradient := {
     # property colors : U64  getter=get_colors setter=set_colors
 
     # --- methods ---
-    add_point! : F64, U64 => {}
+    add_point! : F64, Color => {}
     add_point! = Host.gradient_add_point_3629403827!
     remove_point! : I64 => {}
     remove_point! = Host.gradient_remove_point_1286410249!
@@ -25,11 +26,11 @@ Gradient := {
     get_offset! = Host.gradient_get_offset_4025615559!
     reverse! : () => {}
     reverse! = Host.gradient_reverse_3218959716!
-    set_color! : I64, U64 => {}
+    set_color! : I64, Color => {}
     set_color! = Host.gradient_set_color_2878471219!
-    get_color! : I64 => U64
+    get_color! : I64 => Color
     get_color! = Host.gradient_get_color_2624840992!
-    sample! : F64 => U64
+    sample! : F64 => Color
     sample! = Host.gradient_sample_1250405064!
     get_point_count! : () => I64
     get_point_count! = Host.gradient_get_point_count_3905245786!

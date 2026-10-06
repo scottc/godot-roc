@@ -1,5 +1,6 @@
 # class SkeletonModification2DFABRIK
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: SkeletonModification2D
 SkeletonModification2DFABRIK := {
@@ -28,9 +29,9 @@ SkeletonModification2DFABRIK := {
     set_fabrik_joint_bone_index! = Host.skeletonmodification2dfabrik_set_fabrik_joint_bone_index_3937882851!
     get_fabrik_joint_bone_index! : I64 => I64
     get_fabrik_joint_bone_index! = Host.skeletonmodification2dfabrik_get_fabrik_joint_bone_index_923996154!
-    set_fabrik_joint_magnet_position! : I64, U64 => {}
+    set_fabrik_joint_magnet_position! : I64, Vector2 => {}
     set_fabrik_joint_magnet_position! = Host.skeletonmodification2dfabrik_set_fabrik_joint_magnet_position_163021252!
-    get_fabrik_joint_magnet_position! : I64 => U64
+    get_fabrik_joint_magnet_position! : I64 => Vector2
     get_fabrik_joint_magnet_position! = Host.skeletonmodification2dfabrik_get_fabrik_joint_magnet_position_2299179447!
     set_fabrik_joint_use_target_rotation! : I64, Bool => {}
     set_fabrik_joint_use_target_rotation! = Host.skeletonmodification2dfabrik_set_fabrik_joint_use_target_rotation_300928843!

@@ -1,5 +1,6 @@
 # class NavigationObstacle2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Node2D
 NavigationObstacle2D := {
@@ -13,7 +14,7 @@ NavigationObstacle2D := {
     # property affect_navigation_mesh : Bool  getter=get_affect_navigation_mesh setter=set_affect_navigation_mesh
     # property carve_navigation_mesh : Bool  getter=get_carve_navigation_mesh setter=set_carve_navigation_mesh
     # property avoidance_enabled : Bool  getter=get_avoidance_enabled setter=set_avoidance_enabled
-    # property velocity : U64  getter=get_velocity setter=set_velocity
+    # property velocity : Vector2  getter=get_velocity setter=set_velocity
     # property avoidance_layers : I64  getter=get_avoidance_layers setter=set_avoidance_layers
 
     # --- methods ---
@@ -31,9 +32,9 @@ NavigationObstacle2D := {
     set_radius! = Host.navigationobstacle2d_set_radius_373806689!
     get_radius! : () => F64
     get_radius! = Host.navigationobstacle2d_get_radius_1740695150!
-    set_velocity! : U64 => {}
+    set_velocity! : Vector2 => {}
     set_velocity! = Host.navigationobstacle2d_set_velocity_743155724!
-    get_velocity! : () => U64
+    get_velocity! : () => Vector2
     get_velocity! = Host.navigationobstacle2d_get_velocity_3341600327!
     set_vertices! : U64 => {}
     set_vertices! = Host.navigationobstacle2d_set_vertices_1509147220!

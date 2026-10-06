@@ -1,5 +1,7 @@
 # class TreeItem
 import ../../Host
+import ../../engine/builtin_classes/Rect2
+import ../../engine/builtin_classes/Color
 
 # inherits: Object
 TreeItem := {
@@ -84,17 +86,17 @@ TreeItem := {
     set_icon_overlay! = Host.treeitem_set_icon_overlay_666127730!
     get_icon_overlay! : I64 => U64
     get_icon_overlay! = Host.treeitem_get_icon_overlay_3536238170!
-    set_icon_region! : I64, U64 => {}
+    set_icon_region! : I64, Rect2 => {}
     set_icon_region! = Host.treeitem_set_icon_region_1356297692!
-    get_icon_region! : I64 => U64
+    get_icon_region! : I64 => Rect2
     get_icon_region! = Host.treeitem_get_icon_region_3327874267!
     set_icon_max_width! : I64, I64 => {}
     set_icon_max_width! = Host.treeitem_set_icon_max_width_3937882851!
     get_icon_max_width! : I64 => I64
     get_icon_max_width! = Host.treeitem_get_icon_max_width_923996154!
-    set_icon_modulate! : I64, U64 => {}
+    set_icon_modulate! : I64, Color => {}
     set_icon_modulate! = Host.treeitem_set_icon_modulate_2878471219!
-    get_icon_modulate! : I64 => U64
+    get_icon_modulate! : I64 => Color
     get_icon_modulate! = Host.treeitem_get_icon_modulate_3457211756!
     set_range! : I64, F64 => {}
     set_range! = Host.treeitem_set_range_1602489585!
@@ -152,9 +154,9 @@ TreeItem := {
     set_editable! = Host.treeitem_set_editable_300928843!
     is_editable! : I64 => Bool
     is_editable! = Host.treeitem_is_editable_3067735520!
-    set_custom_color! : I64, U64 => {}
+    set_custom_color! : I64, Color => {}
     set_custom_color! = Host.treeitem_set_custom_color_2878471219!
-    get_custom_color! : I64 => U64
+    get_custom_color! : I64 => Color
     get_custom_color! = Host.treeitem_get_custom_color_3457211756!
     clear_custom_color! : I64 => {}
     clear_custom_color! = Host.treeitem_clear_custom_color_1286410249!
@@ -166,11 +168,11 @@ TreeItem := {
     set_custom_font_size! = Host.treeitem_set_custom_font_size_3937882851!
     get_custom_font_size! : I64 => I64
     get_custom_font_size! = Host.treeitem_get_custom_font_size_923996154!
-    set_custom_bg_color! : I64, U64, Bool => {}
+    set_custom_bg_color! : I64, Color, Bool => {}
     set_custom_bg_color! = Host.treeitem_set_custom_bg_color_894174518!
     clear_custom_bg_color! : I64 => {}
     clear_custom_bg_color! = Host.treeitem_clear_custom_bg_color_1286410249!
-    get_custom_bg_color! : I64 => U64
+    get_custom_bg_color! : I64 => Color
     get_custom_bg_color! = Host.treeitem_get_custom_bg_color_3457211756!
     set_custom_as_button! : I64, Bool => {}
     set_custom_as_button! = Host.treeitem_set_custom_as_button_300928843!
@@ -188,7 +190,7 @@ TreeItem := {
     get_button_id! = Host.treeitem_get_button_id_3175239445!
     get_button_by_id! : I64, I64 => I64
     get_button_by_id! = Host.treeitem_get_button_by_id_3175239445!
-    get_button_color! : I64, I64 => U64
+    get_button_color! : I64, I64 => Color
     get_button_color! = Host.treeitem_get_button_color_2165839948!
     get_button! : I64, I64 => U64
     get_button! = Host.treeitem_get_button_2584904275!
@@ -202,7 +204,7 @@ TreeItem := {
     set_button_description! = Host.treeitem_set_button_description_2285447957!
     set_button_disabled! : I64, I64, Bool => {}
     set_button_disabled! = Host.treeitem_set_button_disabled_1383440665!
-    set_button_color! : I64, I64, U64 => {}
+    set_button_color! : I64, I64, Color => {}
     set_button_color! = Host.treeitem_set_button_color_3733378741!
     is_button_disabled! : I64, I64 => Bool
     is_button_disabled! = Host.treeitem_is_button_disabled_2522259332!

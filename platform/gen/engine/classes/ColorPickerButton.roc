@@ -1,5 +1,6 @@
 # class ColorPickerButton
 import ../../Host
+import ../../engine/builtin_classes/Color
 
 # inherits: Button
 ColorPickerButton := {
@@ -8,14 +9,14 @@ ColorPickerButton := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property color : U64  getter=get_pick_color setter=set_pick_color
+    # property color : Color  getter=get_pick_color setter=set_pick_color
     # property edit_alpha : Bool  getter=is_editing_alpha setter=set_edit_alpha
     # property edit_intensity : Bool  getter=is_editing_intensity setter=set_edit_intensity
 
     # --- methods ---
-    set_pick_color! : U64 => {}
+    set_pick_color! : Color => {}
     set_pick_color! = Host.colorpickerbutton_set_pick_color_2920490490!
-    get_pick_color! : () => U64
+    get_pick_color! : () => Color
     get_pick_color! = Host.colorpickerbutton_get_pick_color_3444240500!
     get_picker! : () => U64
     get_picker! = Host.colorpickerbutton_get_picker_331835996!
@@ -30,7 +31,7 @@ ColorPickerButton := {
     is_editing_intensity! : () => Bool
     is_editing_intensity! = Host.colorpickerbutton_is_editing_intensity_36873697!
 
-    # signal color_changed : color : U64
+    # signal color_changed : color : Color
     # signal popup_closed : ()
     # signal picker_created : ()
 }

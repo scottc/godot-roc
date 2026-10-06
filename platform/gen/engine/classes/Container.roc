@@ -1,5 +1,6 @@
 # class Container
 import ../../Host
+import ../../engine/builtin_classes/Rect2
 
 # inherits: Control
 Container := {
@@ -17,7 +18,7 @@ Container := {
     _get_allowed_size_flags_vertical! = Host.container__get_allowed_size_flags_vertical_1930428628!
     queue_sort! : () => {}
     queue_sort! = Host.container_queue_sort_3218959716!
-    fit_child_in_rect! : U64, U64 => {}
+    fit_child_in_rect! : U64, Rect2 => {}
     fit_child_in_rect! = Host.container_fit_child_in_rect_1993438598!
     set_accessibility_region! : Bool => {}
     set_accessibility_region! = Host.container_set_accessibility_region_2586408642!

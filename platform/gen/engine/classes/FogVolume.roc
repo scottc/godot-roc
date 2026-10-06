@@ -1,5 +1,6 @@
 # class FogVolume
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: VisualInstance3D
 FogVolume := {
@@ -8,14 +9,14 @@ FogVolume := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property size : U64  getter=get_size setter=set_size
+    # property size : Vector3  getter=get_size setter=set_size
     # property shape : I64  getter=get_shape setter=set_shape
     # property material : U64  getter=get_material setter=set_material
 
     # --- methods ---
-    set_size! : U64 => {}
+    set_size! : Vector3 => {}
     set_size! = Host.fogvolume_set_size_3460891852!
-    get_size! : () => U64
+    get_size! : () => Vector3
     get_size! = Host.fogvolume_get_size_3360562783!
     set_shape! : U64 => {}
     set_shape! = Host.fogvolume_set_shape_1416323362!

@@ -1,5 +1,7 @@
 # class Polygon2D
 import ../../Host
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Node2D
 Polygon2D := {
@@ -8,12 +10,12 @@ Polygon2D := {
 
 
     # --- properties (getters/setters are methods) ---
-    # property color : U64  getter=get_color setter=set_color
-    # property offset : U64  getter=get_offset setter=set_offset
+    # property color : Color  getter=get_color setter=set_color
+    # property offset : Vector2  getter=get_offset setter=set_offset
     # property antialiased : Bool  getter=get_antialiased setter=set_antialiased
     # property texture : U64  getter=get_texture setter=set_texture
-    # property texture_offset : U64  getter=get_texture_offset setter=set_texture_offset
-    # property texture_scale : U64  getter=get_texture_scale setter=set_texture_scale
+    # property texture_offset : Vector2  getter=get_texture_offset setter=set_texture_offset
+    # property texture_scale : Vector2  getter=get_texture_scale setter=set_texture_scale
     # property texture_rotation : F64  getter=get_texture_rotation setter=set_texture_rotation
     # property skeleton : Str  getter=get_skeleton setter=set_skeleton
     # property invert_enabled : Bool  getter=get_invert_enabled setter=set_invert_enabled
@@ -34,9 +36,9 @@ Polygon2D := {
     set_uv! = Host.polygon2d_set_uv_1509147220!
     get_uv! : () => U64
     get_uv! = Host.polygon2d_get_uv_2961356807!
-    set_color! : U64 => {}
+    set_color! : Color => {}
     set_color! = Host.polygon2d_set_color_2920490490!
-    get_color! : () => U64
+    get_color! : () => Color
     get_color! = Host.polygon2d_get_color_3444240500!
     set_polygons! : U64 => {}
     set_polygons! = Host.polygon2d_set_polygons_381264803!
@@ -50,17 +52,17 @@ Polygon2D := {
     set_texture! = Host.polygon2d_set_texture_4051416890!
     get_texture! : () => U64
     get_texture! = Host.polygon2d_get_texture_3635182373!
-    set_texture_offset! : U64 => {}
+    set_texture_offset! : Vector2 => {}
     set_texture_offset! = Host.polygon2d_set_texture_offset_743155724!
-    get_texture_offset! : () => U64
+    get_texture_offset! : () => Vector2
     get_texture_offset! = Host.polygon2d_get_texture_offset_3341600327!
     set_texture_rotation! : F64 => {}
     set_texture_rotation! = Host.polygon2d_set_texture_rotation_373806689!
     get_texture_rotation! : () => F64
     get_texture_rotation! = Host.polygon2d_get_texture_rotation_1740695150!
-    set_texture_scale! : U64 => {}
+    set_texture_scale! : Vector2 => {}
     set_texture_scale! = Host.polygon2d_set_texture_scale_743155724!
-    get_texture_scale! : () => U64
+    get_texture_scale! : () => Vector2
     get_texture_scale! = Host.polygon2d_get_texture_scale_3341600327!
     set_invert_enabled! : Bool => {}
     set_invert_enabled! = Host.polygon2d_set_invert_enabled_2586408642!
@@ -74,9 +76,9 @@ Polygon2D := {
     set_invert_border! = Host.polygon2d_set_invert_border_373806689!
     get_invert_border! : () => F64
     get_invert_border! = Host.polygon2d_get_invert_border_1740695150!
-    set_offset! : U64 => {}
+    set_offset! : Vector2 => {}
     set_offset! = Host.polygon2d_set_offset_743155724!
-    get_offset! : () => U64
+    get_offset! : () => Vector2
     get_offset! = Host.polygon2d_get_offset_3341600327!
     add_bone! : Str, U64 => {}
     add_bone! = Host.polygon2d_add_bone_703042815!

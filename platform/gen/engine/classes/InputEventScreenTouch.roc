@@ -1,5 +1,6 @@
 # class InputEventScreenTouch
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: InputEventFromWindow
 InputEventScreenTouch := {
@@ -9,7 +10,7 @@ InputEventScreenTouch := {
 
     # --- properties (getters/setters are methods) ---
     # property index : I64  getter=get_index setter=set_index
-    # property position : U64  getter=get_position setter=set_position
+    # property position : Vector2  getter=get_position setter=set_position
     # property canceled : Bool  getter=is_canceled setter=set_canceled
     # property pressed : Bool  getter=is_pressed setter=set_pressed
     # property double_tap : Bool  getter=is_double_tap setter=set_double_tap
@@ -19,9 +20,9 @@ InputEventScreenTouch := {
     set_index! = Host.inputeventscreentouch_set_index_1286410249!
     get_index! : () => I64
     get_index! = Host.inputeventscreentouch_get_index_3905245786!
-    set_position! : U64 => {}
+    set_position! : Vector2 => {}
     set_position! = Host.inputeventscreentouch_set_position_743155724!
-    get_position! : () => U64
+    get_position! : () => Vector2
     get_position! = Host.inputeventscreentouch_get_position_3341600327!
     set_pressed! : Bool => {}
     set_pressed! = Host.inputeventscreentouch_set_pressed_2586408642!

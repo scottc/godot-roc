@@ -1,5 +1,6 @@
 # class PhysicsTestMotionResult2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: RefCounted
 PhysicsTestMotionResult2D := {
@@ -11,15 +12,15 @@ PhysicsTestMotionResult2D := {
 
 
     # --- methods ---
-    get_travel! : () => U64
+    get_travel! : () => Vector2
     get_travel! = Host.physicstestmotionresult2d_get_travel_3341600327!
-    get_remainder! : () => U64
+    get_remainder! : () => Vector2
     get_remainder! = Host.physicstestmotionresult2d_get_remainder_3341600327!
-    get_collision_point! : () => U64
+    get_collision_point! : () => Vector2
     get_collision_point! = Host.physicstestmotionresult2d_get_collision_point_3341600327!
-    get_collision_normal! : () => U64
+    get_collision_normal! : () => Vector2
     get_collision_normal! = Host.physicstestmotionresult2d_get_collision_normal_3341600327!
-    get_collider_velocity! : () => U64
+    get_collider_velocity! : () => Vector2
     get_collider_velocity! = Host.physicstestmotionresult2d_get_collider_velocity_3341600327!
     get_collider_id! : () => I64
     get_collider_id! = Host.physicstestmotionresult2d_get_collider_id_3905245786!

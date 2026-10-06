@@ -1,5 +1,8 @@
 # class SpriteBase3D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Color
+import ../../engine/builtin_classes/Rect2
 
 # inherits: GeometryInstance3D
 SpriteBase3D := {
@@ -10,10 +13,10 @@ SpriteBase3D := {
 
     # --- properties (getters/setters are methods) ---
     # property centered : Bool  getter=is_centered setter=set_centered
-    # property offset : U64  getter=get_offset setter=set_offset
+    # property offset : Vector2  getter=get_offset setter=set_offset
     # property flip_h : Bool  getter=is_flipped_h setter=set_flip_h
     # property flip_v : Bool  getter=is_flipped_v setter=set_flip_v
-    # property modulate : U64  getter=get_modulate setter=set_modulate
+    # property modulate : Color  getter=get_modulate setter=set_modulate
     # property pixel_size : F64  getter=get_pixel_size setter=set_pixel_size
     # property axis : I64  getter=get_axis setter=set_axis
     # property billboard : I64  getter=get_billboard_mode setter=set_billboard_mode
@@ -35,9 +38,9 @@ SpriteBase3D := {
     set_centered! = Host.spritebase3d_set_centered_2586408642!
     is_centered! : () => Bool
     is_centered! = Host.spritebase3d_is_centered_36873697!
-    set_offset! : U64 => {}
+    set_offset! : Vector2 => {}
     set_offset! = Host.spritebase3d_set_offset_743155724!
-    get_offset! : () => U64
+    get_offset! : () => Vector2
     get_offset! = Host.spritebase3d_get_offset_3341600327!
     set_flip_h! : Bool => {}
     set_flip_h! = Host.spritebase3d_set_flip_h_2586408642!
@@ -47,9 +50,9 @@ SpriteBase3D := {
     set_flip_v! = Host.spritebase3d_set_flip_v_2586408642!
     is_flipped_v! : () => Bool
     is_flipped_v! = Host.spritebase3d_is_flipped_v_36873697!
-    set_modulate! : U64 => {}
+    set_modulate! : Color => {}
     set_modulate! = Host.spritebase3d_set_modulate_2920490490!
-    get_modulate! : () => U64
+    get_modulate! : () => Color
     get_modulate! = Host.spritebase3d_get_modulate_3444240500!
     set_render_priority! : I64 => {}
     set_render_priority! = Host.spritebase3d_set_render_priority_1286410249!
@@ -95,7 +98,7 @@ SpriteBase3D := {
     set_texture_filter! = Host.spritebase3d_set_texture_filter_22904437!
     get_texture_filter! : () => U64
     get_texture_filter! = Host.spritebase3d_get_texture_filter_3289213076!
-    get_item_rect! : () => U64
+    get_item_rect! : () => Rect2
     get_item_rect! = Host.spritebase3d_get_item_rect_1639390495!
     generate_triangle_mesh! : () => U64
     generate_triangle_mesh! = Host.spritebase3d_generate_triangle_mesh_3476533166!

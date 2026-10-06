@@ -1,5 +1,6 @@
 # class SubViewport
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
 
 # inherits: Viewport
 SubViewport := {
@@ -9,21 +10,21 @@ SubViewport := {
     UpdateMode : [UPDATE_DISABLED, UPDATE_ONCE, UPDATE_WHEN_VISIBLE, UPDATE_WHEN_PARENT_VISIBLE, UPDATE_ALWAYS]
 
     # --- properties (getters/setters are methods) ---
-    # property size : U64  getter=get_size setter=set_size
-    # property size_2d_override : U64  getter=get_size_2d_override setter=set_size_2d_override
+    # property size : Vector2i  getter=get_size setter=set_size
+    # property size_2d_override : Vector2i  getter=get_size_2d_override setter=set_size_2d_override
     # property size_2d_override_stretch : Bool  getter=is_size_2d_override_stretch_enabled setter=set_size_2d_override_stretch
     # property view_count : I64  getter=get_view_count setter=set_view_count
     # property render_target_clear_mode : I64  getter=get_clear_mode setter=set_clear_mode
     # property render_target_update_mode : I64  getter=get_update_mode setter=set_update_mode
 
     # --- methods ---
-    set_size! : U64 => {}
+    set_size! : Vector2i => {}
     set_size! = Host.subviewport_set_size_1130785943!
-    get_size! : () => U64
+    get_size! : () => Vector2i
     get_size! = Host.subviewport_get_size_3690982128!
-    set_size_2d_override! : U64 => {}
+    set_size_2d_override! : Vector2i => {}
     set_size_2d_override! = Host.subviewport_set_size_2d_override_1130785943!
-    get_size_2d_override! : () => U64
+    get_size_2d_override! : () => Vector2i
     get_size_2d_override! = Host.subviewport_get_size_2d_override_3690982128!
     set_size_2d_override_stretch! : Bool => {}
     set_size_2d_override_stretch! = Host.subviewport_set_size_2d_override_stretch_2586408642!

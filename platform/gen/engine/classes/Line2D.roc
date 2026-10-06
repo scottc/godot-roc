@@ -1,5 +1,7 @@
 # class Line2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Color
 
 # inherits: Node2D
 Line2D := {
@@ -14,7 +16,7 @@ Line2D := {
     # property closed : Bool  getter=is_closed setter=set_closed
     # property width : F64  getter=get_width setter=set_width
     # property width_curve : U64  getter=get_curve setter=set_curve
-    # property default_color : U64  getter=get_default_color setter=set_default_color
+    # property default_color : Color  getter=get_default_color setter=set_default_color
     # property gradient : U64  getter=get_gradient setter=set_gradient
     # property texture : U64  getter=get_texture setter=set_texture
     # property texture_mode : I64  getter=get_texture_mode setter=set_texture_mode
@@ -30,13 +32,13 @@ Line2D := {
     set_points! = Host.line2d_set_points_1509147220!
     get_points! : () => U64
     get_points! = Host.line2d_get_points_2961356807!
-    set_point_position! : I64, U64 => {}
+    set_point_position! : I64, Vector2 => {}
     set_point_position! = Host.line2d_set_point_position_163021252!
-    get_point_position! : I64 => U64
+    get_point_position! : I64 => Vector2
     get_point_position! = Host.line2d_get_point_position_2299179447!
     get_point_count! : () => I64
     get_point_count! = Host.line2d_get_point_count_3905245786!
-    add_point! : U64, I64 => {}
+    add_point! : Vector2, I64 => {}
     add_point! = Host.line2d_add_point_2654014372!
     remove_point! : I64 => {}
     remove_point! = Host.line2d_remove_point_1286410249!
@@ -54,9 +56,9 @@ Line2D := {
     set_curve! = Host.line2d_set_curve_270443179!
     get_curve! : () => U64
     get_curve! = Host.line2d_get_curve_2460114913!
-    set_default_color! : U64 => {}
+    set_default_color! : Color => {}
     set_default_color! = Host.line2d_set_default_color_2920490490!
-    get_default_color! : () => U64
+    get_default_color! : () => Color
     get_default_color! = Host.line2d_get_default_color_3444240500!
     set_gradient! : U64 => {}
     set_gradient! = Host.line2d_set_gradient_2756054477!

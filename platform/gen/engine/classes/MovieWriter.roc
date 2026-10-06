@@ -1,5 +1,6 @@
 # class MovieWriter
 import ../../Host
+import ../../engine/builtin_classes/Vector2i
 
 # inherits: Object
 MovieWriter := {
@@ -19,7 +20,7 @@ MovieWriter := {
     _handles_file! = Host.moviewriter__handles_file_3927539163!
     _get_supported_extensions! : () => U64
     _get_supported_extensions! = Host.moviewriter__get_supported_extensions_1139954409!
-    _write_begin! : U64, I64, Str => U64
+    _write_begin! : Vector2i, I64, Str => U64
     _write_begin! = Host.moviewriter__write_begin_1866453460!
     _write_frame! : U64, U64 => U64
     _write_frame! = Host.moviewriter__write_frame_2784607037!

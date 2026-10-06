@@ -1,5 +1,6 @@
 # class SpringBoneSimulator3D
 import ../../Host
+import ../../engine/builtin_classes/Vector3
 
 # inherits: SkeletonModifier3D
 SpringBoneSimulator3D := {
@@ -8,7 +9,7 @@ SpringBoneSimulator3D := {
     CenterFrom : [CENTER_FROM_WORLD_ORIGIN, CENTER_FROM_NODE, CENTER_FROM_BONE]
 
     # --- properties (getters/setters are methods) ---
-    # property external_force : U64  getter=get_external_force setter=set_external_force
+    # property external_force : Vector3  getter=get_external_force setter=set_external_force
     # property mutable_bone_axes : Bool  getter=are_bone_axes_mutable setter=set_mutable_bone_axes
     # property setting_count : I64  getter=get_setting_count setter=set_setting_count
 
@@ -65,9 +66,9 @@ SpringBoneSimulator3D := {
     set_rotation_axis! = Host.springbonesimulator3d_set_rotation_axis_1539703856!
     get_rotation_axis! : I64 => U64
     get_rotation_axis! = Host.springbonesimulator3d_get_rotation_axis_2844851118!
-    set_rotation_axis_vector! : I64, U64 => {}
+    set_rotation_axis_vector! : I64, Vector3 => {}
     set_rotation_axis_vector! = Host.springbonesimulator3d_set_rotation_axis_vector_1530502735!
-    get_rotation_axis_vector! : I64 => U64
+    get_rotation_axis_vector! : I64 => Vector3
     get_rotation_axis_vector! = Host.springbonesimulator3d_get_rotation_axis_vector_711720468!
     set_radius_damping_curve! : I64, U64 => {}
     set_radius_damping_curve! = Host.springbonesimulator3d_set_radius_damping_curve_1447180063!
@@ -97,9 +98,9 @@ SpringBoneSimulator3D := {
     set_gravity_damping_curve! = Host.springbonesimulator3d_set_gravity_damping_curve_1447180063!
     get_gravity_damping_curve! : I64 => U64
     get_gravity_damping_curve! = Host.springbonesimulator3d_get_gravity_damping_curve_747537754!
-    set_gravity_direction! : I64, U64 => {}
+    set_gravity_direction! : I64, Vector3 => {}
     set_gravity_direction! = Host.springbonesimulator3d_set_gravity_direction_1530502735!
-    get_gravity_direction! : I64 => U64
+    get_gravity_direction! : I64 => Vector3
     get_gravity_direction! = Host.springbonesimulator3d_get_gravity_direction_711720468!
     set_setting_count! : I64 => {}
     set_setting_count! = Host.springbonesimulator3d_set_setting_count_1286410249!
@@ -119,9 +120,9 @@ SpringBoneSimulator3D := {
     set_joint_rotation_axis! = Host.springbonesimulator3d_set_joint_rotation_axis_1391134969!
     get_joint_rotation_axis! : I64, I64 => U64
     get_joint_rotation_axis! = Host.springbonesimulator3d_get_joint_rotation_axis_3312594080!
-    set_joint_rotation_axis_vector! : I64, I64, U64 => {}
+    set_joint_rotation_axis_vector! : I64, I64, Vector3 => {}
     set_joint_rotation_axis_vector! = Host.springbonesimulator3d_set_joint_rotation_axis_vector_2866752138!
-    get_joint_rotation_axis_vector! : I64, I64 => U64
+    get_joint_rotation_axis_vector! : I64, I64 => Vector3
     get_joint_rotation_axis_vector! = Host.springbonesimulator3d_get_joint_rotation_axis_vector_1592972041!
     set_joint_radius! : I64, I64, F64 => {}
     set_joint_radius! = Host.springbonesimulator3d_set_joint_radius_3506521499!
@@ -139,9 +140,9 @@ SpringBoneSimulator3D := {
     set_joint_gravity! = Host.springbonesimulator3d_set_joint_gravity_3506521499!
     get_joint_gravity! : I64, I64 => F64
     get_joint_gravity! = Host.springbonesimulator3d_get_joint_gravity_3085491603!
-    set_joint_gravity_direction! : I64, I64, U64 => {}
+    set_joint_gravity_direction! : I64, I64, Vector3 => {}
     set_joint_gravity_direction! = Host.springbonesimulator3d_set_joint_gravity_direction_2866752138!
-    get_joint_gravity_direction! : I64, I64 => U64
+    get_joint_gravity_direction! : I64, I64 => Vector3
     get_joint_gravity_direction! = Host.springbonesimulator3d_get_joint_gravity_direction_1592972041!
     get_joint_count! : I64 => I64
     get_joint_count! = Host.springbonesimulator3d_get_joint_count_923996154!
@@ -169,9 +170,9 @@ SpringBoneSimulator3D := {
     get_collision_count! = Host.springbonesimulator3d_get_collision_count_923996154!
     clear_collisions! : I64 => {}
     clear_collisions! = Host.springbonesimulator3d_clear_collisions_1286410249!
-    set_external_force! : U64 => {}
+    set_external_force! : Vector3 => {}
     set_external_force! = Host.springbonesimulator3d_set_external_force_3460891852!
-    get_external_force! : () => U64
+    get_external_force! : () => Vector3
     get_external_force! = Host.springbonesimulator3d_get_external_force_3360562783!
     set_mutable_bone_axes! : Bool => {}
     set_mutable_bone_axes! = Host.springbonesimulator3d_set_mutable_bone_axes_2586408642!

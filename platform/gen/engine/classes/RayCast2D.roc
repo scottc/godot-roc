@@ -1,5 +1,6 @@
 # class RayCast2D
 import ../../Host
+import ../../engine/builtin_classes/Vector2
 
 # inherits: Node2D
 RayCast2D := {
@@ -10,7 +11,7 @@ RayCast2D := {
     # --- properties (getters/setters are methods) ---
     # property enabled : Bool  getter=is_enabled setter=set_enabled
     # property exclude_parent : Bool  getter=get_exclude_parent_body setter=set_exclude_parent_body
-    # property target_position : U64  getter=get_target_position setter=set_target_position
+    # property target_position : Vector2  getter=get_target_position setter=set_target_position
     # property collision_mask : I64  getter=get_collision_mask setter=set_collision_mask
     # property hit_from_inside : Bool  getter=is_hit_from_inside_enabled setter=set_hit_from_inside
     # property collide_with_areas : Bool  getter=is_collide_with_areas_enabled setter=set_collide_with_areas
@@ -21,9 +22,9 @@ RayCast2D := {
     set_enabled! = Host.raycast2d_set_enabled_2586408642!
     is_enabled! : () => Bool
     is_enabled! = Host.raycast2d_is_enabled_36873697!
-    set_target_position! : U64 => {}
+    set_target_position! : Vector2 => {}
     set_target_position! = Host.raycast2d_set_target_position_743155724!
-    get_target_position! : () => U64
+    get_target_position! : () => Vector2
     get_target_position! = Host.raycast2d_get_target_position_3341600327!
     is_colliding! : () => Bool
     is_colliding! = Host.raycast2d_is_colliding_36873697!
@@ -35,9 +36,9 @@ RayCast2D := {
     get_collider_rid! = Host.raycast2d_get_collider_rid_2944877500!
     get_collider_shape! : () => I64
     get_collider_shape! = Host.raycast2d_get_collider_shape_3905245786!
-    get_collision_point! : () => U64
+    get_collision_point! : () => Vector2
     get_collision_point! = Host.raycast2d_get_collision_point_3341600327!
-    get_collision_normal! : () => U64
+    get_collision_normal! : () => Vector2
     get_collision_normal! = Host.raycast2d_get_collision_normal_3341600327!
     add_exception_rid! : U64 => {}
     add_exception_rid! = Host.raycast2d_add_exception_rid_2722037293!

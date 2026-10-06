@@ -1,5 +1,8 @@
 # class EditorNode3DGizmo
 import ../../Host
+import ../../engine/builtin_classes/Vector2
+import ../../engine/builtin_classes/Transform3D
+import ../../engine/builtin_classes/Color
 
 # inherits: Node3DGizmo
 EditorNode3DGizmo := {
@@ -21,29 +24,29 @@ EditorNode3DGizmo := {
     _get_handle_value! = Host.editornode3dgizmo__get_handle_value_2144196525!
     _begin_handle_action! : I64, Bool => {}
     _begin_handle_action! = Host.editornode3dgizmo__begin_handle_action_300928843!
-    _set_handle! : I64, Bool, U64, U64 => {}
+    _set_handle! : I64, Bool, U64, Vector2 => {}
     _set_handle! = Host.editornode3dgizmo__set_handle_2210262157!
     _commit_handle! : I64, Bool, U64, Bool => {}
     _commit_handle! = Host.editornode3dgizmo__commit_handle_3655739840!
-    _subgizmos_intersect_ray! : U64, U64 => I64
+    _subgizmos_intersect_ray! : U64, Vector2 => I64
     _subgizmos_intersect_ray! = Host.editornode3dgizmo__subgizmos_intersect_ray_2055005479!
     _subgizmos_intersect_frustum! : U64, U64 => U64
     _subgizmos_intersect_frustum! = Host.editornode3dgizmo__subgizmos_intersect_frustum_1653813165!
-    _set_subgizmo_transform! : I64, U64 => {}
+    _set_subgizmo_transform! : I64, Transform3D => {}
     _set_subgizmo_transform! = Host.editornode3dgizmo__set_subgizmo_transform_3616898986!
-    _get_subgizmo_transform! : I64 => U64
+    _get_subgizmo_transform! : I64 => Transform3D
     _get_subgizmo_transform! = Host.editornode3dgizmo__get_subgizmo_transform_1965739696!
     _commit_subgizmos! : U64, U64, Bool => {}
     _commit_subgizmos! = Host.editornode3dgizmo__commit_subgizmos_3411059856!
-    add_lines! : U64, U64, Bool, U64 => {}
+    add_lines! : U64, U64, Bool, Color => {}
     add_lines! = Host.editornode3dgizmo_add_lines_2910971437!
-    add_mesh! : U64, U64, U64, U64 => {}
+    add_mesh! : U64, U64, Transform3D, U64 => {}
     add_mesh! = Host.editornode3dgizmo_add_mesh_1579955111!
     add_collision_segments! : U64 => {}
     add_collision_segments! = Host.editornode3dgizmo_add_collision_segments_334873810!
     add_collision_triangles! : U64 => {}
     add_collision_triangles! = Host.editornode3dgizmo_add_collision_triangles_54901064!
-    add_unscaled_billboard! : U64, F64, U64 => {}
+    add_unscaled_billboard! : U64, F64, Color => {}
     add_unscaled_billboard! = Host.editornode3dgizmo_add_unscaled_billboard_520007164!
     add_handles! : U64, U64, U64, Bool, Bool => {}
     add_handles! = Host.editornode3dgizmo_add_handles_2254560097!

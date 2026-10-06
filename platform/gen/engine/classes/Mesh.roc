@@ -1,5 +1,7 @@
 # class Mesh
 import ../../Host
+import ../../engine/builtin_classes/AABB
+import ../../engine/builtin_classes/Vector2i
 
 # inherits: Resource
 Mesh := {
@@ -12,7 +14,7 @@ Mesh := {
     BlendShapeMode : [BLEND_SHAPE_MODE_NORMALIZED, BLEND_SHAPE_MODE_RELATIVE]
 
     # --- properties (getters/setters are methods) ---
-    # property lightmap_size_hint : U64  getter=get_lightmap_size_hint setter=set_lightmap_size_hint
+    # property lightmap_size_hint : Vector2i  getter=get_lightmap_size_hint setter=set_lightmap_size_hint
 
     # --- methods ---
     _get_surface_count! : () => I64
@@ -41,13 +43,13 @@ Mesh := {
     _get_blend_shape_name! = Host.mesh__get_blend_shape_name_659327637!
     _set_blend_shape_name! : I64, Str => {}
     _set_blend_shape_name! = Host.mesh__set_blend_shape_name_3780747571!
-    _get_aabb! : () => U64
+    _get_aabb! : () => AABB
     _get_aabb! = Host.mesh__get_aabb_1068685055!
-    set_lightmap_size_hint! : U64 => {}
+    set_lightmap_size_hint! : Vector2i => {}
     set_lightmap_size_hint! = Host.mesh_set_lightmap_size_hint_1130785943!
-    get_lightmap_size_hint! : () => U64
+    get_lightmap_size_hint! : () => Vector2i
     get_lightmap_size_hint! = Host.mesh_get_lightmap_size_hint_3690982128!
-    get_aabb! : () => U64
+    get_aabb! : () => AABB
     get_aabb! = Host.mesh_get_aabb_1068685055!
     get_faces! : () => U64
     get_faces! = Host.mesh_get_faces_497664490!
