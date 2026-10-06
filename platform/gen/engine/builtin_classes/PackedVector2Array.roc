@@ -1,7 +1,5 @@
 # builtin PackedVector2Array
 import ../../Host
-import Vector2
-import PackedByteArray
 
 PackedVector2Array := {
     ptr : U64

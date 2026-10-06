@@ -1,12 +1,8 @@
-# builtin Vector2
+# builtin Vector2 — layout in engine/MathTypes; methods call Host
 import ../../Host
+import ../../engine/math/Vector2
 
-Vector2 := {
-    x : F32,
-    y : F32
-}.{
-    construct_default! : {} -> Vector2
-    construct_default! = |_| { crash "construct_default! not wired for Vector2" }
+Vector2 := [].{
     Axis : [AXIS_X, AXIS_Y]
 
     # --- methods ---

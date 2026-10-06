@@ -1,8 +1,5 @@
 # builtin String
 import ../../Host
-import PackedStringArray
-import PackedFloat64Array
-import PackedByteArray
 
 String := {
     ptr : U64

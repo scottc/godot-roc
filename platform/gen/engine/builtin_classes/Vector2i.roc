@@ -1,12 +1,8 @@
-# builtin Vector2i
+# builtin Vector2i — layout in engine/MathTypes; methods call Host
 import ../../Host
+import ../../engine/math/Vector2i
 
-Vector2i := {
-    x : I32,
-    y : I32
-}.{
-    construct_default! : {} -> Vector2i
-    construct_default! = |_| { crash "construct_default! not wired for Vector2i" }
+Vector2i := [].{
     Axis : [AXIS_X, AXIS_Y]
 
     # --- methods ---

@@ -229,7 +229,7 @@ main! = |_args| {
     )?
     Path.join(roc_out_path, "Engine.roc").write_utf8!(
     \\import Host
-    \\import Vector3
+    \\import engine/math/Vector3
     \\import GodotRoc
     \\
     \\## A generic godot-4.5.1-like game engine interface.
@@ -262,19 +262,19 @@ main! = |_args| {
     \\        result
     \\    }
     \\
-    \\    get_gravity! : () => Vector3
+    \\    get_gravity! : () => MathTypes.Vector3
     \\    get_gravity! = || {
     \\        result = Host.get_gravity!()
     \\        result
     \\    }
     \\
-    \\    get_velocity! : () => Vector3
+    \\    get_velocity! : () => MathTypes.Vector3
     \\    get_velocity! = || {
     \\        result = Host.get_velocity!()
     \\        result
     \\    }
     \\
-    \\    set_velocity! : Vector3 => {}
+    \\    set_velocity! : MathTypes.Vector3 => {}
     \\    set_velocity! = |vector| {
     \\        Host.set_velocity!(vector)
     \\        {}
@@ -294,6 +294,13 @@ main! = |_args| {
     Path.join(roc_out_path, "engine/BuiltinClassMemberOffsets.roc").write_utf8!(builtin_class_member_offsets_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "engine/NativeStructures.roc").write_utf8!(native_structures_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "engine/UtilityFunctions.roc").write_utf8!(utility_functions_to_roc_source_str(decoded))?
+
+    # Path.join(roc_out_path, "engine/MathTypes.roc").write_utf8!(math_types_to_roc_source_str({}))?
+    # instead of MathTypes.roc:
+    for name in math_type_names {
+        Path.join(roc_out_path, "engine/math/${name}.roc")
+            .write_utf8!(math_type_file_to_roc_source_str(name))?
+    }
 
     for bic in decoded.builtin_classes {
         mod_name = builtin_module_name(bic.name)
@@ -320,6 +327,53 @@ main! = |_args| {
     Ok({})
 }
 
+## Sibling imports for nested math layouts (type modules only — no Host).
+math_type_peer_imports : Str -> Str
+math_type_peer_imports = |name| {
+    match name {
+        "Rect2" => "import Vector2\n\n"
+        "Rect2i" => "import Vector2i\n\n"
+        "AABB" => "import Vector3\n\n"
+        "Plane" => "import Vector3\n\n"
+        "Basis" => "import Vector3\n\n"
+        "Transform2D" => "import Vector2\n\n"
+        "Transform3D" => "import Basis\nimport Vector3\n\n"
+        "Projection" => "import Vector4\n\n"
+        _ => ""
+    }
+}
+
+## One type-module file under engine/math/<Name>.roc
+math_type_file_to_roc_source_str : Str -> Str
+math_type_file_to_roc_source_str = |name| {
+    peers = math_type_peer_imports(name)
+    fields = canonical_roc_fields(name)
+    \\## Godot math value type (layout only — no Host, no methods)
+    \\${peers}${name} := {
+    \\${fields}
+    \\}
+}
+
+math_type_names : List(Str)
+math_type_names = [
+    "Vector2",
+    "Vector2i",
+    "Vector3",
+    "Vector3i",
+    "Vector4",
+    "Vector4i",
+    "Rect2",
+    "Rect2i",
+    "AABB",
+    "Transform2D",
+    "Transform3D",
+    "Basis",
+    "Projection",
+    "Plane",
+    "Quaternion",
+    "Color",
+]
+
 # =============================================================================
 # Naming
 # =============================================================================
@@ -339,6 +393,7 @@ class_module_name = |name| {
     match name {
         "Crypto" => "GodotCrypto"
         "Range" => "GodotRange"
+        "Engine" => "GodotEngine"   # avoid clash with façade Engine.roc
         other => other
     }
 }
@@ -665,7 +720,7 @@ gen_platform_main_roc = |eapi| {
         "BuiltinClassSizes",
         "BuiltinClassMemberOffsets",
         "NativeStructures",
-        "UtilityFunctions",
+        "UtilityFunctions"
     ]
 
     all_names =
@@ -943,7 +998,15 @@ host_to_roc_source_str = |eapi| {
             "\n",
         )
 
+        math_imports =
+            Str.join_with(
+                math_type_names.map(|n| "import engine/math/${n}"),
+                "\n",
+            )
+
     \\# AUTO-GENERATED Host surface — signatures only; bodies via platform hosted → Zig
+    \\${math_imports}
+    \\
     \\Host := [].{
     \\    # --- singletons ---
     \\${sing_decls}
@@ -1119,117 +1182,51 @@ builtin_class_to_roc_source_str = |bic| {
             _ => []
         }
 
-    # For struct builtins always use canonical layouts (JSON members include props).
-    use_canonical = is_struct_builtin(bic.name)
+    # Struct builtins: type lives in MathTypes; this file is methods + enums only.
+    if is_struct_builtin(bic.name) {
+        \\# builtin ${bic.name} — layout in engine/MathTypes; methods call Host
+        \\import ../../Host
+        \\import ../../engine/math/${type_name}
+        \\
+        \\${type_name} := [].{
+        \\${enums_block(bic.enums)}
+        \\
+        \\    # --- methods ---
+        \\${methods_block_live(bic.name, bic.methods)}
+        \\}
+    } else {
+        # Opaque / non-struct builtins (String, Array, …)
+        members_str =
+            if !(members_list.is_empty()) {
+                Str.join_with(members_list.map(|m| "    ${m.name} : ${member_to_roc_field_type(m.type)}"), ",\n")
+            } else {
+                "    ptr : U64"
+            }
 
-    from_members =
-        if use_canonical {
-            []
-        } else {
-            members_list.map(|m| c_to_roc_type(m.type)).fold([], |acc, t|
-                collect_type_refs(acc, type_name, t)
-            )
-        }
+        construct_sig =
+            if !(members_list.is_empty()) {
+                arg_tys = Str.join_with(members_list.map(|m| member_to_roc_field_type(m.type)), ", ")
+                arg_ns = Str.join_with(members_list.map(|m| m.name), ", ")
+                \\    construct_default! : ${arg_tys} -> ${type_name}
+                \\    construct_default! = |${arg_ns}| { { ${arg_ns} } }
+            } else {
+                \\    construct_default! : {} -> ${type_name}
+                \\    construct_default! = |_| { { ptr: 0 } }
+            }
 
-    from_methods =
-        match bic.methods {
-            Ok(ms) =>
-                ms.fold(from_members, |acc, md| {
-                    acc1 =
-                        match md.arguments {
-                            Ok(args) =>
-                                args.fold(acc, |a2, arg|
-                                    collect_type_refs(a2, type_name, c_to_roc_type(arg.type))
-                                )
-                            _ => acc
-                        }
-                    ret_t =
-                        match md.return_type {
-                            Ok(rt) => Ok(c_to_roc_type(rt))
-                            _ =>
-                                match md.return_value {
-                                    Ok(rv) => Ok(c_to_roc_type(rv.type))
-                                    _ => Err(Missing)
-                                }
-                        }
-                    match ret_t {
-                        Ok(t) => collect_type_refs(acc1, type_name, t)
-                        _ => acc1
-                    }
-                })
-            _ => from_members
-        }
-
-    # Also pull peer imports implied by canonical nested types
-    canonical_peers =
-        match bic.name {
-            "Rect2" => ["Vector2"]
-            "Rect2i" => ["Vector2i"]
-            "AABB" => ["Vector3"]
-            "Plane" => ["Vector3"]
-            "Basis" => ["Vector3"]
-            "Transform2D" => ["Vector2"]
-            "Transform3D" => ["Basis", "Vector3"]
-            "Projection" => ["Vector4"]
-            _ => []
-        }
-
-    unique =
-        canonical_peers.fold(from_methods, |acc, t|
-            collect_type_refs(acc, type_name, t)
-        )
-
-    import_lines =
-        Str.join_with(
-            unique.map(|t| {
-                \\import ${t}
-            }),
-            "\n",
-        )
-
-    members_str =
-        if use_canonical {
-            canonical_roc_fields(bic.name)
-        } else if !(members_list.is_empty()) {
-            Str.join_with(members_list.map(|m| "    ${m.name} : ${member_to_roc_field_type(m.type)}"), ",\n")
-        } else {
-            "    ptr : U64"
-        }
-
-    construct_sig =
-        if use_canonical {
-            # Simple zero / named construct for math types — expand later if needed
-            \\    construct_default! : {} -> ${type_name}
-            \\    construct_default! = |_| { crash "construct_default! not wired for ${type_name}" }
-        } else if !(members_list.is_empty()) {
-            arg_tys = Str.join_with(members_list.map(|m| member_to_roc_field_type(m.type)), ", ")
-            arg_ns = Str.join_with(members_list.map(|m| m.name), ", ")
-            \\    construct_default! : ${arg_tys} -> ${type_name}
-            \\    construct_default! = |${arg_ns}| { { ${arg_ns} } }
-        } else {
-            \\    construct_default! : {} -> ${type_name}
-            \\    construct_default! = |_| { { ptr: 0 } }
-        }
-
-    peer_imports =
-        if import_lines == "" {
-            ""
-        } else {
-            "${import_lines}\n"
-        }
-
-    \\# builtin ${bic.name}
-    \\import ../../Host
-    \\${peer_imports}
-    \\${type_name} := {
-    \\${members_str}
-    \\}.{
-    \\${construct_sig}
-    \\${enums_block(bic.enums)}
-    \\
-    \\    # --- methods ---
-    \\${methods_block_live(bic.name, bic.methods)}
-    \\}
+        \\# builtin ${bic.name}
+        \\import ../../Host
+        \\
+        \\${type_name} := {
+        \\${members_str}
+        \\}.{
+        \\${construct_sig}
+        \\${enums_block(bic.enums)}
+        \\
+        \\    # --- methods ---
+        \\${methods_block_live(bic.name, bic.methods)}
+        \\}
+    }
 }
 
 class_to_roc_source_str : ClassDef -> Str
@@ -1268,21 +1265,33 @@ class_to_roc_source_str = |cls| {
                 })
             _ => []
         }
-    # Only import struct builtins (Vector3, etc.); skip U64 handles / class names for now
-    builtin_refs =
-        method_refs.fold([], |acc, t| {
-            if is_struct_builtin(t) and !(List.contains(acc, t)) {
-                List.append(acc, t)
+    needs_math_flag =
+        method_refs.fold(Bool.False, |acc, t|
+            if acc or is_struct_builtin(t) {
+                Bool.True
             } else {
-                acc
+                Bool.False
             }
-        })
+        )
+
     peer_imports =
-        if List.is_empty(builtin_refs) {
-            ""
+        if needs_math_flag {
+            Str.concat(
+                Str.join_with(
+                    [
+                        "Vector2", "Vector2i", "Vector3", "Vector3i",
+                        "Vector4", "Vector4i", "Rect2", "Rect2i", "AABB",
+                        "Transform2D", "Transform3D", "Basis", "Projection",
+                        "Plane", "Quaternion", "Color",
+                    ].map(|t| "import ../../engine/math/${t}"),
+                    "\n",
+                ),
+                "\n",
+            )
         } else {
-            "${Str.join_with(builtin_refs.map(|t| "import ../../engine/builtin_classes/${t}"), "\n")}\n"
+            ""
         }
+
     \\# class ${cls.name}
     \\import ../../Host
     \\${peer_imports}

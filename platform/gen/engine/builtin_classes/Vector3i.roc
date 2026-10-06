@@ -1,13 +1,8 @@
-# builtin Vector3i
+# builtin Vector3i — layout in engine/MathTypes; methods call Host
 import ../../Host
+import ../../engine/math/Vector3i
 
-Vector3i := {
-    x : I32,
-    y : I32,
-    z : I32
-}.{
-    construct_default! : {} -> Vector3i
-    construct_default! = |_| { crash "construct_default! not wired for Vector3i" }
+Vector3i := [].{
     Axis : [AXIS_X, AXIS_Y, AXIS_Z]
 
     # --- methods ---

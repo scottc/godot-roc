@@ -1,13 +1,8 @@
-# builtin Basis
+# builtin Basis — layout in engine/MathTypes; methods call Host
 import ../../Host
-import Vector3
-import Quaternion
+import ../../engine/math/Basis
 
-Basis := {
-    rows : List(Vector3)
-}.{
-    construct_default! : {} -> Basis
-    construct_default! = |_| { crash "construct_default! not wired for Basis" }
+Basis := [].{
 
 
     # --- methods ---

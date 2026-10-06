@@ -1,15 +1,8 @@
-# builtin Quaternion
+# builtin Quaternion — layout in engine/MathTypes; methods call Host
 import ../../Host
-import Vector3
+import ../../engine/math/Quaternion
 
-Quaternion := {
-    x : F32,
-    y : F32,
-    z : F32,
-    w : F32
-}.{
-    construct_default! : {} -> Quaternion
-    construct_default! = |_| { crash "construct_default! not wired for Quaternion" }
+Quaternion := [].{
 
 
     # --- methods ---

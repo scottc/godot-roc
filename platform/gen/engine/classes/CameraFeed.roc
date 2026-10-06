@@ -1,6 +1,21 @@
 # class CameraFeed
 import ../../Host
-import ../../engine/builtin_classes/Transform2D
+import ../../engine/math/Vector2
+import ../../engine/math/Vector2i
+import ../../engine/math/Vector3
+import ../../engine/math/Vector3i
+import ../../engine/math/Vector4
+import ../../engine/math/Vector4i
+import ../../engine/math/Rect2
+import ../../engine/math/Rect2i
+import ../../engine/math/AABB
+import ../../engine/math/Transform2D
+import ../../engine/math/Transform3D
+import ../../engine/math/Basis
+import ../../engine/math/Projection
+import ../../engine/math/Plane
+import ../../engine/math/Quaternion
+import ../../engine/math/Color
 
 # inherits: RefCounted
 CameraFeed := {

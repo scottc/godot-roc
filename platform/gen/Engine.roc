@@ -1,5 +1,5 @@
 import Host
-import Vector3
+import engine/math/Vector3
 import GodotRoc
 
 ## A generic godot-4.5.1-like game engine interface.
@@ -32,19 +32,19 @@ Engine := [].{
         result
     }
 
-    get_gravity! : () => Vector3
+    get_gravity! : () => MathTypes.Vector3
     get_gravity! = || {
         result = Host.get_gravity!()
         result
     }
 
-    get_velocity! : () => Vector3
+    get_velocity! : () => MathTypes.Vector3
     get_velocity! = || {
         result = Host.get_velocity!()
         result
     }
 
-    set_velocity! : Vector3 => {}
+    set_velocity! : MathTypes.Vector3 => {}
     set_velocity! = |vector| {
         Host.set_velocity!(vector)
         {}

@@ -2,7 +2,7 @@
 import ../../Host
 
 # inherits: Object
-Engine := {
+GodotEngine := {
     ptr : U64,
 }.{
 

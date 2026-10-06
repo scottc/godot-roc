@@ -1,14 +1,8 @@
-# builtin Vector4
+# builtin Vector4 — layout in engine/MathTypes; methods call Host
 import ../../Host
+import ../../engine/math/Vector4
 
-Vector4 := {
-    x : F32,
-    y : F32,
-    z : F32,
-    w : F32
-}.{
-    construct_default! : {} -> Vector4
-    construct_default! = |_| { crash "construct_default! not wired for Vector4" }
+Vector4 := [].{
     Axis : [AXIS_X, AXIS_Y, AXIS_Z, AXIS_W]
 
     # --- methods ---

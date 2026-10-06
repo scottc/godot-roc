@@ -1,6 +1,5 @@
 # builtin Callable
 import ../../Host
-import Object
 
 Callable := {
     ptr : U64

@@ -327,7 +327,7 @@ platform "godot-roc"
         EditorUndoRedoManager,
         EditorVCSInterface,
         EncodedObjectAsID,
-        Engine,
+        GodotEngine,
         EngineDebugger,
         EngineProfiler,
         Environment,
@@ -19454,7 +19454,7 @@ import engine/classes/EditorTranslationParserPlugin
 import engine/classes/EditorUndoRedoManager
 import engine/classes/EditorVCSInterface
 import engine/classes/EncodedObjectAsID
-import engine/classes/Engine
+import engine/classes/GodotEngine
 import engine/classes/EngineDebugger
 import engine/classes/EngineProfiler
 import engine/classes/Environment

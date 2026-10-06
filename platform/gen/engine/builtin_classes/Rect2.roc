@@ -1,13 +1,8 @@
-# builtin Rect2
+# builtin Rect2 — layout in engine/MathTypes; methods call Host
 import ../../Host
-import Vector2
+import ../../engine/math/Rect2
 
-Rect2 := {
-    position : Vector2,
-    size : Vector2
-}.{
-    construct_default! : {} -> Rect2
-    construct_default! = |_| { crash "construct_default! not wired for Rect2" }
+Rect2 := [].{
 
 
     # --- methods ---

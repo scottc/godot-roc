@@ -1,13 +1,5 @@
 # builtin PackedByteArray
 import ../../Host
-import PackedInt32Array
-import PackedInt64Array
-import PackedFloat32Array
-import PackedFloat64Array
-import PackedVector2Array
-import PackedVector3Array
-import PackedVector4Array
-import PackedColorArray
 
 PackedByteArray := {
     ptr : U64

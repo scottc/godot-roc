@@ -1,7 +1,5 @@
 # builtin PackedVector4Array
 import ../../Host
-import Vector4
-import PackedByteArray
 
 PackedVector4Array := {
     ptr : U64

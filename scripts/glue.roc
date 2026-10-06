@@ -81,12 +81,12 @@ main! = |_args| {
         id: check_plat_id,
         depends_on: [gen_gdext_id, gen_api_id],
         inputs: [
-            "platform/main.roc",
+            "platform/gen/main.roc",
         ],
         outputs: [],
         program: "roc",
-        args: ["check", "platform/main.roc"],
-        description: "roc check platform/main.roc",
+        args: ["check", "platform/gen/main.roc"],
+        description: "roc check platform/gen/main.roc",
         cwd: "",
         env: [],
     })
@@ -115,7 +115,7 @@ main! = |_args| {
         id: roc_glue_id,
         depends_on: [check_plat_id],
         inputs: [
-            "platform/main.roc",
+            "platform/gen/main.roc",
             "vendor/roc/git-a3ce7f1/ZigGlue.roc",
         ],
         outputs: ["src/roc_platform_abi.zig"],
@@ -124,7 +124,7 @@ main! = |_args| {
             "glue",
             "vendor/roc/git-a3ce7f1/ZigGlue.roc",
             "src/",
-            "platform/main.roc",
+            "platform/gen/main.roc",
         ],
         description: "roc glue → src/roc_platform_abi.zig",
         cwd: "",

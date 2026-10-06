@@ -1,14 +1,8 @@
-# builtin Transform3D
+# builtin Transform3D — layout in engine/MathTypes; methods call Host
 import ../../Host
-import Vector3
-import Basis
+import ../../engine/math/Transform3D
 
-Transform3D := {
-    basis : Basis,
-    origin : Vector3
-}.{
-    construct_default! : {} -> Transform3D
-    construct_default! = |_| { crash "construct_default! not wired for Transform3D" }
+Transform3D := [].{
 
 
     # --- methods ---

@@ -1,16 +1,8 @@
-# builtin Projection
+# builtin Projection — layout in engine/MathTypes; methods call Host
 import ../../Host
-import Rect2
-import Vector2
-import AABB
-import Plane
-import Vector4
+import ../../engine/math/Projection
 
-Projection := {
-    columns : List(Vector4)
-}.{
-    construct_default! : {} -> Projection
-    construct_default! = |_| { crash "construct_default! not wired for Projection" }
+Projection := [].{
     Planes : [PLANE_NEAR, PLANE_FAR, PLANE_LEFT, PLANE_TOP, PLANE_RIGHT, PLANE_BOTTOM]
 
     # --- methods ---

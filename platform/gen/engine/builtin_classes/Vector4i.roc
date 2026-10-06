@@ -1,14 +1,8 @@
-# builtin Vector4i
+# builtin Vector4i — layout in engine/MathTypes; methods call Host
 import ../../Host
+import ../../engine/math/Vector4i
 
-Vector4i := {
-    x : I32,
-    y : I32,
-    z : I32,
-    w : I32
-}.{
-    construct_default! : {} -> Vector4i
-    construct_default! = |_| { crash "construct_default! not wired for Vector4i" }
+Vector4i := [].{
     Axis : [AXIS_X, AXIS_Y, AXIS_Z, AXIS_W]
 
     # --- methods ---

@@ -1,14 +1,8 @@
-# builtin Color
+# builtin Color — layout in engine/MathTypes; methods call Host
 import ../../Host
+import ../../engine/math/Color
 
-Color := {
-    r : F32,
-    g : F32,
-    b : F32,
-    a : F32
-}.{
-    construct_default! : {} -> Color
-    construct_default! = |_| { crash "construct_default! not wired for Color" }
+Color := [].{
 
 
     # --- methods ---

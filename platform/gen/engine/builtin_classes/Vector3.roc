@@ -1,15 +1,8 @@
-# builtin Vector3
+# builtin Vector3 — layout in engine/MathTypes; methods call Host
 import ../../Host
-import Basis
-import Vector2
+import ../../engine/math/Vector3
 
-Vector3 := {
-    x : F32,
-    y : F32,
-    z : F32
-}.{
-    construct_default! : {} -> Vector3
-    construct_default! = |_| { crash "construct_default! not wired for Vector3" }
+Vector3 := [].{
     Axis : [AXIS_X, AXIS_Y, AXIS_Z]
 
     # --- methods ---

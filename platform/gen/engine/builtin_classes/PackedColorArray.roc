@@ -1,7 +1,5 @@
 # builtin PackedColorArray
 import ../../Host
-import Color
-import PackedByteArray
 
 PackedColorArray := {
     ptr : U64

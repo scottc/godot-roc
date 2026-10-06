@@ -1,14 +1,8 @@
-# builtin AABB
+# builtin AABB — layout in engine/MathTypes; methods call Host
 import ../../Host
-import Vector3
-import Plane
+import ../../engine/math/AABB
 
-AABB := {
-    position : Vector3,
-    size : Vector3
-}.{
-    construct_default! : {} -> AABB
-    construct_default! = |_| { crash "construct_default! not wired for AABB" }
+AABB := [].{
 
 
     # --- methods ---

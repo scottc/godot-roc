@@ -1,13 +1,8 @@
-# builtin Plane
+# builtin Plane — layout in engine/MathTypes; methods call Host
 import ../../Host
-import Vector3
+import ../../engine/math/Plane
 
-Plane := {
-    normal : Vector3,
-    d : F32
-}.{
-    construct_default! : {} -> Plane
-    construct_default! = |_| { crash "construct_default! not wired for Plane" }
+Plane := [].{
 
 
     # --- methods ---

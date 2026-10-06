@@ -1,14 +1,8 @@
-# builtin Transform2D
+# builtin Transform2D — layout in engine/MathTypes; methods call Host
 import ../../Host
-import Vector2
+import ../../engine/math/Transform2D
 
-Transform2D := {
-    x : Vector2,
-    y : Vector2,
-    origin : Vector2
-}.{
-    construct_default! : {} -> Transform2D
-    construct_default! = |_| { crash "construct_default! not wired for Transform2D" }
+Transform2D := [].{
 
 
     # --- methods ---
