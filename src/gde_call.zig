@@ -43,6 +43,14 @@ const MAX_BINDS = 256;
 var g_binds: [MAX_BINDS]BindEntry = undefined;
 var g_bind_count: usize = 0;
 
+var g_ctx: ?Ctx = null;
+pub fn setCtx(c: Ctx) void {
+    g_ctx = c;
+}
+pub fn godotRocCtx() Ctx {
+    return g_ctx orelse @panic("gde_call: ctx not set");
+}
+
 fn fnv1a(s: []const u8) u64 {
     var h: u64 = 0xcbf29ce484222325;
     for (s) |c| {
@@ -140,12 +148,11 @@ pub fn callUtility(
     name: [:0]const u8,
     hash: i64,
     args: ?[*]const baseline_gde_if.GDExtensionConstTypePtr,
-    arg_count: baseline_gde_if.GDExtensionInt,
+    arg_count: i64, // or usize — whatever you pass from generated code
     ret: baseline_gde_if.GDExtensionTypePtr,
 ) bool {
     const fn_ptr = getUtilityFunction(ctx, name, hash) orelse return false;
-    // Signature is typically: (ret, args, arg_count)
-    fn_ptr(ret, args, arg_count);
+    fn_ptr(ret, args, @intCast(arg_count)); // i64/usize → i32
     return true;
 }
 

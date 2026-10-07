@@ -1,5 +1,7 @@
 //! AUTO-GENERATED from extension_api.json
 const std = @import("std");
+const gde_call = @import("gde_call.zig");
+const baseline_gde_if = @import("engine/gdextension_interface.generated.zig");
 
 
 
@@ -18449,572 +18451,1760 @@ export fn godot_roc_get_singleton_xrserver() callconv(.c) u64 {
     return 0;
 }
 
-/// utility sin
-export fn godot_roc_util_sin_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility sin hash=2140049587 (gde_call)
+export fn godot_roc_util_sin_2140049587(a_angle_rad: f64) callconv(.c) f64 {
+    var a_angle_rad_ = a_angle_rad;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_angle_rad_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "sin",
+        hashes.util_sin,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility cos
-export fn godot_roc_util_cos_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility cos hash=2140049587 (gde_call)
+export fn godot_roc_util_cos_2140049587(a_angle_rad: f64) callconv(.c) f64 {
+    var a_angle_rad_ = a_angle_rad;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_angle_rad_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "cos",
+        hashes.util_cos,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility tan
-export fn godot_roc_util_tan_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility tan hash=2140049587 (gde_call)
+export fn godot_roc_util_tan_2140049587(a_angle_rad: f64) callconv(.c) f64 {
+    var a_angle_rad_ = a_angle_rad;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_angle_rad_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "tan",
+        hashes.util_tan,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility sinh
-export fn godot_roc_util_sinh_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility sinh hash=2140049587 (gde_call)
+export fn godot_roc_util_sinh_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "sinh",
+        hashes.util_sinh,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility cosh
-export fn godot_roc_util_cosh_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility cosh hash=2140049587 (gde_call)
+export fn godot_roc_util_cosh_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "cosh",
+        hashes.util_cosh,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility tanh
-export fn godot_roc_util_tanh_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility tanh hash=2140049587 (gde_call)
+export fn godot_roc_util_tanh_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "tanh",
+        hashes.util_tanh,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility asin
-export fn godot_roc_util_asin_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility asin hash=2140049587 (gde_call)
+export fn godot_roc_util_asin_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "asin",
+        hashes.util_asin,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility acos
-export fn godot_roc_util_acos_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility acos hash=2140049587 (gde_call)
+export fn godot_roc_util_acos_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "acos",
+        hashes.util_acos,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility atan
-export fn godot_roc_util_atan_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility atan hash=2140049587 (gde_call)
+export fn godot_roc_util_atan_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "atan",
+        hashes.util_atan,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility atan2
-export fn godot_roc_util_atan2_92296394(_: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility atan2 hash=92296394 (gde_call)
+export fn godot_roc_util_atan2_92296394(a_y: f64, a_x: f64) callconv(.c) f64 {
+    var a_y_ = a_y;
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_y_),
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "atan2",
+        hashes.util_atan2,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility asinh
-export fn godot_roc_util_asinh_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility asinh hash=2140049587 (gde_call)
+export fn godot_roc_util_asinh_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "asinh",
+        hashes.util_asinh,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility acosh
-export fn godot_roc_util_acosh_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility acosh hash=2140049587 (gde_call)
+export fn godot_roc_util_acosh_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "acosh",
+        hashes.util_acosh,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility atanh
-export fn godot_roc_util_atanh_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility atanh hash=2140049587 (gde_call)
+export fn godot_roc_util_atanh_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "atanh",
+        hashes.util_atanh,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility sqrt
-export fn godot_roc_util_sqrt_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility sqrt hash=2140049587 (gde_call)
+export fn godot_roc_util_sqrt_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "sqrt",
+        hashes.util_sqrt,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility fmod
-export fn godot_roc_util_fmod_92296394(_: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility fmod hash=92296394 (gde_call)
+export fn godot_roc_util_fmod_92296394(a_x: f64, a_y: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    var a_y_ = a_y;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+        @ptrCast(&a_y_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "fmod",
+        hashes.util_fmod,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility fposmod
-export fn godot_roc_util_fposmod_92296394(_: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility fposmod hash=92296394 (gde_call)
+export fn godot_roc_util_fposmod_92296394(a_x: f64, a_y: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    var a_y_ = a_y;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+        @ptrCast(&a_y_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "fposmod",
+        hashes.util_fposmod,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility posmod
-export fn godot_roc_util_posmod_3133453818(_: i64, _: i64) callconv(.c) i64 {
-    return 0;
+/// utility posmod hash=3133453818 (gde_call)
+export fn godot_roc_util_posmod_3133453818(a_x: i64, a_y: i64) callconv(.c) i64 {
+    var a_x_ = a_x;
+    var a_y_ = a_y;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+        @ptrCast(&a_y_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "posmod",
+        hashes.util_posmod,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility floor
+/// utility floor (stub — non-simple / vararg)
 export fn godot_roc_util_floor_4776452(_: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility floorf
-export fn godot_roc_util_floorf_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility floorf hash=2140049587 (gde_call)
+export fn godot_roc_util_floorf_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "floorf",
+        hashes.util_floorf,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility floori
-export fn godot_roc_util_floori_2780425386(_: f64) callconv(.c) i64 {
-    return 0;
+/// utility floori hash=2780425386 (gde_call)
+export fn godot_roc_util_floori_2780425386(a_x: f64) callconv(.c) i64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "floori",
+        hashes.util_floori,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility ceil
+/// utility ceil (stub — non-simple / vararg)
 export fn godot_roc_util_ceil_4776452(_: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility ceilf
-export fn godot_roc_util_ceilf_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility ceilf hash=2140049587 (gde_call)
+export fn godot_roc_util_ceilf_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "ceilf",
+        hashes.util_ceilf,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility ceili
-export fn godot_roc_util_ceili_2780425386(_: f64) callconv(.c) i64 {
-    return 0;
+/// utility ceili hash=2780425386 (gde_call)
+export fn godot_roc_util_ceili_2780425386(a_x: f64) callconv(.c) i64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "ceili",
+        hashes.util_ceili,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility round
+/// utility round (stub — non-simple / vararg)
 export fn godot_roc_util_round_4776452(_: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility roundf
-export fn godot_roc_util_roundf_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility roundf hash=2140049587 (gde_call)
+export fn godot_roc_util_roundf_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "roundf",
+        hashes.util_roundf,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility roundi
-export fn godot_roc_util_roundi_2780425386(_: f64) callconv(.c) i64 {
-    return 0;
+/// utility roundi hash=2780425386 (gde_call)
+export fn godot_roc_util_roundi_2780425386(a_x: f64) callconv(.c) i64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "roundi",
+        hashes.util_roundi,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility abs
+/// utility abs (stub — non-simple / vararg)
 export fn godot_roc_util_abs_4776452(_: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility absf
-export fn godot_roc_util_absf_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility absf hash=2140049587 (gde_call)
+export fn godot_roc_util_absf_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "absf",
+        hashes.util_absf,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility absi
-export fn godot_roc_util_absi_2157319888(_: i64) callconv(.c) i64 {
-    return 0;
+/// utility absi hash=2157319888 (gde_call)
+export fn godot_roc_util_absi_2157319888(a_x: i64) callconv(.c) i64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "absi",
+        hashes.util_absi,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility sign
+/// utility sign (stub — non-simple / vararg)
 export fn godot_roc_util_sign_4776452(_: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility signf
-export fn godot_roc_util_signf_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility signf hash=2140049587 (gde_call)
+export fn godot_roc_util_signf_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "signf",
+        hashes.util_signf,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility signi
-export fn godot_roc_util_signi_2157319888(_: i64) callconv(.c) i64 {
-    return 0;
+/// utility signi hash=2157319888 (gde_call)
+export fn godot_roc_util_signi_2157319888(a_x: i64) callconv(.c) i64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "signi",
+        hashes.util_signi,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility snapped
+/// utility snapped (stub — non-simple / vararg)
 export fn godot_roc_util_snapped_459914704(_: u64, _: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility snappedf
-export fn godot_roc_util_snappedf_92296394(_: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility snappedf hash=92296394 (gde_call)
+export fn godot_roc_util_snappedf_92296394(a_x: f64, a_step: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    var a_step_ = a_step;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+        @ptrCast(&a_step_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "snappedf",
+        hashes.util_snappedf,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility snappedi
-export fn godot_roc_util_snappedi_3570758393(_: f64, _: i64) callconv(.c) i64 {
-    return 0;
+/// utility snappedi hash=3570758393 (gde_call)
+export fn godot_roc_util_snappedi_3570758393(a_x: f64, a_step: i64) callconv(.c) i64 {
+    var a_x_ = a_x;
+    var a_step_ = a_step;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+        @ptrCast(&a_step_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "snappedi",
+        hashes.util_snappedi,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility pow
-export fn godot_roc_util_pow_92296394(_: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility pow hash=92296394 (gde_call)
+export fn godot_roc_util_pow_92296394(a_base: f64, a_exp: f64) callconv(.c) f64 {
+    var a_base_ = a_base;
+    var a_exp_ = a_exp;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_base_),
+        @ptrCast(&a_exp_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "pow",
+        hashes.util_pow,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility log
-export fn godot_roc_util_log_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility log hash=2140049587 (gde_call)
+export fn godot_roc_util_log_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "log",
+        hashes.util_log,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility exp
-export fn godot_roc_util_exp_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility exp hash=2140049587 (gde_call)
+export fn godot_roc_util_exp_2140049587(a_x: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "exp",
+        hashes.util_exp,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility is_nan
-export fn godot_roc_util_is_nan_3569215213(_: f64) callconv(.c) u8 {
-    return 0;
+/// utility is_nan hash=3569215213 (gde_call)
+export fn godot_roc_util_is_nan_3569215213(a_x: f64) callconv(.c) u8 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: u8 = std.mem.zeroes(u8);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "is_nan",
+        hashes.util_is_nan,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility is_inf
-export fn godot_roc_util_is_inf_3569215213(_: f64) callconv(.c) u8 {
-    return 0;
+/// utility is_inf hash=3569215213 (gde_call)
+export fn godot_roc_util_is_inf_3569215213(a_x: f64) callconv(.c) u8 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: u8 = std.mem.zeroes(u8);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "is_inf",
+        hashes.util_is_inf,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility is_equal_approx
-export fn godot_roc_util_is_equal_approx_1400789633(_: f64, _: f64) callconv(.c) u8 {
-    return 0;
+/// utility is_equal_approx hash=1400789633 (gde_call)
+export fn godot_roc_util_is_equal_approx_1400789633(a_a: f64, a_b: f64) callconv(.c) u8 {
+    var a_a_ = a_a;
+    var a_b_ = a_b;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_a_),
+        @ptrCast(&a_b_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: u8 = std.mem.zeroes(u8);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "is_equal_approx",
+        hashes.util_is_equal_approx,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility is_zero_approx
-export fn godot_roc_util_is_zero_approx_3569215213(_: f64) callconv(.c) u8 {
-    return 0;
+/// utility is_zero_approx hash=3569215213 (gde_call)
+export fn godot_roc_util_is_zero_approx_3569215213(a_x: f64) callconv(.c) u8 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: u8 = std.mem.zeroes(u8);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "is_zero_approx",
+        hashes.util_is_zero_approx,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility is_finite
-export fn godot_roc_util_is_finite_3569215213(_: f64) callconv(.c) u8 {
-    return 0;
+/// utility is_finite hash=3569215213 (gde_call)
+export fn godot_roc_util_is_finite_3569215213(a_x: f64) callconv(.c) u8 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: u8 = std.mem.zeroes(u8);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "is_finite",
+        hashes.util_is_finite,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility ease
-export fn godot_roc_util_ease_92296394(_: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility ease hash=92296394 (gde_call)
+export fn godot_roc_util_ease_92296394(a_x: f64, a_curve: f64) callconv(.c) f64 {
+    var a_x_ = a_x;
+    var a_curve_ = a_curve;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+        @ptrCast(&a_curve_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "ease",
+        hashes.util_ease,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility step_decimals
-export fn godot_roc_util_step_decimals_2780425386(_: f64) callconv(.c) i64 {
-    return 0;
+/// utility step_decimals hash=2780425386 (gde_call)
+export fn godot_roc_util_step_decimals_2780425386(a_x: f64) callconv(.c) i64 {
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "step_decimals",
+        hashes.util_step_decimals,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility lerp
+/// utility lerp (stub — non-simple / vararg)
 export fn godot_roc_util_lerp_3389874542(_: u64, _: u64, _: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility lerpf
-export fn godot_roc_util_lerpf_998901048(_: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility lerpf hash=998901048 (gde_call)
+export fn godot_roc_util_lerpf_998901048(a_from: f64, a_to: f64, a_weight: f64) callconv(.c) f64 {
+    var a_from_ = a_from;
+    var a_to_ = a_to;
+    var a_weight_ = a_weight;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_from_),
+        @ptrCast(&a_to_),
+        @ptrCast(&a_weight_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "lerpf",
+        hashes.util_lerpf,
+        args_ptr,
+        3,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility cubic_interpolate
-export fn godot_roc_util_cubic_interpolate_1090965791(_: f64, _: f64, _: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility cubic_interpolate hash=1090965791 (gde_call)
+export fn godot_roc_util_cubic_interpolate_1090965791(a_from: f64, a_to: f64, a_pre: f64, a_post: f64, a_weight: f64) callconv(.c) f64 {
+    var a_from_ = a_from;
+    var a_to_ = a_to;
+    var a_pre_ = a_pre;
+    var a_post_ = a_post;
+    var a_weight_ = a_weight;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_from_),
+        @ptrCast(&a_to_),
+        @ptrCast(&a_pre_),
+        @ptrCast(&a_post_),
+        @ptrCast(&a_weight_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "cubic_interpolate",
+        hashes.util_cubic_interpolate,
+        args_ptr,
+        5,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility cubic_interpolate_angle
-export fn godot_roc_util_cubic_interpolate_angle_1090965791(_: f64, _: f64, _: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility cubic_interpolate_angle hash=1090965791 (gde_call)
+export fn godot_roc_util_cubic_interpolate_angle_1090965791(a_from: f64, a_to: f64, a_pre: f64, a_post: f64, a_weight: f64) callconv(.c) f64 {
+    var a_from_ = a_from;
+    var a_to_ = a_to;
+    var a_pre_ = a_pre;
+    var a_post_ = a_post;
+    var a_weight_ = a_weight;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_from_),
+        @ptrCast(&a_to_),
+        @ptrCast(&a_pre_),
+        @ptrCast(&a_post_),
+        @ptrCast(&a_weight_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "cubic_interpolate_angle",
+        hashes.util_cubic_interpolate_angle,
+        args_ptr,
+        5,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility cubic_interpolate_in_time
-export fn godot_roc_util_cubic_interpolate_in_time_388121036(_: f64, _: f64, _: f64, _: f64, _: f64, _: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility cubic_interpolate_in_time hash=388121036 (gde_call)
+export fn godot_roc_util_cubic_interpolate_in_time_388121036(a_from: f64, a_to: f64, a_pre: f64, a_post: f64, a_weight: f64, a_to_t: f64, a_pre_t: f64, a_post_t: f64) callconv(.c) f64 {
+    var a_from_ = a_from;
+    var a_to_ = a_to;
+    var a_pre_ = a_pre;
+    var a_post_ = a_post;
+    var a_weight_ = a_weight;
+    var a_to_t_ = a_to_t;
+    var a_pre_t_ = a_pre_t;
+    var a_post_t_ = a_post_t;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_from_),
+        @ptrCast(&a_to_),
+        @ptrCast(&a_pre_),
+        @ptrCast(&a_post_),
+        @ptrCast(&a_weight_),
+        @ptrCast(&a_to_t_),
+        @ptrCast(&a_pre_t_),
+        @ptrCast(&a_post_t_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "cubic_interpolate_in_time",
+        hashes.util_cubic_interpolate_in_time,
+        args_ptr,
+        8,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility cubic_interpolate_angle_in_time
-export fn godot_roc_util_cubic_interpolate_angle_in_time_388121036(_: f64, _: f64, _: f64, _: f64, _: f64, _: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility cubic_interpolate_angle_in_time hash=388121036 (gde_call)
+export fn godot_roc_util_cubic_interpolate_angle_in_time_388121036(a_from: f64, a_to: f64, a_pre: f64, a_post: f64, a_weight: f64, a_to_t: f64, a_pre_t: f64, a_post_t: f64) callconv(.c) f64 {
+    var a_from_ = a_from;
+    var a_to_ = a_to;
+    var a_pre_ = a_pre;
+    var a_post_ = a_post;
+    var a_weight_ = a_weight;
+    var a_to_t_ = a_to_t;
+    var a_pre_t_ = a_pre_t;
+    var a_post_t_ = a_post_t;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_from_),
+        @ptrCast(&a_to_),
+        @ptrCast(&a_pre_),
+        @ptrCast(&a_post_),
+        @ptrCast(&a_weight_),
+        @ptrCast(&a_to_t_),
+        @ptrCast(&a_pre_t_),
+        @ptrCast(&a_post_t_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "cubic_interpolate_angle_in_time",
+        hashes.util_cubic_interpolate_angle_in_time,
+        args_ptr,
+        8,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility bezier_interpolate
-export fn godot_roc_util_bezier_interpolate_1090965791(_: f64, _: f64, _: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility bezier_interpolate hash=1090965791 (gde_call)
+export fn godot_roc_util_bezier_interpolate_1090965791(a_start: f64, a_control_1: f64, a_control_2: f64, a_end: f64, a_t: f64) callconv(.c) f64 {
+    var a_start_ = a_start;
+    var a_control_1_ = a_control_1;
+    var a_control_2_ = a_control_2;
+    var a_end_ = a_end;
+    var a_t_ = a_t;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_start_),
+        @ptrCast(&a_control_1_),
+        @ptrCast(&a_control_2_),
+        @ptrCast(&a_end_),
+        @ptrCast(&a_t_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "bezier_interpolate",
+        hashes.util_bezier_interpolate,
+        args_ptr,
+        5,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility bezier_derivative
-export fn godot_roc_util_bezier_derivative_1090965791(_: f64, _: f64, _: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility bezier_derivative hash=1090965791 (gde_call)
+export fn godot_roc_util_bezier_derivative_1090965791(a_start: f64, a_control_1: f64, a_control_2: f64, a_end: f64, a_t: f64) callconv(.c) f64 {
+    var a_start_ = a_start;
+    var a_control_1_ = a_control_1;
+    var a_control_2_ = a_control_2;
+    var a_end_ = a_end;
+    var a_t_ = a_t;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_start_),
+        @ptrCast(&a_control_1_),
+        @ptrCast(&a_control_2_),
+        @ptrCast(&a_end_),
+        @ptrCast(&a_t_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "bezier_derivative",
+        hashes.util_bezier_derivative,
+        args_ptr,
+        5,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility angle_difference
-export fn godot_roc_util_angle_difference_92296394(_: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility angle_difference hash=92296394 (gde_call)
+export fn godot_roc_util_angle_difference_92296394(a_from: f64, a_to: f64) callconv(.c) f64 {
+    var a_from_ = a_from;
+    var a_to_ = a_to;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_from_),
+        @ptrCast(&a_to_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "angle_difference",
+        hashes.util_angle_difference,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility lerp_angle
-export fn godot_roc_util_lerp_angle_998901048(_: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility lerp_angle hash=998901048 (gde_call)
+export fn godot_roc_util_lerp_angle_998901048(a_from: f64, a_to: f64, a_weight: f64) callconv(.c) f64 {
+    var a_from_ = a_from;
+    var a_to_ = a_to;
+    var a_weight_ = a_weight;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_from_),
+        @ptrCast(&a_to_),
+        @ptrCast(&a_weight_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "lerp_angle",
+        hashes.util_lerp_angle,
+        args_ptr,
+        3,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility inverse_lerp
-export fn godot_roc_util_inverse_lerp_998901048(_: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility inverse_lerp hash=998901048 (gde_call)
+export fn godot_roc_util_inverse_lerp_998901048(a_from: f64, a_to: f64, a_weight: f64) callconv(.c) f64 {
+    var a_from_ = a_from;
+    var a_to_ = a_to;
+    var a_weight_ = a_weight;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_from_),
+        @ptrCast(&a_to_),
+        @ptrCast(&a_weight_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "inverse_lerp",
+        hashes.util_inverse_lerp,
+        args_ptr,
+        3,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility remap
-export fn godot_roc_util_remap_1090965791(_: f64, _: f64, _: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility remap hash=1090965791 (gde_call)
+export fn godot_roc_util_remap_1090965791(a_value: f64, a_istart: f64, a_istop: f64, a_ostart: f64, a_ostop: f64) callconv(.c) f64 {
+    var a_value_ = a_value;
+    var a_istart_ = a_istart;
+    var a_istop_ = a_istop;
+    var a_ostart_ = a_ostart;
+    var a_ostop_ = a_ostop;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_value_),
+        @ptrCast(&a_istart_),
+        @ptrCast(&a_istop_),
+        @ptrCast(&a_ostart_),
+        @ptrCast(&a_ostop_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "remap",
+        hashes.util_remap,
+        args_ptr,
+        5,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility smoothstep
-export fn godot_roc_util_smoothstep_998901048(_: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility smoothstep hash=998901048 (gde_call)
+export fn godot_roc_util_smoothstep_998901048(a_from: f64, a_to: f64, a_x: f64) callconv(.c) f64 {
+    var a_from_ = a_from;
+    var a_to_ = a_to;
+    var a_x_ = a_x;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_from_),
+        @ptrCast(&a_to_),
+        @ptrCast(&a_x_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "smoothstep",
+        hashes.util_smoothstep,
+        args_ptr,
+        3,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility move_toward
-export fn godot_roc_util_move_toward_998901048(_: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility move_toward hash=998901048 (gde_call)
+export fn godot_roc_util_move_toward_998901048(a_from: f64, a_to: f64, a_delta: f64) callconv(.c) f64 {
+    var a_from_ = a_from;
+    var a_to_ = a_to;
+    var a_delta_ = a_delta;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_from_),
+        @ptrCast(&a_to_),
+        @ptrCast(&a_delta_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "move_toward",
+        hashes.util_move_toward,
+        args_ptr,
+        3,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility rotate_toward
-export fn godot_roc_util_rotate_toward_998901048(_: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility rotate_toward hash=998901048 (gde_call)
+export fn godot_roc_util_rotate_toward_998901048(a_from: f64, a_to: f64, a_delta: f64) callconv(.c) f64 {
+    var a_from_ = a_from;
+    var a_to_ = a_to;
+    var a_delta_ = a_delta;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_from_),
+        @ptrCast(&a_to_),
+        @ptrCast(&a_delta_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "rotate_toward",
+        hashes.util_rotate_toward,
+        args_ptr,
+        3,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility deg_to_rad
-export fn godot_roc_util_deg_to_rad_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility deg_to_rad hash=2140049587 (gde_call)
+export fn godot_roc_util_deg_to_rad_2140049587(a_deg: f64) callconv(.c) f64 {
+    var a_deg_ = a_deg;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_deg_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "deg_to_rad",
+        hashes.util_deg_to_rad,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility rad_to_deg
-export fn godot_roc_util_rad_to_deg_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility rad_to_deg hash=2140049587 (gde_call)
+export fn godot_roc_util_rad_to_deg_2140049587(a_rad: f64) callconv(.c) f64 {
+    var a_rad_ = a_rad;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_rad_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "rad_to_deg",
+        hashes.util_rad_to_deg,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility linear_to_db
-export fn godot_roc_util_linear_to_db_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility linear_to_db hash=2140049587 (gde_call)
+export fn godot_roc_util_linear_to_db_2140049587(a_lin: f64) callconv(.c) f64 {
+    var a_lin_ = a_lin;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_lin_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "linear_to_db",
+        hashes.util_linear_to_db,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility db_to_linear
-export fn godot_roc_util_db_to_linear_2140049587(_: f64) callconv(.c) f64 {
-    return 0;
+/// utility db_to_linear hash=2140049587 (gde_call)
+export fn godot_roc_util_db_to_linear_2140049587(a_db: f64) callconv(.c) f64 {
+    var a_db_ = a_db;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_db_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "db_to_linear",
+        hashes.util_db_to_linear,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility wrap
+/// utility wrap (stub — non-simple / vararg)
 export fn godot_roc_util_wrap_3389874542(_: u64, _: u64, _: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility wrapi
-export fn godot_roc_util_wrapi_650295447(_: i64, _: i64, _: i64) callconv(.c) i64 {
-    return 0;
+/// utility wrapi hash=650295447 (gde_call)
+export fn godot_roc_util_wrapi_650295447(a_value: i64, a_min: i64, a_max: i64) callconv(.c) i64 {
+    var a_value_ = a_value;
+    var a_min_ = a_min;
+    var a_max_ = a_max;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_value_),
+        @ptrCast(&a_min_),
+        @ptrCast(&a_max_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "wrapi",
+        hashes.util_wrapi,
+        args_ptr,
+        3,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility wrapf
-export fn godot_roc_util_wrapf_998901048(_: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility wrapf hash=998901048 (gde_call)
+export fn godot_roc_util_wrapf_998901048(a_value: f64, a_min: f64, a_max: f64) callconv(.c) f64 {
+    var a_value_ = a_value;
+    var a_min_ = a_min;
+    var a_max_ = a_max;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_value_),
+        @ptrCast(&a_min_),
+        @ptrCast(&a_max_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "wrapf",
+        hashes.util_wrapf,
+        args_ptr,
+        3,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility max
+/// utility max (stub — non-simple / vararg)
 export fn godot_roc_util_max_3896050336(_: u64, _: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility maxi
-export fn godot_roc_util_maxi_3133453818(_: i64, _: i64) callconv(.c) i64 {
-    return 0;
+/// utility maxi hash=3133453818 (gde_call)
+export fn godot_roc_util_maxi_3133453818(a_a: i64, a_b: i64) callconv(.c) i64 {
+    var a_a_ = a_a;
+    var a_b_ = a_b;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_a_),
+        @ptrCast(&a_b_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "maxi",
+        hashes.util_maxi,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility maxf
-export fn godot_roc_util_maxf_92296394(_: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility maxf hash=92296394 (gde_call)
+export fn godot_roc_util_maxf_92296394(a_a: f64, a_b: f64) callconv(.c) f64 {
+    var a_a_ = a_a;
+    var a_b_ = a_b;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_a_),
+        @ptrCast(&a_b_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "maxf",
+        hashes.util_maxf,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility min
+/// utility min (stub — non-simple / vararg)
 export fn godot_roc_util_min_3896050336(_: u64, _: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility mini
-export fn godot_roc_util_mini_3133453818(_: i64, _: i64) callconv(.c) i64 {
-    return 0;
+/// utility mini hash=3133453818 (gde_call)
+export fn godot_roc_util_mini_3133453818(a_a: i64, a_b: i64) callconv(.c) i64 {
+    var a_a_ = a_a;
+    var a_b_ = a_b;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_a_),
+        @ptrCast(&a_b_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "mini",
+        hashes.util_mini,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility minf
-export fn godot_roc_util_minf_92296394(_: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility minf hash=92296394 (gde_call)
+export fn godot_roc_util_minf_92296394(a_a: f64, a_b: f64) callconv(.c) f64 {
+    var a_a_ = a_a;
+    var a_b_ = a_b;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_a_),
+        @ptrCast(&a_b_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "minf",
+        hashes.util_minf,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility clamp
+/// utility clamp (stub — non-simple / vararg)
 export fn godot_roc_util_clamp_3389874542(_: u64, _: u64, _: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility clampi
-export fn godot_roc_util_clampi_650295447(_: i64, _: i64, _: i64) callconv(.c) i64 {
-    return 0;
+/// utility clampi hash=650295447 (gde_call)
+export fn godot_roc_util_clampi_650295447(a_value: i64, a_min: i64, a_max: i64) callconv(.c) i64 {
+    var a_value_ = a_value;
+    var a_min_ = a_min;
+    var a_max_ = a_max;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_value_),
+        @ptrCast(&a_min_),
+        @ptrCast(&a_max_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "clampi",
+        hashes.util_clampi,
+        args_ptr,
+        3,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility clampf
-export fn godot_roc_util_clampf_998901048(_: f64, _: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility clampf hash=998901048 (gde_call)
+export fn godot_roc_util_clampf_998901048(a_value: f64, a_min: f64, a_max: f64) callconv(.c) f64 {
+    var a_value_ = a_value;
+    var a_min_ = a_min;
+    var a_max_ = a_max;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_value_),
+        @ptrCast(&a_min_),
+        @ptrCast(&a_max_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "clampf",
+        hashes.util_clampf,
+        args_ptr,
+        3,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility nearest_po2
-export fn godot_roc_util_nearest_po2_2157319888(_: i64) callconv(.c) i64 {
-    return 0;
+/// utility nearest_po2 hash=2157319888 (gde_call)
+export fn godot_roc_util_nearest_po2_2157319888(a_value: i64) callconv(.c) i64 {
+    var a_value_ = a_value;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_value_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "nearest_po2",
+        hashes.util_nearest_po2,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility pingpong
-export fn godot_roc_util_pingpong_92296394(_: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility pingpong hash=92296394 (gde_call)
+export fn godot_roc_util_pingpong_92296394(a_value: f64, a_length: f64) callconv(.c) f64 {
+    var a_value_ = a_value;
+    var a_length_ = a_length;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_value_),
+        @ptrCast(&a_length_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "pingpong",
+        hashes.util_pingpong,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility randomize
+/// utility randomize hash=1691721052 (gde_call)
 export fn godot_roc_util_randomize_1691721052() callconv(.c) void {
-    
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = null;
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "randomize",
+        hashes.util_randomize,
+        args_ptr,
+        0,
+        null,
+    );
 }
 
-/// utility randi
+/// utility randi hash=701202648 (gde_call)
 export fn godot_roc_util_randi_701202648() callconv(.c) i64 {
-    return 0;
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = null;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "randi",
+        hashes.util_randi,
+        args_ptr,
+        0,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility randf
+/// utility randf hash=2086227845 (gde_call)
 export fn godot_roc_util_randf_2086227845() callconv(.c) f64 {
-    return 0;
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = null;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "randf",
+        hashes.util_randf,
+        args_ptr,
+        0,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility randi_range
-export fn godot_roc_util_randi_range_3133453818(_: i64, _: i64) callconv(.c) i64 {
-    return 0;
+/// utility randi_range hash=3133453818 (gde_call)
+export fn godot_roc_util_randi_range_3133453818(a_from: i64, a_to: i64) callconv(.c) i64 {
+    var a_from_ = a_from;
+    var a_to_ = a_to;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_from_),
+        @ptrCast(&a_to_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "randi_range",
+        hashes.util_randi_range,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility randf_range
-export fn godot_roc_util_randf_range_92296394(_: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility randf_range hash=92296394 (gde_call)
+export fn godot_roc_util_randf_range_92296394(a_from: f64, a_to: f64) callconv(.c) f64 {
+    var a_from_ = a_from;
+    var a_to_ = a_to;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_from_),
+        @ptrCast(&a_to_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "randf_range",
+        hashes.util_randf_range,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility randfn
-export fn godot_roc_util_randfn_92296394(_: f64, _: f64) callconv(.c) f64 {
-    return 0;
+/// utility randfn hash=92296394 (gde_call)
+export fn godot_roc_util_randfn_92296394(a_mean: f64, a_deviation: f64) callconv(.c) f64 {
+    var a_mean_ = a_mean;
+    var a_deviation_ = a_deviation;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_mean_),
+        @ptrCast(&a_deviation_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: f64 = std.mem.zeroes(f64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "randfn",
+        hashes.util_randfn,
+        args_ptr,
+        2,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility seed
-export fn godot_roc_util_seed_382931173(_: i64) callconv(.c) void {
-    
+/// utility seed hash=382931173 (gde_call)
+export fn godot_roc_util_seed_382931173(a_base: i64) callconv(.c) void {
+    var a_base_ = a_base;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_base_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "seed",
+        hashes.util_seed,
+        args_ptr,
+        1,
+        null,
+    );
 }
 
-/// utility rand_from_seed
+/// utility rand_from_seed (stub — non-simple / vararg)
 export fn godot_roc_util_rand_from_seed_1391063685(_: i64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility weakref
+/// utility weakref (stub — non-simple / vararg)
 export fn godot_roc_util_weakref_4776452(_: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility typeof
+/// utility typeof (stub — non-simple / vararg)
 export fn godot_roc_util_typeof_326422594(_: u64) callconv(.c) i64 {
     return 0;
 }
 
-/// utility type_convert
+/// utility type_convert (stub — non-simple / vararg)
 export fn godot_roc_util_type_convert_2453062746(_: u64, _: i64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility str
+/// utility str (stub — non-simple / vararg)
 export fn godot_roc_util_str_32569176(_: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility error_string
+/// utility error_string (stub — non-simple / vararg)
 export fn godot_roc_util_error_string_942708242(_: i64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility type_string
+/// utility type_string (stub — non-simple / vararg)
 export fn godot_roc_util_type_string_942708242(_: i64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility print
+/// utility print (stub — non-simple / vararg)
 export fn godot_roc_util_print_2648703342(_: u64) callconv(.c) void {
     
 }
 
-/// utility print_rich
+/// utility print_rich (stub — non-simple / vararg)
 export fn godot_roc_util_print_rich_2648703342(_: u64) callconv(.c) void {
     
 }
 
-/// utility printerr
+/// utility printerr (stub — non-simple / vararg)
 export fn godot_roc_util_printerr_2648703342(_: u64) callconv(.c) void {
     
 }
 
-/// utility printt
+/// utility printt (stub — non-simple / vararg)
 export fn godot_roc_util_printt_2648703342(_: u64) callconv(.c) void {
     
 }
 
-/// utility prints
+/// utility prints (stub — non-simple / vararg)
 export fn godot_roc_util_prints_2648703342(_: u64) callconv(.c) void {
     
 }
 
-/// utility printraw
+/// utility printraw (stub — non-simple / vararg)
 export fn godot_roc_util_printraw_2648703342(_: u64) callconv(.c) void {
     
 }
 
-/// utility print_verbose
+/// utility print_verbose (stub — non-simple / vararg)
 export fn godot_roc_util_print_verbose_2648703342(_: u64) callconv(.c) void {
     
 }
 
-/// utility push_error
+/// utility push_error (stub — non-simple / vararg)
 export fn godot_roc_util_push_error_2648703342(_: u64) callconv(.c) void {
     
 }
 
-/// utility push_warning
+/// utility push_warning (stub — non-simple / vararg)
 export fn godot_roc_util_push_warning_2648703342(_: u64) callconv(.c) void {
     
 }
 
-/// utility var_to_str
+/// utility var_to_str (stub — non-simple / vararg)
 export fn godot_roc_util_var_to_str_866625479(_: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility str_to_var
+/// utility str_to_var (stub — non-simple / vararg)
 export fn godot_roc_util_str_to_var_1891498491(_: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility var_to_bytes
+/// utility var_to_bytes (stub — non-simple / vararg)
 export fn godot_roc_util_var_to_bytes_2947269930(_: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility bytes_to_var
+/// utility bytes_to_var (stub — non-simple / vararg)
 export fn godot_roc_util_bytes_to_var_4249819452(_: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility var_to_bytes_with_objects
+/// utility var_to_bytes_with_objects (stub — non-simple / vararg)
 export fn godot_roc_util_var_to_bytes_with_objects_2947269930(_: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility bytes_to_var_with_objects
+/// utility bytes_to_var_with_objects (stub — non-simple / vararg)
 export fn godot_roc_util_bytes_to_var_with_objects_4249819452(_: u64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility hash
+/// utility hash (stub — non-simple / vararg)
 export fn godot_roc_util_hash_326422594(_: u64) callconv(.c) i64 {
     return 0;
 }
 
-/// utility instance_from_id
+/// utility instance_from_id (stub — non-simple / vararg)
 export fn godot_roc_util_instance_from_id_1156694636(_: i64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility is_instance_id_valid
-export fn godot_roc_util_is_instance_id_valid_2232439758(_: i64) callconv(.c) u8 {
-    return 0;
+/// utility is_instance_id_valid hash=2232439758 (gde_call)
+export fn godot_roc_util_is_instance_id_valid_2232439758(a_id: i64) callconv(.c) u8 {
+    var a_id_ = a_id;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&a_id_),
+    };
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+    var ret_val: u8 = std.mem.zeroes(u8);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "is_instance_id_valid",
+        hashes.util_is_instance_id_valid,
+        args_ptr,
+        1,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility is_instance_valid
+/// utility is_instance_valid (stub — non-simple / vararg)
 export fn godot_roc_util_is_instance_valid_996128841(_: u64) callconv(.c) u8 {
     return 0;
 }
 
-/// utility rid_allocate_id
+/// utility rid_allocate_id hash=701202648 (gde_call)
 export fn godot_roc_util_rid_allocate_id_701202648() callconv(.c) i64 {
-    return 0;
+    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = null;
+    var ret_val: i64 = std.mem.zeroes(i64);
+    _ = gde_call.callUtility(
+        gde_call.godotRocCtx(),
+        "rid_allocate_id",
+        hashes.util_rid_allocate_id,
+        args_ptr,
+        0,
+        @ptrCast(&ret_val),
+    );
+    return ret_val;
 }
 
-/// utility rid_from_int64
+/// utility rid_from_int64 (stub — non-simple / vararg)
 export fn godot_roc_util_rid_from_int64_3426892196(_: i64) callconv(.c) u64 {
     return 0;
 }
 
-/// utility is_same
+/// utility is_same (stub — non-simple / vararg)
 export fn godot_roc_util_is_same_1409423524(_: u64, _: u64) callconv(.c) u8 {
     return 0;
 }

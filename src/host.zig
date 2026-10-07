@@ -65,6 +65,7 @@ export fn godot_roc_init(
 ) callconv(.c) baseline_gde_if.GDExtensionBool {
     g_engine_library = p_library;
     g_engine_interface = baseline_gde_if.loadInterface(p_get_proc_address) catch return 0;
+    gde_call.setCtx(.{ .iface = &g_engine_interface, .library = g_engine_library });
 
     g_engine_interface.get_godot_version(&g_engine_runtime_version);
     if (g_engine_runtime_version.major != 4 and g_engine_runtime_version.major != 1 and g_engine_runtime_version.major != 0) {
