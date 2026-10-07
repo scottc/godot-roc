@@ -1,5 +1,6 @@
 # builtin PackedColorArray
 import ../../Host
+import ../../engine/math/Color
 
 PackedColorArray := {
     ptr : U64

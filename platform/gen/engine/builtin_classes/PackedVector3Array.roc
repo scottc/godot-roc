@@ -1,5 +1,6 @@
 # builtin PackedVector3Array
 import ../../Host
+import ../../engine/math/Vector3
 
 PackedVector3Array := {
     ptr : U64

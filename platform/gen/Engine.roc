@@ -4,47 +4,39 @@ import GodotRoc
 
 ## A generic godot-4.5.1-like game engine interface.
 Engine := [].{
-    register_class! : Str, Str => GodotRoc.ClassId # Try({}, [RegisterClassErr(Str), ..])
+    register_class! : Str, Str => GodotRoc.ClassId
     register_class! = |class_name, parent_class_name|
-        match Host.register_class!(class_name, parent_class_name) {
-            Ok(cid) => cid
-            Err(_) => crash "register_class! class panic"
-        }
+        Host.register_class!(class_name, parent_class_name)
 
-    print_error! : Str => {} # Try({}, [PrintErr(Str), ..])
+    print_error! : Str => {}
     print_error! = |str|
         Host.print_error!(str)
 
-    print_warning! : Str => {} # Try({}, [PrintErr(Str), ..])
+    print_warning! : Str => {}
     print_warning! = |str|
         Host.print_warning!(str)
 
-    # Input.is_action_pressed
-    is_action_pressed! : Str => GodotRoc.Bool # TODO: Str => bool
+    is_action_pressed! : Str => GodotRoc.Bool
     is_action_pressed! = |action| {
-        result = Host.input_is_action_pressed!(action)
-        result
+        Host.input_is_action_pressed!(action)
     }
 
     is_on_floor! : () => GodotRoc.Bool
     is_on_floor! = || {
-        result = Host.is_on_floor!()
-        result
+        Host.is_on_floor!()
     }
 
-    get_gravity! : () => MathTypes.Vector3
+    get_gravity! : () => Vector3
     get_gravity! = || {
-        result = Host.get_gravity!()
-        result
+        Host.get_gravity!()
     }
 
-    get_velocity! : () => MathTypes.Vector3
+    get_velocity! : () => Vector3
     get_velocity! = || {
-        result = Host.get_velocity!()
-        result
+        Host.get_velocity!()
     }
 
-    set_velocity! : MathTypes.Vector3 => {}
+    set_velocity! : Vector3 => {}
     set_velocity! = |vector| {
         Host.set_velocity!(vector)
         {}

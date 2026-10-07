@@ -210,20 +210,10 @@ main! = |_args| {
     Stdout.line!("# Parse: ${(Utc.now!() - parse_start).to_str()}ns")?
     Stdout.line!("${render_header(decoded)}")?
 
-    Path.join(roc_out_path, "Host.roc").write_utf8!(host_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "GodotRoc.roc").write_utf8!(
     \\## A module specifically just for this bindings project
     \\GodotRoc := [].{
-    \\    # Unfortunately this is required, due to how roc works.
-    \\    # We have a static platform api, so we can't dynamically create new functions, types, classes etc.
     \\    ClassId : U32
-    \\
-    \\    # A special kind of bool.
-    \\    # Aka an GDExtensionBool=U8, that's either 1 or 0.
-    \\    # perhaps we should use a genuine zig bool
-    \\    # but then map it host side?
-    \\    # Maybe have performance cost.
-    \\    # Depending on the size & alignment that compiler gives to the bool.
     \\    Bool : U8
     \\}
     )?
@@ -234,47 +224,39 @@ main! = |_args| {
     \\
     \\## A generic godot-4.5.1-like game engine interface.
     \\Engine := [].{
-    \\    register_class! : Str, Str => GodotRoc.ClassId # Try({}, [RegisterClassErr(Str), ..])
+    \\    register_class! : Str, Str => GodotRoc.ClassId
     \\    register_class! = |class_name, parent_class_name|
-    \\        match Host.register_class!(class_name, parent_class_name) {
-    \\            Ok(cid) => cid
-    \\            Err(_) => crash "register_class! class panic"
-    \\        }
+    \\        Host.register_class!(class_name, parent_class_name)
     \\
-    \\    print_error! : Str => {} # Try({}, [PrintErr(Str), ..])
+    \\    print_error! : Str => {}
     \\    print_error! = |str|
     \\        Host.print_error!(str)
     \\
-    \\    print_warning! : Str => {} # Try({}, [PrintErr(Str), ..])
+    \\    print_warning! : Str => {}
     \\    print_warning! = |str|
     \\        Host.print_warning!(str)
     \\
-    \\    # Input.is_action_pressed
-    \\    is_action_pressed! : Str => GodotRoc.Bool # TODO: Str => bool
+    \\    is_action_pressed! : Str => GodotRoc.Bool
     \\    is_action_pressed! = |action| {
-    \\        result = Host.input_is_action_pressed!(action)
-    \\        result
+    \\        Host.input_is_action_pressed!(action)
     \\    }
     \\
     \\    is_on_floor! : () => GodotRoc.Bool
     \\    is_on_floor! = || {
-    \\        result = Host.is_on_floor!()
-    \\        result
+    \\        Host.is_on_floor!()
     \\    }
     \\
-    \\    get_gravity! : () => MathTypes.Vector3
+    \\    get_gravity! : () => Vector3
     \\    get_gravity! = || {
-    \\        result = Host.get_gravity!()
-    \\        result
+    \\        Host.get_gravity!()
     \\    }
     \\
-    \\    get_velocity! : () => MathTypes.Vector3
+    \\    get_velocity! : () => Vector3
     \\    get_velocity! = || {
-    \\        result = Host.get_velocity!()
-    \\        result
+    \\        Host.get_velocity!()
     \\    }
     \\
-    \\    set_velocity! : MathTypes.Vector3 => {}
+    \\    set_velocity! : Vector3 => {}
     \\    set_velocity! = |vector| {
     \\        Host.set_velocity!(vector)
     \\        {}
@@ -295,17 +277,17 @@ main! = |_args| {
     Path.join(roc_out_path, "engine/NativeStructures.roc").write_utf8!(native_structures_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "engine/UtilityFunctions.roc").write_utf8!(utility_functions_to_roc_source_str(decoded))?
 
-    # Path.join(roc_out_path, "engine/MathTypes.roc").write_utf8!(math_types_to_roc_source_str({}))?
-    # instead of MathTypes.roc:
     for name in math_type_names {
         Path.join(roc_out_path, "engine/math/${name}.roc")
             .write_utf8!(math_type_file_to_roc_source_str(name))?
     }
 
     for bic in decoded.builtin_classes {
-        mod_name = builtin_module_name(bic.name)
-        Path.join(roc_out_path, "engine/builtin_classes/${mod_name}.roc")
-            .write_utf8!(builtin_class_to_roc_source_str(bic))?
+        if !(is_struct_builtin(bic.name)) {
+            mod_name = builtin_module_name(bic.name)
+            Path.join(roc_out_path, "engine/builtin_classes/${mod_name}.roc")
+                .write_utf8!(builtin_class_to_roc_source_str(bic))?
+        }
     }
 
     for cls in decoded.classes {
@@ -327,7 +309,6 @@ main! = |_args| {
     Ok({})
 }
 
-## Sibling imports for nested math layouts (type modules only — no Host).
 math_type_peer_imports : Str -> Str
 math_type_peer_imports = |name| {
     match name {
@@ -343,7 +324,6 @@ math_type_peer_imports = |name| {
     }
 }
 
-## One type-module file under engine/math/<Name>.roc
 math_type_file_to_roc_source_str : Str -> Str
 math_type_file_to_roc_source_str = |name| {
     peers = math_type_peer_imports(name)
@@ -374,6 +354,33 @@ math_type_names = [
     "Color",
 ]
 
+## Short names implemented in host.zig (MVP façade for Engine.roc)
+host_facade_symbols : List(Str)
+host_facade_symbols = [
+    "register_class",
+    "print_error",
+    "print_warning",
+    "input_is_action_pressed",
+    "is_on_floor",
+    "get_gravity",
+    "get_velocity",
+    "set_velocity",
+    "move_and_slide",
+]
+
+host_facade_decls : Str
+host_facade_decls =
+    \\    # --- platform façade (host.zig MVP) ---
+    \\    register_class! : Str, Str => U32
+    \\    print_error! : Str => {}
+    \\    print_warning! : Str => {}
+    \\    input_is_action_pressed! : Str => U8
+    \\    is_on_floor! : () => U8
+    \\    get_gravity! : () => Vector3
+    \\    get_velocity! : () => Vector3
+    \\    set_velocity! : Vector3 => {}
+    \\    move_and_slide! : () => {}
+
 # =============================================================================
 # Naming
 # =============================================================================
@@ -393,7 +400,7 @@ class_module_name = |name| {
     match name {
         "Crypto" => "GodotCrypto"
         "Range" => "GodotRange"
-        "Engine" => "GodotEngine"   # avoid clash with façade Engine.roc
+        "Engine" => "GodotEngine"
         other => other
     }
 }
@@ -452,22 +459,17 @@ host_util_symbol : Str, U64 -> Str
 host_util_symbol = |name, hash|
     host_symbol("util_${roc_fn_name(name)}_${hash.to_str()}")
 
-## Linker symbol for Zig export / platform hosted map
 host_linker_symbol : Str -> Str
 host_linker_symbol = |sym| "godot_roc_${sym}"
 
-## One hosted map entry: "godot_roc_foo": Host.foo!,
 hosted_entry : Str -> Str
 hosted_entry = |sym|
     \\        "${host_linker_symbol(sym)}": Host.${sym}!,
 
-
 # =============================================================================
-# Type mapping (Roc Host / Roc modules / Zig ABI) — one source of truth
+# Type mapping
 # =============================================================================
 
-## True for Godot builtins that are value types with public members in the API
-## (or well-known fixed layouts). Everything else is opaque handle / ptr.
 is_struct_builtin : Str -> Bool
 is_struct_builtin = |name| {
     match name {
@@ -479,9 +481,6 @@ is_struct_builtin = |name| {
     }
 }
 
-## Canonical Roc record fields for math builtins (matches Zig ABI layouts).
-## Do NOT take these from JSON members — those include computed properties
-## (Color.r8, AABB.end, Rect2.end, …) that are not part of the C layout.
 canonical_roc_fields : Str -> Str
 canonical_roc_fields = |name| {
     match name {
@@ -497,15 +496,14 @@ canonical_roc_fields = |name| {
         "Rect2i" => "    position : Vector2i,\n    size : Vector2i"
         "AABB" => "    position : Vector3,\n    size : Vector3"
         "Plane" => "    normal : Vector3,\n    d : F32"
-        "Basis" => "    rows : List(Vector3)" # fixed 3 in Zig; List is Roc stand-in
+        "Basis" => "    rows : List(Vector3)"
         "Transform2D" => "    x : Vector2,\n    y : Vector2,\n    origin : Vector2"
         "Transform3D" => "    basis : Basis,\n    origin : Vector3"
-        "Projection" => "    columns : List(Vector4)" # fixed 4 in Zig
+        "Projection" => "    columns : List(Vector4)"
         _ => "    ptr : U64"
     }
 }
 
-## Canonical Zig extern-struct fields for math builtins (Godot C ABI).
 canonical_zig_fields : Str -> Str
 canonical_zig_fields = |name| {
     match name {
@@ -529,7 +527,6 @@ canonical_zig_fields = |name| {
     }
 }
 
-## Strip enum:: / bitfield:: for host (always integer ABI for now)
 strip_enum_bitfield_to_int : Str -> Str
 strip_enum_bitfield_to_int = |str| {
     if str.starts_with("enum::") {
@@ -541,7 +538,6 @@ strip_enum_bitfield_to_int = |str| {
     }
 }
 
-## Host surface types (platform hosted ↔ Zig). Prefer structured math types.
 c_to_host_type : Str -> Str
 c_to_host_type = |str| {
     cleaned = strip_enum_bitfield_to_int(str)
@@ -561,16 +557,13 @@ c_to_host_type = |str| {
         "Signal" => "U64"
         "Dictionary" => "U64"
         "Array" => "U64"
-        # typed arrays / packed — opaque until real bindings
         other if other.starts_with("typedarray::") => "U64"
         other if other.starts_with("packed") => "U64"
         other if is_struct_builtin(other) => other
-        # Object classes, opaque builtins, unknown → handle
         _ => "U64"
     }
 }
 
-## Roc-facing types in class/builtin modules (nicer names where possible)
 c_to_roc_type : Str -> Str
 c_to_roc_type = |str| {
     cleaned =
@@ -606,8 +599,6 @@ c_to_roc_type = |str| {
     }
 }
 
-## Zig C ABI type for a Godot type string (args and returns).
-## Strings / StringName / NodePath are opaque handles (u64) for now — never void.
 c_to_zig_type : Str -> Str
 c_to_zig_type = |str| {
     cleaned =
@@ -635,7 +626,6 @@ c_to_zig_type = |str| {
         other if other.starts_with("typedarray::") => "u64"
         other if other.starts_with("packed") => "u64"
         other if is_struct_builtin(other) => other
-        # Object / opaque builtin / unknown
         _ => "u64"
     }
 }
@@ -653,8 +643,6 @@ c_to_zig_ret_from_try = |maybe|
 c_to_zig_arg : Str -> Str
 c_to_zig_arg = |str| c_to_zig_type(str)
 
-## Default return expression for stub bodies.
-## Struct builtins always use std.mem.zeroes so field names never drift.
 zig_default_ret : Str -> Str
 zig_default_ret = |zig_ty| {
     match zig_ty {
@@ -672,16 +660,14 @@ zig_default_ret = |zig_ty| {
     }
 }
 
-
 # =============================================================================
-# Collect every Host symbol (same set used by Host.roc, hosted{}, Zig)
+# Host symbols
 # =============================================================================
 
 all_host_symbols : ExtensionApi -> List(Str)
 all_host_symbols = |eapi| {
 
     sings = eapi.singletons.map(|s| host_singleton_symbol(s.name))
-
     utils = eapi.utility_functions.map(|uf| host_util_symbol(uf.name, uf.hash))
 
     builtin_ms =
@@ -700,16 +686,27 @@ all_host_symbols = |eapi| {
             }
         })
 
-    List.concat(sings, List.concat(utils, List.concat(builtin_ms, class_ms)))
+    List.concat(
+        host_facade_symbols,
+        List.concat(sings, List.concat(utils, List.concat(builtin_ms, class_ms))),
+    )
 }
 
 # =============================================================================
-# Platform root — includes hosted { "godot_roc_*": Host.*!, ... }
+# Platform root
 # =============================================================================
 
 gen_platform_main_roc : ExtensionApi -> Str
 gen_platform_main_roc = |eapi| {
-    builtin_names = eapi.builtin_classes.map(|b| builtin_module_name(b.name))
+    builtin_names =
+        eapi.builtin_classes.fold([], |acc, b| {
+            if is_struct_builtin(b.name) {
+                acc
+            } else {
+                List.append(acc, builtin_module_name(b.name))
+            }
+        })
+
     class_names = eapi.classes.map(|c| class_module_name(c.name))
     singleton_names = eapi.singletons.map(|s| singleton_module_name(s.name))
 
@@ -720,16 +717,20 @@ gen_platform_main_roc = |eapi| {
         "BuiltinClassSizes",
         "BuiltinClassMemberOffsets",
         "NativeStructures",
-        "UtilityFunctions"
+        "UtilityFunctions",
     ]
 
     all_names =
-        List.concat(meta_names, List.concat(builtin_names, List.concat(class_names, singleton_names)))
+        List.concat(
+            meta_names,
+            List.concat(
+                math_type_names,
+                List.concat(builtin_names, List.concat(class_names, singleton_names)),
+            ),
+        )
 
     expose = Str.join_with(all_names.map(|n| "        ${n}"), ",\n")
-
-    hosted_body =
-        Str.join_with(all_host_symbols(eapi).map(hosted_entry), "\n")
+    hosted_body = Str.join_with(all_host_symbols(eapi).map(hosted_entry), "\n")
 
     meta_imports =
         \\import Host
@@ -740,6 +741,8 @@ gen_platform_main_roc = |eapi| {
         \\import engine/NativeStructures
         \\import engine/UtilityFunctions
 
+    math_imports =
+        Str.join_with(math_type_names.map(|n| "import engine/math/${n}"), "\n")
     builtin_imports =
         Str.join_with(builtin_names.map(|n| "import engine/builtin_classes/${n}"), "\n")
     class_imports =
@@ -750,30 +753,22 @@ gen_platform_main_roc = |eapi| {
     \\# AUTO-GENERATED Godot Roc platform
     \\platform "godot-roc"
     \\    requires {} {
-    \\        # Supplied:
     \\        scene_init! : () => {},
     \\        ready! : () => {},
     \\        process! : GodotRoc.ClassId, F64 => {},
     \\        physics_process! : GodotRoc.ClassId, F64 => {},
-    \\        # Generated:
     \\    }
     \\    exposes [
-    \\        # Supplied:
     \\        Engine,
     \\        GodotRoc,
-    \\        # Host,
-    \\        # Generated:
     \\${expose}
     \\    ]
     \\    packages { roc: "nightly-2026-09-27-a3ce7f1" }
     \\    provides {
-    \\        # Provided:
     \\        "godot_roc_scene_init": scene_init_for_host!,
     \\        "godot_roc_ready": ready_for_host!,
     \\        "godot_roc_process": process_for_host!,
     \\        "godot_roc_physics_process": physics_process_for_host!,
-    \\        # Generated:
-    \\        # ...
     \\    }
     \\    hosted {
     \\${hosted_body}
@@ -791,8 +786,9 @@ gen_platform_main_roc = |eapi| {
     \\        x64mingw: { inputs: ["host.lib", app], output: Shared },
     \\        arm64mingw: { inputs: ["host.lib", app], output: Shared },
     \\    }
-    \\# Generated Imports:
     \\${meta_imports}
+    \\
+    \\${math_imports}
     \\
     \\${builtin_imports}
     \\
@@ -800,7 +796,6 @@ gen_platform_main_roc = |eapi| {
     \\
     \\${singleton_imports}
     \\
-    \\# Provided Imports:
     \\import Engine
     \\import Host
     \\import GodotRoc
@@ -839,6 +834,36 @@ render_header = |eapi|
 # Method helpers
 # =============================================================================
 
+method_arg_types_host_for : Str, MethodDef -> Str
+method_arg_types_host_for = |owner, md| {
+    explicit =
+        match md.arguments {
+            Ok(args) if !(args.is_empty()) =>
+                Str.join_with(args.map(|a| c_to_host_type(a.type)), ", ")
+            _ => ""
+        }
+    if md.is_static {
+        if explicit == "" {
+            "()"
+        } else {
+            explicit
+        }
+    } else if is_struct_builtin(owner) {
+        self_ty = c_to_host_type(owner)
+        if explicit == "" {
+            self_ty
+        } else {
+            "${self_ty}, ${explicit}"
+        }
+    } else {
+        if explicit == "" {
+            "()"
+        } else {
+            explicit
+        }
+    }
+}
+
 method_arg_types_host : MethodDef -> Str
 method_arg_types_host = |md|
     match md.arguments {
@@ -862,7 +887,7 @@ method_def_live : Str, MethodDef -> Str
 method_def_live = |owner, md| {
     fn = roc_fn_name(md.name)
     sym = host_method_symbol(owner, md.name, md.hash)
-    args_ty = method_arg_types_host(md)
+    args_ty = method_arg_types_host_for(owner, md)
     ret = method_return_type_host(md)
     \\    ${fn}! : ${args_ty} => ${ret}
     \\    ${fn}! = Host.${sym}!
@@ -923,7 +948,7 @@ signals_block = |maybe|
     }
 
 # =============================================================================
-# Host.roc — signatures only
+# Host.roc
 # =============================================================================
 
 host_entry : Str, Str, Str -> Str
@@ -970,7 +995,7 @@ host_to_roc_source_str = |eapi| {
                         Str.join_with(
                             ms.map(|md| {
                                 sym = host_method_symbol(bic.name, md.name, md.hash)
-                                host_entry(sym, method_arg_types_host(md), method_return_type_host(md))
+                                host_entry(sym, method_arg_types_host_for(bic.name, md), method_return_type_host(md))
                             }),
                             "\n",
                         )
@@ -998,16 +1023,18 @@ host_to_roc_source_str = |eapi| {
             "\n",
         )
 
-        math_imports =
-            Str.join_with(
-                math_type_names.map(|n| "import engine/math/${n}"),
-                "\n",
-            )
+    math_imports =
+        Str.join_with(
+            math_type_names.map(|n| "import engine/math/${n}"),
+            "\n",
+        )
 
     \\# AUTO-GENERATED Host surface — signatures only; bodies via platform hosted → Zig
     \\${math_imports}
     \\
     \\Host := [].{
+    \\${host_facade_decls}
+    \\
     \\    # --- singletons ---
     \\${sing_decls}
     \\
@@ -1182,51 +1209,84 @@ builtin_class_to_roc_source_str = |bic| {
             _ => []
         }
 
-    # Struct builtins: type lives in MathTypes; this file is methods + enums only.
-    if is_struct_builtin(bic.name) {
-        \\# builtin ${bic.name} — layout in engine/MathTypes; methods call Host
-        \\import ../../Host
-        \\import ../../engine/math/${type_name}
-        \\
-        \\${type_name} := [].{
-        \\${enums_block(bic.enums)}
-        \\
-        \\    # --- methods ---
-        \\${methods_block_live(bic.name, bic.methods)}
-        \\}
-    } else {
-        # Opaque / non-struct builtins (String, Array, …)
-        members_str =
-            if !(members_list.is_empty()) {
-                Str.join_with(members_list.map(|m| "    ${m.name} : ${member_to_roc_field_type(m.type)}"), ",\n")
-            } else {
-                "    ptr : U64"
-            }
+    members_str =
+        if !(members_list.is_empty()) {
+            Str.join_with(members_list.map(|m| "    ${m.name} : ${member_to_roc_field_type(m.type)}"), ",\n")
+        } else {
+            "    ptr : U64"
+        }
 
-        construct_sig =
-            if !(members_list.is_empty()) {
-                arg_tys = Str.join_with(members_list.map(|m| member_to_roc_field_type(m.type)), ", ")
-                arg_ns = Str.join_with(members_list.map(|m| m.name), ", ")
-                \\    construct_default! : ${arg_tys} -> ${type_name}
-                \\    construct_default! = |${arg_ns}| { { ${arg_ns} } }
-            } else {
-                \\    construct_default! : {} -> ${type_name}
-                \\    construct_default! = |_| { { ptr: 0 } }
-            }
+    construct_sig =
+        if !(members_list.is_empty()) {
+            arg_tys = Str.join_with(members_list.map(|m| member_to_roc_field_type(m.type)), ", ")
+            arg_ns = Str.join_with(members_list.map(|m| m.name), ", ")
+            \\    construct_default! : ${arg_tys} -> ${type_name}
+            \\    construct_default! = |${arg_ns}| { { ${arg_ns} } }
+        } else {
+            \\    construct_default! : {} -> ${type_name}
+            \\    construct_default! = |_| { { ptr: 0 } }
+        }
 
-        \\# builtin ${bic.name}
-        \\import ../../Host
-        \\
-        \\${type_name} := {
-        \\${members_str}
-        \\}.{
-        \\${construct_sig}
-        \\${enums_block(bic.enums)}
-        \\
-        \\    # --- methods ---
-        \\${methods_block_live(bic.name, bic.methods)}
-        \\}
-    }
+    method_refs =
+        match bic.methods {
+            Ok(ms) =>
+                ms.fold([], |acc, md| {
+                    acc1 =
+                        match md.arguments {
+                            Ok(args) =>
+                                args.fold(acc, |a2, arg|
+                                    collect_type_refs(a2, type_name, c_to_roc_type(arg.type))
+                                )
+                            _ => acc
+                        }
+                    ret_t =
+                        match md.return_type {
+                            Ok(rt) => Ok(c_to_roc_type(rt))
+                            _ =>
+                                match md.return_value {
+                                    Ok(rv) => Ok(c_to_roc_type(rv.type))
+                                    _ => Err(Missing)
+                                }
+                        }
+                    match ret_t {
+                        Ok(t) => collect_type_refs(acc1, type_name, t)
+                        _ => acc1
+                    }
+                })
+            _ => []
+        }
+
+    math_refs =
+        method_refs.fold([], |acc, t| {
+            if is_struct_builtin(t) and !(List.contains(acc, t)) {
+                List.append(acc, t)
+            } else {
+                acc
+            }
+        })
+
+    math_imports =
+        if List.is_empty(math_refs) {
+            ""
+        } else {
+            Str.concat(
+                Str.join_with(math_refs.map(|t| "import ../../engine/math/${t}"), "\n"),
+                "\n",
+            )
+        }
+
+    \\# builtin ${bic.name}
+    \\import ../../Host
+    \\${math_imports}
+    \\${type_name} := {
+    \\${members_str}
+    \\}.{
+    \\${construct_sig}
+    \\${enums_block(bic.enums)}
+    \\
+    \\    # --- methods ---
+    \\${methods_block_live(bic.name, bic.methods)}
+    \\}
 }
 
 class_to_roc_source_str : ClassDef -> Str
@@ -1278,12 +1338,7 @@ class_to_roc_source_str = |cls| {
         if needs_math_flag {
             Str.concat(
                 Str.join_with(
-                    [
-                        "Vector2", "Vector2i", "Vector3", "Vector3i",
-                        "Vector4", "Vector4i", "Rect2", "Rect2i", "AABB",
-                        "Transform2D", "Transform3D", "Basis", "Projection",
-                        "Plane", "Quaternion", "Color",
-                    ].map(|t| "import ../../engine/math/${t}"),
+                    math_type_names.map(|t| "import ../../engine/math/${t}"),
                     "\n",
                 ),
                 "\n",
@@ -1325,7 +1380,7 @@ singleton_to_roc_source_str = |st| {
 }
 
 # =============================================================================
-# Zig ABI — types, hashes, typed export stubs (same symbols as hosted map)
+# Zig ABI
 # =============================================================================
 
 member_to_roc_field_type : Str -> Str
@@ -1338,7 +1393,6 @@ member_to_roc_field_type = |str| {
     }
 }
 
-## Map a Godot member type to a Zig field type for extern structs
 member_to_zig_field_type : Str -> Str
 member_to_zig_field_type = |str| {
     match str {
@@ -1351,8 +1405,6 @@ member_to_zig_field_type = |str| {
     }
 }
 
-## Emit one `pub const Name = extern struct { ... };` from canonical layouts only.
-## JSON members are ignored for layout — they include computed properties.
 zig_extern_struct_for_builtin : BuiltinClass -> Str
 zig_extern_struct_for_builtin = |bic| {
     name = bic.name
@@ -1375,82 +1427,6 @@ zig_all_extern_structs = |eapi|
         "\n",
     )
 
-## Zig identifiers: avoid keywords / empty / leading digits
-zig_safe_ident : Str -> Str
-zig_safe_ident = |s| {
-    base =
-        s.replace_each(" ", "_")
-            .replace_each(".", "_")
-            .replace_each(":", "_")
-            .replace_each("/", "_")
-            .replace_each("-", "_")
-    match base {
-        # keywords / reserved
-        "align" => "align_"
-        "addrspace" => "addrspace_"
-        "asm" => "asm_"
-        "async" => "async_"
-        "await" => "await_"
-        "allowzero" => "allowzero_"
-        "and" => "and_"
-        "anyframe" => "anyframe_"
-        "anyopaque" => "anyopaque_"
-        "anytype" => "anytype_"
-        "break" => "break_"
-        "callconv" => "callconv_"
-        "catch" => "catch_"
-        "comptime" => "comptime_"
-        "const" => "cst"
-        "continue" => "continue_"
-        "defer" => "defer_"
-        "else" => "else_"
-        "enum" => "enm"
-        "errdefer" => "errdefer_"
-        "error" => "err"
-        "export" => "exprt"
-        "extern" => "extrn"
-        "fn" => "func"
-        "for" => "for_"
-        "if" => "if_"
-        "inline" => "inline_"
-        "linksection" => "linksection_"
-        "noalias" => "noalias_"
-        "noinline" => "noinline_"
-        "nosuspend" => "nosuspend_"
-        "opaque" => "opaque_"
-        "or" => "or_"
-        "orelse" => "orelse_"
-        "packed" => "packed_"
-        "pub" => "pblc"
-        "resume" => "resume_"
-        "return" => "ret"
-        "struct" => "strct"
-        "suspend" => "suspend_"
-        "switch" => "switch_"
-        "test" => "test_"
-        "threadlocal" => "threadlocal_"
-        "try" => "try_"
-        "type" => "ty"
-        "union" => "unn"
-        "unreachable" => "unreachable_"
-        "usingnamespace" => "usingnamespace_"
-        "var" => "vr"
-        "volatile" => "volatile_"
-        "while" => "while_"
-        # type names often used as param names
-        "void" => "void_"
-        "bool" => "bool_"
-        "noreturn" => "noreturn_"
-        "undefined" => "undefined_"
-        "null" => "null_"
-        "true" => "true_"
-        "false" => "false_"
-        "" => "arg"
-        other => other
-    }
-}
-
-## Safe Zig identifier fragment for hash const names
 zig_hash_ident : Str -> Str
 zig_hash_ident = |s|
     s.replace_each(" ", "_")
@@ -1501,22 +1477,13 @@ zig_hashes_struct = |eapi| {
         )
 
     \\
-    \\/// Method / utility hashes from extension_api.json (engine + version specific)
     \\pub const hashes = struct {
-    \\    // --- utility ---
     \\${util_lines}
-    \\
-    \\    // --- builtin methods ---
     \\${builtin_lines}
-    \\
-    \\    // --- class methods ---
     \\${class_lines}
     \\};
 }
 
-## Typed parameter list for a method (Zig).
-## Zig 0.16: only a param named exactly `_` is allowed to be unused.
-## Names are not part of the C ABI, so all stubs use `_`.
 zig_method_params : MethodDef -> Str
 zig_method_params = |md|
     match md.arguments {
@@ -1529,6 +1496,21 @@ zig_method_params = |md|
             )
         _ => ""
     }
+
+zig_method_params_for : Str, MethodDef -> Str
+zig_method_params_for = |owner, md| {
+    explicit = zig_method_params(md)
+    if md.is_static or !(is_struct_builtin(owner)) {
+        explicit
+    } else {
+        self_ty = c_to_zig_type(owner)
+        if explicit == "" {
+            "_: ${self_ty}"
+        } else {
+            "_: ${self_ty}, ${explicit}"
+        }
+    }
+}
 
 zig_method_return : MethodDef -> Str
 zig_method_return = |md|
@@ -1545,18 +1527,12 @@ zig_export_method : Str, MethodDef -> Str
 zig_export_method = |owner, md| {
     sym = host_method_symbol(owner, md.name, md.hash)
     ret = zig_method_return(md)
-    params = zig_method_params(md)
-    param_sig =
-        if params == "" {
-            ""
-        } else {
-            params
-        }
+    params = zig_method_params_for(owner, md)
     default_ret = zig_default_ret(ret)
     \\
     \\/// ${owner}.${md.name} hash=${md.hash.to_str()}
-    \\export fn godot_roc_${sym}(${param_sig}) callconv(.c) ${ret} {
-    \\    // TODO: classdb_get_method_bind("${owner}", "${md.name}", ${md.hash.to_str()}) + ptrcall
+    \\export fn godot_roc_${sym}(${params}) callconv(.c) ${ret} {
+    \\    // TODO: ptrcall
     \\    ${default_ret}
     \\}
 }
@@ -1578,9 +1554,8 @@ zig_export_util = |uf| {
         }
     default_ret = zig_default_ret(ret)
     \\
-    \\/// utility ${uf.name} hash=${uf.hash.to_str()}
+    \\/// utility ${uf.name}
     \\export fn godot_roc_${sym}(${params}) callconv(.c) ${ret} {
-    \\    // TODO: variant_get_ptr_utility_function / call
     \\    ${default_ret}
     \\}
 }
@@ -1589,23 +1564,30 @@ zig_export_singleton : Singleton -> Str
 zig_export_singleton = |s| {
     sym = host_singleton_symbol(s.name)
     \\
-    \\/// singleton ${s.name} : ${s.type}
+    \\/// singleton ${s.name}
     \\export fn godot_roc_${sym}() callconv(.c) u64 {
-    \\    // TODO: global_get_singleton("${s.name}")
     \\    return 0;
     \\}
 }
+
+## Façade exports — real bodies live in host.zig; these are weak stubs only if
+## host.zig does not provide the symbol. Prefer implementing them only in host.zig
+## and *not* emitting stubs here to avoid duplicate symbols.
+## We emit comments only; host.zig owns godot_roc_register_class etc.
+zig_facade_note : Str
+zig_facade_note =
+    \\
+    \\// Platform façade symbols (register_class, print_error, set_velocity, …)
+    \\// are implemented in host.zig — do not duplicate export fns here.
+    \\
 
 zig_platform_abi_impl_to_str : ExtensionApi -> Str
 zig_platform_abi_impl_to_str = |eapi| {
     structs = zig_all_extern_structs(eapi)
     hashes = zig_hashes_struct(eapi)
 
-    sings =
-        Str.join_with(eapi.singletons.map(zig_export_singleton), "\n")
-
-    utils =
-        Str.join_with(eapi.utility_functions.map(zig_export_util), "\n")
+    sings = Str.join_with(eapi.singletons.map(zig_export_singleton), "\n")
+    utils = Str.join_with(eapi.utility_functions.map(zig_export_util), "\n")
 
     builtin_methods =
         Str.join_with(
@@ -1630,24 +1612,14 @@ zig_platform_abi_impl_to_str = |eapi| {
         )
 
     \\//! AUTO-GENERATED from extension_api.json
-    \\//! Must match platform hosted { "godot_roc_*": Host.*! }
-    \\//! Types + hashes are ready for host.zig; export bodies are stubs until ptrcall wiring.
     \\const std = @import("std");
     \\
-    \\// ---------------------------------------------------------------------------
-    \\// Builtin value types (extern for Roc ↔ Zig ABI)
-    \\// Canonical layouts only — JSON "members" include computed props (end, r8, …).
-    \\// ---------------------------------------------------------------------------
     \\${structs}
     \\
-    \\// ---------------------------------------------------------------------------
-    \\// Hashes
-    \\// ---------------------------------------------------------------------------
     \\${hashes}
     \\
-    \\// ---------------------------------------------------------------------------
-    \\// Hosted exports (stubs)
-    \\// ---------------------------------------------------------------------------
+    \\${zig_facade_note}
+    \\
     \\${sings}
     \\${utils}
     \\${builtin_methods}

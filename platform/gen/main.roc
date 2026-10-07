@@ -1,19 +1,14 @@
 # AUTO-GENERATED Godot Roc platform
 platform "godot-roc"
     requires {} {
-        # Supplied:
         scene_init! : () => {},
         ready! : () => {},
         process! : GodotRoc.ClassId, F64 => {},
         physics_process! : GodotRoc.ClassId, F64 => {},
-        # Generated:
     }
     exposes [
-        # Supplied:
         Engine,
         GodotRoc,
-        # Host,
-        # Generated:
         Host,
         GlobalConstants,
         GlobalEnums,
@@ -21,27 +16,27 @@ platform "godot-roc"
         BuiltinClassMemberOffsets,
         NativeStructures,
         UtilityFunctions,
+        Vector2,
+        Vector2i,
+        Vector3,
+        Vector3i,
+        Vector4,
+        Vector4i,
+        Rect2,
+        Rect2i,
+        AABB,
+        Transform2D,
+        Transform3D,
+        Basis,
+        Projection,
+        Plane,
+        Quaternion,
+        Color,
         Nil,
         GodotBool,
         GodotInt,
         GodotFloat,
         String,
-        Vector2,
-        Vector2i,
-        Rect2,
-        Rect2i,
-        Vector3,
-        Vector3i,
-        Transform2D,
-        Vector4,
-        Vector4i,
-        Plane,
-        Quaternion,
-        AABB,
-        Basis,
-        Transform3D,
-        Projection,
-        Color,
         StringName,
         NodePath,
         RID,
@@ -1139,15 +1134,21 @@ platform "godot-roc"
     ]
     packages { roc: "nightly-2026-09-27-a3ce7f1" }
     provides {
-        # Provided:
         "godot_roc_scene_init": scene_init_for_host!,
         "godot_roc_ready": ready_for_host!,
         "godot_roc_process": process_for_host!,
         "godot_roc_physics_process": physics_process_for_host!,
-        # Generated:
-        # ...
     }
     hosted {
+        "godot_roc_register_class": Host.register_class!,
+        "godot_roc_print_error": Host.print_error!,
+        "godot_roc_print_warning": Host.print_warning!,
+        "godot_roc_input_is_action_pressed": Host.input_is_action_pressed!,
+        "godot_roc_is_on_floor": Host.is_on_floor!,
+        "godot_roc_get_gravity": Host.get_gravity!,
+        "godot_roc_get_velocity": Host.get_velocity!,
+        "godot_roc_set_velocity": Host.set_velocity!,
+        "godot_roc_move_and_slide": Host.move_and_slide!,
         "godot_roc_get_singleton_performance": Host.get_singleton_performance!,
         "godot_roc_get_singleton_engine": Host.get_singleton_engine!,
         "godot_roc_get_singleton_projectsettings": Host.get_singleton_projectsettings!,
@@ -19138,7 +19139,6 @@ platform "godot-roc"
         x64mingw: { inputs: ["host.lib", app], output: Shared },
         arm64mingw: { inputs: ["host.lib", app], output: Shared },
     }
-# Generated Imports:
 import Host
 import engine/GlobalConstants
 import engine/GlobalEnums
@@ -19147,27 +19147,28 @@ import engine/BuiltinClassMemberOffsets
 import engine/NativeStructures
 import engine/UtilityFunctions
 
+import engine/math/Vector2
+import engine/math/Vector2i
+import engine/math/Vector3
+import engine/math/Vector3i
+import engine/math/Vector4
+import engine/math/Vector4i
+import engine/math/Rect2
+import engine/math/Rect2i
+import engine/math/AABB
+import engine/math/Transform2D
+import engine/math/Transform3D
+import engine/math/Basis
+import engine/math/Projection
+import engine/math/Plane
+import engine/math/Quaternion
+import engine/math/Color
+
 import engine/builtin_classes/Nil
 import engine/builtin_classes/GodotBool
 import engine/builtin_classes/GodotInt
 import engine/builtin_classes/GodotFloat
 import engine/builtin_classes/String
-import engine/builtin_classes/Vector2
-import engine/builtin_classes/Vector2i
-import engine/builtin_classes/Rect2
-import engine/builtin_classes/Rect2i
-import engine/builtin_classes/Vector3
-import engine/builtin_classes/Vector3i
-import engine/builtin_classes/Transform2D
-import engine/builtin_classes/Vector4
-import engine/builtin_classes/Vector4i
-import engine/builtin_classes/Plane
-import engine/builtin_classes/Quaternion
-import engine/builtin_classes/AABB
-import engine/builtin_classes/Basis
-import engine/builtin_classes/Transform3D
-import engine/builtin_classes/Projection
-import engine/builtin_classes/Color
 import engine/builtin_classes/StringName
 import engine/builtin_classes/NodePath
 import engine/builtin_classes/RID
@@ -20265,7 +20266,6 @@ import engine/singletons/PhysicsServer2DSingleton
 import engine/singletons/PhysicsServer3DSingleton
 import engine/singletons/XRServerSingleton
 
-# Provided Imports:
 import Engine
 import Host
 import GodotRoc
