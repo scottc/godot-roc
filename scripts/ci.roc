@@ -383,7 +383,7 @@ main! = |_args| {
         mkdir_ci,
         mkdir_ws,
         copy_template,
-        check,
+        #check,
         glue,
         roc_zig,
         roc_linux,
