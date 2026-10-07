@@ -62,14 +62,14 @@ main! = |_args| {
                 $n = $n + 1
 
                 # preview = str_prefix(scanned.typedef, 100)
-                Stdout.line!("pre-parse n=${$n.to_str()}")?
+                # Stdout.line!("pre-parse n=${$n.to_str()}")?
 
                 comment = parse_comment_docs(scanned.comment)
                 match parse_typedef(scanned.typedef) {
                     Ok(td) => {
                         $ok = $ok + 1
                         $items = $items.append({ comment: comment, typedef: td })
-                        Stdout.line!("post-parse n=${$n.to_str()} ok")?
+                        # Stdout.line!("post-parse n=${$n.to_str()} ok")?
                     }
                     Err(e) => {
                         $err = $err + 1

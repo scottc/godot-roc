@@ -354,7 +354,6 @@ math_type_names = [
     "Color",
 ]
 
-## Short names implemented in host.zig (MVP façade for Engine.roc)
 host_facade_symbols : List(Str)
 host_facade_symbols = [
     "register_class",
@@ -657,6 +656,57 @@ zig_default_ret = |zig_ty| {
         | "Plane" | "Quaternion" | "Color" =>
             "return std.mem.zeroes(${zig_ty});"
         _ => "return undefined;"
+    }
+}
+
+## Types allowed in auto-wired utility (gde_call.callUtility) bodies
+util_c_type_is_simple : Str -> Bool
+util_c_type_is_simple = |str| {
+    cleaned =
+        if str.starts_with("enum::") or str.starts_with("bitfield::") {
+            "int"
+        } else {
+            str
+        }
+    match cleaned {
+        "bool" | "int" | "float" | "double" | "void" => Bool.True
+        _ => Bool.False
+    }
+}
+
+util_is_simple : UtilityFunction -> Bool
+util_is_simple = |uf| {
+    if uf.is_vararg {
+        Bool.False
+    } else {
+        ret_ok =
+            match uf.return_type {
+                Ok(rt) => util_c_type_is_simple(rt)
+                _ => Bool.True
+            }
+        args_ok =
+            match uf.arguments {
+                Ok(args) =>
+                    args.fold(Bool.True, |acc, a|
+                        if acc and util_c_type_is_simple(a.type) {
+                            Bool.True
+                        } else {
+                            Bool.False
+                        }
+                    )
+                _ => Bool.True
+            }
+        ret_ok and args_ok
+    }
+}
+
+zig_util_arg_local : Str -> Str
+zig_util_arg_local = |name| {
+    n = roc_fn_name(name)
+    if n == "" {
+        "arg"
+    } else {
+        "a_${n}"
     }
 }
 
@@ -1532,32 +1582,116 @@ zig_export_method = |owner, md| {
     \\
     \\/// ${owner}.${md.name} hash=${md.hash.to_str()}
     \\export fn godot_roc_${sym}(${params}) callconv(.c) ${ret} {
-    \\    // TODO: ptrcall
+    \\    // TODO: ptrcall via gde_call.callInstance
     \\    ${default_ret}
     \\}
 }
 
+## Simple utils → gde_call.callUtility; others → stubs
 zig_export_util : UtilityFunction -> Str
 zig_export_util = |uf| {
     sym = host_util_symbol(uf.name, uf.hash)
     ret = c_to_zig_ret_from_try(uf.return_type)
-    params =
-        match uf.arguments {
-            Ok(args) if !(args.is_empty()) =>
+    hash_key = "util_${zig_hash_ident(uf.name)}"
+    arg_list = match uf.arguments { Ok(a) => a _ => [] }
+    n_args = arg_list.len().to_str()
+
+    if !(util_is_simple(uf)) {
+        params =
+            if List.is_empty(arg_list) {
+                ""
+            } else {
                 Str.join_with(
-                    args.map(|a| {
+                    arg_list.map(|a| {
                         \\_: ${c_to_zig_arg(a.type)}
                     }),
                     ", ",
                 )
-            _ => ""
-        }
-    default_ret = zig_default_ret(ret)
-    \\
-    \\/// utility ${uf.name}
-    \\export fn godot_roc_${sym}(${params}) callconv(.c) ${ret} {
-    \\    ${default_ret}
-    \\}
+            }
+        default_ret = zig_default_ret(ret)
+        \\
+        \\/// utility ${uf.name} (stub — non-simple / vararg)
+        \\export fn godot_roc_${sym}(${params}) callconv(.c) ${ret} {
+        \\    ${default_ret}
+        \\}
+    } else {
+        params =
+            if List.is_empty(arg_list) {
+                ""
+            } else {
+                Str.join_with(
+                    arg_list.map(|a| {
+                        loc = zig_util_arg_local(a.name)
+                        \\${loc}: ${c_to_zig_arg(a.type)}
+                    }),
+                    ", ",
+                )
+            }
+
+        locals =
+            if List.is_empty(arg_list) {
+                ""
+            } else {
+                Str.concat(
+                    Str.join_with(
+                        arg_list.map(|a| {
+                            loc = zig_util_arg_local(a.name)
+                            \\    var ${loc}_ = ${loc};
+                        }),
+                        "\n",
+                    ),
+                    "\n",
+                )
+            }
+
+        args_array =
+            if List.is_empty(arg_list) {
+                \\    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = null;
+            } else {
+                ptrs =
+                    Str.join_with(
+                        arg_list.map(|a| {
+                            loc = zig_util_arg_local(a.name)
+                            \\        @ptrCast(&${loc}_),
+                        }),
+                        "\n",
+                    )
+                \\    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+                \\${ptrs}
+                \\    };
+                \\    const args_ptr: ?[*]const baseline_gde_if.GDExtensionConstTypePtr = &args;
+            }
+
+        body_ret =
+            if ret == "void" {
+                \\    _ = gde_call.callUtility(
+                \\        gde_call.godotRocCtx(),
+                \\        "${uf.name}",
+                \\        hashes.${hash_key},
+                \\        args_ptr,
+                \\        ${n_args},
+                \\        null,
+                \\    );
+            } else {
+                \\    var ret_val: ${ret} = std.mem.zeroes(${ret});
+                \\    _ = gde_call.callUtility(
+                \\        gde_call.godotRocCtx(),
+                \\        "${uf.name}",
+                \\        hashes.${hash_key},
+                \\        args_ptr,
+                \\        ${n_args},
+                \\        @ptrCast(&ret_val),
+                \\    );
+                \\    return ret_val;
+            }
+
+        \\
+        \\/// utility ${uf.name} hash=${uf.hash.to_str()} (gde_call)
+        \\export fn godot_roc_${sym}(${params}) callconv(.c) ${ret} {
+        \\${locals}${args_array}
+        \\${body_ret}
+        \\}
+    }
 }
 
 zig_export_singleton : Singleton -> Str
@@ -1570,10 +1704,6 @@ zig_export_singleton = |s| {
     \\}
 }
 
-## Façade exports — real bodies live in host.zig; these are weak stubs only if
-## host.zig does not provide the symbol. Prefer implementing them only in host.zig
-## and *not* emitting stubs here to avoid duplicate symbols.
-## We emit comments only; host.zig owns godot_roc_register_class etc.
 zig_facade_note : Str
 zig_facade_note =
     \\
@@ -1613,6 +1743,8 @@ zig_platform_abi_impl_to_str = |eapi| {
 
     \\//! AUTO-GENERATED from extension_api.json
     \\const std = @import("std");
+    \\const gde_call = @import("gde_call.zig");
+    \\const baseline_gde_if = @import("engine/gdextension_interface.generated.zig");
     \\
     \\${structs}
     \\

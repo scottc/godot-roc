@@ -1,8 +1,16 @@
 # Godot Roc
 
+# glue.roc
+src/roc_platform_abi.zig
+src/zig_platform_abi_impl.zig
+src/engine/gdextension_interface.generated.zig
+
+# build.roc
+platform/targets/
+platform/gen/targets/
+
 # ci.roc
 ci-out/
-platform/targets/
 
 # bundle.roc
 bundle-out/
@@ -32,3 +40,13 @@ zig-out/
 
 # roc
 generated-docs/
+platform/gen/main.roc
+platform/gen/Host.roc
+platform/gen/GodotRoc.roc
+platform/gen/Engine.roc
+platform/gen/engine/UtilityFunctions.roc
+platform/gen/engine/NativeStructures.roc
+platform/gen/engine/GlobalEnums.roc
+platform/gen/engine/GlobalConstants.roc
+platform/gen/engine/BuiltinClassSizes.roc
+platform/gen/engine/BuiltinClassMemberOffsets.roc

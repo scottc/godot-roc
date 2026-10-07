@@ -48,7 +48,7 @@ pub fn setCtx(c: Ctx) void {
     g_ctx = c;
 }
 pub fn godotRocCtx() Ctx {
-    return g_ctx orelse @panic("gde_call: ctx not set");
+    return g_ctx orelse @panic("gde_call: ctx not set — call setCtx after loadInterface");
 }
 
 fn fnv1a(s: []const u8) u64 {

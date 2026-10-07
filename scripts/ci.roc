@@ -87,6 +87,26 @@ main! = |_args| {
         env: [],
     })
 
+    # TODO: roc check on the ci template
+    check_id = 99
+    check = Build.cmd({
+        id: check_id,
+        depends_on: [copy_template_id],
+        inputs: [
+            project_main,
+            # + any sources glue reads
+        ],
+        outputs: [
+            # list generated files when known
+        ],
+        program: "roc",
+        args: ["check", project_main],
+        description: "roc check ci-out/workspace/my_game/main.roc",
+        cwd: "",
+        env: [],
+    })
+
+
     # ------------------------------------------------------------------
     # 3. Glue generation
     # ------------------------------------------------------------------
@@ -364,6 +384,7 @@ main! = |_args| {
         mkdir_ci,
         mkdir_ws,
         copy_template,
+        check,
         glue,
         roc_zig,
         roc_linux,

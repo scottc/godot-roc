@@ -1,17 +1,80 @@
-## My Project
+## My Project — sample + light CI smoke tests
 app [ready!, process!, scene_init!, physics_process!] {
     roc: "nightly-2026-09-27-a3ce7f1",
-    # must reference the same commit
     pf: platform "../../../platform/gen/main.roc",
 }
 
+# Manually Provided
 import pf.Engine
 import pf.GodotRoc
 
+# Generated
+import pf.UtilityFunctions
+import pf.Vector3
+
+# This app..
 import MyPlayerCharacter
 import Npc
 
-## Called when godot initializes the Scene Tree, this includes all scenes.
+# ---------------------------------------------------------------------------
+# Smoke (flat — fewer effect branches for the Roc compiler)
+# ---------------------------------------------------------------------------
+
+run_smoke_tests! : () => {}
+run_smoke_tests! = || {
+    Engine.print_warning!("========== godot-roc smoke tests ==========")
+
+    # --- utilities (simple float/int; gde_call.callUtility) ---
+    m = UtilityFunctions.maxf!(3.0, 7.0)
+    Engine.print_warning!("[smoke] maxf(3,7) = ${m.to_str()}")
+
+    n = UtilityFunctions.minf!(3.0, 7.0)
+    Engine.print_warning!("[smoke] minf(3,7) = ${n.to_str()}")
+
+    c = UtilityFunctions.clampf!(15.0, 0.0, 10.0)
+    Engine.print_warning!("[smoke] clampf(15,0,10) = ${c.to_str()}")
+
+    a = UtilityFunctions.absf!(-4.5)
+    Engine.print_warning!("[smoke] absf(-4.5) = ${a.to_str()}")
+
+    s0 = UtilityFunctions.sin!(0.0)
+    Engine.print_warning!("[smoke] sin(0) = ${s0.to_str()}")
+
+    c0 = UtilityFunctions.cos!(0.0)
+    Engine.print_warning!("[smoke] cos(0) = ${c0.to_str()}")
+
+    lr = UtilityFunctions.lerpf!(0.0, 10.0, 0.5)
+    Engine.print_warning!("[smoke] lerpf(0,10,0.5) = ${lr.to_str()}")
+
+    deg = UtilityFunctions.deg_to_rad!(180.0)
+    Engine.print_warning!("[smoke] deg_to_rad(180) = ${deg.to_str()}")
+
+    mi = UtilityFunctions.maxi!(2, 9)
+    Engine.print_warning!("[smoke] maxi(2,9) = ${mi.to_str()}")
+
+    ai = UtilityFunctions.absi!(-3)
+    Engine.print_warning!("[smoke] absi(-3) = ${ai.to_str()}")
+
+    eq = UtilityFunctions.is_equal_approx!(1.0, 1.0)
+    Engine.print_warning!("[smoke] is_equal_approx(1,1) = ${Str.inspect(eq)}")
+
+    # --- math layout (Roc-only) ---
+    v : Vector3
+    v = { x: 1.0, y: 2.0, z: 3.0 }
+    Engine.print_warning!("[smoke] Vector3 = ${v.x.to_str()}, ${v.y.to_str()}, ${v.z.to_str()}")
+
+    # --- engine façade ---
+    pressed = Engine.is_action_pressed!("ui_accept")
+    Engine.print_warning!("[smoke] is_action_pressed(ui_accept) = ${pressed.to_str()}")
+
+    Engine.print_warning!("========== smoke: finished (check values above) ==========")
+    {}
+}
+
+# ---------------------------------------------------------------------------
+# App hooks
+# ---------------------------------------------------------------------------
+
 scene_init! : () => {}
 scene_init! = || {
     Engine.print_warning!("Hello World!")
@@ -21,19 +84,16 @@ scene_init! = || {
 
     npc_class_id = Engine.register_class!("Npc", "CharacterBody3D")
     Engine.print_warning!("Registered Npc id= ${npc_class_id.to_str()}")
+
+    run_smoke_tests!()
 }
 
-## class_id(u64) | class_name(str) = which type / behaviour. Example: (PlayerType vs NPCType)
-## handle(usize) = which object / instance. Example: (NPC#12 vs NPC#15)
-## delta = time elapsed since previous tick
 physics_process! : GodotRoc.ClassId, F64 => {}
-physics_process! = |class_id,  delta| {
+physics_process! = |class_id, delta| {
     _ = match class_id {
         0 => MyPlayerCharacter.physics_process!(delta)
         1 => Npc.physics_process!(delta)
-        _ => {
-            _ = Engine.print_warning!("Unhandled class! (class_id=${class_id.to_str()})")
-        }
+        _ => {}
     }
     {}
 }
@@ -53,5 +113,4 @@ ready! = || {
     {}
 }
 
-# Default app modules must have a main! function.
 main! = |_args| {{}}
