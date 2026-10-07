@@ -4,6 +4,12 @@
 src/roc_platform_abi.zig
 src/zig_platform_abi_impl.zig
 src/engine/gdextension_interface.generated.zig
+platform/gen/*.roc
+platform/gen/engine/*.roc
+platform/gen/engine/builtin_classes/*.roc
+platform/gen/engine/classes/*.roc
+platform/gen/engine/math/*.roc
+platform/gen/engine/singletons/*.roc
 
 # build.roc
 platform/targets/
@@ -40,13 +46,3 @@ zig-out/
 
 # roc
 generated-docs/
-platform/gen/main.roc
-platform/gen/Host.roc
-platform/gen/GodotRoc.roc
-platform/gen/Engine.roc
-platform/gen/engine/UtilityFunctions.roc
-platform/gen/engine/NativeStructures.roc
-platform/gen/engine/GlobalEnums.roc
-platform/gen/engine/GlobalConstants.roc
-platform/gen/engine/BuiltinClassSizes.roc
-platform/gen/engine/BuiltinClassMemberOffsets.roc
