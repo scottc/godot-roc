@@ -11,14 +11,6 @@ import pf.GodotRoc
 import MyPlayerCharacter
 import Npc
 
-# class_name = "Npc"
-# parent_class = "CharacterBody3D"
-# var $npc_class_id = 0 # compiler doesn't allow here
-
-# class_name = "MyPlayerCharacter"
-# parent_class = "CharacterBody3D"
-# var $player_class_id = 0 # compiler doesn't allow here
-
 ## Called when godot initializes the Scene Tree, this includes all scenes.
 scene_init! : () => {}
 scene_init! = || {
