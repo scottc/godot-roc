@@ -172,7 +172,12 @@ main! = |_args| {
             \\cat >"$FILE.repl2" <<'ENDREPL2'
             \\// PATCHED BY scripts/glue.roc
             \\fn nativeOnFatal(_: ?*anyopaque) noreturn {
-            \\    @trap();
+            \\    if (comptime @import("builtin").cpu.arch != .wasm32) {
+            \\        std.debug.print("[roc] onFatal / crash path", .{});
+            \\        std.process.exit(1);
+            \\    } else {
+            \\        @trap();
+            \\    }
             \\}
             \\ENDREPL2
             \\

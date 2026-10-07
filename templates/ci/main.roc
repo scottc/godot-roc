@@ -2,7 +2,7 @@
 app [ready!, process!, scene_init!, physics_process!] {
     roc: "nightly-2026-09-27-a3ce7f1",
     # must reference the same commit
-    pf: platform "../../../platform/main.roc",
+    pf: platform "../../../platform/gen/main.roc",
 }
 
 import pf.Engine

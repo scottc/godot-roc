@@ -242,6 +242,10 @@ export fn roc_expect_failed(bytes: [*]const u8, len: usize) callconv(.c) void {
 }
 
 export fn roc_crashed(bytes: [*]const u8, len: usize) callconv(.c) void {
+    if (is_native_target) {
+        const msg = bytes[0..len];
+        std.debug.print("[roc_crashed] {s}\n", .{msg});
+    }
     abi.DefaultHandlers.rocCrashed(g_roc_host.?, bytes, len);
 }
 
@@ -281,15 +285,15 @@ export fn godot_roc_print_warning(roc_str: abi.RocStr) callconv(.c) void {
     printWarn("godot_roc_print_warning(\"{s}\")\n", .{zig_str});
 }
 
-fn registerClassFromRoc(class_slice: []const u8, parent_slice: []const u8) abi.HostRegister_classResult {
+fn registerClassFromRoc(class_slice: []const u8, parent_slice: []const u8) u32 {
     if (g_godot_roc_class_count >= MAX_CLASSES) {
-        const msg = rocStrFromLiteral("MAX_CLASSES=32");
-        return registerClassResultErr(.OutOfMemoryClassErr, msg);
+        printError("register_class: MAX_CLASSES={d}\n", .{MAX_CLASSES});
+        return 0;
     }
 
     if (class_slice.len > MAX_NAME_LEN or parent_slice.len > MAX_NAME_LEN) {
-        const msg = rocStrFromLiteral("MAX_NAME_LEN=63");
-        return registerClassResultErr(.NameLengthErr, msg);
+        printError("register_class: name longer than MAX_NAME_LEN={d}\n", .{MAX_NAME_LEN});
+        return 0;
     }
 
     const i = g_godot_roc_class_count;
@@ -306,9 +310,12 @@ fn registerClassFromRoc(class_slice: []const u8, parent_slice: []const u8) abi.H
     info.class_id = @intCast(i);
     g_godot_roc_class_count += 1;
 
-    registerClass(info); // uses info.nameZ(), info.parentZ(), info.class_id
+    registerClass(info);
 
-    return registerClassResultOk(info.class_id);
+    // ClassId is U32; avoid 0 if you treat 0 as error — either reserve 0 or use i+1.
+    // Here class_id is index; demo used 0 as first class. Prefer non-zero ids:
+    // info.class_id = @intCast(i + 1); and store accordingly, OR keep index and treat 0 as valid.
+    return info.class_id;
 }
 
 fn rocStrFromLiteral(comptime lit: []const u8) abi.RocStr {
@@ -316,61 +323,10 @@ fn rocStrFromLiteral(comptime lit: []const u8) abi.RocStr {
     return abi.RocStr.fromSlice(lit, g_roc_host.?);
 }
 
-fn registerClassResultOk(class_id: u32) abi.HostRegister_classResult {
-    if (comptime @sizeOf(usize) == 4) {
-        var result: abi.HostRegister_classResult = undefined;
-        result.tag = .Ok;
-        const p: *u32 = @ptrCast(@alignCast(&result.payload));
-        p.* = class_id;
-        // clear any leftover bytes beyond the u32 if you care
-        return result;
-    } else {
-        return .{
-            .payload = .{ .ok = class_id },
-            .tag = .Ok,
-        };
-    }
-}
-
-fn registerClassResultErr(
-    err_tag: abi.NameLengthErrOrOutOfMemoryClassErrTag,
-    msg: abi.RocStr,
-) abi.HostRegister_classResult {
-    if (comptime @sizeOf(usize) == 4) {
-        // Build inner error value into its opaque payload
-        var err_val: abi.NameLengthErrOrOutOfMemoryClassErr = undefined;
-        err_val.tag = err_tag;
-        const str_ptr: *abi.RocStr = @ptrCast(@alignCast(&err_val.payload));
-        str_ptr.* = msg;
-
-        var result: abi.HostRegister_classResult = undefined;
-        result.tag = .Err;
-        const err_bytes = std.mem.asBytes(&err_val);
-        @memset(&result.payload, 0);
-        @memcpy(result.payload[0..err_bytes.len], err_bytes);
-        return result;
-    } else {
-        const err_val: abi.NameLengthErrOrOutOfMemoryClassErr = switch (err_tag) {
-            .NameLengthErr => .{
-                .payload = .{ .name_length_err = msg },
-                .tag = .NameLengthErr,
-            },
-            .OutOfMemoryClassErr => .{
-                .payload = .{ .out_of_memory_class_err = msg },
-                .tag = .OutOfMemoryClassErr,
-            },
-        };
-        return .{
-            .payload = .{ .err = err_val },
-            .tag = .Err,
-        };
-    }
-}
-
 export fn godot_roc_register_class(
     class_name: abi.RocStr,
     parent_class_name: abi.RocStr,
-) callconv(.c) abi.HostRegister_classResult {
+) callconv(.c) u32 {
     const roc_host = g_roc_host.?;
 
     var class_owned = class_name;
@@ -381,13 +337,11 @@ export fn godot_roc_register_class(
     const class_slice = class_owned.asSlice();
     const parent_slice = parent_owned.asSlice();
 
-    printWarn("[./platform/src/native_host.zig] roc_register_class({s}, {s})\n", .{ class_slice, parent_slice });
+    printWarn("[host.zig] godot_roc_register_class({s}, {s})\n", .{ class_slice, parent_slice });
 
-    return registerClassFromRoc(
-        class_slice,
-        parent_slice,
-        //g_roc_host,
-    );
+    const id = registerClassFromRoc(class_slice, parent_slice);
+    printWarn("godot_roc_register_class returning id={d}\n", .{id});
+    return id;
 }
 
 //
@@ -703,18 +657,22 @@ fn freeInstance(class_userdata: ?*anyopaque, instance: baseline_gde_if.GDExtensi
     instanceAllocator().destroy(self); // catch return null;
 }
 
+const StringNameStorage = [8]u8; // confirm size from extension_api for your build
+
+fn makeStringName2(text: [:0]const u8) StringNameStorage {
+    var sn: StringNameStorage = undefined;
+    g_engine_interface.string_name_new_with_utf8_chars(@ptrCast(&sn), text.ptr);
+    return sn;
+}
+
 fn registerClass(info: *GodotRocClassInfo) void {
     printWarn("registerClass(info: *ClassInfo) void\n", .{});
 
-    // unregister first (idempotent) // this maybe needed...
-    // unregisterClass(info.class_name);
+    var class_sn = makeStringName2(info.nameZ());
+    var parent_sn = makeStringName2(info.parentZ());
 
-    var class_sn = makeStringName(info.nameZ());
-    var parent_sn = makeStringName(info.parentZ());
-
-    //var creation: baseline_gde_if.GDExtensionClassCreationInfo5 = std.mem.zeroes(baseline_gde_if.GDExtensionClassCreationInfo5);
     var creation: baseline_gde_if.GDExtensionClassCreationInfo5 = undefined;
-    @memset(@as([*]u8, @ptrCast(&creation))[0..@sizeOf(baseline_gde_if.GDExtensionClassCreationInfo5)], 0); // WASM compatible.
+    @memset(@as([*]u8, @ptrCast(&creation))[0..@sizeOf(@TypeOf(creation))], 0);
 
     creation.is_exposed = 1;
     creation.create_instance_func = createInstance;
@@ -723,7 +681,12 @@ fn registerClass(info: *GodotRocClassInfo) void {
     creation.get_virtual_func = @ptrCast(@constCast(&getVirtual));
     creation.class_userdata = info;
 
-    g_engine_interface.classdb_register_extension_class5(g_engine_library, @ptrCast(&class_sn), @ptrCast(&parent_sn), &creation);
+    g_engine_interface.classdb_register_extension_class5(
+        g_engine_library,
+        @ptrCast(&class_sn),
+        @ptrCast(&parent_sn),
+        &creation,
+    );
 
     printWarn("registered {s} : {s} (id={d})\n", .{ info.nameZ(), info.parentZ(), info.class_id });
 }

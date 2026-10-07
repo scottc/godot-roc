@@ -132,10 +132,10 @@ host_targets = [
 # =============================================================================
 
 out_path : HostTarget -> Str
-out_path = |t| "platform/targets/${t.name}/${t.lib_file}"
+out_path = |t| "platform/gen/targets/${t.name}/${t.lib_file}"
 
 out_dir : HostTarget -> Str
-out_dir = |t| "platform/targets/${t.name}"
+out_dir = |t| "platform/gen/targets/${t.name}"
 
 optimize_flag : Optimize -> Str
 optimize_flag = |o| {

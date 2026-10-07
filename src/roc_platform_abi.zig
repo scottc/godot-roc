@@ -674,7 +674,12 @@ fn nativeWriteStderr(_: ?*anyopaque, data: []const u8) void {
 
 // PATCHED BY scripts/glue.roc
 fn nativeOnFatal(_: ?*anyopaque) noreturn {
-    @trap();
+    if (comptime @import("builtin").cpu.arch != .wasm32) {
+        std.debug.print("[roc] onFatal / crash path", .{});
+        std.process.exit(1);
+    } else {
+        @trap();
+    }
 }
 
     fn freestandingWriteStderr(_: ?*anyopaque, _: []const u8) void {}
