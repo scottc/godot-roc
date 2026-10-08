@@ -19,7 +19,7 @@ physics_process! = |_delta| {
     vy =
         velocity.y
         + -gravity
-        + (if jump == 1 and Engine.is_on_floor!() == 1 then jump_force else 0.0)
+        + (if jump == 1 and Engine.is_on_floor!() == 1 { jump_force } else { 0.0 })
 
     Engine.set_velocity!({ x: vx, y: vy, z: vz })
     Engine.move_and_slide!()

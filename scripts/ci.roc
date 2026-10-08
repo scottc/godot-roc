@@ -40,13 +40,30 @@ main! = |_args| {
     project_wasm = "${project_dir}/my_game.wasm"
     project_godot = "${project_dir}/project.godot"
 
+
+    # ------------------------------------------------------------------
+    # 0. Delete workspace dirs
+    # ------------------------------------------------------------------
+    rmdir_ci_id = 0
+    rmdir_ci = Build.cmd({
+        id: rmdir_ci_id,
+        depends_on: [],
+        inputs: [],
+        outputs: [ci_out],
+        program: "rm",
+        args: ["-rf", ci_out],
+        description: "Delete ci-out",
+        cwd: "",
+        env: [],
+    })
+
     # ------------------------------------------------------------------
     # 1. Create workspace dirs
     # ------------------------------------------------------------------
     mkdir_ci_id = 1
     mkdir_ci = Build.cmd({
         id: mkdir_ci_id,
-        depends_on: [],
+        depends_on: [rmdir_ci_id],
         inputs: [],
         outputs: [ci_out],
         program: "mkdir",
@@ -380,6 +397,7 @@ main! = |_args| {
     # Graph + run
     # ------------------------------------------------------------------
     graph = Build.graph([
+        rmdir_ci,
         mkdir_ci,
         mkdir_ws,
         copy_template,
