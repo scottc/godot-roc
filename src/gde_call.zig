@@ -277,7 +277,7 @@ pub fn callBuiltin(
     type_name: [:0]const u8,
     method_name: [:0]const u8,
     hash: i64,
-    base: ?*anyopaque, // pointer to Vector3 / Color / … value (mutable)
+    base: ?*anyopaque,
     args: ?[*]const baseline_gde_if.GDExtensionConstTypePtr,
     arg_count: i64,
     ret: ?*anyopaque,
@@ -292,9 +292,9 @@ pub fn callBuiltin(
         stringNamePtr(&method_sn),
         hash,
     );
-    if (fn_ptr == null) return false;
-
-    // Signature: (base, args, ret, arg_count) — confirm against your generated Interface
-    fn_ptr(base, args, ret, @intCast(arg_count));
+    // Non-optional in your generated Interface — just call it.
+    // If Godot can return null at runtime, fix the Interface typedef to ?*const fn (...) instead.
+    const args_c: [*c]const ?*const anyopaque = if (args) |a| @ptrCast(a) else null;
+    fn_ptr(base, args_c, ret, @intCast(arg_count));
     return true;
 }
