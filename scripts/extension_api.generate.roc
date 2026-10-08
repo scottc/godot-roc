@@ -236,11 +236,6 @@ main! = |_args| {
     \\    print_warning! = |str|
     \\        Host.print_warning!(str)
     \\
-    \\    is_action_pressed! : Str => GodotRoc.Bool
-    \\    is_action_pressed! = |action| {
-    \\        Host.input_is_action_pressed!(action)
-    \\    }
-    \\
     \\    is_on_floor! : () => GodotRoc.Bool
     \\    is_on_floor! = || {
     \\        Host.is_on_floor!()
@@ -267,6 +262,21 @@ main! = |_args| {
     \\        Host.move_and_slide!()
     \\        {}
     \\    }
+    \\
+    \\    is_action_pressed! : Str => U8
+    \\    is_action_pressed! = |action| Host.input_is_action_pressed!(action)
+    \\
+    \\    is_action_just_pressed! : Str => U8
+    \\    is_action_just_pressed! = |action| Host.input_is_action_just_pressed!(action)
+    \\
+    \\    get_axis! : Str, Str => F64
+    \\    get_axis! = |neg, pos| Host.input_get_axis!(neg, pos)
+    \\
+    \\    get_position! : () => Vector3
+    \\    get_position! = Host.node3d_get_position!
+    \\
+    \\    set_position! : Vector3 => {}
+    \\    set_position! = |p| Host.node3d_set_position!(p)
     \\}
     )?
     Path.join(roc_out_path, "Host.roc").write_utf8!(host_to_roc_source_str(decoded))?
@@ -359,12 +369,16 @@ host_facade_symbols = [
     "register_class",
     "print_error",
     "print_warning",
-    "input_is_action_pressed",
     "is_on_floor",
     "get_gravity",
     "get_velocity",
     "set_velocity",
     "move_and_slide",
+    "input_is_action_pressed",
+    "input_is_action_just_pressed",
+    "input_get_axis",
+    "node3d_get_position",
+    "node3d_set_position",
 ]
 
 host_facade_decls : Str
@@ -373,12 +387,16 @@ host_facade_decls =
     \\    register_class! : Str, Str => U32
     \\    print_error! : Str => {}
     \\    print_warning! : Str => {}
-    \\    input_is_action_pressed! : Str => U8
     \\    is_on_floor! : () => U8
     \\    get_gravity! : () => Vector3
     \\    get_velocity! : () => Vector3
     \\    set_velocity! : Vector3 => {}
     \\    move_and_slide! : () => {}
+    \\    input_is_action_pressed! : Str => U8
+    \\    input_is_action_just_pressed! : Str => U8
+    \\    input_get_axis! : Str, Str => F64
+    \\    node3d_get_position! : () => Vector3
+    \\    node3d_set_position! : Vector3 => {}
 
 # =============================================================================
 # Naming

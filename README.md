@@ -11,7 +11,10 @@ Roc language bindings for Godot Game Engine, Redot Game Engine & Draconic Game E
 
 Godot-Roc lets you write game logic in [Roc](https://roc-lang.org/), "A [fast](https://roc-lang.org/fast), [friendly](https://roc-lang.org/friendly), [functional](https://roc-lang.org/functional) language". While [Godot Engine](https://godotengine.org/), [Redot Engine](https://www.redotengine.org/) or [Draconic Engine](https://github.com/Redot-Engine/DraconicEngine) handles scenes, rendering, and tooling.
 
-Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI for maximum compatability. In theory godot-roc will work with any game engine runtime that supports the `godot-4.5.1` gdextension ABI, including newer versions of godot, forks & alternative host runtimes (aka game engines).
+## Demo
+
+- [godot-demo](https://scottc.github.io/godot-roc)
+- [redot-demo](https://scottc.github.io/redot-roc)
 
 ![Godot-Roc Screenshot](brand/Screenshot_20260923_194128.png)
 
@@ -22,9 +25,9 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 
 | | godot-roc | GDScript | C# | C++ |
 | --- | --- | --- | --- | --- |
-| **API coverage** | \[WIP] What the binding exposes [[exposed-api](platform/)] \[TODO-docs] [[DONE-engine-to-zig-binding-generator](scripts/gdextension_interface.generate.roc)] \[TODO-engine-to-roc-binding-generator] \[TODO-glue-to-glue-generator] | Full engine scripting API | Broad official bindings | Full native access |
+| **API coverage** | \[WIP] [[DONE-engine-to-zig-binding-generator](scripts/gdextension_interface.generate.roc)] [[WIP-engine-to-roc-binding-generator](scripts/extension_api.generate.roc)] \[TODO-docs] | Full engine scripting API | Broad official bindings | Full native access |
 | **Native desktop support** | Linux (\[WIP] cross-compiling; windows & macos) | Linux, windows & mac | Linux, windows & mac | Linux, windows & mac |
-| **Web support** | GDExtension wasm32-emscripten [[godot-demo](https://scottc.github.io/godot-roc)] [[redot-demo](https://scottc.github.io/redot-roc)] | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
+| **Web support** | GDExtension wasm (emscripten) | First-class, full | Not supported (official) | GDExtension wasm (emscripten) |
 | **Role in Godot** | Community binding (this project) | First-party script language | Official .NET support | Engine / GDExtension native |
 
 ## Language & Compiler comparison
@@ -45,8 +48,6 @@ Godot-Roc builds and tests against `godot-4.5.1` as the flagship runtime & ABI f
 | **Ecosystem maturity** | New [[projects](https://github.com/lukewilliamboswell/roc-awesome)] | Mature (Godot-focused) | Mature | Mature |
 | **Docs & tutorials** | Offical Language docs [[roc-docs](https://roc-lang.org/docs/main/)] [[roc-examples](https://roc-lang.org/examples/)] & emerging community | Official & plentiful | Official + .NET ecosystem | Official engine docs; steeper |
 
-
-
 ## Performance Profile
 
 > [!NOTE]
@@ -66,7 +67,6 @@ until profiling shows a script/app-side hotspot.
 | **Small, API-heavy glue** | Fine; bound by engine + bind overhead | Often “fast enough”; very low friction to engine | Marshalling can dominate tiny calls | Fast, but awkward for large amounts of glue |
 | **Heavy algorithms in script/app code** | Strong fit | Prefer not to keep in pure GDScript | Strong option | Best option |
 | **Typical game bottleneck** | Often still rendering / physics / draw calls (engine C++), not Roc vs GDScript | Same | Same | Same unless you replace engine systems |
-
 
 ## Use Cases
 

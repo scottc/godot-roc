@@ -294,9 +294,103 @@ export fn godot_roc_get_gravity() callconv(.c) api.Vector3 {
     return g;
 }
 
-fn ensureInput() void {
-    if (g_input != null) return;
-    g_input = gde_call.getSingleton(ctx(), "Input");
+fn ensureInput() ?*anyopaque {
+    if (g_input == null) {
+        g_input = gde_call.getSingleton(ctx(), "Input");
+    }
+    return g_input;
+}
+
+fn inputIsActionPressed(action_z: [:0]const u8) u8 {
+    const input = ensureInput() orelse return 0;
+    var action = gde_call.makeStringName(ctx(), action_z);
+    defer gde_call.destroyStringName(ctx(), &action);
+
+    var out: u8 = 0;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{@ptrCast(&action)};
+    _ = gde_call.callInstance(
+        ctx(),
+        "Input",
+        "is_action_pressed",
+        api.hashes.Input_is_action_pressed,
+        input,
+        &args,
+        @ptrCast(&out),
+    );
+    return out;
+}
+
+fn inputIsActionJustPressed(action_z: [:0]const u8) u8 {
+    const input = ensureInput() orelse return 0;
+    var action = gde_call.makeStringName(ctx(), action_z);
+    defer gde_call.destroyStringName(ctx(), &action);
+
+    var out: u8 = 0;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{@ptrCast(&action)};
+    _ = gde_call.callInstance(
+        ctx(),
+        "Input",
+        "is_action_just_pressed",
+        api.hashes.Input_is_action_just_pressed,
+        input,
+        &args,
+        @ptrCast(&out),
+    );
+    return out;
+}
+
+fn inputGetAxis(neg_z: [:0]const u8, pos_z: [:0]const u8) f64 {
+    const input = ensureInput() orelse return 0;
+    var neg = gde_call.makeStringName(ctx(), neg_z);
+    defer gde_call.destroyStringName(ctx(), &neg);
+    var pos = gde_call.makeStringName(ctx(), pos_z);
+    defer gde_call.destroyStringName(ctx(), &pos);
+
+    var out: f64 = 0;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+        @ptrCast(&neg),
+        @ptrCast(&pos),
+    };
+    _ = gde_call.callInstance(
+        ctx(),
+        "Input",
+        "get_axis",
+        api.hashes.Input_get_axis,
+        input,
+        &args,
+        @ptrCast(&out),
+    );
+    return out;
+}
+
+fn node3dGetPosition() api.Vector3 {
+    const obj = g_godot_roc_current orelse return .{ .x = 0, .y = 0, .z = 0 };
+    var out: api.Vector3 = .{ .x = 0, .y = 0, .z = 0 };
+    _ = gde_call.callInstance(
+        ctx(),
+        "Node3D",
+        "get_position",
+        api.hashes.Node3D_get_position,
+        obj,
+        null,
+        @ptrCast(&out),
+    );
+    return out;
+}
+
+fn node3dSetPosition(p: api.Vector3) void {
+    const obj = g_godot_roc_current orelse return;
+    var pos = p;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{@ptrCast(&pos)};
+    _ = gde_call.callInstance(
+        ctx(),
+        "Node3D",
+        "set_position",
+        api.hashes.Node3D_set_position,
+        obj,
+        &args,
+        null,
+    );
 }
 
 fn isActionPressed(action: [:0]const u8) bool {
@@ -324,17 +418,80 @@ fn isActionPressed(action: [:0]const u8) bool {
     return ret != 0;
 }
 
-export fn godot_roc_input_is_action_pressed(action: abi.RocStr) callconv(.c) baseline_gde_if.GDExtensionBool {
-    const roc_host = g_roc_host.?;
-    var owned = action;
-    defer owned.decref(roc_host);
+// export fn godot_roc_input_is_action_pressed(action: abi.RocStr) callconv(.c) baseline_gde_if.GDExtensionBool {
+//     const roc_host = g_roc_host.?;
+//     var owned = action;
+//     defer owned.decref(roc_host);
 
-    var buf: [64]u8 = undefined;
-    const s = owned.asSlice();
-    if (s.len >= buf.len) return 0;
-    @memcpy(buf[0..s.len], s);
+//     var buf: [64]u8 = undefined;
+//     const s = owned.asSlice();
+//     if (s.len >= buf.len) return 0;
+//     @memcpy(buf[0..s.len], s);
+//     buf[s.len] = 0;
+//     return if (isActionPressed(buf[0..s.len :0])) 1 else 0;
+// }
+
+threadlocal var roc_str_buf: [512]u8 = undefined;
+
+fn rocStrToZ(str: abi.RocStr) [:0]const u8 {
+    const s = str.asSlice();
+    if (s.len >= roc_str_buf.len) {
+        roc_str_buf[0] = 0;
+        return roc_str_buf[0..0 :0];
+    }
+    if (s.len > 0) {
+        @memcpy(roc_str_buf[0..s.len], s);
+    }
+    roc_str_buf[s.len] = 0;
+    return roc_str_buf[0..s.len :0];
+}
+
+export fn godot_roc_input_is_action_pressed(action: abi.RocStr) callconv(.c) u8 {
+    var owned = action;
+    defer owned.decref(g_roc_host.?);
+
+    return inputIsActionPressed(rocStrToZ(owned));
+}
+
+export fn godot_roc_input_is_action_just_pressed(action: abi.RocStr) callconv(.c) u8 {
+    var owned = action;
+    defer owned.decref(g_roc_host.?);
+    return inputIsActionJustPressed(rocStrToZ(owned));
+}
+
+export fn godot_roc_input_get_axis(neg: abi.RocStr, pos: abi.RocStr) callconv(.c) f64 {
+    var n = neg;
+    var p = pos;
+    defer n.decref(g_roc_host.?);
+    defer p.decref(g_roc_host.?);
+    return inputGetAxisFromRoc(n, p);
+}
+
+fn inputGetAxisFromRoc(neg: abi.RocStr, pos: abi.RocStr) f64 {
+    var neg_buf: [256]u8 = undefined;
+    var pos_buf: [256]u8 = undefined;
+    const nz = copyRocStrToBuf(neg, &neg_buf);
+    const pz = copyRocStrToBuf(pos, &pos_buf);
+    return inputGetAxis(nz, pz);
+}
+
+fn copyRocStrToBuf(str: abi.RocStr, buf: []u8) [:0]const u8 {
+    const s = str.asSlice();
+    if (s.len >= buf.len) {
+        buf[0] = 0;
+        return buf[0..0 :0];
+    }
+    if (s.len > 0) @memcpy(buf[0..s.len], s);
     buf[s.len] = 0;
-    return if (isActionPressed(buf[0..s.len :0])) 1 else 0;
+    return buf[0..s.len :0];
+}
+
+export fn godot_roc_node3d_get_position() callconv(.c) api.Vector3 {
+    return node3dGetPosition();
+}
+
+export fn godot_roc_node3d_set_position(p: api.Vector3) callconv(.c) void {
+    node3dSetPosition(p);
 }
 
 // ---------------------------------------------------------------------------

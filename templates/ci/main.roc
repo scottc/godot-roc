@@ -67,6 +67,12 @@ run_smoke_tests! = || {
     pressed = Engine.is_action_pressed!("ui_accept")
     Engine.print_warning!("[smoke] is_action_pressed(ui_accept) = ${pressed.to_str()}")
 
+    jp = Engine.is_action_just_pressed!("ui_accept")
+    Engine.print_warning!("[smoke] just_pressed(ui_accept) = ${jp.to_str()}")
+
+    axis = Engine.get_axis!("ui_left", "ui_right")
+    Engine.print_warning!("[smoke] get_axis(ui_left,ui_right) = ${axis.to_str()}")
+
     Engine.print_warning!("========== smoke: finished (check values above) ==========")
     {}
 }

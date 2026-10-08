@@ -8,49 +8,23 @@ jump_force = 50.0
 
 physics_process! : F64 => {}
 physics_process! = |_delta| {
-    # Note: physics_process!, runs at a fixed delta, so delta is optional to use here...
-    # Note: process!, runs at a variable delta, once per render cycle.
-    # Read the godot docos, to understand the differences.
+    lx = Engine.get_axis!("left", "right")
+    lz = Engine.get_axis!("forward", "back")
 
-    # Don't forget to set Godot's keybind to action mappings!
-    is_forward = Engine.is_action_pressed!("forward") == 1
-    is_left = Engine.is_action_pressed!("left") == 1
-    is_right = Engine.is_action_pressed!("right") == 1
-    is_back = Engine.is_action_pressed!("back") == 1
-    is_jump = Engine.is_action_pressed!("jump") == 1
+    jump = Engine.is_action_just_pressed!("jump")
 
-    # current velocity
     velocity = Engine.get_velocity!()
-
-    # next velocity
-    vx =
-        if is_right
-            movement_speed
-        else if is_left
-            -movement_speed
-        else
-            idle_speed
-
-    vz = if is_back
-            movement_speed
-        else if is_forward
-            -movement_speed
-        else
-            idle_speed
-
+    vx = lx * movement_speed
+    vz = lz * movement_speed
     vy =
-        velocity.y # preserve existing y-axis momentum, plus add vector modifiers:
+        velocity.y
         + -gravity
-        + if is_jump and (Engine.is_on_floor!() == 1)
-            jump_force
-        else
-            idle_speed
+        + (if jump == 1 and Engine.is_on_floor!() == 1 then jump_force else 0.0)
 
     Engine.set_velocity!({ x: vx, y: vy, z: vz })
-
-    # Process physics for this class / node.
     Engine.move_and_slide!()
 
+    _pos = Engine.get_position!()
     {}
 }
 
