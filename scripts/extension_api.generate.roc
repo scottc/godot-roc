@@ -692,6 +692,141 @@ util_c_type_is_simple = |str| {
     }
 }
 
+## Types allowed for auto-wired callInstance bodies (no String/Object/Variant).
+method_c_type_is_simple : Str -> Bool
+method_c_type_is_simple = |str| {
+    cleaned =
+        if str.starts_with("enum::") or str.starts_with("bitfield::") {
+            "int"
+        } else {
+            str
+        }
+    match cleaned {
+        "bool" | "int" | "float" | "double" | "void" => Bool.True
+        other if is_struct_builtin(other) => Bool.True
+        _ => Bool.False
+    }
+}
+
+method_return_type_str : MethodDef -> Str
+method_return_type_str = |md|
+    match md.return_type {
+        Ok(t) => t
+        _ =>
+            match md.return_value {
+                Ok(rv) => rv.type
+                _ => "void"
+            }
+    }
+
+method_is_simple_ptrcall : MethodDef -> Bool
+method_is_simple_ptrcall = |md| {
+    if md.is_vararg {
+        Bool.False
+    } else {
+        ret_ok = method_c_type_is_simple(method_return_type_str(md))
+        args_ok =
+            match md.arguments {
+                Ok(args) =>
+                    args.fold(Bool.True, |acc, a|
+                        if acc and method_c_type_is_simple(a.type) {
+                            Bool.True
+                        } else {
+                            Bool.False
+                        }
+                    )
+                _ => Bool.True
+            }
+        ret_ok and args_ok
+    }
+}
+
+zig_method_arg_local : Str -> Str
+zig_method_arg_local = |name| {
+    n = roc_fn_name(name)
+    if n == "" {
+        "arg"
+    } else {
+        "a_${n}"
+    }
+}
+
+## Named params (needed so we can take addresses for ptrcall).
+zig_method_params_named : MethodDef -> Str
+zig_method_params_named = |md|
+    match md.arguments {
+        Ok(args) if !(args.is_empty()) =>
+            Str.join_with(
+                args.map(|a| {
+                    loc = zig_method_arg_local(a.name)
+                    \\${loc}: ${c_to_zig_arg(a.type)}
+                }),
+                ", ",
+            )
+        _ => ""
+    }
+
+zig_method_params_named_for : Str, MethodDef -> Str
+zig_method_params_named_for = |owner, md| {
+    explicit = zig_method_params_named(md)
+    if md.is_static or !(is_struct_builtin(owner)) {
+        explicit
+    } else {
+        self_ty = c_to_zig_type(owner)
+        if explicit == "" {
+            "self_val: ${self_ty}"
+        } else {
+            "self_val: ${self_ty}, ${explicit}"
+        }
+    }
+}
+
+zig_ptrcall_args_setup : MethodDef -> { locals : Str, args_array : Str, args_ptr : Str }
+zig_ptrcall_args_setup = |md| {
+    arg_list = match md.arguments { Ok(a) => a _ => [] }
+    if List.is_empty(arg_list) {
+        {
+            locals: "",
+            args_array: "",
+            args_ptr: "null",
+        }
+    } else {
+        locals =
+            Str.concat(
+                Str.join_with(
+                    arg_list.map(|a| {
+                        loc = zig_method_arg_local(a.name)
+                        \\    var ${loc}_ = ${loc};
+                    }),
+                    "\n",
+                ),
+                "\n",
+            )
+        ptrs =
+            Str.join_with(
+                arg_list.map(|a| {
+                    loc = zig_method_arg_local(a.name)
+                    \\        @ptrCast(&${loc}_),
+                }),
+                "\n",
+            )
+        {
+            locals,
+            args_array:
+                \\    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{
+                \\${ptrs}
+                \\    };
+                \\
+            ,
+            args_ptr: "&args",
+        }
+    }
+}
+
+method_hash_key : Str, MethodDef -> Str
+method_hash_key = |owner, md|
+    "${zig_hash_ident(owner)}_${zig_hash_ident(md.name)}"
+
 util_is_simple : UtilityFunction -> Bool
 util_is_simple = |uf| {
     if uf.is_vararg {
@@ -1591,18 +1726,82 @@ zig_method_return = |md|
             }
     }
 
-zig_export_method : Str, MethodDef -> Str
-zig_export_method = |owner, md| {
+zig_export_method : ExtensionApi, Str, MethodDef -> Str
+zig_export_method = |eapi, owner, md| {
     sym = host_method_symbol(owner, md.name, md.hash)
     ret = zig_method_return(md)
-    params = zig_method_params_for(owner, md)
-    default_ret = zig_default_ret(ret)
-    \\
-    \\/// ${owner}.${md.name} hash=${md.hash.to_str()}
-    \\export fn godot_roc_${sym}(${params}) callconv(.c) ${ret} {
-    \\    // TODO: ptrcall via gde_call.callInstance
-    \\    ${default_ret}
-    \\}
+    hkey = method_hash_key(owner, md)
+    is_builtin = is_struct_builtin(owner)
+
+    if is_builtin or !(method_is_simple_ptrcall(md)) {
+        params = zig_method_params_for(owner, md)
+        default_ret = zig_default_ret(ret)
+        kind =
+            if is_builtin {
+                "builtin stub"
+            } else {
+                "stub — non-simple"
+            }
+        \\
+        \\/// ${owner}.${md.name} hash=${md.hash.to_str()} (${kind})
+        \\export fn godot_roc_${sym}(${params}) callconv(.c) ${ret} {
+        \\    ${default_ret}
+        \\}
+    } else {
+        params = zig_method_params_named_for(owner, md)
+        setup = zig_ptrcall_args_setup(md)
+        singleton = is_singleton_name(eapi, owner)
+
+        if ret == "void" {
+            obj_setup =
+                if md.is_static {
+                    \\    const obj: ?*anyopaque = null;
+                } else if singleton {
+                    \\    const obj = gde_call.getSingleton(gde_call.godotRocCtx(), "${owner}") orelse return;
+                } else {
+                    \\    const obj = g_godot_roc_current orelse return;
+                }
+            \\
+            \\/// ${owner}.${md.name} hash=${md.hash.to_str()} (callInstance)
+            \\export fn godot_roc_${sym}(${params}) callconv(.c) void {
+            \\${obj_setup}
+            \\${setup.locals}${setup.args_array}    _ = gde_call.callInstance(
+            \\        gde_call.godotRocCtx(),
+            \\        "${owner}",
+            \\        "${md.name}",
+            \\        hashes.${hkey},
+            \\        obj,
+            \\        ${setup.args_ptr},
+            \\        null,
+            \\    );
+            \\}
+        } else {
+            obj_setup =
+                if md.is_static {
+                    \\    const obj: ?*anyopaque = null;
+                } else if singleton {
+                    \\    const obj = gde_call.getSingleton(gde_call.godotRocCtx(), "${owner}") orelse return std.mem.zeroes(${ret});
+                } else {
+                    \\    const obj = g_godot_roc_current orelse return std.mem.zeroes(${ret});
+                }
+            \\
+            \\/// ${owner}.${md.name} hash=${md.hash.to_str()} (callInstance)
+            \\export fn godot_roc_${sym}(${params}) callconv(.c) ${ret} {
+            \\${obj_setup}
+            \\${setup.locals}${setup.args_array}    var ret_val: ${ret} = std.mem.zeroes(${ret});
+            \\    _ = gde_call.callInstance(
+            \\        gde_call.godotRocCtx(),
+            \\        "${owner}",
+            \\        "${md.name}",
+            \\        hashes.${hkey},
+            \\        obj,
+            \\        ${setup.args_ptr},
+            \\        @ptrCast(&ret_val),
+            \\    );
+            \\    return ret_val;
+            \\}
+        }
+    }
 }
 
 ## Simple utils → gde_call.callUtility; others → stubs
@@ -1718,7 +1917,8 @@ zig_export_singleton = |s| {
     \\
     \\/// singleton ${s.name}
     \\export fn godot_roc_${sym}() callconv(.c) u64 {
-    \\    return 0;
+    \\    const obj = gde_call.getSingleton(gde_call.godotRocCtx(), "${s.name}") orelse return 0;
+    \\    return @intFromPtr(obj);
     \\}
 }
 
@@ -1741,7 +1941,7 @@ zig_platform_abi_impl_to_str = |eapi| {
         Str.join_with(
             eapi.builtin_classes.map(|bic| {
                 match bic.methods {
-                    Ok(ms) => Str.join_with(ms.map(|md| zig_export_method(bic.name, md)), "\n")
+                    Ok(ms) => Str.join_with(ms.map(|md| zig_export_method(eapi, bic.name, md)), "\n")
                     _ => ""
                 }
             }),
@@ -1752,7 +1952,7 @@ zig_platform_abi_impl_to_str = |eapi| {
         Str.join_with(
             eapi.classes.map(|cls| {
                 match cls.methods {
-                    Ok(ms) => Str.join_with(ms.map(|md| zig_export_method(cls.name, md)), "\n")
+                    Ok(ms) => Str.join_with(ms.map(|md| zig_export_method(eapi, cls.name, md)), "\n")
                     _ => ""
                 }
             }),
@@ -1763,6 +1963,10 @@ zig_platform_abi_impl_to_str = |eapi| {
     \\const std = @import("std");
     \\const gde_call = @import("gde_call.zig");
     \\const baseline_gde_if = @import("engine/gdextension_interface.generated.zig");
+    \\
+    \\/// Current Object for generated class instance methods (Host ABI has no self_ptr).
+    \\/// host.zig assigns this during virtuals / before façade calls.
+    \\pub var g_godot_roc_current: ?*anyopaque = null; // ?*GodotRocObjectInstance → ?*anyopaque
     \\
     \\${structs}
     \\
@@ -1775,4 +1979,15 @@ zig_platform_abi_impl_to_str = |eapi| {
     \\${builtin_methods}
     \\${class_methods}
     \\
+}
+
+is_singleton_name : ExtensionApi, Str -> Bool
+is_singleton_name = |eapi, name| {
+    eapi.singletons.fold(Bool.False, |found, s|
+        if found or s.name == name {
+            Bool.True
+        } else {
+            Bool.False
+        }
+    )
 }

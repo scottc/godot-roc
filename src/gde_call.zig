@@ -229,3 +229,72 @@ pub fn callUtility(
     fn_ptr(ret, args, @intCast(arg_count)); // i64 → i32
     return true;
 }
+
+fn variantTypeForBuiltin(comptime name: []const u8) baseline_gde_if.GDExtensionVariantType {
+    // Names must match Godot's enum / your generated VariantType
+    if (std.mem.eql(u8, name, "Vector2")) return .vector2;
+    if (std.mem.eql(u8, name, "Vector2i")) return .vector2i;
+    if (std.mem.eql(u8, name, "Vector3")) return .vector3;
+    if (std.mem.eql(u8, name, "Vector3i")) return .vector3i;
+    if (std.mem.eql(u8, name, "Vector4")) return .vector4;
+    if (std.mem.eql(u8, name, "Vector4i")) return .vector4i;
+    if (std.mem.eql(u8, name, "Color")) return .color;
+    if (std.mem.eql(u8, name, "Quaternion")) return .quaternion;
+    if (std.mem.eql(u8, name, "Basis")) return .basis;
+    if (std.mem.eql(u8, name, "Transform2D")) return .transform2d;
+    if (std.mem.eql(u8, name, "Transform3D")) return .transform3d;
+    if (std.mem.eql(u8, name, "Projection")) return .projection;
+    if (std.mem.eql(u8, name, "Plane")) return .plane;
+    if (std.mem.eql(u8, name, "Rect2")) return .rect2;
+    if (std.mem.eql(u8, name, "Rect2i")) return .rect2i;
+    if (std.mem.eql(u8, name, "AABB")) return .aabb;
+    @compileError("variantTypeForBuiltin: unknown " ++ name);
+}
+
+/// Runtime name → variant type (for generated code that passes owner as string).
+pub fn variantTypeFromName(name: []const u8) ?baseline_gde_if.GDExtensionVariantType {
+    if (std.mem.eql(u8, name, "Vector2")) return .vector2;
+    if (std.mem.eql(u8, name, "Vector2i")) return .vector2i;
+    if (std.mem.eql(u8, name, "Vector3")) return .vector3;
+    if (std.mem.eql(u8, name, "Vector3i")) return .vector3i;
+    if (std.mem.eql(u8, name, "Vector4")) return .vector4;
+    if (std.mem.eql(u8, name, "Vector4i")) return .vector4i;
+    if (std.mem.eql(u8, name, "Color")) return .color;
+    if (std.mem.eql(u8, name, "Quaternion")) return .quaternion;
+    if (std.mem.eql(u8, name, "Basis")) return .basis;
+    if (std.mem.eql(u8, name, "Transform2D")) return .transform2d;
+    if (std.mem.eql(u8, name, "Transform3D")) return .transform3d;
+    if (std.mem.eql(u8, name, "Projection")) return .projection;
+    if (std.mem.eql(u8, name, "Plane")) return .plane;
+    if (std.mem.eql(u8, name, "Rect2")) return .rect2;
+    if (std.mem.eql(u8, name, "Rect2i")) return .rect2i;
+    if (std.mem.eql(u8, name, "AABB")) return .aabb;
+    return null;
+}
+
+pub fn callBuiltin(
+    ctx: Ctx,
+    type_name: [:0]const u8,
+    method_name: [:0]const u8,
+    hash: i64,
+    base: ?*anyopaque, // pointer to Vector3 / Color / … value (mutable)
+    args: ?[*]const baseline_gde_if.GDExtensionConstTypePtr,
+    arg_count: i64,
+    ret: ?*anyopaque,
+) bool {
+    const vt = variantTypeFromName(type_name) orelse return false;
+
+    var method_sn = makeStringName(ctx, method_name);
+    defer destroyStringName(ctx, &method_sn);
+
+    const fn_ptr = ctx.iface.variant_get_ptr_builtin_method(
+        vt,
+        stringNamePtr(&method_sn),
+        hash,
+    );
+    if (fn_ptr == null) return false;
+
+    // Signature: (base, args, ret, arg_count) — confirm against your generated Interface
+    fn_ptr(base, args, ret, @intCast(arg_count));
+    return true;
+}

@@ -48,7 +48,8 @@ const MAX_NAME_LEN = 63;
 var g_godot_roc_classes: [MAX_CLASSES]GodotRocClassInfo = undefined;
 var g_godot_roc_class_count: usize = 0;
 
-var g_godot_roc_current: ?*GodotRocObjectInstance = null;
+// wherever you used to set the current instance:
+// api.g_godot_roc_current = @ptrCast(instance_ptr); // ?*GodotRocObjectInstance → ?*anyopaque
 
 // Cached singletons (optional; gde_call.getSingleton also works each time)
 var g_input: baseline_gde_if.GDExtensionObjectPtr = null;
@@ -364,7 +365,7 @@ fn inputGetAxis(neg_z: [:0]const u8, pos_z: [:0]const u8) f64 {
 }
 
 fn node3dGetPosition() api.Vector3 {
-    const obj = g_godot_roc_current orelse return .{ .x = 0, .y = 0, .z = 0 };
+    const obj = api.g_godot_roc_current orelse return .{ .x = 0, .y = 0, .z = 0 };
     var out: api.Vector3 = .{ .x = 0, .y = 0, .z = 0 };
     _ = gde_call.callInstance(
         ctx(),
@@ -379,7 +380,7 @@ fn node3dGetPosition() api.Vector3 {
 }
 
 fn node3dSetPosition(p: api.Vector3) void {
-    const obj = g_godot_roc_current orelse return;
+    const obj = api.g_godot_roc_current orelse return;
     var pos = p;
     const args = [_]baseline_gde_if.GDExtensionConstTypePtr{@ptrCast(&pos)};
     _ = gde_call.callInstance(
@@ -627,7 +628,12 @@ const GodotRocObjectInstance = struct {
 };
 
 fn requireCurrent() ?*GodotRocObjectInstance {
-    return g_godot_roc_current;
+    const p = api.g_godot_roc_current orelse return null;
+    return @ptrCast(@alignCast(p));
+}
+
+fn setCurrent(inst: ?*GodotRocObjectInstance) void {
+    api.g_godot_roc_current = if (inst) |i| @ptrCast(i) else null;
 }
 
 fn classInstanceFromInstance(instance: baseline_gde_if.GDExtensionClassInstancePtr) *GodotRocObjectInstance {
@@ -767,9 +773,9 @@ fn onProcess(
     if (isEditorHint()) return;
     const delta: f64 = @as(*const f64, @ptrCast(@alignCast(args[0]))).*;
     const self = classInstanceFromInstance(instance);
-    const prev = g_godot_roc_current;
-    g_godot_roc_current = self;
-    defer g_godot_roc_current = prev;
+    const prev = api.g_godot_roc_current;
+    api.g_godot_roc_current = self;
+    defer api.g_godot_roc_current = prev;
     godot_roc_process(self.class_id, delta);
 }
 
@@ -782,9 +788,9 @@ fn onPhysicsProcess(
     if (isEditorHint()) return;
     const delta: f64 = @as(*const f64, @ptrCast(@alignCast(args[0]))).*;
     const self = classInstanceFromInstance(instance);
-    const prev = g_godot_roc_current;
-    g_godot_roc_current = self;
-    defer g_godot_roc_current = prev;
+    const prev = api.g_godot_roc_current;
+    api.g_godot_roc_current = self;
+    defer api.g_godot_roc_current = prev;
     godot_roc_physics_process(self.class_id, delta);
 }
 
