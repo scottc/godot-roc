@@ -117,16 +117,16 @@ run_smoke_tests! = || {
     Engine.print_warning!("[smoke] get_singleton_engine ptr = ${engine_ptr.to_str()}")
 
     # ----- engine façade (StringName path in host.zig) -----
-    pressed = Engine.is_action_pressed!("ui_accept")
-    Engine.print_warning!("[smoke] is_action_pressed(ui_accept) = ${pressed.to_str()}")
+    pressed = Host.input_is_action_pressed_1558498928!("ui_accept", True)
+    Engine.print_warning!("[smoke] is_action_pressed(ui_accept) = ${Str.inspect(pressed)}")
 
-    jp = Engine.is_action_just_pressed!("ui_accept")
-    Engine.print_warning!("[smoke] just_pressed(ui_accept) = ${jp.to_str()}")
+    jp = Host.input_is_action_just_pressed_1558498928!("ui_accept", True)
+    Engine.print_warning!("[smoke] just_pressed(ui_accept) = ${Str.inspect(jp)}")
 
-    jv = Engine.is_action_just_released!("ui_accept")
-    Engine.print_warning!("[smoke] just_released(ui_accept) = ${jv.to_str()}")
+    jv = Host.input_is_action_just_released_1558498928!("ui_accept", True)
+    Engine.print_warning!("[smoke] just_released(ui_accept) = ${Str.inspect(jv)}")
 
-    axis = Engine.get_axis!("ui_left", "ui_right")
+    axis = Host.input_get_axis_1958752504!("ui_left", "ui_right")
     Engine.print_warning!("[smoke] get_axis(ui_left,ui_right) = ${axis.to_str()}")
 
     Engine.print_warning!("========== smoke: finished (check values above) ==========")

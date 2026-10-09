@@ -225,7 +225,7 @@ main! = |_args| {
     \\import Target
     \\# import EngineInfo
     \\
-    \\## A generic godot-4.5.1-like game engine interface.
+    \\## A generic godot-4.x-like game engine interface, with multi-engine & multi-version support.
     \\Engine := [].{
     \\    target_engine! : () => Target.EngineKind
     \\    target_engine! = || {
@@ -247,52 +247,50 @@ main! = |_args| {
     \\    print_warning! : Str => {}
     \\    print_warning! = |str|
     \\        Host.print_warning!(str)
-    \\
-    \\    is_on_floor! : () => GodotRoc.Bool
-    \\    is_on_floor! = || {
-    \\        Host.is_on_floor!()
-    \\    }
-    \\
-    \\    get_gravity! : () => Vector3
-    \\    get_gravity! = || {
-    \\        Host.get_gravity!()
-    \\    }
-    \\
-    \\    get_velocity! : () => Vector3
-    \\    get_velocity! = || {
-    \\        Host.get_velocity!()
-    \\    }
-    \\
-    \\    set_velocity! : Vector3 => {}
-    \\    set_velocity! = |vector| {
-    \\        Host.set_velocity!(vector)
-    \\        {}
-    \\    }
-    \\
-    \\    move_and_slide! : () => {}
-    \\    move_and_slide! = || {
-    \\        Host.move_and_slide!()
-    \\        {}
-    \\    }
-    \\
-    \\    is_action_pressed! : Str => U8
-    \\    is_action_pressed! = |action| Host.input_is_action_pressed!(action)
-    \\
-    \\    is_action_just_pressed! : Str => U8
-    \\    is_action_just_pressed! = |action| Host.input_is_action_just_pressed!(action)
-    \\
-    \\    is_action_just_released! : Str => U8
-    \\    is_action_just_released! = |a| Host.input_is_action_just_released!(a)
-    \\
-    \\    get_axis! : Str, Str => F64
-    \\    get_axis! = |neg, pos| Host.input_get_axis!(neg, pos)
-    \\
-    \\    get_position! : () => Vector3
-    \\    get_position! = Host.node3d_get_position!
-    \\
-    \\    set_position! : Vector3 => {}
-    \\    set_position! = |p| Host.node3d_set_position!(p)
     \\}
+    # \\    # TODO: delete
+    # \\    #is_on_floor! : () => GodotRoc.Bool
+    # \\    #is_on_floor! = || Host.characterbody3d_is_on_floor_36873697!()
+    # \\
+    # \\    # TODO: delete
+    # \\    #get_gravity! : () => Vector3
+    # \\    #get_gravity! = || Host.physicsbody3d_get_gravity_3360562783!()
+    # \\
+    # \\    # TODO: delete
+    # \\    #get_velocity! : () => Vector3
+    # \\    #get_velocity! = || Host.characterbody3d_get_velocity_3360562783!()
+    # \\
+    # \\    # TODO: delete
+    # \\    #set_velocity! : Vector3 => {}
+    # \\    #set_velocity! = |vector| Host.characterbody3d_set_velocity_3460891852!(vector)
+    # \\
+    # \\    # TODO: delete
+    # \\    #move_and_slide! : () => Bool
+    # \\    #move_and_slide! = || Host.characterbody3d_move_and_slide_2240911060!()
+    # \\
+    # \\    # TODO: delete
+    # \\    #is_action_pressed! : Str => U8
+    # \\    #is_action_pressed! = |action| Host.input_is_action_pressed_1558498928!(action)
+    # \\
+    # \\    # TODO: delete
+    # \\    #is_action_just_pressed! : Str => U8
+    # \\    #is_action_just_pressed! = |action| Host.input_is_action_just_pressed_1558498928!(action)
+    # \\
+    # \\    # TODO: delete
+    # \\    #is_action_just_released! : Str => U8
+    # \\    #is_action_just_released! = |a| Host.input_is_action_just_released_1558498928!(a)
+    # \\
+    # \\    # TODO: delete
+    # \\    #get_axis! : Str, Str => F64
+    # \\    #get_axis! = |neg, pos| Host.input_get_axis_1958752504!(neg, pos)
+    # \\
+    # \\    # TODO: delete
+    # \\    #get_position! : () => Vector3
+    # \\    #get_position! = || Host.node3d_get_position_3360562783!()
+    # \\
+    # \\    # TODO: delete
+    # \\    #set_position! : Vector3 => {}
+    # \\    #set_position! = |p| Host.node3d_set_position_3460891852!(p)
     )?
     Path.join(roc_out_path, "Host.roc").write_utf8!(host_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "EngineInfo.roc").write_utf8!(engine_info(decoded))?
@@ -437,17 +435,18 @@ host_facade_symbols = [
     "register_class",
     "print_error",
     "print_warning",
-    "is_on_floor",
-    "get_gravity",
-    "get_velocity",
-    "set_velocity",
-    "move_and_slide",
-    "input_is_action_pressed",
-    "input_is_action_just_pressed",
-    "input_is_action_just_released",
-    "input_get_axis",
-    "node3d_get_position",
-    "node3d_set_position",
+    # TODO: delete
+    # "is_on_floor",
+    # "get_gravity",
+    # "get_velocity",
+    # "set_velocity",
+    # "move_and_slide",
+    # "input_is_action_pressed",
+    # "input_is_action_just_pressed",
+    # "input_is_action_just_released",
+    # "input_get_axis",
+    # "node3d_get_position",
+    # "node3d_set_position",
 ]
 
 host_facade_decls : Str
@@ -458,17 +457,18 @@ host_facade_decls =
     \\    register_class! : Str, Str => U32
     \\    print_error! : Str => {}
     \\    print_warning! : Str => {}
-    \\    is_on_floor! : () => U8
-    \\    get_gravity! : () => Vector3
-    \\    get_velocity! : () => Vector3
-    \\    set_velocity! : Vector3 => {}
-    \\    move_and_slide! : () => {}
-    \\    input_is_action_pressed! : Str => U8
-    \\    input_is_action_just_pressed! : Str => U8
-    \\    input_is_action_just_released! : Str => U8
-    \\    input_get_axis! : Str, Str => F64
-    \\    node3d_get_position! : () => Vector3
-    \\    node3d_set_position! : Vector3 => {}
+    # TODO: delete
+    # \\    is_on_floor! : () => U8
+    # \\    get_gravity! : () => Vector3
+    # \\    get_velocity! : () => Vector3
+    # \\    set_velocity! : Vector3 => {}
+    # \\    move_and_slide! : () => {}
+    # \\    input_is_action_pressed! : Str => U8
+    # \\    input_is_action_just_pressed! : Str => U8
+    # \\    input_is_action_just_released! : Str => U8
+    # \\    input_get_axis! : Str, Str => F64
+    # \\    node3d_get_position! : () => Vector3
+    # \\    node3d_set_position! : Vector3 => {}
 
 # =============================================================================
 # Naming

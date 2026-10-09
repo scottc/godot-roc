@@ -1,4 +1,5 @@
-import pf.Engine
+### MyPlayerCharacter.roc - A player controlled character
+import pf.Host # TODO: Use nice engine APIs, not low level hashed calls.
 
 gravity = 9.8 # TODO: Godot.get_gravity!(handle)
 movement_speed = 2.0
@@ -7,52 +8,25 @@ jump_force = 50.0
 
 physics_process! : F64 => {}
 physics_process! = |_delta| {
-    # Note: physics_process!, runs at a fixed delta, so delta is optional to use here...
-    # Note: process!, runs at a variable delta, once per render cycle.
-    # Read the godot docos, to understand the differences.
+    _lx = Host.input_get_axis_1958752504!("left", "right")
+    _lz = Host.input_get_axis_1958752504!("forward", "back")
 
-    # Don't forget to set Godot's keybind to action mappings!
-    is_forward = Engine.is_action_pressed!("forward") == 1
-    is_left = Engine.is_action_pressed!("left") == 1
-    is_right = Engine.is_action_pressed!("right") == 1
-    is_back = Engine.is_action_pressed!("back") == 1
-    is_jump = Engine.is_action_pressed!("jump") == 1
+    _jump = Host.input_is_action_just_pressed_1558498928!("jump", True)
 
-    # current velocity
-    velocity = Engine.get_velocity!()
+    #_velocity = Host.characterbody3d_get_velocity_3360562783!()
+    # vx = lx * movement_speed
+    # vz = lz * movement_speed
+    # vy =
+    #     velocity.y
+    #     + -gravity
+    #     + (if jump == 1 and Host.characterbody3d_is_on_floor_36873697!() == 1 { jump_force } else { 0.0 })
 
-    # next velocity
-    vx =
-        if is_right
-            movement_speed
-        else if is_left
-            -movement_speed
-        else
-            idle_speed
+    #Host.characterbody3d_set_velocity_3460891852!({ x: 1.1, y: 2.2, z: 3.3 })
+    _mas = Host.characterbody3d_move_and_slide_2240911060!()
 
-    vz = if is_back
-            movement_speed
-        else if is_forward
-            -movement_speed
-        else
-            idle_speed
-
-    vy =
-        velocity.y # preserve existing y-axis momentum, plus add vector modifiers:
-        + -gravity
-        + if is_jump and (Engine.is_on_floor!() == 1)
-            jump_force
-        else
-            idle_speed
-
-    Engine.set_velocity!({ x: vx, y: vy, z: vz })
-
-    # Process physics for this class / node.
-    Engine.move_and_slide!()
-
+    #_pos = Host.node3d_get_position_3360562783!()
     {}
 }
-
 
 # Default app modules must have a main! function.
 main! = |_args| {{}}
