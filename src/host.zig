@@ -212,6 +212,16 @@ export fn godot_roc_register_class(
     return id;
 }
 
+export fn godot_roc_target_engine() callconv(.c) u8 {
+    // 0 = Godot4_7 for this package
+    return 0;
+}
+
+export fn godot_roc_engine_runtime_ok() callconv(.c) u8 {
+    // Optional: compare get_godot_version major/minor to 4/7
+    return 1;
+}
+
 // ---------------------------------------------------------------------------
 // Façade: CharacterBody3D / Input via gde_call
 // ---------------------------------------------------------------------------
@@ -493,6 +503,32 @@ export fn godot_roc_node3d_get_position() callconv(.c) api.Vector3 {
 
 export fn godot_roc_node3d_set_position(p: api.Vector3) callconv(.c) void {
     node3dSetPosition(p);
+}
+
+// host.zig — already have is_action_pressed; add if missing:
+
+export fn godot_roc_input_is_action_just_released(action: abi.RocStr) callconv(.c) u8 {
+    var owned = action;
+    defer owned.decref(g_roc_host.?);
+    return inputIsActionJustReleased(rocStrToZ(owned));
+}
+
+fn inputIsActionJustReleased(action_z: [:0]const u8) u8 {
+    const input = ensureInput() orelse return 0;
+    var sn = gde_call.makeStringName(ctx(), action_z);
+    defer gde_call.destroyStringName(ctx(), &sn);
+    var out: u8 = 0;
+    const args = [_]baseline_gde_if.GDExtensionConstTypePtr{@ptrCast(&sn)};
+    _ = gde_call.callInstance(
+        ctx(),
+        "Input",
+        "is_action_just_released",
+        api.hashes.Input_is_action_just_released,
+        input,
+        &args,
+        @ptrCast(&out),
+    );
+    return out;
 }
 
 // ---------------------------------------------------------------------------

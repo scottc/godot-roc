@@ -298,3 +298,45 @@ pub fn callBuiltin(
     fn_ptr(base, args_c, ret, @intCast(arg_count));
     return true;
 }
+
+/// Build StringName, invoke callInstance, destroy StringName.
+/// `args_before` / `args_after` are optional extra typed args (pointers already in arrays).
+pub fn callInstanceWithStringName(
+    ctx: Ctx,
+    class_name: [:0]const u8,
+    method_name: [:0]const u8,
+    hash: i64,
+    object: ?*anyopaque,
+    string_arg_utf8: [:0]const u8,
+    /// index of StringName among all args (usually 0)
+    string_arg_index: usize,
+    other_args: []const baseline_gde_if.GDExtensionConstTypePtr,
+    ret: ?*anyopaque,
+) bool {
+    var sn = makeStringName(ctx, string_arg_utf8);
+    defer destroyStringName(ctx, &sn);
+
+    // Build full args: insert &sn at string_arg_index
+    var buf: [16]baseline_gde_if.GDExtensionConstTypePtr = undefined;
+    if (other_args.len + 1 > buf.len) return false;
+
+    var i: usize = 0;
+    var o: usize = 0;
+    while (i < other_args.len + 1) : (i += 1) {
+        if (i == string_arg_index) {
+            buf[i] = @ptrCast(&sn);
+        } else {
+            buf[i] = other_args[o];
+            o += 1;
+        }
+    }
+    return callInstance(
+        ctx,
+        class_name,
+        method_name,
+        hash,
+        object,
+        &buf,
+        ret,
+    );
+}

@@ -9,6 +9,7 @@ import pf.Engine
 import pf.GodotRoc
 
 # Generated
+import pf.EngineInfo
 import pf.UtilityFunctions
 import pf.Vector3
 import pf.Host
@@ -24,6 +25,18 @@ import Npc
 run_smoke_tests! : () => {}
 run_smoke_tests! = || {
     Engine.print_warning!("========== godot-roc smoke tests ==========")
+
+    # The static engine versions that the platform was compiled against
+    # And thus are avaliable to use.
+    # Engine.print_warning!("[smoke] platform_api = ${Str.inspect(EngineInfo.platform_api)}")
+    # Engine exclusive APIs, will be gatekept behind a tag union...??
+
+    # The actual runtime engine version that is running.
+    Engine.print_warning!("[smoke] target_engine! = ${Str.inspect(Engine.target_engine!())}")
+
+    # host enforcement of static version(s) == runtime version.
+    ok = Engine.engine_runtime_ok!()
+    Engine.print_warning!("[smoke] engine_runtime_ok = ${ok.to_str()}")
 
     # ----- utilities (callUtility) -----
     m = UtilityFunctions.maxf!(3.0, 7.0)
@@ -97,6 +110,9 @@ run_smoke_tests! = || {
 
     jp = Engine.is_action_just_pressed!("ui_accept")
     Engine.print_warning!("[smoke] just_pressed(ui_accept) = ${jp.to_str()}")
+
+    jv = Engine.is_action_just_released!("ui_accept")
+    Engine.print_warning!("[smoke] just_released(ui_accept) = ${jv.to_str()}")
 
     axis = Engine.get_axis!("ui_left", "ui_right")
     Engine.print_warning!("[smoke] get_axis(ui_left,ui_right) = ${axis.to_str()}")

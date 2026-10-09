@@ -210,6 +210,7 @@ main! = |_args| {
     Stdout.line!("# Parse: ${(Utc.now!() - parse_start).to_str()}ns")?
     Stdout.line!("${render_header(decoded)}")?
 
+    # Top level platform, may contain one or more engines.
     Path.join(roc_out_path, "GodotRoc.roc").write_utf8!(
     \\## A module specifically just for this bindings project
     \\GodotRoc := [].{
@@ -221,9 +222,20 @@ main! = |_args| {
     \\import Host
     \\import engine/math/Vector3
     \\import GodotRoc
+    \\import Target
+    \\# import EngineInfo
     \\
     \\## A generic godot-4.5.1-like game engine interface.
     \\Engine := [].{
+    \\    target_engine! : () => Target.EngineKind
+    \\    target_engine! = || {
+    \\        _ = Host.target_engine!()
+    \\        Godot4_7 # hardcoded for now # TODO: multi-engine support.
+    \\    }
+    \\
+    \\    engine_runtime_ok! : () => U8
+    \\    engine_runtime_ok! = Host.engine_runtime_ok!
+    \\
     \\    register_class! : Str, Str => GodotRoc.ClassId
     \\    register_class! = |class_name, parent_class_name|
     \\        Host.register_class!(class_name, parent_class_name)
@@ -269,6 +281,9 @@ main! = |_args| {
     \\    is_action_just_pressed! : Str => U8
     \\    is_action_just_pressed! = |action| Host.input_is_action_just_pressed!(action)
     \\
+    \\    is_action_just_released! : Str => U8
+    \\    is_action_just_released! = |a| Host.input_is_action_just_released!(a)
+    \\
     \\    get_axis! : Str, Str => F64
     \\    get_axis! = |neg, pos| Host.input_get_axis!(neg, pos)
     \\
@@ -280,6 +295,10 @@ main! = |_args| {
     \\}
     )?
     Path.join(roc_out_path, "Host.roc").write_utf8!(host_to_roc_source_str(decoded))?
+    Path.join(roc_out_path, "EngineInfo.roc").write_utf8!(engine_info(decoded))?
+    Path.join(roc_out_path, "Target.roc").write_utf8!(target(decoded))?
+
+    # Per engine:
     Path.join(roc_out_path, "engine/GlobalConstants.roc").write_utf8!(global_constants_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "engine/GlobalEnums.roc").write_utf8!(global_enums_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "engine/BuiltinClassSizes.roc").write_utf8!(builtin_class_sizes_to_roc_source_str(decoded))?
@@ -318,6 +337,53 @@ main! = |_args| {
     Stdout.line!("# total after parse: ${(Utc.now!() - parse_start).to_str()}ns")?
     Ok({})
 }
+
+target : ExtensionApi -> Str
+target = |_eapi| {
+    \\#import Host # circular import...
+    \\
+    \\#
+    \\Target := [].{
+    \\    EngineKind : [Godot4_7, Godot4_5, Redot26] # hard coded for now, detect avaliable engines later... TODO: nest api call avalibility behind tag union
+    \\
+    \\    # returns the current run-time engine... tag union, enforces engine call correctness...
+    \\    #target_engine! : () => EngineKind
+    \\    #target_engine! = Host.target_engine!
+    \\}
+}
+
+engine_info : ExtensionApi -> Str
+engine_info = |eapi| {
+    # TODO: detect engine fork: Godot vs Redot, using "Engine" for ambigous generic term for now.
+    # TODO: Implement PlatformApi, "engine avalibility @ compile time"
+    # TODO: Implement Richard's target suggestion: https://roc.zulipchat.com/#narrow/channel/231634-beginners/topic/.E2.9C.94.20OS-specific.20APIs.20in.20platforms/with/630287727
+    # "engine avalibility @ runtime & game dev time, with type checker enforcing multi-engine engine-call correctness."
+    # TODO: support multiple engine combinations, Godot4_7 + Redot26, etc.
+    major = eapi.header.version_major.to_str()
+    minor = eapi.header.version_minor.to_str()
+    patch = eapi.header.version_patch.to_str()
+    full = eapi.header.version_full_name
+    \\## AUTO-GENERATED from extension_api.json header
+    \\EngineInfo := [].{
+    \\    version_major : U64
+    \\    version_major = ${major}
+    \\
+    \\    version_minor : U64
+    \\    version_minor = ${minor}
+    \\
+    \\    version_patch : U64
+    \\    version_patch = ${patch}
+    \\
+    \\    version_full_name : Str
+    \\    version_full_name = ${Str.inspect(full)} # escape quotes...
+    \\
+    \\    ## Compile-time identity of this platform package
+    \\    PlatformApi : [Godot4_7] # hard coded for now... TODO: add multi engine...
+    \\    platform_api : PlatformApi
+    \\    platform_api = Godot4_7
+    \\}
+}
+
 
 math_type_peer_imports : Str -> Str
 math_type_peer_imports = |name| {
@@ -366,6 +432,8 @@ math_type_names = [
 
 host_facade_symbols : List(Str)
 host_facade_symbols = [
+    "target_engine",
+    "engine_runtime_ok",
     "register_class",
     "print_error",
     "print_warning",
@@ -376,6 +444,7 @@ host_facade_symbols = [
     "move_and_slide",
     "input_is_action_pressed",
     "input_is_action_just_pressed",
+    "input_is_action_just_released",
     "input_get_axis",
     "node3d_get_position",
     "node3d_set_position",
@@ -384,6 +453,8 @@ host_facade_symbols = [
 host_facade_decls : Str
 host_facade_decls =
     \\    # --- platform façade (host.zig MVP) ---
+    \\    target_engine! : () => U8
+    \\    engine_runtime_ok! : () => U8
     \\    register_class! : Str, Str => U32
     \\    print_error! : Str => {}
     \\    print_warning! : Str => {}
@@ -394,6 +465,7 @@ host_facade_decls =
     \\    move_and_slide! : () => {}
     \\    input_is_action_pressed! : Str => U8
     \\    input_is_action_just_pressed! : Str => U8
+    \\    input_is_action_just_released! : Str => U8
     \\    input_get_axis! : Str, Str => F64
     \\    node3d_get_position! : () => Vector3
     \\    node3d_set_position! : Vector3 => {}
@@ -921,6 +993,8 @@ gen_platform_main_roc = |eapi| {
         "BuiltinClassMemberOffsets",
         "NativeStructures",
         "UtilityFunctions",
+        "EngineInfo",
+        "Target",
     ]
 
     all_names =
@@ -937,6 +1011,8 @@ gen_platform_main_roc = |eapi| {
 
     meta_imports =
         \\import Host
+        \\import EngineInfo
+        \\import Target
         \\import engine/GlobalConstants
         \\import engine/GlobalEnums
         \\import engine/BuiltinClassSizes
@@ -1233,6 +1309,7 @@ host_to_roc_source_str = |eapi| {
         )
 
     \\# AUTO-GENERATED Host surface — signatures only; bodies via platform hosted → Zig
+    \\import Target
     \\${math_imports}
     \\
     \\Host := [].{
@@ -1735,7 +1812,7 @@ zig_export_method = |eapi, owner, md| {
     arg_list = match md.arguments { Ok(a) => a _ => [] }
     n_args = arg_list.len().to_str()
 
-    _singleton = is_singleton_name(eapi, owner) # TODO: use this or not??
+    # singleton = is_singleton_name(eapi, owner) # TODO: use this or not??
 
     if !(method_is_simple_ptrcall(md)) {
         params = zig_method_params_for(owner, md)
@@ -1793,13 +1870,61 @@ zig_export_method = |eapi, owner, md| {
             \\    return ret_val;
             \\}
         }
-    } else {
-        # existing class / singleton callInstance branch (unchanged)
-        # ...
-        \\ /// ?????
-        \\ /// ?????
-        \\ /// ?????
-    }
+        } else {
+            params = zig_method_params_named_for(owner, md)
+            setup = zig_ptrcall_args_setup(md)
+            singleton = is_singleton_name(eapi, owner)
+
+            if ret == "void" {
+                obj_setup =
+                    if md.is_static {
+                        \\    const obj: ?*anyopaque = null;
+                    } else if singleton {
+                        \\    const obj = gde_call.getSingleton(gde_call.godotRocCtx(), "${owner}") orelse return;
+                    } else {
+                        \\    const obj = g_godot_roc_current orelse return;
+                    }
+                \\
+                \\/// ${owner}.${md.name} hash=${md.hash.to_str()} (callInstance)
+                \\export fn godot_roc_${sym}(${params}) callconv(.c) void {
+                \\${obj_setup}
+                \\${setup.locals}${setup.args_array}    _ = gde_call.callInstance(
+                \\        gde_call.godotRocCtx(),
+                \\        "${owner}",
+                \\        "${md.name}",
+                \\        hashes.${hkey},
+                \\        obj,
+                \\        ${setup.args_ptr},
+                \\        null,
+                \\    );
+                \\}
+            } else {
+                obj_setup =
+                    if md.is_static {
+                        \\    const obj: ?*anyopaque = null;
+                    } else if singleton {
+                        \\    const obj = gde_call.getSingleton(gde_call.godotRocCtx(), "${owner}") orelse return std.mem.zeroes(${ret});
+                    } else {
+                        \\    const obj = g_godot_roc_current orelse return std.mem.zeroes(${ret});
+                    }
+                \\
+                \\/// ${owner}.${md.name} hash=${md.hash.to_str()} (callInstance)
+                \\export fn godot_roc_${sym}(${params}) callconv(.c) ${ret} {
+                \\${obj_setup}
+                \\${setup.locals}${setup.args_array}    var ret_val: ${ret} = std.mem.zeroes(${ret});
+                \\    _ = gde_call.callInstance(
+                \\        gde_call.godotRocCtx(),
+                \\        "${owner}",
+                \\        "${md.name}",
+                \\        hashes.${hkey},
+                \\        obj,
+                \\        ${setup.args_ptr},
+                \\        @ptrCast(&ret_val),
+                \\    );
+                \\    return ret_val;
+                \\}
+            }
+        }
 }
 
 ## Simple utils → gde_call.callUtility; others → stubs
