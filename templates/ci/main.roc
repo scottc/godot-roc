@@ -14,6 +14,7 @@ import pf.Host
 import pf.EngineInfo
 import pf.UtilityFunctions
 import pf.Vector3
+import pf.Vector3Methods
 import pf.InputSingleton
 # TODO: Can the game dev alias & re-export these?
 # EngineInfo = import pf.godot4_7.EngineInfo
@@ -101,14 +102,14 @@ run_smoke_tests! = || {
 
     # ----- builtin methods (callBuiltin via Host) -----
     # Replace hashes with names from platform/gen/Host.roc
-    v_len = Host.vector3_length_466405837!(v)
+    v_len = Vector3Methods.length!(v)
     Engine.print_warning!("[smoke] Vector3.length(3,0,4) = ${v_len.to_str()}")
     # expect ~5
 
     v2 : Vector3
     v2 = { x: 1.0, y: 0.0, z: 0.0 }
     # dot hash: rg vector3_dot platform/gen/Host.roc
-    v_dot = Host.vector3_dot_1047977935!(v2, v2)
+    v_dot = Vector3Methods.dot!(v2, v2)
     Engine.print_warning!("[smoke] Vector3.dot((1,0,0),(1,0,0)) = ${v_dot.to_str()}")
     # expect ~1
 

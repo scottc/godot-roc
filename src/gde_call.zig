@@ -374,3 +374,10 @@ pub fn callInstanceWithStringName(
         ret,
     );
 }
+
+pub fn godotStringToRoc(ctx: Ctx, host: *abi.RocHost, s: *StringStorage) abi.RocStr {
+    var buf: [1024]u8 = undefined;
+    const n = ctx.iface.string_to_utf8_chars(@ptrCast(s), buf.ptr, @intCast(buf.len - 1));
+    const len: usize = @intCast(n);
+    return abi.RocStr.fromSlice(host, buf[0..len]); // match your ABI helper name
+}

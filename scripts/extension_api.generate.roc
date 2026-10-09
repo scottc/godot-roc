@@ -254,49 +254,6 @@ main! = |_args| {
     \\    print_warning! = |str|
     \\        Host.print_warning!(str)
     \\}
-    # \\    # TODO: delete
-    # \\    #is_on_floor! : () => GodotRoc.Bool
-    # \\    #is_on_floor! = || Host.characterbody3d_is_on_floor_36873697!()
-    # \\
-    # \\    # TODO: delete
-    # \\    #get_gravity! : () => Vector3
-    # \\    #get_gravity! = || Host.physicsbody3d_get_gravity_3360562783!()
-    # \\
-    # \\    # TODO: delete
-    # \\    #get_velocity! : () => Vector3
-    # \\    #get_velocity! = || Host.characterbody3d_get_velocity_3360562783!()
-    # \\
-    # \\    # TODO: delete
-    # \\    #set_velocity! : Vector3 => {}
-    # \\    #set_velocity! = |vector| Host.characterbody3d_set_velocity_3460891852!(vector)
-    # \\
-    # \\    # TODO: delete
-    # \\    #move_and_slide! : () => Bool
-    # \\    #move_and_slide! = || Host.characterbody3d_move_and_slide_2240911060!()
-    # \\
-    # \\    # TODO: delete
-    # \\    #is_action_pressed! : Str => U8
-    # \\    #is_action_pressed! = |action| Host.input_is_action_pressed_1558498928!(action)
-    # \\
-    # \\    # TODO: delete
-    # \\    #is_action_just_pressed! : Str => U8
-    # \\    #is_action_just_pressed! = |action| Host.input_is_action_just_pressed_1558498928!(action)
-    # \\
-    # \\    # TODO: delete
-    # \\    #is_action_just_released! : Str => U8
-    # \\    #is_action_just_released! = |a| Host.input_is_action_just_released_1558498928!(a)
-    # \\
-    # \\    # TODO: delete
-    # \\    #get_axis! : Str, Str => F64
-    # \\    #get_axis! = |neg, pos| Host.input_get_axis_1958752504!(neg, pos)
-    # \\
-    # \\    # TODO: delete
-    # \\    #get_position! : () => Vector3
-    # \\    #get_position! = || Host.node3d_get_position_3360562783!()
-    # \\
-    # \\    # TODO: delete
-    # \\    #set_position! : Vector3 => {}
-    # \\    #set_position! = |p| Host.node3d_set_position_3460891852!(p)
     )?
     Path.join(roc_out_path, "Host.roc").write_utf8!(host_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "EngineInfo.roc").write_utf8!(engine_info(decoded))?
@@ -316,14 +273,16 @@ main! = |_args| {
     }
 
     for bic in decoded.builtin_classes {
-        if !(is_struct_builtin(bic.name)) {
+        if is_struct_builtin(bic.name) {
+            ops = math_ops_module_to_str(bic)
+            if ops != "" {
+                Path.join(roc_out_path, "engine/math/${bic.name}Methods.roc")
+                    .write_utf8!(ops)?
+            }
+        } else {
             mod_name = builtin_module_name(bic.name)
             Path.join(roc_out_path, "engine/builtin_classes/${mod_name}.roc")
                 .write_utf8!(builtin_class_to_roc_source_str(bic))?
-        } else {
-            mod_name = builtin_module_name(bic.name)
-            Path.join(roc_out_path, "engine/builtin_classes/${mod_name}Methods.roc")
-                .write_utf8!(math_ops_module_to_str(bic))?
         }
     }
 
@@ -445,18 +404,6 @@ host_facade_symbols = [
     "register_class",
     "print_error",
     "print_warning",
-    # TODO: delete
-    # "is_on_floor",
-    # "get_gravity",
-    # "get_velocity",
-    # "set_velocity",
-    # "move_and_slide",
-    # "input_is_action_pressed",
-    # "input_is_action_just_pressed",
-    # "input_is_action_just_released",
-    # "input_get_axis",
-    # "node3d_get_position",
-    # "node3d_set_position",
 ]
 
 host_facade_decls : Str
@@ -467,18 +414,6 @@ host_facade_decls =
     \\    register_class! : Str, Str => U32
     \\    print_error! : Str => {}
     \\    print_warning! : Str => {}
-    # TODO: delete
-    # \\    is_on_floor! : () => U8
-    # \\    get_gravity! : () => Vector3
-    # \\    get_velocity! : () => Vector3
-    # \\    set_velocity! : Vector3 => {}
-    # \\    move_and_slide! : () => {}
-    # \\    input_is_action_pressed! : Str => U8
-    # \\    input_is_action_just_pressed! : Str => U8
-    # \\    input_is_action_just_released! : Str => U8
-    # \\    input_get_axis! : Str, Str => F64
-    # \\    node3d_get_position! : () => Vector3
-    # \\    node3d_set_position! : Vector3 => {}
 
 # =============================================================================
 # Naming
@@ -800,6 +735,11 @@ util_c_type_is_simple = |str| {
     }
 }
 
+method_c_type_is_wireable : Str -> Bool
+method_c_type_is_wireable = |str| {
+    method_c_type_is_simple(str)
+}
+
 method_c_type_is_simple : Str -> Bool
 method_c_type_is_simple = |str| {
     cleaned =
@@ -832,12 +772,12 @@ method_is_simple_ptrcall = |md| {
     if md.is_vararg {
         Bool.False
     } else {
-        ret_ok = method_c_type_is_simple(method_return_type_str(md))
+        ret_ok = method_c_type_is_wireable(method_return_type_str(md))
         args_ok =
             match md.arguments {
                 Ok(args) =>
                     args.fold(Bool.True, |acc, a|
-                        if acc and method_c_type_is_simple(a.type) {
+                        if acc and method_c_type_is_wireable(a.type) {
                             Bool.True
                         } else {
                             Bool.False
@@ -911,7 +851,10 @@ zig_ptrcall_args_setup = |md| {
                             \\    const ${loc}_z = gde_call.copyRocStrToBuf(${loc}_owned, &${loc}_buf);
                             \\    var ${loc}_sn = gde_call.makeStringName(gde_call.godotRocCtx(), ${loc}_z);
                             \\    defer gde_call.destroyStringName(gde_call.godotRocCtx(), &${loc}_sn);
+                        } else if is_object_ptr_godot_type(a.type) {
+                            \\    var ${loc}_: ?*anyopaque = @ptrFromInt(@as(usize, @bitCast(${loc})));
                         } else {
+                            # bool / int / float / math structs — pass address of value
                             \\    var ${loc}_ = ${loc};
                         }
                     }),
@@ -1046,13 +989,35 @@ gen_platform_main_roc = |eapi| {
         "Target",
     ]
 
+    math_method_names =
+        eapi.builtin_classes.fold([], |acc, b| {
+            if is_struct_builtin(b.name) {
+                match b.methods {
+                    Ok(ms) if !(ms.is_empty()) =>
+                        List.append(acc, "${b.name}Methods")
+                    _ => acc
+                }
+            } else {
+                acc
+            }
+        })
+
     all_names =
         List.concat(
             meta_names,
             List.concat(
                 math_type_names,
-                List.concat(builtin_names, List.concat(class_names, singleton_names)),
+                List.concat(
+                    math_method_names,
+                    List.concat(builtin_names, List.concat(class_names, singleton_names)),
+                ),
             ),
+        )
+
+    math_method_imports =
+        Str.join_with(
+            math_method_names.map(|n| "import engine/math/${n}"),
+            "\n",
         )
 
     expose = Str.join_with(all_names.map(|n| "        ${n}"), ",\n")
@@ -1117,6 +1082,8 @@ gen_platform_main_roc = |eapi| {
     \\${meta_imports}
     \\
     \\${math_imports}
+    \\
+    \\${math_method_imports}
     \\
     \\${builtin_imports}
     \\
@@ -2232,16 +2199,78 @@ is_singleton_name = |eapi, name| {
 
 math_ops_module_to_str : BuiltinClass -> Str
 math_ops_module_to_str = |bic| {
-    if !(is_struct_builtin(bic.name)) {
-        ""
+    match bic.methods {
+        Ok(ms) if !(ms.is_empty()) => {
+            body = methods_block_live(bic.name, bic.methods)
+
+            # Collect math types referenced by method args / returns
+            refs =
+                ms.fold([], |acc, md| {
+                    acc1 =
+                        match md.arguments {
+                            Ok(args) =>
+                                args.fold(acc, |a2, arg|
+                                    collect_type_refs(a2, bic.name, c_to_roc_type(arg.type))
+                                )
+                            _ => acc
+                        }
+                    ret_t = c_to_roc_type(method_return_type_str(md))
+                    collect_type_refs(acc1, bic.name, ret_t)
+                })
+
+            math_refs =
+                refs.fold([], |acc, t| {
+                    if is_struct_builtin(t) and t != bic.name and !(List.contains(acc, t)) {
+                        List.append(acc, t)
+                    } else {
+                        acc
+                    }
+                })
+
+            peer_imports =
+                if List.is_empty(math_refs) {
+                    ""
+                } else {
+                    Str.concat(
+                        Str.join_with(math_refs.map(|t| "import ${t}"), "\n"),
+                        "\n",
+                    )
+                }
+
+            \\# ${bic.name} methods → Host (callBuiltin)
+            \\import ../../Host
+            \\import ${bic.name}
+            \\${peer_imports}
+            \\${bic.name}Methods := [].{
+            \\${body}
+            \\}
+        }
+        _ => ""
+    }
+}
+
+## True when Zig param is u64 used as an Object / RID / opaque handle for ptrcall.
+is_object_ptr_godot_type : Str -> Bool
+is_object_ptr_godot_type = |t| {
+    cleaned =
+        if t.starts_with("enum::") or t.starts_with("bitfield::") {
+            "int"
+        } else {
+            t
+        }
+    if is_string_godot_type(cleaned) {
+        Bool.False
+    } else if is_struct_builtin(cleaned) {
+        Bool.False
     } else {
-        body = methods_block_live(bic.name, bic.methods)
-        \\import ../../Host
-        \\import ${bic.name}
-        \\
-        \\## Godot ${bic.name} methods (Host / callBuiltin)
-        \\${bic.name}Methods := [].{
-        \\${body}
-        \\}
+        match cleaned {
+            "bool" | "int" | "float" | "double" | "void" | "Error" => Bool.False
+            "Variant" | "RID" | "Callable" | "Signal" | "Dictionary" | "Array" => Bool.False
+            other if other.starts_with("typedarray::") => Bool.False
+            other if other.starts_with("packed") => Bool.False
+            # Named classes / Object → Zig u64 pointer handle
+            "Object" | "Node" | "RefCounted" => Bool.True
+            _ => Bool.True
+        }
     }
 }
