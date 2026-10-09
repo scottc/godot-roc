@@ -22,44 +22,6 @@ Live web wasm32-emscripten demo:
 
 The binding generator will allow for multi-engine & multi-version projects, which can help facilitate engine migration or games targeting an array of engines. As well as custom trimmed down APIs for "just my use-case", for example a 2D project where you don't need 3D apis.
 
-```roc
-# multi-engine project
-import pf.Engine
-import pf.Target
-
-# single-engine project
-import pf.EngineInfo
-
-physics_process! : F64 => {}
-physics_process! = |delta| {
-    Engine.print_warning!(delta.to_str())
-
-    # The current runtime engine
-    str = match Engine.target_engine!() {
-        # Matching against the statically linked engines.
-        Target.Godot4_7(gd_api) => "Hello Godot! ${Str.inspect(gd_api)}"
-        Target.Redot23(rd_api) => "Hello Redot! ${Str.inspect(rd_api)}"
-        Err(other) => crash "Engine runtime API not statically linked. Update this platform to match the runtime! (generate new bindings!) ${Str.inspect(other)}"
-    }
-    Engine.print_warning!(str)
-
-    # A statically linked engine.
-    Engine.print_warning!(EngineInfo.version_full_name)
-
-    # The engine runtime version, matches a statically linked runtime version.
-    ok = Engine.engine_runtime_ok!()
-    Engine.print_warning!(Str.inspect(ok))
-
-    if !ok crash "Engine runtime API not statically linked. Update this platform to match the runtime! (generate new bindings!)"
-}
-
-handle_godot : Target.Godot4_7 -> U32
-handle_godot = |gd| gd.version_minor * 2
-
-handle_redot : Target.Redot23 -> U32
-handle_rodot = |rd| rd.version_minor * 3
-```
-
 ## Build & Run Binding Generator
 
 ```sh

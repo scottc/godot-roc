@@ -123,13 +123,31 @@ main! = |_args| {
     #     env: [],
     # })
 
+
+    # ------------------------------------------------------------------
+    # ?. Dump bindings
+    # ------------------------------------------------------------------
+    dump_id = 4
+    dump = Build.cmd({
+        id: dump_id,
+        depends_on: [],
+        inputs: [],
+        outputs: [],
+        program: "roc",
+        args: ["run", "scripts/dump.roc"],
+        description: "Dump bindings... roc run scripts/dump.roc",
+        cwd: "",
+        env: [],
+    })
+
+
     # ------------------------------------------------------------------
     # 3. Glue generation
     # ------------------------------------------------------------------
     glue_id = 4
     glue = Build.cmd({
         id: glue_id,
-        depends_on: [copy_template_id],
+        depends_on: [copy_template_id, dump_id],
         inputs: [
             "scripts/glue.roc",
             # + any sources glue reads
@@ -402,6 +420,7 @@ main! = |_args| {
         mkdir_ws,
         copy_template,
         #check,
+        dump,
         glue,
         roc_zig,
         roc_linux,

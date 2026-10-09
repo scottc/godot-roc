@@ -32,10 +32,10 @@ Item : { comment: CommentInfo, typedef: TypeDefInfo }
 main! : List(OsStr) => Try({}, _)
 main! = |_args| {
     source : Path
-    source = "vendor/godot/gdextension_interface.h"
+    source = "vendor-out/godot/gdextension_interface.h"
 
     out_path : Path
-    out_path = "src/engine/gdextension_interface.generated.zig"
+    out_path = "host/glue-out/godot/gdextension_interface.zig"
 
     read_start = Utc.now!()
     c_contents = source.read_utf8!()?

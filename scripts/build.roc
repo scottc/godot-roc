@@ -132,10 +132,12 @@ host_targets = [
 # =============================================================================
 
 out_path : HostTarget -> Str
-out_path = |t| "platform/gen/targets/${t.name}/${t.lib_file}"
+out_path = |t| "platform-out/godot/targets/${t.name}/${t.lib_file}"
 
 out_dir : HostTarget -> Str
-out_dir = |t| "platform/gen/targets/${t.name}"
+out_dir = |t| "platform-out/godot/targets/${t.name}"
+
+host_entry = "host/host.zig"
 
 optimize_flag : Optimize -> Str
 optimize_flag = |o| {
@@ -199,7 +201,7 @@ zig_argv = |t, optimize| {
         match t.kind {
             WasmObj => [
                 "build-obj",
-                "src/host.zig",
+                host_entry,
                 "-target",
                 t.zig_triple,
                 flag,
@@ -211,7 +213,7 @@ zig_argv = |t, optimize| {
             ]
             StaticLib => [
                 "build-lib",
-                "src/host.zig",
+                host_entry,
                 "-target",
                 t.zig_triple,
                 flag,
@@ -268,7 +270,7 @@ build_one_cmd = |t, optimize, id, depends_on| {
         id: id,
         depends_on: depends_on,
         inputs: [
-            "src/host.zig",
+            host_entry,
         ],
         outputs: [emit],
         program: "zig",

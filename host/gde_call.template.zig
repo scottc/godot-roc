@@ -1,6 +1,7 @@
 //! gde_call.zig — shared GDExtension call helpers (excerpt: strings + singletons)
+//! Copy this to the glue-out/godot/gde_call.zig
 const std = @import("std");
-const baseline_gde_if = @import("engine/gdextension_interface.generated.zig");
+const baseline_gde_if = @import("gdextension_interface.zig");
 const abi = @import("roc_platform_abi.zig");
 
 pub fn rocHost() *abi.RocHost {
@@ -94,6 +95,18 @@ pub fn makeString(ctx: Ctx, text: [:0]const u8) StringStorage {
         @compileError("wire string_new_with_utf8_chars on Interface");
     }
     return s;
+}
+
+pub fn godotStringToRoc(ctx: Ctx, host: *abi.RocHost, str_storage: *StringStorage) abi.RocStr {
+    var buf: [2048]u8 = undefined;
+    const n: i64 = ctx.iface.string_to_utf8_chars(
+        @ptrCast(str_storage),
+        @ptrCast(&buf),
+        @intCast(buf.len - 1),
+    );
+    if (n <= 0) return abi.RocStr.empty(); // match your ABI
+    const len: usize = @intCast(n);
+    return abi.RocStr.fromSlice(host, buf[0..len]); // or allocate + copy per your RocStr API
 }
 
 pub fn destroyString(ctx: Ctx, s: *StringStorage) void {
@@ -373,11 +386,4 @@ pub fn callInstanceWithStringName(
         &buf,
         ret,
     );
-}
-
-pub fn godotStringToRoc(ctx: Ctx, host: *abi.RocHost, s: *StringStorage) abi.RocStr {
-    var buf: [1024]u8 = undefined;
-    const n = ctx.iface.string_to_utf8_chars(@ptrCast(s), buf.ptr, @intCast(buf.len - 1));
-    const len: usize = @intCast(n);
-    return abi.RocStr.fromSlice(host, buf[0..len]); // match your ABI helper name
 }

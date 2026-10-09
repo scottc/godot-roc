@@ -66,7 +66,7 @@ main! = |_args| {
         program: "godot",
         args: ["--headless", "--dump-gdextension-interface"],
         description: "Godot: dump-gdextension-interface",
-        cwd: "src/godot",
+        cwd: "vendor-out/godot",
         env: [],
     })
 
@@ -79,7 +79,7 @@ main! = |_args| {
         program: "godot",
         args: ["--headless", "--dump-gdextension-interface-json"],
         description: "Godot: dump-gdextension-interface-json",
-        cwd: "src/godot",
+        cwd: "vendor-out/godot",
         env: [],
     })
 
@@ -92,7 +92,7 @@ main! = |_args| {
         program: "godot",
         args: ["--headless", "--dump-extension-api"],
         description: "Godot: dump-extension-api",
-        cwd: "src/godot",
+        cwd: "vendor-out/godot",
         env: [],
     })
 
@@ -108,7 +108,7 @@ main! = |_args| {
         program: "godot4.5",
         args: ["--headless", "--dump-gdextension-interface"],
         description: "Godot 4.5.1: dump-gdextension-interface",
-        cwd: "src/godot_4_5_1",
+        cwd: "vendor-out/godot_4_5_1",
         env: [],
     })
 
@@ -135,7 +135,7 @@ main! = |_args| {
         program: "godot4.5",
         args: ["--headless", "--dump-extension-api"],
         description: "Godot 4.5.1: dump-extension-api",
-        cwd: "src/godot_4_5_1",
+        cwd: "vendor-out/godot_4_5_1",
         env: [],
     })
 
@@ -151,7 +151,7 @@ main! = |_args| {
         program: "redot",
         args: ["--headless", "--dump-gdextension-interface"],
         description: "Redot: dump-gdextension-interface",
-        cwd: "src/redot",
+        cwd: "vendor-out/redot",
         env: [],
     })
 
@@ -165,7 +165,7 @@ main! = |_args| {
     #     program: "redot",
     #     args: ["--headless", "--dump-gdextension-interface-json"],
     #     description: "Redot: dump-gdextension-interface-json",
-    #     cwd: "src/redot",
+    #     cwd: "vendor-out/redot",
     #     env: [],
     # })
 
@@ -178,7 +178,7 @@ main! = |_args| {
         program: "redot",
         args: ["--headless", "--dump-extension-api"],
         description: "Redot: dump-extension-api",
-        cwd: "src/redot",
+        cwd: "vendor-out/redot",
         env: [],
     })
 
@@ -194,7 +194,7 @@ main! = |_args| {
         program: "rex",
         args: ["--headless", "--dump-gdextension-interface"],
         description: "Rex: dump-gdextension-interface",
-        cwd: "src/rex",
+        cwd: "vendor-out/rex",
         env: [],
     })
 
@@ -208,7 +208,7 @@ main! = |_args| {
     #     program: "rex",
     #     args: ["--headless", "--dump-gdextension-interface-json"],
     #     description: "Rex: dump-gdextension-interface-json",
-    #     cwd: "src/rex",
+    #     cwd: "vendor-out/rex",
     #     env: [],
     # })
 
@@ -221,7 +221,7 @@ main! = |_args| {
         program: "rex",
         args: ["--headless", "--dump-extension-api"],
         description: "Rex: dump-extension-api",
-        cwd: "src/rex",
+        cwd: "vendor-out/rex",
         env: [],
     })
 
@@ -232,8 +232,8 @@ main! = |_args| {
     # # roc glue
 
     # # Generate Godot <-> Zig <--> Roc Bindings
-    # roc run src/godot/gdextension_interface.generate.roc
-    # roc run src/godot/extension_api.generate.roc
+    # roc run vendor-out/godot/gdextension_interface.generate.roc
+    # roc run vendor-out/godot/extension_api.generate.roc
 
     # # Test & ensure everything builds & runs correctly.
     # roc run scripts/ci.roc

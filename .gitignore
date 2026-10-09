@@ -1,9 +1,9 @@
 # Godot Roc
 
 # glue.roc
-src/roc_platform_abi.zig
-src/zig_platform_abi_impl.zig
-src/engine/gdextension_interface.generated.zig
+host/glue-out/godot/roc_platform_abi.zig
+host/glue-out/godot/zig_platform_abi_impl.zig
+host/glue-out/godot/gdextension_interface.zig
 platform/gen/*.roc
 platform/gen/engine/*.roc
 platform/gen/engine/builtin_classes/*.roc
@@ -46,3 +46,11 @@ zig-out/
 
 # roc
 generated-docs/
+
+# out dirs
+platform-out/godot/
+vendor-out/
+host/glue-out/godot/
+platform-out/targets/
+platform-out/
+host/glue-out/godot/gde_call.zig

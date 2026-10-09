@@ -30,7 +30,7 @@ main! = |_args| {
             "scripts/gdextension_interface.generate.roc",
         ],
         outputs: [
-            "src/engine/gdextension_interface.generated.zig",
+            "host/glue-out/godot/gdextension_interface.zig",
         ],
         program: "roc",
         args: ["run", "scripts/gdextension_interface.generate.roc"],
@@ -46,11 +46,11 @@ main! = |_args| {
     test_gdext = Build.cmd({
         id: test_gdext_id,
         depends_on: [gen_gdext_id],
-        inputs: ["src/engine/gdextension_interface.generated.zig"],
+        inputs: ["host/glue-out/godot/gdextension_interface.zig"],
         outputs: [],
         program: "zig",
-        args: ["test", "src/engine/gdextension_interface.generated.zig"],
-        description: "zig test src/engine/gdextension_interface.generated.zig",
+        args: ["test", "host/glue-out/godot/gdextension_interface.zig"],
+        description: "zig test host/glue-out/godot/gdextension_interface.zig",
         cwd: "",
         env: [],
     })
@@ -81,28 +81,12 @@ main! = |_args| {
         id: check_plat_id,
         depends_on: [gen_gdext_id, gen_api_id],
         inputs: [
-            "platform/gen/main.roc",
+            "platform-out/godot/main.roc",
         ],
         outputs: [],
         program: "roc",
-        args: ["check", "platform/gen/main.roc"],
-        description: "roc check platform/gen/main.roc",
-        cwd: "",
-        env: [],
-    })
-
-    # ------------------------------------------------------------------
-    # 5. Test zig platform ABI impl
-    # ------------------------------------------------------------------
-    test_abi_impl_id = 5
-    test_abi_impl = Build.cmd({
-        id: test_abi_impl_id,
-        depends_on: [gen_gdext_id, gen_api_id],
-        inputs: ["src/zig_platform_abi_impl.zig"],
-        outputs: [],
-        program: "zig",
-        args: ["test", "src/zig_platform_abi_impl.zig"],
-        description: "zig test src/zig_platform_abi_impl.zig",
+        args: ["check", "platform-out/godot/main.roc"],
+        description: "roc check platform-out/godot/main.roc",
         cwd: "",
         env: [],
     })
@@ -115,18 +99,18 @@ main! = |_args| {
         id: roc_glue_id,
         depends_on: [check_plat_id],
         inputs: [
-            "platform/gen/main.roc",
+            "platform-out/godot/main.roc",
             "vendor/roc/git-a3ce7f1/ZigGlue.roc",
         ],
-        outputs: ["src/roc_platform_abi.zig"],
+        outputs: ["host/glue-out/godot/roc_platform_abi.zig"],
         program: "roc",
         args: [
             "glue",
             "vendor/roc/git-a3ce7f1/ZigGlue.roc",
-            "src/",
-            "platform/gen/main.roc",
+            "host/glue-out/godot/",
+            "platform-out/godot/main.roc",
         ],
-        description: "roc glue → src/roc_platform_abi.zig",
+        description: "roc glue → host/glue-out/godot/roc_platform_abi.zig",
         cwd: "",
         env: [],
     })
@@ -141,13 +125,13 @@ main! = |_args| {
     patch_glue = Build.cmd({
         id: patch_glue_id,
         depends_on: [roc_glue_id],
-        inputs: ["src/roc_platform_abi.zig"],
-        outputs: ["src/roc_platform_abi.zig"],
+        inputs: ["host/glue-out/godot/roc_platform_abi.zig"],
+        outputs: ["host/glue-out/godot/roc_platform_abi.zig"],
         program: "sh",
         args: [
             "-c",
             \\set -eu
-            \\FILE=src/roc_platform_abi.zig
+            \\FILE=host/glue-out/godot/roc_platform_abi.zig
             \\
             \\# --- pattern files (quoted heredocs = literal text) ---
             \\cat >"$FILE.find1" <<'ENDFIND1'
@@ -230,11 +214,47 @@ main! = |_args| {
     test_abi = Build.cmd({
         id: test_abi_id,
         depends_on: [patch_glue_id],
-        inputs: ["src/roc_platform_abi.zig"],
+        inputs: ["host/glue-out/godot/roc_platform_abi.zig"],
         outputs: [],
         program: "zig",
-        args: ["test", "src/roc_platform_abi.zig"],
-        description: "zig test src/roc_platform_abi.zig",
+        args: ["test", "host/glue-out/godot/roc_platform_abi.zig"],
+        description: "zig test host/glue-out/godot/roc_platform_abi.zig",
+        cwd: "",
+        env: [],
+    })
+
+    #
+    # ?. copy gde_call.template.zig into glue-out
+    #
+    cp_gde_call_id = 123321
+    cp_gde_call = Build.cmd({
+        id: cp_gde_call_id,
+        depends_on: [],
+        inputs: [
+            "host/gde_call.template.zig",
+        ],
+        outputs: [
+            "host/glue-out/godot/gde_call.zig",
+        ],
+        program: "cp",
+        args: ["host/gde_call.template.zig", "host/glue-out/godot/gde_call.zig"],
+        description: "Copy gde_call.zig",
+        cwd: "",
+        env: [],
+    })
+
+    # ------------------------------------------------------------------
+    # 5. Test zig platform ABI impl
+    # ------------------------------------------------------------------
+    test_abi_impl_id = 5
+    test_abi_impl = Build.cmd({
+        id: test_abi_impl_id,
+        depends_on: [patch_glue_id, cp_gde_call_id],
+        inputs: ["host/glue-out/godot/zig_platform_abi_impl.zig"],
+        outputs: [],
+        program: "zig",
+        args: ["test", "host/glue-out/godot/zig_platform_abi_impl.zig"],
+        description: "zig test host/glue-out/godot/zig_platform_abi_impl.zig",
         cwd: "",
         env: [],
     })
@@ -243,14 +263,15 @@ main! = |_args| {
     # Graph + run
     # ------------------------------------------------------------------
     graph = Build.graph([
+        cp_gde_call,
         gen_gdext,
         test_gdext,
         gen_api,
         check_plat,
-        test_abi_impl,
         roc_glue,
         patch_glue,
         test_abi,
+        test_abi_impl,
     ])
 
     match Build.run!(graph) {

@@ -193,10 +193,10 @@ main! : List(OsStr) => Try({}, _)
 main! = |_args| {
 
     source : Path
-    source = "vendor/godot/extension_api.json"
+    source = "vendor-out/godot/extension_api.json"
 
     roc_out_path : Path
-    roc_out_path = "platform/gen"
+    roc_out_path = "platform-out/godot"
 
     Stdout.line!("# extension_api.generate.roc")?
 
@@ -299,7 +299,7 @@ main! = |_args| {
     }
 
     Path.join(roc_out_path, "main.roc").write_utf8!(gen_platform_main_roc(decoded))?
-    Path.join("src", "zig_platform_abi_impl.zig").write_utf8!(zig_platform_abi_impl_to_str(decoded))?
+    Path.join("host/glue-out/godot", "zig_platform_abi_impl.zig").write_utf8!(zig_platform_abi_impl_to_str(decoded))?
 
     Stdout.line!("# total after parse: ${(Utc.now!() - parse_start).to_str()}ns")?
     Ok({})
@@ -2157,10 +2157,10 @@ zig_platform_abi_impl_to_str = |eapi| {
             "\n",
         )
 
-    \\//! AUTO-GENERATED from extension_api.json
+    \\//! AUTO-GENERATED from vendor-out/godot/extension_api.json
     \\const std = @import("std");
     \\const gde_call = @import("gde_call.zig");
-    \\const baseline_gde_if = @import("engine/gdextension_interface.generated.zig");
+    \\const baseline_gde_if = @import("gdextension_interface.zig");
     \\const abi = @import("roc_platform_abi.zig");
     \\
     \\//const GodotRocObjectInstance = extern struct {
