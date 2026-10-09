@@ -320,6 +320,10 @@ main! = |_args| {
             mod_name = builtin_module_name(bic.name)
             Path.join(roc_out_path, "engine/builtin_classes/${mod_name}.roc")
                 .write_utf8!(builtin_class_to_roc_source_str(bic))?
+        } else {
+            mod_name = builtin_module_name(bic.name)
+            Path.join(roc_out_path, "engine/builtin_classes/${mod_name}Methods.roc")
+                .write_utf8!(math_ops_module_to_str(bic))?
         }
     }
 
@@ -2224,4 +2228,20 @@ is_singleton_name = |eapi, name| {
             Bool.False
         }
     )
+}
+
+math_ops_module_to_str : BuiltinClass -> Str
+math_ops_module_to_str = |bic| {
+    if !(is_struct_builtin(bic.name)) {
+        ""
+    } else {
+        body = methods_block_live(bic.name, bic.methods)
+        \\import ../../Host
+        \\import ${bic.name}
+        \\
+        \\## Godot ${bic.name} methods (Host / callBuiltin)
+        \\${bic.name}Methods := [].{
+        \\${body}
+        \\}
+    }
 }
