@@ -227,7 +227,7 @@ export fn godot_roc_engine_runtime_ok() callconv(.c) u8 {
 // ---------------------------------------------------------------------------
 
 export fn godot_roc_set_velocity(v: api.Vector3) callconv(.c) void {
-    const self = requireCurrent() orelse return;
+    const obj = requireCurrentObject() orelse return;
     var gv = v;
     const args = [_]baseline_gde_if.GDExtensionConstTypePtr{@ptrCast(&gv)};
     _ = gde_call.callInstance(
@@ -235,14 +235,14 @@ export fn godot_roc_set_velocity(v: api.Vector3) callconv(.c) void {
         "CharacterBody3D",
         "set_velocity",
         api.hashes.CharacterBody3D_set_velocity,
-        self.object,
+        obj,
         &args,
         null,
     );
 }
 
 export fn godot_roc_get_velocity() callconv(.c) api.Vector3 {
-    const self = requireCurrent() orelse {
+    const obj = requireCurrentObject() orelse {
         return .{ .x = 0, .y = 0, .z = 0 };
     };
     var gv = api.Vector3{ .x = 0, .y = 0, .z = 0 };
@@ -251,7 +251,7 @@ export fn godot_roc_get_velocity() callconv(.c) api.Vector3 {
         "CharacterBody3D",
         "get_velocity",
         api.hashes.CharacterBody3D_get_velocity,
-        self.object,
+        obj,
         null,
         @ptrCast(&gv),
     );
@@ -259,28 +259,28 @@ export fn godot_roc_get_velocity() callconv(.c) api.Vector3 {
 }
 
 export fn godot_roc_move_and_slide() callconv(.c) void {
-    const self = requireCurrent() orelse return;
+    const obj = requireCurrentObject() orelse return;
     var hit: baseline_gde_if.GDExtensionBool = 0;
     _ = gde_call.callInstance(
         ctx(),
         "CharacterBody3D",
         "move_and_slide",
         api.hashes.CharacterBody3D_move_and_slide,
-        self.object,
+        obj,
         null,
         @ptrCast(&hit),
     );
 }
 
 export fn godot_roc_is_on_floor() callconv(.c) baseline_gde_if.GDExtensionBool {
-    const self = requireCurrent() orelse return 0;
+    const obj = requireCurrentObject() orelse return 0;
     var ret: baseline_gde_if.GDExtensionBool = 0;
     _ = gde_call.callInstance(
         ctx(),
         "CharacterBody3D",
         "is_on_floor",
         api.hashes.CharacterBody3D_is_on_floor,
-        self.object,
+        obj,
         null,
         @ptrCast(&ret),
     );
@@ -288,7 +288,7 @@ export fn godot_roc_is_on_floor() callconv(.c) baseline_gde_if.GDExtensionBool {
 }
 
 export fn godot_roc_get_gravity() callconv(.c) api.Vector3 {
-    const self = requireCurrent() orelse {
+    const obj = requireCurrentObject() orelse {
         return .{ .x = 0, .y = -9.8, .z = 0 };
     };
     var g = std.mem.zeroes(api.Vector3);
@@ -298,7 +298,7 @@ export fn godot_roc_get_gravity() callconv(.c) api.Vector3 {
         "CharacterBody3D",
         "get_gravity",
         api.hashes.PhysicsBody3D_get_gravity,
-        self.object,
+        obj,
         null,
         @ptrCast(&g),
     );
@@ -630,6 +630,7 @@ fn ensureRocHost() void {
 
     g_roc_host_storage = abi.makeRocHost(&env.roc_env);
     g_roc_host = &g_roc_host_storage;
+    gde_call.g_roc_host = g_roc_host;
 
     printWarn("ensureRocHost: ready (wasm={})\n", .{comptime is_wasm_target});
     printWarn("roc_initialized()\n", .{});
@@ -663,14 +664,15 @@ const GodotRocObjectInstance = struct {
     class_id: u32,
 };
 
-fn requireCurrent() ?*GodotRocObjectInstance {
-    const p = api.g_godot_roc_current orelse return null;
-    return @ptrCast(@alignCast(p));
+fn requireCurrentObject() baseline_gde_if.GDExtensionObjectPtr { // ?*GodotRocObjectInstance
+    return api.g_godot_roc_current;
+    //const p = api.g_godot_roc_current orelse return null;
+    //return @ptrCast(@alignCast(p));
 }
 
-fn setCurrent(inst: ?*GodotRocObjectInstance) void {
-    api.g_godot_roc_current = if (inst) |i| @ptrCast(i) else null;
-}
+// fn setCurrent(inst: ?*GodotRocObjectInstance) void {
+//     api.g_godot_roc_current = if (inst) |i| @ptrCast(i) else null;
+// }
 
 fn classInstanceFromInstance(instance: baseline_gde_if.GDExtensionClassInstancePtr) *GodotRocObjectInstance {
     return @ptrCast(@alignCast(instance));
@@ -800,21 +802,6 @@ fn onReady(
     godot_roc_ready();
 }
 
-fn onProcess(
-    instance: baseline_gde_if.GDExtensionClassInstancePtr,
-    args: [*c]const baseline_gde_if.GDExtensionConstTypePtr,
-    ret: baseline_gde_if.GDExtensionTypePtr,
-) callconv(.c) void {
-    _ = ret;
-    if (isEditorHint()) return;
-    const delta: f64 = @as(*const f64, @ptrCast(@alignCast(args[0]))).*;
-    const self = classInstanceFromInstance(instance);
-    const prev = api.g_godot_roc_current;
-    api.g_godot_roc_current = self;
-    defer api.g_godot_roc_current = prev;
-    godot_roc_process(self.class_id, delta);
-}
-
 fn onPhysicsProcess(
     instance: baseline_gde_if.GDExtensionClassInstancePtr,
     args: [*c]const baseline_gde_if.GDExtensionConstTypePtr,
@@ -825,9 +812,24 @@ fn onPhysicsProcess(
     const delta: f64 = @as(*const f64, @ptrCast(@alignCast(args[0]))).*;
     const self = classInstanceFromInstance(instance);
     const prev = api.g_godot_roc_current;
-    api.g_godot_roc_current = self;
+    api.g_godot_roc_current = self.object; // MUST be Object*, not `self`
     defer api.g_godot_roc_current = prev;
     godot_roc_physics_process(self.class_id, delta);
+}
+
+fn onProcess(
+    instance: baseline_gde_if.GDExtensionClassInstancePtr,
+    args: [*c]const baseline_gde_if.GDExtensionConstTypePtr,
+    ret: baseline_gde_if.GDExtensionTypePtr,
+) callconv(.c) void {
+    _ = ret;
+    if (isEditorHint()) return;
+    const delta: f64 = @as(*const f64, @ptrCast(@alignCast(args[0]))).*;
+    const self = classInstanceFromInstance(instance);
+    const prev = api.g_godot_roc_current;
+    api.g_godot_roc_current = self.object;
+    defer api.g_godot_roc_current = prev;
+    godot_roc_process(self.class_id, delta);
 }
 
 fn getVirtual(

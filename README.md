@@ -5,7 +5,7 @@ Roc language bindings generator for Godot Game Engine, Redot Game Engine & Draco
 > [!NOTE]   
 > This page is for the godot-roc **platform generator**.
 >
-> For **game development** with godot-roc see our [Getting Started Guide](templates/godot/README.md).
+> For **game development** with godot-roc see our [Getting Started Guide](templates/ci/README.md).
 
 ## About
 

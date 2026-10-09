@@ -1,6 +1,8 @@
 ### MyPlayerCharacter.roc - A player controlled character
 # TODO: delete host import, use generated bespoke apis.
 import pf.Host
+import pf.Engine
+import pf.GodotRoc
 
 # bespoke apis
 import pf.InputSingleton
@@ -15,24 +17,54 @@ jump_force = 50.0
 
 physics_process! : F64 => {}
 physics_process! = |_delta| {
-    lx = Host.input_get_axis_1958752504!("left", "right") # InputSingleton.get_axis("left", "right")
-    lz = Host.input_get_axis_1958752504!("forward", "back")
 
-    jump = Host.input_is_action_just_pressed_1558498928!("jump", True)
-    on_floor = Host.characterbody3d_is_on_floor_36873697!()
+    Engine.print_warning!("AAA")
 
-    velocity = Host.characterbody3d_get_velocity_3360562783!()
-     vx = lx * movement_speed
-     vz = lz * movement_speed
-     vy =
-         velocity.y
-         + -gravity
-         + (if jump and on_floor { jump_force } else { 0.0 })
+    lx = InputSingleton.get_axis!("left", "right")
 
-    Host.characterbody3d_set_velocity_3460891852!({ x: vx.to_f32_wrap(), y: vy, z: vz.to_f32_wrap() })
-    _mas = Host.characterbody3d_move_and_slide_2240911060!()
+    Engine.print_warning!("BBB")
 
-    _pos = Host.node3d_get_position_3360562783!()
+    lz = InputSingleton.get_axis!("forward", "back")
+
+    Engine.print_warning!("CCC")
+
+    jump = InputSingleton.is_action_just_pressed!("jump", GodotRoc.false) == GodotRoc.true
+    on_floor = CharacterBody3D.is_on_floor!() == GodotRoc.true
+
+    Engine.print_warning!("DDD")
+
+    velocity = CharacterBody3D.get_velocity!()
+
+    vx_f : F32
+    vx_f = (lx * movement_speed).to_f32_wrap()
+    vz_f : F32
+    vz_f = (lz * movement_speed).to_f32_wrap()
+
+    vy_f : F32
+    vy_f =
+        velocity.y
+        + (-gravity).to_f32_wrap()
+        + (if jump and on_floor {
+            jump_force.to_f32_wrap()
+        } else {
+            0.0f32
+        })
+
+    Engine.print_warning!("EEE")
+
+    CharacterBody3D.set_velocity!({
+        x: vx_f,
+        y: vy_f,
+        z: vz_f,
+    })
+
+    Engine.print_warning!("FFF")
+
+    _mas = CharacterBody3D.move_and_slide!()
+
+    Engine.print_warning!("GGG")
+
+    _pos = Node3D.get_position!()
     {}
 }
 

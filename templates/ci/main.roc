@@ -121,17 +121,20 @@ run_smoke_tests! = || {
     Engine.print_warning!("[smoke] get_singleton_engine ptr = ${engine_ptr.to_str()}")
 
     # ----- engine façade (StringName path in host.zig) -----
-    pressed = Host.input_is_action_pressed_1558498928!("ui_accept", True)
+    pressed = InputSingleton.is_action_pressed!("ui_accept", GodotRoc.false)
     Engine.print_warning!("[smoke] is_action_pressed(ui_accept) = ${Str.inspect(pressed)}")
 
-    jp = Host.input_is_action_just_pressed_1558498928!("ui_accept", True)
+    jp = InputSingleton.is_action_just_pressed!("ui_accept", GodotRoc.true)
     Engine.print_warning!("[smoke] just_pressed(ui_accept) = ${Str.inspect(jp)}")
 
-    jv = Host.input_is_action_just_released_1558498928!("ui_accept", True)
+    jv = InputSingleton.is_action_just_released!("ui_accept", GodotRoc.true)
     Engine.print_warning!("[smoke] just_released(ui_accept) = ${Str.inspect(jv)}")
 
-    axis = Host.input_get_axis_1958752504!("ui_left", "ui_right")
+    axis = InputSingleton.get_axis!("ui_left", "ui_right")
     Engine.print_warning!("[smoke] get_axis(ui_left,ui_right) = ${axis.to_str()}")
+
+    # Character body — after regen, prefer generated names if current-instance wired:
+    # floor = CharacterBody3D.is_on_floor!()  # only if that module uses g_godot_roc_current
 
     Engine.print_warning!("========== smoke: finished (check values above) ==========")
     {}
@@ -172,6 +175,8 @@ physics_process! = |class_id, delta| {
     # physics smoke test...
     # pos = Engine.get_position!()
     # Engine.print_warning!("[smoke] get_position = ...")
+
+    Engine.print_warning!("physics_process! class_id: ${class_id.to_str()}, delta: ${delta.to_str()}")
 
     _ = match class_id {
         0 => MyPlayerCharacter.physics_process!(delta)

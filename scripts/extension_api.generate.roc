@@ -216,6 +216,12 @@ main! = |_args| {
     \\GodotRoc := [].{
     \\    ClassId : U32
     \\    Bool : U8
+    \\
+    \\    false : GodotRoc.Bool
+    \\    false = 0.U8
+    \\
+    \\    true : GodotRoc.Bool
+    \\    true = 1.U8
     \\}
     )?
     Path.join(roc_out_path, "Engine.roc").write_utf8!(
@@ -326,7 +332,7 @@ main! = |_args| {
     for s in decoded.singletons {
         mod_name = singleton_module_name(s.name)
         Path.join(roc_out_path, "engine/singletons/${mod_name}.roc")
-            .write_utf8!(singleton_to_roc_source_str(s))?
+            .write_utf8!(singleton_to_roc_source_str(decoded, s))?
     }
 
     Path.join(roc_out_path, "main.roc").write_utf8!(gen_platform_main_roc(decoded))?
@@ -634,7 +640,7 @@ c_to_host_type = |str| {
         "int" => "I64"
         "float" => "F64"
         "double" => "F64"
-        "bool" => "Bool"
+        "bool" => "U8"   # was Bool — must match Zig u8 / GDExtensionBool (TODO: consider using an alias...)
         "void" => "{}"
         "String" => "Str"
         "StringName" => "Str"
@@ -730,7 +736,33 @@ c_to_zig_ret_from_try = |maybe|
     }
 
 c_to_zig_arg : Str -> Str
-c_to_zig_arg = |str| c_to_zig_type(str)
+c_to_zig_arg = |str| {
+    cleaned =
+        if str.starts_with("enum::") or str.starts_with("bitfield::") {
+            "i64"
+        } else {
+            str
+        }
+    match cleaned {
+        "bool" => "u8"
+        "int" => "i64"
+        "float" => "f64"
+        "double" => "f64"
+        "void" => "void"
+        "String" | "StringName" | "NodePath" => "abi.RocStr"
+        "Error" => "i64"
+        "Variant" | "RID" | "Callable" | "Signal" | "Dictionary" | "Array" => "u64"
+        other if other.starts_with("typedarray::") => "u64"
+        other if other.starts_with("packed") => "u64"
+        other if is_struct_builtin(other) => other
+        _ => "u64"
+    }
+}
+
+is_string_godot_type : Str -> Bool
+is_string_godot_type = |t| {
+    t == "String" or t == "StringName" or t == "NodePath"
+}
 
 zig_default_ret : Str -> Str
 zig_default_ret = |zig_ty| {
@@ -764,7 +796,6 @@ util_c_type_is_simple = |str| {
     }
 }
 
-## Types allowed for auto-wired callInstance bodies (no String/Object/Variant).
 method_c_type_is_simple : Str -> Bool
 method_c_type_is_simple = |str| {
     cleaned =
@@ -775,6 +806,7 @@ method_c_type_is_simple = |str| {
         }
     match cleaned {
         "bool" | "int" | "float" | "double" | "void" => Bool.True
+        "String" | "StringName" | "NodePath" => Bool.True
         other if is_struct_builtin(other) => Bool.True
         _ => Bool.False
     }
@@ -868,7 +900,16 @@ zig_ptrcall_args_setup = |md| {
                 Str.join_with(
                     arg_list.map(|a| {
                         loc = zig_method_arg_local(a.name)
-                        \\    var ${loc}_ = ${loc};
+                        if is_string_godot_type(a.type) {
+                            \\    var ${loc}_owned = ${loc};
+                            \\    defer ${loc}_owned.decref(gde_call.rocHost());
+                            \\    var ${loc}_buf: [256]u8 = undefined;
+                            \\    const ${loc}_z = gde_call.copyRocStrToBuf(${loc}_owned, &${loc}_buf);
+                            \\    var ${loc}_sn = gde_call.makeStringName(gde_call.godotRocCtx(), ${loc}_z);
+                            \\    defer gde_call.destroyStringName(gde_call.godotRocCtx(), &${loc}_sn);
+                        } else {
+                            \\    var ${loc}_ = ${loc};
+                        }
                     }),
                     "\n",
                 ),
@@ -878,7 +919,11 @@ zig_ptrcall_args_setup = |md| {
             Str.join_with(
                 arg_list.map(|a| {
                     loc = zig_method_arg_local(a.name)
-                    \\        @ptrCast(&${loc}_),
+                    if is_string_godot_type(a.type) {
+                        \\        @ptrCast(&${loc}_sn),
+                    } else {
+                        \\        @ptrCast(&${loc}_),
+                    }
                 }),
                 "\n",
             )
@@ -1645,17 +1690,76 @@ class_to_roc_source_str = |cls| {
     \\}
 }
 
-singleton_to_roc_source_str : Singleton -> Str
-singleton_to_roc_source_str = |st| {
+singleton_to_roc_source_str : ExtensionApi, Singleton -> Str
+singleton_to_roc_source_str = |eapi, st| {
     mod_name = singleton_module_name(st.name)
     sym = host_singleton_symbol(st.name)
+
+    methods_src =
+        eapi.classes.fold("", |acc, cls| {
+            if cls.name == st.name {
+                methods_block_live(cls.name, cls.methods)
+            } else {
+                acc
+            }
+        })
+
+    needs_math =
+        eapi.classes.fold(Bool.False, |acc, cls| {
+            if cls.name != st.name {
+                acc
+            } else {
+                match cls.methods {
+                    Ok(ms) =>
+                        ms.fold(acc, |a2, md| {
+                            a3 =
+                                match md.arguments {
+                                    Ok(args) =>
+                                        args.fold(a2, |a4, arg|
+                                            if is_struct_builtin(c_to_roc_type(arg.type)) {
+                                                Bool.True
+                                            } else {
+                                                a4
+                                            }
+                                        )
+                                    _ => a2
+                                }
+                            ret_t = method_return_type_str(md)
+                            if is_struct_builtin(c_to_roc_type(ret_t)) {
+                                Bool.True
+                            } else {
+                                a3
+                            }
+                        })
+                    _ => acc
+                }
+            }
+        })
+
+    math_imports =
+        if needs_math {
+            Str.concat(
+                Str.join_with(
+                    math_type_names.map(|t| "import ../../engine/math/${t}"),
+                    "\n",
+                ),
+                "\n",
+            )
+        } else {
+            ""
+        }
+
+    \\# singleton ${st.name} (Godot-aligned names → Host hashes)
     \\import ../../Host
-    \\
+    \\${math_imports}
     \\${mod_name} := {
     \\    ptr : U64,
     \\}.{
     \\    get! : () => ${mod_name}
     \\    get! = || { { ptr: Host.${sym}!() } }
+    \\
+    \\    # --- methods (same names as Godot) ---
+    \\${methods_src}
     \\}
 }
 
@@ -2086,10 +2190,17 @@ zig_platform_abi_impl_to_str = |eapi| {
     \\const std = @import("std");
     \\const gde_call = @import("gde_call.zig");
     \\const baseline_gde_if = @import("engine/gdextension_interface.generated.zig");
+    \\const abi = @import("roc_platform_abi.zig");
+    \\
+    \\//const GodotRocObjectInstance = extern struct {
+    \\//    object: ?*anyopaque,
+    \\//    class_id: u32,
+    \\//};
     \\
     \\/// Current Object for generated class instance methods (Host ABI has no self_ptr).
     \\/// host.zig assigns this during virtuals / before façade calls.
-    \\pub var g_godot_roc_current: ?*anyopaque = null; // ?*GodotRocObjectInstance → ?*anyopaque
+    \\pub var g_godot_roc_current: ?*anyopaque = null; // baseline_gde_if.GDExtensionObjectPtr
+    \\pub var g_godot_roc_current_class_id: u32 = 0;
     \\
     \\${structs}
     \\

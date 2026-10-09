@@ -1,6 +1,40 @@
 //! gde_call.zig — shared GDExtension call helpers (excerpt: strings + singletons)
 const std = @import("std");
 const baseline_gde_if = @import("engine/gdextension_interface.generated.zig");
+const abi = @import("roc_platform_abi.zig");
+
+pub fn rocHost() *abi.RocHost {
+    return g_roc_host orelse {
+        @panic("gde_call.g_roc_host not set — call gde_call.g_roc_host = host from ensureRocHost");
+    };
+}
+
+// set from host.zig when RocHost is ready:
+pub var g_roc_host: ?*abi.RocHost = null;
+
+threadlocal var roc_str_buf: [512]u8 = undefined;
+
+pub fn rocStrToZ(str: abi.RocStr) [:0]const u8 {
+    const s = str.asSlice();
+    if (s.len >= roc_str_buf.len) {
+        roc_str_buf[0] = 0;
+        return roc_str_buf[0..0 :0];
+    }
+    if (s.len > 0) @memcpy(roc_str_buf[0..s.len], s);
+    roc_str_buf[s.len] = 0;
+    return roc_str_buf[0..s.len :0];
+}
+
+pub fn copyRocStrToBuf(str: abi.RocStr, buf: []u8) [:0]const u8 {
+    const s = str.asSlice();
+    if (s.len >= buf.len) {
+        buf[0] = 0;
+        return buf[0..0 :0];
+    }
+    if (s.len > 0) @memcpy(buf[0..s.len], s);
+    buf[s.len] = 0;
+    return buf[0..s.len :0];
+}
 
 pub const Ctx = struct {
     iface: *const baseline_gde_if.Interface,
