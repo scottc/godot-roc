@@ -1,5 +1,12 @@
 ### MyPlayerCharacter.roc - A player controlled character
-import pf.Host # TODO: Use nice engine APIs, not low level hashed calls.
+# TODO: delete host import, use generated bespoke apis.
+import pf.Host
+
+# bespoke apis
+import pf.InputSingleton
+import pf.Vector3
+import pf.CharacterBody3D
+import pf.Node3D
 
 gravity = 9.8 # TODO: Godot.get_gravity!(handle)
 movement_speed = 2.0
@@ -8,23 +15,24 @@ jump_force = 50.0
 
 physics_process! : F64 => {}
 physics_process! = |_delta| {
-    _lx = Host.input_get_axis_1958752504!("left", "right")
-    _lz = Host.input_get_axis_1958752504!("forward", "back")
+    lx = Host.input_get_axis_1958752504!("left", "right") # InputSingleton.get_axis("left", "right")
+    lz = Host.input_get_axis_1958752504!("forward", "back")
 
-    _jump = Host.input_is_action_just_pressed_1558498928!("jump", True)
+    jump = Host.input_is_action_just_pressed_1558498928!("jump", True)
+    on_floor = Host.characterbody3d_is_on_floor_36873697!()
 
-    #_velocity = Host.characterbody3d_get_velocity_3360562783!()
-    # vx = lx * movement_speed
-    # vz = lz * movement_speed
-    # vy =
-    #     velocity.y
-    #     + -gravity
-    #     + (if jump == 1 and Host.characterbody3d_is_on_floor_36873697!() == 1 { jump_force } else { 0.0 })
+    velocity = Host.characterbody3d_get_velocity_3360562783!()
+     vx = lx * movement_speed
+     vz = lz * movement_speed
+     vy =
+         velocity.y
+         + -gravity
+         + (if jump and on_floor { jump_force } else { 0.0 })
 
-    #Host.characterbody3d_set_velocity_3460891852!({ x: 1.1, y: 2.2, z: 3.3 })
+    Host.characterbody3d_set_velocity_3460891852!({ x: vx.to_f32_wrap(), y: vy, z: vz.to_f32_wrap() })
     _mas = Host.characterbody3d_move_and_slide_2240911060!()
 
-    #_pos = Host.node3d_get_position_3360562783!()
+    _pos = Host.node3d_get_position_3360562783!()
     {}
 }
 

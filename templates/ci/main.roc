@@ -4,16 +4,20 @@ app [ready!, process!, scene_init!, physics_process!] {
     pf: platform "../../../platform/gen/main.roc",
 }
 
-# Manually Provided
+# Top level multi-engine & multi-version platform
 import pf.Engine
 import pf.Target
 import pf.GodotRoc
+import pf.Host
 
-# Generated
+# Generated Per Engine:
 import pf.EngineInfo
 import pf.UtilityFunctions
 import pf.Vector3
-import pf.Host
+import pf.InputSingleton
+# TODO: Can the game dev alias & re-export these?
+# EngineInfo = import pf.godot4_7.EngineInfo
+# EngineInfo = import pf.redot23.EngineInfo
 
 # This app..
 import MyPlayerCharacter
@@ -48,7 +52,7 @@ run_smoke_tests! = || {
 
     # host enforcement of static version(s) == runtime version.
     ok = Engine.engine_runtime_ok!()
-    Engine.print_warning!("[smoke] engine_runtime_ok = ${ok.to_str()}")
+    Engine.print_warning!("[smoke] engine_runtime_ok! = ${ok.to_str()}")
 
     # ----- utilities (callUtility) -----
     m = UtilityFunctions.maxf!(3.0, 7.0)
