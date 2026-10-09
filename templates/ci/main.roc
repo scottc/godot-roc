@@ -6,6 +6,7 @@ app [ready!, process!, scene_init!, physics_process!] {
 
 # Manually Provided
 import pf.Engine
+import pf.Target
 import pf.GodotRoc
 
 # Generated
@@ -33,6 +34,17 @@ run_smoke_tests! = || {
 
     # The actual runtime engine version that is running.
     Engine.print_warning!("[smoke] target_engine! = ${Str.inspect(Engine.target_engine!())}")
+
+    # TODO:
+    # Returns the current runtime engine
+    # from the avalible engines APIs baked into this .tar.
+    # if you need different versions, either compile platform from source with the engines.
+    # or submit a GH issue.
+    # _result = match Engine.target_engine!() {
+    #     Target.Godot4_7(godot47) => "gd: ${Str.inspect(godot47.do_advanced_shadows())}"
+    #     Target.Redot23(redot23) => "rd: ${Str.inspect(redot23.do_3d_terrain())}"
+    #     _ => crash "Runtime engine mis-match, use one of the other supported engines!"
+    # }
 
     # host enforcement of static version(s) == runtime version.
     ok = Engine.engine_runtime_ok!()
@@ -121,6 +133,18 @@ run_smoke_tests! = || {
     {}
 }
 
+# TODO:
+# do_gd : Target.Godot4_7, Str => {}
+# do_gd = |gd, str| {
+#     gd.do_advanced_shadows!()
+#     {}
+# }
+
+# do_rd : Target.Redot23, Str => {}
+# do_rd = |rd, str| {
+#     gd.do_3d_terrain!()
+#     {}
+# }
 
 # ---------------------------------------------------------------------------
 # App hooks
