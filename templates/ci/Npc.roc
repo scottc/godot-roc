@@ -47,7 +47,7 @@ physics_process! = |_delta| {
         + (if jump and on_floor {
             jump_force.to_f32_wrap()
         } else {
-            0.0f32
+            0.0.F32
         })
 
     Engine.print_warning!("EEE")
