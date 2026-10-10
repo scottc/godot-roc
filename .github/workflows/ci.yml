@@ -11,16 +11,44 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  full-build:
+  build:
     runs-on: ubuntu-24.04
+    timeout-minutes: 120
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v4
 
       - uses: DeterminateSystems/nix-installer-action@main
 
-      - uses: DeterminateSystems/magic-nix-cache-action@main  # optional, speeds cache
+      - uses: cachix/cachix-action@v16
+        if: ${{ secrets.CACHIX_AUTH_TOKEN != '' }}
+        with:
+          name: ${{ vars.CACHIX_CACHE_NAME || 'godot-roc' }}
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
-      - name: CI inside flake
-        run: nix develop -c roc run scripts/ci.roc
-        # or: nix develop -c bin/ci
-        # or a flake app: nix run .#ci
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+        if: ${{ secrets.CACHIX_AUTH_TOKEN == '' }}
+
+      - name: Evaluate flake (warm / fail-fast)
+        run: nix flake check --no-build || true
+        # Optional: nix flake show
+
+      - name: CI
+        run: |
+          set -eux
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            MODE=quick
+          else
+            MODE=full
+          fi
+          # Avoid re-resolving the whole flake UI every time:
+          nix develop --command roc run scripts/ci.roc -- "$MODE"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ci-out
+          path: |
+            ci-out/
+            bundle-out/
+          if-no-files-found: ignore
+          retention-days: 7
