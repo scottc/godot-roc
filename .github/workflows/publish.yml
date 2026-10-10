@@ -3,24 +3,31 @@ name: Publish
 
 on:
   push:
-    tags:
-      - "v*"
+    tags: ["v*"]
   workflow_dispatch:
     inputs:
       tag:
-        description: "Release tag (e.g. v0.1.0). Empty = auto ci-YYYYMMDD-HHMMSS"
-        required: false
+        description: "Release tag (empty = auto ci-YYYYMMDD-HHMMSS)"
+        type: string
         default: ""
       mode:
-        description: "CI mode"
         type: choice
-        options:
-          - full
-          - quick
+        options: [full, quick]
         default: full
+      optimize:
+        type: choice
+        options: [Debug, ReleaseFast, ReleaseSafe, ReleaseSmall]
+        default: ReleaseFast
+      deep_wasm:
+        type: boolean
+        default: true
+      engine:
+        type: choice
+        options: ["", godot, godot_4_5_1, redot, rex]
+        default: ""
 
 permissions:
-  contents: write   # gh release create + upload
+  contents: write
 
 concurrency:
   group: publish-${{ github.ref }}
@@ -34,40 +41,45 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: DeterminateSystems/nix-installer-action@main
-
-      # Prefer a real binary cache for the flake (see notes below).
-      - uses: cachix/cachix-action@v16
-        if: ${{ secrets.CACHIX_AUTH_TOKEN != '' }}
-        with:
-          name: ${{ vars.CACHIX_CACHE_NAME || 'godot-roc' }}
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-          # Push new paths after the job so the next run is fast.
-          pushFilter: /nix/store
-
-      # Fallback / supplement if you still want Magic Nix Cache.
       - uses: DeterminateSystems/magic-nix-cache-action@main
-        if: ${{ secrets.CACHIX_AUTH_TOKEN == '' }}
 
-      - name: Build matrix + publish release
+      - name: Build + GitHub release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Optional: override tag from workflow_dispatch
-          PUBLISH_TAG: ${{ inputs.tag || github.ref_name }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # free, built-in; OK here (not in if:)
         run: |
           set -eux
           MODE="${{ inputs.mode || 'full' }}"
-          TAG_ARGS=()
-          # On tag push, github.ref_name is v1.2.3; on dispatch use input or empty (ci auto-tag).
-          if [ -n "${PUBLISH_TAG:-}" ] && [[ "$PUBLISH_TAG" == v* || "$PUBLISH_TAG" == ci-* ]]; then
-            TAG_ARGS=(--tag="$PUBLISH_TAG")
-          fi
-          nix develop --command roc run scripts/ci.roc -- "$MODE" --publish "${TAG_ARGS[@]}"
+          OPTIMIZE="${{ inputs.optimize || 'ReleaseFast' }}"
+          ARGS=("$MODE" "-Doptimize=${OPTIMIZE}" --publish)
 
-      - name: Upload bundle-out as workflow artefacts (backup)
+          if [ "${{ inputs.deep_wasm || 'true' }}" = "true" ]; then
+            ARGS+=(deep-wasm)
+          fi
+
+          ENGINE="${{ inputs.engine || '' }}"
+          if [ -n "$ENGINE" ]; then
+            ARGS+=("--engine=${ENGINE}")
+          fi
+
+          # Tag: workflow input, or git tag name on tag push
+          TAG="${{ inputs.tag || '' }}"
+          if [ -z "$TAG" ] && [ "${{ github.ref_type }}" = "tag" ]; then
+            TAG="${{ github.ref_name }}"
+          fi
+          if [ -n "$TAG" ]; then
+            ARGS+=("--tag=${TAG}")
+          fi
+
+          if nix eval --raw .#devShells.x86_64-linux.ci >/dev/null 2>&1; then
+            nix develop .#ci --command roc run scripts/ci.roc -- "${ARGS[@]}"
+          else
+            nix develop --command roc run scripts/ci.roc -- "${ARGS[@]}"
+          fi
+
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: bundle-out
+          name: bundle-out-${{ github.run_id }}
           path: bundle-out/
           if-no-files-found: warn
           retention-days: 14

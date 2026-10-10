@@ -1,3 +1,4 @@
+# .github/workflows/ci.yml
 name: CI
 
 on:
@@ -5,6 +6,39 @@ on:
     branches: [master]
   pull_request:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "CI mode (quick = primary hosts; full = full matrix)"
+        type: choice
+        options: [quick, full]
+        default: full
+      optimize:
+        description: "Host/desktop optimize (-Doptimize=…)"
+        type: choice
+        options:
+          - Debug
+          - ReleaseFast
+          - ReleaseSafe
+          - ReleaseSmall
+        default: Debug
+      deep_wasm:
+        description: "Run deep wasm-ld diagnostic link"
+        type: boolean
+        default: true
+      engine:
+        description: "Optional single engine (empty = all selected by mode)"
+        type: choice
+        options:
+          - ""
+          - godot
+          - godot_4_5_1
+          - redot
+          - rex
+        default: ""
+      extra_args:
+        description: "Extra args appended to ci.roc (advanced)"
+        type: string
+        default: ""
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -13,42 +47,79 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
 
       - uses: DeterminateSystems/nix-installer-action@main
 
-      - uses: cachix/cachix-action@v16
-        if: ${{ secrets.CACHIX_AUTH_TOKEN != '' }}
-        with:
-          name: ${{ vars.CACHIX_CACHE_NAME || 'godot-roc' }}
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-
+      # Free: uses GitHub Actions cache as a Nix substituter. No secrets, no paid Cachix.
       - uses: DeterminateSystems/magic-nix-cache-action@main
-        if: ${{ secrets.CACHIX_AUTH_TOKEN == '' }}
 
-      - name: Evaluate flake (warm / fail-fast)
-        run: nix flake check --no-build || true
-        # Optional: nix flake show
-
-      - name: CI
+      - name: Resolve CI args
+        id: args
         run: |
           set -eux
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            MODE=quick
-          else
-            MODE=full
-          fi
-          # Avoid re-resolving the whole flake UI every time:
-          nix develop --command roc run scripts/ci.roc -- "$MODE"
 
-      - uses: actions/upload-artifact@v4
+          # Defaults for push / pull_request
+          MODE="full"
+          OPTIMIZE="Debug"
+          DEEP_WASM="1"
+          ENGINE=""
+          EXTRA=""
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            MODE="quick"
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            MODE="${{ inputs.mode }}"
+            OPTIMIZE="${{ inputs.optimize }}"
+            if [ "${{ inputs.deep_wasm }}" = "true" ]; then
+              DEEP_WASM="1"
+            else
+              DEEP_WASM="0"
+            fi
+            ENGINE="${{ inputs.engine }}"
+            EXTRA="${{ inputs.extra_args }}"
+          fi
+
+          # Build argv for: roc run scripts/ci.roc -- <args...>
+          set -- "$MODE" "-Doptimize=${OPTIMIZE}"
+          if [ "$DEEP_WASM" = "1" ]; then
+            set -- "$@" "deep-wasm"
+          fi
+          if [ -n "$ENGINE" ]; then
+            set -- "$@" "--engine=${ENGINE}"
+          fi
+          # shell-split extra args carefully
+          if [ -n "$EXTRA" ]; then
+            # intentional: allow advanced flags without a second YAML surface
+            # shellcheck disable=SC2086
+            set -- "$@" $EXTRA
+          fi
+
+          echo "argv=$*" >> "$GITHUB_OUTPUT"
+          echo "Resolved: roc run scripts/ci.roc -- $*"
+
+      - name: CI inside flake
+        run: |
+          set -eux
+          # Prefer a lean shell if you define one; falls back to default.
+          if nix eval --raw .#devShells.x86_64-linux.ci >/dev/null 2>&1; then
+            nix develop .#ci --command roc run scripts/ci.roc -- ${{ steps.args.outputs.argv }}
+          else
+            nix develop --command roc run scripts/ci.roc -- ${{ steps.args.outputs.argv }}
+          fi
+
+      - name: Upload artefacts
         if: always()
+        uses: actions/upload-artifact@v4
         with:
-          name: ci-out
+          name: ci-${{ github.run_id }}
           path: |
             ci-out/
             bundle-out/
+            platform-out/
           if-no-files-found: ignore
           retention-days: 7
