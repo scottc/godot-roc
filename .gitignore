@@ -1,59 +1,11 @@
 # Godot Roc
 
-# glue.roc
-host/glue-out/godot/roc_platform_abi.zig
-host/glue-out/godot/zig_platform_abi_impl.zig
-host/glue-out/godot/gdextension_interface.zig
-platform/gen/*.roc
-platform/gen/engine/*.roc
-platform/gen/engine/builtin_classes/*.roc
-platform/gen/engine/classes/*.roc
-platform/gen/engine/math/*.roc
-platform/gen/engine/singletons/*.roc
-
-# build.roc
-platform/targets/
-platform/gen/targets/
-
-# ci.roc
+# out dirs
 ci-out/
-
-# bundle.roc
+platform-out/
+vendor-out/
+host/glue-out/
 bundle-out/
-
-# binaries
-*.a
-*.wasm
-*.so
-*.dll
-*.ll
-*.lib
-*.dylib
-*.lib
-*.o
-*.rh
-*.rm
-
-# packages
-*.tar.br
-*.tar.gz
-*.tar.zst
 
 # zig
 .zig-cache/
-zig-cache/
-zig-out/
-
-# roc
-generated-docs/
-
-# out dirs
-platform-out/godot/
-vendor-out/
-host/glue-out/godot/
-platform-out/targets/
-platform-out/
-host/glue-out/godot/gde_call.zig
-host/glue-out/godot_4_5_1/gde_call.zig
-host/glue-out/redot/gde_call.zig
-host/glue-out/rex/gde_call.zig
