@@ -9,14 +9,9 @@
 #   roc run scripts/ci.roc -- full --publish
 #   GITHUB_TOKEN=ghp_... roc run scripts/ci.roc -- full --publish --tag=v0.1.0
 #
-# Per engine slug:
-#   vendor-out/<slug>/
-#   platform-out/<slug>/
-#   host/glue-out/<slug>/
-#   bundle-out/<slug>/workspace/platform-<slug>/
-#   ci-out/<slug>/workspace/my_game/
-#     main.roc              ← pf: platform "./platform/main.roc"
-#     platform/main.roc
+# Web export runs only for the primary engine (godot / 4.7.2 templates).
+# Other engines still build .so + wasm; they skip headless Web export unless
+# matching export templates are installed.
 #
 
 ## Continuous Integration — engine × host matrix (roc-build)
@@ -84,6 +79,8 @@ EngineSpec : {
     program : Str,
     required_in_full : Bool,
     is_primary : Bool,
+    ## Headless Web export needs matching export templates (only primary has them in nix).
+    export_web : Bool,
     pipeline : EnginePipeline,
     dumps : List(EngineDump),
 }
@@ -331,6 +328,7 @@ engine_specs = [
         program: "godot",
         required_in_full: Bool.True,
         is_primary: Bool.True,
+        export_web: Bool.True,
         pipeline: FullBuild,
         dumps: [
             {
@@ -359,6 +357,8 @@ engine_specs = [
         program: "godot4.5",
         required_in_full: Bool.True,
         is_primary: Bool.False,
+        # Needs 4.5.1 export templates; nix env only ships 4.7.2 templates.
+        export_web: Bool.False,
         pipeline: FullBuild,
         dumps: [
             {
@@ -381,6 +381,7 @@ engine_specs = [
         program: "redot",
         required_in_full: Bool.True,
         is_primary: Bool.False,
+        export_web: Bool.False,
         pipeline: FullBuild,
         dumps: [
             {
@@ -403,6 +404,7 @@ engine_specs = [
         program: "rex",
         required_in_full: Bool.False,
         is_primary: Bool.False,
+        export_web: Bool.False,
         pipeline: DumpOnly,
         dumps: [
             {
@@ -1133,12 +1135,22 @@ phase_bundle_engine = |start_id, host_ids, engine| {
         bundle_ws,
     )
 
+    # Skip empty zip when templates/ is absent under the bundle workspace.
+    zip_script =
+        \\set -eu
+        \\if [ -d templates ]; then
+        \\    zip -r templates.zip . -i templates/
+        \\else
+        \\    echo "[bundle] no templates/ under $(pwd); skipping templates.zip"
+        \\fi
+        \\
+
     zip_templates = mk_cmd(
         zip_id,
         [roc_bundle_id],
-        "zip",
-        ["-r", "templates.zip", ".", "-i", "templates/"],
-        "zip templates [${slug}]",
+        "sh",
+        ["-c", zip_script],
+        "zip templates [${slug}] (optional)",
         bundle_ws,
     )
 
@@ -1239,7 +1251,6 @@ phase_game_engine = |p| {
     linux_out = engine_project_linux_out(eng)
     temp_a = engine_project_temp_a(eng)
     wasm_out = engine_project_wasm(eng)
-    export_index = engine_export_index(eng)
 
     (linux_id, n1) = take_id(p.start_id)
     (web_id, n2) = take_id(n1)
@@ -1358,8 +1369,8 @@ phase_game_engine = |p| {
         "",
     )
 
-    # cwd = project_dir → use paths relative to the Godot project root.
-    # PROJECT must be project.godot (or .), not a repo-root-relative path.
+    # Primary only: needs matching export templates (4.7.2 in current nix env).
+    # Artifact-gated: success if export/index.html exists even when engine crashes after pack.
     export_script =
         \\set +e
         \\ENGINE='${eng.program}'
@@ -1369,6 +1380,10 @@ phase_game_engine = |p| {
         \\if [ ! -f "$PROJECT" ]; then
         \\    echo "[ci] missing $PROJECT in $(pwd)" >&2
         \\    ls -la >&2 || true
+        \\    exit 1
+        \\fi
+        \\if [ ! -f export_presets.cfg ]; then
+        \\    echo "[ci] missing export_presets.cfg (need a preset named Web)" >&2
         \\    exit 1
         \\fi
         \\mkdir -p export
@@ -1383,14 +1398,31 @@ phase_game_engine = |p| {
         \\exit 1
         \\
 
-    godot_export = mk_cmd(
-        export_id,
-        [val_final_id, linux_id],
-        "sh",
-        ["-c", export_script],
-        "Web export (${slug}) — artifact-gated",
-        project_dir,
-    )
+    skip_export_script =
+        \\echo "[ci] skip Web export for ${slug} (no matching export templates in this environment)"
+        \\exit 0
+        \\
+
+    godot_export =
+        if eng.export_web {
+            mk_cmd(
+                export_id,
+                [val_final_id, linux_id],
+                "sh",
+                ["-c", export_script],
+                "Web export (${slug}) — artifact-gated",
+                project_dir,
+            )
+        } else {
+            mk_cmd(
+                export_id,
+                [val_final_id, linux_id],
+                "sh",
+                ["-c", skip_export_script],
+                "Skip Web export (${slug})",
+                project_dir,
+            )
+        }
 
     base_cmds = [
         roc_linux,
@@ -1538,7 +1570,13 @@ main! = |args| {
 
     Log.info!("engines (${List.len(engines).to_str()}):")
     for e in engines {
-        Log.info!("  - ${e.slug} [${pipeline_label(e.pipeline)}]")
+        web =
+            if e.export_web {
+                "web-export"
+            } else {
+                "no-web-export"
+            }
+        Log.info!("  - ${e.slug} [${pipeline_label(e.pipeline)}, ${web}]")
     }
     Log.info!("host targets (${List.len(selected_hosts).to_str()}):")
     for t in selected_hosts {
@@ -1600,7 +1638,11 @@ main! = |args| {
                         Log.info!("  CI app:  ${engine_project_dir(eng)}")
                         Log.info!("  local platform: ${engine_project_platform_main(eng)}")
                         Log.info!("  Bundle:  ${engine_bundle_workspace(eng)}")
-                        Log.info!("  Export:  ${engine_export_index(eng)}")
+                        if eng.export_web {
+                            Log.info!("  Export:  ${engine_export_index(eng)}")
+                        } else {
+                            Log.info!("  Export:  (skipped — no templates for this engine)")
+                        }
                     }
                     match primary_engine(build_engines) {
                         Ok(p) => {
