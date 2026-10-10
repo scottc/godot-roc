@@ -6,12 +6,12 @@
 #   roc run scripts/ci.roc -- quick
 #   roc run scripts/ci.roc -- full
 #   roc run scripts/ci.roc -- -Doptimize=ReleaseFast
-#   roc run scripts/ci.roc -- quick -Doptimize=Debug
 #   roc run scripts/ci.roc -- full deep-wasm
 #
-# Modes:
-#   quick  — primary hosts; dump selected engines; full pipeline only where builds_platform
-#   full   — dump full engine matrix; host CPU/OS matrix for engines with builds_platform
+# CI does not assume an existing tree:
+#   - wipes generated roots (platform-out, host/glue-out, ci-out, bundle-out)
+#   - mkdir -p vendor / platform / glue / targets before use
+#   - avoids declaring generated files as inputs/outputs (cache FileNotFound)
 #
 
 ## Continuous Integration — engine × host matrix (roc-build)
@@ -35,8 +35,6 @@ LibKind : [StaticLib, WasmObj]
 
 HostTier : [Primary, Secondary, Experimental]
 
-# FullBuild = glue + hosts + bundle under platform-out/<slug>/
-# DumpOnly  = vendor dumps only (no platform check/glue until codegen supports slug)
 EnginePipeline : [FullBuild, DumpOnly]
 
 HostName : [
@@ -103,6 +101,9 @@ CiPaths : {
     bundle_workspace : Str,
     host_entry : Str,
     zig_glue_roc : Str,
+    platform_out_root : Str,
+    glue_out_root : Str,
+    vendor_out_root : Str,
 }
 
 ReplacePair : {
@@ -118,7 +119,7 @@ take_id : NodeId -> (NodeId, NodeId)
 take_id = |next| (next, next + 1)
 
 # =============================================================================
-# Engine paths
+# Paths
 # =============================================================================
 
 engine_vendor_dir : EngineSpec -> Str
@@ -489,6 +490,9 @@ default_paths = {
     bundle_workspace: "bundle-out/workspace",
     host_entry: "host/host.zig",
     zig_glue_roc: "vendor/roc/git-a3ce7f1/ZigGlue.roc",
+    platform_out_root: "platform-out",
+    glue_out_root: "host/glue-out",
+    vendor_out_root: "vendor-out",
 }
 
 optimize_flag : Optimize -> Str
@@ -648,13 +652,15 @@ zig_argv = |engine, t, optimize, host_entry| {
     }
 }
 
-mk_cmd : NodeId, List(NodeId), List(Str), List(Str), Str, List(Str), Str, Str -> _
-mk_cmd = |id, depends_on, inputs, outputs, program, args, description, cwd|
+# Never pass generated paths as inputs/outputs — roc-build hashes them and
+# fails with FileNotFound if the file is not on disk yet. Ordering = depends_on only.
+mk_cmd : NodeId, List(NodeId), Str, List(Str), Str, Str -> _
+mk_cmd = |id, depends_on, program, args, description, cwd|
     Build.cmd({
         id: id,
         depends_on: depends_on,
-        inputs: inputs,
-        outputs: outputs,
+        inputs: [],
+        outputs: [],
         program: program,
         args: args,
         description: description,
@@ -671,6 +677,10 @@ find_replace_sh_script = |file_path, pairs| {
     header =
         \\set -eu
         \\FILE='${file_path}'
+        \\if [ ! -f "$FILE" ]; then
+        \\    echo "[find_replace] missing file: $FILE" >&2
+        \\    exit 1
+        \\fi
         \\
         \\replace_first() {
         \\    _body="$1"
@@ -739,8 +749,6 @@ find_replace_cmd = |opts| {
     mk_cmd(
         opts.id,
         opts.depends_on,
-        [opts.file],
-        [opts.file],
         "sh",
         ["-c", script],
         opts.description,
@@ -752,21 +760,93 @@ find_replace_cmd = |opts| {
 # Phases
 # =============================================================================
 
-phase_workspace : NodeId, CiPaths -> _
-phase_workspace = |start_id, paths| {
-    (rm_id, n1) = take_id(start_id)
-    (mkdir_ci_id, n2) = take_id(n1)
-    (mkdir_ws_id, n3) = take_id(n2)
-    (copy_id, n4) = take_id(n3)
+# Wipe generated roots (ok if missing), then create a clean skeleton.
+phase_prepare : NodeId, List(EngineSpec), List(HostTarget), CiPaths -> _
+phase_prepare = |start_id, engines, hosts, paths| {
+    var $cmds = []
+    var $id = start_id
+    var $terminal = []
 
-    rmdir_ci = mk_cmd(rm_id, [], [], [paths.ci_out], "rm", ["-rf", paths.ci_out], "Delete ${paths.ci_out}", "")
-    mkdir_ci = mk_cmd(mkdir_ci_id, [rm_id], [], [paths.ci_out], "mkdir", ["-p", paths.ci_out], "Create ${paths.ci_out}", "")
-    mkdir_ws = mk_cmd(mkdir_ws_id, [mkdir_ci_id], [], [paths.ci_workspace], "mkdir", ["-p", paths.ci_workspace], "Create CI workspace", "")
+    # --- clean roots (ignore missing) ---
+    clean_roots = [
+        paths.ci_out,
+        paths.bundle_out,
+        paths.platform_out_root,
+        paths.glue_out_root,
+    ]
+
+    var $clean_ids = []
+    for root in clean_roots {
+        (cid, n) = take_id($id)
+        $id = n
+        c = mk_cmd(cid, [], "rm", ["-rf", root], "rm -rf ${root}", "")
+        $cmds = List.append($cmds, c)
+        $clean_ids = List.append($clean_ids, cid)
+    }
+
+    # --- mkdir skeleton ---
+    var $dirs = [
+        paths.ci_out,
+        paths.ci_workspace,
+        paths.bundle_out,
+        paths.bundle_workspace,
+        paths.platform_out_root,
+        paths.glue_out_root,
+        paths.vendor_out_root,
+    ]
+
+    for eng in engines {
+        $dirs = List.concat(
+            $dirs,
+            [
+                engine_vendor_dir(eng),
+                engine_platform_dir(eng),
+                engine_glue_dir(eng),
+            ],
+        )
+        match eng.pipeline {
+            FullBuild => {
+                for t in hosts {
+                    $dirs = List.append($dirs, engine_host_out_dir(eng, t))
+                }
+            }
+            DumpOnly => {}
+        }
+    }
+
+    # de-dupe
+    var $uniq = []
+    for d in $dirs {
+        if List.contains($uniq, d) {
+            {}
+        } else {
+            $uniq = List.append($uniq, d)
+        }
+    }
+
+    for dir in $uniq {
+        (mid, n) = take_id($id)
+        $id = n
+        c = mk_cmd(mid, $clean_ids, "mkdir", ["-p", dir], "mkdir -p ${dir}", "")
+        $cmds = List.append($cmds, c)
+        $terminal = List.append($terminal, mid)
+    }
+
+    {
+        cmds: $cmds,
+        terminal_ids: $terminal,
+        next_id: $id,
+    }
+}
+
+phase_workspace : NodeId, List(NodeId), CiPaths -> _
+phase_workspace = |start_id, prepare_ids, paths| {
+    (copy_id, n1) = take_id(start_id)
+
+    # Parent dirs created in phase_prepare
     copy_template = mk_cmd(
         copy_id,
-        [mkdir_ws_id],
-        [],
-        [paths.project_dir],
+        prepare_ids,
         "cp",
         ["-a", "templates/${paths.project_template}", paths.project_dir],
         "Create godot-roc app \"${paths.project_name}\" → ${paths.project_dir}",
@@ -774,14 +854,14 @@ phase_workspace = |start_id, paths| {
     )
 
     {
-        cmds: [rmdir_ci, mkdir_ci, mkdir_ws, copy_template],
+        cmds: [copy_template],
         terminal_ids: [copy_id],
-        next_id: n4,
+        next_id: n1,
     }
 }
 
-phase_dump : NodeId, List(EngineSpec) -> _
-phase_dump = |start_id, engines| {
+phase_dump : NodeId, List(NodeId), List(EngineSpec) -> _
+phase_dump = |start_id, prepare_ids, engines| {
     var $cmds = []
     var $ids = []
     var $id = start_id
@@ -791,12 +871,9 @@ phase_dump = |start_id, engines| {
         for d in eng.dumps {
             (this_id, next) = take_id($id)
             $id = next
-            # No outputs listed — dump tools write into cwd; avoid cache on unknown names
             c = mk_cmd(
                 this_id,
-                [],
-                [],
-                [],
+                prepare_ids,
                 d.program,
                 d.args,
                 d.description,
@@ -814,19 +891,17 @@ phase_dump = |start_id, engines| {
     }
 }
 
-# FullBuild engines only — generators must produce platform-out/<slug>/
-phase_glue_engine : NodeId, List(NodeId), EngineSpec, CiPaths -> _
-phase_glue_engine = |start_id, dump_ids, engine, paths| {
-    (mkdir_glue_id, n1) = take_id(start_id)
-    (cp_gde_id, n2) = take_id(n1)
-    (gen_gdext_id, n3) = take_id(n2)
-    (test_gdext_id, n4) = take_id(n3)
-    (gen_api_id, n5) = take_id(n4)
-    (check_plat_id, n6) = take_id(n5)
-    (roc_glue_id, n7) = take_id(n6)
-    (patch_glue_id, n8) = take_id(n7)
-    (test_abi_id, n9) = take_id(n8)
-    (test_abi_impl_id, n10) = take_id(n9)
+phase_glue_engine : NodeId, List(NodeId), List(NodeId), EngineSpec, CiPaths -> _
+phase_glue_engine = |start_id, prepare_ids, dump_ids, engine, paths| {
+    (cp_gde_id, n1) = take_id(start_id)
+    (gen_gdext_id, n2) = take_id(n1)
+    (test_gdext_id, n3) = take_id(n2)
+    (gen_api_id, n4) = take_id(n3)
+    (check_plat_id, n5) = take_id(n4)
+    (roc_glue_id, n6) = take_id(n5)
+    (patch_glue_id, n7) = take_id(n6)
+    (test_abi_id, n8) = take_id(n7)
+    (test_abi_impl_id, n9) = take_id(n8)
 
     glue_dir = engine_glue_dir(engine)
     platform_main = engine_platform_main(engine)
@@ -836,34 +911,20 @@ phase_glue_engine = |start_id, dump_ids, engine, paths| {
     abi_impl_file = engine_abi_impl_file(engine)
     slug = engine.slug
 
-    mkdir_glue = mk_cmd(
-        mkdir_glue_id,
-        [],
-        [],
-        [glue_dir],
-        "mkdir",
-        ["-p", glue_dir],
-        "mkdir glue-out/${slug}",
-        "",
-    )
+    gate = List.concat(prepare_ids, dump_ids)
 
     cp_gde_call = mk_cmd(
         cp_gde_id,
-        [mkdir_glue_id],
-        ["host/gde_call.template.zig"],
-        [gde_call_file],
+        prepare_ids,
         "cp",
         ["host/gde_call.template.zig", gde_call_file],
         "Copy gde_call.zig → ${slug}",
         "",
     )
 
-    # outputs: [] until generator guarantees path; depends_on dump still gates order
     gen_gdext = mk_cmd(
         gen_gdext_id,
-        List.concat(dump_ids, [mkdir_glue_id]),
-        [], # "scripts/gdextension_interface.generate.roc"
-        [],
+        gate,
         "roc",
         ["run", "scripts/gdextension_interface.generate.roc", "--", "--engine=${slug}"],
         "Generate gdextension_interface (${slug})",
@@ -873,8 +934,6 @@ phase_glue_engine = |start_id, dump_ids, engine, paths| {
     test_gdext = mk_cmd(
         test_gdext_id,
         [gen_gdext_id],
-        [],
-        [],
         "zig",
         ["test", gdext_file],
         "zig test gdextension_interface (${slug})",
@@ -883,9 +942,7 @@ phase_glue_engine = |start_id, dump_ids, engine, paths| {
 
     gen_api = mk_cmd(
         gen_api_id,
-        dump_ids,
-        [], # "scripts/extension_api.generate.roc"
-        [],
+        gate,
         "roc",
         ["run", "scripts/extension_api.generate.roc", "--", "--engine=${slug}"],
         "Generate extension_api (${slug})",
@@ -895,8 +952,6 @@ phase_glue_engine = |start_id, dump_ids, engine, paths| {
     check_plat = mk_cmd(
         check_plat_id,
         [gen_gdext_id, gen_api_id],
-        [],
-        [],
         "roc",
         ["check", platform_main],
         "roc check ${platform_main}",
@@ -905,9 +960,7 @@ phase_glue_engine = |start_id, dump_ids, engine, paths| {
 
     roc_glue = mk_cmd(
         roc_glue_id,
-        [check_plat_id, mkdir_glue_id],
-        [paths.zig_glue_roc],
-        [],
+        [check_plat_id],
         "roc",
         [
             "glue",
@@ -930,8 +983,6 @@ phase_glue_engine = |start_id, dump_ids, engine, paths| {
     test_abi = mk_cmd(
         test_abi_id,
         [patch_glue_id],
-        [],
-        [],
         "zig",
         ["test", abi_file],
         "zig test roc_platform_abi (${slug})",
@@ -941,8 +992,6 @@ phase_glue_engine = |start_id, dump_ids, engine, paths| {
     test_abi_impl = mk_cmd(
         test_abi_impl_id,
         [patch_glue_id, cp_gde_id],
-        [],
-        [],
         "zig",
         ["test", abi_impl_file],
         "zig test zig_platform_abi_impl (${slug})",
@@ -951,7 +1000,6 @@ phase_glue_engine = |start_id, dump_ids, engine, paths| {
 
     {
         cmds: [
-            mkdir_glue,
             cp_gde_call,
             gen_gdext,
             test_gdext,
@@ -963,48 +1011,18 @@ phase_glue_engine = |start_id, dump_ids, engine, paths| {
             test_abi_impl,
         ],
         terminal_ids: [test_gdext_id, test_abi_id, test_abi_impl_id, check_plat_id],
-        next_id: n10,
+        next_id: n9,
     }
 }
 
 phase_hosts_engine : NodeId, List(NodeId), EngineSpec, List(HostTarget), Optimize, CiPaths -> _
 phase_hosts_engine = |start_id, glue_ids, engine, selected, optimize, paths| {
     var $cmds = []
-    var $clean_ids = []
+    var $build_ids = []
     var $id = start_id
     slug = engine.slug
 
-    for t in selected {
-        (this_id, next) = take_id($id)
-        $id = next
-        path = engine_host_out_path(engine, t)
-        c = mk_cmd(this_id, [], [], [], "rm", ["-f", path], "rm -f ${path}", "")
-        $cmds = List.append($cmds, c)
-        $clean_ids = List.append($clean_ids, this_id)
-    }
-
-    var $dirs = []
-    for t in selected {
-        d = engine_host_out_dir(engine, t)
-        if List.contains($dirs, d) {
-            {}
-        } else {
-            $dirs = List.append($dirs, d)
-        }
-    }
-
-    var $mkdir_ids = []
-    for dir in $dirs {
-        (this_id, next) = take_id($id)
-        $id = next
-        c = mk_cmd(this_id, glue_ids, [], [dir], "mkdir", ["-p", dir], "mkdir -p ${dir}", "")
-        $cmds = List.append($cmds, c)
-        $mkdir_ids = List.append($mkdir_ids, this_id)
-    }
-
-    var $build_ids = []
-    deps = List.concat(List.concat($clean_ids, $mkdir_ids), glue_ids)
-
+    # Dirs already created in phase_prepare; just compile
     for t in selected {
         (this_id, next) = take_id($id)
         $id = next
@@ -1012,9 +1030,7 @@ phase_hosts_engine = |start_id, glue_ids, engine, selected, optimize, paths| {
         emit = engine_host_out_path(engine, t)
         c = mk_cmd(
             this_id,
-            deps,
-            [paths.host_entry],
-            [emit],
+            glue_ids,
             "zig",
             argv,
             "compile host ${slug}/${t.name_str} → ${emit}",
@@ -1057,8 +1073,6 @@ phase_game = |p| {
     roc_linux = mk_cmd(
         linux_id,
         game_deps,
-        [paths.project_main],
-        [paths.project_linux_out],
         "roc",
         [
             "build",
@@ -1074,8 +1088,6 @@ phase_game = |p| {
     roc_web = mk_cmd(
         web_id,
         game_deps,
-        [paths.project_main],
-        [paths.project_temp_a],
         "roc",
         [
             "build",
@@ -1090,11 +1102,6 @@ phase_game = |p| {
     ar_x = mk_cmd(
         ar_id,
         [web_id],
-        [paths.project_temp_a],
-        [
-            "${paths.project_dir}/libhost.o.wasm",
-            "${paths.project_dir}/roc_app_llvm_wasm32_speed.o",
-        ],
         "ar",
         ["x", paths.project_temp_a, "--output", paths.project_dir],
         "Extracting for validation (ar x)",
@@ -1104,8 +1111,6 @@ phase_game = |p| {
     validate_host = mk_cmd(
         val_host_id,
         [ar_id],
-        ["${paths.project_dir}/libhost.o.wasm"],
-        [],
         "wasm-validate",
         ["${paths.project_dir}/libhost.o.wasm"],
         "wasm-validate libhost.o.wasm",
@@ -1115,8 +1120,6 @@ phase_game = |p| {
     validate_app_obj = mk_cmd(
         val_app_obj_id,
         [ar_id],
-        ["${paths.project_dir}/roc_app_llvm_wasm32_speed.o"],
-        [],
         "wasm-validate",
         ["${paths.project_dir}/roc_app_llvm_wasm32_speed.o"],
         "wasm-validate roc_app_llvm_wasm32_speed.o",
@@ -1126,11 +1129,6 @@ phase_game = |p| {
     wasm_ld = mk_cmd(
         wasm_ld_id,
         [val_host_id, val_app_obj_id],
-        [
-            "${paths.project_dir}/libhost.o.wasm",
-            "${paths.project_dir}/roc_app_llvm_wasm32_speed.o",
-        ],
-        ["${paths.project_dir}/test.wasm"],
         "zig",
         [
             "wasm-ld",
@@ -1153,8 +1151,6 @@ phase_game = |p| {
     emcc = mk_cmd(
         emcc_id,
         [web_id],
-        [paths.project_temp_a],
-        [paths.project_wasm],
         "emcc",
         [
             paths.project_temp_a,
@@ -1173,8 +1169,6 @@ phase_game = |p| {
     validate_final = mk_cmd(
         val_final_id,
         [emcc_id],
-        [paths.project_wasm],
-        [],
         "wasm-validate",
         ["--enable-extended-const", paths.project_wasm],
         "wasm-validate final game wasm",
@@ -1184,8 +1178,6 @@ phase_game = |p| {
     godot_export = mk_cmd(
         godot_id,
         [val_final_id, linux_id],
-        [paths.project_godot, paths.project_wasm],
-        ["${paths.project_dir}/export/index.html"],
         "godot",
         [
             paths.project_godot,
@@ -1225,10 +1217,8 @@ phase_game = |p| {
 
 phase_bundle_engine : NodeId, List(NodeId), List(NodeId), EngineSpec, CiPaths -> _
 phase_bundle_engine = |start_id, gate_ids, host_ids, engine, paths| {
-    (mkdir_out_id, n1) = take_id(start_id)
-    (mkdir_ws_id, n2) = take_id(n1)
-    (copy_plat_id, n3) = take_id(n2)
-    (roc_bundle_id, n4) = take_id(n3)
+    (copy_plat_id, n1) = take_id(start_id)
+    (roc_bundle_id, n2) = take_id(n1)
 
     slug = engine.slug
     platform_src = "${engine_platform_dir(engine)}/"
@@ -1237,33 +1227,10 @@ phase_bundle_engine = |start_id, gate_ids, host_ids, engine, paths| {
     musl_host = "${platform_dest}/targets/x64musl/libhost.a"
     main_roc = "${platform_dest}/main.roc"
 
-    mkdir_out = mk_cmd(
-        mkdir_out_id,
-        gate_ids,
-        [],
-        [paths.bundle_out],
-        "mkdir",
-        ["-p", paths.bundle_out],
-        "Create ${paths.bundle_out}",
-        "",
-    )
-
-    mkdir_ws = mk_cmd(
-        mkdir_ws_id,
-        [mkdir_out_id],
-        [],
-        [paths.bundle_workspace],
-        "mkdir",
-        ["-p", paths.bundle_workspace],
-        "Create bundle workspace",
-        "",
-    )
-
+    # bundle workspace created in prepare
     copy_platform = mk_cmd(
         copy_plat_id,
-        List.concat(host_ids, [mkdir_ws_id]),
-        [],
-        [platform_dest],
+        List.concat(host_ids, gate_ids),
         "cp",
         ["-a", platform_src, platform_dest],
         "Copy platform-out/${slug} → ${platform_dest}",
@@ -1273,8 +1240,6 @@ phase_bundle_engine = |start_id, gate_ids, host_ids, engine, paths| {
     roc_bundle = mk_cmd(
         roc_bundle_id,
         [copy_plat_id],
-        [],
-        [],
         "roc",
         [
             "bundle",
@@ -1287,9 +1252,9 @@ phase_bundle_engine = |start_id, gate_ids, host_ids, engine, paths| {
     )
 
     {
-        cmds: [mkdir_out, mkdir_ws, copy_platform, roc_bundle],
+        cmds: [copy_platform, roc_bundle],
         terminal_ids: [roc_bundle_id],
-        next_id: n4,
+        next_id: n2,
     }
 }
 
@@ -1300,8 +1265,6 @@ phase_zip_templates = |start_id, depends_on, paths| {
     zip_templates = mk_cmd(
         zip_id,
         depends_on,
-        [],
-        ["${paths.bundle_workspace}/templates.zip"],
         "zip",
         ["-r", "templates.zip", ".", "-i", "templates/"],
         "zip templates",
@@ -1342,12 +1305,11 @@ main! = |args| {
 
     Log.info!("engines (${List.len(engines).to_str()}):")
     for e in engines {
-        Log.info!("  - ${e.slug} [${pipeline_label(e.pipeline)}] vendor=${engine_vendor_dir(e)}")
+        Log.info!("  - ${e.slug} [${pipeline_label(e.pipeline)}]")
     }
-    Log.info!("full-build engines (${List.len(build_engines).to_str()}): platform-out/<slug>/ + hosts + bundle")
     Log.info!("host targets (${List.len(selected_hosts).to_str()}):")
     for t in selected_hosts {
-        Log.info!("  - ${t.name_str} (${t.zig_triple})")
+        Log.info!("  - ${t.name_str}")
     }
 
     match primary_engine(build_engines) {
@@ -1356,17 +1318,17 @@ main! = |args| {
             Err(Exit(1))
         }
         Ok(primary) => {
-            ws = phase_workspace(0, paths)
-            dump = phase_dump(ws.next_id, engines)
+            prep = phase_prepare(0, engines, selected_hosts, paths)
+            ws = phase_workspace(prep.next_id, prep.terminal_ids, paths)
+            dump = phase_dump(ws.next_id, prep.terminal_ids, engines)
 
-            var $cmds = List.concat(ws.cmds, dump.cmds)
+            var $cmds = List.concat(prep.cmds, List.concat(ws.cmds, dump.cmds))
             var $id = dump.next_id
             var $primary_host_ids = []
             var $bundle_gate_hosts = []
 
-            # Glue + hosts + (later) bundle only for FullBuild engines
             for eng in build_engines {
-                g = phase_glue_engine($id, dump.terminal_ids, eng, paths)
+                g = phase_glue_engine($id, prep.terminal_ids, dump.terminal_ids, eng, paths)
                 $cmds = List.concat($cmds, g.cmds)
                 $id = g.next_id
 
@@ -1420,18 +1382,10 @@ main! = |args| {
                     for eng in build_engines {
                         Log.info!("  platform-${eng.slug}/")
                     }
-                    Log.info!("Dump-only engines (no platform codegen yet):")
-                    for e in engines {
-                        match e.pipeline {
-                            DumpOnly => Log.info!("  - ${e.slug}")
-                            FullBuild => {}
-                        }
-                    }
                     Log.info!("Editor test:")
                     Log.info!("  godot ${paths.project_dir}/project.godot")
                     Log.info!("Web export test:")
                     Log.info!("  SERVE_PATH='${paths.project_dir}/export' roc run scripts/serve.roc")
-                    Log.info!("  open http://localhost:8000/index.html")
                     Ok({})
                 }
                 Err(BuildFailed(msg)) => {
