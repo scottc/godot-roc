@@ -3,14 +3,22 @@
 #
 # Usage:
 #   roc run scripts/ci.roc
-#   roc run scripts/ci.roc -- -Doptimize=Debug
+#   roc run scripts/ci.roc -- quick
+#   roc run scripts/ci.roc -- full
 #   roc run scripts/ci.roc -- -Doptimize=ReleaseFast
+#   roc run scripts/ci.roc -- quick -Doptimize=Debug
+#   roc run scripts/ci.roc -- full deep-wasm
 #
-# Consolidated CI: dump → glue → host (zig) → app builds → wasm checks →
-# Godot web export → platform bundle.
+# Modes:
+#   quick  — primary hosts; dump selected engines; full pipeline only where builds_platform
+#   full   — dump full engine matrix; host CPU/OS matrix for engines with builds_platform
+#
+# Note: extension_api / platform codegen currently emits platform-out/godot/ only.
+# Other engines are DumpOnly until generators accept --engine=<slug> and write
+# platform-out/<slug>/ + host/glue-out/<slug>/.
 #
 
-## Continuous Integration — single-graph pipeline (roc-build)
+## Continuous Integration — engine × host matrix (roc-build)
 app [main!] {
     pf: platform "https://github.com/scottc/roc-build/releases/download/0.0.1-pre-alpha-test1/8jZuyEFpCc7ep6yu2iXBT4cAYoxZdjTk5kxShUCMXqgx.tar.zst",
     roc: "nightly-2026-09-27-a3ce7f1",
@@ -20,139 +28,394 @@ import pf.Build
 import pf.Log
 
 # =============================================================================
-# Host-build domain (from scripts/build.roc)
+# Domain types
 # =============================================================================
 
 Optimize : [Debug, ReleaseFast, ReleaseSafe, ReleaseSmall]
 
-Kind : [StaticLib, WasmObj]
+CiMode : [Quick, Full]
+
+LibKind : [StaticLib, WasmObj]
+
+HostTier : [Primary, Secondary, Experimental]
+
+# FullBuild = glue + hosts + bundle under platform-out/<slug>/
+# DumpOnly  = vendor dumps only (no platform check/glue until codegen supports slug)
+EnginePipeline : [FullBuild, DumpOnly]
+
+HostName : [
+    Wasm32,
+    X64Musl,
+    X64V1Musl,
+    Arm64Musl,
+    Arm64V1Musl,
+    X64Mac,
+    Arm64Mac,
+    X64Win,
+    X64Mingw,
+    Arm64Win,
+    Arm64Mingw,
+]
 
 HostTarget : {
-    name : Str,
+    name : HostName,
+    name_str : Str,
     zig_triple : Str,
-    kind : Kind,
+    kind : LibKind,
     lib_file : Str,
     mcpu : [NoCpu, Cpu(Str)],
-    baseline : [NoBaseline, Baseline(Str)],
+    baseline : [NoBaseline, Baseline(HostName)],
+    tier : HostTier,
 }
+
+EngineName : [Godot, Godot451, Redot, Rex]
+
+DumpKind : [GdextensionInterface, GdextensionInterfaceJson, ExtensionApi]
+
+EngineDump : {
+    kind : DumpKind,
+    program : Str,
+    args : List(Str),
+    description : Str,
+}
+
+EngineSpec : {
+    name : EngineName,
+    slug : Str,
+    program : Str,
+    required_in_full : Bool,
+    is_primary : Bool,
+    pipeline : EnginePipeline,
+    dumps : List(EngineDump),
+}
+
+NodeId : U64
+
+CiPaths : {
+    ci_out : Str,
+    ci_workspace : Str,
+    project : Str,
+    project_template : Str,
+    project_name : Str,
+    project_dir : Str,
+    project_main : Str,
+    project_linux_out : Str,
+    project_temp_a : Str,
+    project_wasm : Str,
+    project_godot : Str,
+    bundle_out : Str,
+    bundle_workspace : Str,
+    host_entry : Str,
+    zig_glue_roc : Str,
+}
+
+ReplacePair : {
+    find : Str,
+    replace : Str,
+}
+
+# =============================================================================
+# Id allocator
+# =============================================================================
+
+take_id : NodeId -> (NodeId, NodeId)
+take_id = |next| (next, next + 1)
+
+# =============================================================================
+# Engine paths
+# =============================================================================
+
+engine_vendor_dir : EngineSpec -> Str
+engine_vendor_dir = |e| "vendor-out/${e.slug}"
+
+engine_platform_dir : EngineSpec -> Str
+engine_platform_dir = |e| "platform-out/${e.slug}"
+
+engine_glue_dir : EngineSpec -> Str
+engine_glue_dir = |e| "host/glue-out/${e.slug}"
+
+engine_platform_main : EngineSpec -> Str
+engine_platform_main = |e| "${engine_platform_dir(e)}/main.roc"
+
+engine_host_out_path : EngineSpec, HostTarget -> Str
+engine_host_out_path = |e, t|
+    "${engine_platform_dir(e)}/targets/${t.name_str}/${t.lib_file}"
+
+engine_host_out_dir : EngineSpec, HostTarget -> Str
+engine_host_out_dir = |e, t|
+    "${engine_platform_dir(e)}/targets/${t.name_str}"
+
+engine_abi_file : EngineSpec -> Str
+engine_abi_file = |e| "${engine_glue_dir(e)}/roc_platform_abi.zig"
+
+engine_gdext_file : EngineSpec -> Str
+engine_gdext_file = |e| "${engine_glue_dir(e)}/gdextension_interface.zig"
+
+engine_gde_call_file : EngineSpec -> Str
+engine_gde_call_file = |e| "${engine_glue_dir(e)}/gde_call.zig"
+
+engine_abi_impl_file : EngineSpec -> Str
+engine_abi_impl_file = |e| "${engine_glue_dir(e)}/zig_platform_abi_impl.zig"
+
+engine_bundle_platform_dest : Str, EngineSpec -> Str
+engine_bundle_platform_dest = |bundle_workspace, e|
+    "${bundle_workspace}/platform-${e.slug}"
+
+# =============================================================================
+# Matrices
+# =============================================================================
 
 host_targets : List(HostTarget)
 host_targets = [
     {
-        name: "wasm32",
+        name: Wasm32,
+        name_str: "wasm32",
         zig_triple: "wasm32-freestanding",
         kind: WasmObj,
         lib_file: "libhost.o.wasm",
         mcpu: NoCpu,
         baseline: NoBaseline,
+        tier: Primary,
     },
     {
-        name: "x64mac",
-        zig_triple: "x86_64-macos",
-        kind: StaticLib,
-        lib_file: "libhost.a",
-        mcpu: NoCpu,
-        baseline: NoBaseline,
-    },
-    {
-        name: "x64win",
-        zig_triple: "x86_64-windows-msvc",
-        kind: StaticLib,
-        lib_file: "host.lib",
-        mcpu: NoCpu,
-        baseline: NoBaseline,
-    },
-    {
-        name: "x64mingw",
-        zig_triple: "x86_64-windows-gnu",
-        kind: StaticLib,
-        lib_file: "host.lib",
-        mcpu: NoCpu,
-        baseline: NoBaseline,
-    },
-    {
-        name: "x64musl",
+        name: X64Musl,
+        name_str: "x64musl",
         zig_triple: "x86_64-linux-musl",
         kind: StaticLib,
         lib_file: "libhost.a",
         mcpu: NoCpu,
-        baseline: Baseline("x64v1musl"),
+        baseline: Baseline(X64V1Musl),
+        tier: Primary,
     },
     {
-        name: "x64v1musl",
+        name: X64V1Musl,
+        name_str: "x64v1musl",
         zig_triple: "x86_64-linux-musl",
         kind: StaticLib,
         lib_file: "libhost.a",
         mcpu: Cpu("x86_64"),
         baseline: NoBaseline,
+        tier: Primary,
     },
     {
-        name: "arm64mac",
-        zig_triple: "aarch64-macos",
-        kind: StaticLib,
-        lib_file: "libhost.a",
-        mcpu: NoCpu,
-        baseline: NoBaseline,
-    },
-    {
-        name: "arm64win",
-        zig_triple: "aarch64-windows-msvc",
-        kind: StaticLib,
-        lib_file: "host.lib",
-        mcpu: NoCpu,
-        baseline: NoBaseline,
-    },
-    {
-        name: "arm64mingw",
-        zig_triple: "aarch64-windows-gnu",
-        kind: StaticLib,
-        lib_file: "host.lib",
-        mcpu: NoCpu,
-        baseline: NoBaseline,
-    },
-    {
-        name: "arm64musl",
+        name: Arm64Musl,
+        name_str: "arm64musl",
         zig_triple: "aarch64-linux-musl",
         kind: StaticLib,
         lib_file: "libhost.a",
         mcpu: NoCpu,
-        baseline: Baseline("arm64v1musl"),
+        baseline: Baseline(Arm64V1Musl),
+        tier: Secondary,
     },
     {
-        name: "arm64v1musl",
+        name: Arm64V1Musl,
+        name_str: "arm64v1musl",
         zig_triple: "aarch64-linux-musl",
         kind: StaticLib,
         lib_file: "libhost.a",
         mcpu: Cpu("generic"),
         baseline: NoBaseline,
+        tier: Secondary,
+    },
+    {
+        name: X64Mac,
+        name_str: "x64mac",
+        zig_triple: "x86_64-macos",
+        kind: StaticLib,
+        lib_file: "libhost.a",
+        mcpu: NoCpu,
+        baseline: NoBaseline,
+        tier: Secondary,
+    },
+    {
+        name: Arm64Mac,
+        name_str: "arm64mac",
+        zig_triple: "aarch64-macos",
+        kind: StaticLib,
+        lib_file: "libhost.a",
+        mcpu: NoCpu,
+        baseline: NoBaseline,
+        tier: Secondary,
+    },
+    {
+        name: X64Win,
+        name_str: "x64win",
+        zig_triple: "x86_64-windows-msvc",
+        kind: StaticLib,
+        lib_file: "host.lib",
+        mcpu: NoCpu,
+        baseline: NoBaseline,
+        tier: Secondary,
+    },
+    {
+        name: X64Mingw,
+        name_str: "x64mingw",
+        zig_triple: "x86_64-windows-gnu",
+        kind: StaticLib,
+        lib_file: "host.lib",
+        mcpu: NoCpu,
+        baseline: NoBaseline,
+        tier: Secondary,
+    },
+    {
+        name: Arm64Win,
+        name_str: "arm64win",
+        zig_triple: "aarch64-windows-msvc",
+        kind: StaticLib,
+        lib_file: "host.lib",
+        mcpu: NoCpu,
+        baseline: NoBaseline,
+        tier: Experimental,
+    },
+    {
+        name: Arm64Mingw,
+        name_str: "arm64mingw",
+        zig_triple: "aarch64-windows-gnu",
+        kind: StaticLib,
+        lib_file: "host.lib",
+        mcpu: NoCpu,
+        baseline: NoBaseline,
+        tier: Experimental,
     },
 ]
 
-host_entry = "host/host.zig"
+engine_specs : List(EngineSpec)
+engine_specs = [
+    {
+        name: Godot,
+        slug: "godot",
+        program: "godot",
+        required_in_full: Bool.True,
+        is_primary: Bool.True,
+        # Only engine with working platform codegen today
+        pipeline: FullBuild,
+        dumps: [
+            {
+                kind: GdextensionInterface,
+                program: "godot",
+                args: ["--headless", "--dump-gdextension-interface"],
+                description: "Godot: dump-gdextension-interface",
+            },
+            {
+                kind: GdextensionInterfaceJson,
+                program: "godot",
+                args: ["--headless", "--dump-gdextension-interface-json"],
+                description: "Godot: dump-gdextension-interface-json",
+            },
+            {
+                kind: ExtensionApi,
+                program: "godot",
+                args: ["--headless", "--dump-extension-api"],
+                description: "Godot: dump-extension-api",
+            },
+        ],
+    },
+    {
+        name: Godot451,
+        slug: "godot_4_5_1",
+        program: "godot4.5",
+        required_in_full: Bool.True,
+        is_primary: Bool.False,
+        pipeline: DumpOnly,
+        dumps: [
+            {
+                kind: GdextensionInterface,
+                program: "godot4.5",
+                args: ["--headless", "--dump-gdextension-interface"],
+                description: "Godot 4.5.1: dump-gdextension-interface",
+            },
+            {
+                kind: ExtensionApi,
+                program: "godot4.5",
+                args: ["--headless", "--dump-extension-api"],
+                description: "Godot 4.5.1: dump-extension-api",
+            },
+        ],
+    },
+    {
+        name: Redot,
+        slug: "redot",
+        program: "redot",
+        required_in_full: Bool.True,
+        is_primary: Bool.False,
+        pipeline: DumpOnly,
+        dumps: [
+            {
+                kind: GdextensionInterface,
+                program: "redot",
+                args: ["--headless", "--dump-gdextension-interface"],
+                description: "Redot: dump-gdextension-interface",
+            },
+            {
+                kind: ExtensionApi,
+                program: "redot",
+                args: ["--headless", "--dump-extension-api"],
+                description: "Redot: dump-extension-api",
+            },
+        ],
+    },
+    {
+        name: Rex,
+        slug: "rex",
+        program: "rex",
+        required_in_full: Bool.False,
+        is_primary: Bool.False,
+        pipeline: DumpOnly,
+        dumps: [
+            {
+                kind: GdextensionInterface,
+                program: "rex",
+                args: ["--headless", "--dump-gdextension-interface"],
+                description: "Rex: dump-gdextension-interface",
+            },
+            {
+                kind: ExtensionApi,
+                program: "rex",
+                args: ["--headless", "--dump-extension-api"],
+                description: "Rex: dump-extension-api",
+            },
+        ],
+    },
+]
 
-out_path : HostTarget -> Str
-out_path = |t| "platform-out/godot/targets/${t.name}/${t.lib_file}"
+glue_replace_pairs : List(ReplacePair)
+glue_replace_pairs = [
+    {
+        find:
+            \\    fn nativeWriteStderr(_: ?*anyopaque, data: []const u8) void {
+            \\        std.Io.File.stderr().writeStreamingAll(std.Io.Threaded.global_single_threaded.io(), data) catch {};
+            \\    }
+        ,
+        replace:
+            \\// PATCHED BY scripts/ci.roc (glue)
+            \\fn nativeWriteStderr(_: ?*anyopaque, data: []const u8) void {
+            \\    _ = data;
+            \\}
+        ,
+    },
+    {
+        find:
+            \\    fn nativeOnFatal(_: ?*anyopaque) noreturn {
+            \\        std.process.exit(1);
+            \\    }
+        ,
+        replace:
+            \\// PATCHED BY scripts/ci.roc (glue)
+            \\fn nativeOnFatal(_: ?*anyopaque) noreturn {
+            \\    if (comptime @import("builtin").cpu.arch != .wasm32) {
+            \\        std.debug.print("[roc] onFatal / crash path", .{});
+            \\        std.process.exit(1);
+            \\    } else {
+            \\        @trap();
+            \\    }
+            \\}
+        ,
+    },
+]
 
-out_dir : HostTarget -> Str
-out_dir = |t| "platform-out/godot/targets/${t.name}"
-
-optimize_flag : Optimize -> Str
-optimize_flag = |o| {
-    match o {
-        Debug => "-ODebug"
-        ReleaseFast => "-OReleaseFast"
-        ReleaseSafe => "-OReleaseSafe"
-        ReleaseSmall => "-OReleaseSmall"
-    }
-}
-
-effective_optimize : HostTarget, Optimize -> Optimize
-effective_optimize = |t, o| {
-    match t.kind {
-        WasmObj => ReleaseFast
-        StaticLib => o
-    }
-}
+# =============================================================================
+# Helpers
+# =============================================================================
 
 parse_optimize : List(Str) -> Optimize
 parse_optimize = |args| {
@@ -177,11 +440,173 @@ parse_optimize = |args| {
     $mode
 }
 
-zig_argv : HostTarget, Optimize -> List(Str)
-zig_argv = |t, optimize| {
+parse_mode : List(Str) -> CiMode
+parse_mode = |args| {
+    if List.contains(args, "quick") {
+        Quick
+    } else if List.contains(args, "full") {
+        Full
+    } else {
+        Full
+    }
+}
+
+mode_label : CiMode -> Str
+mode_label = |m| {
+    match m {
+        Quick => "quick"
+        Full => "full"
+    }
+}
+
+optimize_label : Optimize -> Str
+optimize_label = |o| {
+    match o {
+        Debug => "Debug"
+        ReleaseFast => "ReleaseFast"
+        ReleaseSafe => "ReleaseSafe"
+        ReleaseSmall => "ReleaseSmall"
+    }
+}
+
+pipeline_label : EnginePipeline -> Str
+pipeline_label = |p| {
+    match p {
+        FullBuild => "full-build"
+        DumpOnly => "dump-only"
+    }
+}
+
+default_paths : CiPaths
+default_paths = {
+    ci_out: "ci-out",
+    ci_workspace: "ci-out/workspace",
+    project: "my_game",
+    project_template: "ci",
+    project_name: "My Game",
+    project_dir: "ci-out/workspace/my_game",
+    project_main: "ci-out/workspace/my_game/main.roc",
+    project_linux_out: "ci-out/workspace/my_game/my_game.so",
+    project_temp_a: "ci-out/workspace/my_game/temp.a",
+    project_wasm: "ci-out/workspace/my_game/my_game.wasm",
+    project_godot: "ci-out/workspace/my_game/project.godot",
+    bundle_out: "bundle-out",
+    bundle_workspace: "bundle-out/workspace",
+    host_entry: "host/host.zig",
+    zig_glue_roc: "vendor/roc/git-a3ce7f1/ZigGlue.roc",
+}
+
+optimize_flag : Optimize -> Str
+optimize_flag = |o| {
+    match o {
+        Debug => "-ODebug"
+        ReleaseFast => "-OReleaseFast"
+        ReleaseSafe => "-OReleaseSafe"
+        ReleaseSmall => "-OReleaseSmall"
+    }
+}
+
+effective_optimize : HostTarget, Optimize -> Optimize
+effective_optimize = |t, o| {
+    match t.kind {
+        WasmObj => ReleaseFast
+        StaticLib => o
+    }
+}
+
+select_hosts : CiMode -> List(HostTarget)
+select_hosts = |mode| {
+    match mode {
+        Quick =>
+            host_targets.fold([], |acc, t| {
+                match t.tier {
+                    Primary => List.append(acc, t)
+                    _ => acc
+                }
+            })
+        Full => host_targets
+    }
+}
+
+list_has_host_name : List(HostTarget), HostName -> Bool
+list_has_host_name = |hosts, name| {
+    hosts.fold(Bool.False, |acc, h| acc or h.name == name)
+}
+
+find_host : HostName -> Try(HostTarget, [UnknownHost(HostName)])
+find_host = |name| {
+    for t in host_targets {
+        if t.name == name {
+            return Ok(t)
+        }
+    }
+    Err(UnknownHost(name))
+}
+
+with_baselines : List(HostTarget) -> List(HostTarget)
+with_baselines = |selected| {
+    var $out = selected
+    for t in selected {
+        match t.baseline {
+            NoBaseline => {}
+            Baseline(base_name) => {
+                if list_has_host_name($out, base_name) {
+                    {}
+                } else {
+                    match find_host(base_name) {
+                        Ok(base) => {
+                            $out = List.append($out, base)
+                        }
+                        Err(_) => {}
+                    }
+                }
+            }
+        }
+    }
+    $out
+}
+
+select_engines : CiMode -> List(EngineSpec)
+select_engines = |mode| {
+    match mode {
+        Full => engine_specs
+        Quick =>
+            engine_specs.fold([], |acc, e| {
+                match e.name {
+                    Rex => acc
+                    _ => List.append(acc, e)
+                }
+            })
+    }
+}
+
+engines_full_build : List(EngineSpec) -> List(EngineSpec)
+engines_full_build = |engines|
+    engines.fold([], |acc, e| {
+        match e.pipeline {
+            FullBuild => List.append(acc, e)
+            DumpOnly => acc
+        }
+    })
+
+primary_engine : List(EngineSpec) -> Try(EngineSpec, [NoPrimaryEngine])
+primary_engine = |engines| {
+    for e in engines {
+        if e.is_primary {
+            return Ok(e)
+        }
+    }
+    match List.first(engines) {
+        Ok(e) => Ok(e)
+        Err(_) => Err(NoPrimaryEngine)
+    }
+}
+
+zig_argv : EngineSpec, HostTarget, Optimize, Str -> List(Str)
+zig_argv = |engine, t, optimize, host_entry| {
     opt = effective_optimize(t, optimize)
     flag = optimize_flag(opt)
-    emit = out_path(t)
+    emit = engine_host_out_path(engine, t)
 
     base : List(Str)
     base =
@@ -228,29 +653,344 @@ zig_argv = |t, optimize| {
     }
 }
 
-build_one_host_cmd : HostTarget, Optimize, U64, List(U64) -> _
-build_one_host_cmd = |t, optimize, id, depends_on| {
-    argv = zig_argv(t, optimize)
-    emit = out_path(t)
-
+mk_cmd : NodeId, List(NodeId), List(Str), List(Str), Str, List(Str), Str, Str -> _
+mk_cmd = |id, depends_on, inputs, outputs, program, args, description, cwd|
     Build.cmd({
         id: id,
         depends_on: depends_on,
-        inputs: [host_entry],
-        outputs: [emit],
-        program: "zig",
-        args: argv,
-        description: "compile host ${t.name} → ${emit}",
-        cwd: "",
+        inputs: inputs,
+        outputs: outputs,
+        program: program,
+        args: args,
+        description: description,
+        cwd: cwd,
         env: [],
     })
+
+# =============================================================================
+# Find & replace
+# =============================================================================
+
+find_replace_sh_script : Str, List(ReplacePair) -> Str
+find_replace_sh_script = |file_path, pairs| {
+    header =
+        \\set -eu
+        \\FILE='${file_path}'
+        \\
+        \\replace_first() {
+        \\    _body="$1"
+        \\    _find="$2"
+        \\    _repl="$3"
+        \\    awk -v bodyf="$_body" -v findf="$_find" -v replf="$_repl" '
+        \\        function readfile(f,    s, line) {
+        \\            s = ""
+        \\            while ((getline line < f) > 0)
+        \\                s = s line ORS
+        \\            close(f)
+        \\            return s
+        \\        }
+        \\        BEGIN {
+        \\            find = readfile(findf)
+        \\            repl = readfile(replf)
+        \\            body = readfile(bodyf)
+        \\            idx = index(body, find)
+        \\            if (idx == 0) {
+        \\                print "[find_replace] pattern not found in " bodyf > "/dev/stderr"
+        \\                printf "%s", find > "/dev/stderr"
+        \\                exit 1
+        \\            }
+        \\            out = substr(body, 1, idx - 1) repl substr(body, idx + length(find))
+        \\            printf "%s", out > bodyf ".new"
+        \\        }
+        \\    '
+        \\    mv "$_body.new" "$_body"
+        \\}
+        \\
+
+    var $body = header
+    var $i = 0.U64
+    for pair in pairs {
+        tag = $i.to_str()
+        $i = $i + 1
+        block =
+            \\cat >"$FILE.find_${tag}" <<'ENDFIND_${tag}'
+            \\${pair.find}
+            \\ENDFIND_${tag}
+            \\
+            \\cat >"$FILE.repl_${tag}" <<'ENDREPL_${tag}'
+            \\${pair.replace}
+            \\ENDREPL_${tag}
+            \\
+            \\replace_first "$FILE" "$FILE.find_${tag}" "$FILE.repl_${tag}"
+            \\rm -f "$FILE.find_${tag}" "$FILE.repl_${tag}"
+            \\
+        $body = Str.concat($body, block)
+    }
+
+    footer =
+        \\printf '%s\n' "patched $FILE"
+    Str.concat($body, footer)
 }
 
-mkdir_cmds_for : List(HostTarget), U64, List(U64) -> (List(_), List(U64))
-mkdir_cmds_for = |host_list, start_id, depends_on| {
+find_replace_cmd : {
+    id : NodeId,
+    depends_on : List(NodeId),
+    file : Str,
+    pairs : List(ReplacePair),
+    description : Str,
+} -> _
+find_replace_cmd = |opts| {
+    script = find_replace_sh_script(opts.file, opts.pairs)
+    mk_cmd(
+        opts.id,
+        opts.depends_on,
+        [opts.file],
+        [opts.file],
+        "sh",
+        ["-c", script],
+        opts.description,
+        "",
+    )
+}
+
+# =============================================================================
+# Phases
+# =============================================================================
+
+phase_workspace : NodeId, CiPaths -> _
+phase_workspace = |start_id, paths| {
+    (rm_id, n1) = take_id(start_id)
+    (mkdir_ci_id, n2) = take_id(n1)
+    (mkdir_ws_id, n3) = take_id(n2)
+    (copy_id, n4) = take_id(n3)
+
+    rmdir_ci = mk_cmd(rm_id, [], [], [paths.ci_out], "rm", ["-rf", paths.ci_out], "Delete ${paths.ci_out}", "")
+    mkdir_ci = mk_cmd(mkdir_ci_id, [rm_id], [], [paths.ci_out], "mkdir", ["-p", paths.ci_out], "Create ${paths.ci_out}", "")
+    mkdir_ws = mk_cmd(mkdir_ws_id, [mkdir_ci_id], [], [paths.ci_workspace], "mkdir", ["-p", paths.ci_workspace], "Create CI workspace", "")
+    copy_template = mk_cmd(
+        copy_id,
+        [mkdir_ws_id],
+        [],
+        [paths.project_dir],
+        "cp",
+        ["-a", "templates/${paths.project_template}", paths.project_dir],
+        "Create godot-roc app \"${paths.project_name}\" → ${paths.project_dir}",
+        "",
+    )
+
+    {
+        cmds: [rmdir_ci, mkdir_ci, mkdir_ws, copy_template],
+        terminal_ids: [copy_id],
+        next_id: n4,
+    }
+}
+
+phase_dump : NodeId, List(EngineSpec) -> _
+phase_dump = |start_id, engines| {
+    var $cmds = []
+    var $ids = []
+    var $id = start_id
+
+    for eng in engines {
+        vendor = engine_vendor_dir(eng)
+        for d in eng.dumps {
+            (this_id, next) = take_id($id)
+            $id = next
+            # No outputs listed — dump tools write into cwd; avoid cache on unknown names
+            c = mk_cmd(
+                this_id,
+                [],
+                [],
+                [],
+                d.program,
+                d.args,
+                d.description,
+                vendor,
+            )
+            $cmds = List.append($cmds, c)
+            $ids = List.append($ids, this_id)
+        }
+    }
+
+    {
+        cmds: $cmds,
+        terminal_ids: $ids,
+        next_id: $id,
+    }
+}
+
+# FullBuild engines only — generators must produce platform-out/<slug>/
+phase_glue_engine : NodeId, List(NodeId), EngineSpec, CiPaths -> _
+phase_glue_engine = |start_id, dump_ids, engine, paths| {
+    (mkdir_glue_id, n1) = take_id(start_id)
+    (cp_gde_id, n2) = take_id(n1)
+    (gen_gdext_id, n3) = take_id(n2)
+    (test_gdext_id, n4) = take_id(n3)
+    (gen_api_id, n5) = take_id(n4)
+    (check_plat_id, n6) = take_id(n5)
+    (roc_glue_id, n7) = take_id(n6)
+    (patch_glue_id, n8) = take_id(n7)
+    (test_abi_id, n9) = take_id(n8)
+    (test_abi_impl_id, n10) = take_id(n9)
+
+    glue_dir = engine_glue_dir(engine)
+    platform_main = engine_platform_main(engine)
+    abi_file = engine_abi_file(engine)
+    gdext_file = engine_gdext_file(engine)
+    gde_call_file = engine_gde_call_file(engine)
+    abi_impl_file = engine_abi_impl_file(engine)
+    slug = engine.slug
+
+    mkdir_glue = mk_cmd(
+        mkdir_glue_id,
+        [],
+        [],
+        [glue_dir],
+        "mkdir",
+        ["-p", glue_dir],
+        "mkdir glue-out/${slug}",
+        "",
+    )
+
+    cp_gde_call = mk_cmd(
+        cp_gde_id,
+        [mkdir_glue_id],
+        ["host/gde_call.template.zig"],
+        [gde_call_file],
+        "cp",
+        ["host/gde_call.template.zig", gde_call_file],
+        "Copy gde_call.zig → ${slug}",
+        "",
+    )
+
+    # outputs: [] until generator guarantees path; depends_on dump still gates order
+    gen_gdext = mk_cmd(
+        gen_gdext_id,
+        List.concat(dump_ids, [mkdir_glue_id]),
+        ["scripts/gdextension_interface.generate.roc"],
+        [],
+        "roc",
+        ["run", "scripts/gdextension_interface.generate.roc"],
+        "Generate gdextension_interface (${slug})",
+        "",
+    )
+
+    test_gdext = mk_cmd(
+        test_gdext_id,
+        [gen_gdext_id],
+        [],
+        [],
+        "zig",
+        ["test", gdext_file],
+        "zig test gdextension_interface (${slug})",
+        "",
+    )
+
+    gen_api = mk_cmd(
+        gen_api_id,
+        dump_ids,
+        ["scripts/extension_api.generate.roc"],
+        [],
+        "roc",
+        ["run", "scripts/extension_api.generate.roc"],
+        "Generate extension_api (${slug})",
+        "",
+    )
+
+    check_plat = mk_cmd(
+        check_plat_id,
+        [gen_gdext_id, gen_api_id],
+        [],
+        [],
+        "roc",
+        ["check", platform_main],
+        "roc check ${platform_main}",
+        "",
+    )
+
+    roc_glue = mk_cmd(
+        roc_glue_id,
+        [check_plat_id, mkdir_glue_id],
+        [paths.zig_glue_roc],
+        [],
+        "roc",
+        [
+            "glue",
+            paths.zig_glue_roc,
+            "${glue_dir}/",
+            platform_main,
+        ],
+        "roc glue → ${slug}/roc_platform_abi.zig",
+        "",
+    )
+
+    patch_glue = find_replace_cmd({
+        id: patch_glue_id,
+        depends_on: [roc_glue_id],
+        file: abi_file,
+        pairs: glue_replace_pairs,
+        description: "find/replace patch roc_platform_abi.zig (${slug})",
+    })
+
+    test_abi = mk_cmd(
+        test_abi_id,
+        [patch_glue_id],
+        [],
+        [],
+        "zig",
+        ["test", abi_file],
+        "zig test roc_platform_abi (${slug})",
+        "",
+    )
+
+    test_abi_impl = mk_cmd(
+        test_abi_impl_id,
+        [patch_glue_id, cp_gde_id],
+        [],
+        [],
+        "zig",
+        ["test", abi_impl_file],
+        "zig test zig_platform_abi_impl (${slug})",
+        "",
+    )
+
+    {
+        cmds: [
+            mkdir_glue,
+            cp_gde_call,
+            gen_gdext,
+            test_gdext,
+            gen_api,
+            check_plat,
+            roc_glue,
+            patch_glue,
+            test_abi,
+            test_abi_impl,
+        ],
+        terminal_ids: [test_gdext_id, test_abi_id, test_abi_impl_id, check_plat_id],
+        next_id: n10,
+    }
+}
+
+phase_hosts_engine : NodeId, List(NodeId), EngineSpec, List(HostTarget), Optimize, CiPaths -> _
+phase_hosts_engine = |start_id, glue_ids, engine, selected, optimize, paths| {
+    var $cmds = []
+    var $clean_ids = []
+    var $id = start_id
+    slug = engine.slug
+
+    for t in selected {
+        (this_id, next) = take_id($id)
+        $id = next
+        path = engine_host_out_path(engine, t)
+        c = mk_cmd(this_id, [], [], [], "rm", ["-f", path], "rm -f ${path}", "")
+        $cmds = List.append($cmds, c)
+        $clean_ids = List.append($clean_ids, this_id)
+    }
+
     var $dirs = []
-    for t in host_list {
-        d = out_dir(t)
+    for t in selected {
+        d = engine_host_out_dir(engine, t)
         if List.contains($dirs, d) {
             {}
         } else {
@@ -258,52 +998,326 @@ mkdir_cmds_for = |host_list, start_id, depends_on| {
         }
     }
 
-    var $cmds = []
-    var $ids = []
-    var $id = start_id
+    var $mkdir_ids = []
     for dir in $dirs {
-        cmd = Build.cmd({
-            id: $id,
-            depends_on: depends_on,
-            inputs: [],
-            outputs: [dir],
-            program: "mkdir",
-            args: ["-p", dir],
-            description: "mkdir -p ${dir}",
-            cwd: "",
-            env: [],
-        })
-        $cmds = List.append($cmds, cmd)
-        $ids = List.append($ids, $id)
-        $id = $id + 1
+        (this_id, next) = take_id($id)
+        $id = next
+        c = mk_cmd(this_id, glue_ids, [], [dir], "mkdir", ["-p", dir], "mkdir -p ${dir}", "")
+        $cmds = List.append($cmds, c)
+        $mkdir_ids = List.append($mkdir_ids, this_id)
     }
-    ($cmds, $ids)
+
+    var $build_ids = []
+    deps = List.concat(List.concat($clean_ids, $mkdir_ids), glue_ids)
+
+    for t in selected {
+        (this_id, next) = take_id($id)
+        $id = next
+        argv = zig_argv(engine, t, optimize, paths.host_entry)
+        emit = engine_host_out_path(engine, t)
+        c = mk_cmd(
+            this_id,
+            deps,
+            [paths.host_entry],
+            [emit],
+            "zig",
+            argv,
+            "compile host ${slug}/${t.name_str} → ${emit}",
+            "",
+        )
+        $cmds = List.append($cmds, c)
+        $build_ids = List.append($build_ids, this_id)
+    }
+
+    {
+        cmds: $cmds,
+        terminal_ids: $build_ids,
+        next_id: $id,
+    }
 }
 
-clean_host_cmds : U64 -> (List(_), List(U64))
-clean_host_cmds = |start_id| {
-    paths = List.map(host_targets, out_path)
+phase_game : {
+    start_id : NodeId,
+    host_ids : List(NodeId),
+    template_ids : List(NodeId),
+    paths : CiPaths,
+    primary : EngineSpec,
+    deep_wasm : Bool,
+} -> _
+phase_game = |p| {
+    paths = p.paths
+    (linux_id, n1) = take_id(p.start_id)
+    (web_id, n2) = take_id(n1)
+    (ar_id, n3) = take_id(n2)
+    (val_host_id, n4) = take_id(n3)
+    (val_app_obj_id, n5) = take_id(n4)
+    (wasm_ld_id, n6) = take_id(n5)
+    (emcc_id, n7) = take_id(n6)
+    (val_final_id, n8) = take_id(n7)
+    (godot_id, n9) = take_id(n8)
 
-    var $cmds = []
-    var $ids = []
-    var $id = start_id
-    for path in paths {
-        cmd = Build.cmd({
-            id: $id,
-            depends_on: [],
-            inputs: [],
-            outputs: [],
-            program: "rm",
-            args: ["-f", path],
-            description: "rm -f ${path}",
-            cwd: "",
-            env: [],
-        })
-        $cmds = List.append($cmds, cmd)
-        $ids = List.append($ids, $id)
-        $id = $id + 1
+    game_deps = List.concat(p.host_ids, p.template_ids)
+    slug = p.primary.slug
+
+    roc_linux = mk_cmd(
+        linux_id,
+        game_deps,
+        [paths.project_main],
+        [paths.project_linux_out],
+        "roc",
+        [
+            "build",
+            paths.project_main,
+            "--target=x64musl",
+            "--no-cache",
+            "--output=${paths.project_linux_out}",
+        ],
+        "Compiling desktop roc game (x64musl, engine=${slug})",
+        "",
+    )
+
+    roc_web = mk_cmd(
+        web_id,
+        game_deps,
+        [paths.project_main],
+        [paths.project_temp_a],
+        "roc",
+        [
+            "build",
+            paths.project_main,
+            "--target=wasm32",
+            "--output=${paths.project_temp_a}",
+        ],
+        "Compiling web roc game (wasm32, engine=${slug})",
+        "",
+    )
+
+    ar_x = mk_cmd(
+        ar_id,
+        [web_id],
+        [paths.project_temp_a],
+        [
+            "${paths.project_dir}/libhost.o.wasm",
+            "${paths.project_dir}/roc_app_llvm_wasm32_speed.o",
+        ],
+        "ar",
+        ["x", paths.project_temp_a, "--output", paths.project_dir],
+        "Extracting for validation (ar x)",
+        "",
+    )
+
+    validate_host = mk_cmd(
+        val_host_id,
+        [ar_id],
+        ["${paths.project_dir}/libhost.o.wasm"],
+        [],
+        "wasm-validate",
+        ["${paths.project_dir}/libhost.o.wasm"],
+        "wasm-validate libhost.o.wasm",
+        "",
+    )
+
+    validate_app_obj = mk_cmd(
+        val_app_obj_id,
+        [ar_id],
+        ["${paths.project_dir}/roc_app_llvm_wasm32_speed.o"],
+        [],
+        "wasm-validate",
+        ["${paths.project_dir}/roc_app_llvm_wasm32_speed.o"],
+        "wasm-validate roc_app_llvm_wasm32_speed.o",
+        "",
+    )
+
+    wasm_ld = mk_cmd(
+        wasm_ld_id,
+        [val_host_id, val_app_obj_id],
+        [
+            "${paths.project_dir}/libhost.o.wasm",
+            "${paths.project_dir}/roc_app_llvm_wasm32_speed.o",
+        ],
+        ["${paths.project_dir}/test.wasm"],
+        "zig",
+        [
+            "wasm-ld",
+            "--fatal-warnings",
+            "--experimental-pic",
+            "--no-entry",
+            "--export-dynamic",
+            "--import-memory",
+            "--import-table",
+            "-shared",
+            "-o",
+            "${paths.project_dir}/test.wasm",
+            "${paths.project_dir}/libhost.o.wasm",
+            "${paths.project_dir}/roc_app_llvm_wasm32_speed.o",
+        ],
+        "Linking with wasm-ld (diagnostic)",
+        "",
+    )
+
+    emcc = mk_cmd(
+        emcc_id,
+        [web_id],
+        [paths.project_temp_a],
+        [paths.project_wasm],
+        "emcc",
+        [
+            paths.project_temp_a,
+            "-o",
+            paths.project_wasm,
+            "-sERROR_ON_UNDEFINED_SYMBOLS=1",
+            "-sSIDE_MODULE=2",
+            "-sEXPORTED_FUNCTIONS=_godot_roc_init",
+            "-O0",
+            "-msimd128",
+        ],
+        "Final Web GDExtension (emcc SIDE_MODULE=2)",
+        "",
+    )
+
+    validate_final = mk_cmd(
+        val_final_id,
+        [emcc_id],
+        [paths.project_wasm],
+        [],
+        "wasm-validate",
+        ["--enable-extended-const", paths.project_wasm],
+        "wasm-validate final game wasm",
+        "",
+    )
+
+    godot_export = mk_cmd(
+        godot_id,
+        [val_final_id, linux_id],
+        [paths.project_godot, paths.project_wasm],
+        ["${paths.project_dir}/export/index.html"],
+        "godot",
+        [
+            paths.project_godot,
+            "--headless",
+            "--export-release",
+            "Web",
+            "./export/index.html",
+        ],
+        "Godot publish to web (primary engine=${slug})",
+        "",
+    )
+
+    base_cmds = [
+        roc_linux,
+        roc_web,
+        ar_x,
+        validate_host,
+        validate_app_obj,
+        emcc,
+        validate_final,
+        godot_export,
+    ]
+
+    cmds =
+        if p.deep_wasm {
+            List.concat(base_cmds, [wasm_ld])
+        } else {
+            base_cmds
+        }
+
+    {
+        cmds: cmds,
+        terminal_ids: [godot_id, linux_id],
+        next_id: n9,
     }
-    ($cmds, $ids)
+}
+
+phase_bundle_engine : NodeId, List(NodeId), List(NodeId), EngineSpec, CiPaths -> _
+phase_bundle_engine = |start_id, gate_ids, host_ids, engine, paths| {
+    (mkdir_out_id, n1) = take_id(start_id)
+    (mkdir_ws_id, n2) = take_id(n1)
+    (copy_plat_id, n3) = take_id(n2)
+    (roc_bundle_id, n4) = take_id(n3)
+
+    slug = engine.slug
+    platform_src = "${engine_platform_dir(engine)}/"
+    platform_dest = engine_bundle_platform_dest(paths.bundle_workspace, engine)
+    wasm_host = "${platform_dest}/targets/wasm32/libhost.o.wasm"
+    musl_host = "${platform_dest}/targets/x64musl/libhost.a"
+    main_roc = "${platform_dest}/main.roc"
+
+    mkdir_out = mk_cmd(
+        mkdir_out_id,
+        gate_ids,
+        [],
+        [paths.bundle_out],
+        "mkdir",
+        ["-p", paths.bundle_out],
+        "Create ${paths.bundle_out}",
+        "",
+    )
+
+    mkdir_ws = mk_cmd(
+        mkdir_ws_id,
+        [mkdir_out_id],
+        [],
+        [paths.bundle_workspace],
+        "mkdir",
+        ["-p", paths.bundle_workspace],
+        "Create bundle workspace",
+        "",
+    )
+
+    copy_platform = mk_cmd(
+        copy_plat_id,
+        List.concat(host_ids, [mkdir_ws_id]),
+        [],
+        [platform_dest],
+        "cp",
+        ["-a", platform_src, platform_dest],
+        "Copy platform-out/${slug} → ${platform_dest}",
+        "",
+    )
+
+    roc_bundle = mk_cmd(
+        roc_bundle_id,
+        [copy_plat_id],
+        [],
+        [],
+        "roc",
+        [
+            "bundle",
+            main_roc,
+            wasm_host,
+            musl_host,
+        ],
+        "roc bundle platform (${slug}) + primary hosts",
+        paths.bundle_workspace,
+    )
+
+    {
+        cmds: [mkdir_out, mkdir_ws, copy_platform, roc_bundle],
+        terminal_ids: [roc_bundle_id],
+        next_id: n4,
+    }
+}
+
+phase_zip_templates : NodeId, List(NodeId), CiPaths -> _
+phase_zip_templates = |start_id, depends_on, paths| {
+    (zip_id, n1) = take_id(start_id)
+
+    zip_templates = mk_cmd(
+        zip_id,
+        depends_on,
+        [],
+        ["${paths.bundle_workspace}/templates.zip"],
+        "zip",
+        ["-r", "templates.zip", ".", "-i", "templates/"],
+        "zip templates",
+        paths.bundle_workspace,
+    )
+
+    {
+        cmds: [zip_templates],
+        terminal_ids: [zip_id],
+        next_id: n1,
+    }
 }
 
 # =============================================================================
@@ -320,789 +1334,114 @@ main! = |args| {
         }
 
     optimize = parse_optimize(user_args)
+    mode = parse_mode(user_args)
+    deep_wasm = List.contains(user_args, "deep-wasm") or mode == Full
 
-    Log.info!("Continuous Integration — consolidated pipeline")
-    Log.info!("Type check / unit tests / lints beyond glue checks are still light")
-    Log.info!("host optimize = ${Str.inspect(optimize)}")
+    Log.info!("CI — engine × host matrix")
+    Log.info!("mode=${mode_label(mode)}  host_optimize=${optimize_label(optimize)}  deep_wasm=${if deep_wasm "yes" else "no"}")
 
-    # ------------------------------------------------------------------
-    # Paths / constants
-    # ------------------------------------------------------------------
-    ci_out = "ci-out"
-    ci_workspace = "ci-out/workspace"
-    project = "my_game"
-    project_template = "ci"
-    project_roc_entrypoint = "main.roc"
-    project_name = "My Game"
-    project_target_linux_binary = "my_game.so"
-    project_dir = "${ci_workspace}/${project}"
-    project_main = "${project_dir}/${project_roc_entrypoint}"
-    project_linux_out = "${project_dir}/${project_target_linux_binary}"
-    project_temp_a = "${project_dir}/temp.a"
-    project_wasm = "${project_dir}/my_game.wasm"
-    project_godot = "${project_dir}/project.godot"
+    paths = default_paths
+    engines = select_engines(mode)
+    build_engines = engines_full_build(engines)
+    selected_hosts = with_baselines(select_hosts(mode))
 
-    bundle_out = "bundle-out"
-    bundle_workspace = "bundle-out/workspace"
-    platform_src = "platform-out/godot/"
-    platform_dest = "${bundle_workspace}/platform"
-    templates_zip = "${bundle_workspace}/templates.zip"
-
-    # ==================================================================
-    # Phase 0 — CI workspace
-    # ==================================================================
-    rmdir_ci_id = 0
-    rmdir_ci = Build.cmd({
-        id: rmdir_ci_id,
-        depends_on: [],
-        inputs: [],
-        outputs: [ci_out],
-        program: "rm",
-        args: ["-rf", ci_out],
-        description: "Delete ci-out",
-        cwd: "",
-        env: [],
-    })
-
-    mkdir_ci_id = 1
-    mkdir_ci = Build.cmd({
-        id: mkdir_ci_id,
-        depends_on: [rmdir_ci_id],
-        inputs: [],
-        outputs: [ci_out],
-        program: "mkdir",
-        args: ["-p", ci_out],
-        description: "Create ci-out",
-        cwd: "",
-        env: [],
-    })
-
-    mkdir_ws_id = 2
-    mkdir_ws = Build.cmd({
-        id: mkdir_ws_id,
-        depends_on: [mkdir_ci_id],
-        inputs: [],
-        outputs: [ci_workspace],
-        program: "mkdir",
-        args: ["-p", ci_workspace],
-        description: "Create CI workspace",
-        cwd: "",
-        env: [],
-    })
-
-    copy_template_id = 3
-    copy_template = Build.cmd({
-        id: copy_template_id,
-        depends_on: [mkdir_ws_id],
-        inputs: [],
-        outputs: [project_dir],
-        program: "cp",
-        args: ["-a", "templates/${project_template}", project_dir],
-        description: "Create godot-roc app \"${project_name}\" in \"${project_dir}\"",
-        cwd: "",
-        env: [],
-    })
-
-    # ==================================================================
-    # Phase 1 — Dump extension APIs (from scripts/dump.roc)
-    # ==================================================================
-    godot_iface_id = 10
-    godot_iface = Build.cmd({
-        id: godot_iface_id,
-        depends_on: [],
-        inputs: [],
-        outputs: [],
-        program: "godot",
-        args: ["--headless", "--dump-gdextension-interface"],
-        description: "Godot: dump-gdextension-interface",
-        cwd: "vendor-out/godot",
-        env: [],
-    })
-
-    godot_iface_json_id = 11
-    godot_iface_json = Build.cmd({
-        id: godot_iface_json_id,
-        depends_on: [],
-        inputs: [],
-        outputs: [],
-        program: "godot",
-        args: ["--headless", "--dump-gdextension-interface-json"],
-        description: "Godot: dump-gdextension-interface-json",
-        cwd: "vendor-out/godot",
-        env: [],
-    })
-
-    godot_api_id = 12
-    godot_api = Build.cmd({
-        id: godot_api_id,
-        depends_on: [],
-        inputs: [],
-        outputs: [],
-        program: "godot",
-        args: ["--headless", "--dump-extension-api"],
-        description: "Godot: dump-extension-api",
-        cwd: "vendor-out/godot",
-        env: [],
-    })
-
-    godot451_iface_id = 13
-    godot451_iface = Build.cmd({
-        id: godot451_iface_id,
-        depends_on: [],
-        inputs: [],
-        outputs: [],
-        program: "godot4.5",
-        args: ["--headless", "--dump-gdextension-interface"],
-        description: "Godot 4.5.1: dump-gdextension-interface",
-        cwd: "vendor-out/godot_4_5_1",
-        env: [],
-    })
-
-    godot451_api_id = 14
-    godot451_api = Build.cmd({
-        id: godot451_api_id,
-        depends_on: [],
-        inputs: [],
-        outputs: [],
-        program: "godot4.5",
-        args: ["--headless", "--dump-extension-api"],
-        description: "Godot 4.5.1: dump-extension-api",
-        cwd: "vendor-out/godot_4_5_1",
-        env: [],
-    })
-
-    redot_iface_id = 15
-    redot_iface = Build.cmd({
-        id: redot_iface_id,
-        depends_on: [],
-        inputs: [],
-        outputs: [],
-        program: "redot",
-        args: ["--headless", "--dump-gdextension-interface"],
-        description: "Redot: dump-gdextension-interface",
-        cwd: "vendor-out/redot",
-        env: [],
-    })
-
-    redot_api_id = 16
-    redot_api = Build.cmd({
-        id: redot_api_id,
-        depends_on: [],
-        inputs: [],
-        outputs: [],
-        program: "redot",
-        args: ["--headless", "--dump-extension-api"],
-        description: "Redot: dump-extension-api",
-        cwd: "vendor-out/redot",
-        env: [],
-    })
-
-    rex_iface_id = 17
-    rex_iface = Build.cmd({
-        id: rex_iface_id,
-        depends_on: [],
-        inputs: [],
-        outputs: [],
-        program: "rex",
-        args: ["--headless", "--dump-gdextension-interface"],
-        description: "Rex: dump-gdextension-interface",
-        cwd: "vendor-out/rex",
-        env: [],
-    })
-
-    rex_api_id = 18
-    rex_api = Build.cmd({
-        id: rex_api_id,
-        depends_on: [],
-        inputs: [],
-        outputs: [],
-        program: "rex",
-        args: ["--headless", "--dump-extension-api"],
-        description: "Rex: dump-extension-api",
-        cwd: "vendor-out/rex",
-        env: [],
-    })
-
-    dump_done_deps = [
-        godot_iface_id,
-        godot_iface_json_id,
-        godot_api_id,
-        godot451_iface_id,
-        godot451_api_id,
-        redot_iface_id,
-        redot_api_id,
-        rex_iface_id,
-        rex_api_id,
-    ]
-
-    # ==================================================================
-    # Phase 2 — Glue (from scripts/glue.roc)
-    # ==================================================================
-    cp_gde_call_id = 20
-    cp_gde_call = Build.cmd({
-        id: cp_gde_call_id,
-        depends_on: [],
-        inputs: ["host/gde_call.template.zig"],
-        outputs: ["host/glue-out/godot/gde_call.zig"],
-        program: "cp",
-        args: ["host/gde_call.template.zig", "host/glue-out/godot/gde_call.zig"],
-        description: "Copy gde_call.zig",
-        cwd: "",
-        env: [],
-    })
-
-    gen_gdext_id = 21
-    gen_gdext = Build.cmd({
-        id: gen_gdext_id,
-        depends_on: dump_done_deps,
-        inputs: ["scripts/gdextension_interface.generate.roc"],
-        outputs: ["host/glue-out/godot/gdextension_interface.zig"],
-        program: "roc",
-        args: ["run", "scripts/gdextension_interface.generate.roc"],
-        description: "Generate gdextension_interface bindings",
-        cwd: "",
-        env: [],
-    })
-
-    test_gdext_id = 22
-    test_gdext = Build.cmd({
-        id: test_gdext_id,
-        depends_on: [gen_gdext_id],
-        inputs: ["host/glue-out/godot/gdextension_interface.zig"],
-        outputs: [],
-        program: "zig",
-        args: ["test", "host/glue-out/godot/gdextension_interface.zig"],
-        description: "zig test host/glue-out/godot/gdextension_interface.zig",
-        cwd: "",
-        env: [],
-    })
-
-    gen_api_id = 23
-    gen_api = Build.cmd({
-        id: gen_api_id,
-        depends_on: dump_done_deps,
-        inputs: ["scripts/extension_api.generate.roc"],
-        outputs: [],
-        program: "roc",
-        args: ["run", "scripts/extension_api.generate.roc"],
-        description: "Generate extension_api bindings",
-        cwd: "",
-        env: [],
-    })
-
-    check_plat_id = 24
-    check_plat = Build.cmd({
-        id: check_plat_id,
-        depends_on: [gen_gdext_id, gen_api_id],
-        inputs: ["platform-out/godot/main.roc"],
-        outputs: [],
-        program: "roc",
-        args: ["check", "platform-out/godot/main.roc"],
-        description: "roc check platform-out/godot/main.roc",
-        cwd: "",
-        env: [],
-    })
-
-    roc_glue_id = 25
-    roc_glue = Build.cmd({
-        id: roc_glue_id,
-        depends_on: [check_plat_id],
-        inputs: [
-            "platform-out/godot/main.roc",
-            "vendor/roc/git-a3ce7f1/ZigGlue.roc",
-        ],
-        outputs: ["host/glue-out/godot/roc_platform_abi.zig"],
-        program: "roc",
-        args: [
-            "glue",
-            "vendor/roc/git-a3ce7f1/ZigGlue.roc",
-            "host/glue-out/godot/",
-            "platform-out/godot/main.roc",
-        ],
-        description: "roc glue → host/glue-out/godot/roc_platform_abi.zig",
-        cwd: "",
-        env: [],
-    })
-
-    patch_glue_id = 26
-    patch_glue = Build.cmd({
-        id: patch_glue_id,
-        depends_on: [roc_glue_id],
-        inputs: ["host/glue-out/godot/roc_platform_abi.zig"],
-        outputs: ["host/glue-out/godot/roc_platform_abi.zig"],
-        program: "sh",
-        args: [
-            "-c",
-            \\set -eu
-            \\FILE=host/glue-out/godot/roc_platform_abi.zig
-            \\
-            \\# --- pattern files (quoted heredocs = literal text) ---
-            \\cat >"$FILE.find1" <<'ENDFIND1'
-            \\    fn nativeWriteStderr(_: ?*anyopaque, data: []const u8) void {
-            \\        std.Io.File.stderr().writeStreamingAll(std.Io.Threaded.global_single_threaded.io(), data) catch {};
-            \\    }
-            \\ENDFIND1
-            \\
-            \\cat >"$FILE.repl1" <<'ENDREPL1'
-            \\// PATCHED BY scripts/ci.roc (glue)
-            \\fn nativeWriteStderr(_: ?*anyopaque, data: []const u8) void {
-            \\    _ = data;
-            \\}
-            \\ENDREPL1
-            \\
-            \\cat >"$FILE.find2" <<'ENDFIND2'
-            \\    fn nativeOnFatal(_: ?*anyopaque) noreturn {
-            \\        std.process.exit(1);
-            \\    }
-            \\ENDFIND2
-            \\
-            \\cat >"$FILE.repl2" <<'ENDREPL2'
-            \\// PATCHED BY scripts/ci.roc (glue)
-            \\fn nativeOnFatal(_: ?*anyopaque) noreturn {
-            \\    if (comptime @import("builtin").cpu.arch != .wasm32) {
-            \\        std.debug.print("[roc] onFatal / crash path", .{});
-            \\        std.process.exit(1);
-            \\    } else {
-            \\        @trap();
-            \\    }
-            \\}
-            \\ENDREPL2
-            \\
-            \\# --- literal first-occurrence replace (awk) ---
-            \\replace_first() {
-            \\    _body="$1"
-            \\    _find="$2"
-            \\    _repl="$3"
-            \\    awk -v bodyf="$_body" -v findf="$_find" -v replf="$_repl" '
-            \\        function readfile(f,    s, line) {
-            \\            s = ""
-            \\            while ((getline line < f) > 0)
-            \\                s = s line ORS
-            \\            close(f)
-            \\            return s
-            \\        }
-            \\        BEGIN {
-            \\            find = readfile(findf)
-            \\            repl = readfile(replf)
-            \\            body = readfile(bodyf)
-            \\            idx = index(body, find)
-            \\            if (idx == 0) {
-            \\                print "[scripts/ci.roc] pattern not found in " bodyf > "/dev/stderr"
-            \\                printf "%s", find > "/dev/stderr"
-            \\                exit 1
-            \\            }
-            \\            out = substr(body, 1, idx - 1) repl substr(body, idx + length(find))
-            \\            printf "%s", out > bodyf ".new"
-            \\        }
-            \\    '
-            \\    mv "$_body.new" "$_body"
-            \\}
-            \\
-            \\replace_first "$FILE" "$FILE.find1" "$FILE.repl1"
-            \\replace_first "$FILE" "$FILE.find2" "$FILE.repl2"
-            \\
-            \\rm -f "$FILE.find1" "$FILE.repl1" "$FILE.find2" "$FILE.repl2"
-            \\printf '%s\\n' "patched $FILE"
-            ,
-        ],
-        description: "Patch roc_platform_abi.zig (stderr + onFatal)",
-        cwd: "",
-        env: [],
-    })
-
-    test_abi_id = 27
-    test_abi = Build.cmd({
-        id: test_abi_id,
-        depends_on: [patch_glue_id],
-        inputs: ["host/glue-out/godot/roc_platform_abi.zig"],
-        outputs: [],
-        program: "zig",
-        args: ["test", "host/glue-out/godot/roc_platform_abi.zig"],
-        description: "zig test host/glue-out/godot/roc_platform_abi.zig",
-        cwd: "",
-        env: [],
-    })
-
-    test_abi_impl_id = 28
-    test_abi_impl = Build.cmd({
-        id: test_abi_impl_id,
-        depends_on: [patch_glue_id, cp_gde_call_id],
-        inputs: ["host/glue-out/godot/zig_platform_abi_impl.zig"],
-        outputs: [],
-        program: "zig",
-        args: ["test", "host/glue-out/godot/zig_platform_abi_impl.zig"],
-        description: "zig test host/glue-out/godot/zig_platform_abi_impl.zig",
-        cwd: "",
-        env: [],
-    })
-
-    glue_done_deps = [test_gdext_id, test_abi_id, test_abi_impl_id, check_plat_id]
-
-    # ==================================================================
-    # Phase 3 — Host builds (inlined from scripts/build.roc)
-    # ==================================================================
-    (clean_cmds, clean_ids) = clean_host_cmds(100)
-
-    mkdir_start = 100 + List.len(clean_cmds)
-    (mkdir_cmds, mkdir_ids) = mkdir_cmds_for(host_targets, mkdir_start, glue_done_deps)
-
-    host_build_start = mkdir_start + List.len(mkdir_cmds)
-    var $host_build_cmds = []
-    var $host_build_ids = []
-    var $hid = host_build_start
-    for t in host_targets {
-        deps = List.concat(List.concat(clean_ids, mkdir_ids), glue_done_deps)
-        cmd = build_one_host_cmd(t, optimize, $hid, deps)
-        $host_build_cmds = List.append($host_build_cmds, cmd)
-        $host_build_ids = List.append($host_build_ids, $hid)
-        $hid = $hid + 1
+    Log.info!("engines (${List.len(engines).to_str()}):")
+    for e in engines {
+        Log.info!("  - ${e.slug} [${pipeline_label(e.pipeline)}] vendor=${engine_vendor_dir(e)}")
+    }
+    Log.info!("full-build engines (${List.len(build_engines).to_str()}): platform-out/<slug>/ + hosts + bundle")
+    Log.info!("host targets (${List.len(selected_hosts).to_str()}):")
+    for t in selected_hosts {
+        Log.info!("  - ${t.name_str} (${t.zig_triple})")
     }
 
-    # ==================================================================
-    # Phase 4 — App compile + wasm validation + Godot export
-    # ==================================================================
-    roc_linux_id = 200
-    roc_linux = Build.cmd({
-        id: roc_linux_id,
-        depends_on: List.concat($host_build_ids, [copy_template_id]),
-        inputs: [project_main],
-        outputs: [project_linux_out],
-        program: "roc",
-        args: [
-            "build",
-            project_main,
-            "--target=x64musl",
-            "--no-cache",
-            "--output=${project_linux_out}",
-        ],
-        description: "Compiling desktop roc app (x64musl)",
-        cwd: "",
-        env: [],
-    })
-
-    roc_web_id = 201
-    roc_web = Build.cmd({
-        id: roc_web_id,
-        depends_on: List.concat($host_build_ids, [copy_template_id]),
-        inputs: [project_main],
-        outputs: [project_temp_a],
-        program: "roc",
-        args: [
-            "build",
-            project_main,
-            "--target=wasm32",
-            "--output=${project_temp_a}",
-        ],
-        description: "Compiling web roc app (wasm32)",
-        cwd: "",
-        env: [],
-    })
-
-    ar_x_id = 202
-    ar_x = Build.cmd({
-        id: ar_x_id,
-        depends_on: [roc_web_id],
-        inputs: [project_temp_a],
-        outputs: [
-            "${project_dir}/libhost.o.wasm",
-            "${project_dir}/roc_app_llvm_wasm32_speed.o",
-        ],
-        program: "ar",
-        args: [
-            "x",
-            project_temp_a,
-            "--output",
-            project_dir,
-        ],
-        description: "Extracting for validation (ar x)",
-        cwd: "",
-        env: [],
-    })
-
-    ls_id = 203
-    ls = Build.cmd({
-        id: ls_id,
-        depends_on: [ar_x_id],
-        inputs: [project_dir],
-        outputs: [],
-        program: "ls",
-        args: ["-al", project_dir],
-        description: "List extracted files",
-        cwd: "",
-        env: [],
-    })
-
-    validate_host_id = 204
-    validate_host = Build.cmd({
-        id: validate_host_id,
-        depends_on: [ar_x_id],
-        inputs: ["${project_dir}/libhost.o.wasm"],
-        outputs: [],
-        program: "wasm-validate",
-        args: ["${project_dir}/libhost.o.wasm"],
-        description: "Validating host... wasm-validate libhost.o.wasm",
-        cwd: "",
-        env: [],
-    })
-
-    validate_app_id = 205
-    validate_app = Build.cmd({
-        id: validate_app_id,
-        depends_on: [ar_x_id],
-        inputs: ["${project_dir}/roc_app_llvm_wasm32_speed.o"],
-        outputs: [],
-        program: "wasm-validate",
-        args: ["${project_dir}/roc_app_llvm_wasm32_speed.o"],
-        description: "Validating app... wasm-validate roc_app_llvm_wasm32_speed.o",
-        cwd: "",
-        env: [],
-    })
-
-    wasm_ld_id = 206
-    wasm_ld = Build.cmd({
-        id: wasm_ld_id,
-        depends_on: [validate_host_id, validate_app_id],
-        inputs: [
-            "${project_dir}/libhost.o.wasm",
-            "${project_dir}/roc_app_llvm_wasm32_speed.o",
-        ],
-        outputs: ["${project_dir}/test.wasm"],
-        program: "zig",
-        args: [
-            "wasm-ld",
-            "--fatal-warnings",
-            "--experimental-pic",
-            "--no-entry",
-            "--export-dynamic",
-            "--import-memory",
-            "--import-table",
-            "-shared",
-            "-o",
-            "${project_dir}/test.wasm",
-            "${project_dir}/libhost.o.wasm",
-            "${project_dir}/roc_app_llvm_wasm32_speed.o",
-        ],
-        description: "Linking with wasm-ld",
-        cwd: "",
-        env: [],
-    })
-
-    emcc_id = 207
-    emcc = Build.cmd({
-        id: emcc_id,
-        depends_on: [roc_web_id],
-        inputs: [project_temp_a],
-        outputs: [project_wasm],
-        program: "emcc",
-        args: [
-            project_temp_a,
-            "-o",
-            project_wasm,
-            "-sERROR_ON_UNDEFINED_SYMBOLS=1",
-            "-sSIDE_MODULE=2",
-            "-sEXPORTED_FUNCTIONS=_godot_roc_init",
-            "-O0",
-            "-msimd128",
-        ],
-        description: "Compiling Final Web GDExtension (wasm32-emscripten SIDE_MODULE=2)",
-        cwd: "",
-        env: [],
-    })
-
-    validate_final_id = 208
-    validate_final = Build.cmd({
-        id: validate_final_id,
-        depends_on: [emcc_id],
-        inputs: [project_wasm],
-        outputs: [],
-        program: "wasm-validate",
-        args: ["--enable-extended-const", project_wasm],
-        description: "Validating app... wasm-validate --enable-extended-const my_game.wasm",
-        cwd: "",
-        env: [],
-    })
-
-    # Godot export preset should have Extensions Support = On, Thread Support = Off
-    godot_export_id = 209
-    godot_export = Build.cmd({
-        id: godot_export_id,
-        depends_on: [validate_final_id, roc_linux_id],
-        inputs: [project_godot, project_wasm],
-        outputs: ["${project_dir}/export/index.html"],
-        program: "godot",
-        args: [
-            project_godot,
-            "--headless",
-            "--export-release",
-            "Web",
-            "./export/index.html",
-        ],
-        description: "Godot publish to web",
-        cwd: "",
-        env: [],
-    })
-
-    # ==================================================================
-    # Phase 5 — Bundle (from scripts/bundle.roc)
-    # ==================================================================
-    mkdir_bundle_out_id = 300
-    mkdir_bundle_out = Build.cmd({
-        id: mkdir_bundle_out_id,
-        depends_on: [godot_export_id],
-        inputs: [],
-        outputs: [bundle_out],
-        program: "mkdir",
-        args: ["-p", bundle_out],
-        description: "Create bundle-out",
-        cwd: "",
-        env: [],
-    })
-
-    mkdir_bundle_ws_id = 301
-    mkdir_bundle_ws = Build.cmd({
-        id: mkdir_bundle_ws_id,
-        depends_on: [mkdir_bundle_out_id],
-        inputs: [],
-        outputs: [bundle_workspace],
-        program: "mkdir",
-        args: ["-p", bundle_workspace],
-        description: "Create bundle workspace",
-        cwd: "",
-        env: [],
-    })
-
-    copy_platform_id = 302
-    copy_platform = Build.cmd({
-        id: copy_platform_id,
-        depends_on: List.concat($host_build_ids, [mkdir_bundle_ws_id]),
-        inputs: [],
-        outputs: [platform_dest],
-        program: "cp",
-        args: ["-a", platform_src, platform_dest],
-        description: "Copy platform/ → ${platform_dest}",
-        cwd: "",
-        env: [],
-    })
-
-    roc_bundle_id = 303
-    roc_bundle = Build.cmd({
-        id: roc_bundle_id,
-        depends_on: [copy_platform_id],
-        inputs: [
-            "${platform_dest}/main.roc",
-            "${platform_dest}/targets/wasm32/libhost.o.wasm",
-            "${platform_dest}/targets/x64musl/libhost.a",
-        ],
-        outputs: [],
-        program: "roc",
-        args: [
-            "bundle",
-            "${platform_dest}/main.roc",
-            "${platform_dest}/targets/wasm32/libhost.o.wasm",
-            "${platform_dest}/targets/x64musl/libhost.a",
-        ],
-        description: "roc bundle platform/main.roc + host objects",
-        cwd: bundle_workspace,
-        env: [],
-    })
-
-    zip_templates_id = 304
-    zip_templates = Build.cmd({
-        id: zip_templates_id,
-        depends_on: [roc_bundle_id],
-        inputs: [],
-        outputs: [templates_zip],
-        program: "zip",
-        args: [
-            "-r",
-            "templates.zip",
-            ".",
-            "-i",
-            "templates/",
-        ],
-        description: "zip -r templates.zip . -i templates/",
-        cwd: bundle_workspace,
-        env: [],
-    })
-
-    # ==================================================================
-    # Graph
-    # ==================================================================
-    graph = Build.graph(
-        List.concat(
-            [
-                rmdir_ci,
-                mkdir_ci,
-                mkdir_ws,
-                copy_template,
-                # dump
-                godot_iface,
-                godot_iface_json,
-                godot_api,
-                godot451_iface,
-                godot451_api,
-                redot_iface,
-                redot_api,
-                rex_iface,
-                rex_api,
-                # glue
-                cp_gde_call,
-                gen_gdext,
-                test_gdext,
-                gen_api,
-                check_plat,
-                roc_glue,
-                patch_glue,
-                test_abi,
-                test_abi_impl,
-            ],
-            List.concat(
-                clean_cmds,
-                List.concat(
-                    mkdir_cmds,
-                    List.concat(
-                        $host_build_cmds,
-                        [
-                            roc_linux,
-                            roc_web,
-                            ar_x,
-                            ls,
-                            validate_host,
-                            validate_app,
-                            wasm_ld,
-                            emcc,
-                            validate_final,
-                            godot_export,
-                            mkdir_bundle_out,
-                            mkdir_bundle_ws,
-                            copy_platform,
-                            roc_bundle,
-                            zip_templates,
-                        ],
-                    ),
-                ),
-            ),
-        ),
-    )
-
-    match Build.run!(graph) {
-        Ok({}) => {
-            Log.info!("all tasks finished")
-            Log.info!("")
-            Log.info!("CI workspace: ${project_dir}")
-            Log.info!("Bundle workspace: ${bundle_workspace}")
-            Log.info!("")
-            Log.info!("To test the godot project:")
-            Log.info!("  godot ci-out/workspace/my_game/project.godot")
-            Log.info!("")
-            Log.info!("To test the exported web app:")
-            Log.info!("  SERVE_PATH='${project_dir}/export' roc run scripts/serve.roc")
-            Log.info!("  then open http://localhost:8000/index.html")
-            Ok({})
-        }
-        Err(BuildFailed(msg)) => {
-            Log.error!(msg)
+    match primary_engine(build_engines) {
+        Err(NoPrimaryEngine) => {
+            Log.error!("No FullBuild primary engine selected")
             Err(Exit(1))
+        }
+        Ok(primary) => {
+            ws = phase_workspace(0, paths)
+            dump = phase_dump(ws.next_id, engines)
+
+            var $cmds = List.concat(ws.cmds, dump.cmds)
+            var $id = dump.next_id
+            var $primary_host_ids = []
+            var $bundle_gate_hosts = []
+
+            # Glue + hosts + (later) bundle only for FullBuild engines
+            for eng in build_engines {
+                g = phase_glue_engine($id, dump.terminal_ids, eng, paths)
+                $cmds = List.concat($cmds, g.cmds)
+                $id = g.next_id
+
+                h = phase_hosts_engine($id, g.terminal_ids, eng, selected_hosts, optimize, paths)
+                $cmds = List.concat($cmds, h.cmds)
+                $id = h.next_id
+                $bundle_gate_hosts = List.concat($bundle_gate_hosts, h.terminal_ids)
+
+                if eng.is_primary {
+                    $primary_host_ids = h.terminal_ids
+                } else {
+                    {}
+                }
+            }
+
+            game_phase = phase_game({
+                start_id: $id,
+                host_ids: $primary_host_ids,
+                template_ids: ws.terminal_ids,
+                paths: paths,
+                primary: primary,
+                deep_wasm: deep_wasm,
+            })
+            $cmds = List.concat($cmds, game_phase.cmds)
+            $id = game_phase.next_id
+
+            var $bundle_terminals = []
+            for eng in build_engines {
+                b = phase_bundle_engine(
+                    $id,
+                    game_phase.terminal_ids,
+                    $bundle_gate_hosts,
+                    eng,
+                    paths,
+                )
+                $cmds = List.concat($cmds, b.cmds)
+                $id = b.next_id
+                $bundle_terminals = List.concat($bundle_terminals, b.terminal_ids)
+            }
+
+            zip = phase_zip_templates($id, $bundle_terminals, paths)
+            $cmds = List.concat($cmds, zip.cmds)
+
+            graph = Build.graph($cmds)
+
+            match Build.run!(graph) {
+                Ok({}) => {
+                    Log.info!("all tasks finished")
+                    Log.info!("CI workspace: ${paths.project_dir}")
+                    Log.info!("Bundle workspace: ${paths.bundle_workspace}")
+                    for eng in build_engines {
+                        Log.info!("  platform-${eng.slug}/")
+                    }
+                    Log.info!("Dump-only engines (no platform codegen yet):")
+                    for e in engines {
+                        match e.pipeline {
+                            DumpOnly => Log.info!("  - ${e.slug}")
+                            FullBuild => {}
+                        }
+                    }
+                    Log.info!("Web export test:")
+                    Log.info!("  SERVE_PATH='${paths.project_dir}/export' roc run scripts/serve.roc")
+                    Log.info!("  open http://localhost:8000/index.html")
+                    Ok({})
+                }
+                Err(BuildFailed(msg)) => {
+                    Log.error!(msg)
+                    Err(Exit(1))
+                }
+            }
         }
     }
 }

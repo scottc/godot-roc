@@ -54,3 +54,6 @@ host/glue-out/godot/
 platform-out/targets/
 platform-out/
 host/glue-out/godot/gde_call.zig
+host/glue-out/godot_4_5_1/gde_call.zig
+host/glue-out/redot/gde_call.zig
+host/glue-out/rex/gde_call.zig
