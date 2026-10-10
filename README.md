@@ -22,12 +22,50 @@ Live web wasm32-emscripten demo:
 
 The binding generator will allow for multi-engine & multi-version projects, which can help facilitate engine migration or games targeting an array of engines. As well as custom trimmed down APIs for "just my use-case", for example a 2D project where you don't need 3D apis.
 
-## Build & Run Binding Generator
+## Binding Generator Status - 2026-10-10
 
-```sh
-nix develop
-roc run scripts/ci.roc
-```
+> Snapshot of the **godot-roc** binding generator (from `extension_api.json`).  
+> Status is intentionally conservative so new users can see what’s real vs. stubbed.
+
+| Area | Status | Notes |
+|------|--------|-------|
+| **Engine support** | Partial | Godot 4.x primary. Multi-engine tags exist (`Godot4_7`, `Godot4_5`, `Redot26`) but runtime/compile selection is still mostly hardcoded. |
+| **Engine version** | Godot 4.7 (header-driven) | `EngineInfo` is generated from the dumped `extension_api.json` header (`version_major/minor/patch` + full name). Platform identity currently fixed as `Godot4_7`. |
+| **Roc API availability** | High (surface) | Full generation of: Host signatures, GlobalConstants, GlobalEnums, BuiltinClassSizes/MemberOffsets, NativeStructures, UtilityFunctions, math value types, builtin classes, Object classes, singletons, and platform `main.roc`. |
+| **Zig stubs** | Yes (non-simple) | Methods / utility functions that are **vararg** or use non-wireable types fall back to stub bodies (`return 0` / `zeroes` / `undefined`). |
+| **Functioning Zig implementations** | Partial (simple path) | Live for **simple** signatures: scalars (`bool`/`int`/`float`/`double`/`void`), `String`/`StringName`/`NodePath`, and math struct builtins. Uses `callBuiltin` / `callInstance` / `callUtility` + singleton lookup. |
+| **CpuArch–OS support** | Partial | Declared platform targets: `x64musl`, `wasm32`, `x64win`, `arm64win`, `x64mingw`, `arm64mingw`. CI currently exercises **x64musl** (desktop `.so`) and **wasm32** (web GDExtension) most thoroughly. |
+| **Gameplay surface** | Minimal viable | Platform hooks: `scene_init!`, `ready!`, `process!`, `physics_process!`. Facade: `register_class!`, `print_error!`, `print_warning!`, `engine_runtime_ok!`, `target_engine!`. Math types are usable; most class/builtin methods are exposed in Roc and work when they hit the simple Zig path. |
+| **Properties** | Comment-only | Generated as documentation comments (getter/setter names). No dedicated Roc property accessors yet. |
+| **Signals** | Comment-only | Generated as documentation comments. No connect/emit surface yet. |
+| **Enums / bitfields** | Roc types + int ABI | Enums appear as Roc tag unions where generated; ABI side often collapses to `I64`/`i64`. |
+| **Variant / containers** | Opaque handles | `Variant`, `Array`, `Dictionary`, packed/typed arrays, `RID`, `Callable`, `Signal` → `U64` / `u64` handles (no high-level Roc API yet). |
+| **Overall completeness** | **~35–45%** (MVP) | Strong **codegen + type surface** and a working **simple-call path**. Not yet a full Godot scripting experience (properties, signals, complex types, multi-engine, broad OS matrix). |
+
+### Legend
+
+| Symbol | Meaning |
+|--------|---------|
+| **High** | Generated and intended for use |
+| **Partial** | Present but incomplete / limited paths |
+| **Stub** | Signature exists; body is placeholder |
+| **Comment-only** | Documented in Roc, not callable yet |
+
+### What works today (practical)
+
+- Generate Roc + Zig ABI from a Godot `extension_api.json`
+- Math value types (`Vector2`…`Color`, transforms, etc.) with matching Zig layouts
+- Call **simple** builtin/class/utility methods through the host
+- Register classes and run the basic game loop callbacks
+- Build **Linux (x64musl)** and **Web (wasm32)** paths in CI
+
+### What’s next (high impact)
+
+1. Widen Zig wiring beyond “simple” types (Variant, arrays, objects as first-class)
+2. Properties + signals as real Roc APIs
+3. True multi-engine / multi-version selection (drop hardcoding)
+4. Broader CpuArch–OS validation (Windows ARM/x64, etc.)
+5. Replace remaining stubs with real `ptrcall` / vararg paths
 
 ## Binding comparison
 
@@ -116,3 +154,46 @@ godot-roc is developed & maintained by a solo dev; me. Here are some things that
 - **Freedom to continue working on godot-roc**, as how I see fit... For me, I just generally enjoy the process of experimenting with new technology, dealing with new & difficult challenges. And ultimately to serve the needs & desires of game developers & gamers. And I hope that you find this project to be extremely useful.
 
 - **Freedom to move onto the next project**, while this project is great. I eventually see the need to swap out the engine, to a more modern, open-source, high performance design that can out-compete unreal & unity. And the godot-4.5.1 style bindings could be a limiting factor in engine design. As such I have my eyes on the next generation ECS-like engines; bevy and alike.
+
+## Scripts - For platform maintainers.
+
+The scripts folder is for platform generator maintainers, to perform a variety of automated tasks.
+
+## Build & Run Binding Generator - For platform maintainers.
+
+```sh
+nix develop
+roc run scripts/ci.roc
+```
+
+## Updating - For platform maintainers.
+
+> [!IMPORTANT]
+> As a platform maintainer, you are expected to robustly handle security & performance.
+> 
+> As such you are tasked with ensuring a minimal attack surface & performance costs to end users & game developers.
+>
+> In addition, you are also tasked with handling your own security, so game developers & end users are not compromised by proxy.
+>
+> There will be some need to automate tasks, like updating engine versions, generating new binding & glue.
+>
+> You are expected to check the platform, and read and understand the consiqences of each script in their entirely, before running them. Or at least running them inside of an isolated sandbox, where you can protect yourself.
+>
+
+This project is mostly just generating glue.
+
+game engine <-> zig <-> roc
+
+## Overview - For platform maintainers.
+
+- `scripts/ci.roc`: CI script that is triggered to run on every commit to master branch, to build and test everything; to "continously intergrate" code & ensure software quality.
+
+- `scripts/gdextension_interface.generate.roc`: Generates zig glue from `gdextension_interface.h`
+
+- `scripts/extension_api.generate.roc`: Generates roc & zig glue from `extension_api.json`
+
+## Important tools & commands - For platform maintainers.
+
+- `nix flake update`: Upgrade the dev tools, you'll need to manually upgrade some important pins, see: `flake.nix`.
+
+- `nix develop`: Enter the development environment
