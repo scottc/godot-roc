@@ -13,10 +13,6 @@
 #   quick  — primary hosts; dump selected engines; full pipeline only where builds_platform
 #   full   — dump full engine matrix; host CPU/OS matrix for engines with builds_platform
 #
-# Note: extension_api / platform codegen currently emits platform-out/godot/ only.
-# Other engines are DumpOnly until generators accept --engine=<slug> and write
-# platform-out/<slug>/ + host/glue-out/<slug>/.
-#
 
 ## Continuous Integration — engine × host matrix (roc-build)
 app [main!] {
@@ -287,7 +283,6 @@ engine_specs = [
         program: "godot",
         required_in_full: Bool.True,
         is_primary: Bool.True,
-        # Only engine with working platform codegen today
         pipeline: FullBuild,
         dumps: [
             {
@@ -316,7 +311,7 @@ engine_specs = [
         program: "godot4.5",
         required_in_full: Bool.True,
         is_primary: Bool.False,
-        pipeline: DumpOnly,
+        pipeline: FullBuild,
         dumps: [
             {
                 kind: GdextensionInterface,
@@ -338,7 +333,7 @@ engine_specs = [
         program: "redot",
         required_in_full: Bool.True,
         is_primary: Bool.False,
-        pipeline: DumpOnly,
+        pipeline: FullBuild,
         dumps: [
             {
                 kind: GdextensionInterface,
@@ -360,7 +355,7 @@ engine_specs = [
         program: "rex",
         required_in_full: Bool.False,
         is_primary: Bool.False,
-        pipeline: DumpOnly,
+        pipeline: FullBuild,
         dumps: [
             {
                 kind: GdextensionInterface,
@@ -867,10 +862,10 @@ phase_glue_engine = |start_id, dump_ids, engine, paths| {
     gen_gdext = mk_cmd(
         gen_gdext_id,
         List.concat(dump_ids, [mkdir_glue_id]),
-        ["scripts/gdextension_interface.generate.roc"],
+        [], # "scripts/gdextension_interface.generate.roc"
         [],
         "roc",
-        ["run", "scripts/gdextension_interface.generate.roc"],
+        ["run", "scripts/gdextension_interface.generate.roc", "--", "--engine=${slug}"],
         "Generate gdextension_interface (${slug})",
         "",
     )
@@ -889,10 +884,10 @@ phase_glue_engine = |start_id, dump_ids, engine, paths| {
     gen_api = mk_cmd(
         gen_api_id,
         dump_ids,
-        ["scripts/extension_api.generate.roc"],
+        [], # "scripts/extension_api.generate.roc"
         [],
         "roc",
-        ["run", "scripts/extension_api.generate.roc"],
+        ["run", "scripts/extension_api.generate.roc", "--", "--engine=${slug}"],
         "Generate extension_api (${slug})",
         "",
     )

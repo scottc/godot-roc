@@ -25,17 +25,58 @@ needle_const = "const".to_utf8()
 
 Item : { comment: CommentInfo, typedef: TypeDefInfo }
 
+Engine : [Godot, Godot4_5_1, Redot, Rex]
+
+parse_engine : List(OsStr) -> Engine
+parse_engine = |args| {
+    for a in args {
+        str = a.display()
+        if str.starts_with("--engine=") {
+            match str.replace_first("--engine=", "") {
+                "godot" => return Godot
+                "godot_4_5_1" => return Godot4_5_1
+                "redot" => return Redot
+                "rex" => return Rex
+                _ => crash "invalid --engine= flag, must be: godot, godot_4_5_1, redot or rex."
+            }
+        }
+    }
+
+    Godot
+}
+
+engine_str : Engine -> Str
+engine_str = |engine| match engine {
+    Godot => "godot"
+    Godot4_5_1 => "godot_4_5_1"
+    Redot => "redot"
+    Rex => "rex"
+}
+
 # ---------------------------------------------------------------------------
 # Entry
 # ---------------------------------------------------------------------------
 
 main! : List(OsStr) => Try({}, _)
-main! = |_args| {
+main! = |args| {
+
+    user_args =
+        if List.is_empty(args) {
+            []
+        } else {
+            List.drop_first(args, 1)
+        }
+
+    engine : Engine
+    engine = parse_engine(user_args)
+
+    Stdout.line!("# Engine: ${engine_str(engine)}")?
+
     source : Path
-    source = "vendor-out/godot/gdextension_interface.h"
+    source = "vendor-out/${engine_str(engine)}/gdextension_interface.h"
 
     out_path : Path
-    out_path = "host/glue-out/godot/gdextension_interface.zig"
+    out_path = "host/glue-out/${engine_str(engine)}/gdextension_interface.zig"
 
     read_start = Utc.now!()
     c_contents = source.read_utf8!()?

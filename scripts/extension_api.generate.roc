@@ -189,14 +189,54 @@ NativeStructure : {
     format : Str,
 }
 
+Engine : [Godot, Godot4_5_1, Redot, Rex]
+
+parse_engine : List(OsStr) -> Engine
+parse_engine = |args| {
+    for a in args {
+        str = a.display()
+        if str.starts_with("--engine=") {
+            match str.replace_first("--engine=", "") {
+                "godot" => return Godot
+                "godot_4_5_1" => return Godot4_5_1
+                "redot" => return Redot
+                "rex" => return Rex
+                _ => crash "invalid --engine= flag, must be: godot, godot_4_5_1, redot or rex."
+            }
+        }
+    }
+
+    Godot
+}
+
+engine_str : Engine -> Str
+engine_str = |engine| match engine {
+    Godot => "godot"
+    Godot4_5_1 => "godot4_5_1"
+    Redot => "redot"
+    Rex => "rex"
+}
+
 main! : List(OsStr) => Try({}, _)
-main! = |_args| {
+main! = |args| {
+
+    user_args =
+        if List.is_empty(args) {
+            []
+        } else {
+            List.drop_first(args, 1)
+        }
+
+    engine : Engine
+    engine = parse_engine(user_args)
+
+    Stdout.line!("# Engine: ${engine_str(engine)}")?
 
     source : Path
-    source = "vendor-out/godot/extension_api.json"
+    source = "vendor-out/${engine_str(engine)}/extension_api.json"
 
     roc_out_path : Path
-    roc_out_path = "platform-out/godot"
+    roc_out_path = "platform-out/${engine_str(engine)}"
 
     Stdout.line!("# extension_api.generate.roc")?
 
