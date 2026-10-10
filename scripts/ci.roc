@@ -13,11 +13,10 @@
 #   vendor-out/<slug>/
 #   platform-out/<slug>/
 #   host/glue-out/<slug>/
-#   bundle-out/<slug>/workspace/
-#     platform-<slug>/          ← copy of platform-out/<slug>
+#   bundle-out/<slug>/workspace/platform-<slug>/
 #   ci-out/<slug>/workspace/my_game/
-#     main.roc  (platform → ./platform)
-#     platform/ (copy of platform-out/<slug>)
+#     main.roc              ← pf: platform "./platform/main.roc"
+#     platform/main.roc     ← copy of platform-out/<slug>
 #
 
 ## Continuous Integration — engine × host matrix (roc-build)
@@ -172,6 +171,9 @@ engine_project_main = |e| "${engine_project_dir(e)}/main.roc"
 engine_project_platform_dir : EngineSpec -> Str
 engine_project_platform_dir = |e| "${engine_project_dir(e)}/platform"
 
+engine_project_platform_main : EngineSpec -> Str
+engine_project_platform_main = |e| "${engine_project_platform_dir(e)}/main.roc"
+
 engine_project_linux_out : EngineSpec -> Str
 engine_project_linux_out = |e| "${engine_project_dir(e)}/my_game.so"
 
@@ -193,7 +195,6 @@ engine_bundle_out = |e| "bundle-out/${e.slug}"
 engine_bundle_workspace : EngineSpec -> Str
 engine_bundle_workspace = |e| "bundle-out/${e.slug}/workspace"
 
-# Directory name of the platform copy inside the bundle workspace
 engine_bundle_platform_name : EngineSpec -> Str
 engine_bundle_platform_name = |e| "platform-${e.slug}"
 
@@ -201,8 +202,9 @@ engine_bundle_platform_dest : EngineSpec -> Str
 engine_bundle_platform_dest = |e|
     "${engine_bundle_workspace(e)}/${engine_bundle_platform_name(e)}"
 
+# Roc local platform must point at the platform entry file, not a directory.
 engine_local_platform_pkg : Str
-engine_local_platform_pkg = "./platform"
+engine_local_platform_pkg = "./platform/main.roc"
 
 # =============================================================================
 # Matrices
@@ -1100,13 +1102,11 @@ phase_bundle_engine = |start_id, host_ids, engine| {
     (zip_id, n3) = take_id(n2)
 
     slug = engine.slug
-    # No trailing slash: copy the directory node itself as platform-<slug>
     platform_src = engine_platform_dir(engine)
     platform_dest = engine_bundle_platform_dest(engine)
     bundle_ws = engine_bundle_workspace(engine)
     plat_name = engine_bundle_platform_name(engine)
 
-    # Paths relative to bundle_ws (cwd for roc bundle / zip)
     rel_main = "${plat_name}/main.roc"
     rel_wasm = "${plat_name}/targets/wasm32/libhost.o.wasm"
     rel_musl = "${plat_name}/targets/x64musl/libhost.a"
@@ -1150,6 +1150,7 @@ phase_bundle_engine = |start_id, host_ids, engine| {
     }
 }
 
+# Template → local platform tree (verified) → patch main.roc to ./platform/main.roc
 phase_workspace_engine : NodeId, List(NodeId), List(NodeId), EngineSpec, CiRoots -> _
 phase_workspace_engine = |start_id, prepare_ids, bundle_ids, engine, roots| {
     (copy_id, n1) = take_id(start_id)
@@ -1159,6 +1160,7 @@ phase_workspace_engine = |start_id, prepare_ids, bundle_ids, engine, roots| {
     project_dir = engine_project_dir(engine)
     project_main = engine_project_main(engine)
     local_plat = engine_project_platform_dir(engine)
+    local_plat_main = engine_project_platform_main(engine)
     platform_src = engine_platform_dir(engine)
     slug = engine.slug
 
@@ -1171,12 +1173,37 @@ phase_workspace_engine = |start_id, prepare_ids, bundle_ids, engine, roots| {
         "",
     )
 
+    # Robust copy: remove stale tree, copy, require main.roc to exist.
+    copy_script =
+        \\set -eu
+        \\SRC='${platform_src}'
+        \\DST='${local_plat}'
+        \\MAIN='${local_plat_main}'
+        \\if [ ! -d "$SRC" ]; then
+        \\    echo "[workspace] missing platform source: $SRC" >&2
+        \\    exit 1
+        \\fi
+        \\if [ ! -f "$SRC/main.roc" ]; then
+        \\    echo "[workspace] missing $SRC/main.roc" >&2
+        \\    ls -la "$SRC" >&2 || true
+        \\    exit 1
+        \\fi
+        \\rm -rf "$DST"
+        \\cp -a "$SRC" "$DST"
+        \\if [ ! -f "$MAIN" ]; then
+        \\    echo "[workspace] copy failed; missing $MAIN" >&2
+        \\    ls -la "$DST" >&2 || true
+        \\    exit 1
+        \\fi
+        \\echo "[workspace] local platform ready: $MAIN"
+        \\
+
     copy_local_platform = mk_cmd(
         copy_plat_id,
         List.concat(bundle_ids, [copy_id]),
-        "cp",
-        ["-a", platform_src, local_plat],
-        "Copy ${platform_src} → ${local_plat}",
+        "sh",
+        ["-c", copy_script],
+        "Install local platform → ${local_plat} (${slug})",
         "",
     )
 
@@ -1567,7 +1594,7 @@ main! = |args| {
                     for eng in build_engines {
                         Log.info!("engine ${eng.slug}:")
                         Log.info!("  CI app:  ${engine_project_dir(eng)}")
-                        Log.info!("  local platform: ${engine_project_platform_dir(eng)}")
+                        Log.info!("  local platform: ${engine_project_platform_main(eng)}")
                         Log.info!("  Bundle:  ${engine_bundle_workspace(eng)}")
                         Log.info!("  Export:  ${engine_export_index(eng)}")
                     }
