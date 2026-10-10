@@ -10,6 +10,7 @@ import pf.Path
 import pf.Stdout
 import pf.Utc
 import pf.OsStr
+import pf.Cmd
 
 ExtensionApi : {
     header : Header,
@@ -210,35 +211,68 @@ parse_engine = |args| {
 }
 
 engine_str : Engine -> Str
-engine_str = |engine| match engine {
-    Godot => "godot"
-    Godot4_5_1 => "godot4_5_1"
-    Redot => "redot"
-    Rex => "rex"
+engine_str = |engine| {
+    match engine {
+        Godot => "godot"
+        Godot4_5_1 => "godot_4_5_1"
+        Redot => "redot"
+        Rex => "rex"
+    }
+}
+
+# mkdir -p; args must be List(OsStr) on basic-cli 0.23
+ensure_dir! : Path => Try({}, _)
+ensure_dir! = |dir| {
+    flag : OsStr
+    flag = "-p"
+    # Path → Str → OsStr (display/inspect depending on your Path API)
+    dir_arg : OsStr
+    dir_arg = dir.to_os_str() # Path stringifies in interpolation; annotate as OsStr
+    {} = Cmd.exec!("mkdir", [flag, dir_arg])?
+    Ok({})
+}
+
+ensure_platform_dirs! : Path => Try({}, _)
+ensure_platform_dirs! = |roc_out| {
+    ensure_dir!(roc_out)?
+    ensure_dir!(Path.join(roc_out, "engine"))?
+    ensure_dir!(Path.join(roc_out, "engine/math"))?
+    ensure_dir!(Path.join(roc_out, "engine/builtin_classes"))?
+    ensure_dir!(Path.join(roc_out, "engine/classes"))?
+    ensure_dir!(Path.join(roc_out, "engine/singletons"))?
+    Ok({})
 }
 
 main! : List(OsStr) => Try({}, _)
 main! = |args| {
 
-    user_args =
-        if List.is_empty(args) {
-            []
-        } else {
-            List.drop_first(args, 1)
-        }
+    user_args = args
+    #     if List.is_empty(args) {
+    #         []
+    #     } else {
+    #         List.drop_first(args, 1)
+    #     }
 
     engine : Engine
     engine = parse_engine(user_args)
+    eng = engine_str(engine)
 
-    Stdout.line!("# Engine: ${engine_str(engine)}")?
+    Stdout.line!("# Engine: ${eng}")?
 
     source : Path
-    source = "vendor-out/${engine_str(engine)}/extension_api.json"
+    source = "vendor-out/${eng}/extension_api.json"
 
     roc_out_path : Path
-    roc_out_path = "platform-out/${engine_str(engine)}"
+    roc_out_path = "platform-out/${eng}"
+
+    glue_out_dir : Path
+    glue_out_dir = "host/glue-out/${eng}"
 
     Stdout.line!("# extension_api.generate.roc")?
+
+    # Create output trees (idempotent; safe if CI already mkdir'd the roots)
+    ensure_platform_dirs!(roc_out_path)?
+    ensure_dir!(glue_out_dir)?
 
     read_start = Utc.now!()
     json_contents = source.read_utf8!()?
@@ -250,7 +284,6 @@ main! = |args| {
     Stdout.line!("# Parse: ${(Utc.now!() - parse_start).to_str()}ns")?
     Stdout.line!("${render_header(decoded)}")?
 
-    # Top level platform, may contain one or more engines.
     Path.join(roc_out_path, "GodotRoc.roc").write_utf8!(
     \\## A module specifically just for this bindings project
     \\GodotRoc := [].{
@@ -299,7 +332,6 @@ main! = |args| {
     Path.join(roc_out_path, "EngineInfo.roc").write_utf8!(engine_info(decoded))?
     Path.join(roc_out_path, "Target.roc").write_utf8!(target(decoded))?
 
-    # Per engine:
     Path.join(roc_out_path, "engine/GlobalConstants.roc").write_utf8!(global_constants_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "engine/GlobalEnums.roc").write_utf8!(global_enums_to_roc_source_str(decoded))?
     Path.join(roc_out_path, "engine/BuiltinClassSizes.roc").write_utf8!(builtin_class_sizes_to_roc_source_str(decoded))?
@@ -339,7 +371,10 @@ main! = |args| {
     }
 
     Path.join(roc_out_path, "main.roc").write_utf8!(gen_platform_main_roc(decoded))?
-    Path.join("host/glue-out/godot", "zig_platform_abi_impl.zig").write_utf8!(zig_platform_abi_impl_to_str(decoded))?
+
+    # Per-engine glue out (was hardcoded host/glue-out/godot)
+    Path.join(glue_out_dir, "zig_platform_abi_impl.zig")
+        .write_utf8!(zig_platform_abi_impl_to_str(decoded))?
 
     Stdout.line!("# total after parse: ${(Utc.now!() - parse_start).to_str()}ns")?
     Ok({})

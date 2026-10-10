@@ -2,7 +2,11 @@
 
 ## gdextension_interface.h → Zig bindings
 ## Types first, then Interface struct + loadInterface.
-## Run: roc main.roc
+##
+## Usage:
+##   roc run scripts/gdextension_interface.generate.roc -- --engine=godot
+##   roc run scripts/gdextension_interface.generate.roc -- --engine=godot_4_5_1
+##   roc run scripts/gdextension_interface.generate.roc -- --engine=redot
 
 app [main!] {
     roc: "nightly-2026-09-27-a3ce7f1",
@@ -13,6 +17,7 @@ import pf.Path
 import pf.Stdout
 import pf.Utc
 import pf.OsStr
+import pf.Cmd
 
 needle_doc = "/**".to_utf8()
 needle_block_open = "/*".to_utf8()
@@ -46,11 +51,23 @@ parse_engine = |args| {
 }
 
 engine_str : Engine -> Str
-engine_str = |engine| match engine {
-    Godot => "godot"
-    Godot4_5_1 => "godot_4_5_1"
-    Redot => "redot"
-    Rex => "rex"
+engine_str = |engine| {
+    match engine {
+        Godot => "godot"
+        Godot4_5_1 => "godot_4_5_1"
+        Redot => "redot"
+        Rex => "rex"
+    }
+}
+
+ensure_dir! : Path => Try({}, _)
+ensure_dir! = |dir| {
+    flag : OsStr
+    flag = "-p"
+    dir_arg : OsStr
+    dir_arg = dir.to_os_str()
+    {} = Cmd.exec!("mkdir", [flag, dir_arg])?
+    Ok({})
 }
 
 # ---------------------------------------------------------------------------
@@ -59,24 +76,23 @@ engine_str = |engine| match engine {
 
 main! : List(OsStr) => Try({}, _)
 main! = |args| {
-
-    user_args =
-        if List.is_empty(args) {
-            []
-        } else {
-            List.drop_first(args, 1)
-        }
+    user_args = args
 
     engine : Engine
     engine = parse_engine(user_args)
+    eng = engine_str(engine)
 
-    Stdout.line!("# Engine: ${engine_str(engine)}")?
+    Stdout.line!("# Engine: ${eng}")?
 
     source : Path
-    source = "vendor-out/${engine_str(engine)}/gdextension_interface.h"
+    source = "vendor-out/${eng}/gdextension_interface.h"
+
+    glue_dir : Path
+    glue_dir = "host/glue-out/${eng}"
+    ensure_dir!(glue_dir)?
 
     out_path : Path
-    out_path = "host/glue-out/${engine_str(engine)}/gdextension_interface.zig"
+    out_path = Path.join(glue_dir, "gdextension_interface.zig")
 
     read_start = Utc.now!()
     c_contents = source.read_utf8!()?
@@ -85,7 +101,6 @@ main! = |args| {
     bytes = c_contents.to_utf8()
     parse_start = Utc.now!()
 
-    # ---- collect all blocks ----
     $items : List(Item)
     var $items = []
     var $cursor = 0.U64
@@ -102,20 +117,16 @@ main! = |args| {
                 $cursor = scanned.next
                 $n = $n + 1
 
-                # preview = str_prefix(scanned.typedef, 100)
-                # Stdout.line!("pre-parse n=${$n.to_str()}")?
-
                 comment = parse_comment_docs(scanned.comment)
                 match parse_typedef(scanned.typedef) {
                     Ok(td) => {
                         $ok = $ok + 1
                         $items = $items.append({ comment: comment, typedef: td })
-                        # Stdout.line!("post-parse n=${$n.to_str()} ok")?
                     }
                     Err(e) => {
                         $err = $err + 1
                         Stdout.line!("post-parse n=${$n.to_str()} err ${Str.inspect(e)}")?
-                        crash "[scripts/gdextension_interface.generate.roc] TODO: decide on an error handling strategy... how should we return errors?"
+                        crash "[scripts/gdextension_interface.generate.roc] typedef parse failed"
                     }
                 }
             }
@@ -125,10 +136,9 @@ main! = |args| {
     Stdout.line!("parse done n=${$n.to_str()} ok=${$ok.to_str()} err=${$err.to_str()} items=${$items.len().to_str()}")?
     Stdout.line!("parse time: ${(Utc.now!() - parse_start).to_str()}ns")?
 
-    # ---- partition ----
     partition_start = Utc.now!()
-    var $type_parts = [] # List(Str)
-    var $api_fns = [] # List(InterfaceFn)
+    var $type_parts = []
+    var $api_fns = []
 
     for item in $items {
         match item.typedef {
@@ -162,7 +172,6 @@ main! = |args| {
     Stdout.line!("types=${$type_parts.len().to_str()} api_fns=${$api_fns.len().to_str()}")?
     Stdout.line!("partition: ${(Utc.now!() - partition_start).to_str()}ns")?
 
-    # ---- render ----
     render_start = Utc.now!()
     render_result =
         \\//!
@@ -184,7 +193,6 @@ main! = |args| {
 
     Stdout.line!("render: ${(Utc.now!() - render_start).to_str()}ns")?
 
-    # ---- emit ----
     write_start = Utc.now!()
     out_path.write_utf8!(render_result)?
     Stdout.line!("write: ${(Utc.now!() - write_start).to_str()}ns")?
@@ -192,75 +200,12 @@ main! = |args| {
     Ok({})
 }
 
-str_prefix : Str, U64 -> Str
-str_prefix = |s, n| {
-    b = s.to_utf8()
-    end = if n < b.len() { n } else { b.len() }
-    slice_to_str(b, 0, end)
-}
-
-## Compare bytes[i .. i+nlen) to needle without allocating.
-bytes_eq_at : List(U8), U64, List(U8) -> Bool
-bytes_eq_at = |bytes, i, needle| {
-    nlen = needle.len()
-    if i + nlen > bytes.len() {
-        Bool.False
-    } else {
-        var $k = 0.U64
-        var $ok = Bool.True
-        while $k < nlen {
-            match (bytes.get(i + $k), needle.get($k)) {
-                (Ok(a), Ok(b)) if a == b => {
-                    $k = $k + 1
-                }
-                _ => {
-                    $ok = Bool.False
-                    break
-                }
-            }
-        }
-        $ok
-    }
-}
-
-match_at : List(U8), U64, List(U8) -> Bool
-match_at = |bytes, i, needle_bytes| {
-    bytes_eq_at(bytes, i, needle_bytes)
-}
-
-find_from : List(U8), U64, List(U8) -> Try(U64, {})
-find_from = |bytes, start, needle| {
-    nlen = needle.len()
-    len = bytes.len()
-    if nlen == 0 {
-        return Ok(start)
-    }
-    var $i = start
-    while $i + nlen <= len {
-        if bytes_eq_at(bytes, $i, needle) {
-            return Ok($i)
-        }
-        $i = $i + 1
-    }
-    Err({})
-}
-
-find_str : Str, Str -> Try(U64, {})
-find_str = |hay, needle| {
-    find_from(hay.to_utf8(), 0, needle.to_utf8())
-}
-
 # ---------------------------------------------------------------------------
 # Parsed shapes
 # ---------------------------------------------------------------------------
 
-ParsedItem : {
-    comment : CommentInfo,
-    typedef : TypeDefInfo,
-}
-
 InterfaceFn : {
-    api_name : Str, # @name — field + lookup string
+    api_name : Str,
     typedef_name : Str,
     return_type : Str,
     parameters : List(ParamInfo),
@@ -285,6 +230,69 @@ TypeDefInfo : [
     Struct({ name : Str, fields : List(StructField) }),
     FuncPtr({ name : Str, return_type : Str, parameters : List(ParamInfo) }),
 ]
+
+# ---------------------------------------------------------------------------
+# Enum value resolution (fixes FLAGS_DEFAULT = FLAG_NORMAL style aliases)
+# ---------------------------------------------------------------------------
+
+## Look up a previously resolved C enumerator name → integer.
+find_enum_int : List(Str), List(I64), Str -> Try(I64, {})
+find_enum_int = |names, ints, key| {
+    var $i = 0.U64
+    for n in names {
+        if n == key {
+            return match ints.get($i) {
+                Ok(v) => Ok(v)
+                Err(_) => Err({})
+            }
+        }
+        $i = $i + 1
+    }
+    Err({})
+}
+
+## Lower every variant value to a decimal integer string.
+## Handles:
+##   NAME,                          → auto 0,1,2…
+##   NAME = 4,                      → 4
+##   NAME = OTHER_NAME,             → OTHER_NAME's integer
+resolve_enum_variant_values : List(EnumVariant) -> List(EnumVariant)
+resolve_enum_variant_values = |variants| {
+    var $names = []
+    var $ints = []
+    var $out = []
+    var $auto = 0.I64
+
+    for v in variants {
+        val = strip_c_comments(v.value).trim()
+
+        n =
+            if val.is_empty() {
+                $auto
+            } else {
+                match I64.from_str(val) {
+                    Ok(num) => num
+                    Err(_) => {
+                        # C identifier alias → resolve against earlier variants
+                        match find_enum_int($names, $ints, val) {
+                            Ok(num) => num
+                            Err(_) => {
+                                # Unknown expression — fall back to auto so Zig still compiles
+                                $auto
+                            }
+                        }
+                    }
+                }
+            }
+
+        $names = $names.append(v.name)
+        $ints = $ints.append(n)
+        $out = $out.append({ name: v.name, value: n.to_str() })
+        $auto = n + 1
+    }
+
+    $out
+}
 
 # ---------------------------------------------------------------------------
 # Render: types
@@ -333,10 +341,11 @@ render_alias = |name, type_str, c| {
 
 render_enum : Str, List(EnumVariant), CommentInfo -> Str
 render_enum = |name, variants, c| {
-    c_names = variants.map(|v| v.name)
+    resolved = resolve_enum_variant_values(variants)
+    c_names = resolved.map(|v| v.name)
     prefix = common_prefix_of(c_names)
     var $parts = ["pub const ${name} = enum(c_int) {"]
-    for v in variants {
+    for v in resolved {
         field = enum_variant_zig_name(v.name, prefix)
         $parts = $parts.append("    ${field} = ${v.value},")
     }
@@ -344,22 +353,18 @@ render_enum = |name, variants, c| {
     with_doc(c, join_with($parts, "\n"))
 }
 
-## Strip longest common prefix of all variant C names, then lowercase.
-## Escape Zig keywords with @"…".
 enum_variant_zig_name : Str, Str -> Str
 enum_variant_zig_name = |full, common_prefix| {
     stripped =
         if !common_prefix.is_empty() and full.starts_with(common_prefix) {
             full.drop_prefix(common_prefix)
         } else {
-            # fallback: drop up through last known style PREFIX_
             full
         }
     lower = lower_snake(stripped)
     escape_zig_ident(lower)
 }
 
-## Longest common prefix that ends on a '_' boundary (or empty).
 common_prefix_of : List(Str) -> Str
 common_prefix_of = |names| {
     if names.len() == 0 {
@@ -372,7 +377,6 @@ common_prefix_of = |names| {
                 for n in names {
                     $prefix = shared_prefix($prefix, n)
                 }
-                # trim to last '_' so we don't leave a partial token
                 trim_prefix_to_underscore($prefix)
             }
         }
@@ -401,12 +405,10 @@ shared_prefix = |a, b| {
     from_utf8_lossy(list_take_first(ab, $i))
 }
 
-## Keep only through the last '_' so "GDEXTENSION_VARIANT_OP_" stays intact,
-## not "GDEXTENSION_VARIANT_OP_E".
 trim_prefix_to_underscore : Str -> Str
 trim_prefix_to_underscore = |p| {
     bytes = p.to_utf8()
-    var $last_us = 0.U64 # position after last '_'
+    var $last_us = 0.U64
     var $i = 0.U64
     for b in bytes {
         if b == 95.U8 {
@@ -415,7 +417,7 @@ trim_prefix_to_underscore = |p| {
         $i = $i + 1
     }
     if $last_us == 0 {
-        "" # no underscore → don't strip
+        ""
     } else {
         from_utf8_lossy(list_take_first(bytes, $last_us))
     }
@@ -432,7 +434,6 @@ escape_zig_ident = |name| {
 
 is_zig_keyword : Str -> Bool
 is_zig_keyword = |n| {
-    # subset that appears in this header; extend as needed
     n == "error"
         or n == "and"
         or n == "or"
@@ -478,7 +479,6 @@ render_struct = |name, fields, c| {
     with_doc(c, join_with($parts, "\n"))
 }
 
-## Callback typedef only (no @name)
 render_func_ptr_type : Str, Str, List(ParamInfo), CommentInfo -> Str
 render_func_ptr_type = |name, return_type, parameters, c| {
     with_doc(c, "pub const ${name} = ${fn_ptr_type_str(return_type, parameters)};")
@@ -491,7 +491,6 @@ fn_ptr_type_str = |return_type, parameters| {
     "*const fn (${params_zig}) callconv(.c) ${ret}"
 }
 
-## Multi-line param list when helpful
 format_fn_params : List(ParamInfo) -> Str
 format_fn_params = |parameters| {
     if parameters.len() == 0 {
@@ -510,7 +509,6 @@ render_interface_struct = |fns| {
     var $fields = []
     for f in fns {
         ty = fn_ptr_type_str(f.return_type, f.parameters)
-        # optional short doc
         doc =
             if f.comment.since.is_empty() {
                 ""
@@ -556,7 +554,7 @@ render_load_interface = |fns| {
 }
 
 # ---------------------------------------------------------------------------
-# C → Zig types (same as before)
+# C → Zig types
 # ---------------------------------------------------------------------------
 
 zig_type : Str -> Str
@@ -583,24 +581,19 @@ split_c_type = |t| {
     bytes = $rest.to_utf8()
     var $end = bytes.len()
     var $stars = 0.U64
-    # peel trailing " *" / "*" / " const"
     var $guard = 0.U64
     while $guard < 16 and $end > 0 {
         $guard = $guard + 1
-        # trim spaces
         match bytes.get($end - 1) {
             Ok(32.U8) | Ok(9.U8) => {
                 $end = $end - 1
             }
             Ok(42.U8) => {
-                # '*'
                 $stars = $stars + 1
                 $end = $end - 1
             }
             _ => {
-                # trailing "const"?
                 if $end >= 5 and bytes_eq_at(bytes, $end - 5, needle_const) {
-                    # ensure boundary
                     $is_const = Bool.True
                     $end = $end - 5
                 } else {
@@ -634,7 +627,7 @@ map_base_type = |b| {
         "char" => "u8"
         "signed char" => "i8"
         "unsigned char" => "u8"
-        "wchar_t" => "c_ushort"   # Windows / common Godot path; or "c_int" on some Unix # simpler alternative: "wchar_t" => "u16"
+        "wchar_t" => "c_ushort"
         "short" | "short int" | "signed short" | "signed short int" => "c_short"
         "unsigned short" | "unsigned short int" => "c_ushort"
         "int" | "signed int" | "signed" => "c_int"
@@ -691,13 +684,63 @@ apply_pointers = |base, stars, is_const| {
 }
 
 # ---------------------------------------------------------------------------
-# Scanner (collects everything; streaming not required)
+# Scanner
 # ---------------------------------------------------------------------------
 
 ScannedTypeDefSlice : {
     comment : Str,
     typedef : Str,
-    next : U64
+    next : U64,
+}
+
+bytes_eq_at : List(U8), U64, List(U8) -> Bool
+bytes_eq_at = |bytes, i, needle| {
+    nlen = needle.len()
+    if i + nlen > bytes.len() {
+        Bool.False
+    } else {
+        var $k = 0.U64
+        var $ok = Bool.True
+        while $k < nlen {
+            match (bytes.get(i + $k), needle.get($k)) {
+                (Ok(a), Ok(b)) if a == b => {
+                    $k = $k + 1
+                }
+                _ => {
+                    $ok = Bool.False
+                    break
+                }
+            }
+        }
+        $ok
+    }
+}
+
+match_at : List(U8), U64, List(U8) -> Bool
+match_at = |bytes, i, needle_bytes| {
+    bytes_eq_at(bytes, i, needle_bytes)
+}
+
+find_from : List(U8), U64, List(U8) -> Try(U64, {})
+find_from = |bytes, start, needle| {
+    nlen = needle.len()
+    len = bytes.len()
+    if nlen == 0 {
+        return Ok(start)
+    }
+    var $i = start
+    while $i + nlen <= len {
+        if bytes_eq_at(bytes, $i, needle) {
+            return Ok($i)
+        }
+        $i = $i + 1
+    }
+    Err({})
+}
+
+find_str : Str, Str -> Try(U64, {})
+find_str = |hay, needle| {
+    find_from(hay.to_utf8(), 0, needle.to_utf8())
 }
 
 next_typedef_block : List(U8), U64 -> Try(ScannedTypeDefSlice, [Done])
@@ -707,7 +750,6 @@ next_typedef_block = |bytes, start| {
     while $i < len {
         match list_get(bytes, $i) {
             Ok(35.U8) => {
-                # '#'
                 if is_hash_at(bytes, $i) {
                     $i = skip_line(bytes, $i)
                 } else {
@@ -715,9 +757,7 @@ next_typedef_block = |bytes, start| {
                 }
             }
             Ok(47.U8) => {
-                # '/'
                 if match_at(bytes, $i, needle_doc) {
-                    # /** … */ — existing typedef-after-doc path
                     open = $i + 3
                     match find_from(bytes, open, needle_doc_end) {
                         Err({}) => return Err(Done)
@@ -741,7 +781,6 @@ next_typedef_block = |bytes, start| {
                         }
                     }
                 } else if match_at(bytes, $i, needle_block_open) {
-                    # /* … */ non-doc: skip only, do not parse
                     match find_from(bytes, $i + 2, needle_block_close) {
                         Err({}) => return Err(Done)
                         Ok(close) => {
@@ -749,7 +788,6 @@ next_typedef_block = |bytes, start| {
                         }
                     }
                 } else if match_at(bytes, $i, needle_line_comment) {
-                    # // … end of line
                     $i = skip_line(bytes, $i)
                 } else {
                     $i = $i + 1
@@ -814,7 +852,6 @@ skip_c_string = |bytes, start| {
     while $i < len {
         match list_get(bytes, $i) {
             Ok(92.U8) => {
-                # backslash: need room for escaped byte
                 if $i + 1 < len {
                     $i = $i + 2
                 } else {
@@ -933,25 +970,6 @@ parse_comment_docs = |body| {
         } else if line.starts_with("@since") {
             $since = tag_value(line, "@since")
         }
-        # Temp disabled, due to parsing performance issues.
-        # TODO: restore:
-        # else if line.starts_with("@param") {
-        #     rest = tag_value(line, "@param")
-        #     match split_first_space(rest) {
-        #         Ok({ before, after }) => {
-        #             $param_docs = $param_docs.append({ name: before, doc: after.trim() })
-        #         }
-        #         Err({}) => {
-        #             $param_docs = $param_docs.append({ name: rest, doc: "" })
-        #         }
-        #     }
-        # } else if line.starts_with("@return") {
-        #     $return_doc = tag_value(line, "@return")
-        # } else if line.starts_with("@") {
-        #     {}
-        # } else {
-        #     $desc_parts = $desc_parts.append(line)
-        # }
     }
     {
         name: $name,
@@ -982,7 +1000,6 @@ parse_typedef = |line| {
         return Err(ParseErr("not a typedef"))
     }
     rest = t.drop_prefix("typedef").trim()
-    # rest = strip_leading_c_comments(t.drop_prefix("typedef").trim()) # harden, only if needed
     if rest.starts_with("enum") {
         parse_enum_typedef(rest)
     } else if rest.starts_with("struct") {
@@ -1013,7 +1030,6 @@ parse_enum_typedef = |rest| {
     }
 }
 
-## Remove // line comments and /* */ block comments from a C snippet.
 strip_c_comments : Str -> Str
 strip_c_comments = |s| {
     bytes = s.to_utf8()
@@ -1021,12 +1037,11 @@ strip_c_comments = |s| {
     var $i = 0.U64
     len = bytes.len()
     while $i < len {
-        # // comment → end of line
         if $i + 1 < len and match_at(bytes, $i, needle_line_comment) {
             $i = $i + 2
             while $i < len {
                 match list_get(bytes, $i) {
-                    Ok(10.U8) => break # keep newline via normal path
+                    Ok(10.U8) => break
                     _ => {
                         $i = $i + 1
                     }
@@ -1067,9 +1082,9 @@ parse_enum_variants = |inner| {
                 Ok({ before, after }) => {
                     n = before.trim()
                     v = after.trim()
-                    cleaned = strip_c_comments(v)
+                    cleaned = strip_c_comments(v).trim()
                     $out = $out.append({ name: n, value: cleaned })
-                    match I64.from_str(v) {
+                    match I64.from_str(cleaned) {
                         Ok(num) => {
                             $auto = num + 1
                         }
@@ -1086,14 +1101,6 @@ parse_enum_variants = |inner| {
         }
     }
     $out
-}
-
-is_c_ident_start : Str -> Bool
-is_c_ident_start = |s| {
-    match s.to_utf8().first() {
-        Ok(b) if (b >= 65 and b <= 90) or (b >= 97 and b <= 122) or b == 95 => Bool.True
-        _ => Bool.False
-    }
 }
 
 parse_struct_typedef : Str -> Try(TypeDefInfo, [ParseErr(Str)])
@@ -1181,7 +1188,6 @@ parse_alias_typedef = |rest| {
             if toks.len() < 2 {
                 Err(ParseErr("alias needs type and name"))
             } else {
-                # Peel "*Name" / "**Name" → stars on type, clean name
                 { name, stars } = peel_leading_stars(last)
                 if name.is_empty() {
                     Err(ParseErr("alias: name is only stars"))
@@ -1201,11 +1207,8 @@ parse_alias_typedef = |rest| {
     }
 }
 
-# After split_ws, merge pattern: … "void" "*" "Name"
-# Optional pre-pass:
 normalize_alias_tokens : List(Str) -> List(Str)
 normalize_alias_tokens = |toks| {
-    # Fold standalone "*" into previous token: "void" "*" → "void*"
     var $out = []
     for t in toks {
         if t == "*" {
@@ -1218,7 +1221,6 @@ normalize_alias_tokens = |toks| {
                 }
             }
         } else if t.starts_with("*") and t != "*" {
-            # "*Name" left as-is; peel_leading_stars handles it
             $out = $out.append(t)
         } else {
             $out = $out.append(t)
@@ -1227,7 +1229,6 @@ normalize_alias_tokens = |toks| {
     $out
 }
 
-## "*Foo" / "**Foo" → { name: "Foo", stars: 1/2 }
 peel_leading_stars : Str -> { name : Str, stars : U64 }
 peel_leading_stars = |tok| {
     bytes = tok.to_utf8()
@@ -1237,7 +1238,6 @@ peel_leading_stars = |tok| {
     while $i < len {
         match list_get(bytes, $i) {
             Ok(42.U8) => {
-                # '*'
                 $stars = $stars + 1
                 $i = $i + 1
             }
@@ -1288,12 +1288,11 @@ parse_param_list = |inner| {
 }
 
 parse_one_param = |raw| {
-    p = raw.trim() # skip normalize_ws if already single-line from split_args
+    p = raw.trim()
     if p.is_empty() {
         return Err(ParseErr("empty param"))
     }
     toks = split_ws(p)
-    # fold "void" "*" → "void*" in one pass (no drop_last copies if you build new list once)
     toks2 = merge_star_tokens(toks)
     match toks2.last() {
         Err(_) => Err(ParseErr("bad param"))
@@ -1321,7 +1320,6 @@ merge_star_tokens = |toks| {
         if t == "*" {
             match $out.last() {
                 Ok(prev) => {
-                    # avoid drop_last if expensive: rebuild is still OK for tiny param token lists
                     $out = append_replace_last($out, "${prev}*")
                 }
                 Err(_) => {
@@ -1431,23 +1429,6 @@ contains_str = |hay, needle| {
         Ok(_) => Bool.True
         Err(_) => Bool.False
     }
-}
-
-split_on_char : Str, U8 -> List(Str)
-split_on_char = |s, ch| {
-    bytes = s.to_utf8()
-    var $acc = []
-    var $cur = []
-    for b in bytes {
-        if b == ch {
-            $acc = $acc.append(from_utf8_lossy($cur))
-            $cur = []
-        } else {
-            $cur = $cur.append(b)
-        }
-    }
-    $acc = $acc.append(from_utf8_lossy($cur))
-    $acc
 }
 
 lower_snake : Str -> Str
@@ -1560,14 +1541,6 @@ normalize_ws = |s| {
         }
     }
     from_utf8_lossy($out).trim()
-}
-
-split_first_space : Str -> Try({ before : Str, after : Str }, {})
-split_first_space = |s| {
-    match find_str(s, " ") {
-        Err({}) => Err({})
-        Ok(i) => Ok({ before: take_bytes(s, i), after: drop_bytes(s, i + 1) })
-    }
 }
 
 split_ws : Str -> List(Str)

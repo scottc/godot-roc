@@ -356,7 +356,18 @@ engine_specs = [
         program: "rex",
         required_in_full: Bool.False,
         is_primary: Bool.False,
-        pipeline: FullBuild,
+        pipeline: DumpOnly,
+        # Rex currently fails with this, so we disable with DumpOnly
+        # [anon@nixos:~/Projects/godot-roc]$ mkdir -p vendor-out/rex
+        # cd vendor-out/rex
+        # rex --headless --dump-extension-api
+        # ls -la extension_api.json
+        # Dumping Extension API
+        # ReX Engine v0.0.1.alpha.898. - https://redotengine.org
+        #
+        # ERROR: Cannot open file 'extension_api.json' for writing.
+        #    at: generate_extension_json_file (/builds/redot-engine/rex-engine/core/extension/extension_api_dump.cpp:1356)
+        # ls: cannot access 'extension_api.json': No such file or directory
         dumps: [
             {
                 kind: GdextensionInterface,
