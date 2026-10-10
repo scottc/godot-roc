@@ -412,6 +412,27 @@ main! = |_args| {
     })
 
     # ------------------------------------------------------------------
+    # Bundle
+    # ------------------------------------------------------------------
+    bundle_id = 15
+    bundle = Build.cmd({
+        id: bundle_id,
+        depends_on: [godot_id],
+        inputs: [
+        ],
+        outputs: [
+        ],
+        program: "roc",
+        args: [
+            "run",
+            "scripts/bundle.roc",
+        ],
+        description: "Bundle platform",
+        cwd: "",
+        env: [],
+    })
+
+    # ------------------------------------------------------------------
     # Graph + run
     # ------------------------------------------------------------------
     graph = Build.graph([
@@ -433,6 +454,7 @@ main! = |_args| {
         emcc,
         validate_final,
         godot,
+        bundle,
     ])
 
     match Build.run!(graph) {

@@ -43,7 +43,7 @@ main! = |_args| {
     # CI job dirs externally if needed.
     bundle_out = "bundle-out"
     bundle_workspace = "bundle-out/workspace"
-    platform_src = "platform"
+    platform_src = "platform-out/godot/"
     platform_dest = "${bundle_workspace}/platform"
     templates_zip = "${bundle_workspace}/templates.zip"
 
@@ -99,6 +99,27 @@ main! = |_args| {
     # produced by a prior step).
 
     # ------------------------------------------------------------------
+    # ?. Docs
+    # ------------------------------------------------------------------
+    roc_docs_id = 90
+    roc_docs = Build.cmd({
+        id: roc_docs_id,
+        depends_on: [],
+        inputs: [],
+        outputs: [],
+        program: "roc",
+        args: ["docs",
+            "--main=platform-out/godot/main.roc",
+            "--output=${bundle_workspace}/docs",
+            "--time",
+            "--verbose"
+        ],
+        description: "",
+        cwd: "",
+        env: [],
+    })
+
+    # ------------------------------------------------------------------
     # 3. Roc bundle (inside workspace)
     # ------------------------------------------------------------------
     roc_bundle_id = 4
@@ -117,14 +138,22 @@ main! = |_args| {
         program: "roc",
         args: [
             "bundle",
-            "platform/main.roc",
-            "platform/targets/wasm32/libhost.o.wasm",
-            "platform/targets/x64musl/libhost.a",
+            "${platform_dest}/main.roc",
+            "${platform_dest}/targets/wasm32/libhost.o.wasm",
+            "${platform_dest}/targets/x64musl/libhost.a",
         ],
         description: "roc bundle platform/main.roc + host objects",
         cwd: bundle_workspace,
         env: [],
     })
+
+    # ------------------------------------------------------------------
+    # ?. Copy a roc binary?
+    # ------------------------------------------------------------------
+    # We could include a roc binary in a zip
+    # along with the bundled platform, template & docs
+    # an easy way for a game dev to have all-in-1 workspace template
+    # with compiler dependencies (minus emscripten)...
 
     # ------------------------------------------------------------------
     # 4. Zip templates
@@ -149,6 +178,8 @@ main! = |_args| {
         cwd: bundle_workspace,
         env: [],
     })
+
+
 
     # ------------------------------------------------------------------
     # Graph + run
