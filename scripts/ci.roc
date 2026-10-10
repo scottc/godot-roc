@@ -16,7 +16,7 @@
 #   bundle-out/<slug>/workspace/platform-<slug>/
 #   ci-out/<slug>/workspace/my_game/
 #     main.roc              ← pf: platform "./platform/main.roc"
-#     platform/main.roc     ← copy of platform-out/<slug>
+#     platform/main.roc
 #
 
 ## Continuous Integration — engine × host matrix (roc-build)
@@ -202,7 +202,6 @@ engine_bundle_platform_dest : EngineSpec -> Str
 engine_bundle_platform_dest = |e|
     "${engine_bundle_workspace(e)}/${engine_bundle_platform_name(e)}"
 
-# Roc local platform must point at the platform entry file, not a directory.
 engine_local_platform_pkg : Str
 engine_local_platform_pkg = "./platform/main.roc"
 
@@ -1150,7 +1149,6 @@ phase_bundle_engine = |start_id, host_ids, engine| {
     }
 }
 
-# Template → local platform tree (verified) → patch main.roc to ./platform/main.roc
 phase_workspace_engine : NodeId, List(NodeId), List(NodeId), EngineSpec, CiRoots -> _
 phase_workspace_engine = |start_id, prepare_ids, bundle_ids, engine, roots| {
     (copy_id, n1) = take_id(start_id)
@@ -1173,7 +1171,6 @@ phase_workspace_engine = |start_id, prepare_ids, bundle_ids, engine, roots| {
         "",
     )
 
-    # Robust copy: remove stale tree, copy, require main.roc to exist.
     copy_script =
         \\set -eu
         \\SRC='${platform_src}'
@@ -1242,7 +1239,6 @@ phase_game_engine = |p| {
     linux_out = engine_project_linux_out(eng)
     temp_a = engine_project_temp_a(eng)
     wasm_out = engine_project_wasm(eng)
-    project_godot = engine_project_godot(eng)
     export_index = engine_export_index(eng)
 
     (linux_id, n1) = take_id(p.start_id)
@@ -1362,20 +1358,28 @@ phase_game_engine = |p| {
         "",
     )
 
+    # cwd = project_dir → use paths relative to the Godot project root.
+    # PROJECT must be project.godot (or .), not a repo-root-relative path.
     export_script =
         \\set +e
         \\ENGINE='${eng.program}'
-        \\PROJECT='${project_godot}'
-        \\OUT='./export/index.html'
-        \\ARTIFACT='${export_index}'
-        \\mkdir -p "$(dirname "$ARTIFACT")"
-        \\"$ENGINE" "$PROJECT" --headless --export-release "Web" "$OUT"
+        \\PROJECT='project.godot'
+        \\OUT='export/index.html'
+        \\ARTIFACT='export/index.html'
+        \\if [ ! -f "$PROJECT" ]; then
+        \\    echo "[ci] missing $PROJECT in $(pwd)" >&2
+        \\    ls -la >&2 || true
+        \\    exit 1
+        \\fi
+        \\mkdir -p export
+        \\"$ENGINE" --path . --headless --export-release "Web" "$OUT"
         \\status=$?
         \\if [ -f "$ARTIFACT" ]; then
-        \\    echo "[ci] export artifact ok: $ARTIFACT (engine exit=$status)"
+        \\    echo "[ci] export artifact ok: $(pwd)/$ARTIFACT (engine exit=$status)"
         \\    exit 0
         \\fi
-        \\echo "[ci] export failed: missing $ARTIFACT (engine exit=$status)" >&2
+        \\echo "[ci] export failed: missing $(pwd)/$ARTIFACT (engine exit=$status)" >&2
+        \\ls -la export >&2 || true
         \\exit 1
         \\
 
