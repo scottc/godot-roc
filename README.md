@@ -11,6 +11,10 @@ Roc language bindings generator for Godot Game Engine, Redot Game Engine & Draco
 
 Godot-Roc lets you write game logic in [Roc](https://roc-lang.org/), "A [fast](https://roc-lang.org/fast), [friendly](https://roc-lang.org/friendly), [functional](https://roc-lang.org/functional) language". While [Godot Engine](https://godotengine.org/), [Redot Engine](https://www.redotengine.org/) or [Draconic Engine](https://github.com/Redot-Engine/DraconicEngine) handles scenes, rendering, and tooling.
 
+This project is for generating language binding glue & game dev DX.
+
+game engine <-> zig host runtime <-> roc platform API <-> game dev DX
+
 ## Demo
 
 Live web wasm32-emscripten demo:
@@ -159,15 +163,6 @@ godot-roc is developed & maintained by a solo dev; me. Here are some things that
 
 The scripts folder is for platform generator maintainers, to perform a variety of automated tasks.
 
-## Build & Run Binding Generator - For platform maintainers.
-
-```sh
-nix develop
-roc run scripts/ci.roc
-```
-
-## Updating - For platform maintainers.
-
 > [!IMPORTANT]
 > As a platform maintainer, you are expected to robustly handle security & performance.
 > 
@@ -180,20 +175,29 @@ roc run scripts/ci.roc
 > You are expected to check the platform, and read and understand the consiqences of each script in their entirely, before running them. Or at least running them inside of an isolated sandbox, where you can protect yourself.
 >
 
-This project is mostly just generating glue.
+## Scripts Overview - For platform maintainers.
 
-game engine <-> zig <-> roc
-
-## Overview - For platform maintainers.
-
-- `scripts/ci.roc`: CI script that is triggered to run on every commit to master branch, to build and test everything; to "continously intergrate" code & ensure software quality.
+- `scripts/ci.roc`: Build orchistration & CI script that is triggered to run on every commit to master branch, to build, test & bundle 'cpu arch x os x engine' matrix; to "continously intergrate" code & ensure software quality, and to publish builds.
 
 - `scripts/gdextension_interface.generate.roc`: Generates zig glue from `gdextension_interface.h`
 
 - `scripts/extension_api.generate.roc`: Generates roc & zig glue from `extension_api.json`
 
+- `roc glue ...`: generates the roc platform ABI glue.
+
+- `scripts/serve.roc`: To serve 'export to web' projects, so we can run wasm game in a web browser.
+
 ## Important tools & commands - For platform maintainers.
 
 - `nix flake update`: Upgrade the dev tools, you'll need to manually upgrade some important pins, see: `flake.nix`.
 
-- `nix develop`: Enter the development environment
+- `nix develop`: Enter the development environment.
+
+## Build & Run Binding Generator - For platform maintainers.
+
+Note: nix package manager is used to manage dev tooling.
+
+```sh
+nix develop
+roc run scripts/ci.roc
+```

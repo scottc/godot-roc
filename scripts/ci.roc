@@ -1432,6 +1432,8 @@ main! = |args| {
                             FullBuild => {}
                         }
                     }
+                    Log.info!("Editor test:")
+                    Log.info!("  godot ${paths.project_dir}/project.godot")
                     Log.info!("Web export test:")
                     Log.info!("  SERVE_PATH='${paths.project_dir}/export' roc run scripts/serve.roc")
                     Log.info!("  open http://localhost:8000/index.html")
